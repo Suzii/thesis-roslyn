@@ -1,0 +1,1 @@
+19-8-2016 https://mva.microsoft.com/en-us/training-courses/building-roslyn-based-analyzers-and-diagnostics-12596
