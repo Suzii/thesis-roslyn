@@ -1,0 +1,17 @@
+1. Install VS2015 update 3, including VS SDK
+
+2. Add C:\Program Files (x86)\MSBuild\14.0\Bin to PATH variable 
+
+3. Download Roslyn project 
+ > git clone https://github.com/dotnet/roslyn
+ > cd roslyn
+
+4. Restore packages with restore.cmd
+
+5. Build Roslyn.sln via cmd. (msbuild)
+ > msbuild Roslyn.sln
+
+6. Wait for supercool 7,5 minutes
+ -- oh wow, new PC gets the work done in 3 mins!
+
+7. Celebrate...
