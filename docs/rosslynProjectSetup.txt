@@ -1,6 +1,0 @@
-1. Install VS2015 update 3, including VS SDK
-2. Add C:\Program Files (x86)\MSBuild\14.0\Bin to PATH variable 
-3. Restore packages with restore.cmd
-4. Build Roslyn.sln via cmd. (msbuild)
-5. Wair for supercool 7,5 minutes
-6. Celebrate...
