@@ -1,14 +1,15 @@
-﻿using Microsoft.CodeAnalysis;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeActions;
 using Microsoft.CodeAnalysis.CodeFixes;
 using Microsoft.CodeAnalysis.Diagnostics;
 using Microsoft.CodeAnalysis.Formatting;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
 
-namespace TestHelper
+namespace BugHunter.Test.Verifiers
 {
     /// <summary>
     /// Superclass of all Unit tests made for diagnostics with codefixes.
@@ -20,42 +21,19 @@ namespace TestHelper
         /// Returns the codefix being tested (C#) - to be implemented in non-abstract class
         /// </summary>
         /// <returns>The CodeFixProvider to be used for CSharp code</returns>
-        protected virtual CodeFixProvider GetCSharpCodeFixProvider()
-        {
-            return null;
-        }
-
-        /// <summary>
-        /// Returns the codefix being tested (VB) - to be implemented in non-abstract class
-        /// </summary>
-        /// <returns>The CodeFixProvider to be used for VisualBasic code</returns>
-        protected virtual CodeFixProvider GetBasicCodeFixProvider()
-        {
-            return null;
-        }
-
+        protected abstract CodeFixProvider GetCSharpCodeFixProvider();
+        
         /// <summary>
         /// Called to test a C# codefix when applied on the inputted string as a source
         /// </summary>
         /// <param name="oldSource">A class in the form of a string before the CodeFix was applied to it</param>
         /// <param name="newSource">A class in the form of a string after the CodeFix was applied to it</param>
+        /// <param name="references">Array of all the types source file has dependency on</param>
         /// <param name="codeFixIndex">Index determining which codefix to apply if there are multiple</param>
         /// <param name="allowNewCompilerDiagnostics">A bool controlling whether or not the test will fail if the CodeFix introduces other warnings after being applied</param>
-        protected void VerifyCSharpFix(string oldSource, string newSource, int? codeFixIndex = null, bool allowNewCompilerDiagnostics = false)
+        protected void VerifyCSharpFix(string oldSource, string newSource, Type[] references, int? codeFixIndex = null, bool allowNewCompilerDiagnostics = false)
         {
-            VerifyFix(LanguageNames.CSharp, GetCSharpDiagnosticAnalyzer(), GetCSharpCodeFixProvider(), oldSource, newSource, codeFixIndex, allowNewCompilerDiagnostics);
-        }
-
-        /// <summary>
-        /// Called to test a VB codefix when applied on the inputted string as a source
-        /// </summary>
-        /// <param name="oldSource">A class in the form of a string before the CodeFix was applied to it</param>
-        /// <param name="newSource">A class in the form of a string after the CodeFix was applied to it</param>
-        /// <param name="codeFixIndex">Index determining which codefix to apply if there are multiple</param>
-        /// <param name="allowNewCompilerDiagnostics">A bool controlling whether or not the test will fail if the CodeFix introduces other warnings after being applied</param>
-        protected void VerifyBasicFix(string oldSource, string newSource, int? codeFixIndex = null, bool allowNewCompilerDiagnostics = false)
-        {
-            VerifyFix(LanguageNames.VisualBasic, GetBasicDiagnosticAnalyzer(), GetBasicCodeFixProvider(), oldSource, newSource, codeFixIndex, allowNewCompilerDiagnostics);
+            VerifyFix(LanguageNames.CSharp, GetCSharpDiagnosticAnalyzer(), GetCSharpCodeFixProvider(), oldSource, newSource, references, codeFixIndex, allowNewCompilerDiagnostics);
         }
 
         /// <summary>
@@ -69,13 +47,14 @@ namespace TestHelper
         /// <param name="codeFixProvider">The codefix to be applied to the code wherever the relevant Diagnostic is found</param>
         /// <param name="oldSource">A class in the form of a string before the CodeFix was applied to it</param>
         /// <param name="newSource">A class in the form of a string after the CodeFix was applied to it</param>
+        /// <param name="references">Array of all the types source file has dependency on</param>
         /// <param name="codeFixIndex">Index determining which codefix to apply if there are multiple</param>
         /// <param name="allowNewCompilerDiagnostics">A bool controlling whether or not the test will fail if the CodeFix introduces other warnings after being applied</param>
-        private void VerifyFix(string language, DiagnosticAnalyzer analyzer, CodeFixProvider codeFixProvider, string oldSource, string newSource, int? codeFixIndex, bool allowNewCompilerDiagnostics)
+        private void VerifyFix(string language, DiagnosticAnalyzer analyzer, CodeFixProvider codeFixProvider, string oldSource, string newSource, Type[] references, int? codeFixIndex, bool allowNewCompilerDiagnostics)
         {
-            var document = CreateDocument(oldSource, language);
+            var document = CreateDocument(oldSource, references, language);
             var analyzerDiagnostics = GetSortedDiagnosticsFromDocuments(analyzer, new[] { document });
-            var compilerDiagnostics = GetCompilerDiagnostics(document);
+            var compilerDiagnostics = CodeFixVerifier.GetCompilerDiagnostics(document);
             var attempts = analyzerDiagnostics.Length;
 
             for (int i = 0; i < attempts; ++i)
@@ -91,7 +70,7 @@ namespace TestHelper
 
                 if (codeFixIndex != null)
                 {
-                    document = ApplyFix(document, actions.ElementAt((int)codeFixIndex));
+                    document = CodeFixVerifier.ApplyFix(document, actions.ElementAt((int)codeFixIndex));
                     break;
                 }
 

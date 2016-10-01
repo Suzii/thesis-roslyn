@@ -1,12 +1,12 @@
-﻿using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp;
-using Microsoft.CodeAnalysis.Diagnostics;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.Diagnostics;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace TestHelper
+namespace BugHunter.Test.Verifiers
 {
     /// <summary>
     /// Superclass of all Unit Tests for DiagnosticAnalyzers
@@ -17,18 +17,7 @@ namespace TestHelper
         /// <summary>
         /// Get the CSharp analyzer being tested - to be implemented in non-abstract class
         /// </summary>
-        protected virtual DiagnosticAnalyzer GetCSharpDiagnosticAnalyzer()
-        {
-            return null;
-        }
-
-        /// <summary>
-        /// Get the Visual Basic analyzer being tested (C#) - to be implemented in non-abstract class
-        /// </summary>
-        protected virtual DiagnosticAnalyzer GetBasicDiagnosticAnalyzer()
-        {
-            return null;
-        }
+        protected abstract DiagnosticAnalyzer GetCSharpDiagnosticAnalyzer();
         #endregion
 
         #region Verifier wrappers
@@ -38,21 +27,11 @@ namespace TestHelper
         /// Note: input a DiagnosticResult for each Diagnostic expected
         /// </summary>
         /// <param name="source">A class in the form of a string to run the analyzer on</param>
+        /// <param name="references">Array of all the types source file has dependency on</param>
         /// <param name="expected"> DiagnosticResults that should appear after the analyzer is run on the source</param>
-        protected void VerifyCSharpDiagnostic(string source, params DiagnosticResult[] expected)
+        protected void VerifyCSharpDiagnostic(string source, Type[] references = null, params DiagnosticResult[] expected)
         {
-            VerifyDiagnostics(new[] { source }, LanguageNames.CSharp, GetCSharpDiagnosticAnalyzer(), expected);
-        }
-
-        /// <summary>
-        /// Called to test a VB DiagnosticAnalyzer when applied on the single inputted string as a source
-        /// Note: input a DiagnosticResult for each Diagnostic expected
-        /// </summary>
-        /// <param name="source">A class in the form of a string to run the analyzer on</param>
-        /// <param name="expected">DiagnosticResults that should appear after the analyzer is run on the source</param>
-        protected void VerifyBasicDiagnostic(string source, params DiagnosticResult[] expected)
-        {
-            VerifyDiagnostics(new[] { source }, LanguageNames.VisualBasic, GetBasicDiagnosticAnalyzer(), expected);
+            VerifyDiagnostics(new[] { source }, references, LanguageNames.CSharp, GetCSharpDiagnosticAnalyzer(), expected);
         }
 
         /// <summary>
@@ -60,21 +39,11 @@ namespace TestHelper
         /// Note: input a DiagnosticResult for each Diagnostic expected
         /// </summary>
         /// <param name="sources">An array of strings to create source documents from to run the analyzers on</param>
+        /// <param name="references">Array of all the types source files have dependencies on</param>
         /// <param name="expected">DiagnosticResults that should appear after the analyzer is run on the sources</param>
-        protected void VerifyCSharpDiagnostic(string[] sources, params DiagnosticResult[] expected)
+        protected void VerifyCSharpDiagnostic(string[] sources, Type[] references = null, params DiagnosticResult[] expected)
         {
-            VerifyDiagnostics(sources, LanguageNames.CSharp, GetCSharpDiagnosticAnalyzer(), expected);
-        }
-
-        /// <summary>
-        /// Called to test a VB DiagnosticAnalyzer when applied on the inputted strings as a source
-        /// Note: input a DiagnosticResult for each Diagnostic expected
-        /// </summary>
-        /// <param name="sources">An array of strings to create source documents from to run the analyzers on</param>
-        /// <param name="expected">DiagnosticResults that should appear after the analyzer is run on the sources</param>
-        protected void VerifyBasicDiagnostic(string[] sources, params DiagnosticResult[] expected)
-        {
-            VerifyDiagnostics(sources, LanguageNames.VisualBasic, GetBasicDiagnosticAnalyzer(), expected);
+            VerifyDiagnostics(sources, references, LanguageNames.CSharp, GetCSharpDiagnosticAnalyzer(), expected);
         }
 
         /// <summary>
@@ -82,12 +51,13 @@ namespace TestHelper
         /// then verifies each of them.
         /// </summary>
         /// <param name="sources">An array of strings to create source documents from to run the analyzers on</param>
+        /// <param name="references">Array of all the types source files have dependencies on</param>
         /// <param name="language">The language of the classes represented by the source strings</param>
         /// <param name="analyzer">The analyzer to be run on the source code</param>
         /// <param name="expected">DiagnosticResults that should appear after the analyzer is run on the sources</param>
-        private void VerifyDiagnostics(string[] sources, string language, DiagnosticAnalyzer analyzer, params DiagnosticResult[] expected)
+        private void VerifyDiagnostics(string[] sources, Type[] references, string language, DiagnosticAnalyzer analyzer, params DiagnosticResult[] expected)
         {
-            var diagnostics = GetSortedDiagnostics(sources, language, analyzer);
+            var diagnostics = GetSortedDiagnostics(sources, references, language, analyzer);
             VerifyDiagnosticResults(diagnostics, analyzer, expected);
         }
 
