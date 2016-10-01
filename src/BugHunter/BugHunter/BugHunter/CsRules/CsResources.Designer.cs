@@ -23,14 +23,14 @@ namespace BugHunter.CsRules {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class CsResuources {
+    internal class CsResources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal CsResuources() {
+        internal CsResources() {
         }
         
         /// <summary>
@@ -40,7 +40,7 @@ namespace BugHunter.CsRules {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("BugHunter.CsRules.CsResuources", typeof(CsResuources).GetTypeInfo().Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("BugHunter.CsRules.CsResources", typeof(CsResources).GetTypeInfo().Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -58,6 +58,33 @@ namespace BugHunter.CsRules {
             }
             set {
                 resourceCulture = value;
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Consider using one of WhereStartsWith(), WhereEndsWith() or WhereContains() methods instead..
+        /// </summary>
+        internal static string BH1000_Description {
+            get {
+                return ResourceManager.GetString("BH1000_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Method {0} is used without Architect/CTO approval..
+        /// </summary>
+        internal static string BH1000_MessageFormat {
+            get {
+                return ResourceManager.GetString("BH1000_MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Method WhereLike() or WhereNotLike() should not be used used..
+        /// </summary>
+        internal static string BH1000_Title {
+            get {
+                return ResourceManager.GetString("BH1000_Title", resourceCulture);
             }
         }
     }

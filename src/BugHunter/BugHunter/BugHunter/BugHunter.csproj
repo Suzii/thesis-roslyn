@@ -43,10 +43,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ControlResources.resx</DependentUpon>
     </Compile>
-    <Compile Include="CsRules\CsResuources.Designer.cs">
+    <Compile Include="CsRules\Analyzers\BH1000MethodWhereLikeShouldNotBeUsed.cs" />
+    <Compile Include="CsRules\CodeFixes\BH1000CodeFixProvider.cs" />
+    <Compile Include="CsRules\CsResources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>CsResuources.resx</DependentUpon>
+      <DependentUpon>CsResources.resx</DependentUpon>
     </Compile>
     <Compile Include="PageRules\PageResources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -79,9 +81,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>ControlResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="CsRules\CsResuources.resx">
+    <EmbeddedResource Include="CsRules\CsResources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>CsResuources.Designer.cs</LastGenOutput>
+      <LastGenOutput>CsResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="PageRules\PageResources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -136,8 +138,8 @@
       <HintPath>..\..\packages\Microsoft.CodeAnalysis.Workspaces.Common.1.3.1\lib\portable-net45+win8\Microsoft.CodeAnalysis.Workspaces.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.Collections.Immutable, Version=1.1.37.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\System.Collections.Immutable.1.1.37\lib\portable-net45+win8+wp8+wpa81\System.Collections.Immutable.dll</HintPath>
+    <Reference Include="System.Collections.Immutable, Version=1.2.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Collections.Immutable.1.2.0\lib\portable-net45+win8+wp8+wpa81\System.Collections.Immutable.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Composition.AttributedModel, Version=1.0.30.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
@@ -170,8 +172,6 @@
     <Folder Include="AspxRules\CodeFixes\" />
     <Folder Include="ControlRules\Analyzers\" />
     <Folder Include="ControlRules\CodeFixes\" />
-    <Folder Include="CsRules\Analyzers\" />
-    <Folder Include="CsRules\CodeFixes\" />
     <Folder Include="PageRules\Analyzers\" />
     <Folder Include="PageRules\CodeFixes\" />
     <Folder Include="ProjectRules\Analyzers\" />
