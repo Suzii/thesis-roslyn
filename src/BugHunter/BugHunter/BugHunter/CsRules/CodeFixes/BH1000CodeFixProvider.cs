@@ -10,10 +10,16 @@ using Microsoft.CodeAnalysis.CodeActions;
 using Microsoft.CodeAnalysis.CodeFixes;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Microsoft.CodeAnalysis.Rename;
 
 namespace BugHunter.CsRules.CodeFixes
 {
+    internal enum PossibleFixes
+    {
+        WhereContains,
+        WhereStartsWith,
+        WhereEndsWith
+    }
+
     [ExportCodeFixProvider(LanguageNames.CSharp, Name = nameof(BH1000CodeFixProvider)), Shared]
     public class BH1000CodeFixProvider : CodeFixProvider
     {
@@ -28,75 +34,68 @@ namespace BugHunter.CsRules.CodeFixes
         public sealed override async Task RegisterCodeFixesAsync(CodeFixContext context)
         {
             var root = await context.Document.GetSyntaxRootAsync(context.CancellationToken).ConfigureAwait(false);
-            
             var diagnostic = context.Diagnostics.First();
             var diagnosticSpan = diagnostic.Location.SourceSpan;
-
-            // Find the type declaration identified by the diagnostic.
-            var invocationExpression =
-                root.FindToken(diagnosticSpan.Start)
-                    .Parent.AncestorsAndSelf()
-                    .OfType<MemberAccessExpressionSyntax>()
-                    .First();
             
+            var memberAccessExpression = root.FindToken(diagnosticSpan.Start).Parent.AncestorsAndSelf().OfType<MemberAccessExpressionSyntax>().First();
+            if (memberAccessExpression == null)
+            {
+                return;
+            }
+
+            var containsMethodName = GetNewMethodName(PossibleFixes.WhereContains, memberAccessExpression);
             context.RegisterCodeFix(
                 CodeAction.Create(
-                    title: "Replace with WhereContains()",
-                    createChangedDocument: c => ReplaceWithContainsMethod(context.Document, invocationExpression, c),
-                    equivalenceKey: "Replace with WhereContains()"),
+                    title: $"Replace with {containsMethodName}()",
+                    createChangedDocument: c => ReplaceWithWithDifferentMethodCall(context.Document, memberAccessExpression, c, containsMethodName),
+                    equivalenceKey: "Contains()"),
                 diagnostic);
 
+            var startsWithMethodName = GetNewMethodName(PossibleFixes.WhereStartsWith, memberAccessExpression);
             context.RegisterCodeFix(
                 CodeAction.Create(
-                    title: "Replace with WhereStartsWith()",
-                    createChangedDocument: c => ReplaceWithStartsWithMethod(context.Document, invocationExpression, c),
-                    equivalenceKey: "Replace with WhereStartsWith()"),
+                    title: $"Replace with {startsWithMethodName}()",
+                    createChangedDocument: c => ReplaceWithWithDifferentMethodCall(context.Document, memberAccessExpression, c, startsWithMethodName),
+                    equivalenceKey: "StartsWith()"),
                 diagnostic);
 
+            var endsWithMethodName = GetNewMethodName(PossibleFixes.WhereEndsWith, memberAccessExpression);
             context.RegisterCodeFix(
                 CodeAction.Create(
-                    title: "Replace with WhereEndsWith()",
-                    createChangedDocument: c => ReplaceWithEndsWithMethod(context.Document, invocationExpression, c),
-                    equivalenceKey: "Replace with WhereEndsWith()"),
+                    title: $"Replace with {endsWithMethodName}()",
+                    createChangedDocument: c => ReplaceWithWithDifferentMethodCall(context.Document, memberAccessExpression, c, endsWithMethodName),
+                    equivalenceKey: "EndsWith()"),
                 diagnostic);
         }
 
-        // TODO finish this once references versions conflicts are resolved
-        private async Task<Document> ReplaceWithContainsMethod(Document document, MemberAccessExpressionSyntax memberAccessExpressionSyntax, CancellationToken cancellationToken)
+        private async Task<Document> ReplaceWithWithDifferentMethodCall(Document document, MemberAccessExpressionSyntax memberAccessExpression, CancellationToken cancellationToken, string newMethodName)
         {
-            var root = await document.GetSyntaxRootAsync(cancellationToken);
-            
-            var invocationExpr = memberAccessExpressionSyntax.Parent as InvocationExpressionSyntax;
-            if (invocationExpr == null)
-            {
-                throw new ArgumentException(nameof(memberAccessExpressionSyntax));
-            }
+            var root = await document.GetSyntaxRootAsync(cancellationToken).ConfigureAwait(false);
 
+            var newMethodIdentifierName = SyntaxFactory.IdentifierName(newMethodName);
+            var newMemberAccessExpression = memberAccessExpression.WithName(newMethodIdentifierName);
 
-            var contains = SyntaxFactory.IdentifierName("WhereContains");
-            var expr = SyntaxFactory.ExpressionStatement(contains);
-            var newInvocationExpression = invocationExpr.WithExpression(expr.Expression);
-
-            //var newCall =
-            //    SyntaxFactory.ParseStatement(
-            //        $"{memberAccessExpressionSyntax.Name}{memberAccessExpressionSyntax.OperatorToken}Contains({string.Join(", ", invocationExpr.ArgumentList)}");
-
-
-            // TODO
-            var newRoot = root.ReplaceNode(invocationExpr, newInvocationExpression);
+            var newRoot = root.ReplaceNode(memberAccessExpression, newMemberAccessExpression);
             var newDocument = document.WithSyntaxRoot(newRoot);
 
             return newDocument;
         }
 
-        private Task<Document> ReplaceWithEndsWithMethod(Document document, MemberAccessExpressionSyntax invocationExpression, CancellationToken cancellationToken)
+        private string GetNewMethodName(PossibleFixes forFix, MemberAccessExpressionSyntax currentMemberAccessExpression)
         {
-            throw new NotImplementedException();
-        }
+            var isCurrentCallNegated = currentMemberAccessExpression.Name.Identifier.ToString().Contains("Not");
 
-        private Task<Document> ReplaceWithStartsWithMethod(Document document, MemberAccessExpressionSyntax invocationExpression, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
+            switch (forFix)
+            {
+                case PossibleFixes.WhereContains:
+                    return isCurrentCallNegated ? "WhereNotContains" : "WhereContains";
+                case PossibleFixes.WhereStartsWith:
+                    return isCurrentCallNegated ? "WhereNotStartsWith" : "WhereStartsWith";
+                case PossibleFixes.WhereEndsWith:
+                    return isCurrentCallNegated ? "WhereNotEndsWith" : "WhereEndsWith";
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(forFix));
+            }
         }
     }
 }

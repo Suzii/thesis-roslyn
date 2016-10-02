@@ -12,6 +12,7 @@ namespace BugHunter.Test.CsTests
     [TestClass]
     public class BH1000Test : CodeFixVerifier
     {
+        // TODO figure out what to do with multiple fixes for one analyzer
         protected override CodeFixProvider GetCSharpCodeFixProvider()
         {
             return new BH1000CodeFixProvider();
@@ -61,17 +62,62 @@ namespace SampleTestProject.CsSamples
             VerifyCSharpDiagnostic(test, dependentTypes, expected);
 
             var fixtest = @"
-    namespace SampleTestProject.CsSamples
+namespace SampleTestProject.CsSamples
+{
+    public class BH1000MethodWhereLikeShouldNotBeUsed
     {
-        public class BH1000MethodWhereLikeShouldNotBeUsed
+        public void SampleMethod()
         {
-            public void SampleMethod()
-            {
-                var whereCondition = new CMS.DataEngine.WhereCondition();
-                whereCondition = whereCondition.Contains(""columnName"", ""value"");
-            }
+            var whereCondition = new CMS.DataEngine.WhereCondition();
+            whereCondition = whereCondition.WhereContains(""columnName"", ""value"");
         }
-    }";
+    }
+}";
+            VerifyCSharpFix(test, fixtest, dependentTypes);
+        }
+
+        [TestMethod]
+        public void InputWithOneIncident_SurfacesDiagnostic_NegatedOutput()
+        {
+            var dependentTypes = new[] { typeof(WhereConditionBase<>) };
+
+            var test = @"
+namespace SampleTestProject.CsSamples
+{
+    public class BH1000MethodWhereNotLikeShouldNotBeUsed
+    {
+        public void SampleMethod()
+        {
+            var whereCondition = new CMS.DataEngine.WhereCondition();
+            whereCondition = whereCondition.WhereNotLike(""columnName"", ""value"");
+        }
+    }
+}";
+            var expected = new DiagnosticResult
+            {
+                Id = "BH1000",
+                Message = "Method WhereNotLike is used without Architect/CTO approval.",
+                Severity = DiagnosticSeverity.Warning,
+                Locations =
+                    new[] {
+                            new DiagnosticResultLocation("Test0.cs", 9, 30)
+                        }
+            };
+
+            VerifyCSharpDiagnostic(test, dependentTypes, expected);
+
+            var fixtest = @"
+namespace SampleTestProject.CsSamples
+{
+    public class BH1000MethodWhereNotLikeShouldNotBeUsed
+    {
+        public void SampleMethod()
+        {
+            var whereCondition = new CMS.DataEngine.WhereCondition();
+            whereCondition = whereCondition.WhereNotContains(""columnName"", ""value"");
+        }
+    }
+}";
             VerifyCSharpFix(test, fixtest, dependentTypes);
         }
 
