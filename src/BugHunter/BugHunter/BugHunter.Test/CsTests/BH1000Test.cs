@@ -32,9 +32,9 @@ namespace BugHunter.Test.CsTests
         }
         
         [TestMethod]
-        public void InputWithOneIncident_SurfacesDiagnostic()
+        public void InputWithWhereLike_SurfacesDiagnostic()
         {
-            var dependentTypes = new[] {typeof(WhereConditionBase<>)};
+            var dependentTypes = new[] { typeof(WhereConditionBase<>) };
 
             var test = @"
 namespace SampleTestProject.CsSamples
@@ -48,7 +48,7 @@ namespace SampleTestProject.CsSamples
         }
     }
 }";
-            var expected = new DiagnosticResult
+            var expectedDiagnostic = new DiagnosticResult
             {
                 Id = "BH1000",
                 Message = "Method WhereLike is used without Architect/CTO approval.",
@@ -59,9 +59,9 @@ namespace SampleTestProject.CsSamples
                         }
             };
 
-            VerifyCSharpDiagnostic(test, dependentTypes, expected);
+            VerifyCSharpDiagnostic(test, dependentTypes, expectedDiagnostic);
 
-            var fixtest = @"
+            var expectedFix = @"
 namespace SampleTestProject.CsSamples
 {
     public class BH1000MethodWhereLikeShouldNotBeUsed
@@ -73,11 +73,11 @@ namespace SampleTestProject.CsSamples
         }
     }
 }";
-            VerifyCSharpFix(test, fixtest, dependentTypes);
+            VerifyCSharpFix(test, expectedFix, dependentTypes);
         }
 
         [TestMethod]
-        public void InputWithOneIncident_SurfacesDiagnostic_NegatedOutput()
+        public void InputWithWhereNot_SurfacesDiagnostic()
         {
             var dependentTypes = new[] { typeof(WhereConditionBase<>) };
 
@@ -93,7 +93,7 @@ namespace SampleTestProject.CsSamples
         }
     }
 }";
-            var expected = new DiagnosticResult
+            var expectedDiagnostic = new DiagnosticResult
             {
                 Id = "BH1000",
                 Message = "Method WhereNotLike is used without Architect/CTO approval.",
@@ -104,9 +104,9 @@ namespace SampleTestProject.CsSamples
                         }
             };
 
-            VerifyCSharpDiagnostic(test, dependentTypes, expected);
+            VerifyCSharpDiagnostic(test, dependentTypes, expectedDiagnostic);
 
-            var fixtest = @"
+            var expectedFix = @"
 namespace SampleTestProject.CsSamples
 {
     public class BH1000MethodWhereNotLikeShouldNotBeUsed
@@ -118,7 +118,7 @@ namespace SampleTestProject.CsSamples
         }
     }
 }";
-            VerifyCSharpFix(test, fixtest, dependentTypes);
+            VerifyCSharpFix(test, expectedFix, dependentTypes);
         }
 
         [TestMethod]

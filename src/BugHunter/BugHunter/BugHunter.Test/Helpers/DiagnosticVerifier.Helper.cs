@@ -160,7 +160,7 @@ namespace BugHunter.Test.Verifiers
             
             if (references != null)
             {
-                solution = solution.AddMetadataReferences(projectId, references.Select(t => MetadataReference.CreateFromFile(t.Assembly.Location)));
+                solution = solution.AddMetadataReferences(projectId, references.Select(t => MetadataReference.CreateFromFile(t.Assembly.Location)).Distinct());
             }
 
             int count = 0;
@@ -168,7 +168,8 @@ namespace BugHunter.Test.Verifiers
             {
                 var newFileName = fileNamePrefix + count + "." + fileExt;
                 var documentId = DocumentId.CreateNewId(projectId, debugName: newFileName);
-                solution = solution.AddDocument(documentId, newFileName, SourceText.From(source));
+                var sourceText = SourceText.From(source);
+                solution = solution.AddDocument(documentId, newFileName, sourceText);
                 count++;
             }
 

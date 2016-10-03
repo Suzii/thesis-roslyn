@@ -87,5 +87,32 @@ namespace BugHunter.CsRules {
                 return ResourceManager.GetString("BH1000_Title", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to LogEvent called with event type &quot;{0}&quot;, use EventType.{1} instead..
+        /// </summary>
+        internal static string BH1001_Description {
+            get {
+                return ResourceManager.GetString("BH1001_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to LogEvent called with event type &quot;{0}&quot;..
+        /// </summary>
+        internal static string BH1001_MessageFormat {
+            get {
+                return ResourceManager.GetString("BH1001_MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to LogEvent should not be called with hardcoded event type..
+        /// </summary>
+        internal static string BH1001_Title {
+            get {
+                return ResourceManager.GetString("BH1001_Title", resourceCulture);
+            }
+        }
     }
 }

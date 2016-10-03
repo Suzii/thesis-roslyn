@@ -446,6 +446,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CsSamples\BH1000MethodWhereLikeShouldNotBeUsed.cs" />
+    <Compile Include="CsSamples\BH1001LogEventArguments.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

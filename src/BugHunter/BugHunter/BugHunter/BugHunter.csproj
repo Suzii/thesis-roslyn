@@ -44,6 +44,8 @@
       <DependentUpon>ControlResources.resx</DependentUpon>
     </Compile>
     <Compile Include="CsRules\Analyzers\BH1000MethodWhereLikeShouldNotBeUsed.cs" />
+    <Compile Include="CsRules\Analyzers\BH1001EventLogArguments.cs" />
+    <Compile Include="CsRules\CodeFixes\BH1001CodeFixProvider.cs" />
     <Compile Include="CsRules\CodeFixes\BH1000CodeFixProvider.cs" />
     <Compile Include="CsRules\CsResources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -124,6 +126,24 @@
     <Analyzer Include="..\..\packages\Microsoft.CodeAnalysis.Analyzers.1.1.0\analyzers\dotnet\cs\Microsoft.CodeAnalysis.CSharp.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="CMS.Base">
+      <HintPath>..\BugHunter.Test\bin\Debug\CMS.Base.dll</HintPath>
+    </Reference>
+    <Reference Include="CMS.Core">
+      <HintPath>..\..\..\libs\CMS.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="CMS.DataEngine">
+      <HintPath>..\..\..\libs\CMS.DataEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="CMS.EventLog">
+      <HintPath>..\..\..\libs\CMS.EventLog.dll</HintPath>
+    </Reference>
+    <Reference Include="CMS.Helpers">
+      <HintPath>..\..\..\libs\CMS.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="CMS.IO">
+      <HintPath>..\..\..\libs\CMS.IO.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CodeAnalysis, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.CodeAnalysis.Common.1.1.1\lib\portable-net45+win8\Microsoft.CodeAnalysis.dll</HintPath>
       <Private>True</Private>
