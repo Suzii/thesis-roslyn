@@ -70,9 +70,9 @@ namespace BugHunter.CsRules.CodeFixes
                 case "\"I\"":
                     return "CMS.EventLog.EventType.INFORMATION";
                 case "\"W\"":
-                    return "CMS.EventLog.EventType.ERROR";
-                case "\"E\"":
                     return "CMS.EventLog.EventType.WARNING";
+                case "\"E\"":
+                    return "CMS.EventLog.EventType.ERROR";
                 default:
                     throw new ArgumentOutOfRangeException(nameof(oldArgument));
             }
