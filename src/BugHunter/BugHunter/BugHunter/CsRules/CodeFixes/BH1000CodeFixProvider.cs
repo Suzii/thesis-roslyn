@@ -13,13 +13,6 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace BugHunter.CsRules.CodeFixes
 {
-    internal enum PossibleFixes
-    {
-        WhereContains,
-        WhereStartsWith,
-        WhereEndsWith
-    }
-
     [ExportCodeFixProvider(LanguageNames.CSharp, Name = nameof(BH1000CodeFixProvider)), Shared]
     public class BH1000CodeFixProvider : CodeFixProvider
     {
@@ -43,7 +36,7 @@ namespace BugHunter.CsRules.CodeFixes
                 return;
             }
 
-            var containsMethodName = GetNewMethodName(PossibleFixes.WhereContains, memberAccessExpression);
+            var containsMethodName = GetNewMethodName(BH1000PossibleFixes.WhereContains, memberAccessExpression);
             context.RegisterCodeFix(
                 CodeAction.Create(
                     title: $"Replace with {containsMethodName}()",
@@ -51,7 +44,7 @@ namespace BugHunter.CsRules.CodeFixes
                     equivalenceKey: "Contains()"),
                 diagnostic);
 
-            var startsWithMethodName = GetNewMethodName(PossibleFixes.WhereStartsWith, memberAccessExpression);
+            var startsWithMethodName = GetNewMethodName(BH1000PossibleFixes.WhereStartsWith, memberAccessExpression);
             context.RegisterCodeFix(
                 CodeAction.Create(
                     title: $"Replace with {startsWithMethodName}()",
@@ -59,7 +52,7 @@ namespace BugHunter.CsRules.CodeFixes
                     equivalenceKey: "StartsWith()"),
                 diagnostic);
 
-            var endsWithMethodName = GetNewMethodName(PossibleFixes.WhereEndsWith, memberAccessExpression);
+            var endsWithMethodName = GetNewMethodName(BH1000PossibleFixes.WhereEndsWith, memberAccessExpression);
             context.RegisterCodeFix(
                 CodeAction.Create(
                     title: $"Replace with {endsWithMethodName}()",
@@ -81,17 +74,17 @@ namespace BugHunter.CsRules.CodeFixes
             return newDocument;
         }
 
-        private string GetNewMethodName(PossibleFixes forFix, MemberAccessExpressionSyntax currentMemberAccessExpression)
+        private string GetNewMethodName(BH1000PossibleFixes forFix, MemberAccessExpressionSyntax currentMemberAccessExpression)
         {
             var isCurrentCallNegated = currentMemberAccessExpression.Name.Identifier.ToString().Contains("Not");
 
             switch (forFix)
             {
-                case PossibleFixes.WhereContains:
+                case BH1000PossibleFixes.WhereContains:
                     return isCurrentCallNegated ? "WhereNotContains" : "WhereContains";
-                case PossibleFixes.WhereStartsWith:
+                case BH1000PossibleFixes.WhereStartsWith:
                     return isCurrentCallNegated ? "WhereNotStartsWith" : "WhereStartsWith";
-                case PossibleFixes.WhereEndsWith:
+                case BH1000PossibleFixes.WhereEndsWith:
                     return isCurrentCallNegated ? "WhereNotEndsWith" : "WhereEndsWith";
                 default:
                     throw new ArgumentOutOfRangeException(nameof(forFix));

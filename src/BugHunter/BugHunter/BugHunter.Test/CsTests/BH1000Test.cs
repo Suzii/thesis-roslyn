@@ -1,7 +1,6 @@
 ﻿using BugHunter.CsRules.Analyzers;
 using BugHunter.CsRules.CodeFixes;
 using BugHunter.Test.Verifiers;
-using CMS.DataEngine;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeFixes;
 using Microsoft.CodeAnalysis.Diagnostics;
@@ -12,10 +11,6 @@ namespace BugHunter.Test.CsTests
     [TestFixture]
     public class BH1000Test : CodeFixVerifier
     {
-        private CodeFixProvider _codeFixProvider = new BH1000CodeFixProvider();
-
-        private DiagnosticAnalyzer _analyzer = new BH1000MethodWhereLikeShouldNotBeUsed();
-        
         protected override CodeFixProvider GetCSharpCodeFixProvider()
         {
             return new BH1000CodeFixProvider();
@@ -39,27 +34,30 @@ namespace BugHunter.Test.CsTests
             VerifyCSharpDiagnostic(test);
         }
         
-        [Test]
-        public void InputWithWhereLike_SurfacesDiagnostic()
+        [TestCase("WhereLike", "WhereContains", 0)]
+        [TestCase("WhereLike", "WhereStartsWith", 1)]
+        [TestCase("WhereLike", "WhereEndsWith", 2)]
+        [TestCase("WhereNotLike", "WhereNotContains", 0)]
+        [TestCase("WhereNotLike", "WhereNotStartsWith", 1)]
+        [TestCase("WhereNotLike", "WhereNotEndsWith", 2)]
+        public void InputWithWhereLike_SurfacesDiagnostic(string oldMethodCall, string newMethodCall, int codeFixIndex)
         {
-            var dependentTypes = new[] { typeof(WhereConditionBase<>) };
-
-            var test = @"
+            var test = $@"
 namespace SampleTestProject.CsSamples
-{
+{{
     public class BH1000MethodWhereLikeShouldNotBeUsed
-    {
+    {{
         public void SampleMethod()
-        {
+        {{
             var whereCondition = new CMS.DataEngine.WhereCondition();
-            whereCondition = whereCondition.WhereLike(""columnName"", ""value"");
-        }
-    }
-}";
+            whereCondition = whereCondition.{oldMethodCall}(""columnName"", ""value"");
+        }}
+    }}
+}}";
             var expectedDiagnostic = new DiagnosticResult
             {
                 Id = "BH1000",
-                Message = "Method WhereLike is used without Architect/CTO approval.",
+                Message = $"Method {oldMethodCall} is used without Architect/CTO approval.",
                 Severity = DiagnosticSeverity.Warning,
                 Locations =
                     new[] {
@@ -69,64 +67,19 @@ namespace SampleTestProject.CsSamples
 
             VerifyCSharpDiagnostic(test, expectedDiagnostic);
 
-            var expectedFix = @"
+            var expectedFix = $@"
 namespace SampleTestProject.CsSamples
-{
+{{
     public class BH1000MethodWhereLikeShouldNotBeUsed
-    {
+    {{
         public void SampleMethod()
-        {
+        {{
             var whereCondition = new CMS.DataEngine.WhereCondition();
-            whereCondition = whereCondition.WhereContains(""columnName"", ""value"");
-        }
-    }
-}";
-            VerifyCSharpFix(test, expectedFix);
-        }
-
-        [Test]
-        public void InputWithWhereNot_SurfacesDiagnostic()
-        {
-            var dependentTypes = new[] { typeof(WhereConditionBase<>) };
-
-            var test = @"
-namespace SampleTestProject.CsSamples
-{
-    public class BH1000MethodWhereNotLikeShouldNotBeUsed
-    {
-        public void SampleMethod()
-        {
-            var whereCondition = new CMS.DataEngine.WhereCondition();
-            whereCondition = whereCondition.WhereNotLike(""columnName"", ""value"");
-        }
-    }
-}";
-            var expectedDiagnostic = new DiagnosticResult
-            {
-                Id = "BH1000",
-                Message = "Method WhereNotLike is used without Architect/CTO approval.",
-                Severity = DiagnosticSeverity.Warning,
-                Locations =
-                    new[] {
-                            new DiagnosticResultLocation("Test0.cs", 9, 30)
-                        }
-            };
-
-            VerifyCSharpDiagnostic(test, expectedDiagnostic);
-
-            var expectedFix = @"
-namespace SampleTestProject.CsSamples
-{
-    public class BH1000MethodWhereNotLikeShouldNotBeUsed
-    {
-        public void SampleMethod()
-        {
-            var whereCondition = new CMS.DataEngine.WhereCondition();
-            whereCondition = whereCondition.WhereNotContains(""columnName"", ""value"");
-        }
-    }
-}";
-            VerifyCSharpFix(test, expectedFix);
+            whereCondition = whereCondition.{newMethodCall}(""columnName"", ""value"");
+        }}
+    }}
+}}";
+            VerifyCSharpFix(test, expectedFix, codeFixIndex);
         }
 
         [Test]

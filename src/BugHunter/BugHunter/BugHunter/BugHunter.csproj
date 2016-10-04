@@ -47,6 +47,7 @@
     <Compile Include="CsRules\Analyzers\BH1001EventLogArguments.cs" />
     <Compile Include="CsRules\CodeFixes\BH1001CodeFixProvider.cs" />
     <Compile Include="CsRules\CodeFixes\BH1000CodeFixProvider.cs" />
+    <Compile Include="CsRules\CodeFixes\BH1000PossibleFixes.cs" />
     <Compile Include="CsRules\CsResources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
