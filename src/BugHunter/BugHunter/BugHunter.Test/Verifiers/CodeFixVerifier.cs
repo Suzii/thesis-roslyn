@@ -7,7 +7,7 @@ using Microsoft.CodeAnalysis.CodeActions;
 using Microsoft.CodeAnalysis.CodeFixes;
 using Microsoft.CodeAnalysis.Diagnostics;
 using Microsoft.CodeAnalysis.Formatting;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace BugHunter.Test.Verifiers
 {
@@ -28,12 +28,11 @@ namespace BugHunter.Test.Verifiers
         /// </summary>
         /// <param name="oldSource">A class in the form of a string before the CodeFix was applied to it</param>
         /// <param name="newSource">A class in the form of a string after the CodeFix was applied to it</param>
-        /// <param name="references">Array of all the types source file has dependency on</param>
         /// <param name="codeFixIndex">Index determining which codefix to apply if there are multiple</param>
         /// <param name="allowNewCompilerDiagnostics">A bool controlling whether or not the test will fail if the CodeFix introduces other warnings after being applied</param>
-        protected void VerifyCSharpFix(string oldSource, string newSource, Type[] references, int? codeFixIndex = null, bool allowNewCompilerDiagnostics = false)
+        protected void VerifyCSharpFix(string oldSource, string newSource, int? codeFixIndex = null, bool allowNewCompilerDiagnostics = false)
         {
-            VerifyFix(LanguageNames.CSharp, GetCSharpDiagnosticAnalyzer(), GetCSharpCodeFixProvider(), oldSource, newSource, references, codeFixIndex, allowNewCompilerDiagnostics);
+            VerifyFix(LanguageNames.CSharp, GetCSharpDiagnosticAnalyzer(), GetCSharpCodeFixProvider(), oldSource, newSource, GetAdditionalReferences(), codeFixIndex, allowNewCompilerDiagnostics);
         }
 
         /// <summary>
@@ -47,14 +46,14 @@ namespace BugHunter.Test.Verifiers
         /// <param name="codeFixProvider">The codefix to be applied to the code wherever the relevant Diagnostic is found</param>
         /// <param name="oldSource">A class in the form of a string before the CodeFix was applied to it</param>
         /// <param name="newSource">A class in the form of a string after the CodeFix was applied to it</param>
-        /// <param name="references">Array of all the types source file has dependency on</param>
+        /// <param name="references">An array of additional metadata references, source files are dependent on</param>
         /// <param name="codeFixIndex">Index determining which codefix to apply if there are multiple</param>
         /// <param name="allowNewCompilerDiagnostics">A bool controlling whether or not the test will fail if the CodeFix introduces other warnings after being applied</param>
-        private void VerifyFix(string language, DiagnosticAnalyzer analyzer, CodeFixProvider codeFixProvider, string oldSource, string newSource, Type[] references, int? codeFixIndex, bool allowNewCompilerDiagnostics)
+        private void VerifyFix(string language, DiagnosticAnalyzer analyzer, CodeFixProvider codeFixProvider, string oldSource, string newSource, MetadataReference[] references, int? codeFixIndex, bool allowNewCompilerDiagnostics)
         {
             var document = CreateDocument(oldSource, references, language);
             var analyzerDiagnostics = GetSortedDiagnosticsFromDocuments(analyzer, new[] { document });
-            var compilerDiagnostics = CodeFixVerifier.GetCompilerDiagnostics(document);
+            var compilerDiagnostics = CodeFixVerifier.GetCompilerDiagnostics(document).ToList();
             var attempts = analyzerDiagnostics.Length;
 
             for (int i = 0; i < attempts; ++i)
@@ -86,10 +85,8 @@ namespace BugHunter.Test.Verifiers
                     document = document.WithSyntaxRoot(Formatter.Format(document.GetSyntaxRootAsync().Result, Formatter.Annotation, document.Project.Solution.Workspace));
                     newCompilerDiagnostics = GetNewDiagnostics(compilerDiagnostics, GetCompilerDiagnostics(document));
 
-                    Assert.IsTrue(false,
-                        string.Format("Fix introduced new compiler diagnostics:\r\n{0}\r\n\r\nNew document:\r\n{1}\r\n",
-                            string.Join("\r\n", newCompilerDiagnostics.Select(d => d.ToString())),
-                            document.GetSyntaxRootAsync().Result.ToFullString()));
+                    Assert.Fail(
+                        $"Fix introduced new compiler diagnostics:\r\n{string.Join("\r\n", newCompilerDiagnostics.Select(d => d.ToString()))}\r\n\r\nNew document:\r\n{document.GetSyntaxRootAsync().Result.ToFullString()}\r\n");
                 }
 
                 //check if there are analyzer diagnostics left after the code fix

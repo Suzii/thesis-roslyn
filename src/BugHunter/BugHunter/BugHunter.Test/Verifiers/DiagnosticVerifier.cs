@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace BugHunter.Test.Verifiers
 {
@@ -18,6 +18,12 @@ namespace BugHunter.Test.Verifiers
         /// Get the CSharp analyzer being tested - to be implemented in non-abstract class
         /// </summary>
         protected abstract DiagnosticAnalyzer GetCSharpDiagnosticAnalyzer();
+
+        /// <summary>
+        /// Get the additional references to be included in ad-hoc created project 
+        /// </summary>
+        /// <returns></returns>
+        protected abstract MetadataReference[] GetAdditionalReferences();
         #endregion
 
         #region Verifier wrappers
@@ -27,11 +33,10 @@ namespace BugHunter.Test.Verifiers
         /// Note: input a DiagnosticResult for each Diagnostic expected
         /// </summary>
         /// <param name="source">A class in the form of a string to run the analyzer on</param>
-        /// <param name="references">Array of all the types source file has dependency on</param>
         /// <param name="expected"> DiagnosticResults that should appear after the analyzer is run on the source</param>
-        protected void VerifyCSharpDiagnostic(string source, Type[] references = null, params DiagnosticResult[] expected)
+        protected void VerifyCSharpDiagnostic(string source, params DiagnosticResult[] expected)
         {
-            VerifyDiagnostics(new[] { source }, references, LanguageNames.CSharp, GetCSharpDiagnosticAnalyzer(), expected);
+            VerifyDiagnostics(new[] { source }, LanguageNames.CSharp, GetCSharpDiagnosticAnalyzer(), GetAdditionalReferences(), expected);
         }
 
         /// <summary>
@@ -39,11 +44,10 @@ namespace BugHunter.Test.Verifiers
         /// Note: input a DiagnosticResult for each Diagnostic expected
         /// </summary>
         /// <param name="sources">An array of strings to create source documents from to run the analyzers on</param>
-        /// <param name="references">Array of all the types source files have dependencies on</param>
         /// <param name="expected">DiagnosticResults that should appear after the analyzer is run on the sources</param>
-        protected void VerifyCSharpDiagnostic(string[] sources, Type[] references = null, params DiagnosticResult[] expected)
+        protected void VerifyCSharpDiagnostic(string[] sources, params DiagnosticResult[] expected)
         {
-            VerifyDiagnostics(sources, references, LanguageNames.CSharp, GetCSharpDiagnosticAnalyzer(), expected);
+            VerifyDiagnostics(sources, LanguageNames.CSharp, GetCSharpDiagnosticAnalyzer(), GetAdditionalReferences(), expected);
         }
 
         /// <summary>
@@ -51,13 +55,13 @@ namespace BugHunter.Test.Verifiers
         /// then verifies each of them.
         /// </summary>
         /// <param name="sources">An array of strings to create source documents from to run the analyzers on</param>
-        /// <param name="references">Array of all the types source files have dependencies on</param>
         /// <param name="language">The language of the classes represented by the source strings</param>
         /// <param name="analyzer">The analyzer to be run on the source code</param>
+        /// <param name="references">An array of additional metadata references, source files are dependent on</param>
         /// <param name="expected">DiagnosticResults that should appear after the analyzer is run on the sources</param>
-        private void VerifyDiagnostics(string[] sources, Type[] references, string language, DiagnosticAnalyzer analyzer, params DiagnosticResult[] expected)
+        private void VerifyDiagnostics(string[] sources, string language, DiagnosticAnalyzer analyzer, MetadataReference[] references, params DiagnosticResult[] expected)
         {
-            var diagnostics = GetSortedDiagnostics(sources, references, language, analyzer);
+            var diagnostics = GetSortedDiagnostics(sources, language, analyzer, references);
             VerifyDiagnosticResults(diagnostics, analyzer, expected);
         }
 
@@ -73,6 +77,7 @@ namespace BugHunter.Test.Verifiers
         /// <param name="expectedResults">Diagnostic Results that should have appeared in the code</param>
         private static void VerifyDiagnosticResults(IEnumerable<Diagnostic> actualResults, DiagnosticAnalyzer analyzer, params DiagnosticResult[] expectedResults)
         {
+            actualResults = actualResults as IList<Diagnostic> ?? actualResults.ToList();
             int expectedCount = expectedResults.Count();
             int actualCount = actualResults.Count();
 
@@ -80,8 +85,8 @@ namespace BugHunter.Test.Verifiers
             {
                 string diagnosticsOutput = actualResults.Any() ? FormatDiagnostics(analyzer, actualResults.ToArray()) : "    NONE.";
 
-                Assert.IsTrue(false,
-                    string.Format("Mismatch between number of diagnostics returned, expected \"{0}\" actual \"{1}\"\r\n\r\nDiagnostics:\r\n{2}\r\n", expectedCount, actualCount, diagnosticsOutput));
+                Assert.Fail(
+                    $"Mismatch between number of diagnostics returned, expected \"{expectedCount}\" actual \"{actualCount}\"\r\n\r\nDiagnostics:\r\n{diagnosticsOutput}\r\n");
             }
 
             for (int i = 0; i < expectedResults.Length; i++)
@@ -91,25 +96,16 @@ namespace BugHunter.Test.Verifiers
 
                 if (expected.Line == -1 && expected.Column == -1)
                 {
-                    if (actual.Location != Location.None)
-                    {
-                        Assert.IsTrue(false,
-                            string.Format("Expected:\nA project diagnostic with No location\nActual:\n{0}",
-                            FormatDiagnostics(analyzer, actual)));
-                    }
+                    Assert.AreEqual(Location.None, actual.Location,
+                        $"Expected:\nA project diagnostic with No location\nActual:\n{FormatDiagnostics(analyzer, actual)}");
                 }
                 else
                 {
                     VerifyDiagnosticLocation(analyzer, actual, actual.Location, expected.Locations.First());
                     var additionalLocations = actual.AdditionalLocations.ToArray();
 
-                    if (additionalLocations.Length != expected.Locations.Length - 1)
-                    {
-                        Assert.IsTrue(false,
-                            string.Format("Expected {0} additional locations but got {1} for Diagnostic:\r\n    {2}\r\n",
-                                expected.Locations.Length - 1, additionalLocations.Length,
-                                FormatDiagnostics(analyzer, actual)));
-                    }
+                    Assert.AreEqual(expected.Locations.Length - 1, additionalLocations.Length,
+                        $"Expected {expected.Locations.Length - 1} additional locations but got {additionalLocations.Length} for Diagnostic:\r\n    {FormatDiagnostics(analyzer, actual)}\r\n");
 
                     for (int j = 0; j < additionalLocations.Length; ++j)
                     {
@@ -117,26 +113,14 @@ namespace BugHunter.Test.Verifiers
                     }
                 }
 
-                if (actual.Id != expected.Id)
-                {
-                    Assert.IsTrue(false,
-                        string.Format("Expected diagnostic id to be \"{0}\" was \"{1}\"\r\n\r\nDiagnostic:\r\n    {2}\r\n",
-                            expected.Id, actual.Id, FormatDiagnostics(analyzer, actual)));
-                }
+                Assert.AreEqual(expected.Id, actual.Id,
+                        $"Expected diagnostic id to be \"{expected.Id}\" was \"{actual.Id}\"\r\n\r\nDiagnostic:\r\n    {FormatDiagnostics(analyzer, actual)}\r\n");
 
-                if (actual.Severity != expected.Severity)
-                {
-                    Assert.IsTrue(false,
-                        string.Format("Expected diagnostic severity to be \"{0}\" was \"{1}\"\r\n\r\nDiagnostic:\r\n    {2}\r\n",
-                            expected.Severity, actual.Severity, FormatDiagnostics(analyzer, actual)));
-                }
+                Assert.AreEqual(expected.Severity, actual.Severity,
+                        $"Expected diagnostic severity to be \"{expected.Severity}\" was \"{actual.Severity}\"\r\n\r\nDiagnostic:\r\n    {FormatDiagnostics(analyzer, actual)}\r\n");
 
-                if (actual.GetMessage() != expected.Message)
-                {
-                    Assert.IsTrue(false,
-                        string.Format("Expected diagnostic message to be \"{0}\" was \"{1}\"\r\n\r\nDiagnostic:\r\n    {2}\r\n",
-                            expected.Message, actual.GetMessage(), FormatDiagnostics(analyzer, actual)));
-                }
+                Assert.AreEqual(expected.Message, actual.GetMessage(),
+                        $"Expected diagnostic message to be \"{expected.Message}\" was \"{actual.GetMessage()}\"\r\n\r\nDiagnostic:\r\n    {FormatDiagnostics(analyzer, actual)}\r\n");
             }
         }
 
@@ -152,31 +136,22 @@ namespace BugHunter.Test.Verifiers
             var actualSpan = actual.GetLineSpan();
 
             Assert.IsTrue(actualSpan.Path == expected.Path || (actualSpan.Path != null && actualSpan.Path.Contains("Test0.") && expected.Path.Contains("Test.")),
-                string.Format("Expected diagnostic to be in file \"{0}\" was actually in file \"{1}\"\r\n\r\nDiagnostic:\r\n    {2}\r\n",
-                    expected.Path, actualSpan.Path, FormatDiagnostics(analyzer, diagnostic)));
+                $"Expected diagnostic to be in file \"{expected.Path}\" was actually in file \"{actualSpan.Path}\"\r\n\r\nDiagnostic:\r\n    {FormatDiagnostics(analyzer, diagnostic)}\r\n");
 
             var actualLinePosition = actualSpan.StartLinePosition;
 
             // Only check line position if there is an actual line in the real diagnostic
             if (actualLinePosition.Line > 0)
             {
-                if (actualLinePosition.Line + 1 != expected.Line)
-                {
-                    Assert.IsTrue(false,
-                        string.Format("Expected diagnostic to be on line \"{0}\" was actually on line \"{1}\"\r\n\r\nDiagnostic:\r\n    {2}\r\n",
-                            expected.Line, actualLinePosition.Line + 1, FormatDiagnostics(analyzer, diagnostic)));
-                }
+                Assert.AreEqual(expected.Line, actualLinePosition.Line + 1,
+                    $"Expected diagnostic to be on line \"{expected.Line}\" was actually on line \"{actualLinePosition.Line + 1}\"\r\n\r\nDiagnostic:\r\n    {FormatDiagnostics(analyzer, diagnostic)}\r\n");
             }
 
             // Only check column position if there is an actual column position in the real diagnostic
             if (actualLinePosition.Character > 0)
             {
-                if (actualLinePosition.Character + 1 != expected.Column)
-                {
-                    Assert.IsTrue(false,
-                        string.Format("Expected diagnostic to start at column \"{0}\" was actually at column \"{1}\"\r\n\r\nDiagnostic:\r\n    {2}\r\n",
-                            expected.Column, actualLinePosition.Character + 1, FormatDiagnostics(analyzer, diagnostic)));
-                }
+                Assert.AreEqual(expected.Column, actualLinePosition.Character + 1,
+                    $"Expected diagnostic to start at column \"{expected.Column}\" was actually at column \"{actualLinePosition.Character + 1}\"\r\n\r\nDiagnostic:\r\n    {FormatDiagnostics(analyzer, diagnostic)}\r\n");
             }
         }
         #endregion
@@ -193,7 +168,7 @@ namespace BugHunter.Test.Verifiers
             var builder = new StringBuilder();
             for (int i = 0; i < diagnostics.Length; ++i)
             {
-                builder.AppendLine("// " + diagnostics[i].ToString());
+                builder.AppendLine("// " + diagnostics[i]);
 
                 var analyzerType = analyzer.GetType();
                 var rules = analyzer.SupportedDiagnostics;

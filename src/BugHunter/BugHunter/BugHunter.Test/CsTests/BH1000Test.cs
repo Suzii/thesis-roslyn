@@ -5,14 +5,17 @@ using CMS.DataEngine;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeFixes;
 using Microsoft.CodeAnalysis.Diagnostics;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace BugHunter.Test.CsTests
 {
-    [TestClass]
+    [TestFixture]
     public class BH1000Test : CodeFixVerifier
     {
-        // TODO figure out what to do with multiple fixes for one analyzer
+        private CodeFixProvider _codeFixProvider = new BH1000CodeFixProvider();
+
+        private DiagnosticAnalyzer _analyzer = new BH1000MethodWhereLikeShouldNotBeUsed();
+        
         protected override CodeFixProvider GetCSharpCodeFixProvider()
         {
             return new BH1000CodeFixProvider();
@@ -23,7 +26,12 @@ namespace BugHunter.Test.CsTests
             return new BH1000MethodWhereLikeShouldNotBeUsed();
         }
 
-        [TestMethod]
+        protected override MetadataReference[] GetAdditionalReferences()
+        {
+            return Constants.BasicReferences;
+        }
+
+        [Test]
         public void EmptyInput_NoDiagnostic()
         {
             var test = @"";
@@ -31,7 +39,7 @@ namespace BugHunter.Test.CsTests
             VerifyCSharpDiagnostic(test);
         }
         
-        [TestMethod]
+        [Test]
         public void InputWithWhereLike_SurfacesDiagnostic()
         {
             var dependentTypes = new[] { typeof(WhereConditionBase<>) };
@@ -59,7 +67,7 @@ namespace SampleTestProject.CsSamples
                         }
             };
 
-            VerifyCSharpDiagnostic(test, dependentTypes, expectedDiagnostic);
+            VerifyCSharpDiagnostic(test, expectedDiagnostic);
 
             var expectedFix = @"
 namespace SampleTestProject.CsSamples
@@ -73,10 +81,10 @@ namespace SampleTestProject.CsSamples
         }
     }
 }";
-            VerifyCSharpFix(test, expectedFix, dependentTypes);
+            VerifyCSharpFix(test, expectedFix);
         }
 
-        [TestMethod]
+        [Test]
         public void InputWithWhereNot_SurfacesDiagnostic()
         {
             var dependentTypes = new[] { typeof(WhereConditionBase<>) };
@@ -104,7 +112,7 @@ namespace SampleTestProject.CsSamples
                         }
             };
 
-            VerifyCSharpDiagnostic(test, dependentTypes, expectedDiagnostic);
+            VerifyCSharpDiagnostic(test, expectedDiagnostic);
 
             var expectedFix = @"
 namespace SampleTestProject.CsSamples
@@ -118,10 +126,10 @@ namespace SampleTestProject.CsSamples
         }
     }
 }";
-            VerifyCSharpFix(test, expectedFix, dependentTypes);
+            VerifyCSharpFix(test, expectedFix);
         }
 
-        [TestMethod]
+        [Test]
         public void InputWithPossibleFalsePositive_NoDiagnostic()
         {
             var test = @"

@@ -31,13 +31,13 @@ namespace BugHunter.Test.Verifiers
         /// Given classes in the form of strings, their language, and an IDiagnosticAnlayzer to apply to it, return the diagnostics found in the string after converting it to a document.
         /// </summary>
         /// <param name="sources">Classes in the form of strings</param>
-        /// <param name="references">Array of all the types source files have dependencies on</param>
         /// <param name="language">The language the source classes are in</param>
         /// <param name="analyzer">The analyzer to be run on the sources</param>
+        /// <param name="references">Array of additional types source files have dependencies on</param>
         /// <returns>An IEnumerable of Diagnostics that surfaced in the source code, sorted by Location</returns>
-        private static Diagnostic[] GetSortedDiagnostics(string[] sources, Type[] references, string language, DiagnosticAnalyzer analyzer)
+        private static Diagnostic[] GetSortedDiagnostics(string[] sources, string language, DiagnosticAnalyzer analyzer, MetadataReference[] references)
         {
-            return GetSortedDiagnosticsFromDocuments(analyzer, GetDocuments(sources, references, language));
+            return GetSortedDiagnosticsFromDocuments(analyzer, GetDocuments(sources, language, references));
         }
 
         /// <summary>
@@ -103,10 +103,10 @@ namespace BugHunter.Test.Verifiers
         /// Given an array of strings as sources and a language, turn them into a project and return the documents and spans of it.
         /// </summary>
         /// <param name="sources">Classes in the form of strings</param>
-        /// <param name="references">Array of all the types source files have dependencies on</param>
+        /// <param name="references">Array of additional types source files have dependencies on</param>
         /// <param name="language">The language the source code is in</param>
         /// <returns>A Tuple containing the Documents produced from the sources and their TextSpans if relevant</returns>
-        private static Document[] GetDocuments(string[] sources, Type[] references, string language)
+        private static Document[] GetDocuments(string[] sources, string language, MetadataReference[] references)
         {
             if (language != LanguageNames.CSharp && language != LanguageNames.VisualBasic)
             {
@@ -128,10 +128,10 @@ namespace BugHunter.Test.Verifiers
         /// Create a Document from a string through creating a project that contains it.
         /// </summary>
         /// <param name="source">Classes in the form of a string</param>
-        /// <param name="references">Array of all the types source file has dependency on</param>
+        /// <param name="references">Array of additional types source file has dependency on</param>
         /// <param name="language">The language the source code is in</param>
         /// <returns>A Document created from the source string</returns>
-        protected static Document CreateDocument(string source, Type[] references, string language = LanguageNames.CSharp)
+        protected static Document CreateDocument(string source, MetadataReference[] references, string language = LanguageNames.CSharp)
         {
             return CreateProject(new[] { source }, references, language).Documents.First();
         }
@@ -143,7 +143,7 @@ namespace BugHunter.Test.Verifiers
         /// <param name="references">References to be added to solution</param>
         /// <param name="language">The language the source code is in</param>
         /// <returns>A Project created out of the Documents created from the source strings</returns>
-        private static Project CreateProject(string[] sources, Type[] references, string language = LanguageNames.CSharp)
+        private static Project CreateProject(string[] sources, MetadataReference[] references, string language = LanguageNames.CSharp)
         {
             string fileNamePrefix = DefaultFilePathPrefix;
             string fileExt = language == LanguageNames.CSharp ? CSharpDefaultFileExt : VisualBasicDefaultExt;
@@ -160,7 +160,7 @@ namespace BugHunter.Test.Verifiers
             
             if (references != null)
             {
-                solution = solution.AddMetadataReferences(projectId, references.Select(t => MetadataReference.CreateFromFile(t.Assembly.Location)).Distinct());
+                solution = solution.AddMetadataReferences(projectId, references.Distinct());
             }
 
             int count = 0;

@@ -1,26 +1,16 @@
-﻿using System;
-using BugHunter.CsRules.Analyzers;
+﻿using BugHunter.CsRules.Analyzers;
 using BugHunter.CsRules.CodeFixes;
 using BugHunter.Test.Verifiers;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeFixes;
 using Microsoft.CodeAnalysis.Diagnostics;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace BugHunter.Test.CsTests
 {
-    [TestClass]
+    [TestFixture]
     public class BH1001Test : CodeFixVerifier
     {
-        private readonly Type[] _dependentTypes = {
-            typeof(CMS.Core.ModuleName),
-            typeof(CMS.Base.BaseModule),
-            typeof(CMS.DataEngine.TypeCondition),
-            typeof(CMS.Helpers.AJAXHelper),
-            typeof(CMS.IO.AbstractFile),
-            typeof(CMS.EventLog.EventLogProvider)
-        };
-
         protected override CodeFixProvider GetCSharpCodeFixProvider()
         {
             return new BH1001CodeFixProvider();
@@ -31,7 +21,12 @@ namespace BugHunter.Test.CsTests
             return new BH1001EventLogArguments();
         }
 
-        [TestMethod]
+        protected override MetadataReference[] GetAdditionalReferences()
+        {
+            return Constants.BasicReferences;
+        }
+
+        [Test]
         public void EmptyInput_NoDiagnostic()
         {
             var test = @"";
@@ -39,7 +34,7 @@ namespace BugHunter.Test.CsTests
             VerifyCSharpDiagnostic(test);
         }
         
-        [TestMethod]
+        [Test]
         public void InputWithInfoString_SurfacesDiagnostic()
         {
             var test = @"
@@ -64,7 +59,7 @@ namespace SampleTestProject.CsSamples
                         }
             };
 
-            VerifyCSharpDiagnostic(test, _dependentTypes, expectedDiagnostic);
+            VerifyCSharpDiagnostic(test, expectedDiagnostic);
 
             var expectedFix = @"
 namespace SampleTestProject.CsSamples
@@ -78,7 +73,7 @@ namespace SampleTestProject.CsSamples
     }
 }";
 
-            VerifyCSharpFix(test, expectedFix, _dependentTypes);
+            VerifyCSharpFix(test, expectedFix);
         }
     }
 }
