@@ -53,6 +53,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CsResources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\SemanticModelBrowser.cs" />
+    <Compile Include="Helpers\TypesHelper.cs" />
+    <Compile Include="Helpers\TypeSymbolExtensions.cs" />
     <Compile Include="PageRules\PageResources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
