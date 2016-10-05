@@ -1,4 +1,5 @@
 using System.Collections.Immutable;
+using BugHunter.Helpers;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -10,13 +11,14 @@ namespace BugHunter.CsRules.Analyzers
     public class BH1000MethodWhereLikeShouldNotBeUsed : DiagnosticAnalyzer
     {
         public const string DIAGNOSTIC_ID = "BH1000";
-        private const string CATEGORY = AnalyzerCategories.CsRules;
-
-        private static readonly LocalizableString Title = new LocalizableResourceString(nameof(CsResources.BH1000_Title), CsResources.ResourceManager, typeof(CsResources));
-        private static readonly LocalizableString MessageFormat = new LocalizableResourceString(nameof(CsResources.BH1000_MessageFormat), CsResources.ResourceManager, typeof(CsResources));
-        private static readonly LocalizableString Description = new LocalizableResourceString(nameof(CsResources.BH1000_Description), CsResources.ResourceManager, typeof(CsResources));
-
-        private static readonly DiagnosticDescriptor Rule = new DiagnosticDescriptor(DIAGNOSTIC_ID, Title, MessageFormat, CATEGORY, DiagnosticSeverity.Warning, isEnabledByDefault: true, description: Description);
+        
+        private static readonly DiagnosticDescriptor Rule = new DiagnosticDescriptor(DIAGNOSTIC_ID, 
+            title: new LocalizableResourceString(nameof(CsResources.BH1000_Title), CsResources.ResourceManager, typeof(CsResources)),
+            messageFormat: new LocalizableResourceString(nameof(CsResources.BH1000_MessageFormat), CsResources.ResourceManager, typeof(CsResources)), 
+            category: AnalyzerCategories.CsRules, 
+            defaultSeverity: DiagnosticSeverity.Warning, 
+            isEnabledByDefault: true,
+            description: new LocalizableResourceString(nameof(CsResources.BH1000_Description), CsResources.ResourceManager, typeof(CsResources)));
 
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
 
@@ -29,28 +31,25 @@ namespace BugHunter.CsRules.Analyzers
         {
             var memberAccessExpression = (MemberAccessExpressionSyntax)context.Node;
             
-            // First, filter on syntax only
             var memberName = memberAccessExpression.Name.ToString();
             if (memberName != "WhereLike" && memberName != "WhereNotLike")
             {
                 return;
             }
 
-            // Then look at semantics
             var memberSymbol = context.SemanticModel.GetSymbolInfo(memberAccessExpression).Symbol as IMethodSymbol;
             if (memberSymbol == null)
             {
                 return;
             }
 
-            var containingNamespace = memberSymbol.ContainingNamespace;
-            if (containingNamespace.ToDisplayString() != "CMS.DataEngine")
+            var searchedTargetType = TypesHelper.GetITypeSymbol(typeof(CMS.DataEngine.WhereConditionBase<>), context);
+            var actualTargetType = new SemanticModelBrowser(context).GetMemberAccessTarget(memberAccessExpression) as INamedTypeSymbol;
+            if (actualTargetType == null || !actualTargetType.IsDerivedFromClassOrInterface(searchedTargetType, true))
             {
                 return;
             }
 
-            // TODO: check if accessed type can be derived from typeof(WhereConditionBase<>)??
-            
             var diagnostic = Diagnostic.Create(Rule, memberAccessExpression.GetLocation(), memberName);
             context.ReportDiagnostic(diagnostic);
         }

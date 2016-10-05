@@ -1,5 +1,6 @@
 ﻿using System.Collections.Immutable;
 using System.Linq;
+using BugHunter.Helpers;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -11,13 +12,14 @@ namespace BugHunter.CsRules.Analyzers
     public class BH1001EventLogArguments : DiagnosticAnalyzer
     {
         public const string DIAGNOSTIC_ID = "BH1001";
-        private const string CATEGORY = AnalyzerCategories.CsRules;
 
-        private static readonly LocalizableString Title = new LocalizableResourceString(nameof(CsResources.BH1001_Title), CsResources.ResourceManager, typeof(CsResources));
-        private static readonly LocalizableString MessageFormat = new LocalizableResourceString(nameof(CsResources.BH1001_MessageFormat), CsResources.ResourceManager, typeof(CsResources));
-        private static readonly LocalizableString Description = new LocalizableResourceString(nameof(CsResources.BH1001_Description), CsResources.ResourceManager, typeof(CsResources));
-
-        private static readonly DiagnosticDescriptor Rule = new DiagnosticDescriptor(DIAGNOSTIC_ID, Title, MessageFormat, CATEGORY, DiagnosticSeverity.Warning, isEnabledByDefault: true, description: Description);
+        private static readonly DiagnosticDescriptor Rule = new DiagnosticDescriptor(DIAGNOSTIC_ID,
+            title: new LocalizableResourceString(nameof(CsResources.BH1001_Title), CsResources.ResourceManager, typeof(CsResources)),
+            messageFormat: new LocalizableResourceString(nameof(CsResources.BH1001_MessageFormat), CsResources.ResourceManager, typeof(CsResources)),
+            category: AnalyzerCategories.CsRules,
+            defaultSeverity: DiagnosticSeverity.Warning,
+            isEnabledByDefault: true,
+            description: new LocalizableResourceString(nameof(CsResources.BH1001_Description), CsResources.ResourceManager, typeof(CsResources)));
 
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
 
@@ -30,20 +32,25 @@ namespace BugHunter.CsRules.Analyzers
         {
             var invocationExpression = (InvocationExpressionSyntax)context.Node;
             var memberAccess = invocationExpression.Expression as MemberAccessExpressionSyntax;
+            // TODO should check also only for invocation (usage in class where defined)?
             if (memberAccess == null || memberAccess.Name.ToString() != "LogEvent")
             {
                 return;
             }
-            
+
             var symbol = context.SemanticModel.GetSymbolInfo(memberAccess).Symbol;
             var memberSymbol = symbol as IMethodSymbol;
-            if (memberSymbol == null || memberSymbol.ContainingNamespace.ToDisplayString() != "CMS.EventLog")
+            if (memberSymbol == null)
             {
                 return;
             }
 
-
-            // TODO check if invoked on right object
+            var searchedType = TypesHelper.GetITypeSymbol(typeof(CMS.EventLog.EventLogProvider), context.SemanticModel.Compilation);
+            var actualType = context.SemanticModel.GetTypeInfo(memberAccess.Expression).Type as INamedTypeSymbol;
+            if (actualType == null || !actualType.IsDerivedFromClassOrInterface(searchedType, true))
+            {
+                return;
+            }
 
             if (invocationExpression.ArgumentList.Arguments.Count == 0)
             {
