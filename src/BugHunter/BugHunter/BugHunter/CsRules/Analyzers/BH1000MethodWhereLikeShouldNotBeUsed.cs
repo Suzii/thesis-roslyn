@@ -37,12 +37,6 @@ namespace BugHunter.CsRules.Analyzers
                 return;
             }
 
-            var memberSymbol = context.SemanticModel.GetSymbolInfo(memberAccessExpression).Symbol as IMethodSymbol;
-            if (memberSymbol == null)
-            {
-                return;
-            }
-
             var searchedTargetType = TypesHelper.GetITypeSymbol(typeof(CMS.DataEngine.WhereConditionBase<>), context);
             var actualTargetType = new SemanticModelBrowser(context).GetMemberAccessTarget(memberAccessExpression) as INamedTypeSymbol;
             if (actualTargetType == null || !actualTargetType.IsDerivedFromClassOrInterface(searchedTargetType, true))

@@ -1,4 +1,7 @@
-﻿namespace SampleTestProject.CsSamples
+﻿using System;
+using CMS.DataEngine;
+
+namespace SampleTestProject.CsSamples
 {
     public class BH1000MethodWhereLikeShouldNotBeUsed
     {
@@ -24,6 +27,19 @@
         {
             this.WhereNotLike();
             WhereNotLike();
+        }
+
+        public void MethodWithDelegateAsParam(Func<string, string, WhereCondition> func)
+        {
+            var whereCondition = func("columnName", "value");
+        }
+
+        public void MethodPassingWhereLikeAsDelegate()
+        {
+            var whereCondition = new CMS.DataEngine.WhereCondition();
+            whereCondition = whereCondition.WhereLike("columnName", "value");
+
+            MethodWithDelegateAsParam(whereCondition.WhereLike);
         }
     }
 }

@@ -55,11 +55,7 @@ namespace SampleTestProject.CsSamples
                 Id = "BH1001",
                 Message = $"LogEvent called with event type \"{oldArgument}\".",
                 Severity = DiagnosticSeverity.Warning,
-                Locations =
-                    new[]
-                    {
-                        new DiagnosticResultLocation("Test0.cs", 8, 13)
-                    }
+                Locations = new[] { new DiagnosticResultLocation("Test0.cs", 8, 13) }
             };
 
             VerifyCSharpDiagnostic(test, expectedDiagnostic);

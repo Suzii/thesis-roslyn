@@ -28,6 +28,7 @@ namespace BugHunter.CsRules.Analyzers
             context.RegisterSyntaxNodeAction(Analyze, SyntaxKind.InvocationExpression);
         }
 
+        // TODO what if LogEvent is only passed as method group?
         private static void Analyze(SyntaxNodeAnalysisContext context)
         {
             var invocationExpression = (InvocationExpressionSyntax)context.Node;
