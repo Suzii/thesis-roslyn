@@ -170,6 +170,29 @@ namespace BugHunter.Test.HelpersTests
             Assert.AreEqual("string", actual.ToDisplayString());
         }
 
+        [Test]
+        public void GetMemberAccessTarget_ConditionalMemberAccessExpression()
+        {
+            var tree = CSharpSyntaxTree.ParseText(@"
+    public class A {
+        public string Sth = ""something"";
+    }
+
+	public class MyClass
+    {
+        public void Main()
+        {
+            var something = new A()?.Sth.GetString();
+        }
+    }");
+
+            var instance = new SemanticModelBrowser(GetCompilation(tree), tree);
+            var memberAccessExpressionSyntaxs = tree.GetRoot().DescendantNodes().OfType<MemberAccessExpressionSyntax>();
+            var actual = instance.GetMemberAccessTarget(memberAccessExpressionSyntaxs.FirstOrDefault());
+
+            Assert.AreEqual("string", actual.ToDisplayString());
+        }
+
 
         private static Compilation GetCompilation(SyntaxTree tree)
         {

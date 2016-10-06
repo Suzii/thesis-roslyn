@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
 
@@ -40,13 +41,18 @@ namespace BugHunter.Helpers
                 return _semanticModel.GetTypeInfo(memberAccess.Expression).Type;
             }
 
-
             if (memberAccess.Expression is MemberAccessExpressionSyntax)
             {
                 var nestedMemberAccess = memberAccess.Expression as MemberAccessExpressionSyntax;
                 return _semanticModel.GetTypeInfo(nestedMemberAccess.Name).Type;
             }
             
+            if (memberAccess.Expression is MemberBindingExpressionSyntax)
+            {
+                var bindingMemberAccess = memberAccess.Expression as MemberBindingExpressionSyntax;
+                return _semanticModel.GetTypeInfo(bindingMemberAccess).Type;
+            }
+
             if (memberAccess.Expression is ThisExpressionSyntax || memberAccess.Expression is BaseExpressionSyntax)
             {
                 var instance = (InstanceExpressionSyntax) memberAccess.Expression;
