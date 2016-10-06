@@ -62,6 +62,15 @@ namespace BugHunter.CsRules {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Replace with {0}()..
+        /// </summary>
+        internal static string BH1000_CodeFix {
+            get {
+                return ResourceManager.GetString("BH1000_CodeFix", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Consider using one of WhereStartsWith(), WhereEndsWith() or WhereContains() methods instead..
         /// </summary>
         internal static string BH1000_Description {
@@ -85,6 +94,15 @@ namespace BugHunter.CsRules {
         internal static string BH1000_Title {
             get {
                 return ResourceManager.GetString("BH1000_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Replace &quot;{0}&quot; with &quot;{1}&quot;..
+        /// </summary>
+        internal static string BH1001_CodeFix {
+            get {
+                return ResourceManager.GetString("BH1001_CodeFix", resourceCulture);
             }
         }
         

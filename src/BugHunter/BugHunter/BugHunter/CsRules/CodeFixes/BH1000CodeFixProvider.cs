@@ -36,26 +36,28 @@ namespace BugHunter.CsRules.CodeFixes
                 return;
             }
 
+            var codeFixTitle = new LocalizableResourceString(nameof(CsResources.BH1000_CodeFix), CsResources.ResourceManager, typeof(CsResources)).ToString();
             var containsMethodName = GetNewMethodName(BH1000PossibleFixes.WhereContains, memberAccessExpression);
+            var startsWithMethodName = GetNewMethodName(BH1000PossibleFixes.WhereStartsWith, memberAccessExpression);
+            var endsWithMethodName = GetNewMethodName(BH1000PossibleFixes.WhereEndsWith, memberAccessExpression);
+
             context.RegisterCodeFix(
                 CodeAction.Create(
-                    title: $"Replace with {containsMethodName}()",
+                    title: string.Format(codeFixTitle, containsMethodName),
                     createChangedDocument: c => ReplaceWithWithDifferentMethodCall(context.Document, memberAccessExpression, c, containsMethodName),
                     equivalenceKey: "Contains()"),
                 diagnostic);
 
-            var startsWithMethodName = GetNewMethodName(BH1000PossibleFixes.WhereStartsWith, memberAccessExpression);
             context.RegisterCodeFix(
                 CodeAction.Create(
-                    title: $"Replace with {startsWithMethodName}()",
+                    title: string.Format(codeFixTitle, startsWithMethodName),
                     createChangedDocument: c => ReplaceWithWithDifferentMethodCall(context.Document, memberAccessExpression, c, startsWithMethodName),
                     equivalenceKey: "StartsWith()"),
                 diagnostic);
 
-            var endsWithMethodName = GetNewMethodName(BH1000PossibleFixes.WhereEndsWith, memberAccessExpression);
             context.RegisterCodeFix(
                 CodeAction.Create(
-                    title: $"Replace with {endsWithMethodName}()",
+                    title: string.Format(codeFixTitle, endsWithMethodName),
                     createChangedDocument: c => ReplaceWithWithDifferentMethodCall(context.Document, memberAccessExpression, c, endsWithMethodName),
                     equivalenceKey: "EndsWith()"),
                 diagnostic);
