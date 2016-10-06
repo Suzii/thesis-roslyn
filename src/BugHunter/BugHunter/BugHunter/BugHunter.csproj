@@ -53,8 +53,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CsResources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\Analyzers\MemberAccessExpressionAnalyzer.cs" />
     <Compile Include="Helpers\SemanticModelBrowser.cs" />
-    <Compile Include="Helpers\TypesHelper.cs" />
+    <Compile Include="Helpers\TypeExtensions.cs" />
     <Compile Include="Helpers\TypeSymbolExtensions.cs" />
     <Compile Include="PageRules\PageResources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -198,6 +199,7 @@
     <Folder Include="AspxRules\CodeFixes\" />
     <Folder Include="ControlRules\Analyzers\" />
     <Folder Include="ControlRules\CodeFixes\" />
+    <Folder Include="Helpers\CodeFixes\" />
     <Folder Include="PageRules\Analyzers\" />
     <Folder Include="PageRules\CodeFixes\" />
     <Folder Include="ProjectRules\Analyzers\" />

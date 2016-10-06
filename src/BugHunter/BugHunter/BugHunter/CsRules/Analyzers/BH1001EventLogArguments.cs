@@ -46,7 +46,7 @@ namespace BugHunter.CsRules.Analyzers
                 return;
             }
 
-            var searchedType = TypesHelper.GetITypeSymbol(typeof(CMS.EventLog.EventLogProvider), context.SemanticModel.Compilation);
+            var searchedType = typeof(CMS.EventLog.EventLogProvider).GetITypeSymbol(context.SemanticModel.Compilation);
             var actualType = context.SemanticModel.GetTypeInfo(memberAccess.Expression).Type as INamedTypeSymbol;
             if (actualType == null || !actualType.IsDerivedFromClassOrInterface(searchedType, true))
             {

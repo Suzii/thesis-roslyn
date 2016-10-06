@@ -28,7 +28,6 @@ namespace BugHunter.Helpers
         /// </summary>
         /// <param name="memberAccess">Member access to be analyzed for target type</param>
         /// <returns>ITypeSymbol of the object that member belongs to</returns>
-        // TODO consider replacing all those "is" ...ExpressionSyntax with checking for SyntaxKind enum instead
         public ITypeSymbol GetMemberAccessTarget(MemberAccessExpressionSyntax memberAccess)
         {
             if (memberAccess == null)
@@ -74,6 +73,7 @@ namespace BugHunter.Helpers
                 return namedSymbol;
             }
 
+            // TODO return null or throw an exception?
             throw new ArgumentException("Could not detect target for this member access.", nameof(memberAccess));
         }
     }

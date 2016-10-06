@@ -1,8 +1,7 @@
 using System.Collections.Immutable;
-using BugHunter.Helpers;
+using BugHunter.Helpers.Analyzers;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
 
 namespace BugHunter.CsRules.Analyzers
@@ -24,28 +23,9 @@ namespace BugHunter.CsRules.Analyzers
 
         public override void Initialize(AnalysisContext context)
         {
-            context.RegisterSyntaxNodeAction(Analyze, SyntaxKind.SimpleMemberAccessExpression);
-        }
+            var analyzer = new MemberAccessExpressionAnalyzer(Rule, typeof(CMS.DataEngine.WhereConditionBase<>), new []{ "WhereLike", "WhereNotLike" }, true);
 
-        private static void Analyze(SyntaxNodeAnalysisContext context)
-        {
-            var memberAccessExpression = (MemberAccessExpressionSyntax)context.Node;
-            
-            var memberName = memberAccessExpression.Name.ToString();
-            if (memberName != "WhereLike" && memberName != "WhereNotLike")
-            {
-                return;
-            }
-
-            var searchedTargetType = TypesHelper.GetITypeSymbol(typeof(CMS.DataEngine.WhereConditionBase<>), context);
-            var actualTargetType = new SemanticModelBrowser(context).GetMemberAccessTarget(memberAccessExpression) as INamedTypeSymbol;
-            if (actualTargetType == null || !actualTargetType.IsDerivedFromClassOrInterface(searchedTargetType, true))
-            {
-                return;
-            }
-
-            var diagnostic = Diagnostic.Create(Rule, memberAccessExpression.GetLocation(), memberName);
-            context.ReportDiagnostic(diagnostic);
+            context.RegisterSyntaxNodeAction(c => analyzer.Analyze(c), SyntaxKind.SimpleMemberAccessExpression);
         }
     }
 }
