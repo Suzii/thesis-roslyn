@@ -13,18 +13,15 @@ namespace BugHunter.Helpers.Analyzers
         private readonly Type _accessedType;
 
         private readonly string[] _memberNames;
+        
+        public MemberAccessExpressionAnalyzer(DiagnosticDescriptor rule, Type accessedType, string memberName)
+            : this(rule, accessedType, new []{ memberName}) { }
 
-        private readonly bool _shouldUnboundGenerics;
-
-        public MemberAccessExpressionAnalyzer(DiagnosticDescriptor rule, Type accessedType, string memberName, bool shouldUnboundGenerics = false)
-            : this(rule, accessedType, new []{ memberName}, shouldUnboundGenerics) { }
-
-        public MemberAccessExpressionAnalyzer(DiagnosticDescriptor rule, Type accessedType, string[] memberNames, bool shouldUnboundGenerics = false)
+        public MemberAccessExpressionAnalyzer(DiagnosticDescriptor rule, Type accessedType, string[] memberNames)
         {
             _rule = rule;
             _accessedType = accessedType;
             _memberNames = memberNames;
-            _shouldUnboundGenerics = shouldUnboundGenerics;
         }
 
         public void Analyze(SyntaxNodeAnalysisContext context)
@@ -39,7 +36,7 @@ namespace BugHunter.Helpers.Analyzers
 
             var searchedTargetType = _accessedType.GetITypeSymbol(context);
             var actualTargetType = new SemanticModelBrowser(context).GetMemberAccessTarget(memberAccess) as INamedTypeSymbol;
-            if (actualTargetType == null || !actualTargetType.IsDerivedFromClassOrInterface(searchedTargetType, _shouldUnboundGenerics))
+            if (actualTargetType == null || !actualTargetType.IsDerivedFromClassOrInterface(searchedTargetType))
             {
                 return;
             }

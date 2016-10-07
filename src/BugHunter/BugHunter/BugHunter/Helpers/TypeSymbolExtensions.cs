@@ -8,7 +8,7 @@ namespace BugHunter.Helpers
     /// <summary>
     /// Inspired by http://fossies.org/linux/misc/mono-sources/monodevelop/monodevelop-6.0.0.4761.tar.gz/monodevelop-6.0/src/addins/CSharpBinding/Util/TypeExtensions.cs?m=t
     /// </summary>
-    public static class TypeSymbolExtensions
+    internal static class TypeSymbolExtensions
     {
         /// <summary>
         /// Gets the invoke method for a delegate type.
@@ -59,19 +59,19 @@ namespace BugHunter.Helpers
         /// </summary>
         /// <returns>All classes and interfaces.</returns>
         /// <param name="type">Type to be examined</param>
-        /// <param name="includeSuperType">Should supertype be included, default is false</param>
-        public static IEnumerable<INamedTypeSymbol> GetAllBaseClassesAndInterfaces(this INamedTypeSymbol type, bool includeSuperType = false)
+        /// <param name="includeSelf">Should accessed type itself be included, default is false</param>
+        public static IEnumerable<INamedTypeSymbol> GetAllBaseClassesAndInterfaces(this INamedTypeSymbol type, bool includeSelf = false)
         {
-            if (!includeSuperType)
+            if (!includeSelf)
             {
                 type = type.BaseType;
             }
 
-            var curType = type;
-            while (curType != null)
+            var currentType = type;
+            while (currentType != null)
             {
-                yield return curType;
-                curType = curType.BaseType;
+                yield return currentType;
+                currentType = currentType.BaseType;
             }
 
             foreach (var inter in type.AllInterfaces)
@@ -85,34 +85,25 @@ namespace BugHunter.Helpers
         /// </summary>
         /// <param name="type">Type.</param>
         /// <param name="baseType">Base type.</param>
-        /// <param name="shouldUnboundGenerics">If true, any base types or implemented interfaces will be compared with unbounded generics</param>
         /// <returns><c>true</c> if is derived from the specified type baseType; otherwise, <c>false</c>.</returns>
-        public static bool IsDerivedFromClassOrInterface(this INamedTypeSymbol type, INamedTypeSymbol baseType, bool shouldUnboundGenerics = false)
+        public static bool IsDerivedFromClassOrInterface(this INamedTypeSymbol type, INamedTypeSymbol baseType)
         {
-            if (shouldUnboundGenerics)
-            {
-                baseType = baseType.SafelyConstructUnboundGenericType();
-            }
+            baseType = baseType.SafelyConstructUnboundGenericType();
 
-            var curType = type;
-            while (curType != null)
+            var currentType = type;
+            while (currentType != null)
             {
-                if (shouldUnboundGenerics)
-                {
-                    curType = curType.SafelyConstructUnboundGenericType();
-                }
+                currentType = currentType.SafelyConstructUnboundGenericType();
 
-                if (Equals(curType, baseType))
+                if (Equals(currentType, baseType))
                 {
                     return true;
                 }
 
-                curType = curType.BaseType;
+                currentType = currentType.BaseType;
             }
 
-            var interfaces = shouldUnboundGenerics
-                ? type.AllInterfaces.Select(i => i.SafelyConstructUnboundGenericType())
-                : type.AllInterfaces;
+            var interfaces = type.AllInterfaces.Select(i => i.SafelyConstructUnboundGenericType());
 
             return interfaces.Contains(baseType);
         }
@@ -122,7 +113,7 @@ namespace BugHunter.Helpers
         /// </summary>
         /// <param name="type">Type to be sagely unbounded</param>
         /// <returns>Type with unbounded generics or type itself if it is not generic</returns>
-        public static INamedTypeSymbol SafelyConstructUnboundGenericType(this INamedTypeSymbol type)
+        private static INamedTypeSymbol SafelyConstructUnboundGenericType(this INamedTypeSymbol type)
         {
             return type.IsGenericType ? type.ConstructUnboundGenericType() : type;
         }

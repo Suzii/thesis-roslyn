@@ -23,7 +23,7 @@ namespace BugHunter.CsRules.Analyzers
 
         public override void Initialize(AnalysisContext context)
         {
-            var analyzer = new MemberAccessExpressionAnalyzer(Rule, typeof(CMS.DataEngine.WhereConditionBase<>), new []{ "WhereLike", "WhereNotLike" }, true);
+            var analyzer = new MemberAccessExpressionAnalyzer(Rule, typeof(CMS.DataEngine.WhereConditionBase<>), new []{ "WhereLike", "WhereNotLike" });
 
             context.RegisterSyntaxNodeAction(c => analyzer.Analyze(c), SyntaxKind.SimpleMemberAccessExpression);
         }

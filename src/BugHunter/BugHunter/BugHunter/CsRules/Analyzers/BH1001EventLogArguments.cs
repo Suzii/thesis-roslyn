@@ -48,7 +48,7 @@ namespace BugHunter.CsRules.Analyzers
 
             var searchedType = typeof(CMS.EventLog.EventLogProvider).GetITypeSymbol(context.SemanticModel.Compilation);
             var actualType = context.SemanticModel.GetTypeInfo(memberAccess.Expression).Type as INamedTypeSymbol;
-            if (actualType == null || !actualType.IsDerivedFromClassOrInterface(searchedType, true))
+            if (actualType == null || !actualType.IsDerivedFromClassOrInterface(searchedType))
             {
                 return;
             }
