@@ -17,7 +17,7 @@ namespace BugHunter.CsRules.CodeFixes
     public class BH1000CodeFixProvider : CodeFixProvider
     {
         public sealed override ImmutableArray<string> FixableDiagnosticIds
-            => ImmutableArray.Create(BH1000MethodWhereLikeShouldNotBeUsed.DIAGNOSTIC_ID);
+            => ImmutableArray.Create(BH1000WhereLikeMethod.DIAGNOSTIC_ID);
 
         public sealed override FixAllProvider GetFixAllProvider()
         {

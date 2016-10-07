@@ -18,7 +18,7 @@ namespace BugHunter.Test.CsTests
 
         protected override DiagnosticAnalyzer GetCSharpDiagnosticAnalyzer()
         {
-            return new BH1000MethodWhereLikeShouldNotBeUsed();
+            return new BH1000WhereLikeMethod();
         }
 
         protected override MetadataReference[] GetAdditionalReferences()

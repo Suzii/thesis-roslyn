@@ -7,7 +7,7 @@ using Microsoft.CodeAnalysis.Diagnostics;
 namespace BugHunter.CsRules.Analyzers
 {
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class BH1000MethodWhereLikeShouldNotBeUsed : DiagnosticAnalyzer
+    public class BH1000WhereLikeMethod : DiagnosticAnalyzer
     {
         public const string DIAGNOSTIC_ID = "BH1000";
         
