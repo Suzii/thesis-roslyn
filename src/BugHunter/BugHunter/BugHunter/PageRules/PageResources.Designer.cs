@@ -10,7 +10,6 @@
 
 namespace BugHunter.PageRules {
     using System;
-    using System.Reflection;
     
     
     /// <summary>
@@ -40,7 +39,7 @@ namespace BugHunter.PageRules {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("BugHunter.PageRules.PageResources", typeof(PageResources).GetTypeInfo().Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("BugHunter.PageRules.PageResources", typeof(PageResources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

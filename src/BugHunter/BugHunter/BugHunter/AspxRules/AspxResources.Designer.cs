@@ -10,7 +10,6 @@
 
 namespace BugHunter.AspxRules {
     using System;
-    using System.Reflection;
     
     
     /// <summary>
@@ -40,7 +39,7 @@ namespace BugHunter.AspxRules {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("BugHunter.AspxRules.AspxResources", typeof(AspxResources).GetTypeInfo().Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("BugHunter.AspxRules.AspxResources", typeof(AspxResources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

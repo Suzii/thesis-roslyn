@@ -10,7 +10,6 @@
 
 namespace BugHunter.WpRules {
     using System;
-    using System.Reflection;
     
     
     /// <summary>
@@ -40,7 +39,7 @@ namespace BugHunter.WpRules {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("BugHunter.WpRules.WpResources", typeof(WpResources).GetTypeInfo().Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("BugHunter.WpRules.WpResources", typeof(WpResources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

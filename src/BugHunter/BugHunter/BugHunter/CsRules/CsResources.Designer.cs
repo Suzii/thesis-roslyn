@@ -10,7 +10,6 @@
 
 namespace BugHunter.CsRules {
     using System;
-    using System.Reflection;
     
     
     /// <summary>
@@ -40,7 +39,7 @@ namespace BugHunter.CsRules {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("BugHunter.CsRules.CsResources", typeof(CsResources).GetTypeInfo().Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("BugHunter.CsRules.CsResources", typeof(CsResources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
