@@ -66,7 +66,8 @@ namespace BugHunter.CsRules.Analyzers
                 return;
             }
 
-            var diagnostic = Diagnostic.Create(Rule, invocationExpression.GetLocation(), eventTypeArgument.ToString());
+            var warningLocation = invocationExpression.ArgumentList.Arguments.First().GetLocation();
+            var diagnostic = Diagnostic.Create(Rule, warningLocation, eventTypeArgument.ToString());
             context.ReportDiagnostic(diagnostic);
         }
     }
