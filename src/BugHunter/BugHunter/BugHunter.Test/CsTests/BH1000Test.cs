@@ -85,6 +85,49 @@ namespace SampleTestProject.CsSamples
         [TestCase("WhereNotLike", "WhereNotContains", 0)]
         [TestCase("WhereNotLike", "WhereNotStartsWith", 1)]
         [TestCase("WhereNotLike", "WhereNotEndsWith", 2)]
+        public void InputWithFullyQualifiedWhereLike_SurfacesDiagnostic(string oldMethodCall, string newMethodCall, int codeFixIndex)
+        {
+            var test = $@"
+namespace SampleTestProject.CsSamples
+{{
+    public class BH1000MethodWhereLikeShouldNotBeUsed
+    {{
+        public void SampleMethod()
+        {{
+            var whereCondition = new CMS.DataEngine.WhereCondition().{oldMethodCall}(""columnName"", ""value"");
+        }}
+    }}
+}}";
+            var expectedDiagnostic = new DiagnosticResult
+            {
+                Id = "BH1000",
+                Message = $"Method {oldMethodCall} is used without Architect/CTO approval.",
+                Severity = DiagnosticSeverity.Warning,
+                Locations = new[] { new DiagnosticResultLocation("Test0.cs", 8, 34) }
+            };
+
+            VerifyCSharpDiagnostic(test, expectedDiagnostic);
+
+            var expectedFix = $@"
+namespace SampleTestProject.CsSamples
+{{
+    public class BH1000MethodWhereLikeShouldNotBeUsed
+    {{
+        public void SampleMethod()
+        {{
+            var whereCondition = new CMS.DataEngine.WhereCondition().{newMethodCall}(""columnName"", ""value"");
+        }}
+    }}
+}}";
+            VerifyCSharpFix(test, expectedFix, codeFixIndex);
+        }
+
+        [TestCase("WhereLike", "WhereContains", 0)]
+        [TestCase("WhereLike", "WhereStartsWith", 1)]
+        [TestCase("WhereLike", "WhereEndsWith", 2)]
+        [TestCase("WhereNotLike", "WhereNotContains", 0)]
+        [TestCase("WhereNotLike", "WhereNotStartsWith", 1)]
+        [TestCase("WhereNotLike", "WhereNotEndsWith", 2)]
         public void InputWithWhereLikeUsedAsMethodGroup_SurfacesDiagnostic(string oldMethodCall, string newMethodCall, int codeFixIndex)
         {
             var test = $@"
