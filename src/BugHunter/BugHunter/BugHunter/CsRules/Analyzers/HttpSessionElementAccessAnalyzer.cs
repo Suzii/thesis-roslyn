@@ -1,6 +1,5 @@
 ﻿using System.Collections.Immutable;
 using BugHunter.Helpers;
-using Kentico.Google.Apis.Prediction.v1_5.Data;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -9,9 +8,9 @@ using Microsoft.CodeAnalysis.Diagnostics;
 namespace BugHunter.CsRules.Analyzers
 {
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class HttpSessionSessionIdAnalyzer : DiagnosticAnalyzer
+    public class HttpSessionElementAccessAnalyzer : DiagnosticAnalyzer
     {
-        public const string DIAGNOSTIC_ID = DiagnosticIds.HttpSessionId;
+        public const string DIAGNOSTIC_ID = DiagnosticIds.HttpSessionElementAccess;
 
         private static readonly DiagnosticDescriptor Rule = new DiagnosticDescriptor(DIAGNOSTIC_ID,
             title: new LocalizableResourceString(nameof(CsResources.HttpSessionElementAccess_Title), CsResources.ResourceManager, typeof(CsResources)),

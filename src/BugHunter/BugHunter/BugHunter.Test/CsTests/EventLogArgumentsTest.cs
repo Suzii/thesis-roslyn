@@ -61,6 +61,7 @@ namespace SampleTestProject.CsSamples
             VerifyCSharpDiagnostic(test, expectedDiagnostic);
 
             var expectedFix = $@"using CMS.EventLog;
+
 namespace SampleTestProject.CsSamples
 {{
     public class BH1001LogEventEventTypeShoulNotBeHardcoded

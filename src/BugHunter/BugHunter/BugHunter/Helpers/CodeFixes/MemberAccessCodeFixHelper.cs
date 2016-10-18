@@ -1,56 +1,42 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeFixes;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace BugHunter.Helpers.CodeFixes
 {
-    internal class MemberAccessCodeFixHelper
+    internal class MemberAccessCodeFixHelper : CodeFixHelper
     {
-        private readonly CodeFixContext _context;
-        
-        private SyntaxNode _documentRootCache;
-        
-        public MemberAccessCodeFixHelper(CodeFixContext context)
+
+        public MemberAccessCodeFixHelper(CodeFixContext context): base(context)
         {
-            _context = context;
         }
 
         public async Task<MemberAccessExpressionSyntax> GetClosestMemberAccess()
         {
+            var allMemberAccessExpressions = await GetDiagnosedMemberAccesses();
+
+            return allMemberAccessExpressions.First();
+        }
+
+        public async Task<MemberAccessExpressionSyntax> GetInnerMostMemberAccess()
+        {
+            var allMemberAccessExpressions = await GetDiagnosedMemberAccesses();
+
+            return allMemberAccessExpressions.Last();
+        }
+
+        private async Task<IEnumerable<MemberAccessExpressionSyntax>> GetDiagnosedMemberAccesses()
+        {
             var root = await GetDocumentRoot();
-            var diagnostic = _context.Diagnostics.First();
+            var diagnostic = Context.Diagnostics.First();
             var diagnosticSpan = diagnostic.Location.SourceSpan;
 
-            var memberAccessExpression = root.FindToken(diagnosticSpan.Start).Parent.AncestorsAndSelf().OfType<MemberAccessExpressionSyntax>().First();
-            
-            return memberAccessExpression;
-        }
+            var memberAccessExpressions =
+                root.FindToken(diagnosticSpan.Start).Parent.AncestorsAndSelf().OfType<MemberAccessExpressionSyntax>();
 
-        public async Task<Document> ReplaceWithHelper(MemberAccessExpressionSyntax oldMemberAccess, ExpressionSyntax newMemberAccess, string namepsaceToBeReferenced)
-        {
-            var document = _context.Document;
-            var root = await GetDocumentRoot();
-
-            var formattedMemberAccess = newMemberAccess.WithTriviaFrom(oldMemberAccess);
-
-            var newRoot = root.ReplaceNode(oldMemberAccess, formattedMemberAccess);
-            newRoot = UsingsHelper.EnsureUsing((CompilationUnitSyntax)newRoot, namepsaceToBeReferenced);
-
-            var newDocument = document.WithSyntaxRoot(newRoot);
-
-            return newDocument;
-        }
-
-        private async Task<SyntaxNode> GetDocumentRoot()
-        {
-            if (_documentRootCache == null)
-            {
-                _documentRootCache = await _context.Document.GetSyntaxRootAsync(_context.CancellationToken).ConfigureAwait(false);
-            }
-
-            return _documentRootCache;
+            return memberAccessExpressions;
         }
     }
 }

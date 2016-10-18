@@ -61,6 +61,7 @@ namespace SampleTestProject.CsSamples
             VerifyCSharpDiagnostic(test, expectedDiagnostic);
 
             var expectedFix = $@"using CMS.Helpers;
+
 namespace SampleTestProject.CsSamples
 {{
     public class RequestUserHostAddressAnalyzer

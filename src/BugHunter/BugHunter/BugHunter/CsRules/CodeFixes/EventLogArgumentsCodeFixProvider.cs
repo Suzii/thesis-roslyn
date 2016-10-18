@@ -60,7 +60,7 @@ namespace BugHunter.CsRules.CodeFixes
             var newInvocationExpression = invocationExpression.WithArgumentList(newArgumentList);
 
             var newRoot = root.ReplaceNode(invocationExpression, newInvocationExpression);
-            newRoot = UsingsHelper.EnsureUsing((CompilationUnitSyntax)newRoot, GetNamespaceNameToBeReferenced());
+            newRoot = UsingsHelper.EnsureUsings((CompilationUnitSyntax)newRoot, GetNamespaceNameToBeReferenced());
             var newDocument = document.WithSyntaxRoot(newRoot);
 
             return newDocument;

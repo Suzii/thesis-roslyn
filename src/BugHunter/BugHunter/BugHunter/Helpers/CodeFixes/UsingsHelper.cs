@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using Microsoft.CodeAnalysis;
+using Kentico.Google.Apis.Util;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
@@ -7,17 +7,30 @@ namespace BugHunter.Helpers.CodeFixes
 {
     internal class UsingsHelper
     {
-        public static CompilationUnitSyntax EnsureUsing(CompilationUnitSyntax root, string namespaceToBeReferenced)
+       /// <summary>
+       /// Generates using directive for all <param name="usings"/> that are not already present in usings of <param name="root">
+       /// </summary>
+       /// <param name="root">Document to add usings to</param>
+       /// <param name="usings">Usings to be added</param>
+       /// <returns></returns>
+        public static CompilationUnitSyntax EnsureUsings(CompilationUnitSyntax root, params string[] usings)
         {
-            if (root.Usings.Any(u => u.Name.ToString() == namespaceToBeReferenced))
+            if (usings == null || usings.Length == 0)
             {
                 return root;
             }
 
-            var namespaceName = SyntaxFactory.ParseName(namespaceToBeReferenced);
-            var usingDirective = SyntaxFactory.UsingDirective(namespaceName).NormalizeWhitespace();
+            var currentUsings = root.Usings.Select(u => u.Name.ToString());
+            var toBeAddedUsings = usings.Except(currentUsings).ToList();
+            if (toBeAddedUsings.IsNullOrEmpty())
+            {
+                return root;
+            }
 
-            return root.AddUsings(usingDirective);
+            var usingDirectives = toBeAddedUsings.Select(usingName => SyntaxFactory.UsingDirective(SyntaxFactory.ParseName(usingName))).ToArray();
+            var newCompilationUnitSyntax = root.AddUsings(usingDirectives);
+
+            return newCompilationUnitSyntax;
         }
     }
 }

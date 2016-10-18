@@ -61,7 +61,7 @@
       <DependentUpon>CsResources.resx</DependentUpon>
     </Compile>
     <Compile Include="Helpers\Analyzers\MemberAccessAnalyzer.cs" />
-    <Compile Include="Helpers\Analyzers\MemberAccessDescriptor.cs" />
+    <Compile Include="Helpers\CodeFixes\CodeFixHelper.cs" />
     <Compile Include="Helpers\CodeFixes\MemberAccessCodeFixHelper.cs" />
     <Compile Include="Helpers\CodeFixes\UsingsHelper.cs" />
     <Compile Include="Helpers\SemanticModelBrowser.cs" />
