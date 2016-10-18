@@ -6,3 +6,5 @@ In case the analyzers/codefixes misbehave in the experimental instance reset it 
 
 1. `cd C:\Program Files (x86)\Microsoft Visual Studio 14.0\VSSDK\VisualStudioIntegration\Tools\Bin`
 2. `CreateExpInstance.exe /Reset /VSInstance=14.0 /RootSuffix=Exp`
+or alternatively 
+2. `CreateExpInstance.exe /Reset /VSInstance=14.0 /RootSuffix=RoslynDev`
