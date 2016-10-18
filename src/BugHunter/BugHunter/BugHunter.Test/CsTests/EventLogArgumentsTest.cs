@@ -9,16 +9,16 @@ using NUnit.Framework;
 namespace BugHunter.Test.CsTests
 {
     [TestFixture]
-    public class BH1001Test : CodeFixVerifier
+    public class EventLogArgumentsTest : CodeFixVerifier
     {
         protected override CodeFixProvider GetCSharpCodeFixProvider()
         {
-            return new BH1001CodeFixProvider();
+            return new EventLogArgumentsCodeFixProvider();
         }
 
         protected override DiagnosticAnalyzer GetCSharpDiagnosticAnalyzer()
         {
-            return new BH1001EventLogArguments();
+            return new EventLogArgumentsAnalyzer();
         }
 
         protected override MetadataReference[] GetAdditionalReferences()

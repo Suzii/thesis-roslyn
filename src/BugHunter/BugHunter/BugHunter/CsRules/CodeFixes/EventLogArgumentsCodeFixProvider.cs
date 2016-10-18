@@ -14,11 +14,11 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace BugHunter.CsRules.CodeFixes
 {
-    [ExportCodeFixProvider(LanguageNames.CSharp, Name = nameof(BH1001CodeFixProvider)), Shared]
-    public class BH1001CodeFixProvider : CodeFixProvider
+    [ExportCodeFixProvider(LanguageNames.CSharp, Name = nameof(EventLogArgumentsCodeFixProvider)), Shared]
+    public class EventLogArgumentsCodeFixProvider : CodeFixProvider
     {
         public sealed override ImmutableArray<string> FixableDiagnosticIds
-            => ImmutableArray.Create(BH1001EventLogArguments.DIAGNOSTIC_ID);
+            => ImmutableArray.Create(EventLogArgumentsAnalyzer.DIAGNOSTIC_ID);
 
         public sealed override FixAllProvider GetFixAllProvider()
         {

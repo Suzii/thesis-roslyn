@@ -538,9 +538,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CsTests\BH1002Test.cs" />
-    <Compile Include="CsTests\BH1001Test.cs" />
-    <Compile Include="CsTests\BH1000Test.cs" />
+    <Compile Include="CsTests\RequestUserHostAddressTest.cs" />
+    <Compile Include="CsTests\EventLogArgumentsTest.cs" />
+    <Compile Include="CsTests\WhereLikeMethodTest.cs" />
     <Compile Include="CsTests\Constants.cs" />
     <Compile Include="HelpersTests\SemanticModelBrowserTests.cs" />
     <Compile Include="Verifiers\CodeFixVerifier.cs" />

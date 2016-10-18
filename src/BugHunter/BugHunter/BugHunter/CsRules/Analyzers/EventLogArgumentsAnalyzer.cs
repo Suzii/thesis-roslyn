@@ -9,9 +9,9 @@ using Microsoft.CodeAnalysis.Diagnostics;
 namespace BugHunter.CsRules.Analyzers
 {
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class BH1001EventLogArguments : DiagnosticAnalyzer
+    public class EventLogArgumentsAnalyzer : DiagnosticAnalyzer
     {
-        public const string DIAGNOSTIC_ID = "BH1001";
+        public const string DIAGNOSTIC_ID = DiagnosticIds.EventLogArguments;
 
         private static readonly DiagnosticDescriptor Rule = new DiagnosticDescriptor(DIAGNOSTIC_ID,
             title: new LocalizableResourceString(nameof(CsResources.BH1001_Title), CsResources.ResourceManager, typeof(CsResources)),

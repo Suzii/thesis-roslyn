@@ -9,16 +9,16 @@ using NUnit.Framework;
 namespace BugHunter.Test.CsTests
 {
     [TestFixture]
-    public class BH1000Test : CodeFixVerifier
+    public class WhereLikeMethodTest : CodeFixVerifier
     {
         protected override CodeFixProvider GetCSharpCodeFixProvider()
         {
-            return new BH1000CodeFixProvider();
+            return new WhereLikeMethodCodeFixProvider();
         }
 
         protected override DiagnosticAnalyzer GetCSharpDiagnosticAnalyzer()
         {
-            return new BH1000WhereLikeMethod();
+            return new WhereLikeMethodAnalyzer();
         }
 
         protected override MetadataReference[] GetAdditionalReferences()

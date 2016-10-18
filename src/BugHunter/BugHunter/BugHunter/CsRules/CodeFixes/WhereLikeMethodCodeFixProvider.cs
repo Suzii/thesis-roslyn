@@ -13,11 +13,18 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace BugHunter.CsRules.CodeFixes
 {
-    [ExportCodeFixProvider(LanguageNames.CSharp, Name = nameof(BH1000CodeFixProvider)), Shared]
-    public class BH1000CodeFixProvider : CodeFixProvider
+    [ExportCodeFixProvider(LanguageNames.CSharp, Name = nameof(WhereLikeMethodCodeFixProvider)), Shared]
+    public class WhereLikeMethodCodeFixProvider : CodeFixProvider
     {
+        internal enum BH1000PossibleFixes
+        {
+            WhereContains,
+            WhereStartsWith,
+            WhereEndsWith
+        }
+
         public sealed override ImmutableArray<string> FixableDiagnosticIds
-            => ImmutableArray.Create(BH1000WhereLikeMethod.DIAGNOSTIC_ID);
+            => ImmutableArray.Create(WhereLikeMethodAnalyzer.DIAGNOSTIC_ID);
 
         public sealed override FixAllProvider GetFixAllProvider()
         {

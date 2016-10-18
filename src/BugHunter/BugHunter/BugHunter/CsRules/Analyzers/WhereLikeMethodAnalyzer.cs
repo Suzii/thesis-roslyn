@@ -7,9 +7,9 @@ using Microsoft.CodeAnalysis.Diagnostics;
 namespace BugHunter.CsRules.Analyzers
 {
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class BH1000WhereLikeMethod : DiagnosticAnalyzer
+    public class WhereLikeMethodAnalyzer : DiagnosticAnalyzer
     {
-        public const string DIAGNOSTIC_ID = "BH1000";
+        public const string DIAGNOSTIC_ID = DiagnosticIds.WhereLikeMethod;
         
         private static readonly DiagnosticDescriptor Rule = new DiagnosticDescriptor(DIAGNOSTIC_ID, 
             title: new LocalizableResourceString(nameof(CsResources.BH1000_Title), CsResources.ResourceManager, typeof(CsResources)),

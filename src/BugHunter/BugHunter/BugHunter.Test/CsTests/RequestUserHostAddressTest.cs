@@ -10,16 +10,16 @@ using NUnit.Framework;
 namespace BugHunter.Test.CsTests
 {
     [TestFixture]
-    public class BH1002Test : CodeFixVerifier
+    public class RequestUserHostAddressTest : CodeFixVerifier
     {
         protected override CodeFixProvider GetCSharpCodeFixProvider()
         {
-            return new BH1002CodeFixProvider();
+            return new RequestUserHostAddressCodeFixProvider();
         }
 
         protected override DiagnosticAnalyzer GetCSharpDiagnosticAnalyzer()
         {
-            return new BH1002RequestUserHostAddress();
+            return new RequestUserHostAddressAnalyzer();
         }
 
         protected override MetadataReference[] GetAdditionalReferences()
@@ -41,7 +41,7 @@ namespace BugHunter.Test.CsTests
             var test = $@"
 namespace SampleTestProject.CsSamples
 {{
-    public class BH1002RequestUserHostAddress
+    public class RequestUserHostAddressAnalyzer
     {{
         public void SampleMethod()
         {{
@@ -63,7 +63,7 @@ namespace SampleTestProject.CsSamples
             var expectedFix = $@"using CMS.Helpers;
 namespace SampleTestProject.CsSamples
 {{
-    public class BH1002RequestUserHostAddress
+    public class RequestUserHostAddressAnalyzer
     {{
         public void SampleMethod()
         {{

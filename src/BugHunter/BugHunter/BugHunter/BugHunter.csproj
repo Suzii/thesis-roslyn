@@ -33,6 +33,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="DiagnosticIds.cs" />
     <Compile Include="AnalyzerCategories.cs" />
     <Compile Include="AspxRules\AspxResources.Designer.cs">
       <DependentUpon>AspxResources.resx</DependentUpon>
@@ -44,13 +45,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ControlResources.resx</DependentUpon>
     </Compile>
-    <Compile Include="CsRules\Analyzers\BH1000WhereLikeMethod.cs" />
-    <Compile Include="CsRules\Analyzers\BH1001EventLogArguments.cs" />
-    <Compile Include="CsRules\Analyzers\BH1002RequestUserHostAddress.cs" />
-    <Compile Include="CsRules\CodeFixes\BH1000CodeFixProvider.cs" />
-    <Compile Include="CsRules\CodeFixes\BH1002CodeFixProvider.cs" />
-    <Compile Include="CsRules\CodeFixes\BH1001CodeFixProvider.cs" />
-    <Compile Include="CsRules\CodeFixes\BH1000PossibleFixes.cs" />
+    <Compile Include="CsRules\Analyzers\WhereLikeMethodAnalyzer.cs" />
+    <Compile Include="CsRules\Analyzers\EventLogArgumentsAnalyzer.cs" />
+    <Compile Include="CsRules\Analyzers\RequestUserHostAddressAnalyzer.cs" />
+    <Compile Include="CsRules\CodeFixes\WhereLikeMethodCodeFixProvider.cs" />
+    <Compile Include="CsRules\CodeFixes\RequestUserHostAddressCodeFixProvider.cs" />
+    <Compile Include="CsRules\CodeFixes\EventLogArgumentsCodeFixProvider.cs" />
     <Compile Include="CsRules\CsResources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
