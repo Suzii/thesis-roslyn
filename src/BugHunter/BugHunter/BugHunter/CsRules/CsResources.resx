@@ -117,6 +117,22 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ApiReplacements_CodeFix" xml:space="preserve">
+    <value>Replace with "{0}".</value>
+    <comment>{0} - new member access</comment>
+  </data>
+  <data name="ApiReplacements_Description" xml:space="preserve">
+    <value>{0} should not be used. Use {1} instead.</value>
+    <comment>0 - member name, 1 - good type, 2 - current source type</comment>
+  </data>
+  <data name="ApiReplacements_MessageFormat" xml:space="preserve">
+    <value>{0} is accessed directly from {1}.</value>
+    <comment>0 - member name, 1 - source type</comment>
+  </data>
+  <data name="ApiReplacements_Title" xml:space="preserve">
+    <value>{0} should not be used. Use {1} instead.</value>
+    <comment>0 - member name, 1 - source type</comment>
+  </data>
   <data name="BH1000_CodeFix" xml:space="preserve">
     <value>Replace with {0}().</value>
     <comment>{0} - method name to be used instead</comment>
@@ -147,5 +163,18 @@
   <data name="BH1001_Title" xml:space="preserve">
     <value>LogEvent should not be called with hardcoded event type.</value>
     <comment>{0} - called with</comment>
+  </data>
+  <data name="BH1002_CodeFix" xml:space="preserve">
+    <value>Replace "Request.UserHostAddress" with "RequestContext.UserHostAddress".</value>
+    <comment>{0} - old, {1} - new</comment>
+  </data>
+  <data name="BH1002_Description" xml:space="preserve">
+    <value>Request.UserHostAddress property is used. Use RequestContext.UserHostAddress instead.</value>
+  </data>
+  <data name="BH1002_MessageFormat" xml:space="preserve">
+    <value>Property Request.UserHostAddress is being accessed.</value>
+  </data>
+  <data name="BH1002_Title" xml:space="preserve">
+    <value>Request.UserHostAddress should not be used.</value>
   </data>
 </root>

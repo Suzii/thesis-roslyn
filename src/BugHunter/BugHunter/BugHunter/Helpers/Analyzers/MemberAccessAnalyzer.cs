@@ -6,7 +6,7 @@ using Microsoft.CodeAnalysis.Diagnostics;
 
 namespace BugHunter.Helpers.Analyzers
 {
-    internal class MemberAccessExpressionAnalyzer
+    internal class MemberAccessAnalyzer
     {
         private readonly DiagnosticDescriptor _rule;
 
@@ -14,10 +14,10 @@ namespace BugHunter.Helpers.Analyzers
 
         private readonly string[] _memberNames;
         
-        public MemberAccessExpressionAnalyzer(DiagnosticDescriptor rule, Type accessedType, string memberName)
+        public MemberAccessAnalyzer(DiagnosticDescriptor rule, Type accessedType, string memberName)
             : this(rule, accessedType, new []{ memberName}) { }
 
-        public MemberAccessExpressionAnalyzer(DiagnosticDescriptor rule, Type accessedType, string[] memberNames)
+        public MemberAccessAnalyzer(DiagnosticDescriptor rule, Type accessedType, string[] memberNames)
         {
             _rule = rule;
             _accessedType = accessedType;
@@ -40,7 +40,7 @@ namespace BugHunter.Helpers.Analyzers
             {
                 return;
             }
-
+            
             var diagnostic = Diagnostic.Create(_rule, memberAccess.GetLocation(), memberName);
             context.ReportDiagnostic(diagnostic);
         }

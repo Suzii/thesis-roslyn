@@ -61,6 +61,42 @@ namespace BugHunter.CsRules {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Replace with &quot;{0}&quot;..
+        /// </summary>
+        internal static string ApiReplacements_CodeFix {
+            get {
+                return ResourceManager.GetString("ApiReplacements_CodeFix", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} should not be used. Use {1} instead..
+        /// </summary>
+        internal static string ApiReplacements_Description {
+            get {
+                return ResourceManager.GetString("ApiReplacements_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} is accessed directly from {1}..
+        /// </summary>
+        internal static string ApiReplacements_MessageFormat {
+            get {
+                return ResourceManager.GetString("ApiReplacements_MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} should not be used. Use {1} instead..
+        /// </summary>
+        internal static string ApiReplacements_Title {
+            get {
+                return ResourceManager.GetString("ApiReplacements_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Replace with {0}()..
         /// </summary>
         internal static string BH1000_CodeFix {
@@ -129,6 +165,42 @@ namespace BugHunter.CsRules {
         internal static string BH1001_Title {
             get {
                 return ResourceManager.GetString("BH1001_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Replace &quot;Request.UserHostAddress&quot; with &quot;RequestContext.UserHostAddress&quot;..
+        /// </summary>
+        internal static string BH1002_CodeFix {
+            get {
+                return ResourceManager.GetString("BH1002_CodeFix", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Request.UserHostAddress property is used. Use RequestContext.UserHostAddress instead..
+        /// </summary>
+        internal static string BH1002_Description {
+            get {
+                return ResourceManager.GetString("BH1002_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Property Request.UserHostAddress is being accessed..
+        /// </summary>
+        internal static string BH1002_MessageFormat {
+            get {
+                return ResourceManager.GetString("BH1002_MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Request.UserHostAddress should not be used..
+        /// </summary>
+        internal static string BH1002_Title {
+            get {
+                return ResourceManager.GetString("BH1002_Title", resourceCulture);
             }
         }
     }

@@ -44,8 +44,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ControlResources.resx</DependentUpon>
     </Compile>
+    <Compile Include="CsRules\Analyzers\BH1002RequestUserHostAddress.cs" />
     <Compile Include="CsRules\Analyzers\BH1000WhereLikeMethod.cs" />
     <Compile Include="CsRules\Analyzers\BH1001EventLogArguments.cs" />
+    <Compile Include="CsRules\CodeFixes\BH1002CodeFixProvider.cs" />
     <Compile Include="CsRules\CodeFixes\BH1001CodeFixProvider.cs" />
     <Compile Include="CsRules\CodeFixes\BH1000CodeFixProvider.cs" />
     <Compile Include="CsRules\CodeFixes\BH1000PossibleFixes.cs" />
@@ -54,7 +56,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CsResources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Helpers\Analyzers\MemberAccessExpressionAnalyzer.cs" />
+    <Compile Include="Helpers\Analyzers\MemberAccessAnalyzer.cs" />
+    <Compile Include="Helpers\CodeFixes\MemberAccessCodeFixHelper.cs" />
+    <Compile Include="Helpers\CodeFixes\UsingsHelper.cs" />
     <Compile Include="Helpers\SemanticModelBrowser.cs" />
     <Compile Include="Helpers\TypeExtensions.cs" />
     <Compile Include="Helpers\TypeSymbolExtensions.cs" />
@@ -92,6 +96,7 @@
     <EmbeddedResource Include="CsRules\CsResources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>CsResources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="PageRules\PageResources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -194,13 +199,13 @@
       <HintPath>..\..\packages\System.Reflection.Metadata.1.2.0\lib\portable-net45+win8\System.Reflection.Metadata.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="AspxRules\Analyzers\" />
     <Folder Include="AspxRules\CodeFixes\" />
     <Folder Include="ControlRules\Analyzers\" />
     <Folder Include="ControlRules\CodeFixes\" />
-    <Folder Include="Helpers\CodeFixes\" />
     <Folder Include="PageRules\Analyzers\" />
     <Folder Include="PageRules\CodeFixes\" />
     <Folder Include="ProjectRules\Analyzers\" />

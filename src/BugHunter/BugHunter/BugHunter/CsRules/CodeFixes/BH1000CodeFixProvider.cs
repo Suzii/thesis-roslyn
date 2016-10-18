@@ -44,26 +44,26 @@ namespace BugHunter.CsRules.CodeFixes
             context.RegisterCodeFix(
                 CodeAction.Create(
                     title: string.Format(codeFixTitle, containsMethodName),
-                    createChangedDocument: c => ReplaceWithWithDifferentMethodCall(context.Document, memberAccessExpression, c, containsMethodName),
+                    createChangedDocument: c => ReplaceWithDifferentMethodCall(context.Document, memberAccessExpression, c, containsMethodName),
                     equivalenceKey: "Contains()"),
                 diagnostic);
 
             context.RegisterCodeFix(
                 CodeAction.Create(
                     title: string.Format(codeFixTitle, startsWithMethodName),
-                    createChangedDocument: c => ReplaceWithWithDifferentMethodCall(context.Document, memberAccessExpression, c, startsWithMethodName),
+                    createChangedDocument: c => ReplaceWithDifferentMethodCall(context.Document, memberAccessExpression, c, startsWithMethodName),
                     equivalenceKey: "StartsWith()"),
                 diagnostic);
 
             context.RegisterCodeFix(
                 CodeAction.Create(
                     title: string.Format(codeFixTitle, endsWithMethodName),
-                    createChangedDocument: c => ReplaceWithWithDifferentMethodCall(context.Document, memberAccessExpression, c, endsWithMethodName),
+                    createChangedDocument: c => ReplaceWithDifferentMethodCall(context.Document, memberAccessExpression, c, endsWithMethodName),
                     equivalenceKey: "EndsWith()"),
                 diagnostic);
         }
 
-        private async Task<Document> ReplaceWithWithDifferentMethodCall(Document document, MemberAccessExpressionSyntax memberAccessExpression, CancellationToken cancellationToken, string newMethodName)
+        private async Task<Document> ReplaceWithDifferentMethodCall(Document document, MemberAccessExpressionSyntax memberAccessExpression, CancellationToken cancellationToken, string newMethodName)
         {
             var root = await document.GetSyntaxRootAsync(cancellationToken).ConfigureAwait(false);
 

@@ -74,7 +74,7 @@ namespace BugHunter.Helpers
             }
 
             // TODO return null or throw an exception?
-            throw new ArgumentException("Could not detect target for this member access.", nameof(memberAccess));
+            throw new ArgumentException(@"Could not detect target for this member access.", nameof(memberAccess));
         }
     }
 }

@@ -11,6 +11,8 @@ namespace BugHunter.Test.CsTests
         public static readonly MetadataReference CMSIOReference = MetadataReference.CreateFromFile(typeof(CMS.IO.AbstractFile).Assembly.Location);
         public static readonly MetadataReference CMSEventLogReference = MetadataReference.CreateFromFile(typeof(CMS.EventLog.EventType).Assembly.Location);
 
+        public static readonly MetadataReference SystemWebReference = MetadataReference.CreateFromFile(typeof(System.Web.HttpRequest).Assembly.Location);
+
         public static readonly MetadataReference[] BasicReferences =
         {
             CMSCoreReference,
