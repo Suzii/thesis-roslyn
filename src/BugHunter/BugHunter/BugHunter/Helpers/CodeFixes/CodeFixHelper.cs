@@ -16,14 +16,14 @@ namespace BugHunter.Helpers.CodeFixes
             Context = context;
         }
 
-        public async Task<Document> ReplaceExpressionWith(ExpressionSyntax oldExpression, ExpressionSyntax newExpression, params string[] namepsaceToBeReferenced)
+        public async Task<Document> ReplaceExpressionWith(SyntaxNode oldNode, SyntaxNode newNode, params string[] namepsaceToBeReferenced)
         {
             var document = Context.Document;
             var root = await GetDocumentRoot();
 
-            var formattedMemberAccess = newExpression.WithTriviaFrom(oldExpression);
+            var formattedMemberAccess = newNode.WithTriviaFrom(oldNode);
 
-            var newRoot = root.ReplaceNode(oldExpression, formattedMemberAccess);
+            var newRoot = root.ReplaceNode(oldNode, formattedMemberAccess);
 
             if (namepsaceToBeReferenced != null)
             {

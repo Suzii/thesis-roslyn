@@ -1,83 +1,87 @@
-﻿//using System.Collections.Immutable;
-//using System.Composition;
-//using System.Linq;
-//using System.Threading.Tasks;
-//using BugHunter.CsRules.Analyzers;
-//using BugHunter.Helpers.CodeFixes;
-//using Microsoft.CodeAnalysis;
-//using Microsoft.CodeAnalysis.CodeActions;
-//using Microsoft.CodeAnalysis.CodeFixes;
-//using Microsoft.CodeAnalysis.CSharp;
-//using Microsoft.CodeAnalysis.CSharp.Syntax;
+﻿using System;
+using System.Collections.Immutable;
+using System.Composition;
+using System.Linq;
+using System.Threading.Tasks;
+using BugHunter.CsRules.Analyzers;
+using BugHunter.Helpers.CodeFixes;
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CodeActions;
+using Microsoft.CodeAnalysis.CodeFixes;
+using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-//namespace BugHunter.CsRules.CodeFixes
-//{
-//    [ExportCodeFixProvider(LanguageNames.CSharp, Name = nameof(HttpSessionElementAccessCodeFixProvider)), Shared]
-//    public class HttpSessionElementAccessCodeFixProvider : CodeFixProvider
-//    {
-//        public sealed override ImmutableArray<string> FixableDiagnosticIds
-//            => ImmutableArray.Create(HttpSessionElementAccessAnalyzer.DIAGNOSTIC_ID);
+namespace BugHunter.CsRules.CodeFixes
+{
+    [ExportCodeFixProvider(LanguageNames.CSharp, Name = nameof(HttpSessionElementAccessCodeFixProvider)), Shared]
+    public class HttpSessionElementAccessCodeFixProvider : CodeFixProvider
+    {
+        public sealed override ImmutableArray<string> FixableDiagnosticIds
+            => ImmutableArray.Create(HttpSessionElementAccessAnalyzer.DIAGNOSTIC_ID);
 
-//        public sealed override FixAllProvider GetFixAllProvider()
-//        {
-//            return WellKnownFixAllProviders.BatchFixer;
-//        }
+        public sealed override FixAllProvider GetFixAllProvider()
+        {
+            return WellKnownFixAllProviders.BatchFixer;
+        }
 
-//        public sealed override async Task RegisterCodeFixesAsync(CodeFixContext context)
-//        {
-//            ExpressionSyntax oldExpression = await GetSyntaxNodeToBeReplaced(context);
-//            ExpressionSyntax newExpression;
-//            if (oldExpression == null)
-//            {
-//                return;
-//            }
+        public sealed override async Task RegisterCodeFixesAsync(CodeFixContext context)
+        {
+            SyntaxNode oldNode = await GetSyntaxNodeToBeReplaced(context);
+            SyntaxNode newNode;
+            if (oldNode == null)
+            {
+                return;
+            }
 
-//            if (oldExpression.Kind() == SyntaxKind.EqualsExpression)
-//            {
-//                // TODO
-//                newExpression = SyntaxFactory.ParseExpression("SessionHelper.GetValue()");
-//            }
-//            else if(oldExpression.Kind() == SyntaxKind.SimpleMemberAccessExpression)
-//            {
-//                // TODO
-//                oldExpression = SyntaxFactory.ParseExpression(@"SessionHelper.SetValue(""someKey"", ""someValue"")");
-//            }
 
-//            var codeFixTitle = new LocalizableResourceString(nameof(CsResources.ApiReplacements_CodeFix), CsResources.ResourceManager, typeof(CsResources)).ToString();
-//            var usingNamespace = typeof(CMS.Helpers.SessionHelper).Namespace;
+            var codeFixTitle = new LocalizableResourceString(nameof(CsResources.ApiReplacements_CodeFix), CsResources.ResourceManager, typeof(CsResources)).ToString();
+            var diagnostic = context.Diagnostics.First();
+            var usingNamespace = typeof(CMS.Helpers.SessionHelper).Namespace;
+            var codeFixHelper = new CodeFixHelper(context);
 
-//            context.RegisterCodeFix(
-//                CodeAction.Create(
-//                    title: string.Format(codeFixTitle, newMemberAccess),
-//                    createChangedDocument: c => editor.ReplaceWithHelper(memberAccess, newMemberAccess, usingNamespace),
-//                    equivalenceKey: "SessionHelper.GetValue"),
-//                diagnostic);
+            if (oldNode.Kind() == SyntaxKind.EqualsExpression)
+            {
+                // TODO
+                newNode = SyntaxFactory.ParseExpression("SessionHelper.GetValue()");
+                context.RegisterCodeFix(
+                    CodeAction.Create(
+                        title: string.Format(codeFixTitle, newNode),
+                        createChangedDocument: c => codeFixHelper.ReplaceExpressionWith(oldNode, newNode, usingNamespace),
+                        equivalenceKey: "SessionHelper.GetValue"),
+                    diagnostic);
+            }
+            else if (oldNode.Kind() == SyntaxKind.SimpleMemberAccessExpression)
+            {
+                // TODO
+                newNode = SyntaxFactory.ParseExpression(@"SessionHelper.SetValue(""someKey"", ""someValue"")");
+                context.RegisterCodeFix(
+                    CodeAction.Create(
+                        title: string.Format(codeFixTitle, newNode),
+                        createChangedDocument: c => codeFixHelper.ReplaceExpressionWith(oldNode, newNode, usingNamespace),
+                        equivalenceKey: "SessionHelper.SetValue"),
+                    diagnostic);
+            }
+        }
 
-//            context.RegisterCodeFix(
-//                CodeAction.Create(
-//                    title: string.Format(codeFixTitle, newMemberAccess),
-//                    createChangedDocument: c => editor.ReplaceWithHelper(memberAccess, newMemberAccess, usingNamespace),
-//                    equivalenceKey: "SessionHelper.SetValue"),
-//                diagnostic);
-//        }
+        private async Task<SyntaxNode> GetSyntaxNodeToBeReplaced(CodeFixContext context)
+        {
+            throw new NotImplementedException();
+            //var root = await context.Document.GetSyntaxRootAsync(context.CancellationToken);
+            //var diagnostic = context.Diagnostics.First();
+            //var diagnosticSpan = diagnostic.Location.SourceSpan;
 
-//        private async Task<ExpressionSyntax> GetSyntaxNodeToBeReplaced(CodeFixContext context)
-//        {
-//            var root = await context.Document.GetSyntaxRootAsync(context.CancellationToken);
-//            var diagnostic = context.Diagnostics.First();
-//            var diagnosticSpan = diagnostic.Location.SourceSpan;
+            //var elementAccess = root.FindToken(diagnosticSpan.Start).Parent.AncestorsAndSelf().OfType<ElementAccessExpressionSyntax>().First();
+            //if (elementAccess == null)
+            //{
+            //    return null;
+            //}
 
-//            var elementAccess = root.FindToken(diagnosticSpan.Start).Parent.AncestorsAndSelf().OfType<ElementAccessExpressionSyntax>().First();
-//            if (elementAccess == null)
-//            {
-//                return;
-//            }
-
-//            // we should be looking for ElementAccessExpressionSyntax, but if it is enclosed within more complicated expression e.g. HttpContext.Session["something"]
-//            // we want to replace whole MemberAccessExpressionSyntax, including HttpContext
-//            ExpressionSyntax oldExpression = elementAccess.AncestorsAndSelf().OfType<MemberAccessExpressionSyntax>().First();
-//            oldExpression = oldExpression ?? elementAccess;
-
-//        }
-//    }
-//}
+            //// many cases - EqualsValueClauseSyntax, SimpleAssignmentExpression...
+            //var equalsNode = elementAccess.AncestorsAndSelf().OfType<EqualsValueClauseSyntax>().First();
+            //if (equalsNode != null)
+            //{
+            //    return equalsNode;
+            //}
+        }
+    }
+}
