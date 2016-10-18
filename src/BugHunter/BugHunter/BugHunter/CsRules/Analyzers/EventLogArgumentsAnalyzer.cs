@@ -33,8 +33,9 @@ namespace BugHunter.CsRules.Analyzers
         {
             var invocationExpression = (InvocationExpressionSyntax)context.Node;
             var memberAccess = invocationExpression.Expression as MemberAccessExpressionSyntax;
+            var forbiddenMemberName = nameof(CMS.EventLog.EventLogProvider.LogEvent);
             // TODO should check also only for invocation (usage in class where defined)?
-            if (memberAccess == null || memberAccess.Name.ToString() != "LogEvent")
+            if (memberAccess == null || memberAccess.Name.ToString() != forbiddenMemberName)
             {
                 return;
             }

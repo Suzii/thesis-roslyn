@@ -23,7 +23,9 @@ namespace BugHunter.CsRules.Analyzers
 
         public override void Initialize(AnalysisContext context)
         {
-            var analyzer = new MemberAccessAnalyzer(Rule, typeof(System.Web.HttpRequest), "UserHostAddress" );
+            var accessedType = typeof(System.Web.HttpRequest);
+            var memberName = nameof(System.Web.HttpRequest.UserHostAddress);
+            var analyzer = new MemberAccessAnalyzer(Rule, accessedType, memberName);
 
             context.RegisterSyntaxNodeAction(c => analyzer.Analyze(c), SyntaxKind.SimpleMemberAccessExpression);
         }
