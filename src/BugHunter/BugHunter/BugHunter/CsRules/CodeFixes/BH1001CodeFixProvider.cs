@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using BugHunter.CsRules.Analyzers;
+using BugHunter.Helpers.CodeFixes;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeActions;
 using Microsoft.CodeAnalysis.CodeFixes;
@@ -42,7 +43,7 @@ namespace BugHunter.CsRules.CodeFixes
 
             context.RegisterCodeFix(
                 CodeAction.Create(
-                    title: string.Format(codeFixTitle, oldArgument, newArgumentName),
+                    title: string.Format(codeFixTitle, newArgumentName),
                     createChangedDocument: c => ReplaceEventTypeArgument(context.Document, invocationExpression, c, newArgumentName),
                     equivalenceKey: "EventLog"),
                 diagnostic);
@@ -54,11 +55,12 @@ namespace BugHunter.CsRules.CodeFixes
 
             var eventLogExpression = SyntaxFactory.ParseExpression(newArgumentName);
             var newArgumentIdentifier = SyntaxFactory.Argument(eventLogExpression);
-            var newArguments = SyntaxFactory.SeparatedList(new [] { newArgumentIdentifier}.Concat(invocationExpression.ArgumentList.Arguments.Skip(1)));
+            var newArguments = SyntaxFactory.SeparatedList(new [] { newArgumentIdentifier }.Concat(invocationExpression.ArgumentList.Arguments.Skip(1)));
             var newArgumentList = SyntaxFactory.ArgumentList(newArguments);
             var newInvocationExpression = invocationExpression.WithArgumentList(newArgumentList);
 
             var newRoot = root.ReplaceNode(invocationExpression, newInvocationExpression);
+            newRoot = UsingsHelper.EnsureUsing((CompilationUnitSyntax)newRoot, GetNamespaceNameToBeReferenced());
             var newDocument = document.WithSyntaxRoot(newRoot);
 
             return newDocument;
@@ -69,14 +71,20 @@ namespace BugHunter.CsRules.CodeFixes
             switch (oldArgument)
             {
                 case "\"I\"":
-                    return "CMS.EventLog.EventType.INFORMATION";
+                    return "EventType.INFORMATION";
                 case "\"W\"":
-                    return "CMS.EventLog.EventType.WARNING";
+                    return "EventType.WARNING";
                 case "\"E\"":
-                    return "CMS.EventLog.EventType.ERROR";
+                    return "EventType.ERROR";
                 default:
                     throw new ArgumentOutOfRangeException(nameof(oldArgument));
             }
+        }
+
+        private string GetNamespaceNameToBeReferenced()
+        {
+            var usedType = typeof(CMS.EventLog.EventType);
+            return usedType.Namespace;
         }
     }
 }

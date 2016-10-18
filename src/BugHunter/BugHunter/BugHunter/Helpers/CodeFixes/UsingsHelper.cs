@@ -7,7 +7,7 @@ namespace BugHunter.Helpers.CodeFixes
 {
     internal class UsingsHelper
     {
-        public CompilationUnitSyntax EnsureUsing(CompilationUnitSyntax root, string namespaceToBeReferenced)
+        public static CompilationUnitSyntax EnsureUsing(CompilationUnitSyntax root, string namespaceToBeReferenced)
         {
             if (root.Usings.Any(u => u.Name.ToString() == namespaceToBeReferenced))
             {

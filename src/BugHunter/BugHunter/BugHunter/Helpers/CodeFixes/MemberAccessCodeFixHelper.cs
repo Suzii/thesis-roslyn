@@ -9,15 +9,12 @@ namespace BugHunter.Helpers.CodeFixes
     internal class MemberAccessCodeFixHelper
     {
         private readonly CodeFixContext _context;
-
-        private readonly UsingsHelper _usingsHelper;
-
+        
         private SyntaxNode _documentRootCache;
         
         public MemberAccessCodeFixHelper(CodeFixContext context)
         {
             _context = context;
-            _usingsHelper = new UsingsHelper();
         }
 
         public async Task<MemberAccessExpressionSyntax> GetClosestMemberAccess()
@@ -39,7 +36,7 @@ namespace BugHunter.Helpers.CodeFixes
             var formattedMemberAccess = newMemberAccess.WithTriviaFrom(oldMemberAccess);
 
             var newRoot = root.ReplaceNode(oldMemberAccess, formattedMemberAccess);
-            newRoot = _usingsHelper.EnsureUsing((CompilationUnitSyntax)newRoot, namepsaceToBeReferenced);
+            newRoot = UsingsHelper.EnsureUsing((CompilationUnitSyntax)newRoot, namepsaceToBeReferenced);
 
             var newDocument = document.WithSyntaxRoot(newRoot);
 

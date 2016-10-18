@@ -34,9 +34,9 @@ namespace BugHunter.Test.CsTests
             VerifyCSharpDiagnostic(test);
         }
 
-        [TestCase("\"I\"", "CMS.EventLog.EventType.INFORMATION")]
-        [TestCase("\"W\"", "CMS.EventLog.EventType.WARNING")]
-        [TestCase("\"E\"", "CMS.EventLog.EventType.ERROR")]
+        [TestCase("\"I\"", "EventType.INFORMATION")]
+        [TestCase("\"W\"", "EventType.WARNING")]
+        [TestCase("\"E\"", "EventType.ERROR")]
         public void InputWithWrongArgument_SurfacesDiagnostic(string oldArgument, string newArgument)
         {
             var test = $@"
@@ -60,7 +60,7 @@ namespace SampleTestProject.CsSamples
 
             VerifyCSharpDiagnostic(test, expectedDiagnostic);
 
-            var expectedFix = $@"
+            var expectedFix = $@"using CMS.EventLog;
 namespace SampleTestProject.CsSamples
 {{
     public class BH1001LogEventEventTypeShoulNotBeHardcoded
