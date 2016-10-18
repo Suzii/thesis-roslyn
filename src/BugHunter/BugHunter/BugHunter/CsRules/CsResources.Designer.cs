@@ -203,5 +203,59 @@ namespace BugHunter.CsRules {
                 return ResourceManager.GetString("BH1002_Title", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &quot;Session[]&quot; should not be used. Use &quot;SessionHelper.GetValue()&quot; instead..
+        /// </summary>
+        internal static string HttpSessionElementAccess_Description {
+            get {
+                return ResourceManager.GetString("HttpSessionElementAccess_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &quot;{0}&quot; should not be used. Use &quot;SessionHelper.GetValue()&quot; instead..
+        /// </summary>
+        internal static string HttpSessionElementAccess_MessageFormat {
+            get {
+                return ResourceManager.GetString("HttpSessionElementAccess_MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &quot;Session[]&quot; should not be used. Use &quot;SessionHelper.GetValue()&quot; instead..
+        /// </summary>
+        internal static string HttpSessionElementAccess_Title {
+            get {
+                return ResourceManager.GetString("HttpSessionElementAccess_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &quot;Session.SessionID&quot; should not be used. Use &quot;SessionHelper.GetSessionID()&quot; instead..
+        /// </summary>
+        internal static string HttpSessionSessionId_Description {
+            get {
+                return ResourceManager.GetString("HttpSessionSessionId_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &quot;{0}&quot; should not be used. Use &quot;SessionHelper.GetSessionID()&quot; instead..
+        /// </summary>
+        internal static string HttpSessionSessionId_MessageFormat {
+            get {
+                return ResourceManager.GetString("HttpSessionSessionId_MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &quot;Session.SessionID&quot; should not be used. Use &quot;SessionHelper.GetSessionID()&quot; instead..
+        /// </summary>
+        internal static string HttpSessionSessionId_Title {
+            get {
+                return ResourceManager.GetString("HttpSessionSessionId_Title", resourceCulture);
+            }
+        }
     }
 }
