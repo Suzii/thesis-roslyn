@@ -31,18 +31,35 @@ namespace BugHunter.CsRules.Analyzers
         {
             var elementAccess = (ElementAccessExpressionSyntax)context.Node;
 
-            var sessionType = typeof(System.Web.HttpSessionStateBase);
-            var sessionTypeSymbol = sessionType.GetITypeSymbol(context.SemanticModel.Compilation);
-
             var accessedTypeSymbol = context.SemanticModel.GetTypeInfo(elementAccess.Expression).Type as INamedTypeSymbol;
-            if (accessedTypeSymbol == null || !accessedTypeSymbol.IsDerivedFromClassOrInterface(sessionTypeSymbol))
+
+            var sessionBaseType = typeof(System.Web.HttpSessionStateBase);
+            var compilation = context.SemanticModel.Compilation;
+            
+            if (accessedTypeSymbol == null || (!IsHttpSession(accessedTypeSymbol, compilation) && !IsHttpSessionBase(accessedTypeSymbol, compilation)))
             {
                 return;
-                
+
             }
 
             var diagnostic = Diagnostic.Create(Rule, elementAccess.GetLocation(), elementAccess);
             context.ReportDiagnostic(diagnostic);
+        }
+
+        private static bool IsHttpSession(INamedTypeSymbol accessedTypeSymbol, Compilation compilation)
+        {
+            var sessionType = typeof(System.Web.SessionState.HttpSessionState);
+            var sessionTypeSymbol = sessionType.GetITypeSymbol(compilation);
+
+            return accessedTypeSymbol.IsDerivedFromClassOrInterface(sessionTypeSymbol);
+        }
+
+        private static bool IsHttpSessionBase(INamedTypeSymbol accessedTypeSymbol, Compilation compilation)
+        {
+            var sessionBaseType = typeof(System.Web.HttpSessionStateBase);
+            var sessionBaseTypeSymbol = sessionBaseType.GetITypeSymbol(compilation);
+
+            return accessedTypeSymbol.IsDerivedFromClassOrInterface(sessionBaseTypeSymbol);
         }
     }
 }

@@ -34,5 +34,46 @@ namespace BugHunter.Test.CsTests
 
             VerifyCSharpDiagnostic(test);
         }
+
+        [Test]
+        public void InputWithIncident_SurfacesDiagnostic()
+        {
+            var test = $@"
+namespace SampleTestProject.CsSamples
+{{
+    public class RequestUserHostAddressAnalyzer
+    {{
+        public void SampleMethod()
+        {{
+            var request = new System.Web.HttpRequest(""fileName"", ""url"", ""queryString"");
+            var address = request.UserHostAddress;
+        }}
+    }}
+}}";
+            var expectedDiagnostic = new DiagnosticResult
+            {
+                Id = "BH1002",
+                Message = "Property Request.UserHostAddress is being accessed.",
+                Severity = DiagnosticSeverity.Warning,
+                Locations = new[] { new DiagnosticResultLocation("Test0.cs", 9, 27) }
+            };
+
+            VerifyCSharpDiagnostic(test, expectedDiagnostic);
+
+            var expectedFix = $@"using CMS.Helpers;
+
+namespace SampleTestProject.CsSamples
+{{
+    public class RequestUserHostAddressAnalyzer
+    {{
+        public void SampleMethod()
+        {{
+            var request = new System.Web.HttpRequest(""fileName"", ""url"", ""queryString"");
+            var address = RequestContext.UserHostAddress;
+        }}
+    }}
+}}";
+            VerifyCSharpFix(test, expectedFix);
+        }
     }
 }
