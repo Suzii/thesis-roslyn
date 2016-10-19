@@ -36,7 +36,7 @@ namespace BugHunter.Helpers.Analyzers
 
             var searchedTargetType = _accessedType.GetITypeSymbol(context);
             var actualTargetType = new SemanticModelBrowser(context).GetMemberAccessTarget(memberAccess) as INamedTypeSymbol;
-            if (actualTargetType == null || !actualTargetType.IsDerivedFromClassOrInterface(searchedTargetType))
+            if (searchedTargetType == null || actualTargetType == null || !actualTargetType.IsDerivedFromClassOrInterface(searchedTargetType))
             {
                 return;
             }
