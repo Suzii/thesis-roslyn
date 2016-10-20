@@ -26,62 +26,60 @@ namespace BugHunter.CsRules.CodeFixes
 
         public sealed override async Task RegisterCodeFixesAsync(CodeFixContext context)
         {
-            SyntaxNode oldNode = await GetSyntaxNodeToBeReplaced(context);
-            SyntaxNode newNode;
-            if (oldNode == null)
+            var root = await context.Document.GetSyntaxRootAsync(context.CancellationToken);
+            var diagnostic = context.Diagnostics.First();
+            var diagnosticSpan = diagnostic.Location.SourceSpan;
+
+            var elementAccess = root.FindToken(diagnosticSpan.Start).Parent.AncestorsAndSelf().OfType<ElementAccessExpressionSyntax>().First();
+            if (elementAccess == null)
             {
                 return;
             }
 
-
             var codeFixTitle = new LocalizableResourceString(nameof(CsResources.ApiReplacements_CodeFix), CsResources.ResourceManager, typeof(CsResources)).ToString();
-            var diagnostic = context.Diagnostics.First();
             var usingNamespace = typeof(CMS.Helpers.SessionHelper).Namespace;
             var codeFixHelper = new CodeFixHelper(context);
+            SyntaxNode oldNode;
+            SyntaxNode newNode;
+            
+            if (IsUsedForAssignment(elementAccess))
+            {
+                var assignmentExpression = elementAccess.FirstAncestorOrSelf<AssignmentExpressionSyntax>();
+                var sessionKey = GetElementAccessKey(elementAccess);
+                var valueToBeAssigned = assignmentExpression.Right;
 
-            if (oldNode.Kind() == SyntaxKind.EqualsExpression)
-            {
-                // TODO
-                newNode = SyntaxFactory.ParseExpression("SessionHelper.GetValue()");
-                context.RegisterCodeFix(
-                    CodeAction.Create(
-                        title: string.Format(codeFixTitle, newNode),
-                        createChangedDocument: c => codeFixHelper.ReplaceExpressionWith(oldNode, newNode, usingNamespace),
-                        equivalenceKey: "SessionHelper.GetValue"),
-                    diagnostic);
+                var newInvocation = SyntaxFactory.ParseExpression($@"SessionHelper.SetValue({sessionKey}, {valueToBeAssigned})");
+                
+                oldNode = assignmentExpression;
+                newNode = newInvocation;
             }
-            else if (oldNode.Kind() == SyntaxKind.SimpleMemberAccessExpression)
+            else
             {
-                // TODO
-                newNode = SyntaxFactory.ParseExpression(@"SessionHelper.SetValue(""someKey"", ""someValue"")");
-                context.RegisterCodeFix(
-                    CodeAction.Create(
-                        title: string.Format(codeFixTitle, newNode),
-                        createChangedDocument: c => codeFixHelper.ReplaceExpressionWith(oldNode, newNode, usingNamespace),
-                        equivalenceKey: "SessionHelper.SetValue"),
-                    diagnostic);
+                var sessionKey = GetElementAccessKey(elementAccess);
+
+                oldNode = elementAccess;
+                newNode = SyntaxFactory.ParseExpression($@"SessionHelper.GetValue({sessionKey})");
             }
+
+            context.RegisterCodeFix(
+                CodeAction.Create(
+                    title: string.Format(codeFixTitle, newNode),
+                    createChangedDocument: c => codeFixHelper.ReplaceExpressionWith(oldNode, newNode, usingNamespace),
+                    equivalenceKey: "SessionHelper.GetOrSetValue"),
+                diagnostic);
         }
 
-        private async Task<SyntaxNode> GetSyntaxNodeToBeReplaced(CodeFixContext context)
+        private ArgumentSyntax GetElementAccessKey(ElementAccessExpressionSyntax elementAccess)
         {
-            throw new NotImplementedException();
-            //var root = await context.Document.GetSyntaxRootAsync(context.CancellationToken);
-            //var diagnostic = context.Diagnostics.First();
-            //var diagnosticSpan = diagnostic.Location.SourceSpan;
+            return elementAccess.ArgumentList.Arguments.First();
+        }
 
-            //var elementAccess = root.FindToken(diagnosticSpan.Start).Parent.AncestorsAndSelf().OfType<ElementAccessExpressionSyntax>().First();
-            //if (elementAccess == null)
-            //{
-            //    return null;
-            //}
-
-            //// many cases - EqualsValueClauseSyntax, SimpleAssignmentExpression...
-            //var equalsNode = elementAccess.AncestorsAndSelf().OfType<EqualsValueClauseSyntax>().First();
-            //if (equalsNode != null)
-            //{
-            //    return equalsNode;
-            //}
+        private bool IsUsedForAssignment(ElementAccessExpressionSyntax elementAccess)
+        {
+            // look for parent of type SimpleAssignmentexpressionSyntax and make sure elementAccess is an lvalue of this assignment
+            var assignmentExpression = elementAccess.FirstAncestorOrSelf<AssignmentExpressionSyntax>();
+            
+            return (assignmentExpression != null) ? assignmentExpression.Left.Contains(elementAccess) : false;
         }
     }
 }
