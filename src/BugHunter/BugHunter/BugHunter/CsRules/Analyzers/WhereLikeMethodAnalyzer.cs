@@ -23,7 +23,9 @@ namespace BugHunter.CsRules.Analyzers
 
         public override void Initialize(AnalysisContext context)
         {
-            var analyzer = new MemberAccessAnalyzer(Rule, typeof(CMS.DataEngine.WhereConditionBase<>), new []{ "WhereLike", "WhereNotLike" });
+            var accessedType = typeof(CMS.DataEngine.WhereConditionBase<>);
+            var forbiddenMembers = new[] { nameof(CMS.DataEngine.WhereCondition.WhereLike), nameof(CMS.DataEngine.WhereCondition.WhereNotLike) };
+            var analyzer = new MemberAccessAnalyzer(Rule, accessedType, forbiddenMembers);
 
             context.RegisterSyntaxNodeAction(c => analyzer.Analyze(c), SyntaxKind.SimpleMemberAccessExpression);
         }
