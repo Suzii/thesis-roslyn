@@ -11,6 +11,14 @@ using NUnit.Framework;
 
 namespace BugHunter.Test.Verifiers
 {
+    public abstract class CodeFixVerifier<TAnalyzer> : CodeFixVerifier
+    where TAnalyzer : DiagnosticAnalyzer, new()
+    {
+        protected override DiagnosticAnalyzer GetCSharpDiagnosticAnalyzer() => new TAnalyzer();
+
+        protected override CodeFixProvider GetCSharpCodeFixProvider() => null;
+    }
+
     public abstract class CodeFixVerifier<TAnalyzer, TCodeFix> : CodeFixVerifier
         where TAnalyzer : DiagnosticAnalyzer, new()
         where TCodeFix : CodeFixProvider, new()

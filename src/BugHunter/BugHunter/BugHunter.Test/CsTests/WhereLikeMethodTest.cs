@@ -45,7 +45,7 @@ namespace SampleTestProject.CsSamples
             var expectedDiagnostic = new DiagnosticResult
             {
                 Id = "BH1000",
-                Message = $"Method {oldMethodCall} is used without Architect/CTO approval.",
+                Message = $"Method '{oldMethodCall}' should not be used.",
                 Severity = DiagnosticSeverity.Warning,
                 Locations = new[] { new DiagnosticResultLocation("Test0.cs", 9, 30) }
             };
@@ -89,7 +89,7 @@ namespace SampleTestProject.CsSamples
             var expectedDiagnostic = new DiagnosticResult
             {
                 Id = "BH1000",
-                Message = $"Method {oldMethodCall} is used without Architect/CTO approval.",
+                Message = $"Method '{oldMethodCall}' should not be used.",
                 Severity = DiagnosticSeverity.Warning,
                 Locations = new[] { new DiagnosticResultLocation("Test0.cs", 8, 34) }
             };
@@ -138,7 +138,7 @@ namespace SampleTestProject.CsSamples
             var expectedDiagnostic = new DiagnosticResult
             {
                 Id = DiagnosticIds.WhereLikeMethod,
-                Message = $"Method {oldMethodCall} is used without Architect/CTO approval.",
+                Message = $"Method '{oldMethodCall}' should not be used.",
                 Severity = DiagnosticSeverity.Warning,
                 Locations = new[] { new DiagnosticResultLocation("Test0.cs", 14, 39) }
             };

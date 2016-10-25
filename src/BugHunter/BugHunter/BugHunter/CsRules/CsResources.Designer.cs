@@ -151,7 +151,34 @@ namespace BugHunter.CsRules {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Request.UserHostAddress should not be used. Use &apos;RequestContext.Url&apos; instead..
+        ///   Looks up a localized string similar to &apos;Request.Browser&apos; should not be used. Use &apos;BrowserHelper.Browser&apos; instead..
+        /// </summary>
+        internal static string HttpRequestBrowser_Description {
+            get {
+                return ResourceManager.GetString("HttpRequestBrowser_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;{0}.{1}&apos; should not be used. Use &apos;BrowserHelper.Browser&apos; instead..
+        /// </summary>
+        internal static string HttpRequestBrowser_MessageFormat {
+            get {
+                return ResourceManager.GetString("HttpRequestBrowser_MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;BrowserHelper.Browser&apos; should not be used..
+        /// </summary>
+        internal static string HttpRequestBrowser_Title {
+            get {
+                return ResourceManager.GetString("HttpRequestBrowser_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;Request.Url&apos; should not be used. Use &apos;RequestContext.Url&apos; instead..
         /// </summary>
         internal static string HttpRequestUrl_Description {
             get {
@@ -169,7 +196,7 @@ namespace BugHunter.CsRules {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Request.UserHostAddress should not be used..
+        ///   Looks up a localized string similar to &apos;Request.Url&apos; should not be used..
         /// </summary>
         internal static string HttpRequestUrl_Title {
             get {
@@ -178,7 +205,7 @@ namespace BugHunter.CsRules {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Request.UserHostAddress property is used. Use RequestContext.UserHostAddress instead..
+        ///   Looks up a localized string similar to &apos;Request.UserHostAddress&apos; property is used. Use &apos;RequestContext.UserHostAddress&apos; instead..
         /// </summary>
         internal static string HttpRequestUserHostAddress_Description {
             get {
@@ -187,7 +214,7 @@ namespace BugHunter.CsRules {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Property Request.UserHostAddress is being accessed..
+        ///   Looks up a localized string similar to &apos;{0}.{1}&apos; should not be used. Use &apos;RequestContext.UserHostAddress&apos; instead..
         /// </summary>
         internal static string HttpRequestUserHostAddress_MessageFormat {
             get {
@@ -196,7 +223,7 @@ namespace BugHunter.CsRules {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Request.UserHostAddress should not be used..
+        ///   Looks up a localized string similar to &apos;Request.UserHostAddress&apos; should not be used..
         /// </summary>
         internal static string HttpRequestUserHostAddress_Title {
             get {
@@ -259,7 +286,7 @@ namespace BugHunter.CsRules {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Consider using one of WhereStartsWith(), WhereEndsWith() or WhereContains() methods instead..
+        ///   Looks up a localized string similar to Consider using one of &apos;WhereStartsWith()&apos;, &apos;WhereEndsWith()&apos; or &apos;WhereContains()&apos; methods instead..
         /// </summary>
         internal static string WhereLikeMethod_Description {
             get {
@@ -268,7 +295,7 @@ namespace BugHunter.CsRules {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Method {1} is used without Architect/CTO approval..
+        ///   Looks up a localized string similar to Method &apos;{1}&apos; should not be used..
         /// </summary>
         internal static string WhereLikeMethod_MessageFormat {
             get {
@@ -277,7 +304,7 @@ namespace BugHunter.CsRules {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Method WhereLike() or WhereNotLike() should not be used used..
+        ///   Looks up a localized string similar to Method &apos;WhereLike()&apos; or &apos;WhereNotLike()&apos; should not be used used..
         /// </summary>
         internal static string WhereLikeMethod_Title {
             get {

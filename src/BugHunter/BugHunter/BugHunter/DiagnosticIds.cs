@@ -13,6 +13,8 @@
         public const string HttpSessionSessionId = "BH1004";
         public const string HttpRequestAndResponseCookie = "BH1005";
         public const string HttpRequestUrl = "BH1006";
+        public const string HttpRequestBrowser = "BH1007";
+
 
     }
 }

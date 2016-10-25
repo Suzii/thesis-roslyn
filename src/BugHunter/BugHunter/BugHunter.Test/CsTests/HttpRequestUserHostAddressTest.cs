@@ -42,7 +42,7 @@ namespace SampleTestProject.CsSamples
             var expectedDiagnostic = new DiagnosticResult
             {
                 Id = DiagnosticIds.HttpRequestUserHostAddress,
-                Message = "Property Request.UserHostAddress is being accessed.",
+                Message = @"'request.UserHostAddress' should not be used. Use 'RequestContext.UserHostAddress' instead.",
                 Severity = DiagnosticSeverity.Warning,
                 Locations = new[] { new DiagnosticResultLocation("Test0.cs", 9, 27) }
             };
