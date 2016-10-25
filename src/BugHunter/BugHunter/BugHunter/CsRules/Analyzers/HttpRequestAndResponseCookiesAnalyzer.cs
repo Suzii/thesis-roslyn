@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Immutable;
-using BugHunter.Helpers.Analyzers;
+﻿using System.Collections.Immutable;
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Diagnostics;
 
 namespace BugHunter.CsRules.Analyzers
@@ -11,7 +8,7 @@ namespace BugHunter.CsRules.Analyzers
     /// Searches for usage of <see cref="System.Web.HttpCookie"/> as properties of <see cref="System.Web.HttpRequest"/> or <see cref="System.Web.HttpResponse"/>
     /// </summary>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class HttpRequestAndResponseCookiesAnalyzer : DiagnosticAnalyzer
+    public class HttpRequestAndResponseCookiesAnalyzer : BaseMemberAccessAnalyzer
     {
         public const string DIAGNOSTIC_ID = DiagnosticIds.HttpRequestAndResponseCookie;
 
@@ -27,17 +24,10 @@ namespace BugHunter.CsRules.Analyzers
 
         public override void Initialize(AnalysisContext context)
         {
-            RegisterAction(context, typeof(System.Web.HttpRequest), nameof(System.Web.HttpRequest.Cookies));
-            RegisterAction(context, typeof(System.Web.HttpResponse), nameof(System.Web.HttpResponse.Cookies));
-            RegisterAction(context, typeof(System.Web.HttpRequestBase), nameof(System.Web.HttpRequestBase.Cookies));
-            RegisterAction(context, typeof(System.Web.HttpResponseBase), nameof(System.Web.HttpResponseBase.Cookies));
-        }
-
-        private void RegisterAction(AnalysisContext context, Type accessedType, string memberName)
-        {
-            var analyzer = new MemberAccessAnalysisHelper(Rule, accessedType, memberName);
-
-            context.RegisterSyntaxNodeAction(c => analyzer.Analyze(c), SyntaxKind.SimpleMemberAccessExpression);
+            RegisterAction(Rule, context, typeof(System.Web.HttpRequest), nameof(System.Web.HttpRequest.Cookies));
+            RegisterAction(Rule, context, typeof(System.Web.HttpResponse), nameof(System.Web.HttpResponse.Cookies));
+            RegisterAction(Rule, context, typeof(System.Web.HttpRequestBase), nameof(System.Web.HttpRequestBase.Cookies));
+            RegisterAction(Rule, context, typeof(System.Web.HttpResponseBase), nameof(System.Web.HttpResponseBase.Cookies));
         }
     }
 }

@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Immutable;
-using BugHunter.Helpers.Analyzers;
+﻿using System.Collections.Immutable;
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Diagnostics;
 
 namespace BugHunter.CsRules.Analyzers
@@ -14,7 +11,7 @@ namespace BugHunter.CsRules.Analyzers
     /// Note that both classes need to be checked for access as they do not derive from one another and both can be used. For different scenarios check code in test file.
     /// </remarks>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class HttpSessionSessionIdAnalyzer : DiagnosticAnalyzer
+    public class HttpSessionSessionIdAnalyzer : BaseMemberAccessAnalyzer
     {
         public const string DIAGNOSTIC_ID = DiagnosticIds.HttpSessionSessionId;
 
@@ -30,15 +27,8 @@ namespace BugHunter.CsRules.Analyzers
 
         public override void Initialize(AnalysisContext context)
         {
-            RegisterAction(context, typeof(System.Web.SessionState.HttpSessionState), nameof(System.Web.SessionState.HttpSessionState.SessionID));
-            RegisterAction(context, typeof(System.Web.HttpSessionStateBase), nameof(System.Web.HttpSessionStateBase.SessionID));
-        }
-
-        private void RegisterAction(AnalysisContext context, Type accessedType, string memberName)
-        {
-            var analyzer = new MemberAccessAnalysisHelper(Rule, accessedType, memberName);
-
-            context.RegisterSyntaxNodeAction(c => analyzer.Analyze(c), SyntaxKind.SimpleMemberAccessExpression);
+            RegisterAction(Rule, context, typeof(System.Web.SessionState.HttpSessionState), nameof(System.Web.SessionState.HttpSessionState.SessionID));
+            RegisterAction(Rule, context, typeof(System.Web.HttpSessionStateBase), nameof(System.Web.HttpSessionStateBase.SessionID));
         }
     }
 }
