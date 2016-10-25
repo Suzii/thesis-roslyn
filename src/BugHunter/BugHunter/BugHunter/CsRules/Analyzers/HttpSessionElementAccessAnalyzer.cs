@@ -32,10 +32,8 @@ namespace BugHunter.CsRules.Analyzers
             var elementAccess = (ElementAccessExpressionSyntax)context.Node;
 
             var accessedTypeSymbol = context.SemanticModel.GetTypeInfo(elementAccess.Expression).Type as INamedTypeSymbol;
-
-            var sessionBaseType = typeof(System.Web.HttpSessionStateBase);
-            var compilation = context.SemanticModel.Compilation;
             
+            var compilation = context.SemanticModel.Compilation;
             if (accessedTypeSymbol == null || (!IsHttpSession(accessedTypeSymbol, compilation) && !IsHttpSessionBase(accessedTypeSymbol, compilation)))
             {
                 return;

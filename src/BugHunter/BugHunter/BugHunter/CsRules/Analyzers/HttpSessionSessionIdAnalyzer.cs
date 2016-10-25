@@ -1,4 +1,5 @@
 ﻿using System.Collections.Immutable;
+using System.Web;
 using BugHunter.Helpers.Analyzers;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
@@ -6,6 +7,12 @@ using Microsoft.CodeAnalysis.Diagnostics;
 
 namespace BugHunter.CsRules.Analyzers
 {
+    /// <summary>
+    /// Searches for usages of <see cref="System.Web.HttpSessionStateBase"/> or <see cref="System.Web.SessionState.HttpSessionState"/> and their access to SessionID member
+    /// </summary>
+    /// <remarks>
+    /// Note that both classes need to be checked for access as they do not derive from one another and both can be used. For different scenarios check code in test file.
+    /// </remarks>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     public class HttpSessionSessionIdAnalyzer : DiagnosticAnalyzer
     {
@@ -23,10 +30,13 @@ namespace BugHunter.CsRules.Analyzers
 
         public override void Initialize(AnalysisContext context)
         {
-            var name = nameof(System.Web.HttpSessionStateBase.SessionID);
-            var analyzer = new MemberAccessAnalyzer(Rule, typeof(System.Web.HttpSessionStateBase), name);
+            // TODO register two separate actions or modify MemberAccessAnalyzer to accept multiple types???
+            var memberName = nameof(System.Web.HttpSessionStateBase.SessionID);
+            var analyzerForHttpSessionStateBase = new MemberAccessAnalyzer(Rule, typeof(System.Web.HttpSessionStateBase), memberName);
+            var analyzerForHttpSessionState = new MemberAccessAnalyzer(Rule, typeof(System.Web.SessionState.HttpSessionState), memberName);
 
-            context.RegisterSyntaxNodeAction(c => analyzer.Analyze(c), SyntaxKind.SimpleMemberAccessExpression);
+            context.RegisterSyntaxNodeAction(c => analyzerForHttpSessionStateBase.Analyze(c), SyntaxKind.SimpleMemberAccessExpression);
+            context.RegisterSyntaxNodeAction(c => analyzerForHttpSessionState.Analyze(c), SyntaxKind.SimpleMemberAccessExpression);
         }
     }
 }

@@ -35,41 +35,43 @@ namespace BugHunter.Test.CsTests
             VerifyCSharpDiagnostic(test);
         }
 
-        [Test]
-        public void InputWithIncident_SurfacesDiagnostic()
-        {
+        [TestCase("System.Web.HttpContext.Current.Session")]
+        [TestCase("new System.Web.HttpSessionStateWrapper(System.Web.HttpContext.Current.Session)")]
+        public void InputWithIncident_SurfacesDiagnostic(string sessionInstance)
+        {   
             var test = $@"
-namespace SampleTestProject.CsSamples
+namespace SampleTestProject.CsSamples 
 {{
-    public class RequestUserHostAddressAnalyzer
+    public class FakeController
     {{
-        public void SampleMethod()
+        public void FakeIndex()
         {{
-            var request = new System.Web.HttpRequest(""fileName"", ""url"", ""queryString"");
-            var address = request.UserHostAddress;
+            var session = {sessionInstance};
+            var sessionId = session.SessionID;
         }}
     }}
 }}";
+
             var expectedDiagnostic = new DiagnosticResult
             {
-                Id = "BH1002",
-                Message = "Property Request.UserHostAddress is being accessed.",
+                Id = "BH1004",
+                Message = @"""session.SessionID"" should not be used. Use ""SessionHelper.GetSessionID()"" instead.",
                 Severity = DiagnosticSeverity.Warning,
-                Locations = new[] { new DiagnosticResultLocation("Test0.cs", 9, 27) }
+                Locations = new[] { new DiagnosticResultLocation("Test0.cs", 9, 29) }
             };
-
+            
             VerifyCSharpDiagnostic(test, expectedDiagnostic);
 
             var expectedFix = $@"using CMS.Helpers;
 
-namespace SampleTestProject.CsSamples
+namespace SampleTestProject.CsSamples 
 {{
-    public class RequestUserHostAddressAnalyzer
+    public class FakeController
     {{
-        public void SampleMethod()
+        public void FakeIndex()
         {{
-            var request = new System.Web.HttpRequest(""fileName"", ""url"", ""queryString"");
-            var address = RequestContext.UserHostAddress;
+            var session = {sessionInstance};
+            var sessionId = SessionHelper.GetSessionID();
         }}
     }}
 }}";

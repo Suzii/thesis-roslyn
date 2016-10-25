@@ -41,7 +41,7 @@ namespace BugHunter.Helpers.Analyzers
                 return;
             }
             
-            var diagnostic = Diagnostic.Create(_rule, memberAccess.GetLocation(), memberName);
+            var diagnostic = Diagnostic.Create(_rule, memberAccess.GetLocation(), memberAccess.Expression.ToString(), memberName);
             context.ReportDiagnostic(diagnostic);
         }
     }

@@ -79,7 +79,7 @@ namespace BugHunter.CsRules {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} is accessed directly from {1}..
+        ///   Looks up a localized string similar to {1} is accessed directly from {0}..
         /// </summary>
         internal static string ApiReplacements_MessageFormat {
             get {
@@ -115,7 +115,7 @@ namespace BugHunter.CsRules {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Method {0} is used without Architect/CTO approval..
+        ///   Looks up a localized string similar to Method {1} is used without Architect/CTO approval..
         /// </summary>
         internal static string BH1000_MessageFormat {
             get {
@@ -205,7 +205,7 @@ namespace BugHunter.CsRules {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &quot;Session[]&quot; should not be used. Use &quot;SessionHelper.GetValue()&quot; instead..
+        ///   Looks up a localized string similar to &quot;Session[]&quot; should not be used. Use &quot;SessionHelper.GetValue()&quot; or &quot;SessionHelper.SetValue()&quot;  instead..
         /// </summary>
         internal static string HttpSessionElementAccess_Description {
             get {
@@ -214,7 +214,7 @@ namespace BugHunter.CsRules {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &quot;{0}&quot; should not be used. Use &quot;SessionHelper.GetValue()&quot; instead..
+        ///   Looks up a localized string similar to &quot;{0}&quot; should not be used. Use &quot;SessionHelper.GetValue()&quot; or &quot;SessionHelper.SetValue()&quot;  instead..
         /// </summary>
         internal static string HttpSessionElementAccess_MessageFormat {
             get {
@@ -223,7 +223,7 @@ namespace BugHunter.CsRules {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &quot;Session[]&quot; should not be used. Use &quot;SessionHelper.GetValue()&quot; instead..
+        ///   Looks up a localized string similar to &quot;Session[]&quot; should not be used. Use &quot;SessionHelper.GetValue()&quot; or &quot;SessionHelper.SetValue()&quot;  instead..
         /// </summary>
         internal static string HttpSessionElementAccess_Title {
             get {
@@ -241,7 +241,7 @@ namespace BugHunter.CsRules {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &quot;{0}&quot; should not be used. Use &quot;SessionHelper.GetSessionID()&quot; instead..
+        ///   Looks up a localized string similar to &quot;{0}.{1}&quot; should not be used. Use &quot;SessionHelper.GetSessionID()&quot; instead..
         /// </summary>
         internal static string HttpSessionSessionId_MessageFormat {
             get {

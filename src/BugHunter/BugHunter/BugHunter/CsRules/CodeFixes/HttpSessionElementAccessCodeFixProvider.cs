@@ -79,7 +79,7 @@ namespace BugHunter.CsRules.CodeFixes
             // look for parent of type SimpleAssignmentexpressionSyntax and make sure elementAccess is an lvalue of this assignment
             var assignmentExpression = elementAccess.FirstAncestorOrSelf<AssignmentExpressionSyntax>();
             
-            return (assignmentExpression != null) ? assignmentExpression.Left.Contains(elementAccess) : false;
+            return assignmentExpression?.Left.Contains(elementAccess) ?? false;
         }
     }
 }
