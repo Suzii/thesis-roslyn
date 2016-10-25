@@ -1,8 +1,11 @@
-﻿using Microsoft.CodeAnalysis;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Microsoft.CodeAnalysis;
 
-namespace BugHunter.Test.CsTests
+namespace BugHunter.Test
 {
-    public static class Constants
+    public class ReferencesHelper
     {
         public static readonly MetadataReference CMSCoreReference = MetadataReference.CreateFromFile(typeof(CMS.Core.ModuleName).Assembly.Location);
         public static readonly MetadataReference CMSBaseReference = MetadataReference.CreateFromFile(typeof(CMS.Base.BaseModule).Assembly.Location);
@@ -22,5 +25,17 @@ namespace BugHunter.Test.CsTests
             CMSIOReference,
             CMSEventLogReference
         };
+
+        public static MetadataReference[] GetReferencesFor(params Type[] types)
+        {
+            if (types == null || types.Length == 0)
+            {
+                return new MetadataReference[] {};
+            }
+
+            var references = types.Select(type => MetadataReference.CreateFromFile(type.Assembly.Location)).Distinct();
+
+            return references.ToArray();
+        }
     }
 }

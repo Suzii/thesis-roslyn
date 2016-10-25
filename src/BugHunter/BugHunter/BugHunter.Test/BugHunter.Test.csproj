@@ -544,7 +544,7 @@
     <Compile Include="CsTests\HttpRequestUserHostAddressTest.cs" />
     <Compile Include="CsTests\EventLogArgumentsTest.cs" />
     <Compile Include="CsTests\WhereLikeMethodTest.cs" />
-    <Compile Include="CsTests\Constants.cs" />
+    <Compile Include="ReferencesHelper.cs" />
     <Compile Include="HelpersTests\SemanticModelBrowserTests.cs" />
     <Compile Include="Verifiers\CodeFixVerifier.cs" />
     <Compile Include="Verifiers\DiagnosticVerifier.cs" />

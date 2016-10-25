@@ -10,21 +10,11 @@ using NUnit.Framework;
 namespace BugHunter.Test.CsTests
 {
     [TestFixture]
-    public class HttpRequestUserHostAddressTest : CodeFixVerifier
+    public class HttpRequestUserHostAddressTest : CodeFixVerifier<HttpRequestUserHostAddressAnalyzer, HttpRequestUserHostAddressCodeFixProvider>
     {
-        protected override CodeFixProvider GetCSharpCodeFixProvider()
-        {
-            return new HttpRequestUserHostAddressCodeFixProvider();
-        }
-
-        protected override DiagnosticAnalyzer GetCSharpDiagnosticAnalyzer()
-        {
-            return new HttpRequestUserHostAddressAnalyzer();
-        }
-
         protected override MetadataReference[] GetAdditionalReferences()
         {
-            return Constants.BasicReferences.Union(new[] {Constants.SystemWebReference}).ToArray();
+            return ReferencesHelper.BasicReferences.Union(new[] {ReferencesHelper.SystemWebReference}).ToArray();
         }
 
         [Test]

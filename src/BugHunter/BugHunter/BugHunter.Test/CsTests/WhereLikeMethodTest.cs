@@ -9,21 +9,11 @@ using NUnit.Framework;
 namespace BugHunter.Test.CsTests
 {
     [TestFixture]
-    public class WhereLikeMethodTest : CodeFixVerifier
+    public class WhereLikeMethodTest : CodeFixVerifier<WhereLikeMethodAnalyzer, WhereLikeMethodCodeFixProvider>
     {
-        protected override CodeFixProvider GetCSharpCodeFixProvider()
-        {
-            return new WhereLikeMethodCodeFixProvider();
-        }
-
-        protected override DiagnosticAnalyzer GetCSharpDiagnosticAnalyzer()
-        {
-            return new WhereLikeMethodAnalyzer();
-        }
-
         protected override MetadataReference[] GetAdditionalReferences()
         {
-            return Constants.BasicReferences;
+            return ReferencesHelper.BasicReferences;
         }
 
         [Test]
