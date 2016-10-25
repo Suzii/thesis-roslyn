@@ -8,7 +8,7 @@ using NUnit.Framework;
 namespace BugHunter.Test.CsTests
 {
     [TestFixture]
-    public class HttpRequestUserHostAddressTest : CodeFixVerifier<HttpRequestUserHostAddressAnalyzer, HttpRequestUserHostAddressCodeFixProvider>
+    public class HttpRequestUrlTest : CodeFixVerifier<HttpRequestUrlAnalyzer, HttpRequestUrlCodeFixProvider>
     {
         protected override MetadataReference[] GetAdditionalReferences()
         {
@@ -35,14 +35,14 @@ namespace SampleTestProject.CsSamples
         public void SampleMethod()
         {{
             var request = {requestInstance};
-            var address = request.UserHostAddress;
+            var address = request.Url;
         }}
     }}
 }}";
             var expectedDiagnostic = new DiagnosticResult
             {
-                Id = "BH1002",
-                Message = "Property Request.UserHostAddress is being accessed.",
+                Id = "BH1006",
+                Message = @"""request.Url"" should not be used. Use ""RequestContext.Url"" instead.",
                 Severity = DiagnosticSeverity.Warning,
                 Locations = new[] { new DiagnosticResultLocation("Test0.cs", 9, 27) }
             };
@@ -58,7 +58,7 @@ namespace SampleTestProject.CsSamples
         public void SampleMethod()
         {{
             var request = {requestInstance};
-            var address = RequestContext.UserHostAddress;
+            var address = RequestContext.URL;
         }}
     }}
 }}";

@@ -2,8 +2,6 @@
 using BugHunter.CsRules.CodeFixes;
 using BugHunter.Test.Verifiers;
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CodeFixes;
-using Microsoft.CodeAnalysis.Diagnostics;
 using NUnit.Framework;
 
 namespace BugHunter.Test.CsTests

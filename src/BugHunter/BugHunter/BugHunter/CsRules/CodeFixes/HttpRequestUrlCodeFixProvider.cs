@@ -12,7 +12,7 @@ using Microsoft.CodeAnalysis.CSharp;
 namespace BugHunter.CsRules.CodeFixes
 {
     [ExportCodeFixProvider(LanguageNames.CSharp, Name = nameof(HttpRequestUserHostAddressCodeFixProvider)), Shared]
-    public class HttpRequestUserHostAddressCodeFixProvider : CodeFixProvider
+    public class HttpRequestUrlCodeFixProvider : CodeFixProvider
     {
         public sealed override ImmutableArray<string> FixableDiagnosticIds
             => ImmutableArray.Create(HttpRequestUserHostAddressAnalyzer.DIAGNOSTIC_ID);
@@ -34,14 +34,14 @@ namespace BugHunter.CsRules.CodeFixes
 
             var codeFixTitle = new LocalizableResourceString(nameof(CsResources.ApiReplacements_CodeFix), CsResources.ResourceManager, typeof(CsResources)).ToString();
             var usingNamespace = typeof(CMS.Helpers.RequestContext).Namespace;
-            var newMemberAccess = SyntaxFactory.ParseExpression("RequestContext.UserHostAddress");
+            var newMemberAccess = SyntaxFactory.ParseExpression("RequestContext.URL");
             var diagnostic = context.Diagnostics.First();
             
             context.RegisterCodeFix(
                 CodeAction.Create(
                     title: string.Format(codeFixTitle, newMemberAccess),
                     createChangedDocument: c => editor.ReplaceExpressionWith(memberAccess, newMemberAccess, usingNamespace),
-                    equivalenceKey: nameof(HttpRequestUserHostAddressCodeFixProvider)),
+                    equivalenceKey: nameof(HttpRequestUrlCodeFixProvider)),
                 diagnostic);
         }
     }

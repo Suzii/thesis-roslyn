@@ -44,7 +44,7 @@ namespace BugHunter.CsRules.CodeFixes
                 CodeAction.Create(
                     title: string.Format(codeFixTitle, newMemberAccess),
                     createChangedDocument: c => editor.ReplaceExpressionWith(memberAccess, newMemberAccess, usingNamespace),
-                    equivalenceKey: "Cookies"),
+                    equivalenceKey: nameof(HttpRequestAndResponseCookiesCodeFixProvider)),
                 diagnostic);
         }
 

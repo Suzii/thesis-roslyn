@@ -45,7 +45,7 @@ namespace BugHunter.CsRules.CodeFixes
                 CodeAction.Create(
                     title: string.Format(codeFixTitle, newArgumentName),
                     createChangedDocument: c => ReplaceEventTypeArgument(context.Document, invocationExpression, c, newArgumentName),
-                    equivalenceKey: "EventLog"),
+                    equivalenceKey: nameof(EventLogArgumentsCodeFixProvider)),
                 diagnostic);
         }
 

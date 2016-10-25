@@ -41,7 +41,7 @@ namespace BugHunter.CsRules.CodeFixes
                 CodeAction.Create(
                     title: string.Format(codeFixTitle, newMemberAccess),
                     createChangedDocument: c => editor.ReplaceExpressionWith(memberAccess, newMemberAccess, usingNamespace),
-                    equivalenceKey: "SessionHelper.GetSessionID"),
+                    equivalenceKey: nameof(HttpSessionSessionIdCodeFixProvider)),
                 diagnostic);
         }
     }

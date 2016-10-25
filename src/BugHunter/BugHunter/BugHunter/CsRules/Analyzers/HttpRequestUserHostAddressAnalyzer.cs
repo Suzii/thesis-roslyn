@@ -7,7 +7,7 @@ namespace BugHunter.CsRules.Analyzers
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     public class HttpRequestUserHostAddressAnalyzer : BaseMemberAccessAnalyzer
     {
-        public const string DIAGNOSTIC_ID = DiagnosticIds.RequestUserHostAddress;
+        public const string DIAGNOSTIC_ID = DiagnosticIds.HttpRequestUserHostAddress;
         
         private static readonly DiagnosticDescriptor Rule = new DiagnosticDescriptor(DIAGNOSTIC_ID, 
             title: new LocalizableResourceString(nameof(CsResources.HttpRequestUserHostAddress_Title), CsResources.ResourceManager, typeof(CsResources)),
