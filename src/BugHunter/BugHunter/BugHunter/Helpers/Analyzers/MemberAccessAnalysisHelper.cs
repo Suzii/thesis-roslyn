@@ -6,7 +6,7 @@ using Microsoft.CodeAnalysis.Diagnostics;
 
 namespace BugHunter.Helpers.Analyzers
 {
-    internal class MemberAccessAnalyzer
+    internal class MemberAccessAnalysisHelper
     {
         private readonly DiagnosticDescriptor _rule;
 
@@ -14,10 +14,10 @@ namespace BugHunter.Helpers.Analyzers
 
         private readonly string[] _memberNames;
         
-        public MemberAccessAnalyzer(DiagnosticDescriptor rule, Type accessedType, string memberName)
+        public MemberAccessAnalysisHelper(DiagnosticDescriptor rule, Type accessedType, string memberName)
             : this(rule, accessedType, new []{ memberName}) { }
 
-        public MemberAccessAnalyzer(DiagnosticDescriptor rule, Type accessedType, string[] memberNames)
+        public MemberAccessAnalysisHelper(DiagnosticDescriptor rule, Type accessedType, string[] memberNames)
         {
             _rule = rule;
             _accessedType = accessedType;

@@ -35,8 +35,9 @@ namespace BugHunter.Test.CsTests
             VerifyCSharpDiagnostic(test);
         }
         
-        [Test]
-        public void InputWithIncident_SurfacesDiagnostic()
+        [TestCase(@"new System.Web.HttpRequest(""fileName"", ""url"", ""queryString"")")]
+        [TestCase(@"new System.Web.HttpRequestWrapper(new System.Web.HttpRequest(""fileName"", ""url"", ""queryString""))")]
+        public void InputWithIncident_SurfacesDiagnostic(string requestInstance)
         {
             var test = $@"
 namespace SampleTestProject.CsSamples
@@ -45,7 +46,7 @@ namespace SampleTestProject.CsSamples
     {{
         public void SampleMethod()
         {{
-            var request = new System.Web.HttpRequest(""fileName"", ""url"", ""queryString"");
+            var request = {requestInstance};
             var address = request.UserHostAddress;
         }}
     }}
@@ -68,7 +69,7 @@ namespace SampleTestProject.CsSamples
     {{
         public void SampleMethod()
         {{
-            var request = new System.Web.HttpRequest(""fileName"", ""url"", ""queryString"");
+            var request = {requestInstance};
             var address = RequestContext.UserHostAddress;
         }}
     }}

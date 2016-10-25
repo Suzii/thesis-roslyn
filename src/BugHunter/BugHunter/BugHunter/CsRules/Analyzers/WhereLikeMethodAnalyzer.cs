@@ -25,7 +25,7 @@ namespace BugHunter.CsRules.Analyzers
         {
             var accessedType = typeof(CMS.DataEngine.WhereConditionBase<>);
             var forbiddenMembers = new[] { nameof(CMS.DataEngine.WhereCondition.WhereLike), nameof(CMS.DataEngine.WhereCondition.WhereNotLike) };
-            var analyzer = new MemberAccessAnalyzer(Rule, accessedType, forbiddenMembers);
+            var analyzer = new MemberAccessAnalysisHelper(Rule, accessedType, forbiddenMembers);
 
             context.RegisterSyntaxNodeAction(c => analyzer.Analyze(c), SyntaxKind.SimpleMemberAccessExpression);
         }

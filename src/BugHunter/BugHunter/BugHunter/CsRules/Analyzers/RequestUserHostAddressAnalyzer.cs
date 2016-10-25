@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Immutable;
 using BugHunter.Helpers.Analyzers;
 using Microsoft.CodeAnalysis;
@@ -23,9 +24,14 @@ namespace BugHunter.CsRules.Analyzers
 
         public override void Initialize(AnalysisContext context)
         {
-            var accessedType = typeof(System.Web.HttpRequest);
+            RegisterAction(context, typeof(System.Web.HttpRequest));
+            RegisterAction(context, typeof(System.Web.HttpRequestBase));
+        }
+
+        private void RegisterAction(AnalysisContext context, Type accessedType)
+        {
             var memberName = nameof(System.Web.HttpRequest.UserHostAddress);
-            var analyzer = new MemberAccessAnalyzer(Rule, accessedType, memberName);
+            var analyzer = new MemberAccessAnalysisHelper(Rule, accessedType, memberName);
 
             context.RegisterSyntaxNodeAction(c => analyzer.Analyze(c), SyntaxKind.SimpleMemberAccessExpression);
         }

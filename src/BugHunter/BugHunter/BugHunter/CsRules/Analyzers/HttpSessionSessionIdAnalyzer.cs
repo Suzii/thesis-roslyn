@@ -1,4 +1,5 @@
-﻿using System.Collections.Immutable;
+﻿using System;
+using System.Collections.Immutable;
 using System.Web;
 using BugHunter.Helpers.Analyzers;
 using Microsoft.CodeAnalysis;
@@ -30,13 +31,16 @@ namespace BugHunter.CsRules.Analyzers
 
         public override void Initialize(AnalysisContext context)
         {
-            // TODO register two separate actions or modify MemberAccessAnalyzer to accept multiple types???
-            var memberName = nameof(System.Web.HttpSessionStateBase.SessionID);
-            var analyzerForHttpSessionStateBase = new MemberAccessAnalyzer(Rule, typeof(System.Web.HttpSessionStateBase), memberName);
-            var analyzerForHttpSessionState = new MemberAccessAnalyzer(Rule, typeof(System.Web.SessionState.HttpSessionState), memberName);
+            RegisterAction(context, typeof(System.Web.HttpSessionStateBase));
+            RegisterAction(context, typeof(System.Web.SessionState.HttpSessionState));
+        }
 
-            context.RegisterSyntaxNodeAction(c => analyzerForHttpSessionStateBase.Analyze(c), SyntaxKind.SimpleMemberAccessExpression);
-            context.RegisterSyntaxNodeAction(c => analyzerForHttpSessionState.Analyze(c), SyntaxKind.SimpleMemberAccessExpression);
+        private void RegisterAction(AnalysisContext context, Type accessedType)
+        {
+            var memberName = nameof(System.Web.HttpSessionStateBase.SessionID);
+            var analyzer = new MemberAccessAnalysisHelper(Rule, accessedType, memberName);
+
+            context.RegisterSyntaxNodeAction(c => analyzer.Analyze(c), SyntaxKind.SimpleMemberAccessExpression);
         }
     }
 }
