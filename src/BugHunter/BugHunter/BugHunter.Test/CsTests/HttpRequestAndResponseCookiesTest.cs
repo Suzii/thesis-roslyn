@@ -10,16 +10,16 @@ using NUnit.Framework;
 namespace BugHunter.Test.CsTests
 {
     [TestFixture]
-    public class RequestUserHostAddressTest : CodeFixVerifier
+    public class HttpRequestAndResponseCookiesTest : CodeFixVerifier
     {
         protected override CodeFixProvider GetCSharpCodeFixProvider()
         {
-            return new RequestUserHostAddressCodeFixProvider();
+            return new HttpRequestAndResponseCookiesCodeFixProvider();
         }
 
         protected override DiagnosticAnalyzer GetCSharpDiagnosticAnalyzer()
         {
-            return new RequestUserHostAddressAnalyzer();
+            return new HttpRequestAndResponseCookiesAnalyzer();
         }
 
         protected override MetadataReference[] GetAdditionalReferences()
@@ -35,9 +35,11 @@ namespace BugHunter.Test.CsTests
             VerifyCSharpDiagnostic(test);
         }
         
-        [TestCase(@"new System.Web.HttpRequest(""fileName"", ""url"", ""queryString"")")]
-        [TestCase(@"new System.Web.HttpRequestWrapper(new System.Web.HttpRequest(""fileName"", ""url"", ""queryString""))")]
-        public void InputWithIncident_SurfacesDiagnostic(string requestInstance)
+        [TestCase(@"new System.Web.HttpRequest(""fileName"", ""url"", ""queryString"")", "CookieHelper.RequestCookies")]
+        [TestCase(@"new System.Web.HttpResponse(""fileName"", ""url"", ""queryString"")", "CookieHelper.ResponseCookies")]
+        [TestCase(@"new System.Web.HttpRequestWrapper(new System.Web.HttpRequest(""fileName"", ""url"", ""queryString""))", "CookieHelper.RequestCookies")]
+        [TestCase(@"new System.Web.HttpResponseWrapper(new System.Web.HttpRequest(""fileName"", ""url"", ""queryString""))", "CookieHelper.ResponseCookies")]
+        public void InputWithIncident_SurfacesDiagnostic(string instance, string codeFix)
         {
             var test = $@"
 namespace SampleTestProject.CsSamples
@@ -46,15 +48,15 @@ namespace SampleTestProject.CsSamples
     {{
         public void SampleMethod()
         {{
-            var request = {requestInstance};
-            var address = request.UserHostAddress;
+            var r = {instance};
+            var address = r.Cookies;
         }}
     }}
 }}";
             var expectedDiagnostic = new DiagnosticResult
             {
-                Id = "BH1002",
-                Message = "Property Request.UserHostAddress is being accessed.",
+                Id = "BH1005",
+                Message = @"""r.Cookies"" should not be used. Use ""CookieHelper.ResponseCookies"" or ""CookieHelper.RequestCookies"" instead.",
                 Severity = DiagnosticSeverity.Warning,
                 Locations = new[] { new DiagnosticResultLocation("Test0.cs", 9, 27) }
             };
@@ -69,8 +71,8 @@ namespace SampleTestProject.CsSamples
     {{
         public void SampleMethod()
         {{
-            var request = {requestInstance};
-            var address = RequestContext.UserHostAddress;
+            var r = {instance};
+            var address = {codeFix};
         }}
     }}
 }}";

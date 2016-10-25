@@ -11,5 +11,7 @@
         public const string RequestUserHostAddress = "BH1002";
         public const string HttpSessionElementAccess = "BH1003";
         public const string HttpSessionSessionId = "BH1004";
+        public const string HttpRequestAndResponseCookie = "BH1005";
+
     }
 }

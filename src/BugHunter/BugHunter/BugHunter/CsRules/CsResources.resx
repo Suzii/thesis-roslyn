@@ -168,14 +168,24 @@
     <value>Replace "Request.UserHostAddress" with "RequestContext.UserHostAddress".</value>
     <comment>{0} - old, {1} - new</comment>
   </data>
-  <data name="BH1002_Description" xml:space="preserve">
+  <data name="HttpRequestUserHostAddress_Description" xml:space="preserve">
     <value>Request.UserHostAddress property is used. Use RequestContext.UserHostAddress instead.</value>
   </data>
-  <data name="BH1002_MessageFormat" xml:space="preserve">
+  <data name="HttpRequestUserHostAddress_MessageFormat" xml:space="preserve">
     <value>Property Request.UserHostAddress is being accessed.</value>
   </data>
-  <data name="BH1002_Title" xml:space="preserve">
+  <data name="HttpRequestUserHostAddress_Title" xml:space="preserve">
     <value>Request.UserHostAddress should not be used.</value>
+  </data>
+  <data name="HttpRequestAndResponseCookie_Description" xml:space="preserve">
+    <value>"HttpCookie" should not be used accessed directly. Use "CookieHelper.ResponseCookies" or "CookieHelper.RequestCookies" instead.</value>
+    <comment>0 - member name, 1 - good type, 2 - current source type</comment>
+  </data>
+  <data name="HttpRequestAndResponseCookie_MessageFormat" xml:space="preserve">
+    <value>"{0}.{1}" should not be used. Use "CookieHelper.ResponseCookies" or "CookieHelper.RequestCookies" instead.</value>
+  </data>
+  <data name="HttpRequestAndResponseCookie_Title" xml:space="preserve">
+    <value>"HttpCookie" should not be used accessed directly. Use "CookieHelper.ResponseCookies" or "CookieHelper.RequestCookies" instead.</value>
   </data>
   <data name="HttpSessionElementAccess_Description" xml:space="preserve">
     <value>"Session[]" should not be used. Use "SessionHelper.GetValue()" or "SessionHelper.SetValue()"  instead.</value>

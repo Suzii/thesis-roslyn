@@ -35,8 +35,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="CsRules\Analyzers\HttpRequestAndResponseCookiesAnalyzer.cs" />
     <Compile Include="CsRules\Analyzers\HttpSessionSessionIdAnalyzer.cs" />
     <Compile Include="CsRules\Analyzers\HttpSessionElementAccessAnalyzer.cs" />
+    <Compile Include="CsRules\CodeFixes\HttpRequestAndResponseCookiesCodeFixProvider.cs" />
     <Compile Include="CsRules\CodeFixes\HttpSessionElementAccessCodeFixProvider.cs" />
     <Compile Include="CsRules\CodeFixes\HttpSessionSessionIdCodeFixProvider.cs" />
     <Compile Include="DiagnosticIds.cs" />
@@ -53,16 +55,16 @@
     </Compile>
     <Compile Include="CsRules\Analyzers\WhereLikeMethodAnalyzer.cs" />
     <Compile Include="CsRules\Analyzers\EventLogArgumentsAnalyzer.cs" />
-    <Compile Include="CsRules\Analyzers\RequestUserHostAddressAnalyzer.cs" />
+    <Compile Include="CsRules\Analyzers\HttpRequestUserHostAddressAnalyzer.cs" />
     <Compile Include="CsRules\CodeFixes\WhereLikeMethodCodeFixProvider.cs" />
-    <Compile Include="CsRules\CodeFixes\RequestUserHostAddressCodeFixProvider.cs" />
+    <Compile Include="CsRules\CodeFixes\HttpRequestUserHostAddressCodeFixProvider.cs" />
     <Compile Include="CsRules\CodeFixes\EventLogArgumentsCodeFixProvider.cs" />
     <Compile Include="CsRules\CsResources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>CsResources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Helpers\Analyzers\MemberAccessAnalyzer.cs" />
+    <Compile Include="Helpers\Analyzers\MemberAccessAnalysisHelper.cs" />
     <Compile Include="Helpers\CodeFixes\CodeFixHelper.cs" />
     <Compile Include="Helpers\CodeFixes\MemberAccessCodeFixHelper.cs" />
     <Compile Include="Helpers\CodeFixes\UsingsHelper.cs" />

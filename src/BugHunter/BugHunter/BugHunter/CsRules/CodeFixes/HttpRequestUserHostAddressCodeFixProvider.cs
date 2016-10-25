@@ -11,11 +11,11 @@ using Microsoft.CodeAnalysis.CSharp;
 
 namespace BugHunter.CsRules.CodeFixes
 {
-    [ExportCodeFixProvider(LanguageNames.CSharp, Name = nameof(RequestUserHostAddressCodeFixProvider)), Shared]
-    public class RequestUserHostAddressCodeFixProvider : CodeFixProvider
+    [ExportCodeFixProvider(LanguageNames.CSharp, Name = nameof(HttpRequestUserHostAddressCodeFixProvider)), Shared]
+    public class HttpRequestUserHostAddressCodeFixProvider : CodeFixProvider
     {
         public sealed override ImmutableArray<string> FixableDiagnosticIds
-            => ImmutableArray.Create(RequestUserHostAddressAnalyzer.DIAGNOSTIC_ID);
+            => ImmutableArray.Create(HttpRequestUserHostAddressAnalyzer.DIAGNOSTIC_ID);
 
         public sealed override FixAllProvider GetFixAllProvider()
         {

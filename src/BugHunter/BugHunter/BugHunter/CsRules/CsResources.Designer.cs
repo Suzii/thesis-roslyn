@@ -171,36 +171,63 @@ namespace BugHunter.CsRules {
         /// <summary>
         ///   Looks up a localized string similar to Replace &quot;Request.UserHostAddress&quot; with &quot;RequestContext.UserHostAddress&quot;..
         /// </summary>
-        internal static string BH1002_CodeFix {
+        internal static string HttpRequestUserHostAddress_CodeFix {
             get {
                 return ResourceManager.GetString("BH1002_CodeFix", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &quot;HttpCookie&quot; should not be used accessed directly. Use &quot;CookieHelper.ResponseCookies&quot; or &quot;CookieHelper.RequestCookies&quot; instead..
+        /// </summary>
+        internal static string HttpRequestAndResponseCookie_Description {
+            get {
+                return ResourceManager.GetString("HttpRequestAndResponseCookie_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &quot;{0}.{1}&quot; should not be used. Use &quot;CookieHelper.ResponseCookies&quot; or &quot;CookieHelper.RequestCookies&quot; instead..
+        /// </summary>
+        internal static string HttpRequestAndResponseCookie_MessageFormat {
+            get {
+                return ResourceManager.GetString("HttpRequestAndResponseCookie_MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &quot;HttpCookie&quot; should not be used accessed directly. Use &quot;CookieHelper.ResponseCookies&quot; or &quot;CookieHelper.RequestCookies&quot; instead..
+        /// </summary>
+        internal static string HttpRequestAndResponseCookie_Title {
+            get {
+                return ResourceManager.GetString("HttpRequestAndResponseCookie_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Request.UserHostAddress property is used. Use RequestContext.UserHostAddress instead..
         /// </summary>
-        internal static string BH1002_Description {
+        internal static string HttpRequestUserHostAddress_Description {
             get {
-                return ResourceManager.GetString("BH1002_Description", resourceCulture);
+                return ResourceManager.GetString("HttpRequestUserHostAddress_Description", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Property Request.UserHostAddress is being accessed..
         /// </summary>
-        internal static string BH1002_MessageFormat {
+        internal static string HttpRequestUserHostAddress_MessageFormat {
             get {
-                return ResourceManager.GetString("BH1002_MessageFormat", resourceCulture);
+                return ResourceManager.GetString("HttpRequestUserHostAddress_MessageFormat", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Request.UserHostAddress should not be used..
         /// </summary>
-        internal static string BH1002_Title {
+        internal static string HttpRequestUserHostAddress_Title {
             get {
-                return ResourceManager.GetString("BH1002_Title", resourceCulture);
+                return ResourceManager.GetString("HttpRequestUserHostAddress_Title", resourceCulture);
             }
         }
         

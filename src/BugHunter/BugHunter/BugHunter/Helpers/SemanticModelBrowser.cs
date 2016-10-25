@@ -13,6 +13,11 @@ namespace BugHunter.Helpers
     {
         private readonly SemanticModel _semanticModel;
 
+        public SemanticModelBrowser(SemanticModel semanticModel)
+        {
+            _semanticModel = semanticModel;
+        }
+
         public SemanticModelBrowser(SyntaxNodeAnalysisContext context)
         {
             _semanticModel = context.SemanticModel;
