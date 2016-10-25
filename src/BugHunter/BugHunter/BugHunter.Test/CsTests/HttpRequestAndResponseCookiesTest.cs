@@ -43,8 +43,8 @@ namespace SampleTestProject.CsSamples
 }}";
             var expectedDiagnostic = new DiagnosticResult
             {
-                Id = "BH1005",
-                Message = @"""r.Cookies"" should not be used. Use ""CookieHelper.ResponseCookies"" or ""CookieHelper.RequestCookies"" instead.",
+                Id = DiagnosticIds.HttpRequestAndResponseCookie,
+                Message = @"'r.Cookies' should not be used. Use 'CookieHelper.ResponseCookies' or 'CookieHelper.RequestCookies' instead.",
                 Severity = DiagnosticSeverity.Warning,
                 Locations = new[] { new DiagnosticResultLocation("Test0.cs", 9, 27) }
             };

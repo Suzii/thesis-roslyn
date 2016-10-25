@@ -40,8 +40,8 @@ namespace SampleTestProject.CsSamples
 }}";
             var expectedDiagnostic = new DiagnosticResult
             {
-                Id = "BH1001",
-                Message = $"LogEvent called with event type \"{oldArgument}\".",
+                Id = DiagnosticIds.EventLogArguments,
+                Message = $"LogEvent called with event type '{oldArgument}'.",
                 Severity = DiagnosticSeverity.Warning,
                 Locations = new[] { new DiagnosticResultLocation("Test0.cs", 8, 52) }
             };

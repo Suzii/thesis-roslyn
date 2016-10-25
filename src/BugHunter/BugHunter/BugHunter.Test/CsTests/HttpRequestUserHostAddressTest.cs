@@ -41,7 +41,7 @@ namespace SampleTestProject.CsSamples
 }}";
             var expectedDiagnostic = new DiagnosticResult
             {
-                Id = "BH1002",
+                Id = DiagnosticIds.HttpRequestUserHostAddress,
                 Message = "Property Request.UserHostAddress is being accessed.",
                 Severity = DiagnosticSeverity.Warning,
                 Locations = new[] { new DiagnosticResultLocation("Test0.cs", 9, 27) }

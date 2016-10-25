@@ -61,7 +61,7 @@ namespace BugHunter.CsRules {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Replace with &quot;{0}&quot;..
+        ///   Looks up a localized string similar to Replace with &apos;{0}&apos;..
         /// </summary>
         internal static string ApiReplacements_CodeFix {
             get {
@@ -97,88 +97,34 @@ namespace BugHunter.CsRules {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Replace with {0}()..
+        ///   Looks up a localized string similar to LogEvent called with event type &apos;{0}&apos;, use &apos;EventType.{1}&apos; instead..
         /// </summary>
-        internal static string BH1000_CodeFix {
+        internal static string EventLogArguments_Description {
             get {
-                return ResourceManager.GetString("BH1000_CodeFix", resourceCulture);
+                return ResourceManager.GetString("EventLogArguments_Description", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Consider using one of WhereStartsWith(), WhereEndsWith() or WhereContains() methods instead..
+        ///   Looks up a localized string similar to LogEvent called with event type &apos;{0}&apos;..
         /// </summary>
-        internal static string BH1000_Description {
+        internal static string EventLogArguments_MessageFormat {
             get {
-                return ResourceManager.GetString("BH1000_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Method {1} is used without Architect/CTO approval..
-        /// </summary>
-        internal static string BH1000_MessageFormat {
-            get {
-                return ResourceManager.GetString("BH1000_MessageFormat", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Method WhereLike() or WhereNotLike() should not be used used..
-        /// </summary>
-        internal static string BH1000_Title {
-            get {
-                return ResourceManager.GetString("BH1000_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Replace &quot;{0}&quot; with &quot;{1}&quot;..
-        /// </summary>
-        internal static string BH1001_CodeFix {
-            get {
-                return ResourceManager.GetString("BH1001_CodeFix", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to LogEvent called with event type &quot;{0}&quot;, use EventType.{1} instead..
-        /// </summary>
-        internal static string BH1001_Description {
-            get {
-                return ResourceManager.GetString("BH1001_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to LogEvent called with event type &quot;{0}&quot;..
-        /// </summary>
-        internal static string BH1001_MessageFormat {
-            get {
-                return ResourceManager.GetString("BH1001_MessageFormat", resourceCulture);
+                return ResourceManager.GetString("EventLogArguments_MessageFormat", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to LogEvent should not be called with hardcoded event type..
         /// </summary>
-        internal static string BH1001_Title {
+        internal static string EventLogArguments_Title {
             get {
-                return ResourceManager.GetString("BH1001_Title", resourceCulture);
+                return ResourceManager.GetString("EventLogArguments_Title", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Replace &quot;Request.UserHostAddress&quot; with &quot;RequestContext.UserHostAddress&quot;..
-        /// </summary>
-        internal static string BH1002_CodeFix {
-            get {
-                return ResourceManager.GetString("BH1002_CodeFix", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to &quot;HttpCookie&quot; should not be used accessed directly. Use &quot;CookieHelper.ResponseCookies&quot; or &quot;CookieHelper.RequestCookies&quot; instead..
+        ///   Looks up a localized string similar to &apos;HttpCookie&apos; should not be used accessed directly. Use &apos;CookieHelper.ResponseCookies&apos; or &apos;CookieHelper.RequestCookies&apos; instead..
         /// </summary>
         internal static string HttpRequestAndResponseCookie_Description {
             get {
@@ -187,7 +133,7 @@ namespace BugHunter.CsRules {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &quot;{0}.{1}&quot; should not be used. Use &quot;CookieHelper.ResponseCookies&quot; or &quot;CookieHelper.RequestCookies&quot; instead..
+        ///   Looks up a localized string similar to &apos;{0}.{1}&apos; should not be used. Use &apos;CookieHelper.ResponseCookies&apos; or &apos;CookieHelper.RequestCookies&apos; instead..
         /// </summary>
         internal static string HttpRequestAndResponseCookie_MessageFormat {
             get {
@@ -196,7 +142,7 @@ namespace BugHunter.CsRules {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &quot;HttpCookie&quot; should not be used accessed directly. Use &quot;CookieHelper.ResponseCookies&quot; or &quot;CookieHelper.RequestCookies&quot; instead..
+        ///   Looks up a localized string similar to &apos;HttpCookie&apos; should not be used accessed directly. Use &apos;CookieHelper.ResponseCookies&apos; or &apos;CookieHelper.RequestCookies&apos; instead..
         /// </summary>
         internal static string HttpRequestAndResponseCookie_Title {
             get {
@@ -205,7 +151,7 @@ namespace BugHunter.CsRules {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Request.UserHostAddress should not be used. Use &quot;RequestContext.Url&quot; instead..
+        ///   Looks up a localized string similar to Request.UserHostAddress should not be used. Use &apos;RequestContext.Url&apos; instead..
         /// </summary>
         internal static string HttpRequestUrl_Description {
             get {
@@ -214,7 +160,7 @@ namespace BugHunter.CsRules {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &quot;{0}.{1}&quot; should not be used. Use &quot;RequestContext.Url&quot; instead..
+        ///   Looks up a localized string similar to &apos;{0}.{1}&apos; should not be used. Use &apos;RequestContext.Url&apos; instead..
         /// </summary>
         internal static string HttpRequestUrl_MessageFormat {
             get {
@@ -259,7 +205,7 @@ namespace BugHunter.CsRules {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &quot;Session[]&quot; should not be used. Use &quot;SessionHelper.GetValue()&quot; or &quot;SessionHelper.SetValue()&quot;  instead..
+        ///   Looks up a localized string similar to &apos;Session[]&apos; should not be used. Use &apos;SessionHelper.GetValue()&apos; or &apos;SessionHelper.SetValue()&apos;  instead..
         /// </summary>
         internal static string HttpSessionElementAccess_Description {
             get {
@@ -268,7 +214,7 @@ namespace BugHunter.CsRules {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &quot;{0}&quot; should not be used. Use &quot;SessionHelper.GetValue()&quot; or &quot;SessionHelper.SetValue()&quot;  instead..
+        ///   Looks up a localized string similar to &apos;{0}&apos; should not be used. Use &apos;SessionHelper.GetValue()&apos; or &apos;SessionHelper.SetValue()&apos; instead..
         /// </summary>
         internal static string HttpSessionElementAccess_MessageFormat {
             get {
@@ -277,7 +223,7 @@ namespace BugHunter.CsRules {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &quot;Session[]&quot; should not be used. Use &quot;SessionHelper.GetValue()&quot; or &quot;SessionHelper.SetValue()&quot;  instead..
+        ///   Looks up a localized string similar to &apos;Session[]&apos; should not be used. Use &apos;SessionHelper.GetValue()&apos; or &apos;SessionHelper.SetValue()&apos;  instead..
         /// </summary>
         internal static string HttpSessionElementAccess_Title {
             get {
@@ -286,7 +232,7 @@ namespace BugHunter.CsRules {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &quot;Session.SessionID&quot; should not be used. Use &quot;SessionHelper.GetSessionID()&quot; instead..
+        ///   Looks up a localized string similar to &apos;Session.SessionID&apos; should not be used. Use &apos;SessionHelper.GetSessionID()&apos; instead..
         /// </summary>
         internal static string HttpSessionSessionId_Description {
             get {
@@ -295,7 +241,7 @@ namespace BugHunter.CsRules {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &quot;{0}.{1}&quot; should not be used. Use &quot;SessionHelper.GetSessionID()&quot; instead..
+        ///   Looks up a localized string similar to &apos;{0}.{1}&apos; should not be used. Use &apos;SessionHelper.GetSessionID()&apos; instead..
         /// </summary>
         internal static string HttpSessionSessionId_MessageFormat {
             get {
@@ -304,11 +250,38 @@ namespace BugHunter.CsRules {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &quot;Session.SessionID&quot; should not be used. Use &quot;SessionHelper.GetSessionID()&quot; instead..
+        ///   Looks up a localized string similar to &apos;Session.SessionID&apos; should not be used. Use &apos;SessionHelper.GetSessionID()&apos; instead..
         /// </summary>
         internal static string HttpSessionSessionId_Title {
             get {
                 return ResourceManager.GetString("HttpSessionSessionId_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Consider using one of WhereStartsWith(), WhereEndsWith() or WhereContains() methods instead..
+        /// </summary>
+        internal static string WhereLikeMethod_Description {
+            get {
+                return ResourceManager.GetString("WhereLikeMethod_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Method {1} is used without Architect/CTO approval..
+        /// </summary>
+        internal static string WhereLikeMethod_MessageFormat {
+            get {
+                return ResourceManager.GetString("WhereLikeMethod_MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Method WhereLike() or WhereNotLike() should not be used used..
+        /// </summary>
+        internal static string WhereLikeMethod_Title {
+            get {
+                return ResourceManager.GetString("WhereLikeMethod_Title", resourceCulture);
             }
         }
     }

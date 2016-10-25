@@ -63,27 +63,27 @@ namespace BugHunter.AspxRules {
         /// <summary>
         ///   Looks up a localized string similar to Consider using one of WhereStartsWith(), WhereEndsWith() or WhereContains() methods instead..
         /// </summary>
-        internal static string BH1000_Description {
+        internal static string WhereLikeMethod_Description {
             get {
-                return ResourceManager.GetString("BH1000_Description", resourceCulture);
+                return ResourceManager.GetString("WhereLikeMethod_Description", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Method {0} is used without Architect/CTO approval..
         /// </summary>
-        internal static string BH1000_MessageFormat {
+        internal static string WhereLikeMethod_MessageFormat {
             get {
-                return ResourceManager.GetString("BH1000_MessageFormat", resourceCulture);
+                return ResourceManager.GetString("WhereLikeMethod_MessageFormat", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Method WhereLike() or WhereNotLike() should not be used used..
         /// </summary>
-        internal static string BH1000_Title {
+        internal static string WhereLikeMethod_Title {
             get {
-                return ResourceManager.GetString("BH1000_Title", resourceCulture);
+                return ResourceManager.GetString("WhereLikeMethod_Title", resourceCulture);
             }
         }
     }

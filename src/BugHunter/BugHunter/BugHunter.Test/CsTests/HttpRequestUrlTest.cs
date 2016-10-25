@@ -41,8 +41,8 @@ namespace SampleTestProject.CsSamples
 }}";
             var expectedDiagnostic = new DiagnosticResult
             {
-                Id = "BH1006",
-                Message = @"""request.Url"" should not be used. Use ""RequestContext.Url"" instead.",
+                Id = DiagnosticIds.HttpRequestUrl,
+                Message = @"'request.Url' should not be used. Use 'RequestContext.Url' instead.",
                 Severity = DiagnosticSeverity.Warning,
                 Locations = new[] { new DiagnosticResultLocation("Test0.cs", 9, 27) }
             };

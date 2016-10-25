@@ -14,12 +14,12 @@ namespace BugHunter.CsRules.Analyzers
         public const string DIAGNOSTIC_ID = DiagnosticIds.EventLogArguments;
 
         private static readonly DiagnosticDescriptor Rule = new DiagnosticDescriptor(DIAGNOSTIC_ID,
-            title: new LocalizableResourceString(nameof(CsResources.BH1001_Title), CsResources.ResourceManager, typeof(CsResources)),
-            messageFormat: new LocalizableResourceString(nameof(CsResources.BH1001_MessageFormat), CsResources.ResourceManager, typeof(CsResources)),
+            title: new LocalizableResourceString(nameof(CsResources.EventLogArguments_Title), CsResources.ResourceManager, typeof(CsResources)),
+            messageFormat: new LocalizableResourceString(nameof(CsResources.EventLogArguments_MessageFormat), CsResources.ResourceManager, typeof(CsResources)),
             category: AnalyzerCategories.CsRules,
             defaultSeverity: DiagnosticSeverity.Warning,
             isEnabledByDefault: true,
-            description: new LocalizableResourceString(nameof(CsResources.BH1001_Description), CsResources.ResourceManager, typeof(CsResources)));
+            description: new LocalizableResourceString(nameof(CsResources.EventLogArguments_Description), CsResources.ResourceManager, typeof(CsResources)));
 
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
 

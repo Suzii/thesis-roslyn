@@ -37,7 +37,7 @@ namespace BugHunter.CsRules.CodeFixes
                 return;
             }
 
-            var codeFixTitle = new LocalizableResourceString(nameof(CsResources.BH1000_CodeFix), CsResources.ResourceManager, typeof(CsResources)).ToString();
+            var codeFixTitle = new LocalizableResourceString(nameof(CsResources.ApiReplacements_CodeFix), CsResources.ResourceManager, typeof(CsResources)).ToString();
             var oldArgument = invocationExpression.ArgumentList.Arguments.First().Expression.ToString();
             var newArgumentName = GetNewMethodArgument(oldArgument);
 

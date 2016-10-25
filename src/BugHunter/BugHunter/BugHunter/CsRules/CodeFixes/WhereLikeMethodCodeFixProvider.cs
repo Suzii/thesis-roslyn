@@ -43,7 +43,7 @@ namespace BugHunter.CsRules.CodeFixes
                 return;
             }
 
-            var codeFixTitle = new LocalizableResourceString(nameof(CsResources.BH1000_CodeFix), CsResources.ResourceManager, typeof(CsResources)).ToString();
+            var codeFixTitle = new LocalizableResourceString(nameof(CsResources.ApiReplacements_CodeFix), CsResources.ResourceManager, typeof(CsResources)).ToString();
             var containsMethodName = GetNewMethodName(BH1000PossibleFixes.WhereContains, memberAccessExpression);
             var startsWithMethodName = GetNewMethodName(BH1000PossibleFixes.WhereStartsWith, memberAccessExpression);
             var endsWithMethodName = GetNewMethodName(BH1000PossibleFixes.WhereEndsWith, memberAccessExpression);
