@@ -13,11 +13,11 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace BugHunter.CsRules.CodeFixes
 {
-    [ExportCodeFixProvider(LanguageNames.CSharp, Name = nameof(HttpSessionElementAccessCodeFixProvider)), Shared]
-    public class HttpSessionElementAccessCodeFixProvider : CodeFixProvider
+    [ExportCodeFixProvider(LanguageNames.CSharp, Name = nameof(HttpSessionElementAccessGetCodeFixProvider)), Shared]
+    public class HttpSessionElementAccessGetCodeFixProvider : CodeFixProvider
     {
         public sealed override ImmutableArray<string> FixableDiagnosticIds
-            => ImmutableArray.Create(HttpSessionElementAccessAnalyzer.DIAGNOSTIC_ID);
+            => ImmutableArray.Create(HttpSessionElementAccessAnalyzer.DIAGNOSTIC_ID_GET);
 
         public sealed override FixAllProvider GetFixAllProvider()
         {
@@ -39,47 +39,22 @@ namespace BugHunter.CsRules.CodeFixes
             var codeFixTitle = new LocalizableResourceString(nameof(CsResources.ApiReplacements_CodeFix), CsResources.ResourceManager, typeof(CsResources)).ToString();
             var usingNamespace = typeof(CMS.Helpers.SessionHelper).Namespace;
             var codeFixHelper = new CodeFixHelper(context);
-            SyntaxNode oldNode;
-            SyntaxNode newNode;
-            
-            if (IsUsedForAssignment(elementAccess))
-            {
-                var assignmentExpression = elementAccess.FirstAncestorOrSelf<AssignmentExpressionSyntax>();
-                var sessionKey = GetElementAccessKey(elementAccess);
-                var valueToBeAssigned = assignmentExpression.Right;
+            var sessionKey = GetElementAccessKey(elementAccess);
 
-                var newInvocation = SyntaxFactory.ParseExpression($@"SessionHelper.SetValue({sessionKey}, {valueToBeAssigned})");
-                
-                oldNode = assignmentExpression;
-                newNode = newInvocation;
-            }
-            else
-            {
-                var sessionKey = GetElementAccessKey(elementAccess);
-
-                oldNode = elementAccess;
-                newNode = SyntaxFactory.ParseExpression($@"SessionHelper.GetValue({sessionKey})");
-            }
+            SyntaxNode oldNode = elementAccess;
+            SyntaxNode newNode = SyntaxFactory.ParseExpression($@"SessionHelper.GetValue({sessionKey})");
 
             context.RegisterCodeFix(
                 CodeAction.Create(
                     title: string.Format(codeFixTitle, newNode),
                     createChangedDocument: c => codeFixHelper.ReplaceExpressionWith(oldNode, newNode, usingNamespace),
-                    equivalenceKey: "SessionHelper.GetOrSetValue"),
+                    equivalenceKey: nameof(HttpSessionElementAccessGetCodeFixProvider)),
                 diagnostic);
         }
 
         private ArgumentSyntax GetElementAccessKey(ElementAccessExpressionSyntax elementAccess)
         {
             return elementAccess.ArgumentList.Arguments.First();
-        }
-
-        private bool IsUsedForAssignment(ElementAccessExpressionSyntax elementAccess)
-        {
-            // look for parent of type SimpleAssignmentexpressionSyntax and make sure elementAccess is an lvalue of this assignment
-            var assignmentExpression = elementAccess.FirstAncestorOrSelf<AssignmentExpressionSyntax>();
-            
-            return assignmentExpression?.Left.Contains(elementAccess) ?? false;
         }
     }
 }

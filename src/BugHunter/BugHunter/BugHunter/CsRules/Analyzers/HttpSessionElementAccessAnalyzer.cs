@@ -10,9 +10,10 @@ namespace BugHunter.CsRules.Analyzers
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     public class HttpSessionElementAccessAnalyzer : DiagnosticAnalyzer
     {
-        public const string DIAGNOSTIC_ID = DiagnosticIds.HTTP_SESSION_ELEMENT_ACCESS;
+        public const string DIAGNOSTIC_ID_GET = DiagnosticIds.HTTP_SESSION_ELEMENT_ACCESS_GET;
+        public const string DIAGNOSTIC_ID_SET = DiagnosticIds.HTTP_SESSION_ELEMENT_ACCESS_SET;
 
-        private static readonly DiagnosticDescriptor Rule = new DiagnosticDescriptor(DIAGNOSTIC_ID,
+        private static readonly DiagnosticDescriptor RuleForGet = new DiagnosticDescriptor(DIAGNOSTIC_ID_GET,
             title: new LocalizableResourceString(nameof(CsResources.HttpSessionElementAccess_Title), CsResources.ResourceManager, typeof(CsResources)),
             messageFormat: new LocalizableResourceString(nameof(CsResources.HttpSessionElementAccess_MessageFormat), CsResources.ResourceManager, typeof(CsResources)),
             category: AnalyzerCategories.CS_RULES,
@@ -20,7 +21,15 @@ namespace BugHunter.CsRules.Analyzers
             isEnabledByDefault: true,
             description: new LocalizableResourceString(nameof(CsResources.HttpSessionElementAccess_Description), CsResources.ResourceManager, typeof(CsResources)));
 
-        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
+        private static readonly DiagnosticDescriptor RuleForSet = new DiagnosticDescriptor(DIAGNOSTIC_ID_SET,
+            title: new LocalizableResourceString(nameof(CsResources.HttpSessionElementAccess_Title), CsResources.ResourceManager, typeof(CsResources)),
+            messageFormat: new LocalizableResourceString(nameof(CsResources.HttpSessionElementAccess_MessageFormat), CsResources.ResourceManager, typeof(CsResources)),
+            category: AnalyzerCategories.CS_RULES,
+            defaultSeverity: DiagnosticSeverity.Warning,
+            isEnabledByDefault: true,
+            description: new LocalizableResourceString(nameof(CsResources.HttpSessionElementAccess_Description), CsResources.ResourceManager, typeof(CsResources)));
+
+        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(RuleForGet, RuleForSet);
 
         public override void Initialize(AnalysisContext context)
         {
@@ -29,19 +38,27 @@ namespace BugHunter.CsRules.Analyzers
 
         private void Analyze(SyntaxNodeAnalysisContext context)
         {
+            var compilation = context.SemanticModel.Compilation;
             var elementAccess = (ElementAccessExpressionSyntax)context.Node;
-
             var accessedTypeSymbol = context.SemanticModel.GetTypeInfo(elementAccess.Expression).Type as INamedTypeSymbol;
             
-            var compilation = context.SemanticModel.Compilation;
             if (accessedTypeSymbol == null || (!IsHttpSession(accessedTypeSymbol, compilation) && !IsHttpSessionBase(accessedTypeSymbol, compilation)))
             {
                 return;
 
             }
-
-            var diagnostic = Diagnostic.Create(Rule, elementAccess.GetLocation(), elementAccess);
-            context.ReportDiagnostic(diagnostic);
+            
+            if (IsUsedForAssignment(elementAccess))
+            {
+                var assignmentExpression = elementAccess.FirstAncestorOrSelf<AssignmentExpressionSyntax>();
+                var diagnostic = Diagnostic.Create(RuleForSet, assignmentExpression.GetLocation(), elementAccess);
+                context.ReportDiagnostic(diagnostic);
+            }
+            else
+            {
+                var diagnostic = Diagnostic.Create(RuleForGet, elementAccess.GetLocation(), elementAccess);
+                context.ReportDiagnostic(diagnostic);
+            }
         }
 
         private static bool IsHttpSession(INamedTypeSymbol accessedTypeSymbol, Compilation compilation)
@@ -58,6 +75,14 @@ namespace BugHunter.CsRules.Analyzers
             var sessionBaseTypeSymbol = sessionBaseType.GetITypeSymbol(compilation);
 
             return accessedTypeSymbol.IsDerivedFromClassOrInterface(sessionBaseTypeSymbol);
+        }
+
+        private bool IsUsedForAssignment(ElementAccessExpressionSyntax elementAccess)
+        {
+            // look for parent of type SimpleAssignmentexpressionSyntax and make sure elementAccess is an lvalue of this assignment
+            var assignmentExpression = elementAccess.FirstAncestorOrSelf<AssignmentExpressionSyntax>();
+
+            return assignmentExpression?.Left.Contains(elementAccess) ?? false;
         }
     }
 }

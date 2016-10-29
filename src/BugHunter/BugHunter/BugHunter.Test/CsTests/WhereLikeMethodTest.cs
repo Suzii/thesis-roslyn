@@ -44,7 +44,7 @@ namespace SampleTestProject.CsSamples
 }}";
             var expectedDiagnostic = new DiagnosticResult
             {
-                Id = "BH1000",
+                Id = DiagnosticIds.WHERE_LIKE_METHOD,
                 Message = $"Method '{oldMethodCall}' should not be used.",
                 Severity = DiagnosticSeverity.Warning,
                 Locations = new[] { new DiagnosticResultLocation("Test0.cs", 9, 30) }
@@ -88,7 +88,7 @@ namespace SampleTestProject.CsSamples
 }}";
             var expectedDiagnostic = new DiagnosticResult
             {
-                Id = "BH1000",
+                Id = DiagnosticIds.WHERE_LIKE_METHOD,
                 Message = $"Method '{oldMethodCall}' should not be used.",
                 Severity = DiagnosticSeverity.Warning,
                 Locations = new[] { new DiagnosticResultLocation("Test0.cs", 8, 34) }

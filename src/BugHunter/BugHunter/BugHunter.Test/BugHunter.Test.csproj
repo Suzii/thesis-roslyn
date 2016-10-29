@@ -538,12 +538,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CsTests\HttpRequestAndResponseCookiesTest.cs" />
     <Compile Include="CsTests\HttpRequestBrowserTest.cs" />
     <Compile Include="CsTests\HttpRequestUrlTest.cs" />
     <Compile Include="CsTests\HttpResponseRedirectTest.cs" />
-    <Compile Include="CsTests\HttpSessionElementAccessTest.cs" />
+    <Compile Include="CsTests\HttpSessionElementAccessGetTest.cs" />
+    <Compile Include="CsTests\HttpSessionElementAccessSetTest.cs" />
     <Compile Include="CsTests\HttpSessionSessionIdTest.cs" />
-    <Compile Include="CsTests\HttpRequestAndResponseCookiesTest.cs" />
     <Compile Include="CsTests\HttpRequestUserHostAddressTest.cs" />
     <Compile Include="CsTests\EventLogArgumentsTest.cs" />
     <Compile Include="CsTests\WhereLikeMethodTest.cs" />
