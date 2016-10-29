@@ -30,7 +30,8 @@ namespace BugHunter.CsRules.CodeFixes
             var diagnostic = context.Diagnostics.First();
             var diagnosticSpan = diagnostic.Location.SourceSpan;
 
-            var elementAccess = root.FindToken(diagnosticSpan.Start).Parent.AncestorsAndSelf().OfType<ElementAccessExpressionSyntax>().First();
+            var diagnosedNode = root.FindToken(diagnosticSpan.Start).Parent;
+            var elementAccess = diagnosedNode.AncestorsAndSelf().OfType<ElementAccessExpressionSyntax>().FirstOrDefault() ?? diagnosedNode.DescendantNodesAndSelf().OfType<ElementAccessExpressionSyntax>().FirstOrDefault();
             if (elementAccess == null)
             {
                 return;
