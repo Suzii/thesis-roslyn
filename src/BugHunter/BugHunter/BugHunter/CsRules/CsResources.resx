@@ -165,26 +165,26 @@
   <data name="HttpRequestUserHostAddress_Title" xml:space="preserve">
     <value>'Request.UserHostAddress' should not be used.</value>
   </data>
-  <data name="HttpRequestAndResponseCookie_Description" xml:space="preserve">
-    <value>'HttpCookie' should not be used accessed directly. Use 'CookieHelper.ResponseCookies' or 'CookieHelper.RequestCookies' instead.</value>
+  <data name="HttpResponseCookies_Description" xml:space="preserve">
+    <value>'Response.Cookies' should not be used accessed directly. Use 'CookieHelper.ResponseCookies' instead.</value>
     <comment>0 - member name, 1 - good type, 2 - current source type</comment>
   </data>
-  <data name="HttpRequestAndResponseCookie_MessageFormat" xml:space="preserve">
-    <value>'{0}.{1}' should not be used. Use 'CookieHelper.ResponseCookies' or 'CookieHelper.RequestCookies' instead.</value>
+  <data name="HttpResponseCookies_MessageFormat" xml:space="preserve">
+    <value>'{0}.{1}' should not be used. Use 'CookieHelper.ResponseCookies' instead.</value>
   </data>
-  <data name="HttpRequestAndResponseCookie_Title" xml:space="preserve">
-    <value>'HttpCookie' should not be used accessed directly. Use 'CookieHelper.ResponseCookies' or 'CookieHelper.RequestCookies' instead.</value>
+  <data name="HttpResponseCookies_Title" xml:space="preserve">
+    <value>'Response.Cookies' should not be used accessed directly. Use 'CookieHelper.ResponseCookies' instead.</value>
   </data>
-  <data name="HttpSessionElementAccess_Description" xml:space="preserve">
-    <value>'Session[]' should not be used. Use 'SessionHelper.GetValue()' or 'SessionHelper.SetValue()'  instead.</value>
+  <data name="HttpSessionElementAccessGet_Description" xml:space="preserve">
+    <value>'Session[]' should not be used. Use 'SessionHelper.GetValue()' instead.</value>
     <comment>0 - member name, 1 - good type, 2 - current source type</comment>
   </data>
-  <data name="HttpSessionElementAccess_MessageFormat" xml:space="preserve">
-    <value>'{0}' should not be used. Use 'SessionHelper.GetValue()' or 'SessionHelper.SetValue()' instead.</value>
+  <data name="HttpSessionElementAccessGet_MessageFormat" xml:space="preserve">
+    <value>'{0}' should not be used. Use 'SessionHelper.GetValue()' instead.</value>
     <comment>0 - member name, 1 - source type</comment>
   </data>
-  <data name="HttpSessionElementAccess_Title" xml:space="preserve">
-    <value>'Session[]' should not be used. Use 'SessionHelper.GetValue()' or 'SessionHelper.SetValue()'  instead.</value>
+  <data name="HttpSessionElementAccessGet_Title" xml:space="preserve">
+    <value>'Session[]' should not be used. Use 'SessionHelper.GetValue()' instead.</value>
     <comment>0 - member name, 1 - source type</comment>
   </data>
   <data name="HttpSessionSessionId_Description" xml:space="preserve">
@@ -223,5 +223,27 @@
   </data>
   <data name="HttpResponseRedirect_Title" xml:space="preserve">
     <value>'Response.Redirect()' should not be used.</value>
+  </data>
+  <data name="HttpRequestCookies_Description" xml:space="preserve">
+    <value>'Request.Cookies' should not be used accessed directly. Use 'CookieHelper.RequestCookies' instead.</value>
+    <comment>0 - member name, 1 - good type, 2 - current source type</comment>
+  </data>
+  <data name="HttpRequestCookies_MessageFormat" xml:space="preserve">
+    <value>'{0}.{1}' should not be used. Use 'CookieHelper.RequestCookies' instead.</value>
+  </data>
+  <data name="HttpRequestCookies_Title" xml:space="preserve">
+    <value>'Request.Cookies' should not be used accessed directly. Use 'CookieHelper.RequestCookies' instead.</value>
+  </data>
+  <data name="HttpSessionElementAccessSet_Description" xml:space="preserve">
+    <value>'Session[]' should not be used. Use 'SessionHelper.SetValue()'  instead.</value>
+    <comment>0 - member name, 1 - good type, 2 - current source type</comment>
+  </data>
+  <data name="HttpSessionElementAccessSet_MessageFormat" xml:space="preserve">
+    <value>'{0}' should not be used. Use 'SessionHelper.SetValue()' instead.</value>
+    <comment>0 - member name, 1 - source type</comment>
+  </data>
+  <data name="HttpSessionElementAccessSet_Title" xml:space="preserve">
+    <value>'Session[]' should not be used. Use 'SessionHelper.SetValue()'  instead.</value>
+    <comment>0 - member name, 1 - source type</comment>
   </data>
 </root>

@@ -14,20 +14,20 @@ namespace BugHunter.CsRules.Analyzers
         public const string DIAGNOSTIC_ID_SET = DiagnosticIds.HTTP_SESSION_ELEMENT_ACCESS_SET;
 
         private static readonly DiagnosticDescriptor RuleForGet = new DiagnosticDescriptor(DIAGNOSTIC_ID_GET,
-            title: new LocalizableResourceString(nameof(CsResources.HttpSessionElementAccess_Title), CsResources.ResourceManager, typeof(CsResources)),
-            messageFormat: new LocalizableResourceString(nameof(CsResources.HttpSessionElementAccess_MessageFormat), CsResources.ResourceManager, typeof(CsResources)),
+            title: new LocalizableResourceString(nameof(CsResources.HttpSessionElementAccessGet_Title), CsResources.ResourceManager, typeof(CsResources)),
+            messageFormat: new LocalizableResourceString(nameof(CsResources.HttpSessionElementAccessGet_MessageFormat), CsResources.ResourceManager, typeof(CsResources)),
             category: AnalyzerCategories.CS_RULES,
             defaultSeverity: DiagnosticSeverity.Warning,
             isEnabledByDefault: true,
-            description: new LocalizableResourceString(nameof(CsResources.HttpSessionElementAccess_Description), CsResources.ResourceManager, typeof(CsResources)));
+            description: new LocalizableResourceString(nameof(CsResources.HttpSessionElementAccessGet_Description), CsResources.ResourceManager, typeof(CsResources)));
 
         private static readonly DiagnosticDescriptor RuleForSet = new DiagnosticDescriptor(DIAGNOSTIC_ID_SET,
-            title: new LocalizableResourceString(nameof(CsResources.HttpSessionElementAccess_Title), CsResources.ResourceManager, typeof(CsResources)),
-            messageFormat: new LocalizableResourceString(nameof(CsResources.HttpSessionElementAccess_MessageFormat), CsResources.ResourceManager, typeof(CsResources)),
+            title: new LocalizableResourceString(nameof(CsResources.HttpSessionElementAccessSet_Title), CsResources.ResourceManager, typeof(CsResources)),
+            messageFormat: new LocalizableResourceString(nameof(CsResources.HttpSessionElementAccessSet_MessageFormat), CsResources.ResourceManager, typeof(CsResources)),
             category: AnalyzerCategories.CS_RULES,
             defaultSeverity: DiagnosticSeverity.Warning,
             isEnabledByDefault: true,
-            description: new LocalizableResourceString(nameof(CsResources.HttpSessionElementAccess_Description), CsResources.ResourceManager, typeof(CsResources)));
+            description: new LocalizableResourceString(nameof(CsResources.HttpSessionElementAccessSet_Description), CsResources.ResourceManager, typeof(CsResources)));
 
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(RuleForGet, RuleForSet);
 

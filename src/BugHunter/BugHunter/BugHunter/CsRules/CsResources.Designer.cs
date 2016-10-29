@@ -124,33 +124,6 @@ namespace BugHunter.CsRules {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &apos;HttpCookie&apos; should not be used accessed directly. Use &apos;CookieHelper.ResponseCookies&apos; or &apos;CookieHelper.RequestCookies&apos; instead..
-        /// </summary>
-        internal static string HttpRequestAndResponseCookie_Description {
-            get {
-                return ResourceManager.GetString("HttpRequestAndResponseCookie_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to &apos;{0}.{1}&apos; should not be used. Use &apos;CookieHelper.ResponseCookies&apos; or &apos;CookieHelper.RequestCookies&apos; instead..
-        /// </summary>
-        internal static string HttpRequestAndResponseCookie_MessageFormat {
-            get {
-                return ResourceManager.GetString("HttpRequestAndResponseCookie_MessageFormat", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to &apos;HttpCookie&apos; should not be used accessed directly. Use &apos;CookieHelper.ResponseCookies&apos; or &apos;CookieHelper.RequestCookies&apos; instead..
-        /// </summary>
-        internal static string HttpRequestAndResponseCookie_Title {
-            get {
-                return ResourceManager.GetString("HttpRequestAndResponseCookie_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to &apos;Request.Browser&apos; should not be used. Use &apos;BrowserHelper.GetBrowser()&apos; instead..
         /// </summary>
         internal static string HttpRequestBrowser_Description {
@@ -174,6 +147,33 @@ namespace BugHunter.CsRules {
         internal static string HttpRequestBrowser_Title {
             get {
                 return ResourceManager.GetString("HttpRequestBrowser_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;Request.Cookies&apos; should not be used accessed directly. Use &apos;CookieHelper.RequestCookies&apos; instead..
+        /// </summary>
+        internal static string HttpRequestCookies_Description {
+            get {
+                return ResourceManager.GetString("HttpRequestCookies_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;{0}.{1}&apos; should not be used. Use &apos;CookieHelper.RequestCookies&apos; instead..
+        /// </summary>
+        internal static string HttpRequestCookies_MessageFormat {
+            get {
+                return ResourceManager.GetString("HttpRequestCookies_MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;Request.Cookies&apos; should not be used accessed directly. Use &apos;CookieHelper.RequestCookies&apos; instead..
+        /// </summary>
+        internal static string HttpRequestCookies_Title {
+            get {
+                return ResourceManager.GetString("HttpRequestCookies_Title", resourceCulture);
             }
         }
         
@@ -232,6 +232,33 @@ namespace BugHunter.CsRules {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &apos;Response.Cookies&apos; should not be used accessed directly. Use &apos;CookieHelper.ResponseCookies&apos; instead..
+        /// </summary>
+        internal static string HttpResponseCookies_Description {
+            get {
+                return ResourceManager.GetString("HttpResponseCookies_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;{0}.{1}&apos; should not be used. Use &apos;CookieHelper.ResponseCookies&apos; instead..
+        /// </summary>
+        internal static string HttpResponseCookies_MessageFormat {
+            get {
+                return ResourceManager.GetString("HttpResponseCookies_MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;Response.Cookies&apos; should not be used accessed directly. Use &apos;CookieHelper.ResponseCookies&apos; instead..
+        /// </summary>
+        internal static string HttpResponseCookies_Title {
+            get {
+                return ResourceManager.GetString("HttpResponseCookies_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &apos;Response.Redirect()&apos; should not be used. Use &apos;TODO&apos; instead..
         /// </summary>
         internal static string HttpResponseRedirect_Description {
@@ -259,29 +286,56 @@ namespace BugHunter.CsRules {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &apos;Session[]&apos; should not be used. Use &apos;SessionHelper.GetValue()&apos; or &apos;SessionHelper.SetValue()&apos;  instead..
+        ///   Looks up a localized string similar to &apos;Session[]&apos; should not be used. Use &apos;SessionHelper.GetValue()&apos; instead..
         /// </summary>
-        internal static string HttpSessionElementAccess_Description {
+        internal static string HttpSessionElementAccessGet_Description {
             get {
-                return ResourceManager.GetString("HttpSessionElementAccess_Description", resourceCulture);
+                return ResourceManager.GetString("HttpSessionElementAccessGet_Description", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &apos;{0}&apos; should not be used. Use &apos;SessionHelper.GetValue()&apos; or &apos;SessionHelper.SetValue()&apos; instead..
+        ///   Looks up a localized string similar to &apos;{0}&apos; should not be used. Use &apos;SessionHelper.GetValue()&apos; instead..
         /// </summary>
-        internal static string HttpSessionElementAccess_MessageFormat {
+        internal static string HttpSessionElementAccessGet_MessageFormat {
             get {
-                return ResourceManager.GetString("HttpSessionElementAccess_MessageFormat", resourceCulture);
+                return ResourceManager.GetString("HttpSessionElementAccessGet_MessageFormat", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &apos;Session[]&apos; should not be used. Use &apos;SessionHelper.GetValue()&apos; or &apos;SessionHelper.SetValue()&apos;  instead..
+        ///   Looks up a localized string similar to &apos;Session[]&apos; should not be used. Use &apos;SessionHelper.GetValue()&apos; instead..
         /// </summary>
-        internal static string HttpSessionElementAccess_Title {
+        internal static string HttpSessionElementAccessGet_Title {
             get {
-                return ResourceManager.GetString("HttpSessionElementAccess_Title", resourceCulture);
+                return ResourceManager.GetString("HttpSessionElementAccessGet_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;Session[]&apos; should not be used. Use &apos;SessionHelper.SetValue()&apos;  instead..
+        /// </summary>
+        internal static string HttpSessionElementAccessSet_Description {
+            get {
+                return ResourceManager.GetString("HttpSessionElementAccessSet_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;{0}&apos; should not be used. Use &apos;SessionHelper.SetValue()&apos; instead..
+        /// </summary>
+        internal static string HttpSessionElementAccessSet_MessageFormat {
+            get {
+                return ResourceManager.GetString("HttpSessionElementAccessSet_MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;Session[]&apos; should not be used. Use &apos;SessionHelper.SetValue()&apos;  instead..
+        /// </summary>
+        internal static string HttpSessionElementAccessSet_Title {
+            get {
+                return ResourceManager.GetString("HttpSessionElementAccessSet_Title", resourceCulture);
             }
         }
         

@@ -538,7 +538,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CsTests\HttpRequestAndResponseCookiesTest.cs" />
+    <Compile Include="CsTests\HttpRequestCookiesTest.cs" />
+    <Compile Include="CsTests\HttpResponseCookiesTest.cs" />
     <Compile Include="CsTests\HttpRequestBrowserTest.cs" />
     <Compile Include="CsTests\HttpRequestUrlTest.cs" />
     <Compile Include="CsTests\HttpResponseRedirectTest.cs" />

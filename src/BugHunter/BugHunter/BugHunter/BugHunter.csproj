@@ -36,13 +36,15 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="CsRules\Analyzers\BaseMemberAccessAnalyzer.cs" />
-    <Compile Include="CsRules\Analyzers\HttpRequestAndResponseCookiesAnalyzer.cs" />
+    <Compile Include="CsRules\Analyzers\HttpResponseCookiesAnalyzer.cs" />
+    <Compile Include="CsRules\Analyzers\HttpRequestCookiesAnalyzer.cs" />
     <Compile Include="CsRules\Analyzers\HttpRequestBrowserAnalyzer.cs" />
     <Compile Include="CsRules\Analyzers\HttpResponseRedirectAnalyzer.cs" />
     <Compile Include="CsRules\Analyzers\HttpRequestUrlAnalyzer.cs" />
     <Compile Include="CsRules\Analyzers\HttpSessionSessionIdAnalyzer.cs" />
     <Compile Include="CsRules\Analyzers\HttpSessionElementAccessAnalyzer.cs" />
-    <Compile Include="CsRules\CodeFixes\HttpRequestAndResponseCookiesCodeFixProvider.cs" />
+    <Compile Include="CsRules\CodeFixes\HttpRequestCookiesCodeFixProvider.cs" />
+    <Compile Include="CsRules\CodeFixes\HttpResponseCookiesCodeFixProvider.cs" />
     <Compile Include="CsRules\CodeFixes\HttpRequestUrlCodeFixProvider.cs" />
     <Compile Include="CsRules\CodeFixes\HttpRequestBrowserCodeFixProvider.cs" />
     <Compile Include="CsRules\CodeFixes\HttpSessionElementAccessSetCodeFixProvider.cs" />

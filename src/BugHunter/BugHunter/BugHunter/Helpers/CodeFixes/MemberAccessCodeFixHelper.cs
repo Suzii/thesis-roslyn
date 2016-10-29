@@ -19,7 +19,7 @@ namespace BugHunter.Helpers.CodeFixes
             return allMemberAccessExpressions.First();
         }
 
-        public async Task<MemberAccessExpressionSyntax> GetOuterMostMemberAccess()
+        public async Task<MemberAccessExpressionSyntax> GetOutterMostMemberAccess()
         {
             var allMemberAccessExpressions = await GetDiagnosedMemberAccesses();
 

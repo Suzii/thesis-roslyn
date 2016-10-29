@@ -8,7 +8,7 @@ using NUnit.Framework;
 namespace BugHunter.Test.CsTests
 {
     [TestFixture]
-    public class HttpRequestAndResponseCookiesTest : CodeFixVerifier<HttpRequestAndResponseCookiesAnalyzer, HttpRequestAndResponseCookiesCodeFixProvider>
+    public class HttpRequestCookiesTest : CodeFixVerifier<HttpRequestCookiesAnalyzer, HttpRequestCookiesCodeFixProvider>
     {
         protected override MetadataReference[] GetAdditionalReferences()
         {
@@ -24,9 +24,7 @@ namespace BugHunter.Test.CsTests
         }
         
         [TestCase(@"new System.Web.HttpRequest(""fileName"", ""url"", ""queryString"")", "CookieHelper.RequestCookies")]
-        [TestCase(@"new System.Web.HttpResponse(""fileName"", ""url"", ""queryString"")", "CookieHelper.ResponseCookies")]
         [TestCase(@"new System.Web.HttpRequestWrapper(new System.Web.HttpRequest(""fileName"", ""url"", ""queryString""))", "CookieHelper.RequestCookies")]
-        [TestCase(@"new System.Web.HttpResponseWrapper(new System.Web.HttpRequest(""fileName"", ""url"", ""queryString""))", "CookieHelper.ResponseCookies")]
         public void InputWithIncident_SipleMemberAccess_SurfacesDiagnostic(string instance, string codeFix)
         {
             var test = $@"
@@ -43,8 +41,8 @@ namespace SampleTestProject.CsSamples
 }}";
             var expectedDiagnostic = new DiagnosticResult
             {
-                Id = DiagnosticIds.HTTP_REQUEST_AND_RESPONSE_COOKIE,
-                Message = @"'r.Cookies' should not be used. Use 'CookieHelper.ResponseCookies' or 'CookieHelper.RequestCookies' instead.",
+                Id = DiagnosticIds.HTTP_REQUEST_COOKIES,
+                Message = @"'r.Cookies' should not be used. Use 'CookieHelper.RequestCookies' instead.",
                 Severity = DiagnosticSeverity.Warning,
                 Locations = new[] { new DiagnosticResultLocation("Test0.cs", 9, 27) }
             };
@@ -68,9 +66,7 @@ namespace SampleTestProject.CsSamples
         }
 
         [TestCase(@"new System.Web.HttpRequest(""fileName"", ""url"", ""queryString"")", "CookieHelper.RequestCookies")]
-        [TestCase(@"new System.Web.HttpResponse(""fileName"", ""url"", ""queryString"")", "CookieHelper.ResponseCookies")]
         [TestCase(@"new System.Web.HttpRequestWrapper(new System.Web.HttpRequest(""fileName"", ""url"", ""queryString""))", "CookieHelper.RequestCookies")]
-        [TestCase(@"new System.Web.HttpResponseWrapper(new System.Web.HttpRequest(""fileName"", ""url"", ""queryString""))", "CookieHelper.ResponseCookies")]
         public void InputWithIncident_ChainedMemberAccess_SurfacesDiagnostic(string instance, string codeFix)
         {
             var test = $@"
@@ -86,8 +82,8 @@ namespace SampleTestProject.CsSamples
 }}";
             var expectedDiagnostic = new DiagnosticResult
             {
-                Id = DiagnosticIds.HTTP_REQUEST_AND_RESPONSE_COOKIE,
-                Message = $@"'{instance}.Cookies' should not be used. Use 'CookieHelper.ResponseCookies' or 'CookieHelper.RequestCookies' instead.",
+                Id = DiagnosticIds.HTTP_REQUEST_COOKIES,
+                Message = $@"'{instance}.Cookies' should not be used. Use 'CookieHelper.RequestCookies' instead.",
                 Severity = DiagnosticSeverity.Warning,
                 Locations = new[] { new DiagnosticResultLocation("Test0.cs", 8, 27) }
             };

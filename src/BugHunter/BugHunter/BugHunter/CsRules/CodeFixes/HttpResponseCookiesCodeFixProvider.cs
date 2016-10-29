@@ -11,11 +11,11 @@ using Microsoft.CodeAnalysis.CSharp;
 
 namespace BugHunter.CsRules.CodeFixes
 {
-    [ExportCodeFixProvider(LanguageNames.CSharp, Name = nameof(HttpRequestBrowserCodeFixProvider)), Shared]
-    public class HttpRequestBrowserCodeFixProvider : CodeFixProvider
+    [ExportCodeFixProvider(LanguageNames.CSharp, Name = nameof(HttpResponseCookiesCodeFixProvider)), Shared]
+    public class HttpResponseCookiesCodeFixProvider : CodeFixProvider
     {
         public sealed override ImmutableArray<string> FixableDiagnosticIds
-            => ImmutableArray.Create(HttpRequestBrowserAnalyzer.DIAGNOSTIC_ID);
+            => ImmutableArray.Create(HttpResponseCookiesAnalyzer.DIAGNOSTIC_ID);
 
         public sealed override FixAllProvider GetFixAllProvider()
         {
@@ -33,15 +33,15 @@ namespace BugHunter.CsRules.CodeFixes
             }
 
             var codeFixTitle = new LocalizableResourceString(nameof(CsResources.ApiReplacements_CodeFix), CsResources.ResourceManager, typeof(CsResources)).ToString();
-            var usingNamespace = typeof(CMS.Helpers.BrowserHelper).Namespace;
-            var newMemberAccess = SyntaxFactory.ParseExpression("BrowserHelper.GetBrowser()");
+            var usingNamespace = typeof(CMS.Helpers.CookieHelper).Namespace;
+            var newMemberAccess = SyntaxFactory.ParseExpression("CookieHelper.ResponseCookies");
             var diagnostic = context.Diagnostics.First();
             
             context.RegisterCodeFix(
                 CodeAction.Create(
                     title: string.Format(codeFixTitle, newMemberAccess),
                     createChangedDocument: c => editor.ReplaceExpressionWith(memberAccess, newMemberAccess, usingNamespace),
-                    equivalenceKey: nameof(HttpRequestBrowserCodeFixProvider)),
+                    equivalenceKey: nameof(HttpResponseCookiesCodeFixProvider)),
                 diagnostic);
         }
     }

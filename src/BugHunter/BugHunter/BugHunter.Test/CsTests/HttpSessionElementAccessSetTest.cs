@@ -43,7 +43,7 @@ namespace SampleTestProject.CsSamples
             var expectedDiagnostic = new DiagnosticResult
             {
                 Id = DiagnosticIds.HTTP_SESSION_ELEMENT_ACCESS_SET,
-                Message = @"'session[""aKey""]' should not be used. Use 'SessionHelper.GetValue()' or 'SessionHelper.SetValue()' instead.",
+                Message = @"'session[""aKey""]' should not be used. Use 'SessionHelper.SetValue()' instead.",
                 Severity = DiagnosticSeverity.Warning,
                 Locations = new[] { new DiagnosticResultLocation("Test0.cs", 9, 13) }
             };
@@ -85,7 +85,7 @@ namespace SampleTestProject.CsSamples
             var expectedDiagnostic = new DiagnosticResult
             {
                 Id = DiagnosticIds.HTTP_SESSION_ELEMENT_ACCESS_SET,
-                Message = $@"'{sessionInstance}[""aKey""]' should not be used. Use 'SessionHelper.GetValue()' or 'SessionHelper.SetValue()' instead.",
+                Message = $@"'{sessionInstance}[""aKey""]' should not be used. Use 'SessionHelper.SetValue()' instead.",
                 Severity = DiagnosticSeverity.Warning,
                 Locations = new[] { new DiagnosticResultLocation("Test0.cs", 8, 13) }
             };
