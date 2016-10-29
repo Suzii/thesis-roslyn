@@ -41,7 +41,7 @@ namespace SampleTestProject.CsSamples
 }}";
             var expectedDiagnostic = new DiagnosticResult
             {
-                Id = DiagnosticIds.HttpRequestUrl,
+                Id = DiagnosticIds.HTTP_REQUEST_URL,
                 Message = @"'request.Url' should not be used. Use 'RequestContext.Url' instead.",
                 Severity = DiagnosticSeverity.Warning,
                 Locations = new[] { new DiagnosticResultLocation("Test0.cs", 9, 23) }
@@ -82,7 +82,7 @@ namespace SampleTestProject.CsSamples
 }}";
             var expectedDiagnostic = new DiagnosticResult
             {
-                Id = DiagnosticIds.HttpRequestUrl,
+                Id = DiagnosticIds.HTTP_REQUEST_URL,
                 Message = $@"'{requestInstance}.Url' should not be used. Use 'RequestContext.Url' instead.",
                 Severity = DiagnosticSeverity.Warning,
                 Locations = new[] { new DiagnosticResultLocation("Test0.cs", 8, 23) }

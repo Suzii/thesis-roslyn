@@ -41,7 +41,7 @@ namespace SampleTestProject.CsSamples
 }}";
             var expectedDiagnostic = new DiagnosticResult
             {
-                Id = DiagnosticIds.HttpRequestUrl,
+                Id = DiagnosticIds.HTTP_REQUEST_URL,
                 Message = @"'request.Browser.Browser' should not be used. Use 'BrowserHelper.GetBrowser()' instead.",
                 Severity = DiagnosticSeverity.Warning,
                 Locations = new[] { new DiagnosticResultLocation("Test0.cs", 9, 27) }
@@ -84,7 +84,7 @@ namespace SampleTestProject.CsSamples
 }}";
             var expectedDiagnostic = new DiagnosticResult
             {
-                Id = DiagnosticIds.HttpRequestUrl,
+                Id = DiagnosticIds.HTTP_REQUEST_URL,
                 Message = @"'browserInfo.Browser' should not be used. Use 'BrowserHelper.GetBrowser()' instead.",
                 Severity = DiagnosticSeverity.Warning,
                 Locations = new[] { new DiagnosticResultLocation("Test0.cs", 10, 27) }

@@ -13,12 +13,12 @@ namespace BugHunter.CsRules.Analyzers
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     public class HttpSessionSessionIdAnalyzer : BaseMemberAccessAnalyzer
     {
-        public const string DIAGNOSTIC_ID = DiagnosticIds.HttpSessionSessionId;
+        public const string DIAGNOSTIC_ID = DiagnosticIds.HTTP_SESSION_SESSION_ID;
 
         private static readonly DiagnosticDescriptor Rule = new DiagnosticDescriptor(DIAGNOSTIC_ID,
             title: new LocalizableResourceString(nameof(CsResources.HttpSessionSessionId_Title), CsResources.ResourceManager, typeof(CsResources)),
             messageFormat: new LocalizableResourceString(nameof(CsResources.HttpSessionSessionId_MessageFormat), CsResources.ResourceManager, typeof(CsResources)),
-            category: AnalyzerCategories.CsRules,
+            category: AnalyzerCategories.CS_RULES,
             defaultSeverity: DiagnosticSeverity.Warning,
             isEnabledByDefault: true,
             description: new LocalizableResourceString(nameof(CsResources.HttpSessionSessionId_Description), CsResources.ResourceManager, typeof(CsResources)));

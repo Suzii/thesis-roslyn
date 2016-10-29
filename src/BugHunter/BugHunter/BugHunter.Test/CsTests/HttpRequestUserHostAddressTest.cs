@@ -41,7 +41,7 @@ namespace SampleTestProject.CsSamples
 }}";
             var expectedDiagnostic = new DiagnosticResult
             {
-                Id = DiagnosticIds.HttpRequestUserHostAddress,
+                Id = DiagnosticIds.HTTP_REQUEST_USER_HOST_ADDRESS,
                 Message = @"'request.UserHostAddress' should not be used. Use 'RequestContext.UserHostAddress' instead.",
                 Severity = DiagnosticSeverity.Warning,
                 Locations = new[] { new DiagnosticResultLocation("Test0.cs", 9, 27) }
@@ -82,7 +82,7 @@ namespace SampleTestProject.CsSamples
 }}";
             var expectedDiagnostic = new DiagnosticResult
             {
-                Id = DiagnosticIds.HttpRequestUserHostAddress,
+                Id = DiagnosticIds.HTTP_REQUEST_USER_HOST_ADDRESS,
                 Message = $@"'{requestInstance}.UserHostAddress' should not be used. Use 'RequestContext.UserHostAddress' instead.",
                 Severity = DiagnosticSeverity.Warning,
                 Locations = new[] { new DiagnosticResultLocation("Test0.cs", 8, 27) }

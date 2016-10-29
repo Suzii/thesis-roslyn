@@ -42,7 +42,7 @@ namespace SampleTestProject.CsSamples
 
             var expectedDiagnostic = new DiagnosticResult
             {
-                Id = DiagnosticIds.HttpSessionSessionId,
+                Id = DiagnosticIds.HTTP_SESSION_SESSION_ID,
                 Message = @"'session.SessionID' should not be used. Use 'SessionHelper.GetSessionID()' instead.",
                 Severity = DiagnosticSeverity.Warning,
                 Locations = new[] { new DiagnosticResultLocation("Test0.cs", 9, 29) }
@@ -84,7 +84,7 @@ namespace SampleTestProject.CsSamples
 
             var expectedDiagnostic = new DiagnosticResult
             {
-                Id = DiagnosticIds.HttpSessionSessionId,
+                Id = DiagnosticIds.HTTP_SESSION_SESSION_ID,
                 Message = $@"'{sessionInstance}.SessionID' should not be used. Use 'SessionHelper.GetSessionID()' instead.",
                 Severity = DiagnosticSeverity.Warning,
                 Locations = new[] { new DiagnosticResultLocation("Test0.cs", 8, 29) }

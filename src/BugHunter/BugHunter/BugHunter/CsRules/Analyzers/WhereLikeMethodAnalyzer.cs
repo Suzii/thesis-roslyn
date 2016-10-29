@@ -9,12 +9,12 @@ namespace BugHunter.CsRules.Analyzers
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     public class WhereLikeMethodAnalyzer : DiagnosticAnalyzer
     {
-        public const string DIAGNOSTIC_ID = DiagnosticIds.WhereLikeMethod;
+        public const string DIAGNOSTIC_ID = DiagnosticIds.WHERE_LIKE_METHOD;
         
         private static readonly DiagnosticDescriptor Rule = new DiagnosticDescriptor(DIAGNOSTIC_ID, 
             title: new LocalizableResourceString(nameof(CsResources.WhereLikeMethod_Title), CsResources.ResourceManager, typeof(CsResources)),
             messageFormat: new LocalizableResourceString(nameof(CsResources.WhereLikeMethod_MessageFormat), CsResources.ResourceManager, typeof(CsResources)), 
-            category: AnalyzerCategories.CsRules, 
+            category: AnalyzerCategories.CS_RULES, 
             defaultSeverity: DiagnosticSeverity.Warning, 
             isEnabledByDefault: true,
             description: new LocalizableResourceString(nameof(CsResources.WhereLikeMethod_Description), CsResources.ResourceManager, typeof(CsResources)));

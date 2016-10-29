@@ -137,7 +137,7 @@ namespace SampleTestProject.CsSamples
 }}";
             var expectedDiagnostic = new DiagnosticResult
             {
-                Id = DiagnosticIds.WhereLikeMethod,
+                Id = DiagnosticIds.WHERE_LIKE_METHOD,
                 Message = $"Method '{oldMethodCall}' should not be used.",
                 Severity = DiagnosticSeverity.Warning,
                 Locations = new[] { new DiagnosticResultLocation("Test0.cs", 14, 39) }

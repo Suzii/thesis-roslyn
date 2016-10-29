@@ -11,12 +11,12 @@ namespace BugHunter.CsRules.Analyzers
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     public class EventLogArgumentsAnalyzer : DiagnosticAnalyzer
     {
-        public const string DIAGNOSTIC_ID = DiagnosticIds.EventLogArguments;
+        public const string DIAGNOSTIC_ID = DiagnosticIds.EVENT_LOG_ARGUMENTS;
 
         private static readonly DiagnosticDescriptor Rule = new DiagnosticDescriptor(DIAGNOSTIC_ID,
             title: new LocalizableResourceString(nameof(CsResources.EventLogArguments_Title), CsResources.ResourceManager, typeof(CsResources)),
             messageFormat: new LocalizableResourceString(nameof(CsResources.EventLogArguments_MessageFormat), CsResources.ResourceManager, typeof(CsResources)),
-            category: AnalyzerCategories.CsRules,
+            category: AnalyzerCategories.CS_RULES,
             defaultSeverity: DiagnosticSeverity.Warning,
             isEnabledByDefault: true,
             description: new LocalizableResourceString(nameof(CsResources.EventLogArguments_Description), CsResources.ResourceManager, typeof(CsResources)));

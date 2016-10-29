@@ -7,12 +7,12 @@ namespace BugHunter.CsRules.Analyzers
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     public class HttpRequestUrlAnalyzer : BaseMemberAccessAnalyzer
     {
-        public const string DIAGNOSTIC_ID = DiagnosticIds.HttpRequestUrl;
+        public const string DIAGNOSTIC_ID = DiagnosticIds.HTTP_REQUEST_URL;
         
         private static readonly DiagnosticDescriptor Rule = new DiagnosticDescriptor(DIAGNOSTIC_ID, 
             title: new LocalizableResourceString(nameof(CsResources.HttpRequestUrl_Title), CsResources.ResourceManager, typeof(CsResources)),
             messageFormat: new LocalizableResourceString(nameof(CsResources.HttpRequestUrl_MessageFormat), CsResources.ResourceManager, typeof(CsResources)), 
-            category: AnalyzerCategories.CsRules, 
+            category: AnalyzerCategories.CS_RULES, 
             defaultSeverity: DiagnosticSeverity.Warning, 
             isEnabledByDefault: true,
             description: new LocalizableResourceString(nameof(CsResources.HttpRequestUrl_Description), CsResources.ResourceManager, typeof(CsResources)));

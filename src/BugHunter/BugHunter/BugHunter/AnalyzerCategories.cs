@@ -8,36 +8,36 @@
         /// <summary>
         /// Category for ASPX rules
         /// </summary>
-        public const string AspxRules = "BugHunter.AspxRules";
+        public const string ASPX_RULES = "BugHunter.AspxRules";
 
         /// <summary>
         /// Category for control rules
         /// </summary>
-        public const string ControlRules = "BugHunter.ControlRules";
+        public const string CONTROL_RULES = "BugHunter.ControlRules";
 
         /// <summary>
         /// Category for CS rules
         /// </summary>
-        public const string CsRules = "BugHunter.CsRules";
+        public const string CS_RULES = "BugHunter.CsRules";
 
         /// <summary>
         /// Category for page rules
         /// </summary>
-        public const string PageRules = "BugHunter.PageRules";
+        public const string PAGE_RULES = "BugHunter.PageRules";
 
         /// <summary>
         /// Category for project rules
         /// </summary>
-        public const string ProjectRules = "BugHunter.ProjectRules";
+        public const string PROJECT_RULES = "BugHunter.ProjectRules";
 
         /// <summary>
         /// Category for web config rules
         /// </summary>
-        public const string WebConfigRules = "BugHunter.WebConfigRules";
+        public const string WEB_CONFIG_RULES = "BugHunter.WebConfigRules";
 
         /// <summary>
         /// Category for web part rules
         /// </summary>
-        public const string WpRules = "BugHunter.WPRules";
+        public const string WP_RULES = "BugHunter.WPRules";
     }
 }
