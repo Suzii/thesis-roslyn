@@ -18,12 +18,11 @@ namespace BugHunter.CsRules.Analyzers
             description: new LocalizableResourceString(nameof(CsResources.HttpRequestBrowser_Description), CsResources.ResourceManager, typeof(CsResources)));
 
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
-
-        // TODO fix - look only for Request.Browser.Browser
+        
         public override void Initialize(AnalysisContext context)
         {
-            RegisterAction(Rule, context, typeof(System.Web.HttpRequest), nameof(System.Web.HttpRequest.Browser));
-            RegisterAction(Rule, context, typeof(System.Web.HttpRequestBase), nameof(System.Web.HttpRequestBase.Browser));
+            RegisterAction(Rule, context, typeof(System.Web.HttpBrowserCapabilities), nameof(System.Web.HttpBrowserCapabilities.Browser));
+            RegisterAction(Rule, context, typeof(System.Web.HttpBrowserCapabilitiesBase), nameof(System.Web.HttpBrowserCapabilitiesBase.Browser));
         }
     }
 }

@@ -8,7 +8,6 @@ namespace BugHunter.Helpers.CodeFixes
 {
     internal class MemberAccessCodeFixHelper : CodeFixHelper
     {
-
         public MemberAccessCodeFixHelper(CodeFixContext context): base(context)
         {
         }
@@ -20,7 +19,7 @@ namespace BugHunter.Helpers.CodeFixes
             return allMemberAccessExpressions.First();
         }
 
-        public async Task<MemberAccessExpressionSyntax> GetInnerMostMemberAccess()
+        public async Task<MemberAccessExpressionSyntax> GetOuterMostMemberAccess()
         {
             var allMemberAccessExpressions = await GetDiagnosedMemberAccesses();
 

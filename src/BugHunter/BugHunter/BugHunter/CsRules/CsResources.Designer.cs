@@ -151,7 +151,7 @@ namespace BugHunter.CsRules {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &apos;Request.Browser&apos; should not be used. Use &apos;BrowserHelper.Browser&apos; instead..
+        ///   Looks up a localized string similar to &apos;Request.Browser&apos; should not be used. Use &apos;BrowserHelper.GetBrowser()&apos; instead..
         /// </summary>
         internal static string HttpRequestBrowser_Description {
             get {
@@ -160,7 +160,7 @@ namespace BugHunter.CsRules {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &apos;{0}.{1}&apos; should not be used. Use &apos;BrowserHelper.Browser&apos; instead..
+        ///   Looks up a localized string similar to &apos;{0}.{1}&apos; should not be used. Use &apos;BrowserHelper.GetBrowser()&apos; instead..
         /// </summary>
         internal static string HttpRequestBrowser_MessageFormat {
             get {
@@ -169,7 +169,7 @@ namespace BugHunter.CsRules {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &apos;BrowserHelper.Browser&apos; should not be used..
+        ///   Looks up a localized string similar to &apos;Request.Browser&apos; should not be used..
         /// </summary>
         internal static string HttpRequestBrowser_Title {
             get {

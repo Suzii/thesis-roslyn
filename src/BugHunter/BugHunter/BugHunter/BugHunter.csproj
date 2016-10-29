@@ -42,8 +42,8 @@
     <Compile Include="CsRules\Analyzers\HttpSessionSessionIdAnalyzer.cs" />
     <Compile Include="CsRules\Analyzers\HttpSessionElementAccessAnalyzer.cs" />
     <Compile Include="CsRules\CodeFixes\HttpRequestAndResponseCookiesCodeFixProvider.cs" />
-    <Compile Include="CsRules\CodeFixes\HttpRequestBrowserCodeFixProvider.cs" />
     <Compile Include="CsRules\CodeFixes\HttpRequestUrlCodeFixProvider.cs" />
+    <Compile Include="CsRules\CodeFixes\HttpRequestBrowserCodeFixProvider.cs" />
     <Compile Include="CsRules\CodeFixes\HttpSessionElementAccessCodeFixProvider.cs" />
     <Compile Include="CsRules\CodeFixes\HttpSessionSessionIdCodeFixProvider.cs" />
     <Compile Include="DiagnosticIds.cs" />
