@@ -12,14 +12,8 @@ namespace BugHunter.CsRules.Analyzers
     {
         public const string DIAGNOSTIC_ID = DiagnosticIds.HTTP_REQUEST_COOKIES;
 
-        private static readonly DiagnosticDescriptor Rule = new DiagnosticDescriptor(DIAGNOSTIC_ID,
-            title: new LocalizableResourceString(nameof(CsResources.HttpRequestCookies_Title), CsResources.ResourceManager, typeof(CsResources)),
-            messageFormat: new LocalizableResourceString(nameof(CsResources.HttpRequestCookies_MessageFormat), CsResources.ResourceManager, typeof(CsResources)),
-            category: AnalyzerCategories.CS_RULES,
-            defaultSeverity: DiagnosticSeverity.Warning,
-            isEnabledByDefault: true,
-            description: new LocalizableResourceString(nameof(CsResources.HttpRequestCookies_Description), CsResources.ResourceManager, typeof(CsResources)));
-
+        private static readonly DiagnosticDescriptor Rule = GetRule(DIAGNOSTIC_ID, "Request.Cookies", "CookieHelper.RequestCookies");
+            
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
 
         public override void Initialize(AnalysisContext context)

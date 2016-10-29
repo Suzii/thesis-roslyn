@@ -4,6 +4,7 @@ using System.Composition;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using BugHunter.Core.ResourceBuilder;
 using BugHunter.CsRules.Analyzers;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeActions;
@@ -43,28 +44,27 @@ namespace BugHunter.CsRules.CodeFixes
                 return;
             }
 
-            var codeFixTitle = new LocalizableResourceString(nameof(CsResources.ApiReplacements_CodeFix), CsResources.ResourceManager, typeof(CsResources)).ToString();
             var containsMethodName = GetNewMethodName(BH1000PossibleFixes.WhereContains, memberAccessExpression);
             var startsWithMethodName = GetNewMethodName(BH1000PossibleFixes.WhereStartsWith, memberAccessExpression);
             var endsWithMethodName = GetNewMethodName(BH1000PossibleFixes.WhereEndsWith, memberAccessExpression);
 
             context.RegisterCodeFix(
                 CodeAction.Create(
-                    title: string.Format(codeFixTitle, containsMethodName),
+                    title: CodeFixMessageBuilder.GetMessage(containsMethodName),
                     createChangedDocument: c => ReplaceWithDifferentMethodCall(context.Document, memberAccessExpression, c, containsMethodName),
                     equivalenceKey: "Contains()"),
                 diagnostic);
 
             context.RegisterCodeFix(
                 CodeAction.Create(
-                    title: string.Format(codeFixTitle, startsWithMethodName),
+                    title: CodeFixMessageBuilder.GetMessage(startsWithMethodName),
                     createChangedDocument: c => ReplaceWithDifferentMethodCall(context.Document, memberAccessExpression, c, startsWithMethodName),
                     equivalenceKey: "StartsWith()"),
                 diagnostic);
 
             context.RegisterCodeFix(
                 CodeAction.Create(
-                    title: string.Format(codeFixTitle, endsWithMethodName),
+                    title: CodeFixMessageBuilder.GetMessage(endsWithMethodName),
                     createChangedDocument: c => ReplaceWithDifferentMethodCall(context.Document, memberAccessExpression, c, endsWithMethodName),
                     equivalenceKey: "EndsWith()"),
                 diagnostic);

@@ -5,7 +5,7 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
 
-namespace BugHunter.Helpers.Analyzers
+namespace BugHunter.Core.Helpers.Analyzers
 {
     public class MemberAccessAnalysisHelper
     {
@@ -41,8 +41,9 @@ namespace BugHunter.Helpers.Analyzers
             {
                 return;
             }
-            
-            var diagnostic = Diagnostic.Create(_rule, memberAccess.GetLocation(), memberAccess.Expression.ToString(), memberName);
+
+            var usedAs = $"{memberAccess.Expression}.{memberName}";
+            var diagnostic = Diagnostic.Create(_rule, memberAccess.GetLocation(), usedAs);
             context.ReportDiagnostic(diagnostic);
         }
     }

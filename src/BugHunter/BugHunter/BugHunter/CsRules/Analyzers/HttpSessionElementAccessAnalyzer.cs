@@ -1,6 +1,6 @@
 ﻿using System.Collections.Immutable;
 using BugHunter.Core.Extensions;
-using BugHunter.Helpers;
+using BugHunter.Core.ResourceBuilder;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -12,23 +12,12 @@ namespace BugHunter.CsRules.Analyzers
     public class HttpSessionElementAccessAnalyzer : DiagnosticAnalyzer
     {
         public const string DIAGNOSTIC_ID_GET = DiagnosticIds.HTTP_SESSION_ELEMENT_ACCESS_GET;
+
         public const string DIAGNOSTIC_ID_SET = DiagnosticIds.HTTP_SESSION_ELEMENT_ACCESS_SET;
 
-        private static readonly DiagnosticDescriptor RuleForGet = new DiagnosticDescriptor(DIAGNOSTIC_ID_GET,
-            title: new LocalizableResourceString(nameof(CsResources.HttpSessionElementAccessGet_Title), CsResources.ResourceManager, typeof(CsResources)),
-            messageFormat: new LocalizableResourceString(nameof(CsResources.HttpSessionElementAccessGet_MessageFormat), CsResources.ResourceManager, typeof(CsResources)),
-            category: AnalyzerCategories.CS_RULES,
-            defaultSeverity: DiagnosticSeverity.Warning,
-            isEnabledByDefault: true,
-            description: new LocalizableResourceString(nameof(CsResources.HttpSessionElementAccessGet_Description), CsResources.ResourceManager, typeof(CsResources)));
+        private static readonly DiagnosticDescriptor RuleForGet = GetRule(DIAGNOSTIC_ID_GET, "Session[]", "SessionHelper.GetValue()");
 
-        private static readonly DiagnosticDescriptor RuleForSet = new DiagnosticDescriptor(DIAGNOSTIC_ID_SET,
-            title: new LocalizableResourceString(nameof(CsResources.HttpSessionElementAccessSet_Title), CsResources.ResourceManager, typeof(CsResources)),
-            messageFormat: new LocalizableResourceString(nameof(CsResources.HttpSessionElementAccessSet_MessageFormat), CsResources.ResourceManager, typeof(CsResources)),
-            category: AnalyzerCategories.CS_RULES,
-            defaultSeverity: DiagnosticSeverity.Warning,
-            isEnabledByDefault: true,
-            description: new LocalizableResourceString(nameof(CsResources.HttpSessionElementAccessSet_Description), CsResources.ResourceManager, typeof(CsResources)));
+        private static readonly DiagnosticDescriptor RuleForSet = GetRule(DIAGNOSTIC_ID_SET, "Session[]", "SessionHelper.SetValue()");
 
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(RuleForGet, RuleForSet);
 
@@ -60,6 +49,19 @@ namespace BugHunter.CsRules.Analyzers
                 var diagnostic = Diagnostic.Create(RuleForGet, elementAccess.GetLocation(), elementAccess);
                 context.ReportDiagnostic(diagnostic);
             }
+        }
+
+        private static DiagnosticDescriptor GetRule(string diagnosticId, string forbiddenUsage, string recommendedUsage)
+        {
+            var rule = new DiagnosticDescriptor(diagnosticId,
+                title: ApiReplacementsMessageBuilder.GetTitle(forbiddenUsage, recommendedUsage),
+                messageFormat: ApiReplacementsMessageBuilder.GetMessageFormat(recommendedUsage),
+                category: AnalyzerCategories.CS_RULES,
+                defaultSeverity: DiagnosticSeverity.Warning,
+                isEnabledByDefault: true,
+                description: ApiReplacementsMessageBuilder.GetDescription(forbiddenUsage, recommendedUsage));
+
+            return rule;
         }
 
         private static bool IsHttpSession(INamedTypeSymbol accessedTypeSymbol, Compilation compilation)

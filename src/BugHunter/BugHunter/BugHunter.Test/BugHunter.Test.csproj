@@ -550,7 +550,7 @@
     <Compile Include="CsTests\EventLogArgumentsTest.cs" />
     <Compile Include="CsTests\WhereLikeMethodTest.cs" />
     <Compile Include="ReferencesHelper.cs" />
-    <Compile Include="HelpersTests\SemanticModelBrowserTests.cs" />
+    <Compile Include="Shared\MessagesConstants.cs" />
     <Compile Include="Verifiers\CodeFixVerifier.cs" />
     <Compile Include="Verifiers\DiagnosticVerifier.cs" />
     <Compile Include="Helpers\CodeFixVerifier.Helper.cs" />

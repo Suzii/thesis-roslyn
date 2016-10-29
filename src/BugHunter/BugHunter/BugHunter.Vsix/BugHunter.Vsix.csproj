@@ -53,6 +53,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BugHunter.Core\BugHunter.Core.csproj">
+      <Project>{5eba700c-b241-41ce-a39d-6862a95cfb7d}</Project>
+      <Name>BugHunter.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BugHunter\BugHunter.csproj">
       <Project>{94312E36-802C-40FA-A07E-F479E74B61C2}</Project>
       <Name>BugHunter</Name>

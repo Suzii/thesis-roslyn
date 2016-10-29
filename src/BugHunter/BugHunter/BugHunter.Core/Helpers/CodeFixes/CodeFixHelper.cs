@@ -1,10 +1,9 @@
 ﻿using System.Threading.Tasks;
-using BugHunter.Core.Helpers.CodeFixes;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeFixes;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-namespace BugHunter.Helpers.CodeFixes
+namespace BugHunter.Core.Helpers.CodeFixes
 {
     public class CodeFixHelper
     {

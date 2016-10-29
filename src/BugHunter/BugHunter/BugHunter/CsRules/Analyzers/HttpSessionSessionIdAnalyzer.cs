@@ -15,13 +15,7 @@ namespace BugHunter.CsRules.Analyzers
     {
         public const string DIAGNOSTIC_ID = DiagnosticIds.HTTP_SESSION_SESSION_ID;
 
-        private static readonly DiagnosticDescriptor Rule = new DiagnosticDescriptor(DIAGNOSTIC_ID,
-            title: new LocalizableResourceString(nameof(CsResources.HttpSessionSessionId_Title), CsResources.ResourceManager, typeof(CsResources)),
-            messageFormat: new LocalizableResourceString(nameof(CsResources.HttpSessionSessionId_MessageFormat), CsResources.ResourceManager, typeof(CsResources)),
-            category: AnalyzerCategories.CS_RULES,
-            defaultSeverity: DiagnosticSeverity.Warning,
-            isEnabledByDefault: true,
-            description: new LocalizableResourceString(nameof(CsResources.HttpSessionSessionId_Description), CsResources.ResourceManager, typeof(CsResources)));
+        private static readonly DiagnosticDescriptor Rule = GetRule(DIAGNOSTIC_ID, "Session.SessionId", "SessionHelper.GetSessionID()");
 
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
 

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using BugHunter.Core.Helpers.CodeFixes;
+using BugHunter.Core.ResourceBuilder;
 using BugHunter.CsRules.Analyzers;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeActions;
@@ -37,13 +38,12 @@ namespace BugHunter.CsRules.CodeFixes
                 return;
             }
 
-            var codeFixTitle = new LocalizableResourceString(nameof(CsResources.ApiReplacements_CodeFix), CsResources.ResourceManager, typeof(CsResources)).ToString();
             var oldArgument = invocationExpression.ArgumentList.Arguments.First().Expression.ToString();
             var newArgumentName = GetNewMethodArgument(oldArgument);
 
             context.RegisterCodeFix(
                 CodeAction.Create(
-                    title: string.Format(codeFixTitle, newArgumentName),
+                    title: CodeFixMessageBuilder.GetMessage(newArgumentName),
                     createChangedDocument: c => ReplaceEventTypeArgument(context.Document, invocationExpression, c, newArgumentName),
                     equivalenceKey: nameof(EventLogArgumentsCodeFixProvider)),
                 diagnostic);

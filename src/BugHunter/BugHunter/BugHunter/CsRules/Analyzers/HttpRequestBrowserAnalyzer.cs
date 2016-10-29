@@ -8,15 +8,8 @@ namespace BugHunter.CsRules.Analyzers
     public class HttpRequestBrowserAnalyzer : BaseMemberAccessAnalyzer
     {
         public const string DIAGNOSTIC_ID = DiagnosticIds.HTTP_REQUEST_URL;
-        
-        private static readonly DiagnosticDescriptor Rule = new DiagnosticDescriptor(DIAGNOSTIC_ID, 
-            title: new LocalizableResourceString(nameof(CsResources.HttpRequestBrowser_Title), CsResources.ResourceManager, typeof(CsResources)),
-            messageFormat: new LocalizableResourceString(nameof(CsResources.HttpRequestBrowser_MessageFormat), CsResources.ResourceManager, typeof(CsResources)), 
-            category: AnalyzerCategories.CS_RULES, 
-            defaultSeverity: DiagnosticSeverity.Warning, 
-            isEnabledByDefault: true,
-            description: new LocalizableResourceString(nameof(CsResources.HttpRequestBrowser_Description), CsResources.ResourceManager, typeof(CsResources)));
 
+        private static readonly DiagnosticDescriptor Rule = GetRule(DIAGNOSTIC_ID, "Request.Browser", "BrowserHelper.GetBrowser()");
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
         
         public override void Initialize(AnalysisContext context)

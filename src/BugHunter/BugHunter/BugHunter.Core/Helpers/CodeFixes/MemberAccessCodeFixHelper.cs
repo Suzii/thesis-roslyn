@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.CodeAnalysis.CodeFixes;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-namespace BugHunter.Helpers.CodeFixes
+namespace BugHunter.Core.Helpers.CodeFixes
 {
     public class MemberAccessCodeFixHelper : CodeFixHelper
     {

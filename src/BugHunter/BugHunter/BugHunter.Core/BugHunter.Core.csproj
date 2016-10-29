@@ -105,8 +105,21 @@
     <Compile Include="Helpers\CodeFixes\UsingsHelper.cs" />
     <Compile Include="Helpers\SemanticModelBrowser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ResourceBuilder\CodeFixMessageBuilder.cs" />
+    <Compile Include="ResourceBuilder\ApiReplacementsMessageBuilder.cs" />
+    <Compile Include="ResourceBuilder\Resources.Designer.cs">
+      <DependentUpon>Resources.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="ResourceBuilder\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>

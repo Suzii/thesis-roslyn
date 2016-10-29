@@ -4,7 +4,7 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
 
-namespace BugHunter.Helpers
+namespace BugHunter.Core.Helpers
 {
     /// <summary>
     /// Helper class for analyzing semantics of the tree

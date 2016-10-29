@@ -1,7 +1,9 @@
 ﻿using System.Linq;
 using BugHunter.CsRules.Analyzers;
 using BugHunter.CsRules.CodeFixes;
+using BugHunter.Test.Shared;
 using BugHunter.Test.Verifiers;
+using Kentico.Google.Apis.Util;
 using Microsoft.CodeAnalysis;
 using NUnit.Framework;
 
@@ -42,7 +44,7 @@ namespace SampleTestProject.CsSamples
             var expectedDiagnostic = new DiagnosticResult
             {
                 Id = DiagnosticIds.HTTP_RESPONSE_REDIRECT,
-                Message = @"'r.Redirect' should not be used. Use 'TODO' instead.",
+                Message = MessagesConstants.MESSAGE_NO_SUGGESTION.FormatString($"r.Redirect"),
                 Severity = DiagnosticSeverity.Warning,
                 Locations = new[] { new DiagnosticResultLocation("Test0.cs", 9, 13) }
             };
@@ -68,7 +70,7 @@ namespace SampleTestProject.CsSamples
             var expectedDiagnostic = new DiagnosticResult
             {
                 Id = DiagnosticIds.HTTP_RESPONSE_REDIRECT,
-                Message = $@"'{instance}.Redirect' should not be used. Use 'TODO' instead.",
+                Message = MessagesConstants.MESSAGE_NO_SUGGESTION.FormatString($"{instance}.Redirect"),
                 Severity = DiagnosticSeverity.Warning,
                 Locations = new[] { new DiagnosticResultLocation("Test0.cs", 8, 13) }
             };

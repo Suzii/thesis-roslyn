@@ -1,6 +1,8 @@
 ﻿using BugHunter.CsRules.Analyzers;
 using BugHunter.CsRules.CodeFixes;
+using BugHunter.Test.Shared;
 using BugHunter.Test.Verifiers;
+using Kentico.Google.Apis.Util;
 using Microsoft.CodeAnalysis;
 using NUnit.Framework;
 
@@ -45,7 +47,7 @@ namespace SampleTestProject.CsSamples
             var expectedDiagnostic = new DiagnosticResult
             {
                 Id = DiagnosticIds.WHERE_LIKE_METHOD,
-                Message = $"Method '{oldMethodCall}' should not be used.",
+                Message = MessagesConstants.MESSAGE_NO_SUGGESTION.FormatString($"whereCondition.{oldMethodCall}"),
                 Severity = DiagnosticSeverity.Warning,
                 Locations = new[] { new DiagnosticResultLocation("Test0.cs", 9, 30) }
             };
@@ -89,7 +91,7 @@ namespace SampleTestProject.CsSamples
             var expectedDiagnostic = new DiagnosticResult
             {
                 Id = DiagnosticIds.WHERE_LIKE_METHOD,
-                Message = $"Method '{oldMethodCall}' should not be used.",
+                Message = MessagesConstants.MESSAGE_NO_SUGGESTION.FormatString($"new CMS.DataEngine.WhereCondition().{oldMethodCall}"),
                 Severity = DiagnosticSeverity.Warning,
                 Locations = new[] { new DiagnosticResultLocation("Test0.cs", 8, 34) }
             };
@@ -138,7 +140,7 @@ namespace SampleTestProject.CsSamples
             var expectedDiagnostic = new DiagnosticResult
             {
                 Id = DiagnosticIds.WHERE_LIKE_METHOD,
-                Message = $"Method '{oldMethodCall}' should not be used.",
+                Message = MessagesConstants.MESSAGE_NO_SUGGESTION.FormatString($"whereCondition.{oldMethodCall}"),
                 Severity = DiagnosticSeverity.Warning,
                 Locations = new[] { new DiagnosticResultLocation("Test0.cs", 14, 39) }
             };

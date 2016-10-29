@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using BugHunter.Helpers;
+using BugHunter.Core.Helpers;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;

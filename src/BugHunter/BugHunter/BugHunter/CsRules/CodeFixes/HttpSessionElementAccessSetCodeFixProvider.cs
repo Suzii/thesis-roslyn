@@ -3,8 +3,9 @@ using System.Collections.Immutable;
 using System.Composition;
 using System.Linq;
 using System.Threading.Tasks;
+using BugHunter.Core.Helpers.CodeFixes;
+using BugHunter.Core.ResourceBuilder;
 using BugHunter.CsRules.Analyzers;
-using BugHunter.Helpers.CodeFixes;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeActions;
 using Microsoft.CodeAnalysis.CodeFixes;
@@ -37,7 +38,6 @@ namespace BugHunter.CsRules.CodeFixes
                 return;
             }
 
-            var codeFixTitle = new LocalizableResourceString(nameof(CsResources.ApiReplacements_CodeFix), CsResources.ResourceManager, typeof(CsResources)).ToString();
             var usingNamespace = typeof(CMS.Helpers.SessionHelper).Namespace;
             var codeFixHelper = new CodeFixHelper(context);
 
@@ -50,7 +50,7 @@ namespace BugHunter.CsRules.CodeFixes
 
             context.RegisterCodeFix(
                 CodeAction.Create(
-                    title: string.Format(codeFixTitle, newNode),
+                    title: CodeFixMessageBuilder.GetMessage(newNode),
                     createChangedDocument: c => codeFixHelper.ReplaceExpressionWith(oldNode, newNode, usingNamespace),
                     equivalenceKey: nameof(HttpSessionElementAccessSetCodeFixProvider)),
                 diagnostic);
