@@ -25,7 +25,7 @@ namespace BugHunter.Test.CsTests
         
         [TestCase(@"new System.Web.HttpRequest(""fileName"", ""url"", ""queryString"")")]
         [TestCase(@"new System.Web.HttpRequestWrapper(new System.Web.HttpRequest(""fileName"", ""url"", ""queryString""))")]
-        public void InputWithIncident_SurfacesDiagnostic(string requestInstance)
+        public void InputWithIncident_SimpleMemberAccess_SurfacesDiagnostic(string requestInstance)
         {
             var test = $@"
 namespace SampleTestProject.CsSamples
@@ -58,6 +58,46 @@ namespace SampleTestProject.CsSamples
         public void SampleMethod()
         {{
             var request = {requestInstance};
+            var address = RequestContext.UserHostAddress;
+        }}
+    }}
+}}";
+            VerifyCSharpFix(test, expectedFix);
+        }
+
+        [TestCase(@"new System.Web.HttpRequest(""fileName"", ""url"", ""queryString"")")]
+        [TestCase(@"new System.Web.HttpRequestWrapper(new System.Web.HttpRequest(""fileName"", ""url"", ""queryString""))")]
+        public void InputWithIncident_ChainedMemberAccess_SurfacesDiagnostic(string requestInstance)
+        {
+            var test = $@"
+namespace SampleTestProject.CsSamples
+{{
+    public class RequestUserHostAddressAnalyzer
+    {{
+        public void SampleMethod()
+        {{
+            var address = {requestInstance}.UserHostAddress;
+        }}
+    }}
+}}";
+            var expectedDiagnostic = new DiagnosticResult
+            {
+                Id = DiagnosticIds.HttpRequestUserHostAddress,
+                Message = $@"'{requestInstance}.UserHostAddress' should not be used. Use 'RequestContext.UserHostAddress' instead.",
+                Severity = DiagnosticSeverity.Warning,
+                Locations = new[] { new DiagnosticResultLocation("Test0.cs", 8, 27) }
+            };
+
+            VerifyCSharpDiagnostic(test, expectedDiagnostic);
+
+            var expectedFix = $@"using CMS.Helpers;
+
+namespace SampleTestProject.CsSamples
+{{
+    public class RequestUserHostAddressAnalyzer
+    {{
+        public void SampleMethod()
+        {{
             var address = RequestContext.UserHostAddress;
         }}
     }}

@@ -25,7 +25,7 @@ namespace BugHunter.Test.CsTests
 
         [TestCase("System.Web.HttpContext.Current.Session")]
         [TestCase("new System.Web.HttpSessionStateWrapper(System.Web.HttpContext.Current.Session)")]
-        public void InputWithIncident_GetMethod_SurfacesDiagnostic(string sessionInstance)
+        public void InputWithIncident_GetMethod_SimpleAccess_SurfacesDiagnostic(string sessionInstance)
         {   
             var test = $@"
 namespace SampleTestProject.CsSamples 
@@ -66,10 +66,51 @@ namespace SampleTestProject.CsSamples
             VerifyCSharpFix(test, expectedFix);
         }
 
+        [TestCase("System.Web.HttpContext.Current.Session")]
+        [TestCase("new System.Web.HttpSessionStateWrapper(System.Web.HttpContext.Current.Session)")]
+        public void InputWithIncident_GetMethod_ChainedAccess_SurfacesDiagnostic(string sessionInstance)
+        {
+            var test = $@"
+namespace SampleTestProject.CsSamples 
+{{
+    public class FakeController
+    {{
+        public void FakeIndex()
+        {{
+            var aValue = {sessionInstance}[""aKey""];
+        }}
+    }}
+}}";
+
+            var expectedDiagnostic = new DiagnosticResult
+            {
+                Id = DiagnosticIds.HttpSessionElementAccess,
+                Message = $@"'{sessionInstance}[""aKey""]' should not be used. Use 'SessionHelper.GetValue()' or 'SessionHelper.SetValue()' instead.",
+                Severity = DiagnosticSeverity.Warning,
+                Locations = new[] { new DiagnosticResultLocation("Test0.cs", 8, 26) }
+            };
+
+            VerifyCSharpDiagnostic(test, expectedDiagnostic);
+
+            var expectedFix = $@"using CMS.Helpers;
+
+namespace SampleTestProject.CsSamples 
+{{
+    public class FakeController
+    {{
+        public void FakeIndex()
+        {{
+            var aValue = SessionHelper.GetValue(""aKey"");
+        }}
+    }}
+}}";
+            VerifyCSharpFix(test, expectedFix);
+        }
+
 
         [TestCase("System.Web.HttpContext.Current.Session")]
         [TestCase("new System.Web.HttpSessionStateWrapper(System.Web.HttpContext.Current.Session)")]
-        public void InputWithIncident_SetMethod_SurfacesDiagnostic(string sessionInstance)
+        public void InputWithIncident_SetMethod_SimpleAccess_SurfacesDiagnostic(string sessionInstance)
         {
             var test = $@"
 namespace SampleTestProject.CsSamples 
@@ -103,6 +144,47 @@ namespace SampleTestProject.CsSamples
         public void FakeIndex()
         {{
             var session = {sessionInstance};
+            SessionHelper.SetValue(""aKey"", ""aValue"");
+        }}
+    }}
+}}";
+            VerifyCSharpFix(test, expectedFix);
+        }
+
+        [TestCase("System.Web.HttpContext.Current.Session")]
+        [TestCase("new System.Web.HttpSessionStateWrapper(System.Web.HttpContext.Current.Session)")]
+        public void InputWithIncident_SetMethod_ChainedAccess_SurfacesDiagnostic(string sessionInstance)
+        {
+            var test = $@"
+namespace SampleTestProject.CsSamples 
+{{
+    public class FakeController
+    {{
+        public void FakeIndex()
+        {{
+            {sessionInstance}[""aKey""] = ""aValue"";
+        }}
+    }}
+}}";
+
+            var expectedDiagnostic = new DiagnosticResult
+            {
+                Id = "BH1003",
+                Message = $@"'{sessionInstance}[""aKey""]' should not be used. Use 'SessionHelper.GetValue()' or 'SessionHelper.SetValue()' instead.",
+                Severity = DiagnosticSeverity.Warning,
+                Locations = new[] { new DiagnosticResultLocation("Test0.cs", 8, 13) }
+            };
+
+            VerifyCSharpDiagnostic(test, expectedDiagnostic);
+
+            var expectedFix = $@"using CMS.Helpers;
+
+namespace SampleTestProject.CsSamples 
+{{
+    public class FakeController
+    {{
+        public void FakeIndex()
+        {{
             SessionHelper.SetValue(""aKey"", ""aValue"");
         }}
     }}

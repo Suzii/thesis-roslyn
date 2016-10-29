@@ -25,7 +25,7 @@ namespace BugHunter.Test.CsTests
         
         [TestCase(@"new System.Web.HttpRequest(""fileName"", ""url"", ""queryString"")")]
         [TestCase(@"new System.Web.HttpRequestWrapper(new System.Web.HttpRequest(""fileName"", ""url"", ""queryString""))")]
-        public void InputWithIncident_SurfacesDiagnostic(string requestInstance)
+        public void InputWithIncident_SimpleMemberAccess_SurfacesDiagnostic(string requestInstance)
         {
             var test = $@"
 namespace SampleTestProject.CsSamples
@@ -35,7 +35,7 @@ namespace SampleTestProject.CsSamples
         public void SampleMethod()
         {{
             var request = {requestInstance};
-            var address = request.Url;
+            var url = request.Url;
         }}
     }}
 }}";
@@ -44,7 +44,7 @@ namespace SampleTestProject.CsSamples
                 Id = DiagnosticIds.HttpRequestUrl,
                 Message = @"'request.Url' should not be used. Use 'RequestContext.Url' instead.",
                 Severity = DiagnosticSeverity.Warning,
-                Locations = new[] { new DiagnosticResultLocation("Test0.cs", 9, 27) }
+                Locations = new[] { new DiagnosticResultLocation("Test0.cs", 9, 23) }
             };
 
             VerifyCSharpDiagnostic(test, expectedDiagnostic);
@@ -58,7 +58,47 @@ namespace SampleTestProject.CsSamples
         public void SampleMethod()
         {{
             var request = {requestInstance};
-            var address = RequestContext.URL;
+            var url = RequestContext.URL;
+        }}
+    }}
+}}";
+            VerifyCSharpFix(test, expectedFix);
+        }
+
+        [TestCase(@"new System.Web.HttpRequest(""fileName"", ""url"", ""queryString"")")]
+        [TestCase(@"new System.Web.HttpRequestWrapper(new System.Web.HttpRequest(""fileName"", ""url"", ""queryString""))")]
+        public void InputWithIncident_ChainedMemberAccess_SurfacesDiagnostic(string requestInstance)
+        {
+            var test = $@"
+namespace SampleTestProject.CsSamples
+{{
+    public class RequestUserHostAddressAnalyzer
+    {{
+        public void SampleMethod()
+        {{
+            var url = {requestInstance}.Url;
+        }}
+    }}
+}}";
+            var expectedDiagnostic = new DiagnosticResult
+            {
+                Id = DiagnosticIds.HttpRequestUrl,
+                Message = $@"'{requestInstance}.Url' should not be used. Use 'RequestContext.Url' instead.",
+                Severity = DiagnosticSeverity.Warning,
+                Locations = new[] { new DiagnosticResultLocation("Test0.cs", 8, 23) }
+            };
+
+            VerifyCSharpDiagnostic(test, expectedDiagnostic);
+
+            var expectedFix = $@"using CMS.Helpers;
+
+namespace SampleTestProject.CsSamples
+{{
+    public class RequestUserHostAddressAnalyzer
+    {{
+        public void SampleMethod()
+        {{
+            var url = RequestContext.URL;
         }}
     }}
 }}";

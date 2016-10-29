@@ -25,7 +25,7 @@ namespace BugHunter.Test.CsTests
 
         [TestCase("System.Web.HttpContext.Current.Session")]
         [TestCase("new System.Web.HttpSessionStateWrapper(System.Web.HttpContext.Current.Session)")]
-        public void InputWithIncident_SurfacesDiagnostic(string sessionInstance)
+        public void InputWithIncident_SimpleMemberAccess_SurfacesDiagnostic(string sessionInstance)
         {   
             var test = $@"
 namespace SampleTestProject.CsSamples 
@@ -59,6 +59,47 @@ namespace SampleTestProject.CsSamples
         public void FakeIndex()
         {{
             var session = {sessionInstance};
+            var sessionId = SessionHelper.GetSessionID();
+        }}
+    }}
+}}";
+            VerifyCSharpFix(test, expectedFix);
+        }
+
+        [TestCase("System.Web.HttpContext.Current.Session")]
+        [TestCase("new System.Web.HttpSessionStateWrapper(System.Web.HttpContext.Current.Session)")]
+        public void InputWithIncident_ChainedMemberAccess_SurfacesDiagnostic(string sessionInstance)
+        {
+            var test = $@"
+namespace SampleTestProject.CsSamples 
+{{
+    public class FakeController
+    {{
+        public void FakeIndex()
+        {{
+            var sessionId = {sessionInstance}.SessionID;
+        }}
+    }}
+}}";
+
+            var expectedDiagnostic = new DiagnosticResult
+            {
+                Id = DiagnosticIds.HttpSessionSessionId,
+                Message = $@"'{sessionInstance}.SessionID' should not be used. Use 'SessionHelper.GetSessionID()' instead.",
+                Severity = DiagnosticSeverity.Warning,
+                Locations = new[] { new DiagnosticResultLocation("Test0.cs", 8, 29) }
+            };
+
+            VerifyCSharpDiagnostic(test, expectedDiagnostic);
+
+            var expectedFix = $@"using CMS.Helpers;
+
+namespace SampleTestProject.CsSamples 
+{{
+    public class FakeController
+    {{
+        public void FakeIndex()
+        {{
             var sessionId = SessionHelper.GetSessionID();
         }}
     }}
