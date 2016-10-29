@@ -215,4 +215,13 @@
   <data name="HttpRequestBrowser_Title" xml:space="preserve">
     <value>'Request.Browser' should not be used.</value>
   </data>
+  <data name="HttpResponseRedirect_Description" xml:space="preserve">
+    <value>'Response.Redirect()' should not be used. Use 'TODO' instead.</value>
+  </data>
+  <data name="HttpResponseRedirect_MessageFormat" xml:space="preserve">
+    <value>'{0}.{1}' should not be used. Use 'TODO' instead.</value>
+  </data>
+  <data name="HttpResponseRedirect_Title" xml:space="preserve">
+    <value>'Response.Redirect()' should not be used.</value>
+  </data>
 </root>

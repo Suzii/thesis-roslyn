@@ -540,6 +540,7 @@
   <ItemGroup>
     <Compile Include="CsTests\HttpRequestBrowserTest.cs" />
     <Compile Include="CsTests\HttpRequestUrlTest.cs" />
+    <Compile Include="CsTests\HttpResponseRedirectTest.cs" />
     <Compile Include="CsTests\HttpSessionElementAccessTest.cs" />
     <Compile Include="CsTests\HttpSessionSessionIdTest.cs" />
     <Compile Include="CsTests\HttpRequestAndResponseCookiesTest.cs" />

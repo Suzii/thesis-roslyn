@@ -232,6 +232,33 @@ namespace BugHunter.CsRules {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &apos;Response.Redirect()&apos; should not be used. Use &apos;TODO&apos; instead..
+        /// </summary>
+        internal static string HttpResponseRedirect_Description {
+            get {
+                return ResourceManager.GetString("HttpResponseRedirect_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;{0}.{1}&apos; should not be used. Use &apos;TODO&apos; instead..
+        /// </summary>
+        internal static string HttpResponseRedirect_MessageFormat {
+            get {
+                return ResourceManager.GetString("HttpResponseRedirect_MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;Response.Redirect()&apos; should not be used..
+        /// </summary>
+        internal static string HttpResponseRedirect_Title {
+            get {
+                return ResourceManager.GetString("HttpResponseRedirect_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &apos;Session[]&apos; should not be used. Use &apos;SessionHelper.GetValue()&apos; or &apos;SessionHelper.SetValue()&apos;  instead..
         /// </summary>
         internal static string HttpSessionElementAccess_Description {
