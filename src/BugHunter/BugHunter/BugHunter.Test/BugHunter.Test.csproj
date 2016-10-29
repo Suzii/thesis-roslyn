@@ -563,6 +563,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BugHunter.Core\BugHunter.Core.csproj">
+      <Project>{5EBA700C-B241-41CE-A39D-6862A95CFB7D}</Project>
+      <Name>BugHunter.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BugHunter\BugHunter.csproj">
       <Project>{94312E36-802C-40FA-A07E-F479E74B61C2}</Project>
       <Name>BugHunter</Name>

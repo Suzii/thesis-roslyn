@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Linq;
+using BugHunter.Core.Extensions;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
 
 namespace BugHunter.Helpers.Analyzers
 {
-    internal class MemberAccessAnalysisHelper
+    public class MemberAccessAnalysisHelper
     {
         private readonly DiagnosticDescriptor _rule;
 

@@ -6,7 +6,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace BugHunter.Helpers.CodeFixes
 {
-    internal class MemberAccessCodeFixHelper : CodeFixHelper
+    public class MemberAccessCodeFixHelper : CodeFixHelper
     {
         public MemberAccessCodeFixHelper(CodeFixContext context): base(context)
         {

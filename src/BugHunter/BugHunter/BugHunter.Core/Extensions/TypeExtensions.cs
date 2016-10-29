@@ -2,9 +2,9 @@
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
 
-namespace BugHunter.Helpers
+namespace BugHunter.Core.Extensions 
 {
-    internal static class TypeExtensions
+    public static class TypeExtensions
     {
         public static INamedTypeSymbol GetITypeSymbol(this Type type, SyntaxNodeAnalysisContext context)
         {

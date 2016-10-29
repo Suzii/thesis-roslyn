@@ -1,11 +1,12 @@
 ﻿using System.Threading.Tasks;
+using BugHunter.Core.Helpers.CodeFixes;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeFixes;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace BugHunter.Helpers.CodeFixes
 {
-    internal class CodeFixHelper
+    public class CodeFixHelper
     {
         protected readonly CodeFixContext Context;
 

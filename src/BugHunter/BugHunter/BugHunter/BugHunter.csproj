@@ -73,13 +73,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CsResources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Helpers\Analyzers\MemberAccessAnalysisHelper.cs" />
-    <Compile Include="Helpers\CodeFixes\CodeFixHelper.cs" />
-    <Compile Include="Helpers\CodeFixes\MemberAccessCodeFixHelper.cs" />
-    <Compile Include="Helpers\CodeFixes\UsingsHelper.cs" />
-    <Compile Include="Helpers\SemanticModelBrowser.cs" />
-    <Compile Include="Helpers\TypeExtensions.cs" />
-    <Compile Include="Helpers\TypeSymbolExtensions.cs" />
     <Compile Include="PageRules\PageResources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -618,6 +611,12 @@
   <ItemGroup>
     <Analyzer Include="..\..\packages\Microsoft.CodeAnalysis.Analyzers.1.1.0\analyzers\dotnet\cs\Microsoft.CodeAnalysis.Analyzers.dll" />
     <Analyzer Include="..\..\packages\Microsoft.CodeAnalysis.Analyzers.1.1.0\analyzers\dotnet\cs\Microsoft.CodeAnalysis.CSharp.Analyzers.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BugHunter.Core\BugHunter.Core.csproj">
+      <Project>{5eba700c-b241-41ce-a39d-6862a95cfb7d}</Project>
+      <Name>BugHunter.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="AfterBuild">

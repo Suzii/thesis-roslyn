@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.CodeAnalysis;
 
-namespace BugHunter.Helpers
+namespace BugHunter.Core.Extensions
 {
     /// <summary>
     /// Inspired by http://fossies.org/linux/misc/mono-sources/monodevelop/monodevelop-6.0.0.4761.tar.gz/monodevelop-6.0/src/addins/CSharpBinding/Util/TypeExtensions.cs?m=t
     /// </summary>
-    internal static class TypeSymbolExtensions
+    public static class TypeSymbolExtensions
     {
         /// <summary>
         /// Gets the invoke method for a delegate type.

@@ -1,14 +1,14 @@
 ﻿using System.Linq;
-using Kentico.Google.Apis.Util;
+using BugHunter.Core.Extensions;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-namespace BugHunter.Helpers.CodeFixes
+namespace BugHunter.Core.Helpers.CodeFixes
 {
-    internal class UsingsHelper
+    public class UsingsHelper
     {
        /// <summary>
-       /// Generates using directive for all <param name="usings"/> that are not already present in usings of <param name="root">
+       /// Generates using directive for all <param name="usings"/> that are not already present in usings of <param name="root" />
        /// </summary>
        /// <param name="root">Document to add usings to</param>
        /// <param name="usings">Usings to be added</param>
