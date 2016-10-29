@@ -30,9 +30,9 @@ namespace BugHunter.Test.CsTests
             var test = $@"
 namespace SampleTestProject.CsSamples 
 {{
-    public class FakeController
+    public class SampleClass
     {{
-        public void FakeIndex()
+        public void SampleMethod()
         {{
             var session = {sessionInstance};
             var aValue = session[""aKey""];
@@ -54,9 +54,9 @@ namespace SampleTestProject.CsSamples
 
 namespace SampleTestProject.CsSamples 
 {{
-    public class FakeController
+    public class SampleClass
     {{
-        public void FakeIndex()
+        public void SampleMethod()
         {{
             var session = {sessionInstance};
             var aValue = SessionHelper.GetValue(""aKey"");
@@ -73,9 +73,9 @@ namespace SampleTestProject.CsSamples
             var test = $@"
 namespace SampleTestProject.CsSamples 
 {{
-    public class FakeController
+    public class SampleClass
     {{
-        public void FakeIndex()
+        public void SampleMethod()
         {{
             var aValue = {sessionInstance}[""aKey""];
         }}
@@ -96,9 +96,9 @@ namespace SampleTestProject.CsSamples
 
 namespace SampleTestProject.CsSamples 
 {{
-    public class FakeController
+    public class SampleClass
     {{
-        public void FakeIndex()
+        public void SampleMethod()
         {{
             var aValue = SessionHelper.GetValue(""aKey"");
         }}
@@ -115,9 +115,9 @@ namespace SampleTestProject.CsSamples
             var test = $@"
 namespace SampleTestProject.CsSamples 
 {{
-    public class FakeController
+    public class SampleClass
     {{
-        public void FakeIndex()
+        public void SampleMethod()
         {{
             var session = {sessionInstance};
             session[""aKey""] = ""aValue"";
@@ -139,9 +139,9 @@ namespace SampleTestProject.CsSamples
 
 namespace SampleTestProject.CsSamples 
 {{
-    public class FakeController
+    public class SampleClass
     {{
-        public void FakeIndex()
+        public void SampleMethod()
         {{
             var session = {sessionInstance};
             SessionHelper.SetValue(""aKey"", ""aValue"");
@@ -158,9 +158,9 @@ namespace SampleTestProject.CsSamples
             var test = $@"
 namespace SampleTestProject.CsSamples 
 {{
-    public class FakeController
+    public class SampleClass
     {{
-        public void FakeIndex()
+        public void SampleMethod()
         {{
             {sessionInstance}[""aKey""] = ""aValue"";
         }}
@@ -181,9 +181,9 @@ namespace SampleTestProject.CsSamples
 
 namespace SampleTestProject.CsSamples 
 {{
-    public class FakeController
+    public class SampleClass
     {{
-        public void FakeIndex()
+        public void SampleMethod()
         {{
             SessionHelper.SetValue(""aKey"", ""aValue"");
         }}

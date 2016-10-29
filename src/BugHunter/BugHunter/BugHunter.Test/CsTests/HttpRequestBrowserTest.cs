@@ -30,7 +30,7 @@ namespace BugHunter.Test.CsTests
             var test = $@"
 namespace SampleTestProject.CsSamples
 {{
-    public class RequestUserHostAddressAnalyzer
+    public class SampleClass
     {{
         public void SampleMethod()
         {{
@@ -53,7 +53,7 @@ namespace SampleTestProject.CsSamples
 
 namespace SampleTestProject.CsSamples
 {{
-    public class RequestUserHostAddressAnalyzer
+    public class SampleClass
     {{
         public void SampleMethod()
         {{
@@ -72,7 +72,7 @@ namespace SampleTestProject.CsSamples
             var test = $@"
 namespace SampleTestProject.CsSamples
 {{
-    public class RequestUserHostAddressAnalyzer
+    public class SampleClass
     {{
         public void SampleMethod()
         {{
@@ -96,7 +96,7 @@ namespace SampleTestProject.CsSamples
 
 namespace SampleTestProject.CsSamples
 {{
-    public class RequestUserHostAddressAnalyzer
+    public class SampleClass
     {{
         public void SampleMethod()
         {{

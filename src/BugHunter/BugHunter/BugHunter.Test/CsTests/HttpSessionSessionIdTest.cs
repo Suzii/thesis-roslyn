@@ -30,9 +30,9 @@ namespace BugHunter.Test.CsTests
             var test = $@"
 namespace SampleTestProject.CsSamples 
 {{
-    public class FakeController
+    public class SampleClass
     {{
-        public void FakeIndex()
+        public void SampleMethod()
         {{
             var session = {sessionInstance};
             var sessionId = session.SessionID;
@@ -54,9 +54,9 @@ namespace SampleTestProject.CsSamples
 
 namespace SampleTestProject.CsSamples 
 {{
-    public class FakeController
+    public class SampleClass
     {{
-        public void FakeIndex()
+        public void SampleMethod()
         {{
             var session = {sessionInstance};
             var sessionId = SessionHelper.GetSessionID();
@@ -73,9 +73,9 @@ namespace SampleTestProject.CsSamples
             var test = $@"
 namespace SampleTestProject.CsSamples 
 {{
-    public class FakeController
+    public class SampleClass
     {{
-        public void FakeIndex()
+        public void SampleMethod()
         {{
             var sessionId = {sessionInstance}.SessionID;
         }}
@@ -96,9 +96,9 @@ namespace SampleTestProject.CsSamples
 
 namespace SampleTestProject.CsSamples 
 {{
-    public class FakeController
+    public class SampleClass
     {{
-        public void FakeIndex()
+        public void SampleMethod()
         {{
             var sessionId = SessionHelper.GetSessionID();
         }}

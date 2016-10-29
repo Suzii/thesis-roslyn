@@ -33,7 +33,7 @@ namespace BugHunter.Test.CsTests
             var test = $@"
 namespace SampleTestProject.CsSamples
 {{
-    public class BH1000MethodWhereLikeShouldNotBeUsed
+    public class SampleClass
     {{
         public void SampleMethod()
         {{
@@ -55,7 +55,7 @@ namespace SampleTestProject.CsSamples
             var expectedFix = $@"
 namespace SampleTestProject.CsSamples
 {{
-    public class BH1000MethodWhereLikeShouldNotBeUsed
+    public class SampleClass
     {{
         public void SampleMethod()
         {{
@@ -78,7 +78,7 @@ namespace SampleTestProject.CsSamples
             var test = $@"
 namespace SampleTestProject.CsSamples
 {{
-    public class BH1000MethodWhereLikeShouldNotBeUsed
+    public class SampleClass
     {{
         public void SampleMethod()
         {{
@@ -99,7 +99,7 @@ namespace SampleTestProject.CsSamples
             var expectedFix = $@"
 namespace SampleTestProject.CsSamples
 {{
-    public class BH1000MethodWhereLikeShouldNotBeUsed
+    public class SampleClass
     {{
         public void SampleMethod()
         {{
@@ -121,7 +121,7 @@ namespace SampleTestProject.CsSamples
             var test = $@"
 namespace SampleTestProject.CsSamples
 {{
-    public class BH1000MethodWhereLikeShouldNotBeUsed
+    public class SampleClass
     {{
         public void MethodWithDelegateAsParam(Func<string, string, WhereCondition> func)
         {{
@@ -148,7 +148,7 @@ namespace SampleTestProject.CsSamples
             var expectedFix = $@"
 namespace SampleTestProject.CsSamples
 {{
-    public class BH1000MethodWhereLikeShouldNotBeUsed
+    public class SampleClass
     {{
         public void MethodWithDelegateAsParam(Func<string, string, WhereCondition> func)
         {{
@@ -171,7 +171,7 @@ namespace SampleTestProject.CsSamples
             var test = @"
 namespace SampleTestProject.CsSamples
 {
-    public class BH1000MethodWhereLikeShouldNotBeUsed
+    public class SampleClass
     {
         public void WhereLike() {
             // do nothing
