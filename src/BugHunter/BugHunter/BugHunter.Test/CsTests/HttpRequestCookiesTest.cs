@@ -106,5 +106,47 @@ namespace SampleTestProject.CsSamples
 }}";
             VerifyCSharpFix(test, expectedFix);
         }
+
+        [TestCase(@"new System.Web.HttpRequest(""fileName"", ""url"", ""queryString"")")]
+        [TestCase(@"new System.Web.HttpRequestWrapper(new System.Web.HttpRequest(""fileName"", ""url"", ""queryString""))")]
+        public void InputWithIncident_FollowUpMemberAccess_SurfacesDiagnostic(string instance)
+        {
+            var test = $@"
+namespace SampleTestProject.CsSamples
+{{
+    public class SampleClass
+    {{
+        public void SampleMethod()
+        {{
+            var r = {instance};
+            var cookies = r.Cookies.Count;
+        }}
+    }}
+}}";
+            var expectedDiagnostic = new DiagnosticResult
+            {
+                Id = DiagnosticIds.HTTP_REQUEST_COOKIES,
+                Message = MessagesConstants.MESSAGE.FormatString("r.Cookies", "CookieHelper.RequestCookies"),
+                Severity = DiagnosticSeverity.Warning,
+                Locations = new[] { new DiagnosticResultLocation("Test0.cs", 9, 27) }
+            };
+
+            VerifyCSharpDiagnostic(test, expectedDiagnostic);
+
+            var expectedFix = $@"using CMS.Helpers;
+
+namespace SampleTestProject.CsSamples
+{{
+    public class SampleClass
+    {{
+        public void SampleMethod()
+        {{
+            var r = {instance};
+            var cookies = CookieHelper.RequestCookies.Count;
+        }}
+    }}
+}}";
+            VerifyCSharpFix(test, expectedFix);
+        }
     }
 }

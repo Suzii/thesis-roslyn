@@ -27,7 +27,7 @@ namespace BugHunter.Test.CsTests
         
         [TestCase(@"new System.Web.HttpResponse(""fileName"", ""url"", ""queryString"")", "CookieHelper.ResponseCookies")]
         [TestCase(@"new System.Web.HttpResponseWrapper(new System.Web.HttpRequest(""fileName"", ""url"", ""queryString""))", "CookieHelper.ResponseCookies")]
-        public void InputWithIncident_SipleMemberAccess_SurfacesDiagnostic(string instance, string codeFix)
+        public void InputWithIncident_SimpleMemberAccess_SurfacesDiagnostic(string instance, string codeFix)
         {
             var test = $@"
 namespace SampleTestProject.CsSamples
@@ -101,6 +101,48 @@ namespace SampleTestProject.CsSamples
         public void SampleMethod()
         {{
             var cookies = {codeFix};
+        }}
+    }}
+}}";
+            VerifyCSharpFix(test, expectedFix);
+        }
+
+        [TestCase(@"new System.Web.HttpResponse(""fileName"", ""url"", ""queryString"")", "CookieHelper.ResponseCookies")]
+        [TestCase(@"new System.Web.HttpResponseWrapper(new System.Web.HttpRequest(""fileName"", ""url"", ""queryString""))", "CookieHelper.ResponseCookies")]
+        public void InputWithIncident_FollowUpMemberAccess_SurfacesDiagnostic(string instance, string codeFix)
+        {
+            var test = $@"
+namespace SampleTestProject.CsSamples
+{{
+    public class SampleClass
+    {{
+        public void SampleMethod()
+        {{
+            var r = {instance};
+            var cookies = r.Cookies.Count;
+        }}
+    }}
+}}";
+            var expectedDiagnostic = new DiagnosticResult
+            {
+                Id = DiagnosticIds.HTTP_RESPONSE_COOKIES,
+                Message = MessagesConstants.MESSAGE.FormatString($"r.Cookies", "CookieHelper.ResponseCookies"),
+                Severity = DiagnosticSeverity.Warning,
+                Locations = new[] { new DiagnosticResultLocation("Test0.cs", 9, 27) }
+            };
+
+            VerifyCSharpDiagnostic(test, expectedDiagnostic);
+
+            var expectedFix = $@"using CMS.Helpers;
+
+namespace SampleTestProject.CsSamples
+{{
+    public class SampleClass
+    {{
+        public void SampleMethod()
+        {{
+            var r = {instance};
+            var cookies = {codeFix}.Count;
         }}
     }}
 }}";

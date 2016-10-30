@@ -106,5 +106,47 @@ namespace SampleTestProject.CsSamples
 }}";
             VerifyCSharpFix(test, expectedFix);
         }
+
+        [TestCase(@"new System.Web.HttpRequest(""fileName"", ""url"", ""queryString"")")]
+        [TestCase(@"new System.Web.HttpRequestWrapper(new System.Web.HttpRequest(""fileName"", ""url"", ""queryString""))")]
+        public void InputWithIncident_FollowUpMemberAccess_SurfacesDiagnostic(string requestInstance)
+        {
+            var test = $@"
+namespace SampleTestProject.CsSamples
+{{
+    public class SampleClass
+    {{
+        public void SampleMethod()
+        {{
+            var request = {requestInstance};
+            var url = request.Url.Contains(""Ooops..."");
+        }}
+    }}
+}}";
+            var expectedDiagnostic = new DiagnosticResult
+            {
+                Id = DiagnosticIds.HTTP_REQUEST_URL,
+                Message = MessagesConstants.MESSAGE.FormatString("request.Url", "RequestContext.Url"),
+                Severity = DiagnosticSeverity.Warning,
+                Locations = new[] { new DiagnosticResultLocation("Test0.cs", 9, 23) }
+            };
+
+            VerifyCSharpDiagnostic(test, expectedDiagnostic);
+
+            var expectedFix = $@"using CMS.Helpers;
+
+namespace SampleTestProject.CsSamples
+{{
+    public class SampleClass
+    {{
+        public void SampleMethod()
+        {{
+            var request = {requestInstance};
+            var url = RequestContext.URL.Contains(""Ooops..."");
+        }}
+    }}
+}}";
+            VerifyCSharpFix(test, expectedFix);
+        }
     }
 }

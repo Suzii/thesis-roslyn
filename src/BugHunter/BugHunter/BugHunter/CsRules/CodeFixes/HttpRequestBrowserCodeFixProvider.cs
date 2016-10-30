@@ -26,7 +26,7 @@ namespace BugHunter.CsRules.CodeFixes
         public sealed override async Task RegisterCodeFixesAsync(CodeFixContext context)
         {
             var editor = new MemberAccessCodeFixHelper(context);
-            var memberAccess = await editor.GetOutterMostMemberAccess();
+            var memberAccess = await editor.GetDiagnosedMemberAccess();//.GetOuterMostMemberAccess();
 
             if (memberAccess == null)
             {

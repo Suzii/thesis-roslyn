@@ -67,7 +67,7 @@ namespace SampleTestProject.CsSamples
 }}";
             VerifyCSharpFix(test, expectedFix);
         }
-
+        
         [TestCase("System.Web.HttpContext.Current.Session")]
         [TestCase("new System.Web.HttpSessionStateWrapper(System.Web.HttpContext.Current.Session)")]
         public void InputWithIncident_ChainedMemberAccess_SurfacesDiagnostic(string sessionInstance)
@@ -103,6 +103,49 @@ namespace SampleTestProject.CsSamples
         public void SampleMethod()
         {{
             var sessionId = SessionHelper.GetSessionID();
+        }}
+    }}
+}}";
+            VerifyCSharpFix(test, expectedFix);
+        }
+
+        [TestCase("System.Web.HttpContext.Current.Session")]
+        [TestCase("new System.Web.HttpSessionStateWrapper(System.Web.HttpContext.Current.Session)")]
+        public void InputWithIncident_FollowUpMemberAccess_SurfacesDiagnostic(string sessionInstance)
+        {
+            var test = $@"
+namespace SampleTestProject.CsSamples 
+{{
+    public class SampleClass
+    {{
+        public void SampleMethod()
+        {{
+            var session = {sessionInstance};
+            var sessionId = session.SessionID.Contains(""Ooops..."");
+        }}
+    }}
+}}";
+
+            var expectedDiagnostic = new DiagnosticResult
+            {
+                Id = DiagnosticIds.HTTP_SESSION_SESSION_ID,
+                Message = MessagesConstants.MESSAGE.FormatString($"session.SessionID", "SessionHelper.GetSessionID()"),
+                Severity = DiagnosticSeverity.Warning,
+                Locations = new[] { new DiagnosticResultLocation("Test0.cs", 9, 29) }
+            };
+
+            VerifyCSharpDiagnostic(test, expectedDiagnostic);
+
+            var expectedFix = $@"using CMS.Helpers;
+
+namespace SampleTestProject.CsSamples 
+{{
+    public class SampleClass
+    {{
+        public void SampleMethod()
+        {{
+            var session = {sessionInstance};
+            var sessionId = SessionHelper.GetSessionID().Contains(""Ooops..."");
         }}
     }}
 }}";

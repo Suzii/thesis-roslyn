@@ -106,5 +106,48 @@ namespace SampleTestProject.CsSamples
 }}";
             VerifyCSharpFix(test, expectedFix);
         }
+
+        [TestCase("System.Web.HttpContext.Current.Session")]
+        [TestCase("new System.Web.HttpSessionStateWrapper(System.Web.HttpContext.Current.Session)")]
+        public void InputWithIncident_FollowUpAccess_SurfacesDiagnostic(string sessionInstance)
+        {
+            var test = $@"
+namespace SampleTestProject.CsSamples 
+{{
+    public class SampleClass
+    {{
+        public void SampleMethod()
+        {{
+            var session = {sessionInstance};
+            var aValue = session[""aKey""].ToString();
+        }}
+    }}
+}}";
+
+            var expectedDiagnostic = new DiagnosticResult
+            {
+                Id = DiagnosticIds.HTTP_SESSION_ELEMENT_ACCESS_GET,
+                Message = @"'session[""aKey""]' should not be used. Use 'SessionHelper.GetValue()' instead.",
+                Severity = DiagnosticSeverity.Warning,
+                Locations = new[] { new DiagnosticResultLocation("Test0.cs", 9, 26) }
+            };
+
+            VerifyCSharpDiagnostic(test, expectedDiagnostic);
+
+            var expectedFix = $@"using CMS.Helpers;
+
+namespace SampleTestProject.CsSamples 
+{{
+    public class SampleClass
+    {{
+        public void SampleMethod()
+        {{
+            var session = {sessionInstance};
+            var aValue = SessionHelper.GetValue(""aKey"").ToString();
+        }}
+    }}
+}}";
+            VerifyCSharpFix(test, expectedFix);
+        }
     }
 }

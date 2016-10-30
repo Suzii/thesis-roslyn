@@ -4,6 +4,7 @@ using System.Composition;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using BugHunter.Core.Helpers.CodeFixes;
 using BugHunter.Core.ResourceBuilder;
 using BugHunter.CsRules.Analyzers;
 using Microsoft.CodeAnalysis;
@@ -34,11 +35,9 @@ namespace BugHunter.CsRules.CodeFixes
 
         public sealed override async Task RegisterCodeFixesAsync(CodeFixContext context)
         {
-            var root = await context.Document.GetSyntaxRootAsync(context.CancellationToken).ConfigureAwait(false);
             var diagnostic = context.Diagnostics.First();
-            var diagnosticSpan = diagnostic.Location.SourceSpan;
-            
-            var memberAccessExpression = root.FindToken(diagnosticSpan.Start).Parent.AncestorsAndSelf().OfType<MemberAccessExpressionSyntax>().FirstOrDefault();
+            var memberAccessHelper = new MemberAccessCodeFixHelper(context);
+            var memberAccessExpression = await memberAccessHelper.GetClosestMemberAccess();
             if (memberAccessExpression == null)
             {
                 return;
