@@ -46,6 +46,7 @@
     <Compile Include="CsRules\Analyzers\PageIsPostBackAnalyzer.cs" />
     <Compile Include="CsRules\Analyzers\HttpSessionSessionIdAnalyzer.cs" />
     <Compile Include="CsRules\Analyzers\HttpSessionElementAccessAnalyzer.cs" />
+    <Compile Include="CsRules\Analyzers\ClientScriptMethodsAnalyzer.cs" />
     <Compile Include="CsRules\CodeFixes\FormsAuthenticationSignOutCodeFixProvider.cs" />
     <Compile Include="CsRules\CodeFixes\HttpRequestCookiesCodeFixProvider.cs" />
     <Compile Include="CsRules\CodeFixes\HttpResponseCookiesCodeFixProvider.cs" />
@@ -56,6 +57,7 @@
     <Compile Include="CsRules\CodeFixes\PageIsCallbackCodeFixProvider.cs" />
     <Compile Include="CsRules\CodeFixes\PageIsPostBackCodeFixProvider.cs" />
     <Compile Include="CsRules\CodeFixes\HttpSessionSessionIdCodeFixProvider.cs" />
+    <Compile Include="CsRules\CodeFixes\ClientScriptMethosCodeFixProvider.cs" />
     <Compile Include="DiagnosticIds.cs" />
     <Compile Include="AnalyzerCategories.cs" />
     <Compile Include="AspxRules\AspxResources.Designer.cs">

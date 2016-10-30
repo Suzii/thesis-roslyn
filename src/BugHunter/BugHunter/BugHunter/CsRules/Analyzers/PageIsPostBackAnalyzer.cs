@@ -1,12 +1,11 @@
 ﻿using System.Collections.Immutable;
-using System.Web.UI;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
 
 namespace BugHunter.CsRules.Analyzers
 {
     /// <summary>
-    /// Searches for usages of <see cref="Page"/> and their access to IsPostBack member
+    /// Searches for usages of <see cref="System.Web.UI.Page"/> and their access to IsPostBack member
     /// </summary>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     public class PageIsPostBackAnalyzer : BaseMemberAccessAnalyzer

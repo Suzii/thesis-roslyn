@@ -1,12 +1,11 @@
 ﻿using System.Collections.Immutable;
-using System.Web.UI;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
 
 namespace BugHunter.CsRules.Analyzers
 {
     /// <summary>
-    /// Searches for usages of <see cref="Page"/> and their access to IsCallback member
+    /// Searches for usages of <see cref="System.Web.UI.Page"/> and their access to IsCallback member
     /// </summary>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     public class PageIsCallbackAnalyzer : BaseMemberAccessAnalyzer
