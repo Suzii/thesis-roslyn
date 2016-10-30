@@ -12,11 +12,11 @@ using Microsoft.CodeAnalysis.CSharp;
 
 namespace BugHunter.CsRules.CodeFixes
 {
-    [ExportCodeFixProvider(LanguageNames.CSharp, Name = nameof(HttpRequestBrowserCodeFixProvider)), Shared]
-    public class HttpRequestBrowserCodeFixProvider : CodeFixProvider
+    [ExportCodeFixProvider(LanguageNames.CSharp, Name = nameof(FormsAuthenticationSignOutCodeFixProvider)), Shared]
+    public class FormsAuthenticationSignOutCodeFixProvider : CodeFixProvider
     {
         public sealed override ImmutableArray<string> FixableDiagnosticIds
-            => ImmutableArray.Create(HttpRequestBrowserAnalyzer.DIAGNOSTIC_ID);
+            => ImmutableArray.Create(FormsAuthenticationSignOut.DIAGNOSTIC_ID);
 
         public sealed override FixAllProvider GetFixAllProvider()
         {
@@ -33,15 +33,16 @@ namespace BugHunter.CsRules.CodeFixes
                 return;
             }
 
-            var usingNamespace = typeof(CMS.Helpers.BrowserHelper).Namespace;
-            var newMemberAccess = SyntaxFactory.ParseExpression("BrowserHelper.GetBrowser()");
+            var usingNamespace = typeof(CMS.Membership.AuthenticationHelper).Namespace;
+            // parenthesis (for method invocation) will be reused from previous code
+            var newMemberAccess = SyntaxFactory.ParseExpression("AuthenticationHelper.SignOut");
             var diagnostic = context.Diagnostics.First();
 
             context.RegisterCodeFix(
                 CodeAction.Create(
                     title: CodeFixMessageBuilder.GetMessage(newMemberAccess),
                     createChangedDocument: c => editor.ReplaceExpressionWith(memberAccess, newMemberAccess, usingNamespace),
-                    equivalenceKey: nameof(HttpRequestBrowserCodeFixProvider)),
+                    equivalenceKey: nameof(FormsAuthenticationSignOutCodeFixProvider)),
                 diagnostic);
         }
     }

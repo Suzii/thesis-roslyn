@@ -13,6 +13,7 @@ namespace BugHunter.Test
         public static readonly MetadataReference CMSHelpersReference = MetadataReference.CreateFromFile(typeof(CMS.Helpers.AJAXHelper).Assembly.Location);
         public static readonly MetadataReference CMSIOReference = MetadataReference.CreateFromFile(typeof(CMS.IO.AbstractFile).Assembly.Location);
         public static readonly MetadataReference CMSEventLogReference = MetadataReference.CreateFromFile(typeof(CMS.EventLog.EventType).Assembly.Location);
+        public static readonly MetadataReference CMSMembershipReference = MetadataReference.CreateFromFile(typeof(CMS.Membership.AuthenticationHelper).Assembly.Location);
 
         public static readonly MetadataReference SystemWebReference = MetadataReference.CreateFromFile(typeof(System.Web.HttpRequest).Assembly.Location);
 

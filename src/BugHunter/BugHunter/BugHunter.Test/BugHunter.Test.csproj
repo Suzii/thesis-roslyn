@@ -538,6 +538,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CsTests\FormsAuthenticationSignOutTest.cs" />
     <Compile Include="CsTests\HttpRequestCookiesTest.cs" />
     <Compile Include="CsTests\HttpResponseCookiesTest.cs" />
     <Compile Include="CsTests\HttpRequestBrowserTest.cs" />
