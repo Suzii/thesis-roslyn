@@ -12,11 +12,11 @@ using Microsoft.CodeAnalysis.CSharp;
 
 namespace BugHunter.CsRules.CodeFixes
 {
-    [ExportCodeFixProvider(LanguageNames.CSharp, Name = nameof(PageIsPostBackCodeFixProvider)), Shared]
-    public class PageIsPostBackCodeFixProvider : CodeFixProvider
+    [ExportCodeFixProvider(LanguageNames.CSharp, Name = nameof(PageIsCallbackCodeFixProvider)), Shared]
+    public class PageIsCallbackCodeFixProvider : CodeFixProvider
     {
         public sealed override ImmutableArray<string> FixableDiagnosticIds
-            => ImmutableArray.Create(PageIsPostBackAnalyzer.DIAGNOSTIC_ID);
+            => ImmutableArray.Create(PageIsCallbackAnalyzer.DIAGNOSTIC_ID);
 
         public sealed override FixAllProvider GetFixAllProvider()
         {
@@ -35,13 +35,13 @@ namespace BugHunter.CsRules.CodeFixes
 
             var diagnostic = context.Diagnostics.First();
             var usingNamespace = typeof(CMS.Helpers.RequestHelper).Namespace;
-            var newMemberAccess = SyntaxFactory.ParseExpression("RequestHelper.IsPostBack()");
+            var newMemberAccess = SyntaxFactory.ParseExpression("RequestHelper.IsCallback()");
             
             context.RegisterCodeFix(
                 CodeAction.Create(
                     title: CodeFixMessageBuilder.GetMessage(newMemberAccess),
                     createChangedDocument: c => editor.ReplaceExpressionWith(memberAccess, newMemberAccess, usingNamespace),
-                    equivalenceKey: nameof(PageIsPostBackCodeFixProvider)),
+                    equivalenceKey: nameof(PageIsCallbackCodeFixProvider)),
                 diagnostic);
         }
     }

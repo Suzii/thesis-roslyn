@@ -18,6 +18,7 @@
 
         public const string FORMS_AUTHENTICATION_SIGN_OUT = "BH1008";
         public const string PAGE_IS_POST_BACK = "BH1009";
+        public const string PAGE_IS_CALLBACK = "BH1010";
 
         // TODO
         public const string HTTP_RESPONSE_REDIRECT = "BH10XX";
