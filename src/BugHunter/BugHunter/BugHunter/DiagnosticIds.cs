@@ -17,6 +17,7 @@
         public const string HTTP_REQUEST_BROWSER = "BH1007";
 
         public const string FORMS_AUTHENTICATION_SIGN_OUT = "BH1008";
+        public const string PAGE_IS_POST_BACK = "BH1009";
 
         // TODO
         public const string HTTP_RESPONSE_REDIRECT = "BH10XX";
