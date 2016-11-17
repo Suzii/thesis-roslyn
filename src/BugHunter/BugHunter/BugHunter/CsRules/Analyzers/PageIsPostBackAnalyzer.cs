@@ -18,7 +18,7 @@ namespace BugHunter.CsRules.Analyzers
 
         public override void Initialize(AnalysisContext context)
         {
-            RegisterAction(Rule, context, typeof(System.Web.UI.Page), nameof(System.Web.UI.Page.IsPostBack));
+            RegisterAction(Rule, context, "System.Web.UI.Page", "IsPostBack");
         }
     }
 }

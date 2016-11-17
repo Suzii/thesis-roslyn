@@ -17,8 +17,8 @@ namespace BugHunter.CsRules.Analyzers
 
         public override void Initialize(AnalysisContext context)
         {
-            var accessedType = typeof(CMS.DataEngine.WhereConditionBase<>);
-            var forbiddenMembers = new[] { nameof(CMS.DataEngine.WhereCondition.WhereLike), nameof(CMS.DataEngine.WhereCondition.WhereNotLike) };
+            var accessedType = "CMS.DataEngine.WhereConditionBase`1";
+            var forbiddenMembers = new[] { "WhereLike", "WhereNotLike" };
 
             RegisterAction(Rule, context, accessedType, forbiddenMembers);
         }

@@ -15,8 +15,8 @@ namespace BugHunter.CsRules.Analyzers
 
         public override void Initialize(AnalysisContext context)
         {
-            RegisterAction(Rule, context, typeof(System.Web.HttpRequest), nameof(System.Web.HttpRequest.Url));
-            RegisterAction(Rule, context, typeof(System.Web.HttpRequestBase), nameof(System.Web.HttpRequestBase.Url));
+            RegisterAction(Rule, context, "System.Web.HttpRequest", "Url");
+            RegisterAction(Rule, context, "System.Web.HttpRequestBase", "Url");
         }
     }
 }

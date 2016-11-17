@@ -37,7 +37,7 @@ namespace BugHunter.CsRules.CodeFixes
                 return;
             }
 
-            var usingNamespace = typeof(CMS.Helpers.SessionHelper).Namespace;
+            var usingNamespace = "CMS.Helpers";
             var codeFixHelper = new CodeFixHelper(context);
             var sessionKey = GetElementAccessKey(elementAccess);
 

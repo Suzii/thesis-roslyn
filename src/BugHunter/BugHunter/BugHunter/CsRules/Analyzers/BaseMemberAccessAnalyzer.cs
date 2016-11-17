@@ -35,7 +35,7 @@ namespace BugHunter.CsRules.Analyzers
             return rule;
         }
         
-        protected void RegisterAction(DiagnosticDescriptor rule, AnalysisContext context, Type accessedType, params string[] memberNames)
+        protected void RegisterAction(DiagnosticDescriptor rule, AnalysisContext context, string accessedType, params string[] memberNames)
         {
             if (memberNames.Length == 0)
             {

@@ -11,14 +11,14 @@ namespace BugHunter.Core.Helpers.Analyzers
     {
         private readonly DiagnosticDescriptor _rule;
 
-        private readonly Type _accessedType;
+        private readonly string _accessedType;
 
         private readonly string[] _memberNames;
         
-        public MemberAccessAnalysisHelper(DiagnosticDescriptor rule, Type accessedType, string memberName)
+        public MemberAccessAnalysisHelper(DiagnosticDescriptor rule, string accessedType, string memberName)
             : this(rule, accessedType, new []{ memberName}) { }
 
-        public MemberAccessAnalysisHelper(DiagnosticDescriptor rule, Type accessedType, string[] memberNames)
+        public MemberAccessAnalysisHelper(DiagnosticDescriptor rule, string accessedType, string[] memberNames)
         {
             _rule = rule;
             _accessedType = accessedType;
@@ -35,7 +35,7 @@ namespace BugHunter.Core.Helpers.Analyzers
                 return;
             }
 
-            var searchedTargetType = _accessedType.GetITypeSymbol(context);
+            var searchedTargetType = TypeExtensions.GetITypeSymbol(_accessedType, context);
             var actualTargetType = new SemanticModelBrowser(context).GetMemberAccessTarget(memberAccess) as INamedTypeSymbol;
             if (searchedTargetType == null || actualTargetType == null || !actualTargetType.IsDerivedFromClassOrInterface(searchedTargetType))
             {

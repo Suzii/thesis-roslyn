@@ -32,7 +32,7 @@ namespace BugHunter.CsRules.CodeFixes
                 return;
             }
 
-            var usingNamespace = typeof(CMS.Helpers.ScriptHelper).Namespace;
+            var usingNamespace = "CMS.Helpers";
             // Methods in script helper are named same as methods in ClientScriptManager
             // TODO different argument list
             var oldMemeberName = memberAccess.Name;

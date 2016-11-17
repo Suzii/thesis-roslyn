@@ -18,7 +18,7 @@ namespace BugHunter.CsRules.Analyzers
 
         public override void Initialize(AnalysisContext context)
         {
-            RegisterAction(Rule, context, typeof(System.Web.Security.FormsAuthentication), nameof(System.Web.Security.FormsAuthentication.SignOut));
+            RegisterAction(Rule, context, "System.Web.Security.FormsAuthentication", "SignOut");
         }
     }
 }

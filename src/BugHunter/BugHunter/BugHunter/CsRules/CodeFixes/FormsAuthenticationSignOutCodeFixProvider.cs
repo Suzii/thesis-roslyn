@@ -33,7 +33,7 @@ namespace BugHunter.CsRules.CodeFixes
                 return;
             }
 
-            var usingNamespace = typeof(CMS.Membership.AuthenticationHelper).Namespace;
+            var usingNamespace = "CMS.Membership";
             // parenthesis (for method invocation) will be reused from previous code
             var newMemberAccess = SyntaxFactory.ParseExpression("AuthenticationHelper.SignOut");
             var diagnostic = context.Diagnostics.First();
