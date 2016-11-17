@@ -88,6 +88,11 @@ namespace BugHunter.Core.Extensions
         /// <returns><c>true</c> if is derived from the specified type baseType; otherwise, <c>false</c>.</returns>
         public static bool IsDerivedFromClassOrInterface(this INamedTypeSymbol type, INamedTypeSymbol baseType)
         {
+            if (baseType == null)
+            {
+                return false;
+            }
+
             baseType = baseType.SafelyConstructUnboundGenericType();
 
             var currentType = type;
