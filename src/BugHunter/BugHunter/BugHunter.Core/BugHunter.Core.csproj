@@ -102,7 +102,9 @@
     <Compile Include="Extensions\TypeSymbolExtensions.cs" />
     <Compile Include="Helpers\ApiReplacementRuleBuilder.cs" />
     <Compile Include="Helpers\CodeFixes\CodeFixHelper.cs" />
+    <Compile Include="Helpers\CodeFixes\MemberInvocationCodeFixHelper.cs" />
     <Compile Include="Helpers\CodeFixes\MemberAccessCodeFixHelper.cs" />
+    <Compile Include="Helpers\MethodInvocationHelper.cs" />
     <Compile Include="Helpers\CodeFixes\UsingsHelper.cs" />
     <Compile Include="Helpers\LocationHelper.cs" />
     <Compile Include="Helpers\SemanticModelBrowser.cs" />

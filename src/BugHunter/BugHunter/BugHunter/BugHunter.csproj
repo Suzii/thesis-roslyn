@@ -59,7 +59,7 @@
     <Compile Include="CsRules\CodeFixes\PageIsCallbackCodeFixProvider.cs" />
     <Compile Include="CsRules\CodeFixes\PageIsPostBackCodeFixProvider.cs" />
     <Compile Include="CsRules\CodeFixes\HttpSessionSessionIdCodeFixProvider.cs" />
-    <Compile Include="CsRules\CodeFixes\ClientScriptMethosCodeFixProvider.cs" />
+    <Compile Include="CsRules\CodeFixes\ClientScriptMethodsCodeFixProvider.cs" />
     <Compile Include="DiagnosticIds.cs" />
     <Compile Include="AspxRules\AspxResources.Designer.cs">
       <DependentUpon>AspxResources.resx</DependentUpon>

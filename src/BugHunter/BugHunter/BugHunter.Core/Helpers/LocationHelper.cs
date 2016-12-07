@@ -19,11 +19,7 @@ namespace BugHunter.Core.Helpers
         /// <returns>Location of nested method invocation</returns>
         public static Location GetLocationOfMethodInvocationOnly(InvocationExpressionSyntax invocationExpression)
         {
-            var memberAccess = invocationExpression.Expression as MemberAccessExpressionSyntax;
-            if (memberAccess == null)
-            {
-                throw new ArgumentException(@"Unable to cast to MemberAccessExpression", nameof(invocationExpression));
-            }
+            var memberAccess = MethodInvocationHelper.GetUnderlyingMemberAccess(invocationExpression);
 
             var statLocation = memberAccess.Name.GetLocation().SourceSpan.Start;
             var endLocation = invocationExpression.GetLocation().SourceSpan.End;
