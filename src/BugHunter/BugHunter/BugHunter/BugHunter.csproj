@@ -35,6 +35,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="CsRules\Analyzers\BaseMemberInvocatoinAnalyzer.cs" />
     <Compile Include="CsRules\Analyzers\BaseMemberAccessAnalyzer.cs" />
     <Compile Include="CsRules\Analyzers\HttpResponseCookiesAnalyzer.cs" />
     <Compile Include="CsRules\Analyzers\HttpRequestCookiesAnalyzer.cs" />
@@ -47,6 +48,7 @@
     <Compile Include="CsRules\Analyzers\HttpSessionSessionIdAnalyzer.cs" />
     <Compile Include="CsRules\Analyzers\HttpSessionElementAccessAnalyzer.cs" />
     <Compile Include="CsRules\Analyzers\ClientScriptMethodsAnalyzer.cs" />
+    <Compile Include="CsRules\Analyzers\WhereLikeMethodAnalyzer.cs" />
     <Compile Include="CsRules\CodeFixes\FormsAuthenticationSignOutCodeFixProvider.cs" />
     <Compile Include="CsRules\CodeFixes\HttpRequestCookiesCodeFixProvider.cs" />
     <Compile Include="CsRules\CodeFixes\HttpResponseCookiesCodeFixProvider.cs" />
@@ -70,7 +72,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ControlResources.resx</DependentUpon>
     </Compile>
-    <Compile Include="CsRules\Analyzers\WhereLikeMethodAnalyzer.cs" />
     <Compile Include="CsRules\Analyzers\EventLogArgumentsAnalyzer.cs" />
     <Compile Include="CsRules\Analyzers\HttpRequestUserHostAddressAnalyzer.cs" />
     <Compile Include="CsRules\CodeFixes\WhereLikeMethodCodeFixProvider.cs" />
@@ -563,6 +564,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Activities" />
     <Reference Include="System.Collections.Immutable, Version=1.1.37.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.Collections.Immutable.1.1.37\lib\dotnet\System.Collections.Immutable.dll</HintPath>
       <Private>True</Private>

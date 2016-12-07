@@ -53,20 +53,20 @@ namespace SampleTestProject.CsSamples
 
             VerifyCSharpDiagnostic(test, expectedDiagnostic);
 
-            var expectedFix = $@"using CMS.Helpers;
+//            var expectedFix = $@"using CMS.Helpers;
 
-namespace SampleTestProject.CsSamples
-{{
-    public class SampleClass
-    {{
-        public void SampleMethod()
-        {{
-            var clientScript = new System.Web.UI.Page().ClientScript;
-            {codeFix};
-        }}
-    }}
-}}";
-            VerifyCSharpFix(test, expectedFix);
+//namespace SampleTestProject.CsSamples
+//{{
+//    public class SampleClass
+//    {{
+//        public void SampleMethod()
+//        {{
+//            var clientScript = new System.Web.UI.Page().ClientScript;
+//            {codeFix};
+//        }}
+//    }}
+//}}";
+//            VerifyCSharpFix(test, expectedFix);
         }
 
         [TestCase(@"RegisterArrayDeclaration(""arrayName"", ""arrayValue"")", @"RegisterArrayDeclaration(this, ""arrayName"", ""arrayValue"")")]
@@ -96,19 +96,19 @@ namespace SampleTestProject.CsSamples
 
             VerifyCSharpDiagnostic(test, expectedDiagnostic);
 
-            var expectedFix = $@"using CMS.Helpers;
+//            var expectedFix = $@"using CMS.Helpers;
 
-namespace SampleTestProject.CsSamples
-{{
-    public class SampleClass
-    {{
-        public void SampleMethod()
-        {{
-            {codeFix};
-        }}
-    }}
-}}";
-            VerifyCSharpFix(test, expectedFix);
+//namespace SampleTestProject.CsSamples
+//{{
+//    public class SampleClass
+//    {{
+//        public void SampleMethod()
+//        {{
+//            {codeFix};
+//        }}
+//    }}
+//}}";
+//            VerifyCSharpFix(test, expectedFix);
         }
     }
 }

@@ -4,9 +4,8 @@ using Microsoft.CodeAnalysis.Diagnostics;
 
 namespace BugHunter.CsRules.Analyzers
 {
-    // TODO should probably look directly for invocation expression instead of member access
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class ClientScriptMethodsAnalyzer : BaseMemberAccessAnalyzer
+    public class ClientScriptMethodsAnalyzer : BaseMemberInvocatoinAnalyzer
     {
         public const string DIAGNOSTIC_ID = DiagnosticIds.CLIENT_SCRIPT_METHODS;
 
