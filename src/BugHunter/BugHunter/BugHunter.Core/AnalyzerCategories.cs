@@ -1,9 +1,9 @@
-﻿namespace BugHunter
+﻿namespace BugHunter.Core
 {
     /// <summary>
     /// Class defining the analyzer category constants.
     /// </summary>
-    internal static class AnalyzerCategories
+    public static class AnalyzerCategories
     {
         /// <summary>
         /// Category for ASPX rules

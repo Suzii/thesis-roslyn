@@ -1,4 +1,5 @@
 ﻿using System.Collections.Immutable;
+using BugHunter.Core.Helpers;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
 
@@ -12,7 +13,7 @@ namespace BugHunter.CsRules.Analyzers
     {
         public const string DIAGNOSTIC_ID = DiagnosticIds.PAGE_IS_CALLBACK;
 
-        private static readonly DiagnosticDescriptor Rule = GetRule(DIAGNOSTIC_ID, "Page.IsCallback", "RequestHelper.IsCallback()");
+        private static readonly DiagnosticDescriptor Rule = ApiReplacementRuleBuilder.GetRule(DIAGNOSTIC_ID, "Page.IsCallback", "RequestHelper.IsCallback()");
 
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
 

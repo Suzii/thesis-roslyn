@@ -12,7 +12,7 @@ namespace BugHunter.CsRules.Analyzers
     {
         public const string DIAGNOSTIC_ID = DiagnosticIds.WHERE_LIKE_METHOD;
 
-        private static readonly DiagnosticDescriptor Rule = GetRule(DIAGNOSTIC_ID, "WhereLike() or WhereNotLike() methods");
+        private static readonly DiagnosticDescriptor Rule = ApiReplacementRuleBuilder.GetRule(DIAGNOSTIC_ID, "WhereLike() or WhereNotLike() methods");
 
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
 

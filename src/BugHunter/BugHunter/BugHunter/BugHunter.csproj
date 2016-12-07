@@ -61,7 +61,6 @@
     <Compile Include="CsRules\CodeFixes\HttpSessionSessionIdCodeFixProvider.cs" />
     <Compile Include="CsRules\CodeFixes\ClientScriptMethosCodeFixProvider.cs" />
     <Compile Include="DiagnosticIds.cs" />
-    <Compile Include="AnalyzerCategories.cs" />
     <Compile Include="AspxRules\AspxResources.Designer.cs">
       <DependentUpon>AspxResources.resx</DependentUpon>
       <AutoGen>True</AutoGen>

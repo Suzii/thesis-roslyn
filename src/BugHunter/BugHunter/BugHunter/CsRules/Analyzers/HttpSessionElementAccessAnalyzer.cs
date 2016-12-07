@@ -1,5 +1,6 @@
 ﻿using System.Collections.Immutable;
 using BugHunter.Core.Extensions;
+using BugHunter.Core.Helpers;
 using BugHunter.Core.ResourceBuilder;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
@@ -15,9 +16,9 @@ namespace BugHunter.CsRules.Analyzers
 
         public const string DIAGNOSTIC_ID_SET = DiagnosticIds.HTTP_SESSION_ELEMENT_ACCESS_SET;
 
-        private static readonly DiagnosticDescriptor RuleForGet = GetRule(DIAGNOSTIC_ID_GET, "Session[]", "SessionHelper.GetValue()");
+        private static readonly DiagnosticDescriptor RuleForGet = ApiReplacementRuleBuilder.GetRule(DIAGNOSTIC_ID_GET, "Session[]", "SessionHelper.GetValue()");
 
-        private static readonly DiagnosticDescriptor RuleForSet = GetRule(DIAGNOSTIC_ID_SET, "Session[]", "SessionHelper.SetValue()");
+        private static readonly DiagnosticDescriptor RuleForSet = ApiReplacementRuleBuilder.GetRule(DIAGNOSTIC_ID_SET, "Session[]", "SessionHelper.SetValue()");
 
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(RuleForGet, RuleForSet);
 
@@ -49,19 +50,6 @@ namespace BugHunter.CsRules.Analyzers
                 var diagnostic = Diagnostic.Create(RuleForGet, elementAccess.GetLocation(), elementAccess);
                 context.ReportDiagnostic(diagnostic);
             }
-        }
-
-        private static DiagnosticDescriptor GetRule(string diagnosticId, string forbiddenUsage, string recommendedUsage)
-        {
-            var rule = new DiagnosticDescriptor(diagnosticId,
-                title: ApiReplacementsMessageBuilder.GetTitle(forbiddenUsage, recommendedUsage),
-                messageFormat: ApiReplacementsMessageBuilder.GetMessageFormat(recommendedUsage),
-                category: AnalyzerCategories.CS_RULES,
-                defaultSeverity: DiagnosticSeverity.Warning,
-                isEnabledByDefault: true,
-                description: ApiReplacementsMessageBuilder.GetDescription(forbiddenUsage, recommendedUsage));
-
-            return rule;
         }
 
         private static bool IsHttpSession(INamedTypeSymbol accessedTypeSymbol, Compilation compilation)
