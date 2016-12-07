@@ -5,7 +5,7 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using NUnit.Framework;
 
-namespace BugHunter.Test.HelpersTests
+namespace BugHunter.Core.Tests.HelpersTests
 {
     [TestFixture]
     public class SemanticModelBrowserTests

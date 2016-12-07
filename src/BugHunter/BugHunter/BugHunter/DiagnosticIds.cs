@@ -21,7 +21,7 @@
         public const string PAGE_IS_CALLBACK = "BH1010";
         public const string CLIENT_SCRIPT_METHODS = "BH1011";
 
-        // TODO
+        // TODO - codefix
         public const string HTTP_RESPONSE_REDIRECT = "BH10XX";
 
         // ????
