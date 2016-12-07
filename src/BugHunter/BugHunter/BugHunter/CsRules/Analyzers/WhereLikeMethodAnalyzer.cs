@@ -1,7 +1,5 @@
 using System.Collections.Immutable;
-using BugHunter.Core.Helpers.Analyzers;
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Diagnostics;
 
 namespace BugHunter.CsRules.Analyzers
@@ -18,9 +16,8 @@ namespace BugHunter.CsRules.Analyzers
         public override void Initialize(AnalysisContext context)
         {
             var accessedType = typeof(CMS.DataEngine.WhereConditionBase<>);
-            var forbiddenMembers = new[] { nameof(CMS.DataEngine.WhereCondition.WhereLike), nameof(CMS.DataEngine.WhereCondition.WhereNotLike) };
-
-            RegisterAction(Rule, context, accessedType, forbiddenMembers);
+            
+            RegisterAction(Rule, context, accessedType, nameof(CMS.DataEngine.WhereCondition.WhereLike), nameof(CMS.DataEngine.WhereCondition.WhereNotLike));
         }
     }
 }

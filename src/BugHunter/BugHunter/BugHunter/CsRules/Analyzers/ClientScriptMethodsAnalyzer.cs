@@ -17,15 +17,12 @@ namespace BugHunter.CsRules.Analyzers
         public override void Initialize(AnalysisContext context)
         {
             var accessedType = typeof(System.Web.UI.ClientScriptManager);
-            var forbiddenMembers = new[]
-            {
+
+            RegisterAction(Rule, context, accessedType, 
                 nameof(System.Web.UI.ClientScriptManager.RegisterArrayDeclaration),
                 nameof(System.Web.UI.ClientScriptManager.RegisterClientScriptBlock),
                 nameof(System.Web.UI.ClientScriptManager.RegisterClientScriptInclude),
-                nameof(System.Web.UI.ClientScriptManager.RegisterStartupScript)
-            };
-
-            RegisterAction(Rule, context, accessedType, forbiddenMembers);
+                nameof(System.Web.UI.ClientScriptManager.RegisterStartupScript));
         }
     }
 }

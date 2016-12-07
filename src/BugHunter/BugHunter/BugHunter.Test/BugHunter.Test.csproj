@@ -551,7 +551,7 @@
     <Compile Include="CsTests\HttpSessionSessionIdTest.cs" />
     <Compile Include="CsTests\HttpRequestUserHostAddressTest.cs" />
     <Compile Include="CsTests\EventLogArgumentsTest.cs" />
-    <Compile Include="CsTests\ClientScriptMetdohsTest.cs" />
+    <Compile Include="CsTests\ClientScriptMethodsTest.cs" />
     <Compile Include="CsTests\WhereLikeMethodTest.cs" />
     <Compile Include="ReferencesHelper.cs" />
     <Compile Include="Shared\MessagesConstants.cs" />

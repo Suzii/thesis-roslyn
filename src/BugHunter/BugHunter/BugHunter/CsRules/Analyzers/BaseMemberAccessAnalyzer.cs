@@ -1,12 +1,19 @@
 ﻿using System;
-using BugHunter.Core.Helpers.Analyzers;
+using System.Collections.Generic;
+using System.Linq;
+using BugHunter.Core.Extensions;
+using BugHunter.Core.Helpers;
 using BugHunter.Core.ResourceBuilder;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
 
 namespace BugHunter.CsRules.Analyzers
 {
+    /// <summary>
+    /// Used for analysis of SimpleMemberAccess such as "page.IsCallback"
+    /// </summary>
     public abstract class BaseMemberAccessAnalyzer : DiagnosticAnalyzer
     {
         protected static DiagnosticDescriptor GetRule(string diagnosticId, string forbiddenUsage)
@@ -35,16 +42,49 @@ namespace BugHunter.CsRules.Analyzers
             return rule;
         }
         
-        protected void RegisterAction(DiagnosticDescriptor rule, AnalysisContext context, Type accessedType, params string[] memberNames)
+        protected void RegisterAction(DiagnosticDescriptor rule, AnalysisContext context, Type accessedType, string memberName, params string[] additionalMemberNames)
         {
-            if (memberNames.Length == 0)
+            var forbiddenMemberNames = new[] {memberName}.Concat(additionalMemberNames);
+
+            context.RegisterSyntaxNodeAction(c => Analyze(rule, c, accessedType, forbiddenMemberNames), SyntaxKind.SimpleMemberAccessExpression);
+        }
+
+        protected virtual  Location GetWarningLocation(MemberAccessExpressionSyntax memberAccess)
+        {
+            var location = memberAccess.GetLocation();
+
+            return location;
+        }
+
+        protected virtual string GetForbiddenUsageTextForUserMessage(MemberAccessExpressionSyntax memberAccess)
+        {
+            var usedAs = $"{memberAccess.Expression}.{memberAccess.Name}";
+
+            return usedAs;
+        }
+
+        private void Analyze(DiagnosticDescriptor rule, SyntaxNodeAnalysisContext context, Type accessedType, IEnumerable<string> forbiddenMemberNames)
+        {
+            var memberAccess = (MemberAccessExpressionSyntax)context.Node;
+
+            var memberName = memberAccess.Name.ToString();
+            if (!forbiddenMemberNames.Contains(memberName))
             {
                 return;
             }
 
-            var analyzer = new MemberAccessAnalysisHelper(rule, accessedType, memberNames);
+            var searchedTargetType = accessedType.GetITypeSymbol(context);
+            var actualTargetType = new SemanticModelBrowser(context).GetMemberAccessTarget(memberAccess) as INamedTypeSymbol;
+            if (searchedTargetType == null || actualTargetType == null || !actualTargetType.IsDerivedFromClassOrInterface(searchedTargetType))
+            {
+                return;
+            }
 
-            context.RegisterSyntaxNodeAction(c => analyzer.Analyze(c), SyntaxKind.SimpleMemberAccessExpression);
+            var usedAs = GetForbiddenUsageTextForUserMessage(memberAccess);
+            var location = GetWarningLocation(memberAccess);
+            var diagnostic = Diagnostic.Create(rule, location, usedAs);
+
+            context.ReportDiagnostic(diagnostic);
         }
     }
 }

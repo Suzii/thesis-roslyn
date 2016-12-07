@@ -99,7 +99,6 @@
     <Compile Include="Extensions\IEnumerableExtensions.cs" />
     <Compile Include="Extensions\TypeExtensions.cs" />
     <Compile Include="Extensions\TypeSymbolExtensions.cs" />
-    <Compile Include="Helpers\Analyzers\MemberAccessAnalysisHelper.cs" />
     <Compile Include="Helpers\CodeFixes\CodeFixHelper.cs" />
     <Compile Include="Helpers\CodeFixes\MemberAccessCodeFixHelper.cs" />
     <Compile Include="Helpers\CodeFixes\UsingsHelper.cs" />
