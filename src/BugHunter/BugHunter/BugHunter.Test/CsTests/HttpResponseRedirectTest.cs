@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using BugHunter.CsRules.Analyzers;
-using BugHunter.CsRules.CodeFixes;
 using BugHunter.Test.Shared;
 using BugHunter.Test.Verifiers;
 using Kentico.Google.Apis.Util;

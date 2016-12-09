@@ -1,7 +1,6 @@
 ﻿using System.Collections.Immutable;
 using BugHunter.Core.Extensions;
 using BugHunter.Core.Helpers;
-using BugHunter.Core.ResourceBuilder;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
