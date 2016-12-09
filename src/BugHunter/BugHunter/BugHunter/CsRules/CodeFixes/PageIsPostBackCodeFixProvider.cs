@@ -34,7 +34,7 @@ namespace BugHunter.CsRules.CodeFixes
             }
 
             var diagnostic = context.Diagnostics.First();
-            var usingNamespace = typeof(CMS.Helpers.RequestHelper).Namespace;
+            var usingNamespace = "CMS.Helpers";
             var newMemberAccess = SyntaxFactory.ParseExpression("RequestHelper.IsPostBack()");
             
             context.RegisterCodeFix(

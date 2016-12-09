@@ -33,7 +33,7 @@ namespace BugHunter.CsRules.CodeFixes
                 return;
             }
 
-            var usingNamespace = typeof(CMS.Helpers.CookieHelper).Namespace;
+            var usingNamespace = "CMS.Helpers";
             var newMemberAccess = SyntaxFactory.ParseExpression("CookieHelper.RequestCookies");
             var diagnostic = context.Diagnostics.First();
             

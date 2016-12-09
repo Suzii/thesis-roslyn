@@ -16,8 +16,8 @@ namespace BugHunter.CsRules.Analyzers
 
         public override void Initialize(AnalysisContext context)
         {
-            RegisterAction(Rule, context, typeof(System.Web.HttpRequest), nameof(System.Web.HttpRequest.UserHostAddress));
-            RegisterAction(Rule, context, typeof(System.Web.HttpRequestBase), nameof(System.Web.HttpRequestBase.UserHostAddress));
+            RegisterAction(Rule, context, "System.Web.HttpRequest", "UserHostAddress");
+            RegisterAction(Rule, context, "System.Web.HttpRequestBase", "UserHostAddress");
         }
     }
 }

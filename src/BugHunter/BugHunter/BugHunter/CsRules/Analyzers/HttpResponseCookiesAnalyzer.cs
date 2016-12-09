@@ -19,8 +19,8 @@ namespace BugHunter.CsRules.Analyzers
 
         public override void Initialize(AnalysisContext context)
         {
-            RegisterAction(Rule, context, typeof(System.Web.HttpResponse), nameof(System.Web.HttpResponse.Cookies));
-            RegisterAction(Rule, context, typeof(System.Web.HttpResponseBase), nameof(System.Web.HttpResponseBase.Cookies));
+            RegisterAction(Rule, context, "System.Web.HttpResponse", "Cookies");
+            RegisterAction(Rule, context, "System.Web.HttpResponseBase", "Cookies");
         }
     }
 }

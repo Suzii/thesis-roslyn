@@ -15,8 +15,8 @@ namespace BugHunter.CsRules.Analyzers
         
         public override void Initialize(AnalysisContext context)
         {
-            RegisterAction(Rule, context, typeof(System.Web.HttpBrowserCapabilities), nameof(System.Web.HttpBrowserCapabilities.Browser));
-            RegisterAction(Rule, context, typeof(System.Web.HttpBrowserCapabilitiesBase), nameof(System.Web.HttpBrowserCapabilitiesBase.Browser));
+            RegisterAction(Rule, context, "System.Web.HttpBrowserCapabilities", "Browser");
+            RegisterAction(Rule, context, "System.Web.HttpBrowserCapabilitiesBase", "Browser");
         }
     }
 }
