@@ -2,6 +2,7 @@
 using System.Composition;
 using System.Linq;
 using System.Threading.Tasks;
+using BugHunter.Core.Extensions;
 using BugHunter.Core.Helpers;
 using BugHunter.Core.Helpers.CodeFixes;
 using BugHunter.Core.ResourceBuilder;
@@ -29,13 +30,23 @@ namespace BugHunter.CsRules.CodeFixes
         {
             var editor = new MemberInvocationCodeFixHelper(context);
             var invocation = await editor.GetDiagnosedInvocation();
-            if (invocation == null)
+
+            // only apply codefix if invocation is placed in class inheriting from System.Web.Ui.Control
+            // since as first argument we add 'this' and it has to have right type
+            var enclosingClassName = invocation?.FirstAncestorOrSelf<ClassDeclarationSyntax>();
+            if (enclosingClassName == null)
             {
                 return;
             }
 
-            // TODO check if derives from System.Web.UI.control
-            // if not, no codefix should be provided
+            var semanticModel = await context.Document.GetSemanticModelAsync();
+            var enclosingClassType  = semanticModel.GetDeclaredSymbol(enclosingClassName);
+            var uiControlType = TypeExtensions.GetITypeSymbol("System.Web.UI.Control", semanticModel.Compilation);
+            if (enclosingClassType == null || uiControlType == null || !enclosingClassType.IsDerivedFromClassOrInterface(uiControlType))
+            {
+                return;
+            }
+
             var usingNamespace = "CMS.Base.Web.UI";
             var newInvocationExpression = GetNewInvocatioExpression(invocation);
             var diagnostic = context.Diagnostics.First();

@@ -137,7 +137,8 @@ namespace SampleTestProject.CsSamples
 
             VerifyCSharpDiagnostic(test, expectedDiagnostic);
 
-            // TODO verify no codefix is provided
+            // SampleClass does not inherit from System.Web.UI.Control, verify no codefix is applied
+            VerifyCSharpFix(test, test);
         }
     }
 }
