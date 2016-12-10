@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using BugHunter.CsRules.Analyzers;
+using BugHunter.CsRules.CodeFixes;
 using BugHunter.Test.Shared;
 using BugHunter.Test.Verifiers;
 using Microsoft.CodeAnalysis;
@@ -8,7 +9,7 @@ using NUnit.Framework;
 namespace BugHunter.Test.CsTests
 {
     [TestFixture]
-    public class HttpResponseRedirectTest : CodeFixVerifier<HttpResponseRedirectAnalyzer>
+    public class HttpResponseRedirectTest : CodeFixVerifier<HttpResponseRedirectAnalyzer, HttpResponseRedirectCodeFixProvider>
     {
         protected override MetadataReference[] GetAdditionalReferences()
         {
@@ -23,9 +24,11 @@ namespace BugHunter.Test.CsTests
             VerifyCSharpDiagnostic(test);
         }
 
-        [TestCase(@"new System.Web.HttpResponse(""fileName"", ""url"", ""queryString"")")]
-        [TestCase(@"new System.Web.HttpResponseWrapper(new System.Web.HttpRequest(""fileName"", ""url"", ""queryString""))")]
-        public void InputWithIncident_SipleMemberAccess_SurfacesDiagnostic(string instance)
+        [TestCase(@"new System.Web.HttpResponse(""fileName"", ""url"", ""queryString"")", "Redirect", 0)]
+        [TestCase(@"new System.Web.HttpResponse(""fileName"", ""url"", ""queryString"")", "LocalRedirect", 1)]
+        [TestCase(@"new System.Web.HttpResponseWrapper(new System.Web.HttpRequest(""fileName"", ""url"", ""queryString""))", "Redirect", 0)]
+        [TestCase(@"new System.Web.HttpResponseWrapper(new System.Web.HttpRequest(""fileName"", ""url"", ""queryString""))", "LocalRedirect", 1)]
+        public void InputWithIncident_SipleMemberAccess_SurfacesDiagnostic(string instance, string codeFix, int codeFixNumber)
         {
             var test = $@"
 namespace SampleTestProject.CsSamples
@@ -33,7 +36,7 @@ namespace SampleTestProject.CsSamples
     public class SampleClass
     {{
         public void SampleMethod()
-        {{
+        {{ 
             var r = {instance};
             r.Redirect(""url"");
         }}
@@ -48,11 +51,29 @@ namespace SampleTestProject.CsSamples
             };
 
             VerifyCSharpDiagnostic(test, expectedDiagnostic);
+
+            var expectedFix = $@"using CMS.Helpers;
+
+namespace SampleTestProject.CsSamples
+{{
+    public class SampleClass
+    {{
+        public void SampleMethod()
+        {{ 
+            var r = {instance};
+            UrlHelper.{codeFix}(""url"");
+        }}
+    }}
+}}";
+
+            VerifyCSharpFix(test, expectedFix, codeFixNumber);
         }
 
-        [TestCase(@"new System.Web.HttpResponse(""fileName"", ""url"", ""queryString"")")]
-        [TestCase(@"new System.Web.HttpResponseWrapper(new System.Web.HttpRequest(""fileName"", ""url"", ""queryString""))")]
-        public void InputWithIncident_ChainedMemberAccess_SurfacesDiagnostic(string instance)
+        [TestCase(@"new System.Web.HttpResponse(""fileName"", ""url"", ""queryString"")", "Redirect", 0)]
+        [TestCase(@"new System.Web.HttpResponse(""fileName"", ""url"", ""queryString"")", "LocalRedirect", 1)]
+        [TestCase(@"new System.Web.HttpResponseWrapper(new System.Web.HttpRequest(""fileName"", ""url"", ""queryString""))", "Redirect", 0)]
+        [TestCase(@"new System.Web.HttpResponseWrapper(new System.Web.HttpRequest(""fileName"", ""url"", ""queryString""))", "LocalRedirect", 1)]
+        public void InputWithIncident_ChainedMemberAccess_SurfacesDiagnostic(string instance, string codeFix, int codeFixNumber)
         {
             var test = $@"
 namespace SampleTestProject.CsSamples
@@ -74,6 +95,21 @@ namespace SampleTestProject.CsSamples
             };
 
             VerifyCSharpDiagnostic(test, expectedDiagnostic);
+
+            var expectedFix = $@"using CMS.Helpers;
+
+namespace SampleTestProject.CsSamples
+{{
+    public class SampleClass
+    {{
+        public void SampleMethod()
+        {{
+            UrlHelper.{codeFix}(""url"");
+        }}
+    }}
+}}";
+
+            VerifyCSharpFix(test, expectedFix, codeFixNumber);
         }
     }
 }

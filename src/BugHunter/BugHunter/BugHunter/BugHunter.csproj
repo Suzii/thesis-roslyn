@@ -51,6 +51,7 @@
     <Compile Include="CsRules\Analyzers\WhereLikeMethodAnalyzer.cs" />
     <Compile Include="CsRules\CodeFixes\FormsAuthenticationSignOutCodeFixProvider.cs" />
     <Compile Include="CsRules\CodeFixes\HttpRequestCookiesCodeFixProvider.cs" />
+    <Compile Include="CsRules\CodeFixes\HttpResponseRedirectCodeFixProvider.cs" />
     <Compile Include="CsRules\CodeFixes\HttpResponseCookiesCodeFixProvider.cs" />
     <Compile Include="CsRules\CodeFixes\HttpRequestUrlCodeFixProvider.cs" />
     <Compile Include="CsRules\CodeFixes\HttpRequestBrowserCodeFixProvider.cs" />

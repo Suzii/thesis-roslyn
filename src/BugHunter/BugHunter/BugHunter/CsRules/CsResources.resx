@@ -164,4 +164,10 @@
     <value>'Session[]' should not be used. Use 'SessionHelper.SetValue()'  instead.</value>
     <comment>0 - member name, 1 - source type</comment>
   </data>
+  <data name="RedirectCodeFixExternal" xml:space="preserve">
+    <value>Use when redirecting to external URL.</value>
+  </data>
+  <data name="RedirectCodeFixLocal" xml:space="preserve">
+    <value>Use when redirecting to local URL.</value>
+  </data>
 </root>

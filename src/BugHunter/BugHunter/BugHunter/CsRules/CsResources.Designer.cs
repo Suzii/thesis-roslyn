@@ -142,6 +142,24 @@ namespace BugHunter.CsRules {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Use when redirecting to external URL..
+        /// </summary>
+        internal static string RedirectCodeFixExternal {
+            get {
+                return ResourceManager.GetString("RedirectCodeFixExternal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use when redirecting to local URL..
+        /// </summary>
+        internal static string RedirectCodeFixLocal {
+            get {
+                return ResourceManager.GetString("RedirectCodeFixLocal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Consider using one of &apos;WhereStartsWith()&apos;, &apos;WhereEndsWith()&apos; or &apos;WhereContains()&apos; methods instead..
         /// </summary>
         internal static string WhereLikeMethod_Description {
