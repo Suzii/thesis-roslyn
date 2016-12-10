@@ -14,6 +14,13 @@ namespace BugHunter.Test
         public static readonly MetadataReference CMSIOReference = MetadataReference.CreateFromFile(typeof(CMS.IO.AbstractFile).Assembly.Location);
         public static readonly MetadataReference CMSEventLogReference = MetadataReference.CreateFromFile(typeof(CMS.EventLog.EventType).Assembly.Location);
         public static readonly MetadataReference CMSMembershipReference = MetadataReference.CreateFromFile(typeof(CMS.Membership.AuthenticationHelper).Assembly.Location);
+        public static readonly MetadataReference[] CMSSearchLucerne3References =
+        {
+            MetadataReference.CreateFromFile(typeof(CMS.Search.ISearchProvider).Assembly.Location),
+            MetadataReference.CreateFromFile(typeof(Lucene.Net.Search.BooleanClause).Assembly.Location),
+            MetadataReference.CreateFromFile(typeof(WorldNet.Net.SynExpand).Assembly.Location),
+            MetadataReference.CreateFromFile(typeof(CMS.Search.Lucene3.LuceneSearchDocument).Assembly.Location)
+        };
 
         // Kentico.Librarie.Web.Ui
         public static readonly MetadataReference CMSBaseWebUI = MetadataReference.CreateFromFile(typeof(CMS.Base.Web.UI.ScriptHelper).Assembly.Location);

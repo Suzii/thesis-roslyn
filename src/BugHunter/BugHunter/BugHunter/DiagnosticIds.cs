@@ -20,12 +20,11 @@
         public const string PAGE_IS_POST_BACK = "BH1009";
         public const string PAGE_IS_CALLBACK = "BH1010";
         public const string CLIENT_SCRIPT_METHODS = "BH1011";
-
-        // TODO - codefix
-        public const string HTTP_RESPONSE_REDIRECT = "BH10XX";
+        public const string HTTP_RESPONSE_REDIRECT = "BH1012";
 
         // ????
         public const string WHERE_LIKE_METHOD = "BH10X1";
         public const string EVENT_LOG_ARGUMENTS = "BH10X2";
+        public const string LUCERNE_SEARCH_DOCUMENT = "BH10X3";
     }
 }
