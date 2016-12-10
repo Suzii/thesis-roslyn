@@ -3,7 +3,6 @@ using BugHunter.CsRules.Analyzers;
 using BugHunter.CsRules.CodeFixes;
 using BugHunter.Test.Shared;
 using BugHunter.Test.Verifiers;
-using Kentico.Google.Apis.Util;
 using Microsoft.CodeAnalysis;
 using NUnit.Framework;
 
@@ -44,7 +43,7 @@ namespace SampleTestProject.CsSamples
             var expectedDiagnostic = new DiagnosticResult
             {
                 Id = DiagnosticIds.HTTP_REQUEST_URL,
-                Message = MessagesConstants.MESSAGE.FormatString("request.Browser.Browser", "BrowserHelper.GetBrowser()"),
+                Message = string.Format(MessagesConstants.MESSAGE, "request.Browser.Browser", "BrowserHelper.GetBrowser()"),
                 Severity = DiagnosticSeverity.Warning,
                 Locations = new[] { new DiagnosticResultLocation("Test0.cs", 9, 27) }
             };
@@ -87,7 +86,7 @@ namespace SampleTestProject.CsSamples
             var expectedDiagnostic = new DiagnosticResult
             {
                 Id = DiagnosticIds.HTTP_REQUEST_URL,
-                Message = MessagesConstants.MESSAGE.FormatString("browserInfo.Browser", "BrowserHelper.GetBrowser()"),
+                Message = string.Format(MessagesConstants.MESSAGE, "browserInfo.Browser", "BrowserHelper.GetBrowser()"),
                 Severity = DiagnosticSeverity.Warning,
                 Locations = new[] { new DiagnosticResultLocation("Test0.cs", 10, 27) }
             };
@@ -131,7 +130,7 @@ namespace SampleTestProject.CsSamples
             var expectedDiagnostic = new DiagnosticResult
             {
                 Id = DiagnosticIds.HTTP_REQUEST_URL,
-                Message = MessagesConstants.MESSAGE.FormatString("browserInfo.Browser", "BrowserHelper.GetBrowser()"),
+                Message = string.Format(MessagesConstants.MESSAGE, "browserInfo.Browser", "BrowserHelper.GetBrowser()"),
                 Severity = DiagnosticSeverity.Warning,
                 Locations = new[] { new DiagnosticResultLocation("Test0.cs", 10, 27) }
             };

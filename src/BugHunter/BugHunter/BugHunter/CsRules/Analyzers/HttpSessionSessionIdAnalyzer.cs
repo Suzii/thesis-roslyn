@@ -22,8 +22,8 @@ namespace BugHunter.CsRules.Analyzers
 
         public override void Initialize(AnalysisContext context)
         {
-            RegisterAction(Rule, context, typeof(System.Web.SessionState.HttpSessionState), nameof(System.Web.SessionState.HttpSessionState.SessionID));
-            RegisterAction(Rule, context, typeof(System.Web.HttpSessionStateBase), nameof(System.Web.HttpSessionStateBase.SessionID));
+            RegisterAction(Rule, context, "System.Web.SessionState.HttpSessionState", "SessionID");
+            RegisterAction(Rule, context, "System.Web.HttpSessionStateBase", "SessionID");
         }
     }
 }

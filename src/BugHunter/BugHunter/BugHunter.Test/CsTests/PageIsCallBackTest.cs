@@ -3,7 +3,6 @@ using BugHunter.CsRules.Analyzers;
 using BugHunter.CsRules.CodeFixes;
 using BugHunter.Test.Shared;
 using BugHunter.Test.Verifiers;
-using Kentico.Google.Apis.Util;
 using Microsoft.CodeAnalysis;
 using NUnit.Framework;
 
@@ -43,7 +42,7 @@ namespace SampleTestProject.CsSamples
             var expectedDiagnostic = new DiagnosticResult
             {
                 Id = DiagnosticIds.PAGE_IS_CALLBACK,
-                Message = MessagesConstants.MESSAGE.FormatString($"new System.Web.UI.Page().IsCallback", "RequestHelper.IsCallback()"),
+                Message = string.Format(MessagesConstants.MESSAGE, $"new System.Web.UI.Page().IsCallback", "RequestHelper.IsCallback()"),
                 Severity = DiagnosticSeverity.Warning,
                 Locations = new[] { new DiagnosticResultLocation("Test0.cs", 8, 30) }
             };
@@ -84,7 +83,7 @@ namespace SampleTestProject.CsSamples
             var expectedDiagnostic = new DiagnosticResult
             {
                 Id = DiagnosticIds.PAGE_IS_CALLBACK,
-                Message = MessagesConstants.MESSAGE.FormatString($"page.IsCallback", "RequestHelper.IsCallback()"),
+                Message = string.Format(MessagesConstants.MESSAGE, $"page.IsCallback", "RequestHelper.IsCallback()"),
                 Severity = DiagnosticSeverity.Warning,
                 Locations = new[] { new DiagnosticResultLocation("Test0.cs", 9, 26) }
             };

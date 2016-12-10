@@ -3,7 +3,6 @@ using BugHunter.CsRules.Analyzers;
 using BugHunter.CsRules.CodeFixes;
 using BugHunter.Test.Shared;
 using BugHunter.Test.Verifiers;
-using Kentico.Google.Apis.Util;
 using Microsoft.CodeAnalysis;
 using NUnit.Framework;
 
@@ -44,7 +43,7 @@ namespace SampleTestProject.CsSamples
             var expectedDiagnostic = new DiagnosticResult
             {
                 Id = DiagnosticIds.HTTP_REQUEST_USER_HOST_ADDRESS,
-                Message = MessagesConstants.MESSAGE.FormatString("request.UserHostAddress", "RequestContext.UserHostAddress"),
+                Message = string.Format(MessagesConstants.MESSAGE, "request.UserHostAddress", "RequestContext.UserHostAddress"),
                 Severity = DiagnosticSeverity.Warning,
                 Locations = new[] { new DiagnosticResultLocation("Test0.cs", 9, 27) }
             };
@@ -85,7 +84,7 @@ namespace SampleTestProject.CsSamples
             var expectedDiagnostic = new DiagnosticResult
             {
                 Id = DiagnosticIds.HTTP_REQUEST_USER_HOST_ADDRESS,
-                Message = MessagesConstants.MESSAGE.FormatString($"{requestInstance}.UserHostAddress", "RequestContext.UserHostAddress"),
+                Message = string.Format(MessagesConstants.MESSAGE, $"{requestInstance}.UserHostAddress", "RequestContext.UserHostAddress"),
                 Severity = DiagnosticSeverity.Warning,
                 Locations = new[] { new DiagnosticResultLocation("Test0.cs", 8, 27) }
             };
@@ -126,7 +125,7 @@ namespace SampleTestProject.CsSamples
             var expectedDiagnostic = new DiagnosticResult
             {
                 Id = DiagnosticIds.HTTP_REQUEST_USER_HOST_ADDRESS,
-                Message = MessagesConstants.MESSAGE.FormatString("request.UserHostAddress", "RequestContext.UserHostAddress"),
+                Message = string.Format(MessagesConstants.MESSAGE, "request.UserHostAddress", "RequestContext.UserHostAddress"),
                 Severity = DiagnosticSeverity.Warning,
                 Locations = new[] { new DiagnosticResultLocation("Test0.cs", 9, 27) }
             };

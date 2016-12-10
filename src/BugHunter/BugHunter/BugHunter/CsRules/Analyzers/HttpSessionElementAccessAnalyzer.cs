@@ -1,7 +1,6 @@
 ﻿using System.Collections.Immutable;
 using BugHunter.Core.Extensions;
 using BugHunter.Core.Helpers;
-using BugHunter.Core.ResourceBuilder;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -54,16 +53,16 @@ namespace BugHunter.CsRules.Analyzers
 
         private static bool IsHttpSession(INamedTypeSymbol accessedTypeSymbol, Compilation compilation)
         {
-            var sessionType = typeof(System.Web.SessionState.HttpSessionState);
-            var sessionTypeSymbol = sessionType.GetITypeSymbol(compilation);
+            var sessionType = "System.Web.SessionState.HttpSessionState";
+            var sessionTypeSymbol = TypeExtensions.GetITypeSymbol(sessionType, compilation);
 
             return sessionTypeSymbol != null && accessedTypeSymbol.IsDerivedFromClassOrInterface(sessionTypeSymbol);
         }
 
         private static bool IsHttpSessionBase(INamedTypeSymbol accessedTypeSymbol, Compilation compilation)
         {
-            var sessionBaseType = typeof(System.Web.HttpSessionStateBase);
-            var sessionBaseTypeSymbol = sessionBaseType.GetITypeSymbol(compilation);
+            var sessionBaseType = "System.Web.HttpSessionStateBase";
+            var sessionBaseTypeSymbol = TypeExtensions.GetITypeSymbol(sessionBaseType, compilation);
 
             return sessionBaseTypeSymbol != null && accessedTypeSymbol.IsDerivedFromClassOrInterface(sessionBaseTypeSymbol);
         }

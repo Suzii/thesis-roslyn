@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using BugHunter.Core.Extensions;
 using BugHunter.Core.Helpers;
-using BugHunter.Core.ResourceBuilder;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -16,7 +14,7 @@ namespace BugHunter.CsRules.Analyzers
     /// </summary>
     public abstract class BaseMemberAccessAnalyzer : DiagnosticAnalyzer
     {
-        protected void RegisterAction(DiagnosticDescriptor rule, AnalysisContext context, Type accessedType, string memberName, params string[] additionalMemberNames)
+        protected void RegisterAction(DiagnosticDescriptor rule, AnalysisContext context, string accessedType, string memberName, params string[] additionalMemberNames)
         {
             var forbiddenMemberNames = new[] {memberName}.Concat(additionalMemberNames);
 
@@ -37,7 +35,7 @@ namespace BugHunter.CsRules.Analyzers
             return usedAs;
         }
 
-        private void Analyze(DiagnosticDescriptor rule, SyntaxNodeAnalysisContext context, Type accessedType, IEnumerable<string> forbiddenMemberNames)
+        private void Analyze(DiagnosticDescriptor rule, SyntaxNodeAnalysisContext context, string accessedType, IEnumerable<string> forbiddenMemberNames)
         {
             var memberAccess = (MemberAccessExpressionSyntax)context.Node;
 
@@ -47,7 +45,7 @@ namespace BugHunter.CsRules.Analyzers
                 return;
             }
 
-            var searchedTargetType = accessedType.GetITypeSymbol(context);
+            var searchedTargetType = TypeExtensions.GetITypeSymbol(accessedType, context);
             var actualTargetType = new SemanticModelBrowser(context).GetMemberAccessTarget(memberAccess) as INamedTypeSymbol;
             if (searchedTargetType == null || actualTargetType == null || !actualTargetType.IsDerivedFromClassOrInterface(searchedTargetType))
             {

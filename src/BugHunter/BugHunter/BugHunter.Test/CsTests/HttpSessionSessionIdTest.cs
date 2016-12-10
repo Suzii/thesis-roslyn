@@ -3,7 +3,6 @@ using BugHunter.CsRules.Analyzers;
 using BugHunter.CsRules.CodeFixes;
 using BugHunter.Test.Shared;
 using BugHunter.Test.Verifiers;
-using Kentico.Google.Apis.Util;
 using Microsoft.CodeAnalysis;
 using NUnit.Framework;
 
@@ -45,7 +44,7 @@ namespace SampleTestProject.CsSamples
             var expectedDiagnostic = new DiagnosticResult
             {
                 Id = DiagnosticIds.HTTP_SESSION_SESSION_ID,
-                Message = MessagesConstants.MESSAGE.FormatString($"session.SessionID", "SessionHelper.GetSessionID()"),
+                Message = string.Format(MessagesConstants.MESSAGE, $"session.SessionID", "SessionHelper.GetSessionID()"),
                 Severity = DiagnosticSeverity.Warning,
                 Locations = new[] { new DiagnosticResultLocation("Test0.cs", 9, 29) }
             };
@@ -87,7 +86,7 @@ namespace SampleTestProject.CsSamples
             var expectedDiagnostic = new DiagnosticResult
             {
                 Id = DiagnosticIds.HTTP_SESSION_SESSION_ID,
-                Message = MessagesConstants.MESSAGE.FormatString($"{sessionInstance}.SessionID", "SessionHelper.GetSessionID()"),
+                Message = string.Format(MessagesConstants.MESSAGE, $"{sessionInstance}.SessionID", "SessionHelper.GetSessionID()"),
                 Severity = DiagnosticSeverity.Warning,
                 Locations = new[] { new DiagnosticResultLocation("Test0.cs", 8, 29) }
             };
@@ -129,7 +128,7 @@ namespace SampleTestProject.CsSamples
             var expectedDiagnostic = new DiagnosticResult
             {
                 Id = DiagnosticIds.HTTP_SESSION_SESSION_ID,
-                Message = MessagesConstants.MESSAGE.FormatString($"session.SessionID", "SessionHelper.GetSessionID()"),
+                Message = string.Format(MessagesConstants.MESSAGE, $"session.SessionID", "SessionHelper.GetSessionID()"),
                 Severity = DiagnosticSeverity.Warning,
                 Locations = new[] { new DiagnosticResultLocation("Test0.cs", 9, 29) }
             };

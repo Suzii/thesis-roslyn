@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Immutable;
+﻿using System.Collections.Immutable;
 using System.Composition;
 using System.Linq;
 using System.Threading.Tasks;
@@ -38,7 +37,7 @@ namespace BugHunter.CsRules.CodeFixes
                 return;
             }
 
-            var usingNamespace = typeof(CMS.Helpers.SessionHelper).Namespace;
+            var usingNamespace = "CMS.Helpers";
             var codeFixHelper = new CodeFixHelper(context);
 
             var assignmentExpression = elementAccess.FirstAncestorOrSelf<AssignmentExpressionSyntax>();

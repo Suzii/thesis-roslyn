@@ -36,7 +36,7 @@ namespace BugHunter.CsRules.CodeFixes
 
             // TODO check if derives from System.Web.UI.control
             // if not, no codefix should be provided
-            var usingNamespace = typeof(CMS.Helpers.ScriptHelper).Namespace;
+            var usingNamespace = "CMS.Base.Web.UI";
             var newInvocationExpression = GetNewInvocatioExpression(invocation);
             var diagnostic = context.Diagnostics.First();
 

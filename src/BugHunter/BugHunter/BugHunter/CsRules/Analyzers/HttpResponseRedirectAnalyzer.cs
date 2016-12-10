@@ -16,8 +16,8 @@ namespace BugHunter.CsRules.Analyzers
 
         public override void Initialize(AnalysisContext context)
         {
-            RegisterAction(Rule, context, typeof(System.Web.HttpResponse), nameof(System.Web.HttpResponse.Redirect));
-            RegisterAction(Rule, context, typeof(System.Web.HttpResponseBase), nameof(System.Web.HttpResponse.Redirect));
+            RegisterAction(Rule, context, "System.Web.HttpResponse", "Redirect");
+            RegisterAction(Rule, context, "System.Web.HttpResponseBase", "Redirect");
         }
     }
 }

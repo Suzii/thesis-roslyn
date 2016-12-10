@@ -3,7 +3,6 @@ using BugHunter.CsRules.Analyzers;
 using BugHunter.CsRules.CodeFixes;
 using BugHunter.Test.Shared;
 using BugHunter.Test.Verifiers;
-using Kentico.Google.Apis.Util;
 using Microsoft.CodeAnalysis;
 using NUnit.Framework;
 
@@ -14,7 +13,7 @@ namespace BugHunter.Test.CsTests
     {
         protected override MetadataReference[] GetAdditionalReferences()
         {
-            return ReferencesHelper.BasicReferences.Union(new[] { ReferencesHelper.SystemWebReference }).ToArray();
+            return ReferencesHelper.BasicReferences.Union(new[] { ReferencesHelper.SystemWebReference, ReferencesHelper.CMSBaseWebUI }).ToArray();
         }
 
         [Test]
@@ -46,14 +45,14 @@ namespace SampleTestProject.CsSamples
             var expectedDiagnostic = new DiagnosticResult
             {
                 Id = DiagnosticIds.CLIENT_SCRIPT_METHODS,
-                Message = MessagesConstants.MESSAGE_NO_SUGGESTION.FormatString($"clientScript.{methodInvocation}"),
+                Message = string.Format(MessagesConstants.MESSAGE_NO_SUGGESTION, $"clientScript.{methodInvocation}"),
                 Severity = DiagnosticSeverity.Warning,
                 Locations = new[] { new DiagnosticResultLocation("Test0.cs", 9, 13) }
             };
 
             VerifyCSharpDiagnostic(test, expectedDiagnostic);
 
-            var expectedFix = $@"using CMS.Helpers;
+            var expectedFix = $@"using CMS.Base.Web.UI;
 
 namespace SampleTestProject.CsSamples
 {{
@@ -89,14 +88,14 @@ namespace SampleTestProject.CsSamples
             var expectedDiagnostic = new DiagnosticResult
             {
                 Id = DiagnosticIds.CLIENT_SCRIPT_METHODS,
-                Message = MessagesConstants.MESSAGE_NO_SUGGESTION.FormatString($"new System.Web.UI.Page().ClientScript.{methodInvocation}"),
+                Message = string.Format(MessagesConstants.MESSAGE_NO_SUGGESTION, $"new System.Web.UI.Page().ClientScript.{methodInvocation}"),
                 Severity = DiagnosticSeverity.Warning,
                 Locations = new[] { new DiagnosticResultLocation("Test0.cs", 8, 13) }
             };
 
             VerifyCSharpDiagnostic(test, expectedDiagnostic);
 
-            var expectedFix = $@"using CMS.Helpers;
+            var expectedFix = $@"using CMS.Base.Web.UI;
 
 namespace SampleTestProject.CsSamples
 {{
@@ -131,7 +130,7 @@ namespace SampleTestProject.CsSamples
             var expectedDiagnostic = new DiagnosticResult
             {
                 Id = DiagnosticIds.CLIENT_SCRIPT_METHODS,
-                Message = MessagesConstants.MESSAGE_NO_SUGGESTION.FormatString($"new System.Web.UI.Page().ClientScript.{methodInvocation}"),
+                Message = string.Format(MessagesConstants.MESSAGE_NO_SUGGESTION, $"new System.Web.UI.Page().ClientScript.{methodInvocation}"),
                 Severity = DiagnosticSeverity.Warning,
                 Locations = new[] { new DiagnosticResultLocation("Test0.cs", 8, 13) }
             };

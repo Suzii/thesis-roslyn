@@ -33,7 +33,7 @@ namespace BugHunter.CsRules.Analyzers
         {
             var invocationExpression = (InvocationExpressionSyntax)context.Node;
             var memberAccess = invocationExpression.Expression as MemberAccessExpressionSyntax;
-            var forbiddenMemberName = nameof(CMS.EventLog.EventLogProvider.LogEvent);
+            var forbiddenMemberName = "LogEvent";
             if (memberAccess == null || memberAccess.Name.ToString() != forbiddenMemberName)
             {
                 return;
@@ -46,7 +46,7 @@ namespace BugHunter.CsRules.Analyzers
                 return;
             }
 
-            var searchedType = typeof(CMS.EventLog.EventLogProvider).GetITypeSymbol(context.SemanticModel.Compilation);
+            var searchedType = TypeExtensions.GetITypeSymbol("CMS.EventLog.EventLogProvider", context.SemanticModel.Compilation);
             var actualType = context.SemanticModel.GetTypeInfo(memberAccess.Expression).Type as INamedTypeSymbol;
             if (actualType == null || searchedType == null || !actualType.IsDerivedFromClassOrInterface(searchedType))
             {

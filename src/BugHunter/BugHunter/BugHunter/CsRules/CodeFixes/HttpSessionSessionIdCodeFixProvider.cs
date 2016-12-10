@@ -34,7 +34,7 @@ namespace BugHunter.CsRules.CodeFixes
             }
 
             var diagnostic = context.Diagnostics.First();
-            var usingNamespace = typeof(CMS.Helpers.SessionHelper).Namespace;
+            var usingNamespace = "CMS.Helpers";
             var newMemberAccess = SyntaxFactory.ParseExpression("SessionHelper.GetSessionID()");
             
             context.RegisterCodeFix(

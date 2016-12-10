@@ -18,11 +18,8 @@ namespace BugHunter.CsRules.Analyzers
 
         public override void Initialize(AnalysisContext context)
         {
-            var accessedType = typeof(CMS.DataEngine.WhereConditionBase<>);
-            
-            RegisterAction(Rule, context, accessedType, 
-                nameof(CMS.DataEngine.WhereCondition.WhereLike), 
-                nameof(CMS.DataEngine.WhereCondition.WhereNotLike));
+            var accessedType = "CMS.DataEngine.WhereConditionBase`1";
+            RegisterAction(Rule, context, accessedType, "WhereLike", "WhereNotLike");
         }
 
         protected override Location GetWarningLocation(InvocationExpressionSyntax invocationExpression)

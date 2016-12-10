@@ -3,7 +3,6 @@ using BugHunter.CsRules.Analyzers;
 using BugHunter.CsRules.CodeFixes;
 using BugHunter.Test.Shared;
 using BugHunter.Test.Verifiers;
-using Kentico.Google.Apis.Util;
 using Microsoft.CodeAnalysis;
 using NUnit.Framework;
 
@@ -43,7 +42,7 @@ namespace SampleTestProject.CsSamples
             var expectedDiagnostic = new DiagnosticResult
             {
                 Id = DiagnosticIds.FORMS_AUTHENTICATION_SIGN_OUT,
-                Message = MessagesConstants.MESSAGE.FormatString("formsAuthentication.SignOut", "AuthenticationHelper.SignOut()"),
+                Message = string.Format(MessagesConstants.MESSAGE, "formsAuthentication.SignOut", "AuthenticationHelper.SignOut()"),
                 Severity = DiagnosticSeverity.Warning,
                 Locations = new[] { new DiagnosticResultLocation("Test0.cs", 9, 13) }
             };
@@ -83,7 +82,7 @@ namespace SampleTestProject.CsSamples
             var expectedDiagnostic = new DiagnosticResult
             {
                 Id = DiagnosticIds.FORMS_AUTHENTICATION_SIGN_OUT,
-                Message = MessagesConstants.MESSAGE.FormatString("System.Web.Security.FormsAuthentication.SignOut", "AuthenticationHelper.SignOut()"),
+                Message = string.Format(MessagesConstants.MESSAGE, "System.Web.Security.FormsAuthentication.SignOut", "AuthenticationHelper.SignOut()"),
                 Severity = DiagnosticSeverity.Warning,
                 Locations = new[] { new DiagnosticResultLocation("Test0.cs", 8, 13) }
             };
