@@ -9,7 +9,7 @@ using Microsoft.CodeAnalysis.Diagnostics;
 namespace BugHunter.CsRules.Analyzers
 {
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class LucerneSearchDocumentAnalyzer : DiagnosticAnalyzer
+    public class LuceneSearchDocumentAnalyzer : DiagnosticAnalyzer
     {
         public const string DIAGNOSTIC_ID = DiagnosticIds.LUCERNE_SEARCH_DOCUMENT;
 

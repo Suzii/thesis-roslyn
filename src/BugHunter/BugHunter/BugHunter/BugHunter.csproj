@@ -45,6 +45,7 @@
     <Compile Include="CsRules\Analyzers\FormsAuthenticationSignOut.cs" />
     <Compile Include="CsRules\Analyzers\HttpRequestQueryAnalyzer.cs" />
     <Compile Include="CsRules\Analyzers\LucerneSearchDocumentAnalyzer.cs" />
+    <Compile Include="CsRules\Analyzers\LuceneSearchDocumentAnalyzer.cs" />
     <Compile Include="CsRules\Analyzers\PageIsCallbackAnalyzer.cs" />
     <Compile Include="CsRules\Analyzers\StringManipulationMethodsAnalyzer.cs" />
     <Compile Include="CsRules\Analyzers\PageIsPostBackAnalyzer.cs" />

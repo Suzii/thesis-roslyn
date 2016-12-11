@@ -8,7 +8,7 @@ using NUnit.Framework;
 namespace BugHunter.Test.CsTests
 {
     [TestFixture]
-    public class LucerneSearchDocumentTest : CodeFixVerifier<LucerneSearchDocumentAnalyzer>
+    public class LuceneSearchDocumentTest : CodeFixVerifier<LuceneSearchDocumentAnalyzer>
     {
         protected override MetadataReference[] GetAdditionalReferences()
         {
@@ -26,7 +26,7 @@ namespace BugHunter.Test.CsTests
         [Test]
         public void InputWithIncident_MethodReturnValue_SurfacesDiagnostic()
         {
-            var test = @"using CMS.Search.Lucerne3; 
+            var test = @"using CMS.Search.Lucene3; 
 
 namespace SampleTestProject.CsSamples
 {{
@@ -41,9 +41,9 @@ namespace SampleTestProject.CsSamples
             var expectedDiagnostic = new DiagnosticResult
             {
                 Id = DiagnosticIds.LUCERNE_SEARCH_DOCUMENT,
-                Message = string.Format(MessagesConstants.MESSAGE, "LuceneSearchDocument", "IsearchDocument"),
+                Message = string.Format(MessagesConstants.MESSAGE, "LuceneSearchDocument", "ISearchDocument"),
                 Severity = DiagnosticSeverity.Warning,
-                Locations = new[] {new DiagnosticResultLocation("Test0.cs", 6, 17)}
+                Locations = new[] {new DiagnosticResultLocation("Test0.cs", 7, 17)}
             };
 
             VerifyCSharpDiagnostic(test, expectedDiagnostic);
@@ -52,7 +52,7 @@ namespace SampleTestProject.CsSamples
         [Test]
         public void InputWithIncident_VariableDeclaration_SurfacesDiagnostic()
         {
-            var test = @"using CMS.Search.Lucerne3; 
+            var test = @"using CMS.Search.Lucene3; 
 
 namespace SampleTestProject.CsSamples
 {
@@ -67,9 +67,9 @@ namespace SampleTestProject.CsSamples
             var expectedDiagnostic = new DiagnosticResult
             {
                 Id = DiagnosticIds.LUCERNE_SEARCH_DOCUMENT,
-                Message = string.Format(MessagesConstants.MESSAGE, "LuceneSearchDocument", "IsearchDocument"),
+                Message = string.Format(MessagesConstants.MESSAGE, "LuceneSearchDocument", "ISearchDocument"),
                 Severity = DiagnosticSeverity.Warning,
-                Locations = new[] { new DiagnosticResultLocation("Test0.cs", 6, 17) }
+                Locations = new[] { new DiagnosticResultLocation("Test0.cs", 9, 13) }
             };
 
             VerifyCSharpDiagnostic(test, expectedDiagnostic);
@@ -78,7 +78,7 @@ namespace SampleTestProject.CsSamples
         [Test]
         public void InputWithIncident_MethodParameter_SurfacesDiagnostic()
         {
-            var test = @"using CMS.Search.Lucerne3; 
+            var test = @"using CMS.Search.Lucene3; 
 
 namespace SampleTestProject.CsSamples
 {
@@ -93,9 +93,9 @@ namespace SampleTestProject.CsSamples
             var expectedDiagnostic = new DiagnosticResult
             {
                 Id = DiagnosticIds.LUCERNE_SEARCH_DOCUMENT,
-                Message = string.Format(MessagesConstants.MESSAGE, "LuceneSearchDocument", "IsearchDocument"),
+                Message = string.Format(MessagesConstants.MESSAGE, "LuceneSearchDocument", "ISearchDocument"),
                 Severity = DiagnosticSeverity.Warning,
-                Locations = new[] { new DiagnosticResultLocation("Test0.cs", 6, 38) }
+                Locations = new[] { new DiagnosticResultLocation("Test0.cs", 7, 29) }
             };
 
             VerifyCSharpDiagnostic(test, expectedDiagnostic);
@@ -104,7 +104,7 @@ namespace SampleTestProject.CsSamples
         [Test]
         public void OkayUsage_TypeofArgument_NoDiagnostic()
         {
-            var test = @"using CMS.Search.Lucerne3; 
+            var test = @"using CMS.Search.Lucene3; 
 
 namespace SampleTestProject.CsSamples
 {
@@ -112,7 +112,6 @@ namespace SampleTestProject.CsSamples
     {
         private void Method()
         {
-            var type = typeof(LuceneSearchDocument);
             var luceneSearchDocument = new LuceneSearchDocument();
         }
     }
