@@ -6,7 +6,7 @@ using Microsoft.CodeAnalysis.Diagnostics;
 namespace BugHunter.CsRules.Analyzers
 {
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class ClientScriptMethodsAnalyzer : BaseMemberInvocatoinAnalyzer
+    public class ClientScriptMethodsAnalyzer : BaseMemberInvocationAnalyzer
     {
         public const string DIAGNOSTIC_ID = DiagnosticIds.CLIENT_SCRIPT_METHODS;
 

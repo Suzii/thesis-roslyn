@@ -2,6 +2,7 @@
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
 
+// TODO delete and use directly
 namespace BugHunter.Core.Extensions 
 {
     public static class TypeExtensions

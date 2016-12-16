@@ -4,6 +4,7 @@ using Microsoft.CodeAnalysis.Text;
 
 namespace BugHunter.Core.Helpers
 {
+    // TODO consider refactoring to extension methods 
     public static class LocationHelper
     {
 

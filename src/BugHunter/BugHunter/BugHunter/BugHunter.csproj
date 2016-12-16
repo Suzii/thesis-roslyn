@@ -35,7 +35,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="CsRules\Analyzers\BaseMemberInvocatoinAnalyzer.cs" />
+    <Compile Include="CsRules\Analyzers\BaseMemberInvocationAnalyzer.cs" />
     <Compile Include="CsRules\Analyzers\BaseMemberAccessAnalyzer.cs" />
     <Compile Include="CsRules\Analyzers\HttpResponseCookiesAnalyzer.cs" />
     <Compile Include="CsRules\Analyzers\HttpRequestCookiesAnalyzer.cs" />
@@ -45,6 +45,7 @@
     <Compile Include="CsRules\Analyzers\FormsAuthenticationSignOut.cs" />
     <Compile Include="CsRules\Analyzers\LucerneSearchDocumentAnalyzer.cs" />
     <Compile Include="CsRules\Analyzers\PageIsCallbackAnalyzer.cs" />
+    <Compile Include="CsRules\Analyzers\StringManipulationMethodsAnalyzer.cs" />
     <Compile Include="CsRules\Analyzers\PageIsPostBackAnalyzer.cs" />
     <Compile Include="CsRules\Analyzers\HttpSessionSessionIdAnalyzer.cs" />
     <Compile Include="CsRules\Analyzers\HttpSessionElementAccessAnalyzer.cs" />
@@ -59,6 +60,7 @@
     <Compile Include="CsRules\CodeFixes\HttpSessionElementAccessSetCodeFixProvider.cs" />
     <Compile Include="CsRules\CodeFixes\HttpSessionElementAccessGetCodeFixProvider.cs" />
     <Compile Include="CsRules\CodeFixes\PageIsCallbackCodeFixProvider.cs" />
+    <Compile Include="CsRules\CodeFixes\StringManipultionMethodsCodeFixProvider.cs" />
     <Compile Include="CsRules\CodeFixes\PageIsPostBackCodeFixProvider.cs" />
     <Compile Include="CsRules\CodeFixes\HttpSessionSessionIdCodeFixProvider.cs" />
     <Compile Include="CsRules\CodeFixes\ClientScriptMethodsCodeFixProvider.cs" />

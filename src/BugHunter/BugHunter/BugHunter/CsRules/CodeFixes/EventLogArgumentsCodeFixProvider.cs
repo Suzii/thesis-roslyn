@@ -83,8 +83,6 @@ namespace BugHunter.CsRules.CodeFixes
 
         private string GetNamespaceNameToBeReferenced()
         {
-            //var usedType = typeof(CMS.EventLog.EventType);
-            //return usedType.Namespace;
             return "CMS.EventLog";
         }
     }

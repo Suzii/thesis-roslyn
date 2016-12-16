@@ -170,4 +170,13 @@
   <data name="RedirectCodeFixLocal" xml:space="preserve">
     <value>Use when redirecting to local URL.</value>
   </data>
+  <data name="StringManipulationMethods_Description" xml:space="preserve">
+    <value>Do not use string manipulation methods without specifying CultureInfo.</value>
+  </data>
+  <data name="StringManipulationMethods_MessageFormat" xml:space="preserve">
+    <value>'{0}' used without specifying CultureInfo.</value>
+  </data>
+  <data name="StringManipulationMethods_Title" xml:space="preserve">
+    <value>String manipulation methods should not be used without specifying CultureInfo.</value>
+  </data>
 </root>

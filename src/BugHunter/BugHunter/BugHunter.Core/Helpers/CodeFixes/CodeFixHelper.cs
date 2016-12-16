@@ -16,7 +16,7 @@ namespace BugHunter.Core.Helpers.CodeFixes
             Context = context;
         }
 
-        public async Task<Document> ReplaceExpressionWith(SyntaxNode oldNode, SyntaxNode newNode, params string[] namepsaceToBeReferenced)
+        public async Task<Document> ReplaceExpressionWith(SyntaxNode oldNode, SyntaxNode newNode, params string[] namespacesToBeReferenced)
         {
             var document = Context.Document;
             var root = await GetDocumentRoot();
@@ -25,9 +25,9 @@ namespace BugHunter.Core.Helpers.CodeFixes
 
             var newRoot = root.ReplaceNode(oldNode, formattedMemberAccess);
 
-            if (namepsaceToBeReferenced != null)
+            if (namespacesToBeReferenced != null)
             {
-                newRoot = UsingsHelper.EnsureUsings((CompilationUnitSyntax) newRoot, namepsaceToBeReferenced);
+                newRoot = UsingsHelper.EnsureUsings((CompilationUnitSyntax) newRoot, namespacesToBeReferenced);
             }
 
             var newDocument = document.WithSyntaxRoot(newRoot);
@@ -35,6 +35,7 @@ namespace BugHunter.Core.Helpers.CodeFixes
             return newDocument;
         }
 
+        // TODO check out it Roslyn caches Root itself
         protected async Task<SyntaxNode> GetDocumentRoot()
         {
             if (_documentRootCache == null)

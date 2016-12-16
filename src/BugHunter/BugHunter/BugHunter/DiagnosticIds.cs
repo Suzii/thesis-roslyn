@@ -26,5 +26,9 @@
         public const string WHERE_LIKE_METHOD = "BH10X1";
         public const string EVENT_LOG_ARGUMENTS = "BH10X2";
         public const string LUCERNE_SEARCH_DOCUMENT = "BH10X3";
+
+
+        // String methods
+        public const string STRING_MANIPULATION_METHODS = "BH2000";
     }
 }

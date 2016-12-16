@@ -8,7 +8,7 @@ using Location = Microsoft.CodeAnalysis.Location;
 namespace BugHunter.CsRules.Analyzers
 {
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class WhereLikeMethodAnalyzer : BaseMemberInvocatoinAnalyzer
+    public class WhereLikeMethodAnalyzer : BaseMemberInvocationAnalyzer
     {
         public const string DIAGNOSTIC_ID = DiagnosticIds.WHERE_LIKE_METHOD;
 

@@ -52,7 +52,7 @@ namespace BugHunter.Core.Helpers.CodeFixes
         }
 
         /// <summary>
-        /// Returns all <see cref="MemberAccessExpressionSyntax"/> that  includes diagnostic's start position
+        /// Returns all <see cref="MemberAccessExpressionSyntax"/> that includes diagnostic's start position
         /// </summary>
         /// <returns>All member accesses containing diagnostic's start position</returns>
         private async Task<IEnumerable<MemberAccessExpressionSyntax>> GetDiagnosedMemberAccesses()
