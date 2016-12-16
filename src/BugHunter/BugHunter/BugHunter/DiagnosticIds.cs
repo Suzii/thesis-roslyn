@@ -22,6 +22,10 @@
         public const string CLIENT_SCRIPT_METHODS = "BH1011";
         public const string HTTP_RESPONSE_REDIRECT = "BH1012";
 
+        public const string HTTP_REQUEST_QUERY_STRING = "BH1013";
+
+
+
         // ????
         public const string WHERE_LIKE_METHOD = "BH10X1";
         public const string EVENT_LOG_ARGUMENTS = "BH10X2";
