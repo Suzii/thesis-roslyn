@@ -44,7 +44,6 @@
     <Compile Include="CsRules\Analyzers\HttpRequestUrlAnalyzer.cs" />
     <Compile Include="CsRules\Analyzers\FormsAuthenticationSignOut.cs" />
     <Compile Include="CsRules\Analyzers\HttpRequestQueryAnalyzer.cs" />
-    <Compile Include="CsRules\Analyzers\LucerneSearchDocumentAnalyzer.cs" />
     <Compile Include="CsRules\Analyzers\LuceneSearchDocumentAnalyzer.cs" />
     <Compile Include="CsRules\Analyzers\PageIsCallbackAnalyzer.cs" />
     <Compile Include="CsRules\Analyzers\StringManipulationMethodsAnalyzer.cs" />
@@ -55,6 +54,7 @@
     <Compile Include="CsRules\Analyzers\WhereLikeMethodAnalyzer.cs" />
     <Compile Include="CsRules\CodeFixes\FormsAuthenticationSignOutCodeFixProvider.cs" />
     <Compile Include="CsRules\CodeFixes\HttpRequestCookiesCodeFixProvider.cs" />
+    <Compile Include="CsRules\CodeFixes\LuceneSearchDocumentCodeFixProvider.cs" />
     <Compile Include="CsRules\CodeFixes\HttpResponseRedirectCodeFixProvider.cs" />
     <Compile Include="CsRules\CodeFixes\HttpResponseCookiesCodeFixProvider.cs" />
     <Compile Include="CsRules\CodeFixes\HttpRequestUrlCodeFixProvider.cs" />

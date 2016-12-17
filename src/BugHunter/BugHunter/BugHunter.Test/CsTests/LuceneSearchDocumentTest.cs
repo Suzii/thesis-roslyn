@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using BugHunter.CsRules.Analyzers;
+using BugHunter.CsRules.CodeFixes;
 using BugHunter.Test.Shared;
 using BugHunter.Test.Verifiers;
 using Microsoft.CodeAnalysis;
@@ -8,7 +9,7 @@ using NUnit.Framework;
 namespace BugHunter.Test.CsTests
 {
     [TestFixture]
-    public class LuceneSearchDocumentTest : CodeFixVerifier<LuceneSearchDocumentAnalyzer>
+    public class LuceneSearchDocumentTest : CodeFixVerifier<LuceneSearchDocumentAnalyzer, LuceneSearchDocumentCodeFixProvider>
     {
         protected override MetadataReference[] GetAdditionalReferences()
         {
@@ -40,13 +41,68 @@ namespace SampleTestProject.CsSamples
 }}";
             var expectedDiagnostic = new DiagnosticResult
             {
-                Id = DiagnosticIds.LUCERNE_SEARCH_DOCUMENT,
+                Id = DiagnosticIds.LUCENE_SEARCH_DOCUMENT,
                 Message = string.Format(MessagesConstants.MESSAGE, "LuceneSearchDocument", "ISearchDocument"),
                 Severity = DiagnosticSeverity.Warning,
                 Locations = new[] {new DiagnosticResultLocation("Test0.cs", 7, 17)}
             };
 
             VerifyCSharpDiagnostic(test, expectedDiagnostic);
+
+            var expectedFix = @"using CMS.Search.Lucene3;
+using CMS.DataEngine;
+
+namespace SampleTestProject.CsSamples
+{{
+    public class SampleClass
+    {{
+        private ISearchDocument Method()
+        {{
+            return new LuceneSearchDocument();
+        }}
+    }}
+}}";
+
+            VerifyCSharpFix(test, expectedFix);
+        }
+
+        [Test]
+        public void InputWithIncident_MethodReturnValue_FullyQualifiedName_SurfacesDiagnostic()
+        {
+            var test = @"namespace SampleTestProject.CsSamples
+{{
+    public class SampleClass
+    {{
+        private CMS.Search.Lucene3.LuceneSearchDocument Method()
+        {{
+            return new CMS.Search.Lucene3.LuceneSearchDocument();
+        }}
+    }}
+}}";
+            var expectedDiagnostic = new DiagnosticResult
+            {
+                Id = DiagnosticIds.LUCENE_SEARCH_DOCUMENT,
+                Message = string.Format(MessagesConstants.MESSAGE, "CMS.Search.Lucene3.LuceneSearchDocument", "ISearchDocument"),
+                Severity = DiagnosticSeverity.Warning,
+                Locations = new[] { new DiagnosticResultLocation("Test0.cs", 5, 17) }
+            };
+
+            VerifyCSharpDiagnostic(test, expectedDiagnostic);
+
+            var expectedFix = @"using CMS.DataEngine;
+
+namespace SampleTestProject.CsSamples
+{{
+    public class SampleClass
+    {{
+        private ISearchDocument Method()
+        {{
+            return new CMS.Search.Lucene3.LuceneSearchDocument();
+        }}
+    }}
+}}";
+
+            VerifyCSharpFix(test, expectedFix);
         }
 
         [Test]
@@ -66,13 +122,68 @@ namespace SampleTestProject.CsSamples
 }";
             var expectedDiagnostic = new DiagnosticResult
             {
-                Id = DiagnosticIds.LUCERNE_SEARCH_DOCUMENT,
+                Id = DiagnosticIds.LUCENE_SEARCH_DOCUMENT,
                 Message = string.Format(MessagesConstants.MESSAGE, "LuceneSearchDocument", "ISearchDocument"),
                 Severity = DiagnosticSeverity.Warning,
                 Locations = new[] { new DiagnosticResultLocation("Test0.cs", 9, 13) }
             };
 
             VerifyCSharpDiagnostic(test, expectedDiagnostic);
+
+            var expectedFix = @"using CMS.Search.Lucene3;
+using CMS.DataEngine;
+
+namespace SampleTestProject.CsSamples
+{
+    public class SampleClass
+    {
+        private void Method()
+        {
+            ISearchDocument badVariable = null;
+        }
+    }
+}";
+            // allow new compiler diagnostics is true due to unnecessary using directive
+            VerifyCSharpFix(test, expectedFix, 0, true);
+        }
+
+        [Test]
+        public void InputWithIncident_VariableDeclaration_FullyQualifiedName_SurfacesDiagnostic()
+        {
+            var test = @"namespace SampleTestProject.CsSamples
+{
+    public class SampleClass
+    {
+        private void Method()
+        {
+            CMS.Search.Lucene3.LuceneSearchDocument badVariable = null;
+        }
+    }
+}";
+            var expectedDiagnostic = new DiagnosticResult
+            {
+                Id = DiagnosticIds.LUCENE_SEARCH_DOCUMENT,
+                Message = string.Format(MessagesConstants.MESSAGE, "CMS.Search.Lucene3.LuceneSearchDocument", "ISearchDocument"),
+                Severity = DiagnosticSeverity.Warning,
+                Locations = new[] { new DiagnosticResultLocation("Test0.cs", 7, 13) }
+            };
+
+            VerifyCSharpDiagnostic(test, expectedDiagnostic);
+
+            var expectedFix = @"using CMS.DataEngine;
+
+namespace SampleTestProject.CsSamples
+{
+    public class SampleClass
+    {
+        private void Method()
+        {
+            ISearchDocument badVariable = null;
+        }
+    }
+}";
+
+            VerifyCSharpFix(test, expectedFix);
         }
 
         [Test]
@@ -92,17 +203,73 @@ namespace SampleTestProject.CsSamples
 }";
             var expectedDiagnostic = new DiagnosticResult
             {
-                Id = DiagnosticIds.LUCERNE_SEARCH_DOCUMENT,
+                Id = DiagnosticIds.LUCENE_SEARCH_DOCUMENT,
                 Message = string.Format(MessagesConstants.MESSAGE, "LuceneSearchDocument", "ISearchDocument"),
                 Severity = DiagnosticSeverity.Warning,
                 Locations = new[] { new DiagnosticResultLocation("Test0.cs", 7, 29) }
             };
 
             VerifyCSharpDiagnostic(test, expectedDiagnostic);
+
+            var expectedFix = @"using CMS.Search.Lucene3;
+using CMS.DataEngine;
+
+namespace SampleTestProject.CsSamples
+{
+    public class SampleClass
+    {
+        private void Method(ISearchDocument doc)
+        {
+            // Do nothing
+        }
+    }
+}";
+
+            // allow new compiler diagnostics is true due to unnecessary using directive
+            VerifyCSharpFix(test, expectedFix, 0, true);
         }
 
         [Test]
-        public void OkayUsage_TypeofArgument_NoDiagnostic()
+        public void InputWithIncident_MethodParameter_FullyQualifiedName_SurfacesDiagnostic()
+        {
+            var test = @"namespace SampleTestProject.CsSamples
+{
+    public class SampleClass
+    {
+        private void Method(CMS.Search.Lucene3.LuceneSearchDocument doc)
+        {
+            // Do nothing
+        }
+    }
+}";
+            var expectedDiagnostic = new DiagnosticResult
+            {
+                Id = DiagnosticIds.LUCENE_SEARCH_DOCUMENT,
+                Message = string.Format(MessagesConstants.MESSAGE, "CMS.Search.Lucene3.LuceneSearchDocument", "ISearchDocument"),
+                Severity = DiagnosticSeverity.Warning,
+                Locations = new[] { new DiagnosticResultLocation("Test0.cs", 5, 29) }
+            };
+
+            VerifyCSharpDiagnostic(test, expectedDiagnostic);
+
+            var expectedFix = @"using CMS.DataEngine;
+
+namespace SampleTestProject.CsSamples
+{
+    public class SampleClass
+    {
+        private void Method(ISearchDocument doc)
+        {
+            // Do nothing
+        }
+    }
+}";
+
+            VerifyCSharpFix(test, expectedFix);
+        }
+
+        [Test]
+        public void OkayUsage_ObjectCreation_NoDiagnostic()
         {
             var test = @"using CMS.Search.Lucene3; 
 
@@ -116,6 +283,23 @@ namespace SampleTestProject.CsSamples
         }
     }
 }";
+            VerifyCSharpDiagnostic(test);
+        }
+
+        [Test]
+        public void OkayUsage_ObjectCreation_FullyQualifiedName_NoDiagnostic()
+        {
+            var test = @"namespace SampleTestProject.CsSamples
+{
+    public class SampleClass
+    {
+        private void Method()
+        {
+            var luceneSearchDocument = new CMS.Search.Lucene3.LuceneSearchDocument();
+        }
+    }
+}";
+
             VerifyCSharpDiagnostic(test);
         }
     }

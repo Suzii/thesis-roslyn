@@ -11,7 +11,7 @@ namespace BugHunter.CsRules.Analyzers
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     public class LuceneSearchDocumentAnalyzer : DiagnosticAnalyzer
     {
-        public const string DIAGNOSTIC_ID = DiagnosticIds.LUCERNE_SEARCH_DOCUMENT;
+        public const string DIAGNOSTIC_ID = DiagnosticIds.LUCENE_SEARCH_DOCUMENT;
 
         private static readonly DiagnosticDescriptor Rule = ApiReplacementRuleBuilder.GetRule(DIAGNOSTIC_ID, "LucerneSearchDocument", "ISearchDocument");
 
@@ -40,9 +40,14 @@ namespace BugHunter.CsRules.Analyzers
             {
                 return;
             }
+            
+            // if direct parent is QualifiedName, surface diagnostic fo whole
+            var diagnosedNode = identifierNameNode.Parent.IsKind(SyntaxKind.QualifiedName)
+                ? identifierNameNode.Parent
+                : identifierNameNode;
 
-            var warningLocation = identifierNameNode.GetLocation();
-            var diagnostic = Diagnostic.Create(Rule, warningLocation, identifierName);
+            var warningLocation = diagnosedNode.GetLocation();
+            var diagnostic = Diagnostic.Create(Rule, warningLocation, diagnosedNode);
             context.ReportDiagnostic(diagnostic);
         }
     }
