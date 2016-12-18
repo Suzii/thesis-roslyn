@@ -2,6 +2,7 @@ using System.Collections.Immutable;
 using BugHunter.Core;
 using BugHunter.Core.DiagnosticsFormatting;
 using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
 
 namespace BugHunter.CsRules.Analyzers
@@ -30,6 +31,12 @@ namespace BugHunter.CsRules.Analyzers
             RegisterAction(Rule, context, "System.String", "ToUpper");
         }
 
+        // If method is already called with StringComparison argument, no need for diagnostic
+        protected override bool CheckPostConditions(InvocationExpressionSyntax invocationExpression)
+        {
+            return invocationExpression.ArgumentList.Arguments.Count == 0;
+        }
+        
         protected override IDiagnosticFormatter GetDiagnosticFormatter()
         {
             return DiagnosticFormatterFactory.CreateMemberInvocationOnlyFormatter();

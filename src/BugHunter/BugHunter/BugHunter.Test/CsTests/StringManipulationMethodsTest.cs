@@ -14,6 +14,29 @@ namespace BugHunter.Test.CsTests
             return null;
         }
 
+        [TestCase("ToLowerInvariant()")]
+        [TestCase("ToLower(CultureInfo.CurrentCulture)")]
+        [TestCase("ToLower(CultureInfo.InvariantCulture)")]
+        [TestCase("ToUpperInvariant()")]
+        [TestCase("ToUpper(CultureInfo.CurrentCulture)")]
+        [TestCase("ToUpper(CultureInfo.InvariantCulture)")]
+        public void AllowedOverloadCalled_NoDiagnostic(string methodUsed)
+        {
+            var test = $@"namespace SampleTestProject.CsSamples 
+{{
+    public class SampleClass
+    {{
+        public void SampleMethod()
+        {{
+            var original = ""Original string"";
+            var updated = original.{methodUsed};
+        }}
+    }}
+}}";
+
+            VerifyCSharpDiagnostic(test);
+        }
+
         [Test]
         public void EmptyInput_NoDiagnostic()
         {
