@@ -9,8 +9,6 @@ namespace BugHunter.Core.Helpers.CodeFixes
     {
         protected readonly CodeFixContext Context;
 
-        private SyntaxNode _documentRootCache;
-
         public CodeFixHelper(CodeFixContext context)
         {
             Context = context;
@@ -35,15 +33,9 @@ namespace BugHunter.Core.Helpers.CodeFixes
             return newDocument;
         }
 
-        // TODO check out it Roslyn caches Root itself
         protected async Task<SyntaxNode> GetDocumentRoot()
         {
-            if (_documentRootCache == null)
-            {
-                _documentRootCache = await Context.Document.GetSyntaxRootAsync(Context.CancellationToken).ConfigureAwait(false);
-            }
-
-            return _documentRootCache;
+            return await Context.Document.GetSyntaxRootAsync(Context.CancellationToken).ConfigureAwait(false);
         }
     }
 }
