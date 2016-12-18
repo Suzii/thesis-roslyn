@@ -1,16 +1,15 @@
 ﻿using System.Collections.Immutable;
 using System.Linq;
 using BugHunter.Core;
-using BugHunter.Core.Extensions;
+using BugHunter.Core.DiagnosticsFormatting;
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
 
 namespace BugHunter.CsRules.Analyzers
 {
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class EventLogArgumentsAnalyzer : DiagnosticAnalyzer
+    public class EventLogArgumentsAnalyzer : BaseMemberInvocationAnalyzer
     {
         public const string DIAGNOSTIC_ID = DiagnosticIds.EVENT_LOG_ARGUMENTS;
 
@@ -26,49 +25,26 @@ namespace BugHunter.CsRules.Analyzers
 
         public override void Initialize(AnalysisContext context)
         {
-            context.RegisterSyntaxNodeAction(Analyze, SyntaxKind.InvocationExpression);
+            RegisterAction(Rule, context, "CMS.EventLog.EventLogProvider", "LogEvent");
         }
 
-        private static void Analyze(SyntaxNodeAnalysisContext context)
+        protected override bool CheckPostConditions(InvocationExpressionSyntax invocationExpression)
         {
-            var invocationExpression = (InvocationExpressionSyntax)context.Node;
-            var memberAccess = invocationExpression.Expression as MemberAccessExpressionSyntax;
-            var forbiddenMemberName = "LogEvent";
-            if (memberAccess == null || memberAccess.Name.ToString() != forbiddenMemberName)
-            {
-                return;
-            }
-
-            var symbol = context.SemanticModel.GetSymbolInfo(memberAccess).Symbol;
-            var memberSymbol = symbol as IMethodSymbol;
-            if (memberSymbol == null)
-            {
-                return;
-            }
-
-            var searchedType = context.SemanticModel.Compilation.GetTypeByMetadataName("CMS.EventLog.EventLogProvider");
-            var actualType = context.SemanticModel.GetTypeInfo(memberAccess.Expression).Type as INamedTypeSymbol;
-            if (actualType == null || searchedType == null || !actualType.IsDerivedFromClassOrInterface(searchedType))
-            {
-                return;
-            }
-
             if (invocationExpression.ArgumentList.Arguments.Count == 0)
             {
-                return;
+                return false;
             }
 
             var forbiddenEventTypeArgs = new[] { "\"I\"", "\"W\"", "\"E\"" };
             var eventTypeArgument = invocationExpression.ArgumentList.Arguments.First();
             var firstArgumentText = eventTypeArgument.Expression.ToString();
-            if (!forbiddenEventTypeArgs.Contains(firstArgumentText))
-            {
-                return;
-            }
 
-            var warningLocation = invocationExpression.ArgumentList.Arguments.First().GetLocation();
-            var diagnostic = Diagnostic.Create(Rule, warningLocation, eventTypeArgument.ToString());
-            context.ReportDiagnostic(diagnostic);
+            return forbiddenEventTypeArgs.Contains(firstArgumentText);
+        }
+
+        protected override IDiagnosticFormatter GetDiagnosticFormatter()
+        {
+            return new EventLogArgumentsDiagnosticFormatter();
         }
     }
 }

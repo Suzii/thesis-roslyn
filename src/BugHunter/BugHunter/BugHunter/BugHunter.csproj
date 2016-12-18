@@ -37,6 +37,7 @@
   <ItemGroup>
     <Compile Include="CsRules\Analyzers\BaseMemberInvocationAnalyzer.cs" />
     <Compile Include="CsRules\Analyzers\BaseMemberAccessAnalyzer.cs" />
+    <Compile Include="CsRules\Analyzers\EventLogArgumentsDiagnosticFormatter.cs" />
     <Compile Include="CsRules\Analyzers\HttpResponseCookiesAnalyzer.cs" />
     <Compile Include="CsRules\Analyzers\HttpRequestCookiesAnalyzer.cs" />
     <Compile Include="CsRules\Analyzers\HttpRequestBrowserAnalyzer.cs" />

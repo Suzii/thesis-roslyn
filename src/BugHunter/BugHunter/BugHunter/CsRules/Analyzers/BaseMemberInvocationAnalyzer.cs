@@ -89,16 +89,16 @@ namespace BugHunter.CsRules.Analyzers
         }
 
         // To be overriden by subClasses if additional checks are needed
-        protected virtual bool CheckPostConditions(InvocationExpressionSyntax memberAccess)
+        protected virtual bool CheckPostConditions(InvocationExpressionSyntax invocationExpression)
         {
             return true;
         }
 
-        protected virtual Diagnostic CreateDiagnostic(DiagnosticDescriptor rule, InvocationExpressionSyntax memberAccess)
+        protected virtual Diagnostic CreateDiagnostic(DiagnosticDescriptor rule, InvocationExpressionSyntax invocationExpression)
         {
             var diagnosticFormatter = GetDiagnosticFormatter();
-            var usedAs = diagnosticFormatter.GetDiagnosedUsage(memberAccess);
-            var location = diagnosticFormatter.GetLocation(memberAccess);
+            var usedAs = diagnosticFormatter.GetDiagnosedUsage(invocationExpression);
+            var location = diagnosticFormatter.GetLocation(invocationExpression);
 
             return Diagnostic.Create(rule, location, usedAs);
         }
