@@ -15,18 +15,6 @@ namespace BugHunter.CsRules.Analyzers
     /// </summary>
     public abstract class BaseMemberAccessAnalyzer : DiagnosticAnalyzer
     {
-        private readonly IDiagnosticFormatter _diagnosticFormatter;
-
-        protected BaseMemberAccessAnalyzer()
-        {
-            _diagnosticFormatter = DiagnosticFormatterFactory.CreateMemberAccessFormatter();
-        }
-
-        protected BaseMemberAccessAnalyzer(IDiagnosticFormatter diagnosticFormatter)
-        {
-            _diagnosticFormatter = diagnosticFormatter;
-        }
-
         protected void RegisterAction(DiagnosticDescriptor rule, AnalysisContext context, string accessedType, string memberName, params string[] additionalMemberNames)
         {
             var forbiddenMemberNames = new[] {memberName}.Concat(additionalMemberNames);
@@ -34,28 +22,80 @@ namespace BugHunter.CsRules.Analyzers
             context.RegisterSyntaxNodeAction(c => Analyze(rule, c, accessedType, forbiddenMemberNames), SyntaxKind.SimpleMemberAccessExpression);
         }
 
+        protected virtual IDiagnosticFormatter GetDiagnosticFormatter()
+        {
+            return DiagnosticFormatterFactory.CreateMemberAccessFormatter();
+        }
+
         private void Analyze(DiagnosticDescriptor rule, SyntaxNodeAnalysisContext context, string accessedType, IEnumerable<string> forbiddenMemberNames)
         {
-            var memberAccess = (MemberAccessExpressionSyntax)context.Node;
-
-            var memberName = memberAccess.Name.ToString();
-            if (!forbiddenMemberNames.Contains(memberName))
+            if (!CheckPreConditions(context))
             {
                 return;
+            }
+
+            if (!CheckMainConditions(context, accessedType, forbiddenMemberNames))
+            {
+               return;
+            }
+
+            var memberAccess = context.Node as MemberAccessExpressionSyntax;
+            if (!CheckPostConditions(memberAccess))
+            {
+                return;
+            }
+
+            var diagnostic = CreateDiagnostic(rule, memberAccess);
+
+            context.ReportDiagnostic(diagnostic);
+        }
+
+        // Can be overriden by subClasses if additional checks are needed
+        protected virtual bool CheckPreConditions(SyntaxNodeAnalysisContext context)
+        {
+            // TODO check if file is generated
+            return true;
+        }
+
+        protected virtual bool CheckMainConditions(SyntaxNodeAnalysisContext context, string accessedType, IEnumerable<string> memberNames)
+        {
+            var memberAccess = (MemberAccessExpressionSyntax) context.Node;
+            if (memberAccess == null)
+            {
+                return false;
+            }
+
+            var memberName = memberAccess.Name.ToString();
+            if (!memberNames.Contains(memberName))
+            {
+                return false;
             }
 
             var searchedTargetType = TypeExtensions.GetITypeSymbol(accessedType, context);
             var actualTargetType = new SemanticModelBrowser(context).GetMemberAccessTarget(memberAccess) as INamedTypeSymbol;
-            if (searchedTargetType == null || actualTargetType == null || !actualTargetType.IsDerivedFromClassOrInterface(searchedTargetType))
+            if (searchedTargetType == null || 
+                actualTargetType == null ||
+                !actualTargetType.IsDerivedFromClassOrInterface(searchedTargetType))
             {
-                return;
+                return false;
             }
 
-            var usedAs = _diagnosticFormatter.GetDiagnosedUsage(memberAccess);
-            var location = _diagnosticFormatter.GetLocation(memberAccess);
-            var diagnostic = Diagnostic.Create(rule, location, usedAs);
+            return true;
+        }
 
-            context.ReportDiagnostic(diagnostic);
+        // To be overriden by subClasses if additional checks are needed
+        protected virtual bool CheckPostConditions(MemberAccessExpressionSyntax memberAccess)
+        {
+            return true;
+        }
+
+        protected virtual Diagnostic CreateDiagnostic(DiagnosticDescriptor rule, MemberAccessExpressionSyntax memberAccess)
+        {
+            var diagnosticFormatter = GetDiagnosticFormatter();
+            var usedAs = diagnosticFormatter.GetDiagnosedUsage(memberAccess);
+            var location = diagnosticFormatter.GetLocation(memberAccess);
+
+            return Diagnostic.Create(rule, location, usedAs);
         }
     }
 }

@@ -12,11 +12,6 @@ namespace BugHunter.CsRules.Analyzers
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     public class StringManipulationMethodsAnalyzer : BaseMemberInvocationAnalyzer
     {
-        public StringManipulationMethodsAnalyzer()
-            : base(DiagnosticFormatterFactory.CreateMemberInvocationOnlyFormatter())
-        {
-        }
-
         public const string DIAGNOSTIC_ID = DiagnosticIds.STRING_MANIPULATION_METHODS;
 
         private static readonly DiagnosticDescriptor Rule = new DiagnosticDescriptor(DIAGNOSTIC_ID,
@@ -33,6 +28,11 @@ namespace BugHunter.CsRules.Analyzers
         {
             RegisterAction(Rule, context, "System.String", "ToLower");
             RegisterAction(Rule, context, "System.String", "ToUpper");
+        }
+
+        protected override IDiagnosticFormatter GetDiagnosticFormatter()
+        {
+            return DiagnosticFormatterFactory.CreateMemberInvocationOnlyFormatter();
         }
     }
 }
