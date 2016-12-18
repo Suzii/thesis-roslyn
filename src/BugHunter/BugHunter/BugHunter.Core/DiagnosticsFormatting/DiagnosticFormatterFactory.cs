@@ -1,6 +1,6 @@
-﻿using BugHunter.Core.DiagnosticFormatting.Implementation;
+﻿using BugHunter.Core.DiagnosticsFormatting.Implementation;
 
-namespace BugHunter.Core.DiagnosticFormatting
+namespace BugHunter.Core.DiagnosticsFormatting
 {
     public static class DiagnosticFormatterFactory
     {

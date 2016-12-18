@@ -1,7 +1,7 @@
-﻿using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-namespace BugHunter.Core.DiagnosticFormatting.Implementation
+namespace BugHunter.Core.DiagnosticsFormatting.Implementation
 {
     internal class MemberAccessDiagnosticFormatter : MemberAccessDiagnosticFormatterBase, IDiagnosticFormatter
     {

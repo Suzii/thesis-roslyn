@@ -100,7 +100,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="HelpersTests\LocationHelperTests.cs" />
+    <Compile Include="DiagnosticsFormatting\MemberAccessOnlyDiagnosticFormatterTests.cs" />
+    <Compile Include="DiagnosticsFormatting\MemberInvocationOnlyDiagnosticFormatterTests - Copy.cs" />
+    <Compile Include="DiagnosticsFormatting\MemberAccessDiagnosticFormatterTests.cs" />
+    <Compile Include="DiagnosticsFormatting\MemberInvocationDiagnosticFormatterTests.cs" />
     <Compile Include="HelpersTests\SemanticModelBrowserTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

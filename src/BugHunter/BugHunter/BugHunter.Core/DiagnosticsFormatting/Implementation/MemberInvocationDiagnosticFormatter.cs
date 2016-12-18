@@ -1,7 +1,7 @@
-﻿using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-namespace BugHunter.Core.DiagnosticFormatting.Implementation
+namespace BugHunter.Core.DiagnosticsFormatting.Implementation
 {
     internal class MemberInvocationDiagnosticFormatter : MemberInvocationDiagnosticFormatterBase, IDiagnosticFormatter
     {
@@ -12,8 +12,6 @@ namespace BugHunter.Core.DiagnosticFormatting.Implementation
 
         public string GetDiagnosedUsage(ExpressionSyntax expression)
         {
-            //var memberAccess = GetUnderlyingMemberAccess(GetInvocationExpression(expression));
-
             return $"{expression}";
         }
     }

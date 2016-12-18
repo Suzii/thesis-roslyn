@@ -1,9 +1,9 @@
-﻿using System.Collections.Immutable;
+﻿using System;
+using System.Collections.Immutable;
 using System.Composition;
 using System.Linq;
 using System.Threading.Tasks;
 using BugHunter.Core.Extensions;
-using BugHunter.Core.Helpers;
 using BugHunter.Core.Helpers.CodeFixes;
 using BugHunter.Core.ResourceBuilder;
 using BugHunter.CsRules.Analyzers;
@@ -48,7 +48,7 @@ namespace BugHunter.CsRules.CodeFixes
             }
 
             var usingNamespace = "CMS.Base.Web.UI";
-            var newInvocationExpression = GetNewInvocatioExpression(invocation);
+            var newInvocationExpression = GetNewInvocationExpression(invocation);
             var diagnostic = context.Diagnostics.First();
 
             context.RegisterCodeFix(
@@ -71,14 +71,25 @@ namespace BugHunter.CsRules.CodeFixes
             return newArgumentList;
         }
 
-        private InvocationExpressionSyntax GetNewInvocatioExpression(InvocationExpressionSyntax oldInvocation)
+        private InvocationExpressionSyntax GetNewInvocationExpression(InvocationExpressionSyntax oldInvocation)
         {
             // Methods in script helper are named same as methods in ClientScriptManager
-            var oldMethodName = MethodInvocationHelper.GetMethodName(oldInvocation);
+            var oldMethodName = GetMethodName(oldInvocation);
             var newInvocationExpression = SyntaxFactory.ParseExpression($"ScriptHelper.{oldMethodName}()") as InvocationExpressionSyntax;
             var newArgumentList = GetNewArgumentList(oldInvocation);
             
             return newInvocationExpression?.WithArgumentList(newArgumentList); ;
+        }
+        
+        public static string GetMethodName(InvocationExpressionSyntax invocationExpression)
+        {
+            var memberAccess = invocationExpression.Expression as MemberAccessExpressionSyntax;
+            if (memberAccess == null)
+            {
+                throw new ArgumentException(@"Unable to cast to MemberAccessExpression", nameof(invocationExpression));
+            }
+            
+            return memberAccess.Name.ToString();
         }
     }
 }

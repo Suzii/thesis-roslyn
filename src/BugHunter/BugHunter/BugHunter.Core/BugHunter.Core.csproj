@@ -97,14 +97,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AnalyzerCategories.cs" />
-    <Compile Include="DiagnosticFormatting\DiagnosticFormatterFactory.cs" />
-    <Compile Include="DiagnosticFormatting\IDiagnosticFormatter.cs" />
-    <Compile Include="DiagnosticFormatting\Implementation\MemberAccessOnlyDiagnosticFormatter.cs" />
-    <Compile Include="DiagnosticFormatting\Implementation\MemberAccessDiagnosticFormatterBase.cs" />
-    <Compile Include="DiagnosticFormatting\Implementation\MemberInvocationDiagnosticFormatterBase.cs" />
-    <Compile Include="DiagnosticFormatting\Implementation\MemberInvocationOnlyDiagnosticFormatter.cs" />
-    <Compile Include="DiagnosticFormatting\Implementation\MemberInvocationDiagnosticFormatter.cs" />
-    <Compile Include="DiagnosticFormatting\Implementation\MemberAccessDiagnosticFormatter.cs" />
+    <Compile Include="DiagnosticsFormatting\DiagnosticFormatterFactory.cs" />
+    <Compile Include="DiagnosticsFormatting\IDiagnosticFormatter.cs" />
+    <Compile Include="DiagnosticsFormatting\Implementation\MemberAccessOnlyDiagnosticFormatter.cs" />
+    <Compile Include="DiagnosticsFormatting\Implementation\MemberAccessDiagnosticFormatterBase.cs" />
+    <Compile Include="DiagnosticsFormatting\Implementation\MemberInvocationDiagnosticFormatterBase.cs" />
+    <Compile Include="DiagnosticsFormatting\Implementation\MemberInvocationOnlyDiagnosticFormatter.cs" />
+    <Compile Include="DiagnosticsFormatting\Implementation\MemberInvocationDiagnosticFormatter.cs" />
+    <Compile Include="DiagnosticsFormatting\Implementation\MemberAccessDiagnosticFormatter.cs" />
     <Compile Include="Extensions\IEnumerableExtensions.cs" />
     <Compile Include="Extensions\TypeExtensions.cs" />
     <Compile Include="Extensions\TypeSymbolExtensions.cs" />
@@ -112,9 +112,7 @@
     <Compile Include="Helpers\CodeFixes\CodeFixHelper.cs" />
     <Compile Include="Helpers\CodeFixes\MemberInvocationCodeFixHelper.cs" />
     <Compile Include="Helpers\CodeFixes\MemberAccessCodeFixHelper.cs" />
-    <Compile Include="Helpers\MethodInvocationHelper.cs" />
     <Compile Include="Helpers\CodeFixes\UsingsHelper.cs" />
-    <Compile Include="Helpers\LocationHelper.cs" />
     <Compile Include="Helpers\SemanticModelBrowser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResourceBuilder\CodeFixMessageBuilder.cs" />

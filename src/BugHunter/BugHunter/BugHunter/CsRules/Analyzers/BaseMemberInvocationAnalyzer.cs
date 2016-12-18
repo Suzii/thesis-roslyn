@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using BugHunter.Core.DiagnosticFormatting;
+using BugHunter.Core.DiagnosticsFormatting;
 using BugHunter.Core.Extensions;
 using BugHunter.Core.Helpers;
 using Microsoft.CodeAnalysis;

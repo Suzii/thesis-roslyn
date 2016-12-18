@@ -1,7 +1,7 @@
 ﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-namespace BugHunter.Core.DiagnosticFormatting
+namespace BugHunter.Core.DiagnosticsFormatting
 {
     public interface IDiagnosticFormatter
     {

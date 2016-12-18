@@ -1,6 +1,6 @@
 using System.Collections.Immutable;
 using BugHunter.Core;
-using BugHunter.Core.DiagnosticFormatting;
+using BugHunter.Core.DiagnosticsFormatting;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
 
