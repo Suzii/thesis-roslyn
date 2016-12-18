@@ -28,7 +28,7 @@ namespace BugHunter.CsRules.Analyzers
             RegisterAction(Rule, context, "CMS.EventLog.EventLogProvider", "LogEvent");
         }
 
-        protected override bool CheckPostConditions(InvocationExpressionSyntax invocationExpression)
+        protected override bool CheckPostConditions(SyntaxNodeAnalysisContext expression, InvocationExpressionSyntax invocationExpression)
         {
             if (invocationExpression.ArgumentList.Arguments.Count == 0)
             {

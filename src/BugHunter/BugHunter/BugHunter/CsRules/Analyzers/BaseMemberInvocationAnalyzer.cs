@@ -40,7 +40,7 @@ namespace BugHunter.CsRules.Analyzers
             }
 
             var invocationExpression = context.Node as InvocationExpressionSyntax;
-            if (!CheckPostConditions(invocationExpression))
+            if (!CheckPostConditions(context, invocationExpression))
             {
                 return;
             }
@@ -89,7 +89,7 @@ namespace BugHunter.CsRules.Analyzers
         }
 
         // To be overriden by subClasses if additional checks are needed
-        protected virtual bool CheckPostConditions(InvocationExpressionSyntax invocationExpression)
+        protected virtual bool CheckPostConditions(SyntaxNodeAnalysisContext expression, InvocationExpressionSyntax invocationExpression)
         {
             return true;
         }

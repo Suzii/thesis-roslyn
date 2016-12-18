@@ -665,6 +665,7 @@
     <Compile Include="CsTests\HttpSessionElementAccessGetTest.cs" />
     <Compile Include="CsTests\HttpSessionElementAccessSetTest.cs" />
     <Compile Include="CsTests\PageIsCallbackTest.cs" />
+    <Compile Include="CsTests\StringComparisonMethodsTest.cs" />
     <Compile Include="CsTests\StringManipulationMethodsTest.cs" />
     <Compile Include="CsTests\PageIsPostBackTest.cs" />
     <Compile Include="CsTests\HttpSessionSessionIdTest.cs" />

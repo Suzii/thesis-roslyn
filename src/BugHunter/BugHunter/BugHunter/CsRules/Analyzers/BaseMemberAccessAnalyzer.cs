@@ -40,7 +40,7 @@ namespace BugHunter.CsRules.Analyzers
             }
 
             var memberAccess = context.Node as MemberAccessExpressionSyntax;
-            if (!CheckPostConditions(memberAccess))
+            if (!CheckPostConditions(context, memberAccess))
             {
                 return;
             }
@@ -84,7 +84,7 @@ namespace BugHunter.CsRules.Analyzers
         }
 
         // To be overriden by subClasses if additional checks are needed
-        protected virtual bool CheckPostConditions(MemberAccessExpressionSyntax memberAccess)
+        protected virtual bool CheckPostConditions(SyntaxNodeAnalysisContext context, MemberAccessExpressionSyntax memberAccess)
         {
             return true;
         }

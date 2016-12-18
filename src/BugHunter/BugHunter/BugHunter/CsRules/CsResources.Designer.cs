@@ -160,6 +160,33 @@ namespace BugHunter.CsRules {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Do not use string comparison methods without specifying StringComparison..
+        /// </summary>
+        internal static string StringComparisonMethods_Description {
+            get {
+                return ResourceManager.GetString("StringComparisonMethods_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;{0}&apos; used without specifying StringComparison..
+        /// </summary>
+        internal static string StringComparisonMethods_MessageFormat {
+            get {
+                return ResourceManager.GetString("StringComparisonMethods_MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to String comparison methods should not be used without specifying StringComparison..
+        /// </summary>
+        internal static string StringComparisonMethods_Title {
+            get {
+                return ResourceManager.GetString("StringComparisonMethods_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Do not use string manipulation methods without specifying CultureInfo..
         /// </summary>
         internal static string StringManipulationMethods_Description {

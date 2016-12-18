@@ -27,12 +27,11 @@ namespace BugHunter.CsRules.Analyzers
 
         public override void Initialize(AnalysisContext context)
         {
-            RegisterAction(Rule, context, "System.String", "ToLower");
-            RegisterAction(Rule, context, "System.String", "ToUpper");
+            RegisterAction(Rule, context, "System.String", "ToLower", "ToUpper");
         }
 
         // If method is already called with StringComparison argument, no need for diagnostic
-        protected override bool CheckPostConditions(InvocationExpressionSyntax invocationExpression)
+        protected override bool CheckPostConditions(SyntaxNodeAnalysisContext expression, InvocationExpressionSyntax invocationExpression)
         {
             return invocationExpression.ArgumentList.Arguments.Count == 0;
         }

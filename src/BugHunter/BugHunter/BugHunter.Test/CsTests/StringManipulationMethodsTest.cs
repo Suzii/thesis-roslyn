@@ -14,6 +14,14 @@ namespace BugHunter.Test.CsTests
             return null;
         }
 
+        [Test]
+        public void EmptyInput_NoDiagnostic()
+        {
+            var test = @"";
+
+            VerifyCSharpDiagnostic(test);
+        }
+
         [TestCase("ToLowerInvariant()")]
         [TestCase("ToLower(CultureInfo.CurrentCulture)")]
         [TestCase("ToLower(CultureInfo.InvariantCulture)")]
@@ -37,14 +45,6 @@ namespace BugHunter.Test.CsTests
             VerifyCSharpDiagnostic(test);
         }
 
-        [Test]
-        public void EmptyInput_NoDiagnostic()
-        {
-            var test = @"";
-
-            VerifyCSharpDiagnostic(test);
-        }
-        
         [TestCase("ToLower()", "ToLowerInvariant()", 0)]
         [TestCase("ToLower()", "ToLower(CultureInfo.CurrentCulture)", 1)]
         [TestCase("ToUpper()", "ToUpperInvariant()", 0)]

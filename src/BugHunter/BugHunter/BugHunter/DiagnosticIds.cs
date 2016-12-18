@@ -31,5 +31,7 @@
 
         // String methods
         public const string STRING_MANIPULATION_METHODS = "BH2000";
+        public const string STRING_COMPARISON_METHODS = "BH2001";
+
     }
 }
