@@ -46,7 +46,7 @@ namespace BugHunter.CsRules.Analyzers
                 return;
             }
 
-            var searchedType = TypeExtensions.GetITypeSymbol("CMS.EventLog.EventLogProvider", context.SemanticModel.Compilation);
+            var searchedType = context.SemanticModel.Compilation.GetTypeByMetadataName("CMS.EventLog.EventLogProvider");
             var actualType = context.SemanticModel.GetTypeInfo(memberAccess.Expression).Type as INamedTypeSymbol;
             if (actualType == null || searchedType == null || !actualType.IsDerivedFromClassOrInterface(searchedType))
             {

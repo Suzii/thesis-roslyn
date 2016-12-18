@@ -54,7 +54,7 @@ namespace BugHunter.CsRules.Analyzers
         private static bool IsHttpSession(INamedTypeSymbol accessedTypeSymbol, Compilation compilation)
         {
             var sessionType = "System.Web.SessionState.HttpSessionState";
-            var sessionTypeSymbol = TypeExtensions.GetITypeSymbol(sessionType, compilation);
+            var sessionTypeSymbol = compilation.GetTypeByMetadataName(sessionType);
 
             return sessionTypeSymbol != null && accessedTypeSymbol.IsDerivedFromClassOrInterface(sessionTypeSymbol);
         }
@@ -62,7 +62,7 @@ namespace BugHunter.CsRules.Analyzers
         private static bool IsHttpSessionBase(INamedTypeSymbol accessedTypeSymbol, Compilation compilation)
         {
             var sessionBaseType = "System.Web.HttpSessionStateBase";
-            var sessionBaseTypeSymbol = TypeExtensions.GetITypeSymbol(sessionBaseType, compilation);
+            var sessionBaseTypeSymbol = compilation.GetTypeByMetadataName(sessionBaseType);
 
             return sessionBaseTypeSymbol != null && accessedTypeSymbol.IsDerivedFromClassOrInterface(sessionBaseTypeSymbol);
         }

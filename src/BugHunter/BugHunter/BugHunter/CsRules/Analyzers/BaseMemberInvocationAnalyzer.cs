@@ -15,10 +15,9 @@ namespace BugHunter.CsRules.Analyzers
     /// </summary>
     public abstract class BaseMemberInvocationAnalyzer : DiagnosticAnalyzer
     {
-        protected void RegisterAction(DiagnosticDescriptor rule, AnalysisContext context, string accessedType, string memberName, params string[] additionalMemberNames)
+        protected void RegisterAction(DiagnosticDescriptor rule, AnalysisContext context, string accessedType, string methodName, params string[] additionalMethodNames)
         {
-            // TODO create and initialize setnew HashSet<string>();
-            var forbiddenMemberNames = new[] { memberName }.Concat(additionalMemberNames);
+            var forbiddenMemberNames = new HashSet<string>(additionalMethodNames) { methodName };
 
             context.RegisterSyntaxNodeAction(c => Analyze(rule, c, accessedType, forbiddenMemberNames), SyntaxKind.InvocationExpression);
         }
@@ -28,14 +27,14 @@ namespace BugHunter.CsRules.Analyzers
             return DiagnosticFormatterFactory.CreateMemberInvocationFormatter();
         }
 
-        private void Analyze(DiagnosticDescriptor rule, SyntaxNodeAnalysisContext context, string accessedType, IEnumerable<string> forbiddenMemberNames)
+        private void Analyze(DiagnosticDescriptor rule, SyntaxNodeAnalysisContext context, string accessedType, ISet<string> forbiddenMethodNames)
         {
             if (!CheckPreConditions(context))
             {
                 return;
             }
 
-            if (!CheckMainConditions(context, accessedType, forbiddenMemberNames))
+            if (!CheckMainConditions(context, accessedType, forbiddenMethodNames))
             {
                 return;
             }
@@ -58,7 +57,7 @@ namespace BugHunter.CsRules.Analyzers
             return true;
         }
 
-        protected virtual bool CheckMainConditions(SyntaxNodeAnalysisContext context, string accessedType, IEnumerable<string> methodNames)
+        protected virtual bool CheckMainConditions(SyntaxNodeAnalysisContext context, string accessedType, ISet<string> methodNames)
         {
             var invocationExpression = (InvocationExpressionSyntax)context.Node;
             var memberAccess = invocationExpression.Expression as MemberAccessExpressionSyntax;
@@ -75,7 +74,8 @@ namespace BugHunter.CsRules.Analyzers
                 return false;
             }
 
-            var searchedTargetType = TypeExtensions.GetITypeSymbol(accessedType, context);
+
+            var searchedTargetType = context.SemanticModel.Compilation.GetTypeByMetadataName(accessedType);
             var actualTargetType = new SemanticModelBrowser(context).GetMemberAccessTarget(memberAccess) as INamedTypeSymbol;
             if (searchedTargetType == null ||
                 actualTargetType == null ||

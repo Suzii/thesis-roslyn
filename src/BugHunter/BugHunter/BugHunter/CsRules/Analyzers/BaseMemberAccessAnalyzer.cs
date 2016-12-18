@@ -17,7 +17,7 @@ namespace BugHunter.CsRules.Analyzers
     {
         protected void RegisterAction(DiagnosticDescriptor rule, AnalysisContext context, string accessedType, string memberName, params string[] additionalMemberNames)
         {
-            var forbiddenMemberNames = new[] {memberName}.Concat(additionalMemberNames);
+            var forbiddenMemberNames = new HashSet<string>(additionalMemberNames) { memberName };
 
             context.RegisterSyntaxNodeAction(c => Analyze(rule, c, accessedType, forbiddenMemberNames), SyntaxKind.SimpleMemberAccessExpression);
         }
@@ -27,7 +27,7 @@ namespace BugHunter.CsRules.Analyzers
             return DiagnosticFormatterFactory.CreateMemberAccessFormatter();
         }
 
-        private void Analyze(DiagnosticDescriptor rule, SyntaxNodeAnalysisContext context, string accessedType, IEnumerable<string> forbiddenMemberNames)
+        private void Analyze(DiagnosticDescriptor rule, SyntaxNodeAnalysisContext context, string accessedType, ISet<string> forbiddenMemberNames)
         {
             if (!CheckPreConditions(context))
             {
@@ -57,7 +57,7 @@ namespace BugHunter.CsRules.Analyzers
             return true;
         }
 
-        protected virtual bool CheckMainConditions(SyntaxNodeAnalysisContext context, string accessedType, IEnumerable<string> memberNames)
+        protected virtual bool CheckMainConditions(SyntaxNodeAnalysisContext context, string accessedType, ISet<string> memberNames)
         {
             var memberAccess = (MemberAccessExpressionSyntax) context.Node;
             if (memberAccess == null)
@@ -71,7 +71,7 @@ namespace BugHunter.CsRules.Analyzers
                 return false;
             }
 
-            var searchedTargetType = TypeExtensions.GetITypeSymbol(accessedType, context);
+            var searchedTargetType = context.SemanticModel.Compilation.GetTypeByMetadataName(accessedType);
             var actualTargetType = new SemanticModelBrowser(context).GetMemberAccessTarget(memberAccess) as INamedTypeSymbol;
             if (searchedTargetType == null || 
                 actualTargetType == null ||

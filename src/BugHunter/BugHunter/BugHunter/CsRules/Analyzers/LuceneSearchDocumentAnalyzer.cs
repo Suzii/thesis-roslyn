@@ -33,7 +33,7 @@ namespace BugHunter.CsRules.Analyzers
                 return;
             }
 
-            var searchedTargetType = TypeExtensions.GetITypeSymbol(forbiddenTypeFullyQualified, context);
+            var searchedTargetType = context.SemanticModel.Compilation.GetTypeByMetadataName(forbiddenTypeFullyQualified);
             var actualTargetTypeInfo = context.SemanticModel.GetTypeInfo(identifierNameNode);
             var actualTargetType = actualTargetTypeInfo.Type;
             if (searchedTargetType == null || actualTargetType == null || !(actualTargetType as INamedTypeSymbol).IsDerivedFromClassOrInterface(searchedTargetType))
