@@ -97,6 +97,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AnalyzerCategories.cs" />
+    <Compile Include="DiagnosticFormatting\DiagnosticFormatterFactory.cs" />
+    <Compile Include="DiagnosticFormatting\IDiagnosticFormatter.cs" />
+    <Compile Include="DiagnosticFormatting\Implementation\MemberAccessOnlyDiagnosticFormatter.cs" />
+    <Compile Include="DiagnosticFormatting\Implementation\MemberAccessDiagnosticFormatterBase.cs" />
+    <Compile Include="DiagnosticFormatting\Implementation\MemberInvocationDiagnosticFormatterBase.cs" />
+    <Compile Include="DiagnosticFormatting\Implementation\MemberInvocationOnlyDiagnosticFormatter.cs" />
+    <Compile Include="DiagnosticFormatting\Implementation\MemberInvocationDiagnosticFormatter.cs" />
+    <Compile Include="DiagnosticFormatting\Implementation\MemberAccessDiagnosticFormatter.cs" />
     <Compile Include="Extensions\IEnumerableExtensions.cs" />
     <Compile Include="Extensions\TypeExtensions.cs" />
     <Compile Include="Extensions\TypeSymbolExtensions.cs" />

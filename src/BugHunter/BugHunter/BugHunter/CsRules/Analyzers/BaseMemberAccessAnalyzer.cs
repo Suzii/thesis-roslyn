@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using BugHunter.Core.DiagnosticFormatting;
 using BugHunter.Core.Extensions;
 using BugHunter.Core.Helpers;
 using Microsoft.CodeAnalysis;
@@ -14,25 +15,23 @@ namespace BugHunter.CsRules.Analyzers
     /// </summary>
     public abstract class BaseMemberAccessAnalyzer : DiagnosticAnalyzer
     {
+        private readonly IDiagnosticFormatter _diagnosticFormatter;
+
+        protected BaseMemberAccessAnalyzer()
+        {
+            _diagnosticFormatter = DiagnosticFormatterFactory.CreateMemberAccessFormatter();
+        }
+
+        protected BaseMemberAccessAnalyzer(IDiagnosticFormatter diagnosticFormatter)
+        {
+            _diagnosticFormatter = diagnosticFormatter;
+        }
+
         protected void RegisterAction(DiagnosticDescriptor rule, AnalysisContext context, string accessedType, string memberName, params string[] additionalMemberNames)
         {
             var forbiddenMemberNames = new[] {memberName}.Concat(additionalMemberNames);
 
             context.RegisterSyntaxNodeAction(c => Analyze(rule, c, accessedType, forbiddenMemberNames), SyntaxKind.SimpleMemberAccessExpression);
-        }
-
-        protected virtual  Location GetWarningLocation(MemberAccessExpressionSyntax memberAccess)
-        {
-            var location = memberAccess.GetLocation();
-
-            return location;
-        }
-
-        protected virtual string GetForbiddenUsageTextForUserMessage(MemberAccessExpressionSyntax memberAccess)
-        {
-            var usedAs = $"{memberAccess.Expression}.{memberAccess.Name}";
-
-            return usedAs;
         }
 
         private void Analyze(DiagnosticDescriptor rule, SyntaxNodeAnalysisContext context, string accessedType, IEnumerable<string> forbiddenMemberNames)
@@ -52,8 +51,8 @@ namespace BugHunter.CsRules.Analyzers
                 return;
             }
 
-            var usedAs = GetForbiddenUsageTextForUserMessage(memberAccess);
-            var location = GetWarningLocation(memberAccess);
+            var usedAs = _diagnosticFormatter.GetDiagnosedUsage(memberAccess);
+            var location = _diagnosticFormatter.GetLocation(memberAccess);
             var diagnostic = Diagnostic.Create(rule, location, usedAs);
 
             context.ReportDiagnostic(diagnostic);

@@ -46,7 +46,7 @@ namespace SampleTestProject.CsSamples
             var expectedDiagnostic = new DiagnosticResult
             {
                 Id = DiagnosticIds.WHERE_LIKE_METHOD,
-                Message = string.Format(MessagesConstants.MESSAGE_NO_SUGGESTION, $@"whereCondition.{oldMethodCall}(""columnName"", ""value"")"),
+                Message = string.Format(MessagesConstants.MESSAGE_NO_SUGGESTION, $@"{oldMethodCall}(""columnName"", ""value"")"),
                 Severity = DiagnosticSeverity.Warning,
                 Locations = new[] { new DiagnosticResultLocation("Test0.cs", 9, 45) }
             };
@@ -91,7 +91,7 @@ namespace SampleTestProject.CsSamples
             var expectedDiagnostic = new DiagnosticResult
             {
                 Id = DiagnosticIds.WHERE_LIKE_METHOD,
-                Message = string.Format(MessagesConstants.MESSAGE_NO_SUGGESTION, $@"whereCondition.{oldMethodCall}(""columnName"", ""value"")"),
+                Message = string.Format(MessagesConstants.MESSAGE_NO_SUGGESTION, $@"{oldMethodCall}(""columnName"", ""value"")"),
                 Severity = DiagnosticSeverity.Warning,
                 Locations = new[] { new DiagnosticResultLocation("Test0.cs", 9, 45) }
             };
@@ -136,7 +136,7 @@ namespace SampleTestProject.CsSamples
             var expectedDiagnostic = new DiagnosticResult
             {
                 Id = DiagnosticIds.WHERE_LIKE_METHOD,
-                Message = string.Format(MessagesConstants.MESSAGE_NO_SUGGESTION, $@"whereCondition.Or().{oldMethodCall}(""columnName"", ""value"")"),
+                Message = string.Format(MessagesConstants.MESSAGE_NO_SUGGESTION, $@"{oldMethodCall}(""columnName"", ""value"")"),
                 Severity = DiagnosticSeverity.Warning,
                 Locations = new[] { new DiagnosticResultLocation("Test0.cs", 9, 50) }
             };
@@ -180,7 +180,7 @@ namespace SampleTestProject.CsSamples
             var expectedDiagnostic = new DiagnosticResult
             {
                 Id = DiagnosticIds.WHERE_LIKE_METHOD,
-                Message = string.Format(MessagesConstants.MESSAGE_NO_SUGGESTION, $@"new CMS.DataEngine.WhereCondition().{oldMethodCall}(""columnName"", ""value"")"),
+                Message = string.Format(MessagesConstants.MESSAGE_NO_SUGGESTION, $@"{oldMethodCall}(""columnName"", ""value"")"),
                 Severity = DiagnosticSeverity.Warning,
                 Locations = new[] { new DiagnosticResultLocation("Test0.cs", 8, 70) }
             };

@@ -1,15 +1,19 @@
 using System.Collections.Immutable;
+using BugHunter.Core.DiagnosticFormatting;
 using BugHunter.Core.Helpers;
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
-using Location = Microsoft.CodeAnalysis.Location;
 
 namespace BugHunter.CsRules.Analyzers
 {
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     public class WhereLikeMethodAnalyzer : BaseMemberInvocationAnalyzer
     {
+        public WhereLikeMethodAnalyzer()
+            : base(DiagnosticFormatterFactory.CreateMemberInvocationOnlyFormatter())
+        {
+        }
+
         public const string DIAGNOSTIC_ID = DiagnosticIds.WHERE_LIKE_METHOD;
 
         private static readonly DiagnosticDescriptor Rule = ApiReplacementRuleBuilder.GetRule(DIAGNOSTIC_ID, "WhereLike() or WhereNotLike() methods");
@@ -20,11 +24,6 @@ namespace BugHunter.CsRules.Analyzers
         {
             var accessedType = "CMS.DataEngine.WhereConditionBase`1";
             RegisterAction(Rule, context, accessedType, "WhereLike", "WhereNotLike");
-        }
-
-        protected override Location GetWarningLocation(InvocationExpressionSyntax invocationExpression)
-        {
-            return LocationHelper.GetLocationOfMethodInvocationOnly(invocationExpression);
         }
     }
 }

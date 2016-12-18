@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using BugHunter.Core.DiagnosticFormatting;
 using BugHunter.Core.Extensions;
 using BugHunter.Core.Helpers;
 using Microsoft.CodeAnalysis;
@@ -13,25 +14,25 @@ namespace BugHunter.CsRules.Analyzers
     /// Used for analysis of MemberAccess which Invocation at the same time such as "whereCondition.WhereLike(...)"
     /// </summary>
     public abstract class BaseMemberInvocationAnalyzer : DiagnosticAnalyzer
-    {     
+    {
+        private readonly IDiagnosticFormatter _diagnosticFormatter;
+
+        protected BaseMemberInvocationAnalyzer()
+        {
+            _diagnosticFormatter = DiagnosticFormatterFactory.CreateMemberInvocationFormatter();
+        }
+
+        protected BaseMemberInvocationAnalyzer(IDiagnosticFormatter diagnosticFormatter)
+        {
+            _diagnosticFormatter = diagnosticFormatter;
+        }
+
         protected void RegisterAction(DiagnosticDescriptor rule, AnalysisContext context, string accessedType, string memberName, params string[] additionalMemberNames)
         {
             // TODO create and initialize setnew HashSet<string>();
             var forbiddenMemberNames = new[] {memberName}.Concat(additionalMemberNames);
 
             context.RegisterSyntaxNodeAction(c => Analyze(rule, c, accessedType, forbiddenMemberNames), SyntaxKind.InvocationExpression);
-        }
-
-        protected virtual  Location GetWarningLocation(InvocationExpressionSyntax invocationExpression)
-        {
-            return LocationHelper.GetLocationOfWholeInvocation(invocationExpression);
-        }
-
-        protected virtual string GetForbiddenUsageTextForUserMessage(InvocationExpressionSyntax invocationExpression)
-        {
-            var usedAs = $"{invocationExpression}";
-
-            return usedAs;
         }
 
         // Change to ISEt
@@ -59,8 +60,8 @@ namespace BugHunter.CsRules.Analyzers
                 return;
             }
 
-            var usedAs = GetForbiddenUsageTextForUserMessage(invocationExpression);
-            var location = GetWarningLocation(invocationExpression);
+            var usedAs = _diagnosticFormatter.GetDiagnosedUsage(invocationExpression);
+            var location = _diagnosticFormatter.GetLocation(invocationExpression);
             var diagnostic = Diagnostic.Create(rule, location, usedAs);
 
             context.ReportDiagnostic(diagnostic);

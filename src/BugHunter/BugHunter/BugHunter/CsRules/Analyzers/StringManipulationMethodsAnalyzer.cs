@@ -1,8 +1,7 @@
 using System.Collections.Immutable;
 using BugHunter.Core;
-using BugHunter.Core.Helpers;
+using BugHunter.Core.DiagnosticFormatting;
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
 
 namespace BugHunter.CsRules.Analyzers
@@ -13,6 +12,11 @@ namespace BugHunter.CsRules.Analyzers
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     public class StringManipulationMethodsAnalyzer : BaseMemberInvocationAnalyzer
     {
+        public StringManipulationMethodsAnalyzer()
+            : base(DiagnosticFormatterFactory.CreateMemberInvocationOnlyFormatter())
+        {
+        }
+
         public const string DIAGNOSTIC_ID = DiagnosticIds.STRING_MANIPULATION_METHODS;
 
         private static readonly DiagnosticDescriptor Rule = new DiagnosticDescriptor(DIAGNOSTIC_ID,
@@ -24,17 +28,6 @@ namespace BugHunter.CsRules.Analyzers
             description: new LocalizableResourceString(nameof(CsResources.StringManipulationMethods_Description), CsResources.ResourceManager, typeof(CsResources)));
 
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
-
-
-        protected override string GetForbiddenUsageTextForUserMessage(InvocationExpressionSyntax invocationExpression)
-        {
-            return $"{MethodInvocationHelper.GetMethodName(invocationExpression)}()";
-        }
-
-        protected override Location GetWarningLocation(InvocationExpressionSyntax invocationExpression)
-        {
-            return LocationHelper.GetLocationOfMethodInvocationOnly(invocationExpression);
-        }
 
         public override void Initialize(AnalysisContext context)
         {
