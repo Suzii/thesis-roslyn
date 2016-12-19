@@ -7,7 +7,7 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
 
-namespace BugHunter.CsRules.Analyzers
+namespace BugHunter.Core.Analyzers
 {
     /// <summary>
     /// Used for analysis of MemberAccess which Invocation at the same time such as "whereCondition.WhereLike(...)"
