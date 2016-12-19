@@ -1,5 +1,6 @@
 using System.Collections.Immutable;
 using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
 
 namespace BugHunter.StringMethodsRules.Analyzers
@@ -19,6 +20,16 @@ namespace BugHunter.StringMethodsRules.Analyzers
         public override void Initialize(AnalysisContext context)
         {
             RegisterAction(Rule, context, "System.String", "IndexOf", "LastIndexOf");
+        }
+
+        protected override bool CheckPostConditions(SyntaxNodeAnalysisContext expression, InvocationExpressionSyntax invocationExpression)
+        {
+            return base.CheckPostConditions(expression, invocationExpression) && !IsFirstArgumentChar(invocationExpression);
+        }
+
+        private static bool IsFirstArgumentChar(InvocationExpressionSyntax invocationExpression)
+        {
+            return invocationExpression.ArgumentList.Arguments.First().Expression.ToString().Trim().StartsWith("'");
         }
     }
 }

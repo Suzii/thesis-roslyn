@@ -2,7 +2,6 @@ using System.Linq;
 using BugHunter.Core;
 using BugHunter.Core.Analyzers;
 using BugHunter.Core.DiagnosticsFormatting;
-using BugHunter.CsRules.Analyzers;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
@@ -33,9 +32,7 @@ namespace BugHunter.StringMethodsRules.Analyzers
         {
             var arguments = invocationExpression.ArgumentList.Arguments;
 
-            return arguments.Any() && 
-                !arguments.First().Expression.ToString().Trim().StartsWith("'") && 
-                !arguments.Any(a => IsStringComparison(a) || IsCultureInfo(a));
+            return arguments.Any() && !arguments.Any(a => IsStringComparison(a) || IsCultureInfo(a));
         }
         
         // TODO check for proper type not just string
