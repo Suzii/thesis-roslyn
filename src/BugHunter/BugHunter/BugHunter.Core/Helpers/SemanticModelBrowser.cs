@@ -40,7 +40,7 @@ namespace BugHunter.Core.Helpers
                 throw new ArgumentNullException(nameof(memberAccess));
             }
 
-            if (memberAccess.Expression is LiteralExpressionSyntax || memberAccess.Expression is IdentifierNameSyntax)
+            if (memberAccess.Expression is LiteralExpressionSyntax || memberAccess.Expression is IdentifierNameSyntax || memberAccess.Expression is PredefinedTypeSyntax)
             {
                 return _semanticModel.GetTypeInfo(memberAccess.Expression).Type;
             }

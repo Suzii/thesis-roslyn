@@ -665,6 +665,7 @@
     <Compile Include="CsTests\HttpSessionElementAccessGetTest.cs" />
     <Compile Include="CsTests\HttpSessionElementAccessSetTest.cs" />
     <Compile Include="CsTests\PageIsCallbackTest.cs" />
+    <Compile Include="StringMethodsTests\StringEqualsAndCompareStaticTest.cs" />
     <Compile Include="StringMethodsTests\StringStartsEndsWithTest.cs" />
     <Compile Include="StringMethodsTests\StringIndexOfTest.cs" />
     <Compile Include="StringMethodsTests\StringEqualsCompareToTest.cs" />
