@@ -117,57 +117,22 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="WhereLikeMethod_Description" xml:space="preserve">
-    <value>Consider using one of 'WhereStartsWith()', 'WhereEndsWith()' or 'WhereContains()' methods instead.</value>
+  <data name="StringManipulationMethods_Description" xml:space="preserve">
+    <value>Do not use string manipulation methods without specifying CultureInfo.</value>
   </data>
-  <data name="WhereLikeMethod_MessageFormat" xml:space="preserve">
-    <value>Method '{1}' should not be used.</value>
-    <comment>{0} - source type {1} - method name</comment>
+  <data name="StringManipulationMethods_MessageFormat" xml:space="preserve">
+    <value>'{0}' used without specifying CultureInfo.</value>
   </data>
-  <data name="WhereLikeMethod_Title" xml:space="preserve">
-    <value>Method 'WhereLike()' or 'WhereNotLike()' should not be used used.</value>
+  <data name="StringManipulationMethods_Title" xml:space="preserve">
+    <value>String manipulation methods should not be used without specifying CultureInfo.</value>
   </data>
-  <data name="EventLogArguments_Description" xml:space="preserve">
-    <value>LogEvent called with event type '{0}', use 'EventType.{1}' instead.</value>
-    <comment>{0} - called with,
-{1} - to be called with</comment>
+  <data name="StringComparisonMethods_Description" xml:space="preserve">
+    <value>Do not use string comparison methods without specifying StringComparison.</value>
   </data>
-  <data name="EventLogArguments_MessageFormat" xml:space="preserve">
-    <value>LogEvent called with event type '{0}'.</value>
-    <comment>{0} - called with</comment>
+  <data name="StringComparisonMethods_MessageFormat" xml:space="preserve">
+    <value>'{0}' used without specifying StringComparison.</value>
   </data>
-  <data name="EventLogArguments_Title" xml:space="preserve">
-    <value>LogEvent should not be called with hardcoded event type.</value>
-    <comment>{0} - called with</comment>
-  </data>
-  <data name="HttpSessionElementAccessGet_Description" xml:space="preserve">
-    <value>'Session[]' should not be used. Use 'SessionHelper.GetValue()' instead.</value>
-    <comment>0 - member name, 1 - good type, 2 - current source type</comment>
-  </data>
-  <data name="HttpSessionElementAccessGet_MessageFormat" xml:space="preserve">
-    <value>'{0}' should not be used. Use 'SessionHelper.GetValue()' instead.</value>
-    <comment>0 - member name, 1 - source type</comment>
-  </data>
-  <data name="HttpSessionElementAccessGet_Title" xml:space="preserve">
-    <value>'Session[]' should not be used. Use 'SessionHelper.GetValue()' instead.</value>
-    <comment>0 - member name, 1 - source type</comment>
-  </data>
-  <data name="HttpSessionElementAccessSet_Description" xml:space="preserve">
-    <value>'Session[]' should not be used. Use 'SessionHelper.SetValue()'  instead.</value>
-    <comment>0 - member name, 1 - good type, 2 - current source type</comment>
-  </data>
-  <data name="HttpSessionElementAccessSet_MessageFormat" xml:space="preserve">
-    <value>'{0}' should not be used. Use 'SessionHelper.SetValue()' instead.</value>
-    <comment>0 - member name, 1 - source type</comment>
-  </data>
-  <data name="HttpSessionElementAccessSet_Title" xml:space="preserve">
-    <value>'Session[]' should not be used. Use 'SessionHelper.SetValue()'  instead.</value>
-    <comment>0 - member name, 1 - source type</comment>
-  </data>
-  <data name="RedirectCodeFixExternal" xml:space="preserve">
-    <value>Use when redirecting to external URL.</value>
-  </data>
-  <data name="RedirectCodeFixLocal" xml:space="preserve">
-    <value>Use when redirecting to local URL.</value>
+  <data name="StringComparisonMethods_Title" xml:space="preserve">
+    <value>String comparison methods should not be used without specifying StringComparison.</value>
   </data>
 </root>

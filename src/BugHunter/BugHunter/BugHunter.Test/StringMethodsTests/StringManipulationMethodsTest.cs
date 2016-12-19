@@ -1,10 +1,10 @@
-﻿using BugHunter.CsRules.Analyzers;
-using BugHunter.CsRules.CodeFixes;
+﻿using BugHunter.StringMethodsRules.Analyzers;
+using BugHunter.StringMethodsRules.CodeFixes;
 using BugHunter.Test.Verifiers;
 using Microsoft.CodeAnalysis;
 using NUnit.Framework;
 
-namespace BugHunter.Test.CsTests
+namespace BugHunter.Test.StringMethodsTests
 {
     [TestFixture]
     public class StringManipulationMethodsTest : CodeFixVerifier<StringManipulationMethodsAnalyzer, StringManipultionMethodsCodeFixProvider>

@@ -47,8 +47,8 @@
     <Compile Include="CsRules\Analyzers\HttpRequestQueryAnalyzer.cs" />
     <Compile Include="CsRules\Analyzers\LuceneSearchDocumentAnalyzer.cs" />
     <Compile Include="CsRules\Analyzers\PageIsCallbackAnalyzer.cs" />
-    <Compile Include="CsRules\Analyzers\StringComparisonMethodsAnalyzer.cs" />
-    <Compile Include="CsRules\Analyzers\StringManipulationMethodsAnalyzer.cs" />
+    <Compile Include="StringMethodsRules\Analyzers\StringComparisonMethodsAnalyzer.cs" />
+    <Compile Include="StringMethodsRules\Analyzers\StringManipulationMethodsAnalyzer.cs" />
     <Compile Include="CsRules\Analyzers\PageIsPostBackAnalyzer.cs" />
     <Compile Include="CsRules\Analyzers\HttpSessionSessionIdAnalyzer.cs" />
     <Compile Include="CsRules\Analyzers\HttpSessionElementAccessAnalyzer.cs" />
@@ -64,7 +64,7 @@
     <Compile Include="CsRules\CodeFixes\HttpSessionElementAccessSetCodeFixProvider.cs" />
     <Compile Include="CsRules\CodeFixes\HttpSessionElementAccessGetCodeFixProvider.cs" />
     <Compile Include="CsRules\CodeFixes\PageIsCallbackCodeFixProvider.cs" />
-    <Compile Include="CsRules\CodeFixes\StringManipultionMethodsCodeFixProvider.cs" />
+    <Compile Include="StringMethodsRules\CodeFixes\StringManipultionMethodsCodeFixProvider.cs" />
     <Compile Include="CsRules\CodeFixes\PageIsPostBackCodeFixProvider.cs" />
     <Compile Include="CsRules\CodeFixes\HttpSessionSessionIdCodeFixProvider.cs" />
     <Compile Include="CsRules\CodeFixes\ClientScriptMethodsCodeFixProvider.cs" />
@@ -100,6 +100,11 @@
       <DependentUpon>ProjectResources.resx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StringMethodsRules\StringMethodsResources.Designer.cs">
+      <DependentUpon>StringMethodsResources.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="WebConfigRules\WebConfigResources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -132,6 +137,11 @@
     <EmbeddedResource Include="ProjectRules\ProjectResources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>ProjectResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StringMethodsRules\StringMethodsResources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>StringMethodsResources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="WebConfigRules\WebConfigResources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

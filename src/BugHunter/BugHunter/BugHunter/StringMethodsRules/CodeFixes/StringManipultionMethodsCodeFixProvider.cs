@@ -4,14 +4,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using BugHunter.Core.Helpers.CodeFixes;
 using BugHunter.Core.ResourceBuilder;
-using BugHunter.CsRules.Analyzers;
+using BugHunter.StringMethodsRules.Analyzers;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeActions;
 using Microsoft.CodeAnalysis.CodeFixes;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-namespace BugHunter.CsRules.CodeFixes
+namespace BugHunter.StringMethodsRules.CodeFixes
 {
     [ExportCodeFixProvider(LanguageNames.CSharp, Name = nameof(StringManipultionMethodsCodeFixProvider)), Shared]
     public class StringManipultionMethodsCodeFixProvider : CodeFixProvider

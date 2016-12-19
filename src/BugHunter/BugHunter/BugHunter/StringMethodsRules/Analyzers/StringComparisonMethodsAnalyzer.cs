@@ -2,11 +2,12 @@ using System.Collections.Immutable;
 using System.Linq;
 using BugHunter.Core;
 using BugHunter.Core.DiagnosticsFormatting;
+using BugHunter.CsRules.Analyzers;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
 
-namespace BugHunter.CsRules.Analyzers
+namespace BugHunter.StringMethodsRules.Analyzers
 {
     /// <summary>
     /// Searches for usages of 'Equals()' and 'CompareTo()' etc. methods called on strings and reports their usage when no overload with StringComparison argument is used
@@ -20,36 +21,36 @@ namespace BugHunter.CsRules.Analyzers
         public const string DIAGNOSTIC_ID_INDEX_OF = DiagnosticIds.STRING_INDEX_OF_METHODS;
 
         private static readonly DiagnosticDescriptor EqualsCompareRule = new DiagnosticDescriptor(DIAGNOSTIC_ID_EQUALS_COMPARE,
-            title: new LocalizableResourceString(nameof(CsResources.StringComparisonMethods_Title), CsResources.ResourceManager, typeof(CsResources)),
-            messageFormat: new LocalizableResourceString(nameof(CsResources.StringComparisonMethods_MessageFormat), CsResources.ResourceManager, typeof(CsResources)),
+            title: new LocalizableResourceString(nameof(StringMethodsResources.StringComparisonMethods_Title), StringMethodsResources.ResourceManager, typeof(StringMethodsResources)),
+            messageFormat: new LocalizableResourceString(nameof(StringMethodsResources.StringComparisonMethods_MessageFormat), StringMethodsResources.ResourceManager, typeof(StringMethodsResources)),
             category: AnalyzerCategories.CS_RULES,
             defaultSeverity: DiagnosticSeverity.Error,
             isEnabledByDefault: true,
-            description: new LocalizableResourceString(nameof(CsResources.StringComparisonMethods_Description), CsResources.ResourceManager, typeof(CsResources)));
+            description: new LocalizableResourceString(nameof(StringMethodsResources.StringComparisonMethods_Description), StringMethodsResources.ResourceManager, typeof(StringMethodsResources)));
 
         private static readonly DiagnosticDescriptor EqualsCompareStaticRule = new DiagnosticDescriptor(DIAGNOSTIC_ID_EQUALS_COMPARE_STATIC,
-            title: new LocalizableResourceString(nameof(CsResources.StringComparisonMethods_Title), CsResources.ResourceManager, typeof(CsResources)),
-            messageFormat: new LocalizableResourceString(nameof(CsResources.StringComparisonMethods_MessageFormat), CsResources.ResourceManager, typeof(CsResources)),
+            title: new LocalizableResourceString(nameof(StringMethodsResources.StringComparisonMethods_Title), StringMethodsResources.ResourceManager, typeof(StringMethodsResources)),
+            messageFormat: new LocalizableResourceString(nameof(StringMethodsResources.StringComparisonMethods_MessageFormat), StringMethodsResources.ResourceManager, typeof(StringMethodsResources)),
             category: AnalyzerCategories.CS_RULES,
             defaultSeverity: DiagnosticSeverity.Error,
             isEnabledByDefault: true,
-            description: new LocalizableResourceString(nameof(CsResources.StringComparisonMethods_Description), CsResources.ResourceManager, typeof(CsResources)));
+            description: new LocalizableResourceString(nameof(StringMethodsResources.StringComparisonMethods_Description), StringMethodsResources.ResourceManager, typeof(StringMethodsResources)));
 
         private static readonly DiagnosticDescriptor StartsEndsWithRule = new DiagnosticDescriptor(DIAGNOSTIC_ID_START_ENDS_WITH,
-            title: new LocalizableResourceString(nameof(CsResources.StringComparisonMethods_Title), CsResources.ResourceManager, typeof(CsResources)),
-            messageFormat: new LocalizableResourceString(nameof(CsResources.StringComparisonMethods_MessageFormat), CsResources.ResourceManager, typeof(CsResources)),
+            title: new LocalizableResourceString(nameof(StringMethodsResources.StringComparisonMethods_Title), StringMethodsResources.ResourceManager, typeof(StringMethodsResources)),
+            messageFormat: new LocalizableResourceString(nameof(StringMethodsResources.StringComparisonMethods_MessageFormat), StringMethodsResources.ResourceManager, typeof(StringMethodsResources)),
             category: AnalyzerCategories.CS_RULES,
             defaultSeverity: DiagnosticSeverity.Error,
             isEnabledByDefault: true,
-            description: new LocalizableResourceString(nameof(CsResources.StringComparisonMethods_Description), CsResources.ResourceManager, typeof(CsResources)));
+            description: new LocalizableResourceString(nameof(StringMethodsResources.StringComparisonMethods_Description), StringMethodsResources.ResourceManager, typeof(StringMethodsResources)));
 
         private static readonly DiagnosticDescriptor IndexOfRule = new DiagnosticDescriptor(DIAGNOSTIC_ID_INDEX_OF,
-            title: new LocalizableResourceString(nameof(CsResources.StringComparisonMethods_Title), CsResources.ResourceManager, typeof(CsResources)),
-            messageFormat: new LocalizableResourceString(nameof(CsResources.StringComparisonMethods_MessageFormat), CsResources.ResourceManager, typeof(CsResources)),
+            title: new LocalizableResourceString(nameof(StringMethodsResources.StringComparisonMethods_Title), StringMethodsResources.ResourceManager, typeof(StringMethodsResources)),
+            messageFormat: new LocalizableResourceString(nameof(StringMethodsResources.StringComparisonMethods_MessageFormat), StringMethodsResources.ResourceManager, typeof(StringMethodsResources)),
             category: AnalyzerCategories.CS_RULES,
             defaultSeverity: DiagnosticSeverity.Error,
             isEnabledByDefault: true,
-            description: new LocalizableResourceString(nameof(CsResources.StringComparisonMethods_Description), CsResources.ResourceManager, typeof(CsResources)));
+            description: new LocalizableResourceString(nameof(StringMethodsResources.StringComparisonMethods_Description), StringMethodsResources.ResourceManager, typeof(StringMethodsResources)));
 
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(EqualsCompareRule, EqualsCompareStaticRule, IndexOfRule, StartsEndsWithRule);
 
