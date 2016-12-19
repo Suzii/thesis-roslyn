@@ -6,7 +6,7 @@ using NUnit.Framework;
 namespace BugHunter.Test.CsTests
 {
     [TestFixture]
-    public class StringComparisonMethodsTest : CodeFixVerifier<StringComparisonMethodsAnalyzer>
+    public class StringIndexOfTest : CodeFixVerifier<StringComparisonMethodsAnalyzer>
     {
         protected override MetadataReference[] GetAdditionalReferences()
         {
@@ -21,18 +21,16 @@ namespace BugHunter.Test.CsTests
             VerifyCSharpDiagnostic(test);
         }
 
-        [TestCase(@"Equals(""a"", StringComparison.InvariantCultureIgnoreCase)")]
-        [TestCase(@"Equals(""a"", false, CultureInfo.CurrentCulture)")]
-        [TestCase(@"CompareTo(""a"", StringComparison.InvariantCultureIgnoreCase)")]
-        [TestCase(@"CompareTo(""a"", false, CultureInfo.CurrentCulture)")]
-        [TestCase(@"StartsWith(""a"", StringComparison.InvariantCultureIgnoreCase)")]
-        [TestCase(@"StartsWith(""a"", false, CultureInfo.CurrentCulture)")]
-        [TestCase(@"EndsWith(""a"", StringComparison.InvariantCultureIgnoreCase)")]
-        [TestCase(@"EndsWith(""a"", false, CultureInfo.CurrentCulture)")]
         [TestCase(@"IndexOf(""a"", StringComparison.InvariantCultureIgnoreCase)")]
         [TestCase(@"IndexOf(""a"", false, CultureInfo.CurrentCulture)")]
+        [TestCase(@"IndexOf('a')")]
+        [TestCase(@"IndexOf('a', 0)")]
+        [TestCase(@"IndexOf('a', 0, 1)")]
         [TestCase(@"LastIndexOf(""a"", StringComparison.InvariantCultureIgnoreCase)")]
         [TestCase(@"LastIndexOf(""a"", false, CultureInfo.CurrentCulture)")]
+        [TestCase(@"LastIndexOf('a')")]
+        [TestCase(@"LastIndexOf('a', 0)")]
+        [TestCase(@"LastIndexOf('a', 0, 1)")]
         public void AllowedOverloadCalled_NoDiagnostic(string methodUsed)
         {
             var test = $@"namespace SampleTestProject.CsSamples 
@@ -50,10 +48,6 @@ namespace BugHunter.Test.CsTests
             VerifyCSharpDiagnostic(test);
         }
 
-        [TestCase(@"Equals(""a"")", @"Equals(""a"", StringComparison.InvariantCultureIgnoreCase)")]
-        [TestCase(@"CompareTo(""a"")", @"CompareTo(""a"", StringComparison.InvariantCultureIgnoreCase)")]
-        [TestCase(@"StartsWith(""a"")", @"StartsWith(""a"", StringComparison.InvariantCultureIgnoreCase)")]
-        [TestCase(@"EndsWith(""a"")", @"EndsWith(""a"", StringComparison.InvariantCultureIgnoreCase)")]
         [TestCase(@"IndexOf(""a"")", @"IndexOf(""a"", StringComparison.InvariantCultureIgnoreCase)")]
         [TestCase(@"LastIndexOf(""a"")", @"LastIndexOf(""a"", StringComparison.InvariantCultureIgnoreCase)")]
         public void InputWithIncident_SimpleMemberAccess_SurfacesDiagnostic(string methodUsed, string codeFix)
@@ -72,7 +66,7 @@ namespace BugHunter.Test.CsTests
 
             var expectedDiagnostic = new DiagnosticResult
             {
-                Id = DiagnosticIds.STRING_COMPARISON_METHODS,
+                Id = DiagnosticIds.STRING_INDEX_OF_METHODS,
                 Message = $"'{methodUsed}' used without specifying StringComparison.",
                 Severity = DiagnosticSeverity.Error,
                 Locations = new[] { new DiagnosticResultLocation("Test0.cs", 8, 35) }
@@ -94,10 +88,6 @@ namespace BugHunter.Test.CsTests
             //VerifyCSharpFix(test, expectedFix);
         }
 
-        [TestCase(@"Equals(""a"")", @"Equals(""a"", StringComparison.InvariantCultureIgnoreCase)")]
-        [TestCase(@"CompareTo(""a"")", @"CompareTo(""a"", StringComparison.InvariantCultureIgnoreCase)")]
-        [TestCase(@"StartsWith(""a"")", @"StartsWith(""a"", StringComparison.InvariantCultureIgnoreCase)")]
-        [TestCase(@"EndsWith(""a"")", @"EndsWith(""a"", StringComparison.InvariantCultureIgnoreCase)")]
         [TestCase(@"IndexOf(""a"")", @"IndexOf(""a"", StringComparison.InvariantCultureIgnoreCase)")]
         [TestCase(@"LastIndexOf(""a"")", @"LastIndexOf(""a"", StringComparison.InvariantCultureIgnoreCase)")]
         public void InputWithIncident_FollowUpMemberAccess_SurfacesDiagnostic(string methodUsed, string codeFix)
@@ -116,7 +106,7 @@ namespace BugHunter.Test.CsTests
 
             var expectedDiagnostic = new DiagnosticResult
             {
-                Id = DiagnosticIds.STRING_COMPARISON_METHODS,
+                Id = DiagnosticIds.STRING_INDEX_OF_METHODS,
                 Message = $"'{methodUsed}' used without specifying StringComparison.",
                 Severity = DiagnosticSeverity.Error,
                 Locations = new[] { new DiagnosticResultLocation("Test0.cs", 8, 35) }
@@ -138,10 +128,6 @@ namespace BugHunter.Test.CsTests
             //VerifyCSharpFix(test, expectedFix);
         }
 
-        [TestCase(@"Equals(""a"")", @"Equals(""a"", StringComparison.InvariantCultureIgnoreCase)")]
-        [TestCase(@"CompareTo(""a"")", @"CompareTo(""a"", StringComparison.InvariantCultureIgnoreCase)")]
-        [TestCase(@"StartsWith(""a"")", @"StartsWith(""a"", StringComparison.InvariantCultureIgnoreCase)")]
-        [TestCase(@"EndsWith(""a"")", @"EndsWith(""a"", StringComparison.InvariantCultureIgnoreCase)")]
         [TestCase(@"IndexOf(""a"")", @"IndexOf(""a"", StringComparison.InvariantCultureIgnoreCase)")]
         [TestCase(@"LastIndexOf(""a"")", @"LastIndexOf(""a"", StringComparison.InvariantCultureIgnoreCase)")]
        public void InputWithIncident_PrecedingMemberAccess_SurfacesDiagnostic(string methodUsed, string codeFix)
@@ -160,7 +146,7 @@ namespace BugHunter.Test.CsTests
 
             var expectedDiagnostic = new DiagnosticResult
             {
-                Id = DiagnosticIds.STRING_COMPARISON_METHODS,
+                Id = DiagnosticIds.STRING_INDEX_OF_METHODS,
                 Message = $"'{methodUsed}' used without specifying StringComparison.",
                 Severity = DiagnosticSeverity.Error,
                 Locations = new[] { new DiagnosticResultLocation("Test0.cs", 8, 48) }

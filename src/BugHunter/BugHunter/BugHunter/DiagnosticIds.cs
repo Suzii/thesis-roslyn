@@ -21,7 +21,6 @@
         public const string PAGE_IS_CALLBACK = "BH1010";
         public const string CLIENT_SCRIPT_METHODS = "BH1011";
         public const string HTTP_RESPONSE_REDIRECT = "BH1012";
-
         public const string HTTP_REQUEST_QUERY_STRING = "BH1013";
 
         // ????
@@ -29,9 +28,12 @@
         public const string EVENT_LOG_ARGUMENTS = "BH10X2";
         public const string LUCENE_SEARCH_DOCUMENT = "BH10X3";
 
-        // String methods
+        // String methods & Culture
         public const string STRING_MANIPULATION_METHODS = "BH2000";
-        public const string STRING_COMPARISON_METHODS = "BH2001";
 
+        public const string STRING_EQUALS_COMPARE_TO_METHODS = "BH2001";
+        public const string STRING_EQUALS_COMPARE_STATIC_METHODS = "BH2002";
+        public const string STRING_STARTS_ENDS_WITH_METHODS = "BH2003";
+        public const string STRING_INDEX_OF_METHODS = "BH2004";
     }
 }
