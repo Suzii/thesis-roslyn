@@ -69,6 +69,7 @@
     <Compile Include="CsRules\CodeFixes\HttpSessionElementAccessSetCodeFixProvider.cs" />
     <Compile Include="CsRules\CodeFixes\HttpSessionElementAccessGetCodeFixProvider.cs" />
     <Compile Include="CsRules\CodeFixes\PageIsCallbackCodeFixProvider.cs" />
+    <Compile Include="StringMethodsRules\CodeFixes\StringEqualsMethodCodeFixProvider.cs" />
     <Compile Include="StringMethodsRules\CodeFixes\StringManipultionMethodsCodeFixProvider.cs" />
     <Compile Include="CsRules\CodeFixes\PageIsPostBackCodeFixProvider.cs" />
     <Compile Include="CsRules\CodeFixes\HttpSessionSessionIdCodeFixProvider.cs" />

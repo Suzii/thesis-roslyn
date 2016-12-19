@@ -1,4 +1,5 @@
 ﻿using BugHunter.StringMethodsRules.Analyzers;
+using BugHunter.StringMethodsRules.CodeFixes;
 using BugHunter.Test.Verifiers;
 using Microsoft.CodeAnalysis;
 using NUnit.Framework;
@@ -6,7 +7,7 @@ using NUnit.Framework;
 namespace BugHunter.Test.StringMethodsTests
 {
     [TestFixture]
-    public class StringEqualsTest : CodeFixVerifier<StringEqualsMethodAnalyzer>
+    public class StringEqualsTest : CodeFixVerifier<StringEqualsMethodAnalyzer, StringEqualsMethodCodeFixProvider>
     {
         protected override MetadataReference[] GetAdditionalReferences()
         {
@@ -40,8 +41,11 @@ namespace BugHunter.Test.StringMethodsTests
             VerifyCSharpDiagnostic(test);
         }
 
-        [TestCase(@"Equals(""a"")", @"Equals(""a"", StringComparison.InvariantCultureIgnoreCase)")]
-        public void InputWithIncident_SimpleMemberAccess_SurfacesDiagnostic(string methodUsed, string codeFix)
+        [TestCase(@"Equals(""a"")", @"Equals(""a"", StringComparison.CurrentCulture)", 0)]
+        [TestCase(@"Equals(""a"")", @"Equals(""a"", StringComparison.CurrentCultureIgnoreCase)", 1)]
+        [TestCase(@"Equals(""a"")", @"Equals(""a"", StringComparison.InvariantCulture)", 2)]
+        [TestCase(@"Equals(""a"")", @"Equals(""a"", StringComparison.InvariantCultureIgnoreCase)", 3)]
+        public void InputWithIncident_SimpleMemberAccess_SurfacesDiagnostic(string methodUsed, string codeFix, int codeFixNumber)
         {
             var test = $@"namespace SampleTestProject.CsSamples 
 {{
@@ -72,15 +76,18 @@ namespace BugHunter.Test.StringMethodsTests
         public void SampleMethod()
         {{
             var original = ""Original string"";
-            var updated = original.{codeFix};
+            var result = original.{codeFix};
         }}
     }}
 }}";
-            //VerifyCSharpFix(test, expectedFix);
+            VerifyCSharpFix(test, expectedFix, codeFixNumber);
         }
 
-        [TestCase(@"Equals(""a"")", @"Equals(""a"", StringComparison.InvariantCultureIgnoreCase)")]
-        public void InputWithIncident_FollowUpMemberAccess_SurfacesDiagnostic(string methodUsed, string codeFix)
+        [TestCase(@"Equals(""a"")", @"Equals(""a"", StringComparison.CurrentCulture)", 0)]
+        [TestCase(@"Equals(""a"")", @"Equals(""a"", StringComparison.CurrentCultureIgnoreCase)", 1)]
+        [TestCase(@"Equals(""a"")", @"Equals(""a"", StringComparison.InvariantCulture)", 2)]
+        [TestCase(@"Equals(""a"")", @"Equals(""a"", StringComparison.InvariantCultureIgnoreCase)", 3)]
+        public void InputWithIncident_FollowUpMemberAccess_SurfacesDiagnostic(string methodUsed, string codeFix, int codeFixNumber)
         {
             var test = $@"namespace SampleTestProject.CsSamples 
 {{
@@ -111,15 +118,18 @@ namespace BugHunter.Test.StringMethodsTests
         public void SampleMethod()
         {{
             var original = ""Original string"";
-            var updated = original.{codeFix}.ToString();
+            var result = original.{codeFix}.ToString();
         }}
     }}
 }}";
-            //VerifyCSharpFix(test, expectedFix);
+            VerifyCSharpFix(test, expectedFix, codeFixNumber);
         }
 
-        [TestCase(@"Equals(""a"")", @"Equals(""a"", StringComparison.InvariantCultureIgnoreCase)")]
-        public void InputWithIncident_PrecedingMemberAccess_SurfacesDiagnostic(string methodUsed, string codeFix)
+        [TestCase(@"Equals(""a"")", @"Equals(""a"", StringComparison.CurrentCulture)", 0)]
+        [TestCase(@"Equals(""a"")", @"Equals(""a"", StringComparison.CurrentCultureIgnoreCase)", 1)]
+        [TestCase(@"Equals(""a"")", @"Equals(""a"", StringComparison.InvariantCulture)", 2)]
+        [TestCase(@"Equals(""a"")", @"Equals(""a"", StringComparison.InvariantCultureIgnoreCase)", 3)]
+        public void InputWithIncident_PrecedingMemberAccess_SurfacesDiagnostic(string methodUsed, string codeFix, int codeFixNumber)
         {
             var test = $@"namespace SampleTestProject.CsSamples 
 {{
@@ -150,11 +160,11 @@ namespace BugHunter.Test.StringMethodsTests
         public void SampleMethod()
         {{
             var original = ""Original string"";
-            var updated = original.Substring(0).{codeFix}.ToString();
+            var result = original.Substring(0).{codeFix}.ToString();
         }}
     }}
 }}";
-            //VerifyCSharpFix(test, expectedFix);
+            VerifyCSharpFix(test, expectedFix, codeFixNumber);
         }
     }
 }
