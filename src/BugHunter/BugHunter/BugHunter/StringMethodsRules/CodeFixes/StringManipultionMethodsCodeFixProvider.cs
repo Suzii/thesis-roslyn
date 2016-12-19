@@ -41,20 +41,20 @@ namespace BugHunter.StringMethodsRules.CodeFixes
 
             var methodName = invocation.Expression.ToString();
 
-            var newMemberAccess1 = SyntaxFactory.ParseExpression($"{methodName}Invariant()");
-            var newMemberAccess2 = SyntaxFactory.ParseExpression($"{methodName}(CultureInfo.CurrentCulture)");
+            var newInvocation1 = SyntaxFactory.ParseExpression($"{methodName}Invariant()");
+            var newInvocation2 = SyntaxFactory.ParseExpression($"{methodName}(CultureInfo.CurrentCulture)");
             
             context.RegisterCodeFix(
                 CodeAction.Create(
-                    title: CodeFixMessageBuilder.GetMessage(newMemberAccess1),
-                    createChangedDocument: c => editor.ReplaceExpressionWith(invocation, newMemberAccess1),
+                    title: CodeFixMessageBuilder.GetMessage(newInvocation1),
+                    createChangedDocument: c => editor.ReplaceExpressionWith(invocation, newInvocation1),
                     equivalenceKey: $"{nameof(StringManipultionMethodsCodeFixProvider)}-InvariantCulture"),
                 diagnostic);
 
             context.RegisterCodeFix(
                 CodeAction.Create(
-                    title: CodeFixMessageBuilder.GetMessage(newMemberAccess2),
-                    createChangedDocument: c => editor.ReplaceExpressionWith(invocation, newMemberAccess2),
+                    title: CodeFixMessageBuilder.GetMessage(newInvocation2),
+                    createChangedDocument: c => editor.ReplaceExpressionWith(invocation, newInvocation2),
                     equivalenceKey: $"{nameof(StringManipultionMethodsCodeFixProvider)}-CurrentCulture"),
                 diagnostic);
         }

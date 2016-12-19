@@ -6,7 +6,7 @@ using NUnit.Framework;
 namespace BugHunter.Test.StringMethodsTests
 {
     [TestFixture]
-    public class StringEqualsCompareToTest : CodeFixVerifier<StringEqualsAndCompareToMethodsAnalyzer>
+    public class StringEqualsTest : CodeFixVerifier<StringEqualsMethodAnalyzer>
     {
         protected override MetadataReference[] GetAdditionalReferences()
         {
@@ -23,8 +23,6 @@ namespace BugHunter.Test.StringMethodsTests
 
         [TestCase(@"Equals(""a"", StringComparison.InvariantCultureIgnoreCase)")]
         [TestCase(@"Equals(""a"", false, CultureInfo.CurrentCulture)")]
-        [TestCase(@"CompareTo(""a"", StringComparison.InvariantCultureIgnoreCase)")]
-        [TestCase(@"CompareTo(""a"", false, CultureInfo.CurrentCulture)")]
         public void AllowedOverloadCalled_NoDiagnostic(string methodUsed)
         {
             var test = $@"namespace SampleTestProject.CsSamples 
@@ -43,7 +41,6 @@ namespace BugHunter.Test.StringMethodsTests
         }
 
         [TestCase(@"Equals(""a"")", @"Equals(""a"", StringComparison.InvariantCultureIgnoreCase)")]
-        [TestCase(@"CompareTo(""a"")", @"CompareTo(""a"", StringComparison.InvariantCultureIgnoreCase)")]
         public void InputWithIncident_SimpleMemberAccess_SurfacesDiagnostic(string methodUsed, string codeFix)
         {
             var test = $@"namespace SampleTestProject.CsSamples 
@@ -60,7 +57,7 @@ namespace BugHunter.Test.StringMethodsTests
 
             var expectedDiagnostic = new DiagnosticResult
             {
-                Id = DiagnosticIds.STRING_EQUALS_COMPARE_TO_METHODS,
+                Id = DiagnosticIds.STRING_EQUALS_METHOD,
                 Message = $"'{methodUsed}' used without specifying StringComparison.",
                 Severity = DiagnosticSeverity.Error,
                 Locations = new[] { new DiagnosticResultLocation("Test0.cs", 8, 35) }
@@ -83,7 +80,6 @@ namespace BugHunter.Test.StringMethodsTests
         }
 
         [TestCase(@"Equals(""a"")", @"Equals(""a"", StringComparison.InvariantCultureIgnoreCase)")]
-        [TestCase(@"CompareTo(""a"")", @"CompareTo(""a"", StringComparison.InvariantCultureIgnoreCase)")]
         public void InputWithIncident_FollowUpMemberAccess_SurfacesDiagnostic(string methodUsed, string codeFix)
         {
             var test = $@"namespace SampleTestProject.CsSamples 
@@ -100,7 +96,7 @@ namespace BugHunter.Test.StringMethodsTests
 
             var expectedDiagnostic = new DiagnosticResult
             {
-                Id = DiagnosticIds.STRING_EQUALS_COMPARE_TO_METHODS,
+                Id = DiagnosticIds.STRING_EQUALS_METHOD,
                 Message = $"'{methodUsed}' used without specifying StringComparison.",
                 Severity = DiagnosticSeverity.Error,
                 Locations = new[] { new DiagnosticResultLocation("Test0.cs", 8, 35) }
@@ -123,7 +119,6 @@ namespace BugHunter.Test.StringMethodsTests
         }
 
         [TestCase(@"Equals(""a"")", @"Equals(""a"", StringComparison.InvariantCultureIgnoreCase)")]
-        [TestCase(@"CompareTo(""a"")", @"CompareTo(""a"", StringComparison.InvariantCultureIgnoreCase)")]
         public void InputWithIncident_PrecedingMemberAccess_SurfacesDiagnostic(string methodUsed, string codeFix)
         {
             var test = $@"namespace SampleTestProject.CsSamples 
@@ -140,7 +135,7 @@ namespace BugHunter.Test.StringMethodsTests
 
             var expectedDiagnostic = new DiagnosticResult
             {
-                Id = DiagnosticIds.STRING_EQUALS_COMPARE_TO_METHODS,
+                Id = DiagnosticIds.STRING_EQUALS_METHOD,
                 Message = $"'{methodUsed}' used without specifying StringComparison.",
                 Severity = DiagnosticSeverity.Error,
                 Locations = new[] { new DiagnosticResultLocation("Test0.cs", 8, 48) }

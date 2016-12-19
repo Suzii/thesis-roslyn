@@ -48,9 +48,10 @@
     <Compile Include="CsRules\Analyzers\LuceneSearchDocumentAnalyzer.cs" />
     <Compile Include="CsRules\Analyzers\PageIsCallbackAnalyzer.cs" />
     <Compile Include="StringMethodsRules\Analyzers\BaseStringComparisonMethodsAnalyzer.cs" />
+    <Compile Include="StringMethodsRules\Analyzers\StringCompareToMethodAnalyzer.cs" />
     <Compile Include="StringMethodsRules\Analyzers\StringStartAndEndsWithMethodsAnalyzer.cs" />
     <Compile Include="StringMethodsRules\Analyzers\StringEqualsAndCompareStaticMethodsAnalyzer.cs" />
-    <Compile Include="StringMethodsRules\Analyzers\StringEqualsAndCompareToMethodsAnalyzer.cs" />
+    <Compile Include="StringMethodsRules\Analyzers\StringEqualsMethodAnalyzer.cs" />
     <Compile Include="StringMethodsRules\Analyzers\StringIndexOfMethodsAnalyzer.cs" />
     <Compile Include="StringMethodsRules\Analyzers\StringManipulationMethodsAnalyzer.cs" />
     <Compile Include="CsRules\Analyzers\PageIsPostBackAnalyzer.cs" />
