@@ -1,4 +1,5 @@
 using System.Collections.Immutable;
+using BugHunter.Core.Analyzers;
 using BugHunter.Core.DiagnosticsFormatting;
 using BugHunter.Core.Helpers;
 using Microsoft.CodeAnalysis;

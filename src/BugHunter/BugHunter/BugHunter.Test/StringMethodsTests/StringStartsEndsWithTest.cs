@@ -6,7 +6,7 @@ using NUnit.Framework;
 namespace BugHunter.Test.StringMethodsTests
 {
     [TestFixture]
-    public class StringStartsEndsWithTest : CodeFixVerifier<StringComparisonMethodsAnalyzer>
+    public class StringStartsEndsWithTest : CodeFixVerifier<StringStartAndEndsWithMethodsAnalyzer>
     {
         protected override MetadataReference[] GetAdditionalReferences()
         {

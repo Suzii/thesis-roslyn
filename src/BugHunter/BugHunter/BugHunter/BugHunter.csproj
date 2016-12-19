@@ -25,6 +25,8 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>
+    </DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -35,8 +37,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="CsRules\Analyzers\BaseMemberInvocationAnalyzer.cs" />
-    <Compile Include="CsRules\Analyzers\BaseMemberAccessAnalyzer.cs" />
     <Compile Include="CsRules\Analyzers\EventLogArgumentsDiagnosticFormatter.cs" />
     <Compile Include="CsRules\Analyzers\HttpResponseCookiesAnalyzer.cs" />
     <Compile Include="CsRules\Analyzers\HttpRequestCookiesAnalyzer.cs" />
@@ -47,7 +47,11 @@
     <Compile Include="CsRules\Analyzers\HttpRequestQueryAnalyzer.cs" />
     <Compile Include="CsRules\Analyzers\LuceneSearchDocumentAnalyzer.cs" />
     <Compile Include="CsRules\Analyzers\PageIsCallbackAnalyzer.cs" />
-    <Compile Include="StringMethodsRules\Analyzers\StringComparisonMethodsAnalyzer.cs" />
+    <Compile Include="StringMethodsRules\Analyzers\BaseStringComparisonMethodsAnalyzer.cs" />
+    <Compile Include="StringMethodsRules\Analyzers\StringStartAndEndsWithMethodsAnalyzer.cs" />
+    <Compile Include="StringMethodsRules\Analyzers\StringEqualsAndCompareStaticMethodsAnalyzer.cs" />
+    <Compile Include="StringMethodsRules\Analyzers\StringEqualsAndCompareToMethodsAnalyzer.cs" />
+    <Compile Include="StringMethodsRules\Analyzers\StringIndexOfMethodsAnalyzer.cs" />
     <Compile Include="StringMethodsRules\Analyzers\StringManipulationMethodsAnalyzer.cs" />
     <Compile Include="CsRules\Analyzers\PageIsPostBackAnalyzer.cs" />
     <Compile Include="CsRules\Analyzers\HttpSessionSessionIdAnalyzer.cs" />

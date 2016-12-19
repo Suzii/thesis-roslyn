@@ -1,5 +1,6 @@
 using System.Collections.Immutable;
 using BugHunter.Core;
+using BugHunter.Core.Analyzers;
 using BugHunter.Core.DiagnosticsFormatting;
 using BugHunter.CsRules.Analyzers;
 using Microsoft.CodeAnalysis;

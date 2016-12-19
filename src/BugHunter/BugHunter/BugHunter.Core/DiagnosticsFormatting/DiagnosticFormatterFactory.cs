@@ -23,5 +23,11 @@ namespace BugHunter.Core.DiagnosticsFormatting
         {
             return new MemberInvocationOnlyDiagnosticFormatter();
         }
+
+        public static IDiagnosticFormatter CreateFormatter<TFormatter>()
+            where TFormatter : IDiagnosticFormatter, new()
+        {
+            return new TFormatter();
+        }
     }
 }
