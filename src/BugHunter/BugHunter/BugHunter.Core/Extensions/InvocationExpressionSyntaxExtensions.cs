@@ -42,11 +42,8 @@ namespace BugHunter.Core.Extensions
             }
 
             var argumentsToBeAdded = newArguments.Select(a => SyntaxFactory.Argument(SyntaxFactory.ParseExpression(a)));
-            var newMethodArguments = invocation.ArgumentList.Arguments.AddRange(argumentsToBeAdded);
-            var newArgumentList = SyntaxFactory.ArgumentList(newMethodArguments);
-            var newInvocation = invocation.WithArgumentList(newArgumentList).NormalizeWhitespace();
-
-            return newInvocation;
+            
+            return invocation.AppendArguments(argumentsToBeAdded.ToArray());
         }
     }
 }
