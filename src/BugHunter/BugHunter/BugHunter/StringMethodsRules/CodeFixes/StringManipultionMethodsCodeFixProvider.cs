@@ -9,7 +9,6 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeActions;
 using Microsoft.CodeAnalysis.CodeFixes;
 using Microsoft.CodeAnalysis.CSharp;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace BugHunter.StringMethodsRules.CodeFixes
 {
@@ -26,24 +25,18 @@ namespace BugHunter.StringMethodsRules.CodeFixes
 
         public sealed override async Task RegisterCodeFixesAsync(CodeFixContext context)
         {
-            var editor = new CodeFixHelper(context);
-            var diagnostic = context.Diagnostics.First();
-            var diagnosticSpan = diagnostic.Location.SourceSpan;
-
-            var root = await context.Document.GetSyntaxRootAsync();
-            var invocation = root.FindNode(diagnosticSpan, true).FirstAncestorOrSelf<InvocationExpressionSyntax>(); 
-;
-
+            var editor = new MemberInvocationCodeFixHelper(context);
+            var invocation = await editor.GetDiagnosedInvocation();
             if (invocation == null)
             {
                 return;
             }
 
+            var diagnostic = context.Diagnostics.First();
             var methodName = invocation.Expression.ToString();
-
             var newInvocation1 = SyntaxFactory.ParseExpression($"{methodName}Invariant()");
             var newInvocation2 = SyntaxFactory.ParseExpression($"{methodName}(CultureInfo.CurrentCulture)");
-            
+
             context.RegisterCodeFix(
                 CodeAction.Create(
                     title: CodeFixMessageBuilder.GetMessage(newInvocation1),

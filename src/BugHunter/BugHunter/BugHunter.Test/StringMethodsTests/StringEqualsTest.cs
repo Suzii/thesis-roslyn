@@ -7,8 +7,16 @@ using NUnit.Framework;
 namespace BugHunter.Test.StringMethodsTests
 {
     [TestFixture]
-    public class StringEqualsTest : CodeFixVerifier<StringEqualsMethodAnalyzer, StringEqualsMethodCodeFixProvider>
+    public class StringEqualsTest : CodeFixVerifier<StringEqualsMethodAnalyzer, StringComparisonMethodsWithModifierCodeFixProvider>
     {
+        static readonly object[] TestSource =
+        {
+            new object[] { @"Equals(""a"", ""b"")", @"Equals(""a"", ""b"", StringComparison.CurrentCulture)", 0 },
+            new object[] { @"Equals(""a"", ""b"")", @"Equals(""a"", ""b"", StringComparison.CurrentCultureIgnoreCase)", 1 },
+            new object[] { @"Equals(""a"", ""b"")", @"Equals(""a"", ""b"", StringComparison.InvariantCulture)", 2 },
+            new object[] { @"Equals(""a"", ""b"")", @"Equals(""a"", ""b"", StringComparison.InvariantCultureIgnoreCase)", 3 },
+        };
+
         protected override MetadataReference[] GetAdditionalReferences()
         {
             return null;
@@ -41,10 +49,7 @@ namespace BugHunter.Test.StringMethodsTests
             VerifyCSharpDiagnostic(test);
         }
 
-        [TestCase(@"Equals(""a"")", @"Equals(""a"", StringComparison.CurrentCulture)", 0)]
-        [TestCase(@"Equals(""a"")", @"Equals(""a"", StringComparison.CurrentCultureIgnoreCase)", 1)]
-        [TestCase(@"Equals(""a"")", @"Equals(""a"", StringComparison.InvariantCulture)", 2)]
-        [TestCase(@"Equals(""a"")", @"Equals(""a"", StringComparison.InvariantCultureIgnoreCase)", 3)]
+        [Test, TestCaseSource(nameof(TestSource))]
         public void InputWithIncident_SimpleMemberAccess_SurfacesDiagnostic(string methodUsed, string codeFix, int codeFixNumber)
         {
             var test = $@"namespace SampleTestProject.CsSamples 
@@ -69,7 +74,9 @@ namespace BugHunter.Test.StringMethodsTests
 
             VerifyCSharpDiagnostic(test, expectedDiagnostic);
 
-            var expectedFix = $@"namespace SampleTestProject.CsSamples 
+            var expectedFix = $@"using System;
+
+namespace SampleTestProject.CsSamples 
 {{
     public class SampleClass
     {{
@@ -80,13 +87,11 @@ namespace BugHunter.Test.StringMethodsTests
         }}
     }}
 }}";
+
             VerifyCSharpFix(test, expectedFix, codeFixNumber);
         }
 
-        [TestCase(@"Equals(""a"")", @"Equals(""a"", StringComparison.CurrentCulture)", 0)]
-        [TestCase(@"Equals(""a"")", @"Equals(""a"", StringComparison.CurrentCultureIgnoreCase)", 1)]
-        [TestCase(@"Equals(""a"")", @"Equals(""a"", StringComparison.InvariantCulture)", 2)]
-        [TestCase(@"Equals(""a"")", @"Equals(""a"", StringComparison.InvariantCultureIgnoreCase)", 3)]
+        [Test, TestCaseSource(nameof(TestSource))]
         public void InputWithIncident_FollowUpMemberAccess_SurfacesDiagnostic(string methodUsed, string codeFix, int codeFixNumber)
         {
             var test = $@"namespace SampleTestProject.CsSamples 
@@ -111,7 +116,9 @@ namespace BugHunter.Test.StringMethodsTests
 
             VerifyCSharpDiagnostic(test, expectedDiagnostic);
 
-            var expectedFix = $@"namespace SampleTestProject.CsSamples 
+            var expectedFix = $@"using System;
+
+namespace SampleTestProject.CsSamples 
 {{
     public class SampleClass
     {{
@@ -122,13 +129,11 @@ namespace BugHunter.Test.StringMethodsTests
         }}
     }}
 }}";
+
             VerifyCSharpFix(test, expectedFix, codeFixNumber);
         }
 
-        [TestCase(@"Equals(""a"")", @"Equals(""a"", StringComparison.CurrentCulture)", 0)]
-        [TestCase(@"Equals(""a"")", @"Equals(""a"", StringComparison.CurrentCultureIgnoreCase)", 1)]
-        [TestCase(@"Equals(""a"")", @"Equals(""a"", StringComparison.InvariantCulture)", 2)]
-        [TestCase(@"Equals(""a"")", @"Equals(""a"", StringComparison.InvariantCultureIgnoreCase)", 3)]
+        [Test, TestCaseSource(nameof(TestSource))]
         public void InputWithIncident_PrecedingMemberAccess_SurfacesDiagnostic(string methodUsed, string codeFix, int codeFixNumber)
         {
             var test = $@"namespace SampleTestProject.CsSamples 
@@ -153,7 +158,9 @@ namespace BugHunter.Test.StringMethodsTests
 
             VerifyCSharpDiagnostic(test, expectedDiagnostic);
 
-            var expectedFix = $@"namespace SampleTestProject.CsSamples 
+            var expectedFix = $@"using System;
+
+namespace SampleTestProject.CsSamples 
 {{
     public class SampleClass
     {{
@@ -164,6 +171,7 @@ namespace BugHunter.Test.StringMethodsTests
         }}
     }}
 }}";
+
             VerifyCSharpFix(test, expectedFix, codeFixNumber);
         }
     }

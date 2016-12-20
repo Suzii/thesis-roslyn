@@ -104,6 +104,7 @@
     <Compile Include="DiagnosticsFormatting\MemberInvocationOnlyDiagnosticFormatterTests - Copy.cs" />
     <Compile Include="DiagnosticsFormatting\MemberAccessDiagnosticFormatterTests.cs" />
     <Compile Include="DiagnosticsFormatting\MemberInvocationDiagnosticFormatterTests.cs" />
+    <Compile Include="Extensions\InvocationExpressionSyntaxExtenstions.cs" />
     <Compile Include="HelpersTests\SemanticModelBrowserTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

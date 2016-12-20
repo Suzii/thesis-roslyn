@@ -5,12 +5,12 @@ using Microsoft.CodeAnalysis.Diagnostics;
 namespace BugHunter.StringMethodsRules.Analyzers
 {
     /// <summary>
-    /// Searches for usages of 'Equals()' and 'CompareTo()' methods called on strings and reports their usage when no overload with StringComparison argument is used
+    /// Searches for usages of 'Equals()' methods called on strings and reports their usage when no overload with StringComparison argument is used
     /// </summary>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class StringEqualsAndCompareStaticMethodsAnalyzer : BaseStringComparisonMethodsAnalyzer
+    public class StringEqualsStaticMethodAnalyzer : BaseStringComparisonMethodsAnalyzer
     {
-        public const string DIAGNOSTIC_ID = DiagnosticIds.STRING_EQUALS_COMPARE_STATIC_METHODS;
+        public const string DIAGNOSTIC_ID = DiagnosticIds.STRING_EQUALS_STATIC_METHOD;
 
         private static readonly DiagnosticDescriptor Rule = CreateRule(DIAGNOSTIC_ID);
 
@@ -18,7 +18,7 @@ namespace BugHunter.StringMethodsRules.Analyzers
 
         public override void Initialize(AnalysisContext context)
         {
-            RegisterAction(Rule, context, "System.String", "Equals", "Compare");
+            RegisterAction(Rule, context, "System.String", "Equals");
         }
     }
 }

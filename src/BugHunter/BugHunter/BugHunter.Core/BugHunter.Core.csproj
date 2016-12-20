@@ -108,6 +108,7 @@
     <Compile Include="DiagnosticsFormatting\Implementation\MemberInvocationDiagnosticFormatter.cs" />
     <Compile Include="DiagnosticsFormatting\Implementation\MemberAccessDiagnosticFormatter.cs" />
     <Compile Include="Extensions\IEnumerableExtensions.cs" />
+    <Compile Include="Extensions\InvocationExpressionSyntaxExtensions.cs" />
     <Compile Include="Extensions\TypeSymbolExtensions.cs" />
     <Compile Include="Helpers\ApiReplacementRuleBuilder.cs" />
     <Compile Include="Helpers\CodeFixes\CodeFixHelper.cs" />

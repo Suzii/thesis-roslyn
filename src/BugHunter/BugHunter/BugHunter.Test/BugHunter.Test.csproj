@@ -665,11 +665,12 @@
     <Compile Include="CsTests\HttpSessionElementAccessGetTest.cs" />
     <Compile Include="CsTests\HttpSessionElementAccessSetTest.cs" />
     <Compile Include="CsTests\PageIsCallbackTest.cs" />
-    <Compile Include="StringMethodsTests\StringEqualsAndCompareStaticTest.cs" />
+    <Compile Include="StringMethodsTests\StringCompareToTest.cs" />
+    <Compile Include="StringMethodsTests\StringCompareStaticMethodTest.cs" />
+    <Compile Include="StringMethodsTests\StringEqualsStaticMethodTest.cs" />
     <Compile Include="StringMethodsTests\StringEqualsTest.cs" />
     <Compile Include="StringMethodsTests\StringStartsEndsWithTest.cs" />
     <Compile Include="StringMethodsTests\StringIndexOfTest.cs" />
-    <Compile Include="StringMethodsTests\StringCompareToTest.cs" />
     <Compile Include="StringMethodsTests\StringManipulationMethodsTest.cs" />
     <Compile Include="CsTests\PageIsPostBackTest.cs" />
     <Compile Include="CsTests\HttpSessionSessionIdTest.cs" />

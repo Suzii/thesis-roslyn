@@ -7,14 +7,14 @@ using NUnit.Framework;
 namespace BugHunter.Test.StringMethodsTests
 {
     [TestFixture]
-    public class StringCompareToTest : CodeFixVerifier<StringCompareToMethodAnalyzer, StringCompareToMethodCodeFixProvider>
+    public class StringEqualsStaticMethodTest : CodeFixVerifier<StringEqualsStaticMethodAnalyzer, StringEqualsStaticMethodCodeFixProvider>
     {
         static readonly object[] TestSource =
         {
-            new object[] { @"CompareTo(""a"")", @"string.Compare(""aa"", ""a"", StringComparison.CurrentCulture)", 0 },
-            new object[] { @"CompareTo(""a"")", @"string.Compare(""aa"", ""a"", StringComparison.CurrentCultureIgnoreCase)", 1 },
-            new object[] { @"CompareTo(""a"")", @"string.Compare(""aa"", ""a"", StringComparison.InvariantCulture)", 2 },
-            new object[] { @"CompareTo(""a"")", @"string.Compare(""aa"", ""a"", StringComparison.InvariantCultureIgnoreCase)", 3 },
+            new object[] { @"Equals(""a"", ""b"")", @"Equals(""a"", ""b"", StringComparison.CurrentCulture)", 0 },
+            new object[] { @"Equals(""a"", ""b"")", @"Equals(""a"", ""b"", StringComparison.CurrentCultureIgnoreCase)", 1 },
+            new object[] { @"Equals(""a"", ""b"")", @"Equals(""a"", ""b"", StringComparison.InvariantCulture)", 2 },
+            new object[] { @"Equals(""a"", ""b"")", @"Equals(""a"", ""b"", StringComparison.InvariantCultureIgnoreCase)", 3 },
         };
 
         protected override MetadataReference[] GetAdditionalReferences()
@@ -30,8 +30,7 @@ namespace BugHunter.Test.StringMethodsTests
             VerifyCSharpDiagnostic(test);
         }
 
-        [TestCase(@"CompareTo(""a"", StringComparison.InvariantCultureIgnoreCase)")]
-        [TestCase(@"CompareTo(""a"", false, CultureInfo.CurrentCulture)")]
+        [TestCase(@"Equals(""a"", ""b"", StringComparison.InvariantCultureIgnoreCase)")]
         public void AllowedOverloadCalled_NoDiagnostic(string methodUsed)
         {
             var test = $@"namespace SampleTestProject.CsSamples 
@@ -40,8 +39,7 @@ namespace BugHunter.Test.StringMethodsTests
     {{
         public void SampleMethod()
         {{
-            var original = ""Original string"";
-            var result = original.{methodUsed};
+            var result = string.{methodUsed};
         }}
     }}
 }}";
@@ -58,17 +56,17 @@ namespace BugHunter.Test.StringMethodsTests
     {{
         public void SampleMethod()
         {{
-            var result = ""aa"".{methodUsed};
+            var result = string.{methodUsed};
         }}
     }}
 }}";
 
             var expectedDiagnostic = new DiagnosticResult
             {
-                Id = DiagnosticIds.STRING_COMPARE_TO_METHOD,
+                Id = DiagnosticIds.STRING_EQUALS_STATIC_METHOD,
                 Message = $"'{methodUsed}' used without specifying StringComparison.",
                 Severity = DiagnosticSeverity.Error,
-                Locations = new[] { new DiagnosticResultLocation("Test0.cs", 7, 31) }
+                Locations = new[] { new DiagnosticResultLocation("Test0.cs", 7, 33) }
             };
 
             VerifyCSharpDiagnostic(test, expectedDiagnostic);
@@ -81,7 +79,7 @@ namespace SampleTestProject.CsSamples
     {{
         public void SampleMethod()
         {{
-            var result = {codeFix};
+            var result = string.{codeFix};
         }}
     }}
 }}";
@@ -98,17 +96,17 @@ namespace SampleTestProject.CsSamples
     {{
         public void SampleMethod()
         {{
-            var result = ""aa"".{methodUsed}.ToString();
+            var result = string.{methodUsed}.ToString();
         }}
     }}
 }}";
 
             var expectedDiagnostic = new DiagnosticResult
             {
-                Id = DiagnosticIds.STRING_COMPARE_TO_METHOD,
+                Id = DiagnosticIds.STRING_EQUALS_STATIC_METHOD,
                 Message = $"'{methodUsed}' used without specifying StringComparison.",
                 Severity = DiagnosticSeverity.Error,
-                Locations = new[] { new DiagnosticResultLocation("Test0.cs", 7, 31) }
+                Locations = new[] { new DiagnosticResultLocation("Test0.cs", 7, 33) }
             };
 
             VerifyCSharpDiagnostic(test, expectedDiagnostic);
@@ -121,55 +119,12 @@ namespace SampleTestProject.CsSamples
     {{
         public void SampleMethod()
         {{
-            var result = {codeFix}.ToString();
+            var result = string.{codeFix}.ToString();
         }}
     }}
 }}";
 
             VerifyCSharpFix(test, expectedFix, codeFixNumber);
-        }
-        
-        [Test, TestCaseSource(nameof(TestSource))]
-        public void InputWithIncident_PrecedingMemberAccess_SurfacesDiagnostic(string methodUsed, string codeFix, int codeFixNumber)
-        {
-            var test = $@"namespace SampleTestProject.CsSamples 
-{{
-    public class SampleClass
-    {{
-        public void SampleMethod()
-        {{
-            var original = ""Original string"";
-            var result = original.Substring(0).{methodUsed}.ToString();
-        }}
-    }}
-}}";
-
-            var expectedDiagnostic = new DiagnosticResult
-            {
-                Id = DiagnosticIds.STRING_COMPARE_TO_METHOD,
-                Message = $"'{methodUsed}' used without specifying StringComparison.",
-                Severity = DiagnosticSeverity.Error,
-                Locations = new[] { new DiagnosticResultLocation("Test0.cs", 8, 48) }
-            };
-
-            VerifyCSharpDiagnostic(test, expectedDiagnostic);
-
-            var expectedFix = $@"using System;
-
-namespace SampleTestProject.CsSamples 
-{{
-    public class SampleClass
-    {{
-        public void SampleMethod()
-        {{
-            var original = ""Original string"";
-            var temp = {codeFix};
-            var result = original.Substring(0).temp.ToString();
-        }}
-    }}
-}}";
-            // TODO no codfix to be applied (so far)
-            VerifyCSharpFix(test, test);
         }
     }
 }

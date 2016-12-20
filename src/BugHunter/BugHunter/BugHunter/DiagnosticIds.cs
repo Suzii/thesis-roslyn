@@ -33,9 +33,13 @@
 
         public const string STRING_EQUALS_METHOD = "BH2001";
         public const string STRING_COMPARE_TO_METHOD = "BH2002";
-        public const string STRING_EQUALS_COMPARE_STATIC_METHODS = "BH2003";
 
-        public const string STRING_STARTS_ENDS_WITH_METHODS = "BH2004";
-        public const string STRING_INDEX_OF_METHODS = "BH2005";
+        public const string STRING_STARTS_ENDS_WITH_METHODS = "BH2003";
+        public const string STRING_INDEX_OF_METHODS = "BH2004";
+
+        public const string STRING_COMPARE_STATIC_METHOD = "BH2006";
+        public const string STRING_EQUALS_STATIC_METHOD = "BH2005";
+
+
     }
 }
