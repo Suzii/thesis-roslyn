@@ -51,6 +51,27 @@ namespace BugHunter.Core.Tests.HelpersTests
         }
 
         [Test]
+        public void GetMemberAccessTarget_PredefinedType()
+        {
+            var tree = CSharpSyntaxTree.ParseText(@"
+	public class MyClass
+    {
+        private string _sth = ""something"";
+
+        public void Main()
+        {
+            var something = string.Equals(""a"", ""a"");
+        }
+    }");
+
+            var instance = new SemanticModelBrowser(GetCompilation(tree), tree);
+            var memberAccessExpressionSyntaxs = tree.GetRoot().DescendantNodes().OfType<MemberAccessExpressionSyntax>();
+            var actual = instance.GetMemberAccessTarget(memberAccessExpressionSyntaxs.FirstOrDefault());
+
+            Assert.AreEqual("string", actual.ToDisplayString());
+        }
+
+        [Test]
         public void GetMemberAccessTarget_InvocationExpression()
         {
             var tree = CSharpSyntaxTree.ParseText(@"
