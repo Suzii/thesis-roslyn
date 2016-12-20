@@ -30,15 +30,15 @@ namespace BugHunter.Test.CsTests
             var test = @"using CMS.Search.Lucene3; 
 
 namespace SampleTestProject.CsSamples
-{{
+{
     public class SampleClass
-    {{
+    {
         private LuceneSearchDocument Method()
-        {{
+        {
             return new LuceneSearchDocument();
-        }}
-    }}
-}}";
+        }
+    }
+}";
             var expectedDiagnostic = new DiagnosticResult
             {
                 Id = DiagnosticIds.LUCENE_SEARCH_DOCUMENT,
@@ -53,15 +53,15 @@ namespace SampleTestProject.CsSamples
 using CMS.DataEngine;
 
 namespace SampleTestProject.CsSamples
-{{
+{
     public class SampleClass
-    {{
+    {
         private ISearchDocument Method()
-        {{
+        {
             return new LuceneSearchDocument();
-        }}
-    }}
-}}";
+        }
+    }
+}";
 
             VerifyCSharpFix(test, expectedFix);
         }
@@ -70,15 +70,15 @@ namespace SampleTestProject.CsSamples
         public void InputWithIncident_MethodReturnValue_FullyQualifiedName_SurfacesDiagnostic()
         {
             var test = @"namespace SampleTestProject.CsSamples
-{{
+{
     public class SampleClass
-    {{
+    {
         private CMS.Search.Lucene3.LuceneSearchDocument Method()
-        {{
+        {
             return new CMS.Search.Lucene3.LuceneSearchDocument();
-        }}
-    }}
-}}";
+        }
+    }
+}";
             var expectedDiagnostic = new DiagnosticResult
             {
                 Id = DiagnosticIds.LUCENE_SEARCH_DOCUMENT,
@@ -92,15 +92,15 @@ namespace SampleTestProject.CsSamples
             var expectedFix = @"using CMS.DataEngine;
 
 namespace SampleTestProject.CsSamples
-{{
+{
     public class SampleClass
-    {{
+    {
         private ISearchDocument Method()
-        {{
+        {
             return new CMS.Search.Lucene3.LuceneSearchDocument();
-        }}
-    }}
-}}";
+        }
+    }
+}";
 
             VerifyCSharpFix(test, expectedFix);
         }

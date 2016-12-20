@@ -11,10 +11,10 @@ namespace BugHunter.Test.StringMethodsTests
     {
         static readonly object[] TestSource =
         {
-            new object[] { @"Equals(""a"", ""b"")", @"Equals(""a"", ""b"", StringComparison.CurrentCulture)", 0 },
-            new object[] { @"Equals(""a"", ""b"")", @"Equals(""a"", ""b"", StringComparison.CurrentCultureIgnoreCase)", 1 },
-            new object[] { @"Equals(""a"", ""b"")", @"Equals(""a"", ""b"", StringComparison.InvariantCulture)", 2 },
-            new object[] { @"Equals(""a"", ""b"")", @"Equals(""a"", ""b"", StringComparison.InvariantCultureIgnoreCase)", 3 },
+            new object[] { @"Equals(""a"")", @"Equals(""a"", StringComparison.CurrentCulture)", 0 },
+            new object[] { @"Equals(""a"")", @"Equals(""a"", StringComparison.CurrentCultureIgnoreCase)", 1 },
+            new object[] { @"Equals(""a"")", @"Equals(""a"", StringComparison.InvariantCulture)", 2 },
+            new object[] { @"Equals(""a"")", @"Equals(""a"", StringComparison.InvariantCultureIgnoreCase)", 3 },
         };
 
         protected override MetadataReference[] GetAdditionalReferences()

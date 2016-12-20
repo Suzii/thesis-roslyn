@@ -13,7 +13,7 @@ namespace BugHunter.Test.CsTests
     {
         protected override MetadataReference[] GetAdditionalReferences()
         {
-            return ReferencesHelper.BasicReferences.Union(new[] {ReferencesHelper.SystemWebReference}).ToArray();
+            return ReferencesHelper.BasicReferences.Union(new[] { ReferencesHelper.SystemWebReference }).ToArray();
         }
 
         [Test]
@@ -24,8 +24,8 @@ namespace BugHunter.Test.CsTests
             VerifyCSharpDiagnostic(test);
         }
         
-        [TestCase(@"new System.Web.HttpResponse(""fileName"", ""url"", ""queryString"")", "CookieHelper.ResponseCookies")]
-        [TestCase(@"new System.Web.HttpResponseWrapper(new System.Web.HttpRequest(""fileName"", ""url"", ""queryString""))", "CookieHelper.ResponseCookies")]
+        [TestCase(@"new System.Web.HttpResponse(null)", "CookieHelper.ResponseCookies")]
+        [TestCase(@"new System.Web.HttpResponseWrapper(new System.Web.HttpResponse(null))", "CookieHelper.ResponseCookies")]
         public void InputWithIncident_SimpleMemberAccess_SurfacesDiagnostic(string instance, string codeFix)
         {
             var test = $@"
@@ -43,7 +43,7 @@ namespace SampleTestProject.CsSamples
             var expectedDiagnostic = new DiagnosticResult
             {
                 Id = DiagnosticIds.HTTP_RESPONSE_COOKIES,
-                Message = string.Format(MessagesConstants.MESSAGE, $"r.Cookies", "CookieHelper.ResponseCookies"),
+                Message = string.Format(MessagesConstants.MESSAGE, "r.Cookies", "CookieHelper.ResponseCookies"),
                 Severity = DiagnosticSeverity.Warning,
                 Locations = new[] { new DiagnosticResultLocation("Test0.cs", 9, 27) }
             };
@@ -66,8 +66,8 @@ namespace SampleTestProject.CsSamples
             VerifyCSharpFix(test, expectedFix);
         }
 
-        [TestCase(@"new System.Web.HttpResponse(""fileName"", ""url"", ""queryString"")", "CookieHelper.ResponseCookies")]
-        [TestCase(@"new System.Web.HttpResponseWrapper(new System.Web.HttpRequest(""fileName"", ""url"", ""queryString""))", "CookieHelper.ResponseCookies")]
+        [TestCase(@"new System.Web.HttpResponse(null)", "CookieHelper.ResponseCookies")]
+        [TestCase(@"new System.Web.HttpResponseWrapper(new System.Web.HttpResponse(null))", "CookieHelper.ResponseCookies")]
         public void InputWithIncident_ChainedMemberAccess_SurfacesDiagnostic(string instance, string codeFix)
         {
             var test = $@"
@@ -106,11 +106,12 @@ namespace SampleTestProject.CsSamples
             VerifyCSharpFix(test, expectedFix);
         }
 
-        [TestCase(@"new System.Web.HttpResponse(""fileName"", ""url"", ""queryString"")", "CookieHelper.ResponseCookies")]
-        [TestCase(@"new System.Web.HttpResponseWrapper(new System.Web.HttpRequest(""fileName"", ""url"", ""queryString""))", "CookieHelper.ResponseCookies")]
+        [TestCase(@"new System.Web.HttpResponse(null)", "CookieHelper.ResponseCookies")]
+        [TestCase(@"new System.Web.HttpResponseWrapper(new System.Web.HttpResponse(null))", "CookieHelper.ResponseCookies")]
         public void InputWithIncident_FollowUpMemberAccess_SurfacesDiagnostic(string instance, string codeFix)
         {
-            var test = $@"
+            var test = $@"using System;
+
 namespace SampleTestProject.CsSamples
 {{
     public class SampleClass
@@ -125,14 +126,15 @@ namespace SampleTestProject.CsSamples
             var expectedDiagnostic = new DiagnosticResult
             {
                 Id = DiagnosticIds.HTTP_RESPONSE_COOKIES,
-                Message = string.Format(MessagesConstants.MESSAGE, $"r.Cookies", "CookieHelper.ResponseCookies"),
+                Message = string.Format(MessagesConstants.MESSAGE, "r.Cookies", "CookieHelper.ResponseCookies"),
                 Severity = DiagnosticSeverity.Warning,
-                Locations = new[] { new DiagnosticResultLocation("Test0.cs", 9, 27) }
+                Locations = new[] { new DiagnosticResultLocation("Test0.cs", 10, 27) }
             };
 
             VerifyCSharpDiagnostic(test, expectedDiagnostic);
 
-            var expectedFix = $@"using CMS.Helpers;
+            var expectedFix = $@"using System;
+using CMS.Helpers;
 
 namespace SampleTestProject.CsSamples
 {{

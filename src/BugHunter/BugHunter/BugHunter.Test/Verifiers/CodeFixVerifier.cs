@@ -72,6 +72,8 @@ namespace BugHunter.Test.Verifiers
             var compilerDiagnostics = CodeFixVerifier.GetCompilerDiagnostics(document).ToList();
             var attempts = analyzerDiagnostics.Length;
 
+            Assert.IsEmpty(compilerDiagnostics.Where(diag => diag.Severity == DiagnosticSeverity.Error), "Unable to compile original source code.");
+
             for (int i = 0; i < attempts; ++i)
             {
                 var actions = new List<CodeAction>();

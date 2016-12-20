@@ -118,7 +118,7 @@ namespace SampleTestProject.CsSamples
         public void SampleMethod()
         {{
             var request = {requestInstance};
-            var url = request.Url.Contains(""Ooops..."");
+            var url = request.Url.Host.Contains(""Ooops..."");
         }}
     }}
 }}";
@@ -141,7 +141,7 @@ namespace SampleTestProject.CsSamples
         public void SampleMethod()
         {{
             var request = {requestInstance};
-            var url = RequestContext.URL.Contains(""Ooops..."");
+            var url = RequestContext.URL.Host.Contains(""Ooops..."");
         }}
     }}
 }}";

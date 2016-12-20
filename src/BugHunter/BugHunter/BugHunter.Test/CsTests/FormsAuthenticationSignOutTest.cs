@@ -27,29 +27,30 @@ namespace BugHunter.Test.CsTests
         [Test]
         public void InputWithIncident_SimpleMemberAccess_SurfacesDiagnostic()
         {
-            var test = $@"
+            var test = $@"using System.Web.Security;
+
 namespace SampleTestProject.CsSamples
 {{
     public class SampleClass
     {{
         public void SampleMethod()
         {{
-            var formsAuthentication = System.Web.Security.FormsAuthentication;
-            formsAuthentication.SignOut();
+            FormsAuthentication.SignOut();
         }}
     }}
 }}";
             var expectedDiagnostic = new DiagnosticResult
             {
                 Id = DiagnosticIds.FORMS_AUTHENTICATION_SIGN_OUT,
-                Message = string.Format(MessagesConstants.MESSAGE, "formsAuthentication.SignOut", "AuthenticationHelper.SignOut()"),
+                Message = string.Format(MessagesConstants.MESSAGE, "FormsAuthentication.SignOut", "AuthenticationHelper.SignOut()"),
                 Severity = DiagnosticSeverity.Warning,
                 Locations = new[] { new DiagnosticResultLocation("Test0.cs", 9, 13) }
             };
 
             VerifyCSharpDiagnostic(test, expectedDiagnostic);
 
-            var expectedFix = $@"using CMS.Membership;
+            var expectedFix = $@"using System.Web.Security;
+using CMS.Membership;
 
 namespace SampleTestProject.CsSamples
 {{
@@ -57,12 +58,11 @@ namespace SampleTestProject.CsSamples
     {{
         public void SampleMethod()
         {{
-            var formsAuthentication = System.Web.Security.FormsAuthentication;
             AuthenticationHelper.SignOut();
         }}
     }}
 }}";
-            VerifyCSharpFix(test, expectedFix);
+            VerifyCSharpFix(test, expectedFix, 0, true);
         }
 
         [Test]

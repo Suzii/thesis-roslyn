@@ -24,10 +24,10 @@ namespace BugHunter.Test.CsTests
             VerifyCSharpDiagnostic(test);
         }
 
-        [TestCase(@"new System.Web.HttpResponse(""fileName"", ""url"", ""queryString"")", "Redirect", 0)]
-        [TestCase(@"new System.Web.HttpResponse(""fileName"", ""url"", ""queryString"")", "LocalRedirect", 1)]
-        [TestCase(@"new System.Web.HttpResponseWrapper(new System.Web.HttpRequest(""fileName"", ""url"", ""queryString""))", "Redirect", 0)]
-        [TestCase(@"new System.Web.HttpResponseWrapper(new System.Web.HttpRequest(""fileName"", ""url"", ""queryString""))", "LocalRedirect", 1)]
+        [TestCase(@"new System.Web.HttpResponse(null)", "Redirect", 0)]
+        [TestCase(@"new System.Web.HttpResponse(null)", "LocalRedirect", 1)]
+        [TestCase(@"new System.Web.HttpResponseWrapper(new System.Web.HttpResponse(null))", "Redirect", 0)]
+        [TestCase(@"new System.Web.HttpResponseWrapper(new System.Web.HttpResponse(null))", "LocalRedirect", 1)]
         public void InputWithIncident_SipleMemberAccess_SurfacesDiagnostic(string instance, string codeFix, int codeFixNumber)
         {
             var test = $@"
@@ -69,10 +69,10 @@ namespace SampleTestProject.CsSamples
             VerifyCSharpFix(test, expectedFix, codeFixNumber);
         }
 
-        [TestCase(@"new System.Web.HttpResponse(""fileName"", ""url"", ""queryString"")", "Redirect", 0)]
-        [TestCase(@"new System.Web.HttpResponse(""fileName"", ""url"", ""queryString"")", "LocalRedirect", 1)]
-        [TestCase(@"new System.Web.HttpResponseWrapper(new System.Web.HttpRequest(""fileName"", ""url"", ""queryString""))", "Redirect", 0)]
-        [TestCase(@"new System.Web.HttpResponseWrapper(new System.Web.HttpRequest(""fileName"", ""url"", ""queryString""))", "LocalRedirect", 1)]
+        [TestCase(@"new System.Web.HttpResponse(null)", "Redirect", 0)]
+        [TestCase(@"new System.Web.HttpResponse(null)", "LocalRedirect", 1)]
+        [TestCase(@"new System.Web.HttpResponseWrapper(new System.Web.HttpResponse(null))", "Redirect", 0)]
+        [TestCase(@"new System.Web.HttpResponseWrapper(new System.Web.HttpResponse(null))", "LocalRedirect", 1)]
         public void InputWithIncident_ChainedMemberAccess_SurfacesDiagnostic(string instance, string codeFix, int codeFixNumber)
         {
             var test = $@"
