@@ -1,1 +1,0 @@
-https://github.com/dotnet/roslyn/blob/master/src/Features/CSharp/Portable/SignatureHelp/ElementAccessExpressionSignatureHelpProvider.cs
