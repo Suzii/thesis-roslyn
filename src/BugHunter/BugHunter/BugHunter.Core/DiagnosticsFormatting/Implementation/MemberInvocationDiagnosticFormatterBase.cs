@@ -1,4 +1,5 @@
 using System;
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace BugHunter.Core.DiagnosticsFormatting.Implementation
@@ -31,7 +32,7 @@ namespace BugHunter.Core.DiagnosticsFormatting.Implementation
         /// </summary>
         /// <param name="expression">Expression</param>
         /// <returns>Casted invocation expression</returns>
-        protected static InvocationExpressionSyntax GetInvocationExpression(ExpressionSyntax expression)
+        protected static InvocationExpressionSyntax GetInvocationExpression(SyntaxNode expression)
         {
             var invocationExpressionSyntax = expression as InvocationExpressionSyntax;
             if (invocationExpressionSyntax == null)

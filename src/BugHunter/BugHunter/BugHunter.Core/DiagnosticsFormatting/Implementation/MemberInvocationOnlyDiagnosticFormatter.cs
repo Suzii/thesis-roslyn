@@ -15,7 +15,7 @@ namespace BugHunter.Core.DiagnosticsFormatting.Implementation
         /// </summary>
         /// <param name="expression">Invocation expression</param>
         /// <returns>Location of nested method invocation</returns>
-        public Location GetLocation(ExpressionSyntax expression)
+        public Location GetLocation(SyntaxNode expression)
         {
             var invocationExpression = GetInvocationExpression(expression);
             var memberAccess = GetUnderlyingMemberAccess(invocationExpression);
@@ -27,7 +27,7 @@ namespace BugHunter.Core.DiagnosticsFormatting.Implementation
             return location;
         }
 
-        public string GetDiagnosedUsage(ExpressionSyntax expression)
+        public string GetDiagnosedUsage(SyntaxNode expression)
         {
             var invocationExpression = GetInvocationExpression(expression);
             var memberAccess = GetUnderlyingMemberAccess(invocationExpression);

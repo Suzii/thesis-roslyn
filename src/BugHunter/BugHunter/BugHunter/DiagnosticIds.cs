@@ -40,6 +40,7 @@
         public const string STRING_COMPARE_STATIC_METHOD = "BH2006";
         public const string STRING_EQUALS_STATIC_METHOD = "BH2005";
 
-
+        // System.IO shit
+        public const string SYSTEM_IO = "BH3000";
     }
 }

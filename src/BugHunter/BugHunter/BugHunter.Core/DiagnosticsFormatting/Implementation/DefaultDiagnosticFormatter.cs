@@ -1,9 +1,8 @@
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace BugHunter.Core.DiagnosticsFormatting.Implementation
 {
-    internal class MemberInvocationDiagnosticFormatter : MemberInvocationDiagnosticFormatterBase, IDiagnosticFormatter
+    internal class DefaultDiagnosticFormatter : IDiagnosticFormatter
     {
         public Location GetLocation(SyntaxNode expression)
         {
@@ -12,7 +11,7 @@ namespace BugHunter.Core.DiagnosticsFormatting.Implementation
 
         public string GetDiagnosedUsage(SyntaxNode expression)
         {
-            return $"{expression}";
+            return expression.ToString();
         }
     }
 }

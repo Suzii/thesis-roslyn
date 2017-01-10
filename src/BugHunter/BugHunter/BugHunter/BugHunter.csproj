@@ -47,6 +47,7 @@
     <Compile Include="CsRules\Analyzers\HttpRequestQueryAnalyzer.cs" />
     <Compile Include="CsRules\Analyzers\LuceneSearchDocumentAnalyzer.cs" />
     <Compile Include="CsRules\Analyzers\PageIsCallbackAnalyzer.cs" />
+    <Compile Include="CsRules\Analyzers\SystemIOAnalyzer.cs" />
     <Compile Include="StringMethodsRules\Analyzers\BaseStringComparisonMethodsAnalyzer.cs" />
     <Compile Include="StringMethodsRules\Analyzers\StringCompareToMethodAnalyzer.cs" />
     <Compile Include="StringMethodsRules\Analyzers\StringEqualsStaticMethodAnalyzer.cs" />

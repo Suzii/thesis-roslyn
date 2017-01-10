@@ -4,6 +4,11 @@ namespace BugHunter.Core.DiagnosticsFormatting
 {
     public static class DiagnosticFormatterFactory
     {
+        public static IDiagnosticFormatter CreateDefaultFormatter()
+        {
+            return new DefaultDiagnosticFormatter();
+        }
+
         public static IDiagnosticFormatter CreateMemberAccessFormatter()
         {
             return new MemberAccessDiagnosticFormatter();
