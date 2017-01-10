@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BugHunter.Core", "src\BugHu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BugHunter", "src\BugHunter\BugHunter.csproj", "{94312E36-802C-40FA-A07E-F479E74B61C2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BugHunter.PerformanceTest", "test\BugHunter.PerformanceTest\BugHunter.PerformanceTest.csproj", "{EABFC61A-E553-4F75-A1D6-FB5E8891D659}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{94312E36-802C-40FA-A07E-F479E74B61C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{94312E36-802C-40FA-A07E-F479E74B61C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{94312E36-802C-40FA-A07E-F479E74B61C2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EABFC61A-E553-4F75-A1D6-FB5E8891D659}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EABFC61A-E553-4F75-A1D6-FB5E8891D659}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EABFC61A-E553-4F75-A1D6-FB5E8891D659}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EABFC61A-E553-4F75-A1D6-FB5E8891D659}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

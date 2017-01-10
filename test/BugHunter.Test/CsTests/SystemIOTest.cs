@@ -122,7 +122,7 @@ namespace SampleTestProject.CsSamples
 {
     public class SampleClass
     {
-        public void HelperMethod(char c) 
+        public static void HelperMethod(char c) 
         {
             // Do nothing
         }
