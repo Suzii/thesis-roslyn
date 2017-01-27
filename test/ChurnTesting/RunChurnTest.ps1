@@ -11,7 +11,7 @@ function Clone-SampleProject {
 	
     Push-Location
     cd .\$PathToTestSolution
-	&$Git checkout 146f627b6de3aec15736f91ce5fba81f07c051d5 | Out-String | Write-Verbose
+	&$Git checkout 4ff471833b6c6db15c34b9717db8fc054ad70c09 | Out-String | Write-Verbose
     Pop-Location
 }
 
