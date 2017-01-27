@@ -18,11 +18,11 @@ namespace BugHunter.StringMethodsRules.CodeFixes
     /// <summary>
     /// Fixes string.Compare("a", "b") into overload with StringComparison argument
     /// </summary>
-    [ExportCodeFixProvider(LanguageNames.CSharp, Name = nameof(StringEqualsStaticMethodCodeFixProvider)), Shared]
+    [ExportCodeFixProvider(LanguageNames.CSharp, Name = nameof(StringCompareStaticMethodCodeFixProvider)), Shared]
     public class StringCompareStaticMethodCodeFixProvider : CodeFixProvider
     {
         public sealed override ImmutableArray<string> FixableDiagnosticIds
-            => ImmutableArray.Create(StringEqualsStaticMethodAnalyzer.DIAGNOSTIC_ID);
+            => ImmutableArray.Create(StringCompareStaticMethodAnalyzer.DIAGNOSTIC_ID);
 
         public sealed override FixAllProvider GetFixAllProvider()
         {
@@ -73,7 +73,7 @@ namespace BugHunter.StringMethodsRules.CodeFixes
                     CodeAction.Create(
                         title: CodeFixMessageBuilder.GetMessage(newInvocation),
                         createChangedDocument: c => editor.ReplaceExpressionWith(invocation, newInvocation, namespacesToBeReferenced),
-                        equivalenceKey: $"{nameof(StringEqualsStaticMethodCodeFixProvider)}-{strignComparisonOption}"),
+                        equivalenceKey: $"{nameof(StringCompareStaticMethodCodeFixProvider)}-{strignComparisonOption}"),
                     context.Diagnostics.First());
             }
         }

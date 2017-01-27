@@ -74,7 +74,6 @@
     </Compile>
     <Compile Include="StringMethodsRules\Analyzers\BaseStringComparisonMethodsAnalyzer.cs" />
     <Compile Include="StringMethodsRules\Analyzers\StringCompareToMethodAnalyzer.cs" />
-    <Compile Include="StringMethodsRules\Analyzers\StringEqualsStaticMethodAnalyzer.cs" />
     <Compile Include="StringMethodsRules\Analyzers\StringStartAndEndsWithMethodsAnalyzer.cs" />
     <Compile Include="StringMethodsRules\Analyzers\StringCompareStaticMethodAnalyzer.cs" />
     <Compile Include="StringMethodsRules\Analyzers\StringEqualsMethodAnalyzer.cs" />
@@ -96,7 +95,6 @@
     <Compile Include="CsRules\CodeFixes\HttpSessionElementAccessGetCodeFixProvider.cs" />
     <Compile Include="CsRules\CodeFixes\PageIsCallbackCodeFixProvider.cs" />
     <Compile Include="StringMethodsRules\CodeFixes\StringCompareStaticMethodCodeFixProvider.cs" />
-    <Compile Include="StringMethodsRules\CodeFixes\StringEqualsStaticMethodCodeFixProvider.cs" />
     <Compile Include="StringMethodsRules\CodeFixes\StringCompareToMethodCodeFixProvider.cs" />
     <Compile Include="StringMethodsRules\CodeFixes\StringComparisonMethodsWithModifierCodeFixProvider.cs" />
     <Compile Include="StringMethodsRules\CodeFixes\StringComparisonOptions.cs" />

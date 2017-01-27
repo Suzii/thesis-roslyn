@@ -7,7 +7,7 @@ using NUnit.Framework;
 namespace BugHunter.Test.StringMethodsTests
 {
     [TestFixture]
-    public class StringEqualsStaticMethodTest : CodeFixVerifier<StringEqualsStaticMethodAnalyzer, StringEqualsStaticMethodCodeFixProvider>
+    public class StringEqualsStaticMethodTest : CodeFixVerifier<StringEqualsMethodAnalyzer, StringComparisonMethodsWithModifierCodeFixProvider>
     {
         static readonly object[] TestSource =
         {
@@ -21,15 +21,7 @@ namespace BugHunter.Test.StringMethodsTests
         {
             return null;
         }
-
-        [Test]
-        public void EmptyInput_NoDiagnostic()
-        {
-            var test = @"";
-
-            VerifyCSharpDiagnostic(test);
-        }
-
+        
         [TestCase(@"Equals(""a"", ""b"", StringComparison.InvariantCultureIgnoreCase)")]
         public void AllowedOverloadCalled_NoDiagnostic(string methodUsed)
         {
@@ -63,7 +55,7 @@ namespace BugHunter.Test.StringMethodsTests
 
             var expectedDiagnostic = new DiagnosticResult
             {
-                Id = DiagnosticIds.STRING_EQUALS_STATIC_METHOD,
+                Id = DiagnosticIds.STRING_EQUALS_METHOD,
                 Message = $"'{methodUsed}' used without specifying StringComparison.",
                 Severity = DiagnosticSeverity.Error,
                 Locations = new[] { new DiagnosticResultLocation("Test0.cs", 7, 33) }
@@ -103,7 +95,7 @@ namespace SampleTestProject.CsSamples
 
             var expectedDiagnostic = new DiagnosticResult
             {
-                Id = DiagnosticIds.STRING_EQUALS_STATIC_METHOD,
+                Id = DiagnosticIds.STRING_EQUALS_METHOD,
                 Message = $"'{methodUsed}' used without specifying StringComparison.",
                 Severity = DiagnosticSeverity.Error,
                 Locations = new[] { new DiagnosticResultLocation("Test0.cs", 7, 33) }
