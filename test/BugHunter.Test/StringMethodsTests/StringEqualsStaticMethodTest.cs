@@ -21,7 +21,15 @@ namespace BugHunter.Test.StringMethodsTests
         {
             return null;
         }
-        
+
+        [Test]
+        public void EmptyInput_NoDiagnostic()
+        {
+            var test = @"";
+
+            VerifyCSharpDiagnostic(test);
+        }
+
         [TestCase(@"Equals(""a"", ""b"", StringComparison.InvariantCultureIgnoreCase)")]
         public void AllowedOverloadCalled_NoDiagnostic(string methodUsed)
         {
