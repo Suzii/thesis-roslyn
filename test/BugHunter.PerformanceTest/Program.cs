@@ -13,11 +13,14 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Threading;
 using BugHunter.PerformanceTest.Helpers;
+using BugHunter.PerformanceTest.Models;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeActions;
 using Microsoft.CodeAnalysis.CodeFixes;
+using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Diagnostics;
 using Microsoft.CodeAnalysis.MSBuild;
+using Microsoft.CodeAnalysis.VisualBasic;
 using File = System.IO.File;
 using Path = System.IO.Path;
 
@@ -104,21 +107,24 @@ namespace BugHunter.PerformanceTest
             {
                 var csharpProjects = solution.Projects.Where(i => i.Language == LanguageNames.CSharp).ToList();
 
-                Console.WriteLine("Number of projects:\t\t" + csharpProjects.Count);
-                Console.WriteLine("Number of documents:\t\t" + csharpProjects.Sum(x => x.DocumentIds.Count));
+                Console.WriteLine("Number of projects: \t\t{0,10:N}", csharpProjects.Count);
+                Console.WriteLine("Number of documents:\t\t{0,10:N}", csharpProjects.Sum(x => x.DocumentIds.Count));
 
                 var statistics = await GetAnalyzerStatisticsAsync(csharpProjects, cancellationToken).ConfigureAwait(true);
                 
-                // TODO extend with more detailed stats about nodes
-                Console.WriteLine("Number of syntax nodes:\t\t" + statistics.NumberofNodes);
-                Console.WriteLine("Number of syntax tokens:\t" + statistics.NumberOfTokens);
-                Console.WriteLine("Number of syntax trivia:\t" + statistics.NumberOfTrivia);
+                Console.WriteLine("Number of syntax tokens:\t{0,10:N}", statistics.NumberOfTokens);
+                Console.WriteLine("Number of syntax trivia:\t{0,10:N}", statistics.NumberOfTrivia);
+                Console.WriteLine("Number of syntax nodes:\t\t{0,10:N}", statistics.NodesStatistic.NumberofNodesTotal);
+                Console.WriteLine("- memberAccess:        \t\t{0,10:N}", statistics.NodesStatistic.NumberOfMemberAccessExpressionNodes);
+                Console.WriteLine("- invocationExpression:\t\t{0,10:N}", statistics.NodesStatistic.NumberOfInvocationExpressionNodes);
+                Console.WriteLine("- elementAccess:       \t\t{0,10:N}", statistics.NodesStatistic.NumberElementAccessExpressionNodes);
+                Console.WriteLine("- identifierName:      \t\t{0,10:N}", statistics.NodesStatistic.NumberOfIdentifierNameNodes);
             }
-
-            stopwatch.Restart();
 
             var force = args.Contains("/force");
 
+            // TODO  execute following code multiple times and create statistics
+            stopwatch.Restart();
             var diagnostics = await GetAnalyzerDiagnosticsAsync(solution, solutionPath, analyzers, force, cancellationToken).ConfigureAwait(true);
             var allDiagnostics = diagnostics.SelectMany(i => i.Value).ToImmutableArray();
 
@@ -315,7 +321,7 @@ namespace BugHunter.PerformanceTest
                 sums.Add(documentStatistics);
             });
 
-            var sum = sums.Aggregate(new Statistic(0, 0, 0), (currentResult, value) => currentResult + value);
+            var sum = sums.Aggregate(new Statistic(new NodesStatistic(0, 0, 0, 0, 0), 0, 0), (currentResult, value) => currentResult + value);
             return Task.FromResult(sum);
         }
 
@@ -323,14 +329,18 @@ namespace BugHunter.PerformanceTest
         {
             var tree = await document.GetSyntaxTreeAsync(cancellationToken).ConfigureAwait(false);
             var root = await tree.GetRootAsync(cancellationToken).ConfigureAwait(false);
-            var tokensAndNodes = root.DescendantNodesAndTokensAndSelf(descendIntoTrivia: true).ToArray();
-
-            // TODO add statistic for more detailed option like, what nodes are Invocation/MemberAccess/Identifier... (all that we are interested in based on our analyzers)
-            var numberOfNodes = tokensAndNodes.Count(x => x.IsNode);
-            var numberOfTokens = tokensAndNodes.Count(x => x.IsToken);
+            var numberOfTokens = root.DescendantTokens(descendIntoTrivia: true).Count();
             var numberOfTrivia = root.DescendantTrivia(descendIntoTrivia: true).Count();
-
-            return new Statistic(numberOfNodes, numberOfTokens, numberOfTrivia);
+            var nodes = root.DescendantNodesAndSelf(descendIntoTrivia: true).ToArray();
+            
+            var numberOfNodes = nodes.Length;
+            var numberOfMemberAccesses = nodes.Count(n => n.IsKind(SyntaxKind.SimpleMemberAccessExpression));
+            var numberOfInvocations = nodes.Count(n => n.IsKind(SyntaxKind.InvocationExpression));
+            var numberOfElementAccesses = nodes.Count(n => n.IsKind(SyntaxKind.ElementAccessExpression));
+            var numberOfIdentifierNames = nodes.Count(n => n.IsKind(SyntaxKind.IdentifierName));
+            var nodesStats = new NodesStatistic(numberOfNodes, numberOfMemberAccesses, numberOfInvocations, numberOfElementAccesses, numberOfIdentifierNames);
+          
+            return new Statistic(nodesStats, numberOfTokens, numberOfTrivia);
         }
 
         private static IEnumerable<DiagnosticAnalyzer> FilterAnalyzers(IEnumerable<DiagnosticAnalyzer> analyzers, string[] args)
