@@ -9,7 +9,7 @@ namespace BugHunter.CsRules.Analyzers
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     public class HttpRequestBrowserAnalyzer : BaseMemberAccessAnalyzer
     {
-        public const string DIAGNOSTIC_ID = DiagnosticIds.HTTP_REQUEST_URL;
+        public const string DIAGNOSTIC_ID = DiagnosticIds.HTTP_REQUEST_BROWSER;
 
         private static readonly DiagnosticDescriptor Rule = ApiReplacementRuleBuilder.GetRule(DIAGNOSTIC_ID, "Request.Browser", "BrowserHelper.GetBrowser()");
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
