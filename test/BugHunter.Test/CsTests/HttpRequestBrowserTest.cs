@@ -42,7 +42,7 @@ namespace SampleTestProject.CsSamples
 }}";
             var expectedDiagnostic = new DiagnosticResult
             {
-                Id = DiagnosticIds.HTTP_REQUEST_URL,
+                Id = DiagnosticIds.HTTP_REQUEST_BROWSER,
                 Message = string.Format(MessagesConstants.MESSAGE, "request.Browser.Browser", "BrowserHelper.GetBrowser()"),
                 Severity = DiagnosticSeverity.Warning,
                 Locations = new[] { new DiagnosticResultLocation("Test0.cs", 9, 27) }
@@ -85,7 +85,7 @@ namespace SampleTestProject.CsSamples
 }}";
             var expectedDiagnostic = new DiagnosticResult
             {
-                Id = DiagnosticIds.HTTP_REQUEST_URL,
+                Id = DiagnosticIds.HTTP_REQUEST_BROWSER,
                 Message = string.Format(MessagesConstants.MESSAGE, "browserInfo.Browser", "BrowserHelper.GetBrowser()"),
                 Severity = DiagnosticSeverity.Warning,
                 Locations = new[] { new DiagnosticResultLocation("Test0.cs", 10, 27) }
@@ -129,7 +129,7 @@ namespace SampleTestProject.CsSamples
 }}";
             var expectedDiagnostic = new DiagnosticResult
             {
-                Id = DiagnosticIds.HTTP_REQUEST_URL,
+                Id = DiagnosticIds.HTTP_REQUEST_BROWSER,
                 Message = string.Format(MessagesConstants.MESSAGE, "browserInfo.Browser", "BrowserHelper.GetBrowser()"),
                 Severity = DiagnosticSeverity.Warning,
                 Locations = new[] { new DiagnosticResultLocation("Test0.cs", 10, 27) }
