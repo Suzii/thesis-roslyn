@@ -62,29 +62,38 @@ namespace BugHunter.WpRules {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Consider using one of WhereStartsWith(), WhereEndsWith() or WhereContains() methods instead..
+        ///   Looks up a localized string similar to Replace with &apos;{0}&apos;..
         /// </summary>
-        internal static string BH1000_Description {
+        internal static string ValidationHelperGet_CodeFix {
             get {
-                return ResourceManager.GetString("BH1000_Description", resourceCulture);
+                return ResourceManager.GetString("ValidationHelperGet_CodeFix", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Method {0} is used without Architect/CTO approval..
+        ///   Looks up a localized string similar to Do not use Get..() methods on ValidatinoHelper. Use Get..System() instead to ensure specific culture representation..
         /// </summary>
-        internal static string BH1000_MessageFormat {
+        internal static string ValidationHelperGet_Description {
             get {
-                return ResourceManager.GetString("BH1000_MessageFormat", resourceCulture);
+                return ResourceManager.GetString("ValidationHelperGet_Description", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Method WhereLike() or WhereNotLike() should not be used used..
+        ///   Looks up a localized string similar to Do not use {0}(). Use Get method with &apos;System&apos; instead to ensure specific culture representation..
         /// </summary>
-        internal static string BH1000_Title {
+        internal static string ValidationHelperGet_MessageFormat {
             get {
-                return ResourceManager.GetString("BH1000_Title", resourceCulture);
+                return ResourceManager.GetString("ValidationHelperGet_MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do not use Get..() methods on ValidatinoHelper..
+        /// </summary>
+        internal static string ValidationHelperGet_Title {
+            get {
+                return ResourceManager.GetString("ValidationHelperGet_Title", resourceCulture);
             }
         }
     }

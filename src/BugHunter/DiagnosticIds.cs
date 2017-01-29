@@ -41,5 +41,8 @@
 
         // System.IO
         public const string SYSTEM_IO = "BH3000";
+
+        // WP checks
+        public const string VALIDATION_HELPER_GET = "BH4000";
     }
 }

@@ -45,7 +45,7 @@ namespace BugHunter.Test
             {
                 return new MetadataReference[] {};
             }
-
+            
             var references = types.Select(type => MetadataReference.CreateFromFile(type.Assembly.Location)).Distinct();
 
             return references.ToArray();

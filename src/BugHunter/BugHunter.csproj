@@ -119,6 +119,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>WebConfigResources.resx</DependentUpon>
     </Compile>
+    <Compile Include="WpRules\Analyzers\ValidationHelperGetAnalyzer.cs" />
+    <Compile Include="WpRules\CodeFixes\ValidationHelperGetCodeFixProvider.cs" />
     <Compile Include="WpRules\WpResources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -241,8 +243,6 @@
     <Folder Include="ProjectRules\CodeFixes\" />
     <Folder Include="WebConfigRules\Analyzers\" />
     <Folder Include="WebConfigRules\CodeFixes\" />
-    <Folder Include="WpRules\Analyzers\" />
-    <Folder Include="WpRules\CodeFixes\" />
   </ItemGroup>
   <ItemGroup>
     <Analyzer Include="..\..\packages\Microsoft.CodeAnalysis.Analyzers.1.1.0\analyzers\dotnet\cs\Microsoft.CodeAnalysis.Analyzers.dll" />

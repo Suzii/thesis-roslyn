@@ -23,7 +23,7 @@ namespace BugHunter.Test.Verifiers
             return diagnosticResult;
         }
 
-        public static DiagnosticResult WithLocation(this DiagnosticResult diagnosticResult, int line, int column)
+        public static DiagnosticResult WithLocation(this DiagnosticResult diagnosticResult, int line, int column, string path = "Test0.cs")
         {
             if (line < -1)
             {
@@ -35,7 +35,7 @@ namespace BugHunter.Test.Verifiers
                 throw new ArgumentOutOfRangeException(nameof(column), @"column must be >= -1");
             }
 
-            diagnosticResult.Locations = new[] { new DiagnosticResultLocation("Test01.cs", line, column) };
+            diagnosticResult.Locations = new[] { new DiagnosticResultLocation(path, line, column) };
 
             return diagnosticResult;
         }

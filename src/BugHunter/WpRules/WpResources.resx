@@ -117,13 +117,20 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="BH1000_Description" xml:space="preserve">
-    <value>Consider using one of WhereStartsWith(), WhereEndsWith() or WhereContains() methods instead.</value>
+  <data name="ValidationHelperGet_CodeFix" xml:space="preserve">
+    <value>Replace with '{0}'.</value>
+    <comment>0 - suggested code fix</comment>
   </data>
-  <data name="BH1000_MessageFormat" xml:space="preserve">
-    <value>Method {0} is used without Architect/CTO approval.</value>
+  <data name="ValidationHelperGet_Description" xml:space="preserve">
+    <value>Do not use Get..() methods on ValidatinoHelper. Use Get..System() instead to ensure specific culture representation.</value>
+    <comment>0 - forbidden usage</comment>
   </data>
-  <data name="BH1000_Title" xml:space="preserve">
-    <value>Method WhereLike() or WhereNotLike() should not be used used.</value>
+  <data name="ValidationHelperGet_MessageFormat" xml:space="preserve">
+    <value>Do not use {0}(). Use Get method with 'System' instead to ensure specific culture representation.</value>
+    <comment>0 - forbidden usage</comment>
+  </data>
+  <data name="ValidationHelperGet_Title" xml:space="preserve">
+    <value>Do not use Get..() methods on ValidatinoHelper.</value>
+    <comment>0 - forbidden usage</comment>
   </data>
 </root>
