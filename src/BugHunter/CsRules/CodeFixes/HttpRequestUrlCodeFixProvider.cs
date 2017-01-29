@@ -16,7 +16,7 @@ namespace BugHunter.CsRules.CodeFixes
     public class HttpRequestUrlCodeFixProvider : CodeFixProvider
     {
         public sealed override ImmutableArray<string> FixableDiagnosticIds
-            => ImmutableArray.Create(HttpRequestUserHostAddressAnalyzer.DIAGNOSTIC_ID);
+            => ImmutableArray.Create(HttpRequestUrlAnalyzer.DIAGNOSTIC_ID);
 
         public sealed override FixAllProvider GetFixAllProvider()
         {
