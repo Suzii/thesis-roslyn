@@ -74,7 +74,7 @@ namespace BugHunter.Test.StringMethodsTests
             {
                 Id = DiagnosticIds.STRING_STARTS_ENDS_WITH_METHODS,
                 Message = $"'{methodUsed}' used without specifying StringComparison.",
-                Severity = DiagnosticSeverity.Error,
+                Severity = DiagnosticSeverity.Warning,
                 Locations = new[] { new DiagnosticResultLocation("Test0.cs", 8, 35) }
             };
             
@@ -116,7 +116,7 @@ namespace SampleTestProject.CsSamples
             {
                 Id = DiagnosticIds.STRING_STARTS_ENDS_WITH_METHODS,
                 Message = $"'{methodUsed}' used without specifying StringComparison.",
-                Severity = DiagnosticSeverity.Error,
+                Severity = DiagnosticSeverity.Warning,
                 Locations = new[] { new DiagnosticResultLocation("Test0.cs", 8, 35) }
             };
 
@@ -158,7 +158,7 @@ namespace SampleTestProject.CsSamples
             {
                 Id = DiagnosticIds.STRING_STARTS_ENDS_WITH_METHODS,
                 Message = $"'{methodUsed}' used without specifying StringComparison.",
-                Severity = DiagnosticSeverity.Error,
+                Severity = DiagnosticSeverity.Warning,
                 Locations = new[] { new DiagnosticResultLocation("Test0.cs", 8, 48) }
             };
 

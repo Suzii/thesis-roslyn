@@ -67,7 +67,7 @@ namespace BugHunter.Test.StringMethodsTests
             {
                 Id = DiagnosticIds.STRING_MANIPULATION_METHODS,
                 Message = $"'{methodUsed}' used without specifying CultureInfo.",
-                Severity = DiagnosticSeverity.Error,
+                Severity = DiagnosticSeverity.Warning,
                 Locations = new[] { new DiagnosticResultLocation("Test0.cs", 8, 36) }
             };
             
@@ -109,7 +109,7 @@ namespace BugHunter.Test.StringMethodsTests
             {
                 Id = DiagnosticIds.STRING_MANIPULATION_METHODS,
                 Message = $"'{methodUsed}' used without specifying CultureInfo.",
-                Severity = DiagnosticSeverity.Error,
+                Severity = DiagnosticSeverity.Warning,
                 Locations = new[] { new DiagnosticResultLocation("Test0.cs", 8, 36) }
             };
 
@@ -151,7 +151,7 @@ namespace BugHunter.Test.StringMethodsTests
             {
                 Id = DiagnosticIds.STRING_MANIPULATION_METHODS,
                 Message = $"'{methodUsed}' used without specifying CultureInfo.",
-                Severity = DiagnosticSeverity.Error,
+                Severity = DiagnosticSeverity.Warning,
                 Locations = new[] { new DiagnosticResultLocation("Test0.cs", 8, 49) }
             };
 
