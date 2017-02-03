@@ -2,6 +2,7 @@
 using BugHunter.Test.Verifiers;
 using BugHunter.WpRules.Analyzers;
 using BugHunter.WpRules.CodeFixes;
+using CMS.Helpers;
 using Microsoft.CodeAnalysis;
 using NUnit.Framework;
 
@@ -35,6 +36,8 @@ namespace BugHunter.Test.WpTests
 
         [TestCase(@"GetDouble(""0"", 0)", @"GetDoubleSystem(""0"", 0)")]
         [TestCase(@"GetDouble(""0"", 0, CultureInfo.CurrentUICulture)", @"GetDoubleSystem(""0"", 0)")]
+        [TestCase(@"GetDecimal(""0"", 0)", @"GetDecimalSystem(""0"", 0)")]
+        [TestCase(@"GetDecimal(""0"", 0, CultureInfo.CurrentUICulture)", @"GetDecimalSystem(""0"", 0)")]
         [TestCase(@"GetDate(""0"", DateTime.MaxValue)", @"GetDateSystem(""0"", DateTime.MaxValue)")]
         [TestCase(@"GetDate(""0"", DateTime.MaxValue, CultureInfo.CurrentUICulture)", @"GetDateSystem(""0"", DateTime.MaxValue)")]
         [TestCase(@"GetDateTime(""0"", DateTime.MaxValue)", @"GetDateTimeSystem(""0"", DateTime.MaxValue)")]

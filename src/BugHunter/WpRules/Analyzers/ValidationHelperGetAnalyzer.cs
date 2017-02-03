@@ -1,4 +1,5 @@
-﻿using System.Collections.Immutable;
+﻿using System;
+using System.Collections.Immutable;
 using BugHunter.Core;
 using BugHunter.Core.Analyzers;
 using BugHunter.Core.DiagnosticsFormatting;
@@ -27,7 +28,7 @@ namespace BugHunter.WpRules.Analyzers
 
         public override void Initialize(AnalysisContext context)
         {
-            RegisterAction(Rule, context, "CMS.Helpers.ValidationHelper", "GetDouble", "GetDate", "GetDateTime");
+            RegisterAction(Rule, context, "CMS.Helpers.ValidationHelper", "GetDouble", "GetDecimal", "GetDate", "GetDateTime");
         }
 
         protected override IDiagnosticFormatter GetDiagnosticFormatter()
