@@ -43,7 +43,13 @@
         public const string SYSTEM_IO = "BH3000";
 
         // WP checks
-        public const string VALIDATION_HELPER_GET = "BH4000";
-        public const string WEB_PART_BASE = "BH4001";
+        public const string WEB_PART_BASE = "BH4000";
+        public const string VALIDATION_HELPER_GET = "BH4001";
+
+        // Control checks
+        public const string USER_CONTROL_BASE = "BH5000";
+        
+        // Page checks
+        public const string PAGE_BASE = "BH6000";
     }
 }

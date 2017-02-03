@@ -57,7 +57,7 @@
     <Compile Include="CsRules\Analyzers\LuceneSearchDocumentAnalyzer.cs" />
     <Compile Include="CsRules\Analyzers\PageIsCallbackAnalyzer.cs" />
     <Compile Include="ProjectPaths.cs" />
-    <Compile Include="WpRules\Analyzers\WebPartBaseAnalyzer.cs" />
+    <Compile Include="BaseClassesRules\Analyzers\WebPartBaseAnalyzer.cs" />
     <Compile Include="CsRules\CsResources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -237,6 +237,7 @@
   <ItemGroup>
     <Folder Include="AspxRules\Analyzers\" />
     <Folder Include="AspxRules\CodeFixes\" />
+    <Folder Include="BaseClassesRules\CodeFixes\" />
     <Folder Include="ControlRules\Analyzers\" />
     <Folder Include="ControlRules\CodeFixes\" />
     <Folder Include="PageRules\Analyzers\" />
