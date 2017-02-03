@@ -15,7 +15,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace BugHunter.WpRules.CodeFixes
 {
-    [ExportCodeFixProvider(LanguageNames.CSharp, Name = nameof(ValidationHelperGetAnalyzer)), Shared]
+    [ExportCodeFixProvider(LanguageNames.CSharp, Name = nameof(ValidationHelperGetCodeFixProvider)), Shared]
     public class ValidationHelperGetCodeFixProvider : CodeFixProvider
     {
         public sealed override ImmutableArray<string> FixableDiagnosticIds

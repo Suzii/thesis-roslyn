@@ -56,7 +56,8 @@
     <Compile Include="CsRules\Analyzers\HttpRequestQueryAnalyzer.cs" />
     <Compile Include="CsRules\Analyzers\LuceneSearchDocumentAnalyzer.cs" />
     <Compile Include="CsRules\Analyzers\PageIsCallbackAnalyzer.cs" />
-    <Compile Include="CsRules\Analyzers\SystemIOAnalyzer.cs" />
+    <Compile Include="ProjectPaths.cs" />
+    <Compile Include="WpRules\Analyzers\WebPartBaseAnalyzer.cs" />
     <Compile Include="CsRules\CsResources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -119,7 +120,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>WebConfigResources.resx</DependentUpon>
     </Compile>
+    <Compile Include="CsRules\Analyzers\SystemIOAnalyzer.cs" />
     <Compile Include="WpRules\Analyzers\ValidationHelperGetAnalyzer.cs" />
+    <Compile Include="WpRules\CodeFixes\WebPartBaseCodeFixProvider.cs" />
     <Compile Include="WpRules\CodeFixes\ValidationHelperGetCodeFixProvider.cs" />
     <Compile Include="WpRules\WpResources.Designer.cs">
       <AutoGen>True</AutoGen>

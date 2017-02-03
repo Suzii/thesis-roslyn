@@ -62,7 +62,6 @@ namespace SampleTestProject.CsSamples
             var expectedDiagnostic = GetDiagnosticResult(oldUsage.Substring(0, oldUsage.IndexOf("(", StringComparison.Ordinal))).WithLocation(11, 30);
 
             VerifyCSharpDiagnostic(test, expectedDiagnostic);
-
             var expectedFix = $@"using System;
 using System.Globalization;
 using CMS.Helpers;

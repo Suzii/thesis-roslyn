@@ -688,6 +688,7 @@
     <Compile Include="Helpers\DiagnosticResult.cs" />
     <Compile Include="Helpers\DiagnosticVerifier.Helper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WpTests\WebPartBaseTest.cs" />
     <Compile Include="WpTests\ValidationHelperGetTest.cs" />
   </ItemGroup>
   <ItemGroup>

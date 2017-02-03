@@ -44,5 +44,6 @@
 
         // WP checks
         public const string VALIDATION_HELPER_GET = "BH4000";
+        public const string WEB_PART_BASE = "BH4001";
     }
 }
