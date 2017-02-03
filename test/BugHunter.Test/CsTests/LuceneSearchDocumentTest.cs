@@ -114,9 +114,10 @@ namespace SampleTestProject.CsSamples
 {
     public class SampleClass
     {
-        private void Method()
+        private boolean Method()
         {
             LuceneSearchDocument badVariable = null;
+            return badVariable == null;
         }
     }
 }";
@@ -137,9 +138,10 @@ namespace SampleTestProject.CsSamples
 {
     public class SampleClass
     {
-        private void Method()
+        private boolean Method()
         {
             ISearchDocument badVariable = null;
+            return badVariable == null;
         }
     }
 }";
@@ -154,9 +156,10 @@ namespace SampleTestProject.CsSamples
 {
     public class SampleClass
     {
-        private void Method()
+        private boolean Method()
         {
             CMS.Search.Lucene3.LuceneSearchDocument badVariable = null;
+            return badVariable == null;
         }
     }
 }";
@@ -176,14 +179,15 @@ namespace SampleTestProject.CsSamples
 {
     public class SampleClass
     {
-        private void Method()
+        private boolean Method()
         {
             ISearchDocument badVariable = null;
+            return badVariable == null;
         }
     }
 }";
 
-            VerifyCSharpFix(test, expectedFix);
+            VerifyCSharpFix(test, expectedFix, 0, true);
         }
 
         [Test]
