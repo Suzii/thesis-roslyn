@@ -122,7 +122,6 @@
     </Compile>
     <Compile Include="CsRules\Analyzers\SystemIOAnalyzer.cs" />
     <Compile Include="WpRules\Analyzers\ValidationHelperGetAnalyzer.cs" />
-    <Compile Include="WpRules\CodeFixes\WebPartBaseCodeFixProvider.cs" />
     <Compile Include="WpRules\CodeFixes\ValidationHelperGetCodeFixProvider.cs" />
     <Compile Include="WpRules\WpResources.Designer.cs">
       <AutoGen>True</AutoGen>

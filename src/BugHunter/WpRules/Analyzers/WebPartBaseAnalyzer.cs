@@ -1,26 +1,23 @@
 ﻿using System;
 using System.Collections.Immutable;
 using System.Linq;
-using System.Threading.Tasks;
 using BugHunter.Core;
-using BugHunter.Core.Extensions;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
-using Microsoft.CodeAnalysis.Text;
 
 namespace BugHunter.WpRules.Analyzers
 {
     /// <summary>
-    /// Checks if file inherits from right class.
+    /// Checks if Web Part file inherits from right class.
     /// </summary>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     public class WebPartBaseAnalyzer : DiagnosticAnalyzer
     {
         public const string DIAGNOSTIC_ID = DiagnosticIds.WEB_PART_BASE;
 
-        // TODO think of nice messages
+        // TODO think of nicer messages
         private static readonly DiagnosticDescriptor Rule = new DiagnosticDescriptor(DIAGNOSTIC_ID,
                 title: "Web Part must inherit the right class",
                 messageFormat: "'{0}' should inherit from CMS<something>WebPart.",
@@ -39,9 +36,9 @@ namespace BugHunter.WpRules.Analyzers
         private void Analyze(SyntaxTreeAnalysisContext context)
         {
             var filePath = context.Tree.FilePath;
-            if (string.IsNullOrEmpty(filePath) || !filePath.Contains(ProjectPaths.UI_WEB_PARTS) || filePath.Contains("_files\\"))
+            if (string.IsNullOrEmpty(filePath) || filePath.Contains("_files\\") || !(filePath.Contains(ProjectPaths.UI_WEB_PARTS) || filePath.Contains(ProjectPaths.WEB_PARTS)))
             {
-                //return;
+                return;
             }
 
             string[] webPartBases;
@@ -73,7 +70,7 @@ namespace BugHunter.WpRules.Analyzers
             var publicInstantiableClassDeclarations = root
                 .DescendantNodesAndSelf()
                 .OfType<ClassDeclarationSyntax>()
-                .Where(classDeclarationSyntax 
+                .Where(classDeclarationSyntax
                     => IsPublicClass(classDeclarationSyntax)
                     && !IsAbstractCLass(classDeclarationSyntax));
 
@@ -88,8 +85,8 @@ namespace BugHunter.WpRules.Analyzers
 
             foreach (var badWebPart in classDeclarationsNotExtendingCMSWebPart)
             {
-                // TODo
-                var diagnostic = Diagnostic.Create(Rule, Location.None, badWebPart.Identifier.ToString());
+                var location = context.Tree.GetLocation(badWebPart.Identifier.FullSpan);
+                var diagnostic = Diagnostic.Create(Rule, location, badWebPart.Identifier.ToString());
                 context.ReportDiagnostic(diagnostic);
             }
         }
@@ -103,7 +100,7 @@ namespace BugHunter.WpRules.Analyzers
         private static bool IsOneOfRequiredCMSWebParts(BaseTypeSyntax baseType, string[] cmsWebPartBases)
         {
             var baseTypeName = baseType.ToString();
-            var baseTypeClassName = baseTypeName.Substring(1+baseTypeName.LastIndexOf(".", StringComparison.Ordinal));
+            var baseTypeClassName = baseTypeName.Substring(1 + baseTypeName.LastIndexOf(".", StringComparison.Ordinal));
             // TODO
             return cmsWebPartBases.Any(webPartBase => webPartBase == baseTypeClassName);
         }
@@ -126,6 +123,5 @@ namespace BugHunter.WpRules.Analyzers
         {
             return (!string.IsNullOrEmpty(path) && path.IndexOf(ProjectPaths.UI_WEB_PARTS, StringComparison.OrdinalIgnoreCase) > -1);
         }
-
     }
 }
