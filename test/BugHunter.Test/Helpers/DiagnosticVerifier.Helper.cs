@@ -35,10 +35,11 @@ namespace BugHunter.Test.Verifiers
         /// <param name="language">The language the source classes are in</param>
         /// <param name="analyzer">The analyzer to be run on the sources</param>
         /// <param name="references">Array of additional types source files have dependencies on</param>
+        /// <param name="fakeFilePath">Path that the file should have</param>
         /// <returns>An IEnumerable of Diagnostics that surfaced in the source code, sorted by Location</returns>
-        private static Diagnostic[] GetSortedDiagnostics(string[] sources, string language, DiagnosticAnalyzer analyzer, MetadataReference[] references)
+        private static Diagnostic[] GetSortedDiagnostics(string[] sources, string language, DiagnosticAnalyzer analyzer, MetadataReference[] references, string fakeFilePath = "")
         {
-            return GetSortedDiagnosticsFromDocuments(analyzer, GetDocuments(sources, language, references));
+            return GetSortedDiagnosticsFromDocuments(analyzer, GetDocuments(sources, language, references, fakeFilePath));
         }
 
         /// <summary>
@@ -106,15 +107,16 @@ namespace BugHunter.Test.Verifiers
         /// <param name="sources">Classes in the form of strings</param>
         /// <param name="references">Array of additional types source files have dependencies on</param>
         /// <param name="language">The language the source code is in</param>
+        /// <param name="fakeFilePath">Path that the file should have</param>
         /// <returns>A Tuple containing the Documents produced from the sources and their TextSpans if relevant</returns>
-        private static Document[] GetDocuments(string[] sources, string language, MetadataReference[] references)
+        private static Document[] GetDocuments(string[] sources, string language, MetadataReference[] references, string fakeFilePath = "")
         {
             if (language != LanguageNames.CSharp && language != LanguageNames.VisualBasic)
             {
                 throw new ArgumentException("Unsupported Language");
             }
 
-            var project = CreateProject(sources, references, language);
+            var project = CreateProject(sources, references, fakeFilePath, language);
             var documents = project.Documents.ToArray();
 
             if (sources.Length != documents.Length)
@@ -131,10 +133,11 @@ namespace BugHunter.Test.Verifiers
         /// <param name="source">Classes in the form of a string</param>
         /// <param name="references">Array of additional types source file has dependency on</param>
         /// <param name="language">The language the source code is in</param>
+        /// <param name="fakeFilePath">Path that the file should have</param>
         /// <returns>A Document created from the source string</returns>
-        protected static Document CreateDocument(string source, MetadataReference[] references, string language = LanguageNames.CSharp)
+        protected static Document CreateDocument(string source, MetadataReference[] references, string fakeFilePath = "", string language = LanguageNames.CSharp)
         {
-            return CreateProject(new[] { source }, references, language).Documents.First();
+            return CreateProject(new[] { source }, references, fakeFilePath, language).Documents.First();
         }
 
         /// <summary>
@@ -143,8 +146,9 @@ namespace BugHunter.Test.Verifiers
         /// <param name="sources">Classes in the form of strings</param>
         /// <param name="references">References to be added to solution</param>
         /// <param name="language">The language the source code is in</param>
+        /// <param name="fakeFilePath">Path that the file should have</param>
         /// <returns>A Project created out of the Documents created from the source strings</returns>
-        private static Project CreateProject(string[] sources, MetadataReference[] references, string language = LanguageNames.CSharp)
+        private static Project CreateProject(string[] sources, MetadataReference[] references, string fakeFilePath = "", string language = LanguageNames.CSharp)
         {
             string fileNamePrefix = DefaultFilePathPrefix;
             string fileExt = language == LanguageNames.CSharp ? CSharpDefaultFileExt : VisualBasicDefaultExt;
@@ -168,7 +172,7 @@ namespace BugHunter.Test.Verifiers
             int count = 0;
             foreach (var source in sources)
             {
-                var newFileName = fileNamePrefix + count + "." + fileExt;
+                var newFileName = fakeFilePath + fileNamePrefix + count + "." + fileExt;
                 var documentId = DocumentId.CreateNewId(projectId, debugName: newFileName);
                 var sourceText = SourceText.From(source);
                 solution = solution.AddDocument(documentId, newFileName, sourceText);
