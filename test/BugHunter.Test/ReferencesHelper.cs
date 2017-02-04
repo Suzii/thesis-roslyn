@@ -24,6 +24,9 @@ namespace BugHunter.Test
 
         // Kentico.Librarie.Web.Ui
         public static readonly MetadataReference CMSBaseWebUI = MetadataReference.CreateFromFile(typeof(CMS.Base.Web.UI.ScriptHelper).Assembly.Location);
+        public static readonly MetadataReference CMSUIControls = MetadataReference.CreateFromFile(typeof(CMS.UIControls.CMSAbstractUIWebpart).Assembly.Location);
+        public static readonly MetadataReference CMSEcommerceWebUI = MetadataReference.CreateFromFile(typeof(CMS.Ecommerce.Web.UI.CMSAuthorizeNetProvider).Assembly.Location);
+        public static readonly MetadataReference CMSPortalEngineWebUI = MetadataReference.CreateFromFile(typeof(CMS.PortalEngine.Web.UI.BaseEditMenu).Assembly.Location);
 
 
         // System.Web
