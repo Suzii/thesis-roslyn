@@ -4,6 +4,7 @@ using System.Linq;
 using BugHunter.Core;
 using BugHunter.Core.Extensions;
 using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
 
@@ -30,81 +31,95 @@ namespace BugHunter.BaseClassesRules.Analyzers
 
         public override void Initialize(AnalysisContext context)
         {
-            context.RegisterSyntaxTreeAction(Analyze);
-        }
-
-        private void Analyze(SyntaxTreeAnalysisContext context)
-        {
-            var filePath = context.Tree.FilePath;
-            if (string.IsNullOrEmpty(filePath) || filePath.Contains("_files\\") || !(filePath.Contains(ProjectPaths.UI_WEB_PARTS) || filePath.Contains(ProjectPaths.WEB_PARTS)))
-            {
-                return;
-            }
-
-            string[] webPartBases;
-            if (IsUIWebPart(filePath))
+            context.RegisterCompilationStartAction(compilationContext =>
             {
                 // UI web part can be inherited form CMSAbstractUIWebpart only
-                webPartBases = new[] { "CMSAbstractUIWebpart" };
-            }
-            else
-            {
-                webPartBases = new[] {
-                "CMSAbstractWebPart",
-                "CMSAbstractEditableWebPart",
-                "CMSAbstractLayoutWebPart",
-                "CMSAbstractLanguageWebPart",
-                "CMSCheckoutWebPart",
-                "CMSAbstractWireframeWebPart",
-                "SocialMediaAbstractWebPart",
-                "CMSAbstractWizardWebPart",
-                //"CMS.PortalEngine.Web.UI.CMSAbstractWebPart",
-                //"CMS.PortalEngine.Web.UI.CMSAbstractEditableWebPart",
-                //"CMS.PortalEngine.Web.UI.CMSAbstractLayoutWebPart",
-                //"CMS.PortalEngine.Web.UI.CMSAbstractWizardWebPart",
-                //"CMS.Ecommerce.Web.UI.CMSCheckoutWebPart"
-                };
-            }
+                var uiWebPartBases = new[]
+                    {
+                        "CMS.UIControls.CMSAbstractUIWebpart"
+                    }
+                    .Select(compilationContext.Compilation.GetTypeByMetadataName);
 
-            var root = context.Tree.GetRoot();
+                var webPartBases = new[]
+                    {
+                        //"CMSAbstractWebPart",
+                        //"CMSAbstractEditableWebPart",
+                        //"CMSAbstractLayoutWebPart",
+                        //"CMSAbstractLanguageWebPart",
+                        //"CMSCheckoutWebPart",
+                        //"CMSAbstractWireframeWebPart",
+                        //"SocialMediaAbstractWebPart",
+                        //"CMSAbstractWizardWebPart",
+                        "CMS.PortalEngine.Web.UI.CMSAbstractWebPart",
+                        "CMS.PortalEngine.Web.UI.CMSAbstractEditableWebPart",
+                        "CMS.PortalEngine.Web.UI.CMSAbstractLayoutWebPart",
+                        "CMS.PortalEngine.Web.UI.CMSAbstractWizardWebPart",
+                        "CMS.Ecommerce.Web.UI.CMSCheckoutWebPart"
+                    }
+                    .Select(compilationContext.Compilation.GetTypeByMetadataName);
 
-            var publicInstantiableClassDeclarations = root
-                .DescendantNodesAndSelf()
-                .OfType<ClassDeclarationSyntax>()
-                .Where(classDeclarationSyntax
-                    => classDeclarationSyntax.IsPublic()
-                    && !classDeclarationSyntax.IsAbstract());
+                if (uiWebPartBases.Union(webPartBases).Any(baseType => baseType == null))
+                {
+                    return;
+                }
 
-            var classDeclarationsNotExtendingCMSWebPart = publicInstantiableClassDeclarations
-                .Where(classDeclaration => !ExtendsRequiredCMSWebPart(classDeclaration, webPartBases))
-                .ToList();
+                compilationContext.RegisterSyntaxTreeAction(syntaxTreeAnalysisContext =>
+                {
+                    var filePath = syntaxTreeAnalysisContext.Tree.FilePath;
+                    if (string.IsNullOrEmpty(filePath) ||
+                        filePath.Contains("_files\\") ||
+                        !(filePath.Contains(ProjectPaths.UI_WEB_PARTS) || filePath.Contains(ProjectPaths.WEB_PARTS)))
+                    {
+                        return;
+                    }
 
-            if (classDeclarationsNotExtendingCMSWebPart.Count == 0)
-            {
-                return;
-            }
+                    var publicInstantiableClassDeclarations = syntaxTreeAnalysisContext
+                        .Tree
+                        .GetRoot()
+                        .DescendantNodesAndSelf()
+                        .OfType<ClassDeclarationSyntax>()
+                        .Where(classDeclarationSyntax
+                            => classDeclarationSyntax.IsPublic()
+                            && !classDeclarationSyntax.IsAbstract());
 
-            foreach (var badWebPart in classDeclarationsNotExtendingCMSWebPart)
-            {
-                var location = context.Tree.GetLocation(badWebPart.Identifier.FullSpan);
-                var diagnostic = Diagnostic.Create(Rule, location, badWebPart.Identifier.ToString());
-                context.ReportDiagnostic(diagnostic);
-            }
+                    foreach (var classDeclaration in publicInstantiableClassDeclarations)
+                    {
+                        if (classDeclaration.BaseList != null && !classDeclaration.BaseList.Types.IsNullOrEmpty())
+                        {
+                            var semanticModel = compilationContext.Compilation.GetSemanticModel(syntaxTreeAnalysisContext.Tree);
+                            var baseTypeTypeSymbol = semanticModel.GetDeclaredSymbol(classDeclaration).BaseType;
+
+                            if (baseTypeTypeSymbol != null)
+                            {
+                                if (IsUIWebPart(filePath))
+                                {
+                                    if (uiWebPartBases.Any(baseTypeTypeSymbol.Equals))
+                                    {
+                                        continue;
+                                    }
+                                }
+                                else
+                                {
+                                    if (webPartBases.Any(baseTypeTypeSymbol.Equals))
+                                    {
+                                        continue;
+                                    }
+                                }
+                            }
+                        }
+
+                        var diagnostic = CreateDIagnostic(syntaxTreeAnalysisContext, classDeclaration);
+                        syntaxTreeAnalysisContext.ReportDiagnostic(diagnostic);
+                    }
+                });
+            });
         }
 
-        private static bool ExtendsRequiredCMSWebPart(ClassDeclarationSyntax classDeclaration, string[] webPartBases)
+        private static Diagnostic CreateDIagnostic(SyntaxTreeAnalysisContext syntaxTreeAnalysisContext, ClassDeclarationSyntax classDeclaration)
         {
-            // TODO add some more robust type comparison than strings
-            var baseList = classDeclaration.BaseList;
-            return baseList != null && baseList.Types.Any(baseType => IsOneOfRequiredCMSWebParts(baseType, webPartBases));
-        }
-
-        private static bool IsOneOfRequiredCMSWebParts(BaseTypeSyntax baseType, string[] cmsWebPartBases)
-        {
-            var baseTypeName = baseType.ToString();
-            var baseTypeClassName = baseTypeName.Substring(1 + baseTypeName.LastIndexOf(".", StringComparison.Ordinal));
-            // TODO
-            return cmsWebPartBases.Any(webPartBase => webPartBase == baseTypeClassName);
+            var location = syntaxTreeAnalysisContext.Tree.GetLocation(classDeclaration.Identifier.FullSpan);
+            var diagnostic = Diagnostic.Create(Rule, location, classDeclaration.Identifier.ToString());
+            return diagnostic;
         }
 
         /// <summary>
