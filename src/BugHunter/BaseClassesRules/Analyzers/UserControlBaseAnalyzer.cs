@@ -51,9 +51,9 @@ namespace BugHunter.BaseClassesRules.Analyzers
                         .DescendantNodesAndSelf()
                         .OfType<ClassDeclarationSyntax>()
                         .Where(classDeclarationSyntax
-                            => IsPublicClass(classDeclarationSyntax)
-                            && !IsAbstractClass(classDeclarationSyntax)
-                            && IsPartialClass(classDeclarationSyntax));
+                            => classDeclarationSyntax.IsPublic()
+                            && !classDeclarationSyntax.IsAbstract()
+                            && classDeclarationSyntax.IsPartial());
 
                     foreach (var classDeclaration in publicPartialInstantiableClassDeclarations)
                     {
@@ -80,19 +80,5 @@ namespace BugHunter.BaseClassesRules.Analyzers
             });
         }
 
-        private bool IsPartialClass(ClassDeclarationSyntax classDeclarationSyntax)
-        {
-            return classDeclarationSyntax.Modifiers.Any(modifier => modifier.IsKind(SyntaxKind.PartialKeyword));
-        }
-
-        private static bool IsAbstractClass(ClassDeclarationSyntax classDeclarationSyntax)
-        {
-            return classDeclarationSyntax.Modifiers.Any(modifier => modifier.IsKind(SyntaxKind.AbstractKeyword));
-        }
-
-        private static bool IsPublicClass(ClassDeclarationSyntax classDeclarationSyntax)
-        {
-            return classDeclarationSyntax.Modifiers.Any(modifier => modifier.IsKind(SyntaxKind.PublicKeyword));
-        }
     }
 }

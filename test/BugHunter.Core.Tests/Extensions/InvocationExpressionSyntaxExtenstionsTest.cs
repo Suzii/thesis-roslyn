@@ -7,7 +7,7 @@ using NUnit.Framework.Internal;
 namespace BugHunter.Core.Tests.Extensions
 {
     [TestFixture]
-    public class InvocationExpressionSyntaxExtenstions
+    public class InvocationExpressionSyntaxExtenstionsTest
     {
         [TestCase(@"someMethod()", @"someMethod(""newArgument"")")]
         [TestCase(@"someMethod(""a"", ""b"")", @"someMethod(""a"", ""b"", ""newArgument"")")]

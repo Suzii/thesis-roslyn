@@ -2,6 +2,7 @@
 using System.Collections.Immutable;
 using System.Linq;
 using BugHunter.Core;
+using BugHunter.Core.Extensions;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -72,8 +73,8 @@ namespace BugHunter.BaseClassesRules.Analyzers
                 .DescendantNodesAndSelf()
                 .OfType<ClassDeclarationSyntax>()
                 .Where(classDeclarationSyntax
-                    => IsPublicClass(classDeclarationSyntax)
-                    && !IsAbstractCLass(classDeclarationSyntax));
+                    => classDeclarationSyntax.IsPublic()
+                    && !classDeclarationSyntax.IsAbstract());
 
             var classDeclarationsNotExtendingCMSWebPart = publicInstantiableClassDeclarations
                 .Where(classDeclaration => !ExtendsRequiredCMSWebPart(classDeclaration, webPartBases))
@@ -105,16 +106,6 @@ namespace BugHunter.BaseClassesRules.Analyzers
             var baseTypeClassName = baseTypeName.Substring(1 + baseTypeName.LastIndexOf(".", StringComparison.Ordinal));
             // TODO
             return cmsWebPartBases.Any(webPartBase => webPartBase == baseTypeClassName);
-        }
-
-        private static bool IsAbstractCLass(ClassDeclarationSyntax classDeclarationSyntax)
-        {
-            return classDeclarationSyntax.Modifiers.Any(modifier => modifier.IsKind(SyntaxKind.AbstractKeyword));
-        }
-
-        private static bool IsPublicClass(ClassDeclarationSyntax classDeclarationSyntax)
-        {
-            return classDeclarationSyntax.Modifiers.Any(modifier => modifier.IsKind(SyntaxKind.PublicKeyword));
         }
 
         /// <summary>
