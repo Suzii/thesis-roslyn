@@ -17,6 +17,12 @@
         /// This folder contains UserControls 
         /// </summary>
         // TODO
-        public const string USER_CONTROLS = @"CMSUsesrControl\";
+        public const string USER_CONTROLS = @"CMSUserControl\";
+
+        /// <summary>
+        /// This folder contains Pages
+        /// </summary>
+        // TODO
+        public const string PAGES = @"CMSPage\";
     }
 }

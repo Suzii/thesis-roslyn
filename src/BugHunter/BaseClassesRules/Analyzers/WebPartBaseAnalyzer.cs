@@ -4,7 +4,6 @@ using System.Linq;
 using BugHunter.Core;
 using BugHunter.Core.Extensions;
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
 
