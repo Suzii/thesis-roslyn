@@ -11,5 +11,12 @@
         /// This folder contains webparts
         /// </summary>
         public const string WEB_PARTS = @"CMSWebParts\";
+
+
+        /// <summary>
+        /// This folder contains UserControls 
+        /// </summary>
+        // TODO
+        public const string USER_CONTROLS = @"CMSUsesrControl\";
     }
 }

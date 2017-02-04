@@ -28,6 +28,7 @@ namespace BugHunter.Test
 
         // System.Web
         public static readonly MetadataReference SystemWebReference = MetadataReference.CreateFromFile(typeof(System.Web.HttpRequest).Assembly.Location);
+        public static readonly MetadataReference SystemWebUIReference = MetadataReference.CreateFromFile(typeof(System.Web.UI.Control).Assembly.Location);
 
         public static readonly MetadataReference[] BasicReferences =
         {
