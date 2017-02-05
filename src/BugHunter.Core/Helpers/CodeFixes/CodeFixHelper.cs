@@ -39,9 +39,9 @@ namespace BugHunter.Core.Helpers.CodeFixes
             return Context.Diagnostics.First();
         }
 
-        public Diagnostic GetFirstDiagnostic(string diagnosticId)
+        public Diagnostic GetFirstDiagnostic(params string[] diagnosticIds)
         {
-            return Context.Diagnostics.FirstOrDefault(diagnostic => diagnostic.Id == diagnosticId);
+            return Context.Diagnostics.FirstOrDefault(diagnostic => diagnosticIds.Contains(diagnostic.Id));
         }
 
         public Location GetDiagnosticLocation()

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Immutable;
 using System.Composition;
+using System.Linq;
 using System.Threading.Tasks;
 using BugHunter.BaseClassesRules.Analyzers;
 using BugHunter.Core.Extensions;
@@ -15,12 +16,17 @@ namespace BugHunter.BaseClassesRules.CodeFixes
     public class WebPartBaseCodeFixProvider : CodeFixProvider
     {
         public sealed override ImmutableArray<string> FixableDiagnosticIds
-            => ImmutableArray.Create(WebPartBaseAnalyzer.DIAGNOSTIC_ID);
+            => ImmutableArray.Create(WebPartBaseAnalyzer.WEB_PART_DIAGNOSTIC_ID, WebPartBaseAnalyzer.UI_WEB_PART_DIAGNOSTIC_ID);
 
         public sealed override FixAllProvider GetFixAllProvider()
         {
             return WellKnownFixAllProviders.BatchFixer;
         }
+
+        private static readonly ClassAndItsNamespace[] UiWebPartBaseClasses =
+{
+            new ClassAndItsNamespace { ClassNamespace = "CMS.UIControls", ClassName = "CMSAbstractUIWebpart"},
+        };
 
         private static readonly ClassAndItsNamespace[] WebPartBaseClasses =
         {
@@ -35,14 +41,19 @@ namespace BugHunter.BaseClassesRules.CodeFixes
         {
             var baseTypeCodeFixHelper = new ClassDeclarationCodeFixHelper(context);
 
-            var diagnostic = baseTypeCodeFixHelper.GetFirstDiagnostic(WebPartBaseAnalyzer.DIAGNOSTIC_ID);
-            var classDeclaration = await baseTypeCodeFixHelper.GetDiagnosedClassDeclarationSyntax(WebPartBaseAnalyzer.DIAGNOSTIC_ID);
+            var diagnostic = baseTypeCodeFixHelper.GetFirstDiagnostic(FixableDiagnosticIds.ToArray());
+            var diagnosticId = diagnostic.Id;
+            var classDeclaration = await baseTypeCodeFixHelper.GetDiagnosedClassDeclarationSyntax(diagnosticId);
             if (classDeclaration == null)
             {
                 return;
             }
 
-            foreach (var classAndItsNamespace in WebPartBaseClasses)
+            var suggestions = diagnosticId == DiagnosticIds.UI_WEB_PART_BASE
+                ? UiWebPartBaseClasses
+                : WebPartBaseClasses;
+
+            foreach (var classAndItsNamespace in suggestions)
             {
                 var newClassDeclaration = classDeclaration.WithBaseClass(classAndItsNamespace.ClassName);
                 context.RegisterCodeFix(

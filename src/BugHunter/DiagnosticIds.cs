@@ -44,6 +44,7 @@
 
         // WP checks
         public const string WEB_PART_BASE = "BH4000";
+        public const string UI_WEB_PART_BASE = "BH4002";
         public const string VALIDATION_HELPER_GET = "BH4001";
 
         // Control checks
