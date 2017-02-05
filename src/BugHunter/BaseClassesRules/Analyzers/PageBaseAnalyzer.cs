@@ -1,10 +1,9 @@
 ﻿using System.Collections.Immutable;
 using System.Linq;
 using BugHunter.Core;
+using BugHunter.Core.Analyzers;
 using BugHunter.Core.Extensions;
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
 
 namespace BugHunter.BaseClassesRules.Analyzers
@@ -13,7 +12,7 @@ namespace BugHunter.BaseClassesRules.Analyzers
     /// Checks if Page file inherits from right class.
     /// </summary>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class PageBaseAnalyzer : DiagnosticAnalyzer
+    public class PageBaseAnalyzer : BaseClassDeclarationSyntaxAnalyzer
     {
         public const string DIAGNOSTIC_ID = DiagnosticIds.PAGE_BASE;
 
@@ -46,11 +45,7 @@ namespace BugHunter.BaseClassesRules.Analyzers
                         return;
                     }
 
-                    var publicPartialInstantiableClassDeclarations = syntaxTreeAnalysisContext
-                        .Tree
-                        .GetRoot()
-                        .DescendantNodesAndSelf()
-                        .OfType<ClassDeclarationSyntax>()
+                    var publicPartialInstantiableClassDeclarations = GetAllClassDeclarations(syntaxTreeAnalysisContext)
                         .Where(classDeclarationSyntax
                             => classDeclarationSyntax.IsPublic()
                             && !classDeclarationSyntax.IsAbstract()
@@ -58,30 +53,16 @@ namespace BugHunter.BaseClassesRules.Analyzers
 
                     foreach (var classDeclaration in publicPartialInstantiableClassDeclarations)
                     {
-                        if (classDeclaration.BaseList == null || classDeclaration.BaseList.Types.IsNullOrEmpty())
-                        {
-                            continue;
-                        }
-
                         var semanticModel = compilationContext.Compilation.GetSemanticModel(syntaxTreeAnalysisContext.Tree);
-                        var baseTypeTypeSymbol = semanticModel.GetDeclaredSymbol(classDeclaration).BaseType;
-                        if (baseTypeTypeSymbol == null || !baseTypeTypeSymbol.Equals(systemWebUiPageType))
+                        var baseTypeTypeSymbol = GetBaseTypeSymbol(classDeclaration, semanticModel);
+                        if (baseTypeTypeSymbol != null && baseTypeTypeSymbol.Equals(systemWebUiPageType))
                         {
-                            continue;
+                            var diagnostic = CreateDiagnostic(syntaxTreeAnalysisContext, classDeclaration, Rule);
+                            syntaxTreeAnalysisContext.ReportDiagnostic(diagnostic);
                         }
-
-                        var diagnostic = CreateDIagnostic(syntaxTreeAnalysisContext, classDeclaration);
-                        syntaxTreeAnalysisContext.ReportDiagnostic(diagnostic);
                     }
                 });
             });
-        }
-
-        private static Diagnostic CreateDIagnostic(SyntaxTreeAnalysisContext syntaxTreeAnalysisContext, ClassDeclarationSyntax classDeclaration)
-        {
-            var location = syntaxTreeAnalysisContext.Tree.GetLocation(classDeclaration.Identifier.FullSpan);
-            var diagnostic = Diagnostic.Create(Rule, location, classDeclaration.Identifier.ToString());
-            return diagnostic;
         }
     }
 }

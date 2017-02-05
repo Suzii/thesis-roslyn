@@ -1,10 +1,9 @@
 ﻿using System.Collections.Immutable;
 using System.Linq;
 using BugHunter.Core;
+using BugHunter.Core.Analyzers;
 using BugHunter.Core.Extensions;
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
 
 namespace BugHunter.BaseClassesRules.Analyzers
@@ -13,7 +12,7 @@ namespace BugHunter.BaseClassesRules.Analyzers
     /// Checks if User Control file inherits from right class.
     /// </summary>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class UserControlBaseAnalyzer : DiagnosticAnalyzer
+    public class UserControlBaseAnalyzer : BaseClassDeclarationSyntaxAnalyzer
     {
         public const string DIAGNOSTIC_ID = DiagnosticIds.USER_CONTROL_BASE;
 
@@ -40,18 +39,13 @@ namespace BugHunter.BaseClassesRules.Analyzers
 
                 compilationContext.RegisterSyntaxTreeAction(syntaxTreeAnalysisContext =>
                 {
-
                     var filePath = syntaxTreeAnalysisContext.Tree.FilePath;
                     if (string.IsNullOrEmpty(filePath) || !filePath.Contains(ProjectPaths.USER_CONTROLS))
                     {
                         return;
                     }
 
-                    var publicPartialInstantiableClassDeclarations = syntaxTreeAnalysisContext
-                        .Tree
-                        .GetRoot()
-                        .DescendantNodesAndSelf()
-                        .OfType<ClassDeclarationSyntax>()
+                    var publicPartialInstantiableClassDeclarations = GetAllClassDeclarations(syntaxTreeAnalysisContext)
                         .Where(classDeclarationSyntax
                             => classDeclarationSyntax.IsPublic()
                             && !classDeclarationSyntax.IsAbstract()
@@ -59,30 +53,18 @@ namespace BugHunter.BaseClassesRules.Analyzers
 
                     foreach (var classDeclaration in publicPartialInstantiableClassDeclarations)
                     {
-                        if (classDeclaration.BaseList == null || classDeclaration.BaseList.Types.IsNullOrEmpty())
-                        {
-                            continue;
-                        }
-
                         var semanticModel = compilationContext.Compilation.GetSemanticModel(syntaxTreeAnalysisContext.Tree);
-                        var baseTypeTypeSymbol = semanticModel.GetDeclaredSymbol(classDeclaration).BaseType;
-                        if (baseTypeTypeSymbol == null || !baseTypeTypeSymbol.Equals(systemWebUiControlType))
+                        var baseTypeTypeSymbol = GetBaseTypeSymbol(classDeclaration, semanticModel);
+                        if (baseTypeTypeSymbol != null && baseTypeTypeSymbol.Equals(systemWebUiControlType))
                         {
-                            continue;
+                            var diagnostic = CreateDiagnostic(syntaxTreeAnalysisContext, classDeclaration, Rule);
+                            syntaxTreeAnalysisContext.ReportDiagnostic(diagnostic);
                         }
-
-                        var diagnostic = GetDiagnostic(syntaxTreeAnalysisContext, classDeclaration);
-                        syntaxTreeAnalysisContext.ReportDiagnostic(diagnostic);
                     }
                 });
             });
         }
 
-        private static Diagnostic GetDiagnostic(SyntaxTreeAnalysisContext syntaxTreeAnalysisContext, ClassDeclarationSyntax classDeclaration)
-        {
-            var location = syntaxTreeAnalysisContext.Tree.GetLocation(classDeclaration.Identifier.FullSpan);
-            var diagnostic = Diagnostic.Create(Rule, location, classDeclaration.Identifier.ToString());
-            return diagnostic;
-        }
+       
     }
 }

@@ -85,6 +85,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AnalyzerCategories.cs" />
+    <Compile Include="Analyzers\BaseClassDeclarationSyntaxAnalyzer.cs" />
     <Compile Include="Analyzers\BaseMemberAccessAnalyzer.cs" />
     <Compile Include="Analyzers\BaseMemberInvocationAnalyzer.cs" />
     <Compile Include="DiagnosticsFormatting\DiagnosticFormatterFactory.cs" />

@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using BugHunter.Core;
+using BugHunter.Core.Analyzers;
 using BugHunter.Core.Extensions;
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
 
 namespace BugHunter.BaseClassesRules.Analyzers
@@ -15,7 +13,7 @@ namespace BugHunter.BaseClassesRules.Analyzers
     /// Checks if Web Part file inherits from right class.
     /// </summary>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class WebPartBaseAnalyzer : DiagnosticAnalyzer
+    public class WebPartBaseAnalyzer : BaseClassDeclarationSyntaxAnalyzer
     {
         public const string WEB_PART_DIAGNOSTIC_ID = DiagnosticIds.WEB_PART_BASE;
         public const string UI_WEB_PART_DIAGNOSTIC_ID = DiagnosticIds.UI_WEB_PART_BASE;
@@ -106,41 +104,14 @@ namespace BugHunter.BaseClassesRules.Analyzers
                 });
             });
         }
-
-        private static IEnumerable<ClassDeclarationSyntax> GetAllClassDeclarations(SyntaxTreeAnalysisContext syntaxTreeAnalysisContext)
-        {
-            return syntaxTreeAnalysisContext
-                .Tree
-                .GetRoot()
-                .DescendantNodesAndSelf()
-                .OfType<ClassDeclarationSyntax>();
-        }
-
+        
         private static bool FileIsInWebPartsFolder(string filePath)
         {
             return !string.IsNullOrEmpty(filePath) &&
                    !filePath.Contains("_files\\") &&
                    (filePath.Contains(ProjectPaths.UI_WEB_PARTS) || filePath.Contains(ProjectPaths.WEB_PARTS));
         }
-
-        private static INamedTypeSymbol GetBaseTypeSymbol(ClassDeclarationSyntax classDeclaration, SemanticModel semanticModel)
-        {
-            // if class is not extending nor implementing anything, it has no base type
-            if (classDeclaration.BaseList == null || classDeclaration.BaseList.Types.IsNullOrEmpty())
-            {
-                return null;
-            }
-
-            return semanticModel.GetDeclaredSymbol(classDeclaration).BaseType;
-        }
-
-        private static Diagnostic CreateDiagnostic(SyntaxTreeAnalysisContext syntaxTreeAnalysisContext, ClassDeclarationSyntax classDeclaration, DiagnosticDescriptor rule)
-        {
-            var location = syntaxTreeAnalysisContext.Tree.GetLocation(classDeclaration.Identifier.FullSpan);
-            var diagnostic = Diagnostic.Create(rule, location, classDeclaration.Identifier.ToString());
-            return diagnostic;
-        }
-
+        
         /// <summary>
         /// Checks if the given file is UI web part.
         /// </summary>
