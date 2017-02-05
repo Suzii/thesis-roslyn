@@ -20,9 +20,9 @@ namespace BugHunter.Core.Helpers.CodeFixes
             var document = Context.Document;
             var root = await GetDocumentRoot();
 
-            var formattedMemberAccess = newNode.WithTriviaFrom(oldNode);
+            var formattedNewNode = newNode.WithTriviaFrom(oldNode);
 
-            var newRoot = root.ReplaceNode(oldNode, formattedMemberAccess);
+            var newRoot = root.ReplaceNode(oldNode, formattedNewNode);
 
             if (namespacesToBeReferenced != null)
             {
@@ -34,9 +34,19 @@ namespace BugHunter.Core.Helpers.CodeFixes
             return newDocument;
         }
 
+        public Diagnostic GetFirstDiagnostic()
+        {
+            return Context.Diagnostics.First();
+        }
+
+        public Diagnostic GetFirstDiagnostic(string diagnosticId)
+        {
+            return Context.Diagnostics.FirstOrDefault(diagnostic => diagnostic.Id == diagnosticId);
+        }
+
         public Location GetDiagnosticLocation()
         {
-            return Context.Diagnostics.First().Location;
+            return GetFirstDiagnostic().Location;
         }
 
         protected async Task<SyntaxNode> GetDocumentRoot()

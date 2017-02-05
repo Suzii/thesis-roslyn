@@ -42,14 +42,6 @@ namespace BugHunter.BaseClassesRules.Analyzers
 
                 var webPartBases = new[]
                     {
-                        //"CMSAbstractWebPart",
-                        //"CMSAbstractEditableWebPart",
-                        //"CMSAbstractLayoutWebPart",
-                        //"CMSAbstractLanguageWebPart",
-                        //"CMSCheckoutWebPart",
-                        //"CMSAbstractWireframeWebPart",
-                        //"SocialMediaAbstractWebPart",
-                        //"CMSAbstractWizardWebPart",
                         "CMS.PortalEngine.Web.UI.CMSAbstractWebPart",
                         "CMS.PortalEngine.Web.UI.CMSAbstractEditableWebPart",
                         "CMS.PortalEngine.Web.UI.CMSAbstractLayoutWebPart",
@@ -70,6 +62,7 @@ namespace BugHunter.BaseClassesRules.Analyzers
                         filePath.Contains("_files\\") ||
                         !(filePath.Contains(ProjectPaths.UI_WEB_PARTS) || filePath.Contains(ProjectPaths.WEB_PARTS)))
                     {
+                        // TODO if commented out, it is for testing purposes only, uncomment
                         return;
                     }
 

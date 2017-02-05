@@ -71,6 +71,63 @@ namespace BugHunter.Core.Tests.Extensions
             }
         }
 
+        private class WithBaseType
+        {
+            [Test]
+            public void NoBaseList_AddsBaseType()
+            {
+                var test = $"public class SampleClass\r\n{{\r\n}}";
+                var expectedFix = $"public class SampleClass : SomeBaseClass\r\n{{\r\n}}";
+
+                Assert.AreEqual(expectedFix, GetClassDeclarationSyntax(test).WithBaseClass("SomeBaseClass").ToString());
+            }
+
+            [Test]
+            public void HasBaseType_ReplacesBaseType()
+            {
+                var test = $"public class SampleClass : BaseTypeToBeReplaced\r\n{{\r\n}}";
+                var expectedFix = $"public class SampleClass : SomeBaseClass\r\n{{\r\n}}";
+
+                Assert.AreEqual(expectedFix, GetClassDeclarationSyntax(test).WithBaseClass("SomeBaseClass").ToString());
+            }
+
+            [Test]
+            public void ImplementsInterface_AddsBaseType()
+            {
+                var test = $"public class SampleClass : IRandomInterface\r\n{{\r\n}}";
+                var expectedFix = $"public class SampleClass : SomeBaseClass, IRandomInterface\r\n{{\r\n}}";
+
+                Assert.AreEqual(expectedFix, GetClassDeclarationSyntax(test).WithBaseClass("SomeBaseClass").ToString());
+            }
+
+            [Test]
+            public void ImplementsFullyQualifiedInterface_AddsBaseType()
+            {
+                var test = $"public class SampleClass : Some.Namespace.IRandomInterface\r\n{{\r\n}}";
+                var expectedFix = $"public class SampleClass : SomeBaseClass, Some.Namespace.IRandomInterface\r\n{{\r\n}}";
+
+                Assert.AreEqual(expectedFix, GetClassDeclarationSyntax(test).WithBaseClass("SomeBaseClass").ToString());
+            }
+
+            [Test]
+            public void ImplementsInterfaceAndExtendsBaseType_ReplacesBaseType()
+            {
+                var test = $"public class SampleClass : BaseTypeToBeReplaced, IRandomInterface\r\n{{\r\n}}";
+                var expectedFix = $"public class SampleClass : SomeBaseClass, IRandomInterface\r\n{{\r\n}}";
+
+                Assert.AreEqual(expectedFix, GetClassDeclarationSyntax(test).WithBaseClass("SomeBaseClass").ToString());
+            }
+
+            [Test]
+            public void ImplementsFullyQUalifiedInterfaceAndExtendsBaseType_ReplacesBaseType()
+            {
+                var test = $"public class SampleClass : BaseTypeToBeReplaced, Some.Namespace.IRandomInterface\r\n{{\r\n}}";
+                var expectedFix = $"public class SampleClass : SomeBaseClass, Some.Namespace.IRandomInterface\r\n{{\r\n}}";
+
+                Assert.AreEqual(expectedFix, GetClassDeclarationSyntax(test).WithBaseClass("SomeBaseClass").ToString());
+            }
+        }
+
         private static ClassDeclarationSyntax GetClassDeclarationSyntax(string classDeclaration)
         {
             return SyntaxFactory

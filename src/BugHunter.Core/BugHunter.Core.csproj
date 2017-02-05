@@ -101,11 +101,13 @@
     <Compile Include="Extensions\InvocationExpressionSyntaxExtensions.cs" />
     <Compile Include="Extensions\TypeSymbolExtensions.cs" />
     <Compile Include="Helpers\ApiReplacementRuleBuilder.cs" />
+    <Compile Include="Helpers\CodeFixes\ClassDeclarationCodeFixHelper.cs" />
     <Compile Include="Helpers\CodeFixes\CodeFixHelper.cs" />
     <Compile Include="Helpers\CodeFixes\MemberInvocationCodeFixHelper.cs" />
     <Compile Include="Helpers\CodeFixes\MemberAccessCodeFixHelper.cs" />
     <Compile Include="Helpers\CodeFixes\UsingsHelper.cs" />
     <Compile Include="Helpers\SemanticModelBrowser.cs" />
+    <Compile Include="Models\ClassAndItsNamespace.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResourceBuilder\CodeFixMessageBuilder.cs" />
     <Compile Include="ResourceBuilder\ApiReplacementsMessageBuilder.cs" />

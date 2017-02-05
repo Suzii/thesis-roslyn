@@ -43,6 +43,7 @@
     </Compile>
     <Compile Include="BaseClassesRules\Analyzers\PageBaseAnalyzer.cs" />
     <Compile Include="BaseClassesRules\Analyzers\UserControlBaseAnalyzer.cs" />
+    <Compile Include="BaseClassesRules\CodeFixes\WebPartBaseCodeFixProvider.cs" />
     <Compile Include="ControlRules\ControlResources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -239,7 +240,6 @@
   <ItemGroup>
     <Folder Include="AspxRules\Analyzers\" />
     <Folder Include="AspxRules\CodeFixes\" />
-    <Folder Include="BaseClassesRules\CodeFixes\" />
     <Folder Include="ControlRules\Analyzers\" />
     <Folder Include="ControlRules\CodeFixes\" />
     <Folder Include="PageRules\Analyzers\" />
