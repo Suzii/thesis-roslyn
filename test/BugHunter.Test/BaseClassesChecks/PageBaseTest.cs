@@ -1,13 +1,15 @@
 ﻿using System.Linq;
 using BugHunter.BaseClassesRules.Analyzers;
+using BugHunter.BaseClassesRules.CodeFixes;
 using BugHunter.Test.Verifiers;
+using CMS.UIControls;
 using Microsoft.CodeAnalysis;
 using NUnit.Framework;
 
 namespace BugHunter.Test.BaseClassesChecks
 {
     [TestFixture]
-    public class PageBaseTest : CodeFixVerifier<PageBaseAnalyzer>
+    public class PageBaseTest : CodeFixVerifier<PageBaseAnalyzer, PageBaseCodeFixProvider>
     {
         protected override MetadataReference[] GetAdditionalReferences()
         {
@@ -47,7 +49,6 @@ namespace BugHunter.Test.BaseClassesChecks
             VerifyCSharpDiagnostic(test, excludedPath);
         }
 
-        // TODO is this okay? Not extending any class in defined project path without diagnostic???
         [TestCase(ProjectPaths.PAGES)]
         public void InputWithError_ClassNotExtendingAnyClass_NoDiagnostic(string filePath)
         {
@@ -58,6 +59,19 @@ namespace BugHunter.Test.BaseClassesChecks
     }}
 }}";
 
+            VerifyCSharpDiagnostic(test, filePath);
+        }
+
+        [TestCase(nameof(CMS.UIControls.AbstractCMSPage), ProjectPaths.PAGES)]
+        [TestCase("CMS.UIControls.AbstractCMSPage", ProjectPaths.PAGES)]
+        public void OkayInput_ClassExtendingCMSClass_NoDiagnostic(string oldUsage, string filePath)
+        {
+            var test = $@"namespace SampleTestProject.CsSamples
+{{
+    public partial class SampleClass: {oldUsage}
+    {{
+    }}
+}}";
             VerifyCSharpDiagnostic(test, filePath);
         }
 
@@ -78,17 +92,34 @@ namespace SampleTestProject.CsSamples
             VerifyCSharpDiagnostic(test, ProjectPaths.PAGES, expectedDiagnostic.WithLocation(5, 26, ProjectPaths.PAGES + "Test0.cs"));
         }
 
-        [TestCase(nameof(CMS.UIControls.AbstractCMSPage), ProjectPaths.PAGES)]
-        [TestCase("CMS.UIControls.AbstractCMSPage", ProjectPaths.PAGES)]
-        public void OkayInput_ClassExtendingCMSClass_NoDiagnostic(string oldUsage, string filePath)
+        // TODO add more possibilities
+        private static readonly object[] CodeFixesTestSource = {
+            new object [] {ProjectPaths.PAGES, nameof(CMSAbstractEditablePage), "CMS.UIControls", 0},
+        };
+
+        [Test, TestCaseSource(nameof(CodeFixesTestSource))]
+        public void InputWithError_ClassExtendingWrongClass_ProvidesCodefixes(string filePath, string baseClassToExtend, string namespaceToBeUsed, int codeFixNumber)
         {
             var test = $@"namespace SampleTestProject.CsSamples
 {{
-    public partial class SampleClass: {oldUsage}
+    public partial class SampleClass : System.Web.UI.Page
     {{
     }}
 }}";
-            VerifyCSharpDiagnostic(test, filePath);
+            var expectedDiagnostic = GetDiagnosticResult("SampleClass");
+
+            VerifyCSharpDiagnostic(test, filePath, expectedDiagnostic.WithLocation(3, 26, filePath + "Test0.cs"));
+
+            var expectedFix = $@"using {namespaceToBeUsed};
+
+namespace SampleTestProject.CsSamples
+{{
+    public partial class SampleClass : {baseClassToExtend}
+    {{
+    }}
+}}";
+
+            VerifyCSharpFix(test, expectedFix, codeFixNumber, false, filePath);
         }
     }
 }

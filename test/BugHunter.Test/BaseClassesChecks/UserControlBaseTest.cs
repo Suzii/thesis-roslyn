@@ -1,13 +1,15 @@
 ﻿using System.Linq;
 using BugHunter.BaseClassesRules.Analyzers;
+using BugHunter.BaseClassesRules.CodeFixes;
 using BugHunter.Test.Verifiers;
+using CMS.UIControls;
 using Microsoft.CodeAnalysis;
 using NUnit.Framework;
 
 namespace BugHunter.Test.BaseClassesChecks
 {
     [TestFixture]
-    public class UserControlBaseTest : CodeFixVerifier<UserControlBaseAnalyzer>
+    public class UserControlBaseTest : CodeFixVerifier<UserControlBaseAnalyzer, UserControlBaseCodeFixProvider>
     {
         protected override MetadataReference[] GetAdditionalReferences()
         {
@@ -61,6 +63,19 @@ namespace BugHunter.Test.BaseClassesChecks
             VerifyCSharpDiagnostic(test, filePath);
         }
 
+        [TestCase(nameof(CMS.Base.Web.UI.AbstractUserControl), ProjectPaths.USER_CONTROLS)]
+        [TestCase("CMS.Base.Web.UI.AbstractUserControl", ProjectPaths.UI_WEB_PARTS)]
+        public void OkayInput_ClassExtendingCMSClass_NoDiagnostic(string oldUsage, string filePath)
+        {
+            var test = $@"namespace SampleTestProject.CsSamples
+{{
+    public partial class SampleClass: {oldUsage}
+    {{
+    }}
+}}";
+            VerifyCSharpDiagnostic(test, filePath);
+        }
+
         [TestCase(nameof(System.Web.UI.Control))]
         [TestCase("System.Web.UI.Control")]
         public void InputWithError_ClassNotExtendingCMSClass_SurfacesDiagnostic(string oldUsage)
@@ -78,17 +93,34 @@ namespace SampleTestProject.CsSamples
             VerifyCSharpDiagnostic(test, ProjectPaths.USER_CONTROLS, expectedDiagnostic.WithLocation(5, 26, ProjectPaths.USER_CONTROLS + "Test0.cs"));
         }
 
-        [TestCase(nameof(CMS.Base.Web.UI.AbstractUserControl), ProjectPaths.USER_CONTROLS)]
-        [TestCase("CMS.Base.Web.UI.AbstractUserControl", ProjectPaths.UI_WEB_PARTS)]
-        public void OkayInput_ClassExtendingCMSClass_NoDiagnostic(string oldUsage, string filePath)
+        // TODO add more possibilities
+        private static readonly object[] CodeFixesTestSource = {
+            new object [] {ProjectPaths.USER_CONTROLS, nameof(CMSUserControl), "CMS.UIControls", 0},
+        };
+
+        [Test, TestCaseSource(nameof(CodeFixesTestSource))]
+        public void InputWithError_ClassExtendingWrongClass_ProvidesCodefixes(string filePath, string baseClassToExtend, string namespaceToBeUsed, int codeFixNumber)
         {
             var test = $@"namespace SampleTestProject.CsSamples
 {{
-    public partial class SampleClass: {oldUsage}
+    public partial class SampleClass : System.Web.UI.Control
     {{
     }}
 }}";
-            VerifyCSharpDiagnostic(test, filePath);
+            var expectedDiagnostic = GetDiagnosticResult("SampleClass");
+
+            VerifyCSharpDiagnostic(test, filePath, expectedDiagnostic.WithLocation(3, 26, filePath + "Test0.cs"));
+
+            var expectedFix = $@"using {namespaceToBeUsed};
+
+namespace SampleTestProject.CsSamples
+{{
+    public partial class SampleClass : {baseClassToExtend}
+    {{
+    }}
+}}";
+
+            VerifyCSharpFix(test, expectedFix, codeFixNumber, false, filePath);
         }
     }
 }

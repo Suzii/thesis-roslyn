@@ -43,6 +43,8 @@
     </Compile>
     <Compile Include="BaseClassesRules\Analyzers\PageBaseAnalyzer.cs" />
     <Compile Include="BaseClassesRules\Analyzers\UserControlBaseAnalyzer.cs" />
+    <Compile Include="BaseClassesRules\CodeFixes\UserControlBaseCodeFixProvider.cs" />
+    <Compile Include="BaseClassesRules\CodeFixes\PageBaseCodeFixProvider.cs" />
     <Compile Include="BaseClassesRules\CodeFixes\WebPartBaseCodeFixProvider.cs" />
     <Compile Include="ControlRules\ControlResources.Designer.cs">
       <AutoGen>True</AutoGen>
