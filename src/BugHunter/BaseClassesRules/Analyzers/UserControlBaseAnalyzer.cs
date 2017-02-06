@@ -1,4 +1,5 @@
 ﻿using System.Collections.Immutable;
+using System.Globalization;
 using System.Linq;
 using BugHunter.Core;
 using BugHunter.Core.Analyzers;
@@ -31,7 +32,7 @@ namespace BugHunter.BaseClassesRules.Analyzers
         {
             context.RegisterCompilationStartAction(compilationContext =>
             {
-                var systemWebUiControlType = compilationContext.Compilation.GetTypeByMetadataName("System.Web.UI.Control");
+                var systemWebUiControlType = compilationContext.Compilation.GetTypeByMetadataName("System.Web.UI.UserControl");
                 if (systemWebUiControlType == null)
                 {
                     return;
@@ -40,7 +41,7 @@ namespace BugHunter.BaseClassesRules.Analyzers
                 compilationContext.RegisterSyntaxTreeAction(syntaxTreeAnalysisContext =>
                 {
                     var filePath = syntaxTreeAnalysisContext.Tree.FilePath;
-                    if (string.IsNullOrEmpty(filePath) || !filePath.Contains(ProjectPaths.USER_CONTROLS))
+                    if (string.IsNullOrEmpty(filePath) || /*!filePath.EndsWith(".ascx.cs") ||*/!filePath.Contains(ProjectPaths.USER_CONTROLS))
                     {
                         return;
                     }

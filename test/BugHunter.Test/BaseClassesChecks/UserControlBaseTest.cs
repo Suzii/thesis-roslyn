@@ -2,6 +2,7 @@
 using BugHunter.BaseClassesRules.Analyzers;
 using BugHunter.BaseClassesRules.CodeFixes;
 using BugHunter.Test.Verifiers;
+using CMS.Base.Web.UI;
 using CMS.UIControls;
 using Microsoft.CodeAnalysis;
 using NUnit.Framework;
@@ -35,9 +36,9 @@ namespace BugHunter.Test.BaseClassesChecks
         }
 
         [TestCase(@"", @"")]
-        [TestCase(@"", @": System.Web.UI.Control")]
+        [TestCase(@"", @": System.Web.UI.UserControl")]
         [TestCase(@"\this\should\prevent\from\diagnostic\being\raised", @"")]
-        [TestCase(@"\this\should\prevent\from\diagnostic\being\raised", @": System.Web.UI.Control")]
+        [TestCase(@"\this\should\prevent\from\diagnostic\being\raised", @": System.Web.UI.UserControl")]
         public void OkInput_ClassOnExcludedPath_NoDiagnostic(string excludedPath, string baseList)
         {
             var test = $@"namespace SampleTestProject.CsSamples
@@ -49,7 +50,6 @@ namespace BugHunter.Test.BaseClassesChecks
             VerifyCSharpDiagnostic(test, excludedPath);
         }
 
-        // TODO is this okay? Not extending any class in defined project path without diagnostic???
         [TestCase(ProjectPaths.USER_CONTROLS)]
         public void InputWithError_ClassNotExtendingAnyClass_NoDiagnostic(string filePath)
         {
@@ -76,8 +76,8 @@ namespace BugHunter.Test.BaseClassesChecks
             VerifyCSharpDiagnostic(test, filePath);
         }
 
-        [TestCase(nameof(System.Web.UI.Control))]
-        [TestCase("System.Web.UI.Control")]
+        [TestCase(nameof(System.Web.UI.UserControl))]
+        [TestCase("System.Web.UI.UserControl")]
         public void InputWithError_ClassNotExtendingCMSClass_SurfacesDiagnostic(string oldUsage)
         {
             var test = $@"using System.Web.UI;
@@ -93,9 +93,9 @@ namespace SampleTestProject.CsSamples
             VerifyCSharpDiagnostic(test, ProjectPaths.USER_CONTROLS, expectedDiagnostic.WithLocation(5, 26, ProjectPaths.USER_CONTROLS + "Test0.cs"));
         }
 
-        // TODO add more possibilities
         private static readonly object[] CodeFixesTestSource = {
             new object [] {ProjectPaths.USER_CONTROLS, nameof(CMSUserControl), "CMS.UIControls", 0},
+            new object [] {ProjectPaths.USER_CONTROLS, nameof(AbstractUserControl), "CMS.Base.Web.UI", 1},
         };
 
         [Test, TestCaseSource(nameof(CodeFixesTestSource))]
@@ -103,7 +103,7 @@ namespace SampleTestProject.CsSamples
         {
             var test = $@"namespace SampleTestProject.CsSamples
 {{
-    public partial class SampleClass : System.Web.UI.Control
+    public partial class SampleClass : System.Web.UI.UserControl
     {{
     }}
 }}";

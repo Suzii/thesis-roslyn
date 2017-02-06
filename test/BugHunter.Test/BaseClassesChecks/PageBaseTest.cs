@@ -92,9 +92,9 @@ namespace SampleTestProject.CsSamples
             VerifyCSharpDiagnostic(test, ProjectPaths.PAGES, expectedDiagnostic.WithLocation(5, 26, ProjectPaths.PAGES + "Test0.cs"));
         }
 
-        // TODO add more possibilities
         private static readonly object[] CodeFixesTestSource = {
-            new object [] {ProjectPaths.PAGES, nameof(CMSAbstractEditablePage), "CMS.UIControls", 0},
+            new object [] {ProjectPaths.PAGES, nameof(AbstractCMSPage), "CMS.UIControls", 0},
+            new object [] {ProjectPaths.PAGES, nameof(CMSUIPage), "CMS.UIControls", 1},
         };
 
         [Test, TestCaseSource(nameof(CodeFixesTestSource))]

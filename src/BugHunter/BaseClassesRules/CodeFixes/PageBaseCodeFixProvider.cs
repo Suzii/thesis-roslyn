@@ -23,10 +23,10 @@ namespace BugHunter.BaseClassesRules.CodeFixes
             return WellKnownFixAllProviders.BatchFixer;
         }
 
-        // TODO add more possibilities
         private static readonly ClassAndItsNamespace[] SuggestedBaseClasses =
         {
-            new ClassAndItsNamespace { ClassNamespace = "CMS.UIControls", ClassName = "CMSAbstractEditablePage"},
+            new ClassAndItsNamespace { ClassNamespace = "CMS.UIControls", ClassName = "AbstractCMSPage"},
+            new ClassAndItsNamespace { ClassNamespace = "CMS.UIControls", ClassName = "CMSUIPage"},
         };
 
         public sealed override async Task RegisterCodeFixesAsync(CodeFixContext context)
