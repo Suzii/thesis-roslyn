@@ -17,7 +17,7 @@ namespace BugHunter.Test.BaseClassesChecks
             return ReferencesHelper.BasicReferences.Union(new[] { ReferencesHelper.CMSBaseWebUI, ReferencesHelper.SystemWebReference, ReferencesHelper.SystemWebUIReference }).ToArray();
         }
 
-        private readonly FakeFileInfo _userControlFakeFileInfo = new FakeFileInfo() { FileLoaction = ProjectPaths.USER_CONTROLS };
+        private readonly FakeFileInfo _userControlFakeFileInfo = new FakeFileInfo { FileExtension= "ascx.cs" };
         
         private DiagnosticResult GetDiagnosticResult(params string[] messageArgumentStrings)
         {
@@ -37,11 +37,11 @@ namespace BugHunter.Test.BaseClassesChecks
             VerifyCSharpDiagnostic(test);
         }
 
-        [TestCase(@"", @"")]
-        [TestCase(@"", @": System.Web.UI.UserControl")]
-        [TestCase(@"\this\should\prevent\from\diagnostic\being\raised", @"")]
-        [TestCase(@"\this\should\prevent\from\diagnostic\being\raised", @": System.Web.UI.UserControl")]
-        public void OkInput_ClassOnExcludedPath_NoDiagnostic(string excludedPath, string baseList)
+        [TestCase(@"cs", @"")]
+        [TestCase(@"cs", @": System.Web.UI.UserControl")]
+        [TestCase(@"this.should.prevent.from.diagnostic.being.raised.cs", @"")]
+        [TestCase(@"this.should.prevent.from.diagnostic.being.raised.cs", @": System.Web.UI.UserControl")]
+        public void OkInput_ClassOnExcludedPath_NoDiagnostic(string excludedFileExtension, string baseList)
         {
             var test = $@"namespace SampleTestProject.CsSamples
 {{
@@ -49,7 +49,7 @@ namespace BugHunter.Test.BaseClassesChecks
     {{
     }}
 }}";
-            VerifyCSharpDiagnostic(test, new FakeFileInfo() {FileLoaction = excludedPath});
+            VerifyCSharpDiagnostic(test, new FakeFileInfo {FileExtension = excludedFileExtension});
         }
 
         [Test]
@@ -90,9 +90,9 @@ namespace SampleTestProject.CsSamples
     {{
     }}
 }}";
-            var expectedDiagnostic = GetDiagnosticResult("SampleClass");
+            var expectedDiagnostic = GetDiagnosticResult("SampleClass").WithLocation(5, 26, _userControlFakeFileInfo);
 
-            VerifyCSharpDiagnostic(test, _userControlFakeFileInfo, expectedDiagnostic.WithLocation(5, 26, ProjectPaths.USER_CONTROLS + "Test0.cs"));
+            VerifyCSharpDiagnostic(test, _userControlFakeFileInfo, expectedDiagnostic);
         }
 
         private static readonly object[] CodeFixesTestSource = {
@@ -109,9 +109,9 @@ namespace SampleTestProject.CsSamples
     {{
     }}
 }}";
-            var expectedDiagnostic = GetDiagnosticResult("SampleClass");
+            var expectedDiagnostic = GetDiagnosticResult("SampleClass").WithLocation(3, 26, _userControlFakeFileInfo);
 
-            VerifyCSharpDiagnostic(test, _userControlFakeFileInfo, expectedDiagnostic.WithLocation(3, 26, ProjectPaths.USER_CONTROLS + "Test0.cs"));
+            VerifyCSharpDiagnostic(test, _userControlFakeFileInfo, expectedDiagnostic);
 
             var expectedFix = $@"using {namespaceToBeUsed};
 

@@ -62,7 +62,7 @@
     <Compile Include="CsRules\Analyzers\HttpRequestQueryAnalyzer.cs" />
     <Compile Include="CsRules\Analyzers\LuceneSearchDocumentAnalyzer.cs" />
     <Compile Include="CsRules\Analyzers\PageIsCallbackAnalyzer.cs" />
-    <Compile Include="ProjectPaths.cs" />
+    <Compile Include="FilePaths.cs" />
     <Compile Include="BaseClassesRules\Analyzers\WebPartBaseAnalyzer.cs" />
     <Compile Include="CsRules\CsResources.Designer.cs">
       <AutoGen>True</AutoGen>

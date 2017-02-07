@@ -36,10 +36,10 @@ namespace BugHunter.Test.BaseClassesChecks
             VerifyCSharpDiagnostic(test);
         }
 
-        [TestCase(@"", @"")]
-        [TestCase(@"", @": System.Web.UI.Page")]
-        [TestCase(@".cs", @"")]
-        [TestCase(@".cs", @": System.Web.UI.Page")]
+        [TestCase(@"cs", @"")]
+        [TestCase(@"cs", @": System.Web.UI.Page")]
+        [TestCase(@"this.should.prevent.from.diagnostic.being.raised.cs", @"")]
+        [TestCase(@"this.should.prevent.from.diagnostic.being.raised.cs", @": System.Web.UI.Page")]
         public void OkInput_ClassOnExcludedPath_NoDiagnostic(string excludedFileExtension, string baseList)
         {
             var test = $@"namespace SampleTestProject.CsSamples

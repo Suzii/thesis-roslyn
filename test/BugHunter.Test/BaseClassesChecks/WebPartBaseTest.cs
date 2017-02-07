@@ -24,8 +24,8 @@ namespace BugHunter.Test.BaseClassesChecks
             }).ToArray();
         }
 
-        private readonly FakeFileInfo _uiWebPartFakeFileInfo = new FakeFileInfo() { FileLoaction = ProjectPaths.UI_WEB_PARTS };
-        private readonly FakeFileInfo _webPartFakeFileInfo = new FakeFileInfo() { FileLoaction = ProjectPaths.WEB_PARTS };
+        private readonly FakeFileInfo _uiWebPartFakeFileInfo = new FakeFileInfo() { FileLoaction = FilePaths.Folders.UI_WEB_PARTS };
+        private readonly FakeFileInfo _webPartFakeFileInfo = new FakeFileInfo() { FileLoaction = FilePaths.Folders.WEB_PARTS };
         
         private static DiagnosticResult GetDiagnosticResult(string projectPath, params string[] messageArgumentStrings)
         {
@@ -43,7 +43,7 @@ namespace BugHunter.Test.BaseClassesChecks
                 Severity = DiagnosticSeverity.Warning,
             };
 
-            return projectPath == ProjectPaths.UI_WEB_PARTS ? uiWebPartDiagnostic : webPartDiagnostic;
+            return projectPath == FilePaths.Folders.UI_WEB_PARTS ? uiWebPartDiagnostic : webPartDiagnostic;
         }
 
         [Test]
@@ -83,18 +83,18 @@ namespace BugHunter.Test.BaseClassesChecks
             VerifyCSharpDiagnostic(test, new FakeFileInfo {FileLoaction = excludedPath});
         }
 
-        [TestCase(nameof(CMS.UIControls.CMSAbstractUIWebpart), "using CMS.UIControls;\r\n\r\n", ProjectPaths.UI_WEB_PARTS)]
-        [TestCase(nameof(CMS.PortalEngine.Web.UI.CMSAbstractWebPart), "using CMS.PortalEngine.Web.UI;\r\n\r\n", ProjectPaths.WEB_PARTS)]
-        [TestCase(nameof(CMS.PortalEngine.Web.UI.CMSAbstractEditableWebPart), "using CMS.PortalEngine.Web.UI;\r\n\r\n", ProjectPaths.WEB_PARTS)]
-        [TestCase(nameof(CMS.PortalEngine.Web.UI.CMSAbstractLayoutWebPart), "using CMS.PortalEngine.Web.UI;\r\n\r\n", ProjectPaths.WEB_PARTS)]
-        [TestCase(nameof(CMS.PortalEngine.Web.UI.CMSAbstractWizardWebPart), "using CMS.PortalEngine.Web.UI;\r\n\r\n", ProjectPaths.WEB_PARTS)]
-        [TestCase(nameof(CMS.Ecommerce.Web.UI.CMSCheckoutWebPart), "using CMS.Ecommerce.Web.UI;\r\n\r\n", ProjectPaths.WEB_PARTS)]
-        [TestCase("CMS.UIControls.CMSAbstractUIWebpart", "", ProjectPaths.UI_WEB_PARTS)]
-        [TestCase("CMS.PortalEngine.Web.UI.CMSAbstractWebPart", "", ProjectPaths.WEB_PARTS)]
-        [TestCase("CMS.PortalEngine.Web.UI.CMSAbstractEditableWebPart", "", ProjectPaths.WEB_PARTS)]
-        [TestCase("CMS.PortalEngine.Web.UI.CMSAbstractLayoutWebPart", "", ProjectPaths.WEB_PARTS)]
-        [TestCase("CMS.PortalEngine.Web.UI.CMSAbstractWizardWebPart", "", ProjectPaths.WEB_PARTS)]
-        [TestCase("CMS.Ecommerce.Web.UI.CMSCheckoutWebPart", "", ProjectPaths.WEB_PARTS)]
+        [TestCase(nameof(CMS.UIControls.CMSAbstractUIWebpart), "using CMS.UIControls;\r\n\r\n", FilePaths.Folders.UI_WEB_PARTS)]
+        [TestCase(nameof(CMS.PortalEngine.Web.UI.CMSAbstractWebPart), "using CMS.PortalEngine.Web.UI;\r\n\r\n", FilePaths.Folders.WEB_PARTS)]
+        [TestCase(nameof(CMS.PortalEngine.Web.UI.CMSAbstractEditableWebPart), "using CMS.PortalEngine.Web.UI;\r\n\r\n", FilePaths.Folders.WEB_PARTS)]
+        [TestCase(nameof(CMS.PortalEngine.Web.UI.CMSAbstractLayoutWebPart), "using CMS.PortalEngine.Web.UI;\r\n\r\n", FilePaths.Folders.WEB_PARTS)]
+        [TestCase(nameof(CMS.PortalEngine.Web.UI.CMSAbstractWizardWebPart), "using CMS.PortalEngine.Web.UI;\r\n\r\n", FilePaths.Folders.WEB_PARTS)]
+        [TestCase(nameof(CMS.Ecommerce.Web.UI.CMSCheckoutWebPart), "using CMS.Ecommerce.Web.UI;\r\n\r\n", FilePaths.Folders.WEB_PARTS)]
+        [TestCase("CMS.UIControls.CMSAbstractUIWebpart", "", FilePaths.Folders.UI_WEB_PARTS)]
+        [TestCase("CMS.PortalEngine.Web.UI.CMSAbstractWebPart", "", FilePaths.Folders.WEB_PARTS)]
+        [TestCase("CMS.PortalEngine.Web.UI.CMSAbstractEditableWebPart", "", FilePaths.Folders.WEB_PARTS)]
+        [TestCase("CMS.PortalEngine.Web.UI.CMSAbstractLayoutWebPart", "", FilePaths.Folders.WEB_PARTS)]
+        [TestCase("CMS.PortalEngine.Web.UI.CMSAbstractWizardWebPart", "", FilePaths.Folders.WEB_PARTS)]
+        [TestCase("CMS.Ecommerce.Web.UI.CMSCheckoutWebPart", "", FilePaths.Folders.WEB_PARTS)]
         public void OkayInput_ClassExtendingCMSClass_NoDiagnostic(string oldUsage, string usings, string filePath)
         {
             var test = $@"{usings}namespace SampleTestProject.CsSamples
@@ -131,25 +131,25 @@ namespace SampleTestProject.CsSamples
     }}
 }}";
 
-            var expectedDiagnosticForWebPart = GetDiagnosticResult(ProjectPaths.WEB_PARTS, "SampleClass").WithLocation(3, 18, ProjectPaths.WEB_PARTS + "Test0.cs");
-            var expectedDiagnosticForUiWebPart = GetDiagnosticResult(ProjectPaths.UI_WEB_PARTS, "SampleClass").WithLocation(3, 18, ProjectPaths.UI_WEB_PARTS + "Test0.cs");
+            var expectedDiagnosticForWebPart = GetDiagnosticResult(FilePaths.Folders.WEB_PARTS, "SampleClass").WithLocation(3, 18, FilePaths.Folders.WEB_PARTS + "Test0.cs");
+            var expectedDiagnosticForUiWebPart = GetDiagnosticResult(FilePaths.Folders.UI_WEB_PARTS, "SampleClass").WithLocation(3, 18, FilePaths.Folders.UI_WEB_PARTS + "Test0.cs");
 
-            VerifyCSharpDiagnostic(test, _webPartFakeFileInfo, expectedDiagnosticForWebPart.WithLocation(5, 18, ProjectPaths.WEB_PARTS + "Test0.cs"));
-            VerifyCSharpDiagnostic(test, _uiWebPartFakeFileInfo, expectedDiagnosticForUiWebPart.WithLocation(5, 18, ProjectPaths.UI_WEB_PARTS + "Test0.cs"));
+            VerifyCSharpDiagnostic(test, _webPartFakeFileInfo, expectedDiagnosticForWebPart.WithLocation(5, 18, FilePaths.Folders.WEB_PARTS + "Test0.cs"));
+            VerifyCSharpDiagnostic(test, _uiWebPartFakeFileInfo, expectedDiagnosticForUiWebPart.WithLocation(5, 18, FilePaths.Folders.UI_WEB_PARTS + "Test0.cs"));
         }
 
-        [TestCase(nameof(CMS.UIControls.CMSAbstractUIWebpart), "using CMS.UIControls;\r\n\r\n", ProjectPaths.WEB_PARTS)]
-        [TestCase(nameof(CMS.PortalEngine.Web.UI.CMSAbstractWebPart), "using CMS.PortalEngine.Web.UI;\r\n\r\n", ProjectPaths.UI_WEB_PARTS)]
-        [TestCase(nameof(CMS.PortalEngine.Web.UI.CMSAbstractEditableWebPart), "using CMS.PortalEngine.Web.UI;\r\n\r\n", ProjectPaths.UI_WEB_PARTS)]
-        [TestCase(nameof(CMS.PortalEngine.Web.UI.CMSAbstractLayoutWebPart), "using CMS.PortalEngine.Web.UI;\r\n\r\n", ProjectPaths.UI_WEB_PARTS)]
-        [TestCase(nameof(CMS.PortalEngine.Web.UI.CMSAbstractWizardWebPart), "using CMS.PortalEngine.Web.UI;\r\n\r\n", ProjectPaths.UI_WEB_PARTS)]
-        [TestCase(nameof(CMS.Ecommerce.Web.UI.CMSCheckoutWebPart), "using CMS.Ecommerce.Web.UI;\r\n\r\n", ProjectPaths.UI_WEB_PARTS)]
-        [TestCase("CMS.UIControls.CMSAbstractUIWebpart", "", ProjectPaths.WEB_PARTS)]
-        [TestCase("CMS.PortalEngine.Web.UI.CMSAbstractWebPart", "", ProjectPaths.UI_WEB_PARTS)]
-        [TestCase("CMS.PortalEngine.Web.UI.CMSAbstractEditableWebPart", "", ProjectPaths.UI_WEB_PARTS)]
-        [TestCase("CMS.PortalEngine.Web.UI.CMSAbstractLayoutWebPart", "", ProjectPaths.UI_WEB_PARTS)]
-        [TestCase("CMS.PortalEngine.Web.UI.CMSAbstractWizardWebPart", "", ProjectPaths.UI_WEB_PARTS)]
-        [TestCase("CMS.Ecommerce.Web.UI.CMSCheckoutWebPart", "", ProjectPaths.UI_WEB_PARTS)]
+        [TestCase(nameof(CMS.UIControls.CMSAbstractUIWebpart), "using CMS.UIControls;\r\n\r\n", FilePaths.Folders.WEB_PARTS)]
+        [TestCase(nameof(CMS.PortalEngine.Web.UI.CMSAbstractWebPart), "using CMS.PortalEngine.Web.UI;\r\n\r\n", FilePaths.Folders.UI_WEB_PARTS)]
+        [TestCase(nameof(CMS.PortalEngine.Web.UI.CMSAbstractEditableWebPart), "using CMS.PortalEngine.Web.UI;\r\n\r\n", FilePaths.Folders.UI_WEB_PARTS)]
+        [TestCase(nameof(CMS.PortalEngine.Web.UI.CMSAbstractLayoutWebPart), "using CMS.PortalEngine.Web.UI;\r\n\r\n", FilePaths.Folders.UI_WEB_PARTS)]
+        [TestCase(nameof(CMS.PortalEngine.Web.UI.CMSAbstractWizardWebPart), "using CMS.PortalEngine.Web.UI;\r\n\r\n", FilePaths.Folders.UI_WEB_PARTS)]
+        [TestCase(nameof(CMS.Ecommerce.Web.UI.CMSCheckoutWebPart), "using CMS.Ecommerce.Web.UI;\r\n\r\n", FilePaths.Folders.UI_WEB_PARTS)]
+        [TestCase("CMS.UIControls.CMSAbstractUIWebpart", "", FilePaths.Folders.WEB_PARTS)]
+        [TestCase("CMS.PortalEngine.Web.UI.CMSAbstractWebPart", "", FilePaths.Folders.UI_WEB_PARTS)]
+        [TestCase("CMS.PortalEngine.Web.UI.CMSAbstractEditableWebPart", "", FilePaths.Folders.UI_WEB_PARTS)]
+        [TestCase("CMS.PortalEngine.Web.UI.CMSAbstractLayoutWebPart", "", FilePaths.Folders.UI_WEB_PARTS)]
+        [TestCase("CMS.PortalEngine.Web.UI.CMSAbstractWizardWebPart", "", FilePaths.Folders.UI_WEB_PARTS)]
+        [TestCase("CMS.Ecommerce.Web.UI.CMSCheckoutWebPart", "", FilePaths.Folders.UI_WEB_PARTS)]
         public void InputWithIncident_ClassExtendingCMSClassButOnWrongPath_SurfacesDignostic(string oldUsage, string usings, string filePath)
         {
             var test = $@"{usings}namespace SampleTestProject.CsSamples
@@ -168,12 +168,12 @@ namespace SampleTestProject.CsSamples
         #region  CodeFixes tests - only testing CodeFix, not analyzer part
 
         private static readonly object[] CodeFixesTestSource = {
-            new object [] {ProjectPaths.UI_WEB_PARTS, "CMSAbstractUIWebpart", "CMS.UIControls", 0},
-            new object [] {ProjectPaths.WEB_PARTS, "CMSAbstractWebPart", "CMS.PortalEngine.Web.UI", 0},
-            new object [] {ProjectPaths.WEB_PARTS, "CMSAbstractEditableWebPart", "CMS.PortalEngine.Web.UI", 1},
-            new object [] {ProjectPaths.WEB_PARTS, "CMSAbstractLayoutWebPart", "CMS.PortalEngine.Web.UI", 2},
-            new object [] {ProjectPaths.WEB_PARTS, "CMSAbstractWizardWebPart", "CMS.PortalEngine.Web.UI", 3},
-            new object [] {ProjectPaths.WEB_PARTS, "CMSCheckoutWebPart", "CMS.Ecommerce.Web.UI", 4},
+            new object [] {FilePaths.Folders.UI_WEB_PARTS, "CMSAbstractUIWebpart", "CMS.UIControls", 0},
+            new object [] {FilePaths.Folders.WEB_PARTS, "CMSAbstractWebPart", "CMS.PortalEngine.Web.UI", 0},
+            new object [] {FilePaths.Folders.WEB_PARTS, "CMSAbstractEditableWebPart", "CMS.PortalEngine.Web.UI", 1},
+            new object [] {FilePaths.Folders.WEB_PARTS, "CMSAbstractLayoutWebPart", "CMS.PortalEngine.Web.UI", 2},
+            new object [] {FilePaths.Folders.WEB_PARTS, "CMSAbstractWizardWebPart", "CMS.PortalEngine.Web.UI", 3},
+            new object [] {FilePaths.Folders.WEB_PARTS, "CMSCheckoutWebPart", "CMS.Ecommerce.Web.UI", 4},
         };
 
         [Test, TestCaseSource(nameof(CodeFixesTestSource))]

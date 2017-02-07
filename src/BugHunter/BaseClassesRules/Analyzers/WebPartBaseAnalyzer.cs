@@ -109,7 +109,7 @@ namespace BugHunter.BaseClassesRules.Analyzers
         {
             return !string.IsNullOrEmpty(filePath) &&
                    !filePath.Contains("_files\\") &&
-                   (filePath.Contains(ProjectPaths.UI_WEB_PARTS) || filePath.Contains(ProjectPaths.WEB_PARTS));
+                   (filePath.Contains(FilePaths.Folders.UI_WEB_PARTS) || filePath.Contains(FilePaths.Folders.WEB_PARTS));
         }
         
         /// <summary>
@@ -118,7 +118,7 @@ namespace BugHunter.BaseClassesRules.Analyzers
         /// <param name="path">Path to web part file.</param>
         private static bool IsUIWebPart(string path)
         {
-            return !string.IsNullOrEmpty(path) && path.IndexOf(ProjectPaths.UI_WEB_PARTS, StringComparison.OrdinalIgnoreCase) > -1;
+            return !string.IsNullOrEmpty(path) && path.IndexOf(FilePaths.Folders.UI_WEB_PARTS, StringComparison.OrdinalIgnoreCase) > -1;
         }
     }
 }

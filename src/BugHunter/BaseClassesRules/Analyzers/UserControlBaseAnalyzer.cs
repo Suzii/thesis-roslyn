@@ -41,7 +41,7 @@ namespace BugHunter.BaseClassesRules.Analyzers
                 compilationContext.RegisterSyntaxTreeAction(syntaxTreeAnalysisContext =>
                 {
                     var filePath = syntaxTreeAnalysisContext.Tree.FilePath;
-                    if (string.IsNullOrEmpty(filePath) || /*!filePath.EndsWith(".ascx.cs") ||*/!filePath.Contains(ProjectPaths.USER_CONTROLS))
+                    if (string.IsNullOrEmpty(filePath) || !filePath.EndsWith(FilePaths.Extensions.CONTROLS))
                     {
                         return;
                     }
@@ -65,7 +65,5 @@ namespace BugHunter.BaseClassesRules.Analyzers
                 });
             });
         }
-
-       
     }
 }

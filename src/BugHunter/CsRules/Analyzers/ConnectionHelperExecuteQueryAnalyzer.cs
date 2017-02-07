@@ -33,10 +33,10 @@ namespace BugHunter.CsRules.Analyzers
 
         private bool IsUiFile(string filePath)
         {
-            return filePath.EndsWith(ProjectPaths.Extensions.PAGES) 
-                || filePath.EndsWith(ProjectPaths.Extensions.CONTROLS) 
-                || filePath.EndsWith(ProjectPaths.Extensions.HANDLERS)
-                || filePath.EndsWith(ProjectPaths.Extensions.MASTER_PAGE);
+            return filePath.EndsWith(FilePaths.Extensions.PAGES) 
+                || filePath.EndsWith(FilePaths.Extensions.CONTROLS) 
+                || filePath.EndsWith(FilePaths.Extensions.HANDLERS)
+                || filePath.EndsWith(FilePaths.Extensions.MASTER_PAGE);
         }
     }
 }

@@ -40,7 +40,7 @@ namespace BugHunter.BaseClassesRules.Analyzers
                 compilationContext.RegisterSyntaxTreeAction(syntaxTreeAnalysisContext =>
                 {
                     var filePath = syntaxTreeAnalysisContext.Tree.FilePath;
-                    if (string.IsNullOrEmpty(filePath) || !filePath.EndsWith(ProjectPaths.Extensions.PAGES))
+                    if (string.IsNullOrEmpty(filePath) || !filePath.EndsWith(FilePaths.Extensions.PAGES))
                     {
                         return;
                     }
