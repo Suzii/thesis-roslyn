@@ -4,7 +4,7 @@
     {
         public FakeFileInfo()
         {
-            FilePath = "";
+            FileLoaction = "";
             FileNamePrefix = "Test";
             FileExtension = "cs";
         }
@@ -13,6 +13,8 @@
 
         public string FileNamePrefix { get; set; }
 
-        public string FilePath { get; set; }
+        public string FileLoaction { get; set; }
+
+        public string GetFullFilePath(int index) => $"{FileLoaction}{FileNamePrefix}{index}.{FileExtension}";
     }
 }

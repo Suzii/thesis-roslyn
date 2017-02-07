@@ -13,7 +13,7 @@ namespace BugHunter.CsRules.Analyzers
 
         private static readonly DiagnosticDescriptor Rule = new DiagnosticDescriptor(DIAGNOSTIC_ID,
                 title: "Do not use ExecuteQuery in UI.",
-                messageFormat: "'{0}' should not be called directly from this file. Move logic to codebehind.",
+                messageFormat: "'{0}()' should not be called directly from this file. Move logic to codebehind.",
                 category: AnalyzerCategories.CS_RULES,
                 defaultSeverity: DiagnosticSeverity.Warning,
                 isEnabledByDefault: true,
@@ -28,7 +28,6 @@ namespace BugHunter.CsRules.Analyzers
 
         protected override bool CheckPreConditions(SyntaxNodeAnalysisContext context)
         {
-
             return base.CheckPreConditions(context) && IsUiFile(context.Node.SyntaxTree.FilePath);
         }
 

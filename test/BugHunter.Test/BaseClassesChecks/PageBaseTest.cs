@@ -16,7 +16,7 @@ namespace BugHunter.Test.BaseClassesChecks
             return ReferencesHelper.BasicReferences.Union(new[] { ReferencesHelper.CMSBaseWebUI, ReferencesHelper.SystemWebReference, ReferencesHelper.SystemWebUIReference }).ToArray();
         }
 
-        private readonly FakeFileInfo _pagesFakeFileInfo = new FakeFileInfo() {FilePath = ProjectPaths.PAGES};
+        private readonly FakeFileInfo _pagesFakeFileInfo = new FakeFileInfo() {FileLoaction = ProjectPaths.PAGES};
 
         private DiagnosticResult GetDiagnosticResult(params string[] messageArgumentStrings)
         {
@@ -48,7 +48,7 @@ namespace BugHunter.Test.BaseClassesChecks
     {{
     }}
 }}";
-            var fakeFileInfo = new FakeFileInfo() {FilePath = excludedPath};
+            var fakeFileInfo = new FakeFileInfo() {FileLoaction = excludedPath};
             VerifyCSharpDiagnostic(test, fakeFileInfo);
         }
 

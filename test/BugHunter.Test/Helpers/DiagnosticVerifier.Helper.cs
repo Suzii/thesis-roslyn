@@ -22,7 +22,7 @@ namespace BugHunter.Test.Verifiers
         private static readonly MetadataReference CodeAnalysisReference = MetadataReference.CreateFromFile(typeof(Compilation).Assembly.Location);
 
         internal static string TestProjectName = "TestProject";
-        internal static FakeFileInfo DefaultFileInfo = new FakeFileInfo { FilePath = "", FileNamePrefix = "Test", FileExtension = "cs"};
+        internal static FakeFileInfo DefaultFileInfo = new FakeFileInfo { FileLoaction = "", FileNamePrefix = "Test", FileExtension = "cs"};
 
         #region  Get Diagnostics
 
@@ -159,7 +159,7 @@ namespace BugHunter.Test.Verifiers
             int count = 0;
             foreach (var source in sources)
             {
-                var newFileName = fakeFileInfo.FilePath + fakeFileInfo.FileNamePrefix + count + "." + fakeFileInfo.FileExtension;
+                var newFileName = fakeFileInfo.FileLoaction + fakeFileInfo.FileNamePrefix + count + "." + fakeFileInfo.FileExtension;
                 var documentId = DocumentId.CreateNewId(projectId, debugName: newFileName);
                 var sourceText = SourceText.From(source);
                 solution = solution.AddDocument(documentId, newFileName, sourceText);
