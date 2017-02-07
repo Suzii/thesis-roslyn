@@ -16,7 +16,7 @@ namespace BugHunter.Test.BaseClassesChecks
             return ReferencesHelper.BasicReferences.Union(new[] { ReferencesHelper.CMSBaseWebUI, ReferencesHelper.SystemWebReference, ReferencesHelper.SystemWebUIReference }).ToArray();
         }
 
-        private readonly FakeFileInfo _pagesFakeFileInfo = new FakeFileInfo() {FileLoaction = ProjectPaths.PAGES};
+        private readonly FakeFileInfo _pagesFakeFileInfo = new FakeFileInfo {FileExtension= "aspx.cs"};
 
         private DiagnosticResult GetDiagnosticResult(params string[] messageArgumentStrings)
         {
@@ -38,9 +38,9 @@ namespace BugHunter.Test.BaseClassesChecks
 
         [TestCase(@"", @"")]
         [TestCase(@"", @": System.Web.UI.Page")]
-        [TestCase(@"\this\should\prevent\from\diagnostic\being\raised", @"")]
-        [TestCase(@"\this\should\prevent\from\diagnostic\being\raised", @": System.Web.UI.Page")]
-        public void OkInput_ClassOnExcludedPath_NoDiagnostic(string excludedPath, string baseList)
+        [TestCase(@".cs", @"")]
+        [TestCase(@".cs", @": System.Web.UI.Page")]
+        public void OkInput_ClassOnExcludedPath_NoDiagnostic(string excludedFileExtension, string baseList)
         {
             var test = $@"namespace SampleTestProject.CsSamples
 {{
@@ -48,7 +48,7 @@ namespace BugHunter.Test.BaseClassesChecks
     {{
     }}
 }}";
-            var fakeFileInfo = new FakeFileInfo() {FileLoaction = excludedPath};
+            var fakeFileInfo = new FakeFileInfo {FileExtension = excludedFileExtension};
             VerifyCSharpDiagnostic(test, fakeFileInfo);
         }
 
@@ -90,9 +90,9 @@ namespace SampleTestProject.CsSamples
     {{
     }}
 }}";
-            var expectedDiagnostic = GetDiagnosticResult("SampleClass");
+            var expectedDiagnostic = GetDiagnosticResult("SampleClass").WithLocation(5, 26, _pagesFakeFileInfo);
 
-            VerifyCSharpDiagnostic(test, _pagesFakeFileInfo, expectedDiagnostic.WithLocation(5, 26, ProjectPaths.PAGES + "Test0.cs"));
+            VerifyCSharpDiagnostic(test, _pagesFakeFileInfo, expectedDiagnostic);
         }
 
         private static readonly object[] CodeFixesTestSource = {
@@ -109,9 +109,9 @@ namespace SampleTestProject.CsSamples
     {{
     }}
 }}";
-            var expectedDiagnostic = GetDiagnosticResult("SampleClass");
+            var expectedDiagnostic = GetDiagnosticResult("SampleClass").WithLocation(3, 26, _pagesFakeFileInfo);
 
-            VerifyCSharpDiagnostic(test, _pagesFakeFileInfo, expectedDiagnostic.WithLocation(3, 26, ProjectPaths.PAGES + "Test0.cs"));
+            VerifyCSharpDiagnostic(test, _pagesFakeFileInfo, expectedDiagnostic);
 
             var expectedFix = $@"using {namespaceToBeUsed};
 

@@ -19,12 +19,6 @@
         // TODO
         public const string USER_CONTROLS = @"CMSUserControl\";
 
-        /// <summary>
-        /// This folder contains Pages
-        /// </summary>
-        // TODO
-        public const string PAGES = @"CMSPage\";
-
         public static class Extensions
         {
             public const string PAGES = ".aspx.cs";
