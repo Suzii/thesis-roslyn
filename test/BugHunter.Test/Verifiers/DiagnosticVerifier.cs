@@ -35,7 +35,7 @@ namespace BugHunter.Test.Verifiers
         /// <param name="expected"> DiagnosticResults that should appear after the analyzer is run on the source</param>
         protected void VerifyCSharpDiagnostic(string source, params DiagnosticResult[] expected)
         {
-            VerifyDiagnostics(new[] { source }, LanguageNames.CSharp, GetCSharpDiagnosticAnalyzer(), GetAdditionalReferences(), "", expected);
+            VerifyDiagnostics(new[] { source }, GetCSharpDiagnosticAnalyzer(), GetAdditionalReferences(), null, expected);
         }
 
         /// <summary>
@@ -46,7 +46,7 @@ namespace BugHunter.Test.Verifiers
         /// <param name="expected">DiagnosticResults that should appear after the analyzer is run on the sources</param>
         protected void VerifyCSharpDiagnostic(string[] sources, params DiagnosticResult[] expected)
         {
-            VerifyDiagnostics(sources, LanguageNames.CSharp, GetCSharpDiagnosticAnalyzer(), GetAdditionalReferences(), "", expected);
+            VerifyDiagnostics(sources, GetCSharpDiagnosticAnalyzer(), GetAdditionalReferences(), null, expected);
         }
 
         /// <summary>
@@ -54,11 +54,11 @@ namespace BugHunter.Test.Verifiers
         /// Note: input a DiagnosticResult for each Diagnostic expected
         /// </summary>
         /// <param name="source">A class in the form of a string to run the analyzer on</param>
-        /// <param name="fakeFilePath">Path that the file should have</param>
+        /// <param name="fakeFileInfo">Fake file info generated files should have</param>
         /// <param name="expected">DiagnosticResults that should appear after the analyzer is run on the sources</param>
-        protected void VerifyCSharpDiagnostic(string source, string fakeFilePath, params DiagnosticResult[] expected)
+        protected void VerifyCSharpDiagnostic(string source, FakeFileInfo fakeFileInfo, params DiagnosticResult[] expected)
         {
-            VerifyDiagnostics(new[] { source }, LanguageNames.CSharp, GetCSharpDiagnosticAnalyzer(), GetAdditionalReferences(), fakeFilePath, expected);
+            VerifyDiagnostics(new[] { source }, GetCSharpDiagnosticAnalyzer(), GetAdditionalReferences(), fakeFileInfo, expected);
         }
 
         /// <summary>
@@ -66,14 +66,13 @@ namespace BugHunter.Test.Verifiers
         /// then verifies each of them.
         /// </summary>
         /// <param name="sources">An array of strings to create source documents from to run the analyzers on</param>
-        /// <param name="language">The language of the classes represented by the source strings</param>
         /// <param name="analyzer">The analyzer to be run on the source code</param>
         /// <param name="references">An array of additional metadata references, source files are dependent on</param>
         /// <param name="expected">DiagnosticResults that should appear after the analyzer is run on the sources</param>
-        /// <param name="fakeFilePath">Path that the file should have</param>
-        private void VerifyDiagnostics(string[] sources, string language, DiagnosticAnalyzer analyzer, MetadataReference[] references, string fakeFilePath = "", params DiagnosticResult[] expected)
+        /// <param name="fakeFileInfo">Fake file info generated files should have</param>
+        private void VerifyDiagnostics(string[] sources, DiagnosticAnalyzer analyzer, MetadataReference[] references, FakeFileInfo fakeFileInfo = null, params DiagnosticResult[] expected)
         {
-            var diagnostics = GetSortedDiagnostics(sources, language, analyzer, references, fakeFilePath);
+            var diagnostics = GetSortedDiagnostics(sources, analyzer, references, fakeFileInfo);
             VerifyDiagnosticResults(diagnostics, analyzer, expected);
         }
 

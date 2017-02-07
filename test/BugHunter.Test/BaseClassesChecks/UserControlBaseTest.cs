@@ -17,6 +17,8 @@ namespace BugHunter.Test.BaseClassesChecks
             return ReferencesHelper.BasicReferences.Union(new[] { ReferencesHelper.CMSBaseWebUI, ReferencesHelper.SystemWebReference, ReferencesHelper.SystemWebUIReference }).ToArray();
         }
 
+        private readonly FakeFileInfo _userControlFakeFileInfo = new FakeFileInfo() { FilePath = ProjectPaths.USER_CONTROLS };
+        
         private DiagnosticResult GetDiagnosticResult(params string[] messageArgumentStrings)
         {
             return new DiagnosticResult
@@ -47,11 +49,11 @@ namespace BugHunter.Test.BaseClassesChecks
     {{
     }}
 }}";
-            VerifyCSharpDiagnostic(test, excludedPath);
+            VerifyCSharpDiagnostic(test, new FakeFileInfo() {FilePath = excludedPath});
         }
 
-        [TestCase(ProjectPaths.USER_CONTROLS)]
-        public void InputWithError_ClassNotExtendingAnyClass_NoDiagnostic(string filePath)
+        [Test]
+        public void InputWithError_ClassNotExtendingAnyClass_NoDiagnostic()
         {
             var test = $@"namespace SampleTestProject.CsSamples
 {{
@@ -60,12 +62,12 @@ namespace BugHunter.Test.BaseClassesChecks
     }}
 }}";
 
-            VerifyCSharpDiagnostic(test, filePath);
+            VerifyCSharpDiagnostic(test, _userControlFakeFileInfo);
         }
 
-        [TestCase(nameof(CMS.Base.Web.UI.AbstractUserControl), ProjectPaths.USER_CONTROLS)]
-        [TestCase("CMS.Base.Web.UI.AbstractUserControl", ProjectPaths.UI_WEB_PARTS)]
-        public void OkayInput_ClassExtendingCMSClass_NoDiagnostic(string oldUsage, string filePath)
+        [TestCase(nameof(CMS.Base.Web.UI.AbstractUserControl))]
+        [TestCase("CMS.Base.Web.UI.AbstractUserControl")]
+        public void OkayInput_ClassExtendingCMSClass_NoDiagnostic(string oldUsage)
         {
             var test = $@"namespace SampleTestProject.CsSamples
 {{
@@ -73,7 +75,7 @@ namespace BugHunter.Test.BaseClassesChecks
     {{
     }}
 }}";
-            VerifyCSharpDiagnostic(test, filePath);
+            VerifyCSharpDiagnostic(test, _userControlFakeFileInfo);
         }
 
         [TestCase(nameof(System.Web.UI.UserControl))]
@@ -90,16 +92,16 @@ namespace SampleTestProject.CsSamples
 }}";
             var expectedDiagnostic = GetDiagnosticResult("SampleClass");
 
-            VerifyCSharpDiagnostic(test, ProjectPaths.USER_CONTROLS, expectedDiagnostic.WithLocation(5, 26, ProjectPaths.USER_CONTROLS + "Test0.cs"));
+            VerifyCSharpDiagnostic(test, _userControlFakeFileInfo, expectedDiagnostic.WithLocation(5, 26, ProjectPaths.USER_CONTROLS + "Test0.cs"));
         }
 
         private static readonly object[] CodeFixesTestSource = {
-            new object [] {ProjectPaths.USER_CONTROLS, nameof(CMSUserControl), "CMS.UIControls", 0},
-            new object [] {ProjectPaths.USER_CONTROLS, nameof(AbstractUserControl), "CMS.Base.Web.UI", 1},
+            new object [] {nameof(CMSUserControl), "CMS.UIControls", 0},
+            new object [] {nameof(AbstractUserControl), "CMS.Base.Web.UI", 1},
         };
 
         [Test, TestCaseSource(nameof(CodeFixesTestSource))]
-        public void InputWithError_ClassExtendingWrongClass_ProvidesCodefixes(string filePath, string baseClassToExtend, string namespaceToBeUsed, int codeFixNumber)
+        public void InputWithError_ClassExtendingWrongClass_ProvidesCodefixes(string baseClassToExtend, string namespaceToBeUsed, int codeFixNumber)
         {
             var test = $@"namespace SampleTestProject.CsSamples
 {{
@@ -109,7 +111,7 @@ namespace SampleTestProject.CsSamples
 }}";
             var expectedDiagnostic = GetDiagnosticResult("SampleClass");
 
-            VerifyCSharpDiagnostic(test, filePath, expectedDiagnostic.WithLocation(3, 26, filePath + "Test0.cs"));
+            VerifyCSharpDiagnostic(test, _userControlFakeFileInfo, expectedDiagnostic.WithLocation(3, 26, ProjectPaths.USER_CONTROLS + "Test0.cs"));
 
             var expectedFix = $@"using {namespaceToBeUsed};
 
@@ -120,7 +122,7 @@ namespace SampleTestProject.CsSamples
     }}
 }}";
 
-            VerifyCSharpFix(test, expectedFix, codeFixNumber, false, filePath);
+            VerifyCSharpFix(test, expectedFix, codeFixNumber, false, _userControlFakeFileInfo);
         }
     }
 }

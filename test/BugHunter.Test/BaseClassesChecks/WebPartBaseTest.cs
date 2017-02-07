@@ -24,6 +24,9 @@ namespace BugHunter.Test.BaseClassesChecks
             }).ToArray();
         }
 
+        private readonly FakeFileInfo _uiWebPartFakeFileInfo = new FakeFileInfo() { FilePath = ProjectPaths.UI_WEB_PARTS };
+        private readonly FakeFileInfo _webPartFakeFileInfo = new FakeFileInfo() { FilePath = ProjectPaths.WEB_PARTS };
+        
         private static DiagnosticResult GetDiagnosticResult(string projectPath, params string[] messageArgumentStrings)
         {
             var webPartDiagnostic = new DiagnosticResult
@@ -77,7 +80,7 @@ namespace BugHunter.Test.BaseClassesChecks
     {{
     }}
 }}";
-            VerifyCSharpDiagnostic(test, excludedPath);
+            VerifyCSharpDiagnostic(test, new FakeFileInfo {FilePath = excludedPath});
         }
 
         [TestCase(nameof(CMS.UIControls.CMSAbstractUIWebpart), "using CMS.UIControls;\r\n\r\n", ProjectPaths.UI_WEB_PARTS)]
@@ -100,7 +103,7 @@ namespace BugHunter.Test.BaseClassesChecks
     {{
     }}
 }}";
-            VerifyCSharpDiagnostic(test, filePath);
+            VerifyCSharpDiagnostic(test, new FakeFileInfo {FilePath = filePath});
         }
 
         [Test]
@@ -112,8 +115,8 @@ namespace BugHunter.Test.BaseClassesChecks
     {{
     }}
 }}";
-            VerifyCSharpDiagnostic(test, ProjectPaths.WEB_PARTS);
-            VerifyCSharpDiagnostic(test, ProjectPaths.UI_WEB_PARTS);
+            VerifyCSharpDiagnostic(test, _webPartFakeFileInfo);
+            VerifyCSharpDiagnostic(test, _uiWebPartFakeFileInfo);
         }
 
         [Test]
@@ -131,8 +134,8 @@ namespace SampleTestProject.CsSamples
             var expectedDiagnosticForWebPart = GetDiagnosticResult(ProjectPaths.WEB_PARTS, "SampleClass").WithLocation(3, 18, ProjectPaths.WEB_PARTS + "Test0.cs");
             var expectedDiagnosticForUiWebPart = GetDiagnosticResult(ProjectPaths.UI_WEB_PARTS, "SampleClass").WithLocation(3, 18, ProjectPaths.UI_WEB_PARTS + "Test0.cs");
 
-            VerifyCSharpDiagnostic(test, ProjectPaths.WEB_PARTS, expectedDiagnosticForWebPart.WithLocation(5, 18, ProjectPaths.WEB_PARTS + "Test0.cs"));
-            VerifyCSharpDiagnostic(test, ProjectPaths.UI_WEB_PARTS, expectedDiagnosticForUiWebPart.WithLocation(5, 18, ProjectPaths.UI_WEB_PARTS + "Test0.cs"));
+            VerifyCSharpDiagnostic(test, _webPartFakeFileInfo, expectedDiagnosticForWebPart.WithLocation(5, 18, ProjectPaths.WEB_PARTS + "Test0.cs"));
+            VerifyCSharpDiagnostic(test, _uiWebPartFakeFileInfo, expectedDiagnosticForUiWebPart.WithLocation(5, 18, ProjectPaths.UI_WEB_PARTS + "Test0.cs"));
         }
 
         [TestCase(nameof(CMS.UIControls.CMSAbstractUIWebpart), "using CMS.UIControls;\r\n\r\n", ProjectPaths.WEB_PARTS)]
@@ -159,7 +162,7 @@ namespace SampleTestProject.CsSamples
             var line = string.IsNullOrEmpty(usings) ? 3 : 5;
             var expectedDiagnostic = GetDiagnosticResult(filePath, "SampleClass").WithLocation(line, 18, filePath + "Test0.cs");;
 
-            VerifyCSharpDiagnostic(test, filePath, expectedDiagnostic);
+            VerifyCSharpDiagnostic(test, new FakeFileInfo {FilePath = filePath}, expectedDiagnostic);
         }
 
         #region  CodeFixes tests - only testing CodeFix, not analyzer part
@@ -176,6 +179,7 @@ namespace SampleTestProject.CsSamples
         [Test, TestCaseSource(nameof(CodeFixesTestSource))]
         public void InputWithError_ClassNotCMSClass_ProvidesCodefixes(string filePath, string baseClassToExtend, string namespaceToBeUsed, int codeFixNumber)
         {
+            var fakeFileInfo = new FakeFileInfo {FilePath = filePath};
             var test = $@"namespace SampleTestProject.CsSamples
 {{
     public class SampleClass : System.Web.UI.WebControls.WebParts.Part
@@ -184,7 +188,7 @@ namespace SampleTestProject.CsSamples
 }}";
             var expectedDiagnostic = GetDiagnosticResult(filePath, "SampleClass").WithLocation(3, 18, filePath + "Test0.cs");
 
-            VerifyCSharpDiagnostic(test, filePath, expectedDiagnostic);
+            VerifyCSharpDiagnostic(test, fakeFileInfo, expectedDiagnostic);
 
             var expectedFix = $@"using {namespaceToBeUsed};
 
@@ -195,12 +199,13 @@ namespace SampleTestProject.CsSamples
     }}
 }}";
 
-            VerifyCSharpFix(test, expectedFix, codeFixNumber, false, filePath);
+            VerifyCSharpFix(test, expectedFix, codeFixNumber, false, fakeFileInfo);
         }
 
         [Test, TestCaseSource(nameof(CodeFixesTestSource))]
         public void InputWithError_ClassImplementingSomeInterface_ProvidesCodefixes(string filePath, string baseClassToExtend, string namespaceToBeUsed, int codeFixNumber)
         {
+            var fakeFileInfo = new FakeFileInfo {FilePath = filePath};
             var test = $@"namespace SampleTestProject.CsSamples
 {{
     public class SampleClass : System.IDisposable
@@ -210,7 +215,7 @@ namespace SampleTestProject.CsSamples
 }}";
             var expectedDiagnostic = GetDiagnosticResult(filePath, "SampleClass").WithLocation(3, 18, filePath + "Test0.cs");
             
-            VerifyCSharpDiagnostic(test, filePath, expectedDiagnostic);
+            VerifyCSharpDiagnostic(test, fakeFileInfo, expectedDiagnostic);
 
             var expectedFix = $@"using {namespaceToBeUsed};
 
@@ -222,12 +227,13 @@ namespace SampleTestProject.CsSamples
     }}
 }}";
 
-            VerifyCSharpFix(test, expectedFix, codeFixNumber, false, filePath);
+            VerifyCSharpFix(test, expectedFix, codeFixNumber, false, fakeFileInfo);
         }
 
         [Test, TestCaseSource(nameof(CodeFixesTestSource))]
         public void InputWithError_ClassExtendingWrongClassAndImplementingSomeInterface_ProvidesCodefixes(string filePath, string baseClassToExtend, string namespaceToBeUsed, int codeFixNumber)
         {
+            var fakeFileInfo = new FakeFileInfo {FilePath = filePath};
             var test = $@"namespace SampleTestProject.CsSamples
 {{
     public class SampleClass : System.Web.UI.WebControls.WebParts.Part, System.IDisposable
@@ -237,7 +243,7 @@ namespace SampleTestProject.CsSamples
 }}";
             var expectedDiagnostic = GetDiagnosticResult(filePath, "SampleClass").WithLocation(3, 18, filePath + "Test0.cs");
 
-            VerifyCSharpDiagnostic(test, filePath, expectedDiagnostic);
+            VerifyCSharpDiagnostic(test, fakeFileInfo, expectedDiagnostic);
 
             var expectedFix = $@"using {namespaceToBeUsed};
 
@@ -249,7 +255,7 @@ namespace SampleTestProject.CsSamples
     }}
 }}";
 
-            VerifyCSharpFix(test, expectedFix, codeFixNumber, false, filePath);
+            VerifyCSharpFix(test, expectedFix, codeFixNumber, false, fakeFileInfo);
         }
         #endregion
     }

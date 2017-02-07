@@ -16,6 +16,8 @@ namespace BugHunter.Test.BaseClassesChecks
             return ReferencesHelper.BasicReferences.Union(new[] { ReferencesHelper.CMSBaseWebUI, ReferencesHelper.SystemWebReference, ReferencesHelper.SystemWebUIReference }).ToArray();
         }
 
+        private readonly FakeFileInfo _pagesFakeFileInfo = new FakeFileInfo() {FilePath = ProjectPaths.PAGES};
+
         private DiagnosticResult GetDiagnosticResult(params string[] messageArgumentStrings)
         {
             return new DiagnosticResult
@@ -46,11 +48,12 @@ namespace BugHunter.Test.BaseClassesChecks
     {{
     }}
 }}";
-            VerifyCSharpDiagnostic(test, excludedPath);
+            var fakeFileInfo = new FakeFileInfo() {FilePath = excludedPath};
+            VerifyCSharpDiagnostic(test, fakeFileInfo);
         }
 
-        [TestCase(ProjectPaths.PAGES)]
-        public void InputWithError_ClassNotExtendingAnyClass_NoDiagnostic(string filePath)
+        [Test]
+        public void InputWithError_ClassNotExtendingAnyClass_NoDiagnostic()
         {
             var test = $@"namespace SampleTestProject.CsSamples
 {{
@@ -59,12 +62,12 @@ namespace BugHunter.Test.BaseClassesChecks
     }}
 }}";
 
-            VerifyCSharpDiagnostic(test, filePath);
+            VerifyCSharpDiagnostic(test, _pagesFakeFileInfo);
         }
 
-        [TestCase(nameof(CMS.UIControls.AbstractCMSPage), ProjectPaths.PAGES)]
-        [TestCase("CMS.UIControls.AbstractCMSPage", ProjectPaths.PAGES)]
-        public void OkayInput_ClassExtendingCMSClass_NoDiagnostic(string oldUsage, string filePath)
+        [TestCase(nameof(CMS.UIControls.AbstractCMSPage))]
+        [TestCase("CMS.UIControls.AbstractCMSPage")]
+        public void OkayInput_ClassExtendingCMSClass_NoDiagnostic(string oldUsage)
         {
             var test = $@"namespace SampleTestProject.CsSamples
 {{
@@ -72,7 +75,7 @@ namespace BugHunter.Test.BaseClassesChecks
     {{
     }}
 }}";
-            VerifyCSharpDiagnostic(test, filePath);
+            VerifyCSharpDiagnostic(test, _pagesFakeFileInfo);
         }
 
         [TestCase(nameof(System.Web.UI.Page))]
@@ -89,16 +92,16 @@ namespace SampleTestProject.CsSamples
 }}";
             var expectedDiagnostic = GetDiagnosticResult("SampleClass");
 
-            VerifyCSharpDiagnostic(test, ProjectPaths.PAGES, expectedDiagnostic.WithLocation(5, 26, ProjectPaths.PAGES + "Test0.cs"));
+            VerifyCSharpDiagnostic(test, _pagesFakeFileInfo, expectedDiagnostic.WithLocation(5, 26, ProjectPaths.PAGES + "Test0.cs"));
         }
 
         private static readonly object[] CodeFixesTestSource = {
-            new object [] {ProjectPaths.PAGES, nameof(AbstractCMSPage), "CMS.UIControls", 0},
-            new object [] {ProjectPaths.PAGES, nameof(CMSUIPage), "CMS.UIControls", 1},
+            new object [] {nameof(AbstractCMSPage), "CMS.UIControls", 0},
+            new object [] {nameof(CMSUIPage), "CMS.UIControls", 1},
         };
 
         [Test, TestCaseSource(nameof(CodeFixesTestSource))]
-        public void InputWithError_ClassExtendingWrongClass_ProvidesCodefixes(string filePath, string baseClassToExtend, string namespaceToBeUsed, int codeFixNumber)
+        public void InputWithError_ClassExtendingWrongClass_ProvidesCodefixes(string baseClassToExtend, string namespaceToBeUsed, int codeFixNumber)
         {
             var test = $@"namespace SampleTestProject.CsSamples
 {{
@@ -108,7 +111,7 @@ namespace SampleTestProject.CsSamples
 }}";
             var expectedDiagnostic = GetDiagnosticResult("SampleClass");
 
-            VerifyCSharpDiagnostic(test, filePath, expectedDiagnostic.WithLocation(3, 26, filePath + "Test0.cs"));
+            VerifyCSharpDiagnostic(test, _pagesFakeFileInfo, expectedDiagnostic.WithLocation(3, 26, ProjectPaths.PAGES + "Test0.cs"));
 
             var expectedFix = $@"using {namespaceToBeUsed};
 
@@ -119,7 +122,7 @@ namespace SampleTestProject.CsSamples
     }}
 }}";
 
-            VerifyCSharpFix(test, expectedFix, codeFixNumber, false, filePath);
+            VerifyCSharpFix(test, expectedFix, codeFixNumber, false, _pagesFakeFileInfo);
         }
     }
 }

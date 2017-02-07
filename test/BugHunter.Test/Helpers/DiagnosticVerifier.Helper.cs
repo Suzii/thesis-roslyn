@@ -21,25 +21,22 @@ namespace BugHunter.Test.Verifiers
         private static readonly MetadataReference CSharpSymbolsReference = MetadataReference.CreateFromFile(typeof(CSharpCompilation).Assembly.Location);
         private static readonly MetadataReference CodeAnalysisReference = MetadataReference.CreateFromFile(typeof(Compilation).Assembly.Location);
 
-        internal static string DefaultFilePathPrefix = "Test";
-        internal static string CSharpDefaultFileExt = "cs";
-        internal static string VisualBasicDefaultExt = "vb";
         internal static string TestProjectName = "TestProject";
+        internal static FakeFileInfo DefaultFileInfo = new FakeFileInfo { FilePath = "", FileNamePrefix = "Test", FileExtension = "cs"};
 
         #region  Get Diagnostics
 
         /// <summary>
-        /// Given classes in the form of strings, their language, and an IDiagnosticAnlayzer to apply to it, return the diagnostics found in the string after converting it to a document.
+        /// Given classes in the form of strings and an IDiagnosticAnlayzer to apply to it, return the diagnostics found in the string after converting it to a document.
         /// </summary>
         /// <param name="sources">Classes in the form of strings</param>
-        /// <param name="language">The language the source classes are in</param>
         /// <param name="analyzer">The analyzer to be run on the sources</param>
         /// <param name="references">Array of additional types source files have dependencies on</param>
-        /// <param name="fakeFilePath">Path that the file should have</param>
+        /// <param name="fakeFileInfo">Fake file info generated files should have</param>
         /// <returns>An IEnumerable of Diagnostics that surfaced in the source code, sorted by Location</returns>
-        private static Diagnostic[] GetSortedDiagnostics(string[] sources, string language, DiagnosticAnalyzer analyzer, MetadataReference[] references, string fakeFilePath = "")
+        private static Diagnostic[] GetSortedDiagnostics(string[] sources, DiagnosticAnalyzer analyzer, MetadataReference[] references, FakeFileInfo fakeFileInfo)
         {
-            return GetSortedDiagnosticsFromDocuments(analyzer, GetDocuments(sources, language, references, fakeFilePath));
+            return GetSortedDiagnosticsFromDocuments(analyzer, GetDocuments(sources, references, fakeFileInfo));
         }
 
         /// <summary>
@@ -102,21 +99,15 @@ namespace BugHunter.Test.Verifiers
 
         #region Set up compilation and documents
         /// <summary>
-        /// Given an array of strings as sources and a language, turn them into a project and return the documents and spans of it.
+        /// Given an array of strings as sources, turn them into a project and return the documents and spans of it.
         /// </summary>
         /// <param name="sources">Classes in the form of strings</param>
         /// <param name="references">Array of additional types source files have dependencies on</param>
-        /// <param name="language">The language the source code is in</param>
-        /// <param name="fakeFilePath">Path that the file should have</param>
+        /// <param name="fakeFileInfo">Fake file info generated files should have</param>
         /// <returns>A Tuple containing the Documents produced from the sources and their TextSpans if relevant</returns>
-        private static Document[] GetDocuments(string[] sources, string language, MetadataReference[] references, string fakeFilePath = "")
+        private static Document[] GetDocuments(string[] sources, MetadataReference[] references, FakeFileInfo fakeFileInfo)
         {
-            if (language != LanguageNames.CSharp && language != LanguageNames.VisualBasic)
-            {
-                throw new ArgumentException("Unsupported Language");
-            }
-
-            var project = CreateProject(sources, references, fakeFilePath, language);
+            var project = CreateProject(sources, references, fakeFileInfo);
             var documents = project.Documents.ToArray();
 
             if (sources.Length != documents.Length)
@@ -132,12 +123,11 @@ namespace BugHunter.Test.Verifiers
         /// </summary>
         /// <param name="source">Classes in the form of a string</param>
         /// <param name="references">Array of additional types source file has dependency on</param>
-        /// <param name="language">The language the source code is in</param>
-        /// <param name="fakeFilePath">Path that the file should have</param>
+        /// <param name="fakeFileInfo">Fake file info generated files should have</param>
         /// <returns>A Document created from the source string</returns>
-        protected static Document CreateDocument(string source, MetadataReference[] references, string fakeFilePath = "", string language = LanguageNames.CSharp)
+        protected static Document CreateDocument(string source, MetadataReference[] references, FakeFileInfo fakeFileInfo)
         {
-            return CreateProject(new[] { source }, references, fakeFilePath, language).Documents.First();
+            return CreateProject(new[] { source }, references, fakeFileInfo).Documents.First();
         }
 
         /// <summary>
@@ -145,19 +135,16 @@ namespace BugHunter.Test.Verifiers
         /// </summary>
         /// <param name="sources">Classes in the form of strings</param>
         /// <param name="references">References to be added to solution</param>
-        /// <param name="language">The language the source code is in</param>
-        /// <param name="fakeFilePath">Path that the file should have</param>
+        /// <param name="fakeFileInfo">Fake file info generated files should have</param>
         /// <returns>A Project created out of the Documents created from the source strings</returns>
-        private static Project CreateProject(string[] sources, MetadataReference[] references, string fakeFilePath = "", string language = LanguageNames.CSharp)
+        private static Project CreateProject(string[] sources, MetadataReference[] references, FakeFileInfo fakeFileInfo)
         {
-            string fileNamePrefix = DefaultFilePathPrefix;
-            string fileExt = language == LanguageNames.CSharp ? CSharpDefaultFileExt : VisualBasicDefaultExt;
-
+            fakeFileInfo = fakeFileInfo ?? DefaultFileInfo;
             var projectId = ProjectId.CreateNewId(debugName: TestProjectName);
 
             var solution = new AdhocWorkspace()
                 .CurrentSolution
-                .AddProject(projectId, TestProjectName, TestProjectName, language)
+                .AddProject(projectId, TestProjectName, TestProjectName, LanguageNames.CSharp)
                 .AddMetadataReference(projectId, CorlibReference)
                 .AddMetadataReference(projectId, SystemReference)
                 .AddMetadataReference(projectId, SystemCoreReference)
@@ -172,7 +159,7 @@ namespace BugHunter.Test.Verifiers
             int count = 0;
             foreach (var source in sources)
             {
-                var newFileName = fakeFilePath + fileNamePrefix + count + "." + fileExt;
+                var newFileName = fakeFileInfo.FilePath + fakeFileInfo.FileNamePrefix + count + "." + fakeFileInfo.FileExtension;
                 var documentId = DocumentId.CreateNewId(projectId, debugName: newFileName);
                 var sourceText = SourceText.From(source);
                 solution = solution.AddDocument(documentId, newFileName, sourceText);

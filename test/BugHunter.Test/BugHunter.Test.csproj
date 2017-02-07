@@ -669,6 +669,7 @@
     <Compile Include="CsTests\HttpSessionElementAccessSetTest.cs" />
     <Compile Include="CsTests\PageIsCallbackTest.cs" />
     <Compile Include="Helpers\DiagnosticResultExtensions.cs" />
+    <Compile Include="Helpers\FakeFileInfo.cs" />
     <Compile Include="StringMethodsTests\StringCompareToTest.cs" />
     <Compile Include="StringMethodsTests\StringCompareStaticMethodTest.cs" />
     <Compile Include="StringMethodsTests\StringEqualsStaticMethodTest.cs" />

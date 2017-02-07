@@ -46,9 +46,10 @@ namespace BugHunter.Test.Verifiers
         /// <param name="newSource">A class in the form of a string after the CodeFix was applied to it</param>
         /// <param name="codeFixIndex">Index determining which codefix to apply if there are multiple</param>
         /// <param name="allowNewCompilerDiagnostics">A bool controlling whether or not the test will fail if the CodeFix introduces other warnings after being applied</param>
-        protected void VerifyCSharpFix(string oldSource, string newSource, int? codeFixIndex = null, bool allowNewCompilerDiagnostics = false, string fakeFilePath = "")
+        /// <param name="fakeFileInfo">Fake file info generated files should have</param>
+        protected void VerifyCSharpFix(string oldSource, string newSource, int? codeFixIndex = null, bool allowNewCompilerDiagnostics = false, FakeFileInfo fakeFileInfo = null)
         {
-            VerifyFix(LanguageNames.CSharp, GetCSharpDiagnosticAnalyzer(), GetCSharpCodeFixProvider(), oldSource, newSource, GetAdditionalReferences(), codeFixIndex, allowNewCompilerDiagnostics, fakeFilePath);
+            VerifyFix(GetCSharpDiagnosticAnalyzer(), GetCSharpCodeFixProvider(), oldSource, newSource, GetAdditionalReferences(), codeFixIndex, allowNewCompilerDiagnostics, fakeFileInfo);
         }
 
         /// <summary>
@@ -57,7 +58,6 @@ namespace BugHunter.Test.Verifiers
         /// Then gets the string after the codefix is applied and compares it with the expected result.
         /// Note: If any codefix causes new diagnostics to show up, the test fails unless allowNewCompilerDiagnostics is set to true.
         /// </summary>
-        /// <param name="language">The language the source code is in</param>
         /// <param name="analyzer">The analyzer to be applied to the source code</param>
         /// <param name="codeFixProvider">The codefix to be applied to the code wherever the relevant Diagnostic is found</param>
         /// <param name="oldSource">A class in the form of a string before the CodeFix was applied to it</param>
@@ -65,9 +65,10 @@ namespace BugHunter.Test.Verifiers
         /// <param name="references">An array of additional metadata references, source files are dependent on</param>
         /// <param name="codeFixIndex">Index determining which codefix to apply if there are multiple</param>
         /// <param name="allowNewCompilerDiagnostics">A bool controlling whether or not the test will fail if the CodeFix introduces other warnings after being applied</param>
-        private void VerifyFix(string language, DiagnosticAnalyzer analyzer, CodeFixProvider codeFixProvider, string oldSource, string newSource, MetadataReference[] references, int? codeFixIndex, bool allowNewCompilerDiagnostics, string fakeFilePath = "")
+        /// <param name="fakeFileInfo">Fake file info generated files should have</param>
+        private void VerifyFix(DiagnosticAnalyzer analyzer, CodeFixProvider codeFixProvider, string oldSource, string newSource, MetadataReference[] references, int? codeFixIndex, bool allowNewCompilerDiagnostics, FakeFileInfo fakeFileInfo)
         {
-            var document = CreateDocument(oldSource, references, fakeFilePath, language);
+            var document = CreateDocument(oldSource, references, fakeFileInfo);
             var analyzerDiagnostics = GetSortedDiagnosticsFromDocuments(analyzer, new[] { document });
             var compilerDiagnostics = CodeFixVerifier.GetCompilerDiagnostics(document).ToList();
             var attempts = analyzerDiagnostics.Length;
