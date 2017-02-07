@@ -31,13 +31,12 @@ namespace BugHunter.CsRules.Analyzers
             return base.CheckPreConditions(context) && IsUiFile(context.Node.SyntaxTree.FilePath);
         }
 
-        //TODO extract to some helper
         private bool IsUiFile(string filePath)
         {
-            return filePath.EndsWith(".aspx.cs") 
-                || filePath.EndsWith(".ascx.cs") 
-                || filePath.EndsWith(".master.cs")
-                || filePath.EndsWith(".ashx.cs");
+            return filePath.EndsWith(ProjectPaths.Extensions.PAGES) 
+                || filePath.EndsWith(ProjectPaths.Extensions.CONTROLS) 
+                || filePath.EndsWith(ProjectPaths.Extensions.HANDLERS)
+                || filePath.EndsWith(ProjectPaths.Extensions.MASTER_PAGE);
         }
     }
 }
