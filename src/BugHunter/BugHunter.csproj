@@ -52,6 +52,7 @@
       <DependentUpon>ControlResources.resx</DependentUpon>
     </Compile>
     <Compile Include="CsRules\Analyzers\EventLogArgumentsDiagnosticFormatter.cs" />
+    <Compile Include="CsRules\Analyzers\ConnectionHelperExecuteQueryAnalyzer.cs" />
     <Compile Include="CsRules\Analyzers\HttpResponseCookiesAnalyzer.cs" />
     <Compile Include="CsRules\Analyzers\HttpRequestCookiesAnalyzer.cs" />
     <Compile Include="CsRules\Analyzers\HttpRequestBrowserAnalyzer.cs" />
