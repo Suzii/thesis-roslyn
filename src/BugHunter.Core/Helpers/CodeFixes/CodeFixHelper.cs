@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeFixes;
@@ -17,16 +18,19 @@ namespace BugHunter.Core.Helpers.CodeFixes
 
         public async Task<Document> ReplaceExpressionWith(SyntaxNode oldNode, SyntaxNode newNode, params string[] namespacesToBeReferenced)
         {
+            return await ApplyRootModification((oldRoot) => oldRoot.ReplaceNode(oldNode, newNode.WithTriviaFrom(oldNode)), namespacesToBeReferenced);
+        }
+
+        public async Task<Document> ApplyRootModification(Func<SyntaxNode, SyntaxNode> rootModificationFunc, params string[] namespacesToBeReferenced)
+        {
             var document = Context.Document;
             var root = await GetDocumentRoot();
 
-            var formattedNewNode = newNode.WithTriviaFrom(oldNode);
-
-            var newRoot = root.ReplaceNode(oldNode, formattedNewNode);
+            var newRoot = rootModificationFunc(root);
 
             if (namespacesToBeReferenced != null)
             {
-                newRoot = UsingsHelper.EnsureUsings((CompilationUnitSyntax) newRoot, namespacesToBeReferenced);
+                newRoot = UsingsHelper.EnsureUsings((CompilationUnitSyntax)newRoot, namespacesToBeReferenced);
             }
 
             var newDocument = document.WithSyntaxRoot(newRoot);

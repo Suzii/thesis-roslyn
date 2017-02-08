@@ -29,7 +29,7 @@ namespace BugHunter.Core.Analyzers
 
             return semanticModel.GetDeclaredSymbol(classDeclaration).BaseType;
         }
-
+        
         protected static Diagnostic CreateDiagnostic(SyntaxTreeAnalysisContext syntaxTreeAnalysisContext, ClassDeclarationSyntax classDeclaration, DiagnosticDescriptor rule)
         {
             var location = syntaxTreeAnalysisContext.Tree.GetLocation(classDeclaration.Identifier.FullSpan);

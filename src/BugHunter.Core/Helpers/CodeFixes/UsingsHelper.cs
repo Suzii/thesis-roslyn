@@ -21,7 +21,7 @@ namespace BugHunter.Core.Helpers.CodeFixes
             }
 
             var currentUsings = root.Usings.Select(u => u.Name.ToString());
-            var toBeAddedUsings = usings.Except(currentUsings).ToList();
+            var toBeAddedUsings = usings.Where(toBeAdded => !string.IsNullOrEmpty(toBeAdded)).Except(currentUsings).ToList();
             if (toBeAddedUsings.IsNullOrEmpty())
             {
                 return root;

@@ -659,6 +659,7 @@
     <Compile Include="CsTests\FormsAuthenticationSignOutTest.cs" />
     <Compile Include="CsTests\HttpRequestQueryStringTest.cs" />
     <Compile Include="CsTests\ConnectionHelperExecuteQueryTest.cs" />
+    <Compile Include="CsTests\ModuleRegistrationTest.cs" />
     <Compile Include="CsTests\SystemIOTest.cs" />
     <Compile Include="CsTests\LuceneSearchDocumentTest.cs" />
     <Compile Include="CsTests\HttpRequestCookiesTest.cs" />

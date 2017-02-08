@@ -61,7 +61,9 @@
     <Compile Include="CsRules\Analyzers\FormsAuthenticationSignOut.cs" />
     <Compile Include="CsRules\Analyzers\HttpRequestQueryAnalyzer.cs" />
     <Compile Include="CsRules\Analyzers\LuceneSearchDocumentAnalyzer.cs" />
+    <Compile Include="CsRules\Analyzers\ModuleRegistrationAnalyzer.cs" />
     <Compile Include="CsRules\Analyzers\PageIsCallbackAnalyzer.cs" />
+    <Compile Include="CsRules\CodeFixes\ModuleRegistrationCodeFixProvider.cs" />
     <Compile Include="FilePaths.cs" />
     <Compile Include="BaseClassesRules\Analyzers\WebPartBaseAnalyzer.cs" />
     <Compile Include="CsRules\CsResources.Designer.cs">

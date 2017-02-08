@@ -28,6 +28,7 @@
         public const string EVENT_LOG_ARGUMENTS = "BH10X2";
         public const string LUCENE_SEARCH_DOCUMENT = "BH10X3";
         public const string CONNECTION_HELPER_EXECUTE_QUERY = "BH10X4";
+        public const string MODULE_REGISTRATION = "BH10X5";
 
         // String methods & Culture
         public const string STRING_MANIPULATION_METHODS = "BH2000";
