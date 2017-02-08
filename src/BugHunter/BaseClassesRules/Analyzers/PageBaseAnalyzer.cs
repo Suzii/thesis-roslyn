@@ -49,11 +49,19 @@ namespace BugHunter.BaseClassesRules.Analyzers
                         .Where(classDeclarationSyntax
                             => classDeclarationSyntax.IsPublic()
                             && !classDeclarationSyntax.IsAbstract()
-                            && classDeclarationSyntax.IsPartial());
+                            && classDeclarationSyntax.IsPartial())
+                        .ToArray();
+
+                    if (!publicPartialInstantiableClassDeclarations.Any())
+                    {
+                        return;
+                    }
+
+
+                    var semanticModel = compilationContext.Compilation.GetSemanticModel(syntaxTreeAnalysisContext.Tree);
 
                     foreach (var classDeclaration in publicPartialInstantiableClassDeclarations)
                     {
-                        var semanticModel = compilationContext.Compilation.GetSemanticModel(syntaxTreeAnalysisContext.Tree);
                         var baseTypeTypeSymbol = GetBaseTypeSymbol(classDeclaration, semanticModel);
                         if (baseTypeTypeSymbol != null && baseTypeTypeSymbol.Equals(systemWebUiPageType))
                         {

@@ -80,7 +80,13 @@ namespace BugHunter.BaseClassesRules.Analyzers
                     var publicInstantiableClassDeclarations = GetAllClassDeclarations(syntaxTreeAnalysisContext)
                         .Where(classDeclarationSyntax
                             => classDeclarationSyntax.IsPublic()
-                            && !classDeclarationSyntax.IsAbstract());
+                            && !classDeclarationSyntax.IsAbstract())
+                        .ToArray();
+
+                    if (!publicInstantiableClassDeclarations.Any())
+                    {
+                        return;
+                    }
 
                     var semanticModel = compilationContext.Compilation.GetSemanticModel(syntaxTreeAnalysisContext.Tree);
 
