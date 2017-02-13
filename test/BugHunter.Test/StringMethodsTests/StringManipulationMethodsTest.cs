@@ -9,9 +9,16 @@ namespace BugHunter.Test.StringMethodsTests
     [TestFixture]
     public class StringManipulationMethodsTest : CodeFixVerifier<StringManipulationMethodsAnalyzer, StringManipultionMethodsCodeFixProvider>
     {
-        protected override MetadataReference[] GetAdditionalReferences()
+        protected override MetadataReference[] GetAdditionalReferences() => null;
+
+        private DiagnosticResult GetDiagnosticResult(string methodUsed)
         {
-            return null;
+            return new DiagnosticResult
+            {
+                Id = DiagnosticIds.STRING_MANIPULATION_METHODS,
+                Message = $"'{methodUsed}' used without specifying CultureInfo.",
+                Severity = DiagnosticSeverity.Warning,
+            };
         }
 
         [Test]
@@ -66,14 +73,7 @@ namespace SampleTestProject.CsSamples
     }}
 }}";
 
-            var expectedDiagnostic = new DiagnosticResult
-            {
-                Id = DiagnosticIds.STRING_MANIPULATION_METHODS,
-                Message = $"'{methodUsed}' used without specifying CultureInfo.",
-                Severity = DiagnosticSeverity.Warning,
-                Locations = new[] { new DiagnosticResultLocation("Test0.cs", 8, 36) }
-            };
-            
+            var expectedDiagnostic = GetDiagnosticResult(methodUsed).WithLocation(8, 36);
             VerifyCSharpDiagnostic(test, expectedDiagnostic);
 
             var expectedFix = $@"namespace SampleTestProject.CsSamples 
@@ -108,14 +108,7 @@ namespace SampleTestProject.CsSamples
     }}
 }}";
 
-            var expectedDiagnostic = new DiagnosticResult
-            {
-                Id = DiagnosticIds.STRING_MANIPULATION_METHODS,
-                Message = $"'{methodUsed}' used without specifying CultureInfo.",
-                Severity = DiagnosticSeverity.Warning,
-                Locations = new[] { new DiagnosticResultLocation("Test0.cs", 8, 36) }
-            };
-
+            var expectedDiagnostic = GetDiagnosticResult(methodUsed).WithLocation(8, 36);
             VerifyCSharpDiagnostic(test, expectedDiagnostic);
 
             var expectedFix = $@"namespace SampleTestProject.CsSamples 
@@ -150,14 +143,7 @@ namespace SampleTestProject.CsSamples
     }}
 }}";
 
-            var expectedDiagnostic = new DiagnosticResult
-            {
-                Id = DiagnosticIds.STRING_MANIPULATION_METHODS,
-                Message = $"'{methodUsed}' used without specifying CultureInfo.",
-                Severity = DiagnosticSeverity.Warning,
-                Locations = new[] { new DiagnosticResultLocation("Test0.cs", 8, 49) }
-            };
-
+            var expectedDiagnostic = GetDiagnosticResult(methodUsed).WithLocation(8, 49);
             VerifyCSharpDiagnostic(test, expectedDiagnostic);
 
             var expectedFix = $@"namespace SampleTestProject.CsSamples 

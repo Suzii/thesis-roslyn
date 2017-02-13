@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
+using System.Threading;
 using BugHunter.BaseClassesRules.Analyzers;
 using BugHunter.BaseClassesRules.CodeFixes;
 using BugHunter.Test.Verifiers;
@@ -26,23 +28,27 @@ namespace BugHunter.Test.BaseClassesChecks
         private readonly FakeFileInfo _uiWebPartFakeFileInfo = new FakeFileInfo() { FileLoaction = FilePaths.Folders.UI_WEB_PARTS };
         private readonly FakeFileInfo _webPartFakeFileInfo = new FakeFileInfo() { FileLoaction = FilePaths.Folders.WEB_PARTS };
         
-        private static DiagnosticResult GetDiagnosticResult(string projectPath, params string[] messageArgumentStrings)
+        private static DiagnosticResult GetDiagnosticResult(string projectPath, params string[] messageArguments)
         {
-            var webPartDiagnostic = new DiagnosticResult
+            switch (projectPath)
             {
-                Id = DiagnosticIds.WEB_PART_BASE,
-                Message = $"'{messageArgumentStrings[0]}' should inherit from CMS<something>WebPart.",
-                Severity = DiagnosticSeverity.Warning,
-            };
-
-            var uiWebPartDiagnostic = new DiagnosticResult
-            {
-                Id = DiagnosticIds.UI_WEB_PART_BASE,
-                Message = $"'{messageArgumentStrings[0]}' should inherit from CMS<something>WebPart.",
-                Severity = DiagnosticSeverity.Warning,
-            };
-
-            return projectPath == FilePaths.Folders.UI_WEB_PARTS ? uiWebPartDiagnostic : webPartDiagnostic;
+                case FilePaths.Folders.UI_WEB_PARTS:
+                    return new DiagnosticResult
+                    {
+                        Id = DiagnosticIds.UI_WEB_PART_BASE,
+                        Message = $"'{messageArguments[0]}' should inherit from CMS<something>WebPart.",
+                        Severity = DiagnosticSeverity.Warning,
+                    };
+                case FilePaths.Folders.WEB_PARTS:
+                    return new DiagnosticResult
+                    {
+                        Id = DiagnosticIds.WEB_PART_BASE,
+                        Message = $"'{messageArguments[0]}' should inherit from CMS<something>WebPart.",
+                        Severity = DiagnosticSeverity.Warning,
+                    };
+                default:
+                    throw new ArgumentException(nameof(projectPath));
+            }
         }
 
         [Test]

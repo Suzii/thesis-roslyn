@@ -2,8 +2,6 @@
 using BugHunter.BaseClassesRules.Analyzers;
 using BugHunter.BaseClassesRules.CodeFixes;
 using BugHunter.Test.Verifiers;
-using CMS.Base.Web.UI;
-using CMS.UIControls;
 using Microsoft.CodeAnalysis;
 using NUnit.Framework;
 
@@ -19,12 +17,12 @@ namespace BugHunter.Test.BaseClassesChecks
 
         private readonly FakeFileInfo _userControlFakeFileInfo = new FakeFileInfo { FileExtension= "ascx.cs" };
         
-        private DiagnosticResult GetDiagnosticResult(params string[] messageArgumentStrings)
+        private DiagnosticResult GetDiagnosticResult(params string[] messageArguments)
         {
             return new DiagnosticResult
             {
                 Id = DiagnosticIds.USER_CONTROL_BASE,
-                Message = $"'{messageArgumentStrings[0]}' should inherit from some abstract CMSControl.",
+                Message = $"'{messageArguments[0]}' should inherit from some abstract CMSControl.",
                 Severity = DiagnosticSeverity.Warning,
             };
         }
@@ -98,8 +96,8 @@ namespace SampleTestProject.CsSamples
         }
 
         private static readonly object[] CodeFixesTestSource = {
-            new object [] {nameof(CMSUserControl), "CMS.UIControls", 0},
-            new object [] {nameof(AbstractUserControl), "CMS.Base.Web.UI", 1},
+            new object [] {nameof(CMS.UIControls.CMSUserControl), "CMS.UIControls", 0},
+            new object [] {nameof(CMS.Base.Web.UI.AbstractUserControl), "CMS.Base.Web.UI", 1},
         };
 
         [Test, TestCaseSource(nameof(CodeFixesTestSource))]

@@ -28,9 +28,16 @@ namespace BugHunter.Test.StringMethodsTests
             new object[] { @"Compare(""a"", 0, ""aa"", 0, 1, false)", @"Compare(""a"", 0, ""aa"", 0, 1, StringComparison.InvariantCulture)", 1 },
         };
 
-        protected override MetadataReference[] GetAdditionalReferences()
+        protected override MetadataReference[] GetAdditionalReferences() => null;
+
+        private DiagnosticResult GetDiagnosticResult(string methodUsed)
         {
-            return null;
+            return new DiagnosticResult
+            {
+                Id = DiagnosticIds.STRING_COMPARE_STATIC_METHOD,
+                Message = $"'{methodUsed}' used without specifying StringComparison.",
+                Severity = DiagnosticSeverity.Warning,
+            };
         }
 
         [Test]
@@ -79,14 +86,7 @@ namespace SampleTestProject.CsSamples
     }}
 }}";
 
-            var expectedDiagnostic = new DiagnosticResult
-            {
-                Id = DiagnosticIds.STRING_COMPARE_STATIC_METHOD,
-                Message = $"'{methodUsed}' used without specifying StringComparison.",
-                Severity = DiagnosticSeverity.Warning,
-                Locations = new[] { new DiagnosticResultLocation("Test0.cs", 7, 33) }
-            };
-
+            var expectedDiagnostic = GetDiagnosticResult(methodUsed).WithLocation(7, 33);
             VerifyCSharpDiagnostic(test, expectedDiagnostic);
 
             var expectedFix = $@"using System;
@@ -119,14 +119,7 @@ namespace SampleTestProject.CsSamples
     }}
 }}";
 
-            var expectedDiagnostic = new DiagnosticResult
-            {
-                Id = DiagnosticIds.STRING_COMPARE_STATIC_METHOD,
-                Message = $"'{methodUsed}' used without specifying StringComparison.",
-                Severity = DiagnosticSeverity.Warning,
-                Locations = new[] { new DiagnosticResultLocation("Test0.cs", 7, 33) }
-            };
-
+            var expectedDiagnostic = GetDiagnosticResult(methodUsed).WithLocation(7, 33);
             VerifyCSharpDiagnostic(test, expectedDiagnostic);
 
             var expectedFix = $@"using System;

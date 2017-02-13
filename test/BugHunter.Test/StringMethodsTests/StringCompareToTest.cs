@@ -17,9 +17,16 @@ namespace BugHunter.Test.StringMethodsTests
             new object[] { @"CompareTo(""a"")", @"string.Compare(""aa"", ""a"", StringComparison.InvariantCultureIgnoreCase)", 3 },
         };
 
-        protected override MetadataReference[] GetAdditionalReferences()
+        protected override MetadataReference[] GetAdditionalReferences() => null;
+
+        private DiagnosticResult GetDiagnosticResult(string methodUsed)
         {
-            return null;
+            return new DiagnosticResult
+            {
+                Id = DiagnosticIds.STRING_COMPARE_TO_METHOD,
+                Message = $"'{methodUsed}' used without specifying StringComparison.",
+                Severity = DiagnosticSeverity.Warning,
+            };
         }
 
         [Test]
@@ -44,14 +51,8 @@ namespace BugHunter.Test.StringMethodsTests
     }}
 }}";
 
-            var expectedDiagnostic = new DiagnosticResult
-            {
-                Id = DiagnosticIds.STRING_COMPARE_TO_METHOD,
-                Message = $"'{methodUsed}' used without specifying StringComparison.",
-                Severity = DiagnosticSeverity.Warning,
-                Locations = new[] { new DiagnosticResultLocation("Test0.cs", 7, 31) }
-            };
 
+            var expectedDiagnostic = GetDiagnosticResult(methodUsed).WithLocation(7, 31);
             VerifyCSharpDiagnostic(test, expectedDiagnostic);
 
             var expectedFix = $@"using System;
@@ -84,14 +85,7 @@ namespace SampleTestProject.CsSamples
     }}
 }}";
 
-            var expectedDiagnostic = new DiagnosticResult
-            {
-                Id = DiagnosticIds.STRING_COMPARE_TO_METHOD,
-                Message = $"'{methodUsed}' used without specifying StringComparison.",
-                Severity = DiagnosticSeverity.Warning,
-                Locations = new[] { new DiagnosticResultLocation("Test0.cs", 7, 31) }
-            };
-
+            var expectedDiagnostic = GetDiagnosticResult(methodUsed).WithLocation(7, 31);
             VerifyCSharpDiagnostic(test, expectedDiagnostic);
 
             var expectedFix = $@"using System;
@@ -125,14 +119,7 @@ namespace SampleTestProject.CsSamples
     }}
 }}";
 
-            var expectedDiagnostic = new DiagnosticResult
-            {
-                Id = DiagnosticIds.STRING_COMPARE_TO_METHOD,
-                Message = $"'{methodUsed}' used without specifying StringComparison.",
-                Severity = DiagnosticSeverity.Warning,
-                Locations = new[] { new DiagnosticResultLocation("Test0.cs", 8, 48) }
-            };
-
+            var expectedDiagnostic = GetDiagnosticResult(methodUsed).WithLocation(8, 48);
             VerifyCSharpDiagnostic(test, expectedDiagnostic);
 
             var expectedFix = $@"using System;

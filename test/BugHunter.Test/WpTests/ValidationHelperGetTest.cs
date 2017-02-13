@@ -16,12 +16,12 @@ namespace BugHunter.Test.WpTests
             return new[] {ReferencesHelper.CMSHelpersReference};
         }
 
-        private DiagnosticResult GetDiagnosticResult(params string[] messageArgumentStrings)
+        private DiagnosticResult GetDiagnosticResult(params string[] messageArguments)
         {
             return new DiagnosticResult
             {
                 Id = DiagnosticIds.VALIDATION_HELPER_GET,
-                Message = string.Format("Do not use {0}(). Use Get method with 'System' instead to ensure specific culture representation.", messageArgumentStrings),
+                Message = string.Format("Do not use {0}(). Use Get method with 'System' instead to ensure specific culture representation.", messageArguments),
                 Severity = DiagnosticSeverity.Warning,
             };
         }

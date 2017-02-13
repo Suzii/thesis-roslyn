@@ -2,7 +2,6 @@
 using BugHunter.BaseClassesRules.Analyzers;
 using BugHunter.BaseClassesRules.CodeFixes;
 using BugHunter.Test.Verifiers;
-using CMS.UIControls;
 using Microsoft.CodeAnalysis;
 using NUnit.Framework;
 
@@ -18,12 +17,12 @@ namespace BugHunter.Test.BaseClassesChecks
 
         private readonly FakeFileInfo _pagesFakeFileInfo = new FakeFileInfo {FileExtension= "aspx.cs"};
 
-        private DiagnosticResult GetDiagnosticResult(params string[] messageArgumentStrings)
+        private DiagnosticResult GetDiagnosticResult(params string[] messageArguments)
         {
             return new DiagnosticResult
             {
                 Id = DiagnosticIds.PAGE_BASE,
-                Message = $"'{messageArgumentStrings[0]}' should inherit from some abstract CMSPage.",
+                Message = $"'{messageArguments[0]}' should inherit from some abstract CMSPage.",
                 Severity = DiagnosticSeverity.Warning,
             };
         }
@@ -98,8 +97,8 @@ namespace SampleTestProject.CsSamples
         }
 
         private static readonly object[] CodeFixesTestSource = {
-            new object [] {nameof(AbstractCMSPage), "CMS.UIControls", 0},
-            new object [] {nameof(CMSUIPage), "CMS.UIControls", 1},
+            new object [] {nameof(CMS.UIControls.AbstractCMSPage), "CMS.UIControls", 0},
+            new object [] {nameof(CMS.UIControls.CMSUIPage), "CMS.UIControls", 1},
         };
 
         [Test, TestCaseSource(nameof(CodeFixesTestSource))]
