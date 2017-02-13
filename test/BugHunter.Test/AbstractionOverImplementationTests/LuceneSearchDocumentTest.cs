@@ -1,8 +1,9 @@
 using System.Linq;
 using BugHunter.AbstractionOverImplementation.Analyzers;
 using BugHunter.AbstractionOverImplementation.CodeFixes;
-using BugHunter.Test.Shared;
-using BugHunter.Test.Verifiers;
+using BugHunter.Test.CmsApiReplacementsTests.Constants;
+using BugHunter.TestUtils.Helpers;
+using BugHunter.TestUtils.Verifiers;
 using Microsoft.CodeAnalysis;
 using NUnit.Framework;
 

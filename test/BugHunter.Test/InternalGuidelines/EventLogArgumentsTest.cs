@@ -1,6 +1,7 @@
 ﻿using BugHunter.InternalGuidelinesRules.Analyzers;
 using BugHunter.InternalGuidelinesRules.CodeFixes;
-using BugHunter.Test.Verifiers;
+using BugHunter.TestUtils.Helpers;
+using BugHunter.TestUtils.Verifiers;
 using Microsoft.CodeAnalysis;
 using NUnit.Framework;
 

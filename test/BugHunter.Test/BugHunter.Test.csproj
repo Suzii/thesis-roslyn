@@ -654,6 +654,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CmsApiReplacementsTests\Constants\MessagesConstants.cs" />
     <Compile Include="CmsBaseClassesTests\PageBaseTest.cs" />
     <Compile Include="CmsBaseClassesTests\UserControlBaseTest.cs" />
     <Compile Include="CmsApiReplacementsTests\FormsAuthenticationSignOutTest.cs" />
@@ -670,8 +671,6 @@
     <Compile Include="CmsApiReplacementsTests\HttpSessionElementAccessGetTest.cs" />
     <Compile Include="CmsApiReplacementsTests\HttpSessionElementAccessSetTest.cs" />
     <Compile Include="CmsApiReplacementsTests\PageIsCallbackTest.cs" />
-    <Compile Include="Helpers\DiagnosticResultExtensions.cs" />
-    <Compile Include="Helpers\FakeFileInfo.cs" />
     <Compile Include="StringAndCultureTests\StringCompareToTest.cs" />
     <Compile Include="StringAndCultureTests\StringCompareStaticMethodTest.cs" />
     <Compile Include="StringAndCultureTests\StringEqualsStaticMethodTest.cs" />
@@ -686,12 +685,6 @@
     <Compile Include="CmsApiReplacementsTests\ClientScriptMethodsTest.cs" />
     <Compile Include="InternalGuidelines\WhereLikeMethodTest.cs" />
     <Compile Include="ReferencesHelper.cs" />
-    <Compile Include="Shared\MessagesConstants.cs" />
-    <Compile Include="Verifiers\CodeFixVerifier.cs" />
-    <Compile Include="Verifiers\DiagnosticVerifier.cs" />
-    <Compile Include="Helpers\CodeFixVerifier.Helper.cs" />
-    <Compile Include="Helpers\DiagnosticResult.cs" />
-    <Compile Include="Helpers\DiagnosticVerifier.Helper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CmsBaseClassesTests\WebPartBaseTest.cs" />
     <Compile Include="WebInternalGuidelinesTests\ValidationHelperGetTest.cs" />
@@ -715,6 +708,10 @@
     <ProjectReference Include="..\..\src\BugHunter\BugHunter.csproj">
       <Project>{94312e36-802c-40fa-a07e-f479e74b61c2}</Project>
       <Name>BugHunter</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BugHunter.TestUtils\BugHunter.TestUtils.csproj">
+      <Project>{51413d47-6598-40a4-9bc7-91d88742b9da}</Project>
+      <Name>BugHunter.TestUtils</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

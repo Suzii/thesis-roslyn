@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 
-namespace BugHunter.Test.Verifiers
+namespace BugHunter.TestUtils.Verifiers
 {
     /// <summary>
     /// Diagnostic Producer class with extra methods dealing with applying codefixes

@@ -1,4 +1,4 @@
-﻿namespace BugHunter.Test.Verifiers
+﻿namespace BugHunter.TestUtils.Helpers
 {
     public class FakeFileInfo
     {

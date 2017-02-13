@@ -6,9 +6,10 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
+using BugHunter.TestUtils.Helpers;
 using NUnit.Framework;
 
-namespace BugHunter.Test.Verifiers
+namespace BugHunter.TestUtils.Verifiers
 {
     /// <summary>
     /// Class for turning strings into documents and getting the diagnostics on them
@@ -53,7 +54,7 @@ namespace BugHunter.Test.Verifiers
             foreach (var document in documents)
             {
                 // check that original documents are compilable
-                var compilerDiagnostics = CodeFixVerifier.GetCompilerDiagnostics(document).ToList();
+                var compilerDiagnostics = TestUtils.Verifiers.CodeFixVerifier.GetCompilerDiagnostics(document).ToList();
                 Assert.IsEmpty(compilerDiagnostics.Where(diag => diag.Severity == DiagnosticSeverity.Warning || diag.Severity == DiagnosticSeverity.Error), "Unable to compile original source code.");
 
                 projects.Add(document.Project);

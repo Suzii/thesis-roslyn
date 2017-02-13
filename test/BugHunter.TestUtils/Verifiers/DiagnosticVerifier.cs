@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using BugHunter.TestUtils.Helpers;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
 using NUnit.Framework;
 
-namespace BugHunter.Test.Verifiers
+namespace BugHunter.TestUtils.Verifiers
 {
     /// <summary>
     /// Superclass of all Unit Tests for DiagnosticAnalyzers

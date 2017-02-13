@@ -1,7 +1,8 @@
 using BugHunter.InternalGuidelinesRules.Analyzers;
 using BugHunter.InternalGuidelinesRules.CodeFixes;
-using BugHunter.Test.Shared;
-using BugHunter.Test.Verifiers;
+using BugHunter.Test.CmsApiReplacementsTests.Constants;
+using BugHunter.TestUtils.Helpers;
+using BugHunter.TestUtils.Verifiers;
 using Microsoft.CodeAnalysis;
 using NUnit.Framework;
 

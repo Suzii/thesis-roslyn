@@ -1,9 +1,9 @@
 ﻿using System;
 using Microsoft.CodeAnalysis;
 
-namespace BugHunter.Test.Verifiers
+namespace BugHunter.TestUtils.Helpers
 {
-    internal static class DiagnosticResultExtensions
+    public static class DiagnosticResultExtensions
     {
         public static DiagnosticResult WithId(this DiagnosticResult diagnosticResult, string id)
         {

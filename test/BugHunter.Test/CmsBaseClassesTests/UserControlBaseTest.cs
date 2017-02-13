@@ -1,7 +1,8 @@
 ﻿using System.Linq;
 using BugHunter.CmsBaseClassesRules.Analyzers;
 using BugHunter.CmsBaseClassesRules.CodeFixes;
-using BugHunter.Test.Verifiers;
+using BugHunter.TestUtils.Helpers;
+using BugHunter.TestUtils.Verifiers;
 using Microsoft.CodeAnalysis;
 using NUnit.Framework;
 

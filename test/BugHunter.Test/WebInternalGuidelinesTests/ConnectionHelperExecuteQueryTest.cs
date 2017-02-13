@@ -1,5 +1,6 @@
 using System.Linq;
-using BugHunter.Test.Verifiers;
+using BugHunter.TestUtils.Helpers;
+using BugHunter.TestUtils.Verifiers;
 using BugHunter.WebInternalGuidelinesRules.Analyzers;
 using Microsoft.CodeAnalysis;
 using NUnit.Framework;

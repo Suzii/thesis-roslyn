@@ -1,6 +1,6 @@
-﻿namespace BugHunter.Test.Shared
+﻿namespace BugHunter.Test.CmsApiReplacementsTests.Constants
 {
-    internal static class MessagesConstants
+    public static class MessagesConstants
     {
         public const string MESSAGE = @"'{0}' should not be used. Use '{1}' instead.";
 

@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+
+using BugHunter.TestUtils.Helpers;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeActions;
 using Microsoft.CodeAnalysis.CodeFixes;
@@ -8,7 +10,7 @@ using Microsoft.CodeAnalysis.Diagnostics;
 using Microsoft.CodeAnalysis.Formatting;
 using NUnit.Framework;
 
-namespace BugHunter.Test.Verifiers
+namespace BugHunter.TestUtils.Verifiers
 {
     public abstract class CodeFixVerifier<TAnalyzer> : CodeFixVerifier
     where TAnalyzer : DiagnosticAnalyzer, new()
@@ -69,7 +71,7 @@ namespace BugHunter.Test.Verifiers
         private void VerifyFix(DiagnosticAnalyzer analyzer, CodeFixProvider codeFixProvider, string oldSource, string newSource, MetadataReference[] references, int? codeFixIndex, bool allowNewCompilerDiagnostics, FakeFileInfo fakeFileInfo)
         {
             var document = CreateDocument(oldSource, references, fakeFileInfo);
-            var compilerDiagnostics = CodeFixVerifier.GetCompilerDiagnostics(document).ToList();
+            var compilerDiagnostics = GetCompilerDiagnostics(document).ToList();
             Assert.IsEmpty(compilerDiagnostics.Where(diag => diag.Severity == DiagnosticSeverity.Warning || diag.Severity == DiagnosticSeverity.Error), "Unable to compile original source code.");
 
             var analyzerDiagnostics = GetSortedDiagnosticsFromDocuments(analyzer, new[] { document });
@@ -88,7 +90,7 @@ namespace BugHunter.Test.Verifiers
 
                 if (codeFixIndex != null)
                 {
-                    document = CodeFixVerifier.ApplyFix(document, actions.ElementAt((int)codeFixIndex));
+                    document = ApplyFix(document, actions.ElementAt((int)codeFixIndex));
                     break;
                 }
 
