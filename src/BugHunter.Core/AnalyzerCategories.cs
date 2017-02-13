@@ -6,38 +6,39 @@
     public static class AnalyzerCategories
     {
         /// <summary>
-        /// Category for ASPX rules
+        /// Category for analyzers looking for standard .NET properties and methods with CMS equivalent that should be used instead
         /// </summary>
-        public const string ASPX_RULES = "BugHunter.AspxRules";
+        public const string CmsApiReplacements = "CmsApiReplacements";
 
         /// <summary>
-        /// Category for control rules
+        /// Category for analyzers reporting inheritance of conventional .NET class over a CMS abstract class
         /// </summary>
-        public const string CONTROL_RULES = "BugHunter.ControlRules";
+        public const string CmsBaseClasses = "CmsBaseClasses";
 
         /// <summary>
-        /// Category for CS rules
+        /// Category for analyzers reporting unintended or error-prone usage of CMS API
         /// </summary>
-        public const string CS_RULES = "BugHunter.CsRules";
+        public const string InternalGuidelines = "InternalGuidelines";
 
         /// <summary>
-        /// Category for page rules
+        /// Category for analyzers reporting unintended or error-prone usage of CMS API strictly related to web presentation layer
         /// </summary>
-        public const string PAGE_RULES = "BugHunter.PageRules";
+        public const string WebInternalGuidelines = "WebInternalGuidelines";
 
         /// <summary>
-        /// Category for project rules
+        /// Category for analyzers reporting usage of specific implementation over an appropriate abstraction 
         /// </summary>
-        public const string PROJECT_RULES = "BugHunter.ProjectRules";
+        /// TODO rename
+        public const string AbstractionOverImplementation = "AbstractionOverImplementation";
 
         /// <summary>
-        /// Category for web config rules
+        /// Category for analyzers reporting suspicious usage of String comparison and manipulation methods without culture specification
         /// </summary>
-        public const string WEB_CONFIG_RULES = "BugHunter.WebConfigRules";
+        public const string StringAndCulture = "StringAndCulture";
 
         /// <summary>
-        /// Category for web part rules
+        /// Category for analyzers reporting forbidden usage of System.IO API where CMS equivalents should be used
         /// </summary>
-        public const string WP_RULES = "BugHunter.WPRules";
+        public const string SystemIo = "SystemIo";
     }
 }

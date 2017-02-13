@@ -121,7 +121,7 @@
     <value>Consider using one of 'WhereStartsWith()', 'WhereEndsWith()' or 'WhereContains()' methods instead.</value>
   </data>
   <data name="WhereLikeMethod_MessageFormat" xml:space="preserve">
-    <value>Method '{1}' should not be used.</value>
+    <value>'{0}' should not be used.</value>
     <comment>{0} - source type {1} - method name</comment>
   </data>
   <data name="WhereLikeMethod_Title" xml:space="preserve">
@@ -169,5 +169,19 @@
   </data>
   <data name="RedirectCodeFixLocal" xml:space="preserve">
     <value>Use when redirecting to local URL.</value>
+  </data>
+  <data name="ApiReplacements_CodeFix" xml:space="preserve">
+    <value>Replace with '{0}'.</value>
+    <comment>0 - suggested code fix</comment>
+  </data>
+  <data name="LuceneSearchDocument_Description" xml:space="preserve">
+    <value>'LuceneSearchDocument' should not be used. Use 'ISearchDocument' instead.</value>
+  </data>
+  <data name="LuceneSearchDocument_MessageFormat" xml:space="preserve">
+    <value>'{0}' should not be used. Use 'ISearchDocument' instead.</value>
+    <comment>0 - forbidden usage</comment>
+  </data>
+  <data name="LuceneSearchDocument_Title" xml:space="preserve">
+    <value>'LuceneSearchDocument' should not be used.</value>
   </data>
 </root>

@@ -19,7 +19,7 @@ namespace BugHunter.WpRules.Analyzers
         private static readonly DiagnosticDescriptor Rule = new DiagnosticDescriptor(DIAGNOSTIC_ID,
                 title: new LocalizableResourceString(nameof(WpResources.ValidationHelperGet_Title), WpResources.ResourceManager, typeof(WpResources)),
                 messageFormat: new LocalizableResourceString(nameof(WpResources.ValidationHelperGet_MessageFormat), WpResources.ResourceManager, typeof(WpResources)),
-                category: AnalyzerCategories.WP_RULES,
+                category: AnalyzerCategories.WebInternalGuidelines,
                 defaultSeverity: DiagnosticSeverity.Warning,
                 isEnabledByDefault: true,
                 description: new LocalizableResourceString(nameof(WpResources.ValidationHelperGet_Description), WpResources.ResourceManager, typeof(WpResources)));

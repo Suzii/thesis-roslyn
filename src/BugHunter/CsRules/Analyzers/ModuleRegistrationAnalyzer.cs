@@ -23,7 +23,7 @@ namespace BugHunter.CsRules.Analyzers
         private static readonly DiagnosticDescriptor Rule = new DiagnosticDescriptor(DIAGNOSTIC_ID,
                 title: "Module or ModuleEntry must be registered.",
                 messageFormat: "Module or ModuleEntry '{0}' is not registered in the same file where it is declared. Add assembly attribute [assembly: RegisterModule(typeof({0}))] to the file.",
-                category: AnalyzerCategories.CS_RULES,
+                category: AnalyzerCategories.CmsBaseClasses,
                 defaultSeverity: DiagnosticSeverity.Warning,
                 isEnabledByDefault: true,
                 description: "Modules and ModuleEntries must be registered in the same file where they are declared. Add assembly attribute [assembly: RegisterModule(typeof(XY))] to the file.");

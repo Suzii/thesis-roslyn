@@ -22,7 +22,7 @@ namespace BugHunter.BaseClassesRules.Analyzers
         private static readonly DiagnosticDescriptor WebPartRule = new DiagnosticDescriptor(WEB_PART_DIAGNOSTIC_ID,
                 title: "Web Part must inherit the right class",
                 messageFormat: "'{0}' should inherit from CMS<something>WebPart.",
-                category: AnalyzerCategories.CS_RULES,
+                category: AnalyzerCategories.CmsBaseClasses,
                 defaultSeverity: DiagnosticSeverity.Warning,
                 isEnabledByDefault: true,
                 description: "Web Part must inherit the right class.");
@@ -30,7 +30,7 @@ namespace BugHunter.BaseClassesRules.Analyzers
         private static readonly DiagnosticDescriptor UiWebPartRule = new DiagnosticDescriptor(UI_WEB_PART_DIAGNOSTIC_ID,
         title: "UI Web Part must inherit the right class",
         messageFormat: "'{0}' should inherit from CMS<something>WebPart.",
-        category: AnalyzerCategories.CS_RULES,
+        category: AnalyzerCategories.CmsBaseClasses,
         defaultSeverity: DiagnosticSeverity.Warning,
         isEnabledByDefault: true,
         description: "Web Part must inherit the right class.");

@@ -57,7 +57,7 @@ namespace BugHunter.CsRules.Analyzers
         private static readonly DiagnosticDescriptor Rule = new DiagnosticDescriptor(DIAGNOSTIC_ID,
                 title: "Do not use System.IO",
                 messageFormat: "'{0}' should not use 'System.IO' directly. Use equivalent method from namespace 'CMS.IO'.",
-                category: AnalyzerCategories.CS_RULES,
+                category: AnalyzerCategories.SystemIo,
                 defaultSeverity: DiagnosticSeverity.Warning,
                 isEnabledByDefault: true,
                 description: "'System.IO' namespace should not be used directly. Use equivalent method from namespace 'CMS.IO'.");

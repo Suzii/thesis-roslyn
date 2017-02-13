@@ -38,8 +38,9 @@
   <ItemGroup>
     <Compile Include="BaseClassesRules\Analyzers\PageBaseAnalyzer.cs" />
     <Compile Include="BaseClassesRules\Analyzers\UserControlBaseAnalyzer.cs" />
-    <Compile Include="BaseClassesRules\CodeFixes\UserControlBaseCodeFixProvider.cs" />
+    <Compile Include="BaseClassesRules\Analyzers\WebPartBaseAnalyzer.cs" />
     <Compile Include="BaseClassesRules\CodeFixes\PageBaseCodeFixProvider.cs" />
+    <Compile Include="BaseClassesRules\CodeFixes\UserControlBaseCodeFixProvider.cs" />
     <Compile Include="BaseClassesRules\CodeFixes\WebPartBaseCodeFixProvider.cs" />
     <Compile Include="CsRules\Analyzers\EventLogArgumentsDiagnosticFormatter.cs" />
     <Compile Include="CsRules\Analyzers\ConnectionHelperExecuteQueryAnalyzer.cs" />
@@ -55,7 +56,6 @@
     <Compile Include="CsRules\Analyzers\PageIsCallbackAnalyzer.cs" />
     <Compile Include="CsRules\CodeFixes\ModuleRegistrationCodeFixProvider.cs" />
     <Compile Include="FilePaths.cs" />
-    <Compile Include="BaseClassesRules\Analyzers\WebPartBaseAnalyzer.cs" />
     <Compile Include="CsRules\CsResources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -146,9 +146,6 @@
     <None Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="CMS.Base">
-      <HintPath>..\..\packages\Kentico.Libraries.10.0.1\lib\net45\CMS.Base.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.CodeAnalysis, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.CodeAnalysis.Common.1.1.0\lib\portable-net45+win8\Microsoft.CodeAnalysis.dll</HintPath>
       <Private>True</Private>

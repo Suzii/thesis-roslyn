@@ -1,4 +1,5 @@
 ﻿using System.Collections.Immutable;
+using BugHunter.Core;
 using BugHunter.Core.Extensions;
 using BugHunter.Core.Helpers;
 using Microsoft.CodeAnalysis;
@@ -13,8 +14,13 @@ namespace BugHunter.CsRules.Analyzers
     {
         public const string DIAGNOSTIC_ID = DiagnosticIds.LUCENE_SEARCH_DOCUMENT;
 
-        private static readonly DiagnosticDescriptor Rule = ApiReplacementRuleBuilder.GetRule(DIAGNOSTIC_ID, "LuceneSearchDocument", "ISearchDocument");
-
+        private static readonly DiagnosticDescriptor Rule = new DiagnosticDescriptor(DIAGNOSTIC_ID,
+            title: new LocalizableResourceString(nameof(CsResources.LuceneSearchDocument_Title), CsResources.ResourceManager, typeof(CsResources)),
+            messageFormat: new LocalizableResourceString(nameof(CsResources.LuceneSearchDocument_MessageFormat), CsResources.ResourceManager, typeof(CsResources)),
+            category: AnalyzerCategories.AbstractionOverImplementation,
+            defaultSeverity: DiagnosticSeverity.Warning,
+            isEnabledByDefault: true,
+            description: new LocalizableResourceString(nameof(CsResources.LuceneSearchDocument_Description), CsResources.ResourceManager, typeof(CsResources)));
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
 
         public override void Initialize(AnalysisContext context)

@@ -62,6 +62,15 @@ namespace BugHunter.CsRules {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Replace with &apos;{0}&apos;..
+        /// </summary>
+        internal static string ApiReplacements_CodeFix {
+            get {
+                return ResourceManager.GetString("ApiReplacements_CodeFix", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to LogEvent called with event type &apos;{0}&apos;, use &apos;EventType.{1}&apos; instead..
         /// </summary>
         internal static string EventLogArguments_Description {
@@ -143,6 +152,33 @@ namespace BugHunter.CsRules {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &apos;LuceneSearchDocument&apos; should not be used. Use &apos;ISearchDocument&apos; instead..
+        /// </summary>
+        internal static string LuceneSearchDocument_Description {
+            get {
+                return ResourceManager.GetString("LuceneSearchDocument_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;{0}&apos; should not be used. Use &apos;ISearchDocument&apos; instead..
+        /// </summary>
+        internal static string LuceneSearchDocument_MessageFormat {
+            get {
+                return ResourceManager.GetString("LuceneSearchDocument_MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;LuceneSearchDocument&apos; should not be used..
+        /// </summary>
+        internal static string LuceneSearchDocument_Title {
+            get {
+                return ResourceManager.GetString("LuceneSearchDocument_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Use when redirecting to external URL..
         /// </summary>
         internal static string RedirectCodeFixExternal {
@@ -170,7 +206,7 @@ namespace BugHunter.CsRules {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Method &apos;{1}&apos; should not be used..
+        ///   Looks up a localized string similar to &apos;{0}&apos; should not be used..
         /// </summary>
         internal static string WhereLikeMethod_MessageFormat {
             get {

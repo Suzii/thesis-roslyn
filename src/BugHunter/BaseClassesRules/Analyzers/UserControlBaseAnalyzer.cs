@@ -21,7 +21,7 @@ namespace BugHunter.BaseClassesRules.Analyzers
         private static readonly DiagnosticDescriptor Rule = new DiagnosticDescriptor(DIAGNOSTIC_ID,
                 title: "User control must inherit the right class",
                 messageFormat: "'{0}' should inherit from some abstract CMSControl.",
-                category: AnalyzerCategories.CS_RULES,
+                category: AnalyzerCategories.CmsBaseClasses,
                 defaultSeverity: DiagnosticSeverity.Warning,
                 isEnabledByDefault: true,
                 description: "User control must inherit the right class.");

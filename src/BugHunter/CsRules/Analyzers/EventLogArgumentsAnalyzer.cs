@@ -17,7 +17,7 @@ namespace BugHunter.CsRules.Analyzers
         private static readonly DiagnosticDescriptor Rule = new DiagnosticDescriptor(DIAGNOSTIC_ID,
             title: new LocalizableResourceString(nameof(CsResources.EventLogArguments_Title), CsResources.ResourceManager, typeof(CsResources)),
             messageFormat: new LocalizableResourceString(nameof(CsResources.EventLogArguments_MessageFormat), CsResources.ResourceManager, typeof(CsResources)),
-            category: AnalyzerCategories.CS_RULES,
+            category: AnalyzerCategories.InternalGuidelines,
             defaultSeverity: DiagnosticSeverity.Warning,
             isEnabledByDefault: true,
             description: new LocalizableResourceString(nameof(CsResources.EventLogArguments_Description), CsResources.ResourceManager, typeof(CsResources)));

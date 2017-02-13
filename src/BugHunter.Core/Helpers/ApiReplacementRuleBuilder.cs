@@ -10,7 +10,7 @@ namespace BugHunter.Core.Helpers
             var rule = new DiagnosticDescriptor(diagnosticId,
                 title: ApiReplacementsMessageBuilder.GetTitle(forbiddenUsage),
                 messageFormat: ApiReplacementsMessageBuilder.GetMessageFormat(),
-                category: AnalyzerCategories.CS_RULES,
+                category: AnalyzerCategories.CmsApiReplacements,
                 defaultSeverity: DiagnosticSeverity.Warning,
                 isEnabledByDefault: true,
                 description: ApiReplacementsMessageBuilder.GetDescription(forbiddenUsage));
@@ -23,7 +23,7 @@ namespace BugHunter.Core.Helpers
             var rule = new DiagnosticDescriptor(diagnosticId,
                 title: ApiReplacementsMessageBuilder.GetTitle(forbiddenUsage, recommendedUsage),
                 messageFormat: ApiReplacementsMessageBuilder.GetMessageFormat(recommendedUsage),
-                category: AnalyzerCategories.CS_RULES,
+                category: AnalyzerCategories.CmsApiReplacements,
                 defaultSeverity: DiagnosticSeverity.Warning,
                 isEnabledByDefault: true,
                 description: ApiReplacementsMessageBuilder.GetDescription(forbiddenUsage, recommendedUsage));
