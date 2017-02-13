@@ -36,21 +36,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="AspxRules\AspxResources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>AspxResources.resx</DependentUpon>
-    </Compile>
     <Compile Include="BaseClassesRules\Analyzers\PageBaseAnalyzer.cs" />
     <Compile Include="BaseClassesRules\Analyzers\UserControlBaseAnalyzer.cs" />
     <Compile Include="BaseClassesRules\CodeFixes\UserControlBaseCodeFixProvider.cs" />
     <Compile Include="BaseClassesRules\CodeFixes\PageBaseCodeFixProvider.cs" />
     <Compile Include="BaseClassesRules\CodeFixes\WebPartBaseCodeFixProvider.cs" />
-    <Compile Include="ControlRules\ControlResources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ControlResources.resx</DependentUpon>
-    </Compile>
     <Compile Include="CsRules\Analyzers\EventLogArgumentsDiagnosticFormatter.cs" />
     <Compile Include="CsRules\Analyzers\ConnectionHelperExecuteQueryAnalyzer.cs" />
     <Compile Include="CsRules\Analyzers\HttpResponseCookiesAnalyzer.cs" />
@@ -70,16 +60,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>CsResources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="PageRules\PageResources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>PageResources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="ProjectRules\ProjectResources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ProjectResources.resx</DependentUpon>
     </Compile>
     <Compile Include="StringMethodsRules\Analyzers\BaseStringComparisonMethodsAnalyzer.cs" />
     <Compile Include="StringMethodsRules\Analyzers\StringCompareToMethodAnalyzer.cs" />
@@ -123,11 +103,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>StringMethodsResources.resx</DependentUpon>
     </Compile>
-    <Compile Include="WebConfigRules\WebConfigResources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>WebConfigResources.resx</DependentUpon>
-    </Compile>
     <Compile Include="CsRules\Analyzers\SystemIOAnalyzer.cs" />
     <Compile Include="WpRules\Analyzers\ValidationHelperGetAnalyzer.cs" />
     <Compile Include="WpRules\CodeFixes\ValidationHelperGetCodeFixProvider.cs" />
@@ -138,35 +113,15 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="AspxRules\AspxResources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>AspxResources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ControlRules\ControlResources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>ControlResources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
     <EmbeddedResource Include="CsRules\CsResources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>CsResources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="PageRules\PageResources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>PageResources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ProjectRules\ProjectResources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>ProjectResources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
     <EmbeddedResource Include="StringMethodsRules\StringMethodsResources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>StringMethodsResources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="WebConfigRules\WebConfigResources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>WebConfigResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="WpRules\WpResources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -245,18 +200,7 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="AspxRules\Analyzers\" />
-    <Folder Include="AspxRules\CodeFixes\" />
-    <Folder Include="ControlRules\Analyzers\" />
-    <Folder Include="ControlRules\CodeFixes\" />
-    <Folder Include="PageRules\Analyzers\" />
-    <Folder Include="PageRules\CodeFixes\" />
-    <Folder Include="ProjectRules\Analyzers\" />
-    <Folder Include="ProjectRules\CodeFixes\" />
-    <Folder Include="WebConfigRules\Analyzers\" />
-    <Folder Include="WebConfigRules\CodeFixes\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Analyzer Include="..\..\packages\Microsoft.CodeAnalysis.Analyzers.1.1.0\analyzers\dotnet\cs\Microsoft.CodeAnalysis.Analyzers.dll" />
     <Analyzer Include="..\..\packages\Microsoft.CodeAnalysis.Analyzers.1.1.0\analyzers\dotnet\cs\Microsoft.CodeAnalysis.CSharp.Analyzers.dll" />
