@@ -1,4 +1,5 @@
 ﻿using BugHunter.Analyzers.CmsBaseClassesRules.Analyzers;
+using BugHunter.Analyzers.CmsBaseClassesRules.CodeFixes;
 using BugHunter.TestUtils;
 using BugHunter.TestUtils.Helpers;
 using BugHunter.TestUtils.Verifiers;
@@ -8,8 +9,7 @@ using NUnit.Framework;
 namespace BugHunter.Analyzers.Test.CmsBaseClassesTests
 {    
     [TestFixture]
-    // TODO test codefix as well
-    public class ModuleRegistrationTest : CodeFixVerifier<ModuleRegistrationAnalyzer>
+    public class ModuleRegistrationTest : CodeFixVerifier<ModuleRegistrationAnalyzer, ModuleRegistrationCodeFixProvider>
     {
         protected override MetadataReference[] GetAdditionalReferences()
         {
@@ -54,6 +54,7 @@ using CMS.Core;
 using SampleTestProject.CsSamples;
 
 [assembly: RegisterModule(typeof(MyModule))]
+
 namespace SampleTestProject.CsSamples
 {
     public class MyModule : CMS.DataEngine.Module
@@ -78,6 +79,7 @@ using CMS.Core;
 using SampleTestProject.CsSamples;
 
 [assembly: RegisterModule(typeof(MyModule))]
+
 namespace SampleTestProject.CsSamples
 {
     public class MyModule : ModuleEntry
@@ -115,9 +117,9 @@ namespace SampleTestProject.CsSamples
 
             var expectedFix = @"using CMS;
 using CMS.Core;
-using SampleTestProject.CsSamples;
 
-[assembly: RegisterModule(typeof(MyModule))]
+[assembly: RegisterModule(typeof(SampleTestProject.CsSamples.MyModule))]
+
 namespace SampleTestProject.CsSamples
 {
     public class MyModule : CMS.DataEngine.Module
@@ -132,7 +134,7 @@ namespace SampleTestProject.CsSamples
     }
 }";
 
-            //VerifyCSharpFix(test, expectedFix);
+            VerifyCSharpFix(test, expectedFix);
         }
 
         [Test]
@@ -153,11 +155,11 @@ namespace SampleTestProject.CsSamples
 
             VerifyCSharpDiagnostic(test, expectedDiagnostic);
 
-            var expectedFix = @"using CMS;
-using CMS.Core;
-using SampleTestProject.CsSamples;
+            var expectedFix = @"using CMS.Core;
+using CMS;
 
-[assembly: RegisterModule(typeof(MyModule))]
+[assembly: RegisterModule(typeof(SampleTestProject.CsSamples.MyModule))]
+
 namespace SampleTestProject.CsSamples
 {
     public class MyModule : ModuleEntry
@@ -168,7 +170,7 @@ namespace SampleTestProject.CsSamples
     }
 }";
 
-            //VerifyCSharpFix(test, expectedFix);
+            VerifyCSharpFix(test, expectedFix);
         }
 
         [Test]
@@ -178,6 +180,7 @@ namespace SampleTestProject.CsSamples
 using CMS.Core;
 
 [assembly: CMS.RegisterModule(typeof(System.String))]
+
 namespace SampleTestProject.CsSamples
 {
     public class MyModule : CMS.DataEngine.Module
@@ -191,16 +194,16 @@ namespace SampleTestProject.CsSamples
         }
     }
 }";
-            var expectedDiagnostic = GetDiagnosticResult("MyModule").WithLocation(7, 18);
+            var expectedDiagnostic = GetDiagnosticResult("MyModule").WithLocation(8, 18);
 
             VerifyCSharpDiagnostic(test, expectedDiagnostic);
 
             var expectedFix = @"using CMS;
 using CMS.Core;
-using SampleTestProject.CsSamples;
 
 [assembly: CMS.RegisterModule(typeof(System.String))]
-[assembly: RegisterModule(typeof(MyModule))]
+[assembly: RegisterModule(typeof(SampleTestProject.CsSamples.MyModule))]
+
 namespace SampleTestProject.CsSamples
 {
     public class MyModule : CMS.DataEngine.Module
@@ -215,7 +218,7 @@ namespace SampleTestProject.CsSamples
     }
 }";
 
-            //VerifyCSharpFix(test, expectedFix);
+            VerifyCSharpFix(test, expectedFix);
         }
     }
 }

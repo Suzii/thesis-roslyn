@@ -21,7 +21,7 @@ namespace BugHunter.Core.Helpers.CodeFixes
             return await ApplyRootModification((oldRoot) => oldRoot.ReplaceNode(oldNode, newNode.WithTriviaFrom(oldNode)), namespacesToBeReferenced);
         }
 
-        public async Task<Document> ApplyRootModification(Func<SyntaxNode, SyntaxNode> rootModificationFunc, params string[] namespacesToBeReferenced)
+        public async Task<Document> ApplyRootModification(Func<CompilationUnitSyntax, CompilationUnitSyntax> rootModificationFunc, params string[] namespacesToBeReferenced)
         {
             var document = Context.Document;
             var root = await GetDocumentRoot();
@@ -30,7 +30,7 @@ namespace BugHunter.Core.Helpers.CodeFixes
 
             if (namespacesToBeReferenced != null)
             {
-                newRoot = UsingsHelper.EnsureUsings((CompilationUnitSyntax)newRoot, namespacesToBeReferenced);
+                newRoot = UsingsHelper.EnsureUsings(newRoot, namespacesToBeReferenced);
             }
 
             var newDocument = document.WithSyntaxRoot(newRoot);
@@ -53,9 +53,9 @@ namespace BugHunter.Core.Helpers.CodeFixes
             return GetFirstDiagnostic().Location;
         }
 
-        protected async Task<SyntaxNode> GetDocumentRoot()
+        protected async Task<CompilationUnitSyntax> GetDocumentRoot()
         {
-            return await Context.Document.GetSyntaxRootAsync(Context.CancellationToken).ConfigureAwait(false);
+            return (CompilationUnitSyntax) await Context.Document.GetSyntaxRootAsync(Context.CancellationToken).ConfigureAwait(false);
         }
     }
 }
