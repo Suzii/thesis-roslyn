@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using BugHunter.Analyzers.CmsApiReplacementRules.Analyzers;
 using BugHunter.Analyzers.CmsApiReplacementRules.CodeFixes;
+using BugHunter.TestUtils;
 using BugHunter.TestUtils.Helpers;
 using BugHunter.TestUtils.Verifiers;
 using Microsoft.CodeAnalysis;

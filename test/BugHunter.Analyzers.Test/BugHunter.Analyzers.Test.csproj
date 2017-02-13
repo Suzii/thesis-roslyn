@@ -584,8 +584,8 @@
       <HintPath>..\..\packages\NUnit3TestAdapter.3.4.1\lib\nunit.engine.api.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="nunit.framework, Version=3.5.0.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\NUnit.3.5.0\lib\net45\nunit.framework.dll</HintPath>
+    <Reference Include="nunit.framework, Version=3.6.0.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\NUnit.3.6.0\lib\net45\nunit.framework.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="NUnit3.TestAdapter, Version=3.4.1.0, Culture=neutral, PublicKeyToken=4cb40d35494691ac, processorArchitecture=MSIL">
@@ -647,11 +647,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CmsApiReplacementsTests\Constants\MessagesConstants.cs" />
-    <Compile Include="CmsBaseClassesTests\PageBaseTest.cs" />
-    <Compile Include="CmsBaseClassesTests\UserControlBaseTest.cs" />
     <Compile Include="CmsApiReplacementsTests\FormsAuthenticationSignOutTest.cs" />
     <Compile Include="CmsApiReplacementsTests\HttpRequestQueryStringTest.cs" />
-    <Compile Include="WebInternalGuidelinesTests\ConnectionHelperExecuteQueryTest.cs" />
     <Compile Include="CmsBaseClassesTests\ModuleRegistrationTest.cs" />
     <Compile Include="SystemIoTests\SystemIOTest.cs" />
     <Compile Include="AbstractionOverImplementationTests\LuceneSearchDocumentTest.cs" />
@@ -676,10 +673,7 @@
     <Compile Include="InternalGuidelines\EventLogArgumentsTest.cs" />
     <Compile Include="CmsApiReplacementsTests\ClientScriptMethodsTest.cs" />
     <Compile Include="InternalGuidelines\WhereLikeMethodTest.cs" />
-    <Compile Include="ReferencesHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="CmsBaseClassesTests\WebPartBaseTest.cs" />
-    <Compile Include="WebInternalGuidelinesTests\ValidationHelperGetTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

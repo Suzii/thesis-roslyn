@@ -2,15 +2,15 @@
 using System.Composition;
 using System.Linq;
 using System.Threading.Tasks;
-using BugHunter.Analyzers.CmsBaseClassesRules.Analyzers;
 using BugHunter.Core.Extensions;
 using BugHunter.Core.Helpers.CodeFixes;
 using BugHunter.Core.Models;
+using BugHunter.Web.Analyzers.CmsBaseClassesRules.Analyzers;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeActions;
 using Microsoft.CodeAnalysis.CodeFixes;
 
-namespace BugHunter.Analyzers.CmsBaseClassesRules.CodeFixes
+namespace BugHunter.Web.Analyzers.CmsBaseClassesRules.CodeFixes
 {
     [ExportCodeFixProvider(LanguageNames.CSharp, Name = nameof(WebPartBaseCodeFixProvider)), Shared]
     public class WebPartBaseCodeFixProvider : CodeFixProvider

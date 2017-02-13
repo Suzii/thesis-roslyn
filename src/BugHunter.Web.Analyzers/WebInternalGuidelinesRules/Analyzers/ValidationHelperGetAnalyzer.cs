@@ -5,7 +5,7 @@ using BugHunter.Core.DiagnosticsFormatting;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
 
-namespace BugHunter.Analyzers.WebInternalGuidelinesRules.Analyzers
+namespace BugHunter.Web.Analyzers.WebInternalGuidelinesRules.Analyzers
 {
     /// <summary>
     /// Searches for usages of <c>CMS.Helpers.ValidationHelper</c> and their access to <c>GetDouble</c>, <c>GetDateTime</c> methods

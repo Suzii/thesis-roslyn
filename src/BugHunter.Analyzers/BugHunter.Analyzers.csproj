@@ -46,12 +46,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CmsApiReplacementsResources.resx</DependentUpon>
     </Compile>
-    <Compile Include="CmsBaseClassesRules\Analyzers\PageBaseAnalyzer.cs" />
-    <Compile Include="CmsBaseClassesRules\Analyzers\UserControlBaseAnalyzer.cs" />
-    <Compile Include="CmsBaseClassesRules\Analyzers\WebPartBaseAnalyzer.cs" />
-    <Compile Include="CmsBaseClassesRules\CodeFixes\PageBaseCodeFixProvider.cs" />
-    <Compile Include="CmsBaseClassesRules\CodeFixes\UserControlBaseCodeFixProvider.cs" />
-    <Compile Include="CmsBaseClassesRules\CodeFixes\WebPartBaseCodeFixProvider.cs" />
     <Compile Include="InternalGuidelinesRules\Analyzers\EventLogArgumentsDiagnosticFormatter.cs" />
     <Compile Include="InternalGuidelinesRules\InternalGuidelinesResources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -68,7 +62,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>SystemIoResources.resx</DependentUpon>
     </Compile>
-    <Compile Include="WebInternalGuidelinesRules\Analyzers\ConnectionHelperExecuteQueryAnalyzer.cs" />
     <Compile Include="CmsApiReplacementRules\Analyzers\HttpResponseCookiesAnalyzer.cs" />
     <Compile Include="CmsApiReplacementRules\Analyzers\HttpRequestCookiesAnalyzer.cs" />
     <Compile Include="CmsApiReplacementRules\Analyzers\HttpRequestBrowserAnalyzer.cs" />
@@ -80,7 +73,6 @@
     <Compile Include="CmsBaseClassesRules\Analyzers\ModuleRegistrationAnalyzer.cs" />
     <Compile Include="CmsApiReplacementRules\Analyzers\PageIsCallbackAnalyzer.cs" />
     <Compile Include="CmsBaseClassesRules\CodeFixes\ModuleRegistrationCodeFixProvider.cs" />
-    <Compile Include="FilePaths.cs" />
     <Compile Include="StringAndCultureRules\Analyzers\BaseStringComparisonMethodsAnalyzer.cs" />
     <Compile Include="StringAndCultureRules\Analyzers\StringCompareToMethodAnalyzer.cs" />
     <Compile Include="StringAndCultureRules\Analyzers\StringStartAndEndsWithMethodsAnalyzer.cs" />
@@ -119,13 +111,6 @@
     <Compile Include="InternalGuidelinesRules\CodeFixes\EventLogArgumentsCodeFixProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SystemIoRules\Analyzers\SystemIOAnalyzer.cs" />
-    <Compile Include="WebInternalGuidelinesRules\Analyzers\ValidationHelperGetAnalyzer.cs" />
-    <Compile Include="WebInternalGuidelinesRules\CodeFixes\ValidationHelperGetCodeFixProvider.cs" />
-    <Compile Include="WebInternalGuidelinesRules\WpResources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>WpResources.resx</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="AbstractionOverImplementation\AbstractionOverImplementationResources.resx">
@@ -152,10 +137,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>SystemIoResources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="WebInternalGuidelinesRules\WpResources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>WpResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

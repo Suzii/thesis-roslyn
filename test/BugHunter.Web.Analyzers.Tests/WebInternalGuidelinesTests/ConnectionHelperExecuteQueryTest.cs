@@ -1,11 +1,12 @@
 using System.Linq;
-using BugHunter.Analyzers.WebInternalGuidelinesRules.Analyzers;
+using BugHunter.TestUtils;
 using BugHunter.TestUtils.Helpers;
 using BugHunter.TestUtils.Verifiers;
+using BugHunter.Web.Analyzers.WebInternalGuidelinesRules.Analyzers;
 using Microsoft.CodeAnalysis;
 using NUnit.Framework;
 
-namespace BugHunter.Analyzers.Test.WebInternalGuidelinesTests
+namespace BugHunter.Web.Analyzers.Tests.WebInternalGuidelinesTests
 {
     [TestFixture]
     public class ConnectionHelperExecuteQueryTest : CodeFixVerifier<ConnectionHelperExecuteQueryAnalyzer>

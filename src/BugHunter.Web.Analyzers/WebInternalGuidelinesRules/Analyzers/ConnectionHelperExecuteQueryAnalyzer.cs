@@ -1,10 +1,11 @@
 using System.Collections.Immutable;
 using BugHunter.Core;
 using BugHunter.Core.Analyzers;
+using BugHunter.Core.Constants;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
 
-namespace BugHunter.Analyzers.WebInternalGuidelinesRules.Analyzers
+namespace BugHunter.Web.Analyzers.WebInternalGuidelinesRules.Analyzers
 {
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     public class ConnectionHelperExecuteQueryAnalyzer : BaseMemberAccessAnalyzer
@@ -33,10 +34,10 @@ namespace BugHunter.Analyzers.WebInternalGuidelinesRules.Analyzers
 
         private bool IsUiFile(string filePath)
         {
-            return filePath.EndsWith(FilePaths.Extensions.PAGES) 
-                || filePath.EndsWith(FilePaths.Extensions.CONTROLS) 
-                || filePath.EndsWith(FilePaths.Extensions.HANDLERS)
-                || filePath.EndsWith(FilePaths.Extensions.MASTER_PAGE);
+            return filePath.EndsWith(FileExtensions.PAGES) 
+                || filePath.EndsWith(FileExtensions.CONTROLS) 
+                || filePath.EndsWith(FileExtensions.HANDLERS)
+                || filePath.EndsWith(FileExtensions.MASTER_PAGE);
         }
     }
 }

@@ -2,7 +2,7 @@
 using System.Linq;
 using Microsoft.CodeAnalysis;
 
-namespace BugHunter.Analyzers.Test
+namespace BugHunter.TestUtils
 {
     public class ReferencesHelper
     {

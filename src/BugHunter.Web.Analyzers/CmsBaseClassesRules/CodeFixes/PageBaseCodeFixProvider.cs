@@ -2,21 +2,21 @@
 using System.Composition;
 using System.Linq;
 using System.Threading.Tasks;
-using BugHunter.Analyzers.CmsBaseClassesRules.Analyzers;
 using BugHunter.Core.Extensions;
 using BugHunter.Core.Helpers.CodeFixes;
 using BugHunter.Core.Models;
+using BugHunter.Web.Analyzers.CmsBaseClassesRules.Analyzers;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeActions;
 using Microsoft.CodeAnalysis.CodeFixes;
 
-namespace BugHunter.Analyzers.CmsBaseClassesRules.CodeFixes
+namespace BugHunter.Web.Analyzers.CmsBaseClassesRules.CodeFixes
 {
-    [ExportCodeFixProvider(LanguageNames.CSharp, Name = nameof(UserControlBaseCodeFixProvider)), Shared]
-    public class UserControlBaseCodeFixProvider : CodeFixProvider
+    [ExportCodeFixProvider(LanguageNames.CSharp, Name = nameof(PageBaseCodeFixProvider)), Shared]
+    public class PageBaseCodeFixProvider : CodeFixProvider
     {
         public sealed override ImmutableArray<string> FixableDiagnosticIds
-            => ImmutableArray.Create(UserControlBaseAnalyzer.DIAGNOSTIC_ID);
+            => ImmutableArray.Create(PageBaseAnalyzer.DIAGNOSTIC_ID);
 
         public sealed override FixAllProvider GetFixAllProvider()
         {
@@ -25,8 +25,8 @@ namespace BugHunter.Analyzers.CmsBaseClassesRules.CodeFixes
 
         private static readonly ClassAndItsNamespace[] SuggestedBaseClasses =
         {
-            new ClassAndItsNamespace { ClassNamespace = "CMS.UIControls", ClassName = "CMSUserControl"},
-            new ClassAndItsNamespace { ClassNamespace = "CMS.Base.Web.UI", ClassName = "AbstractUserControl"},
+            new ClassAndItsNamespace { ClassNamespace = "CMS.UIControls", ClassName = "AbstractCMSPage"},
+            new ClassAndItsNamespace { ClassNamespace = "CMS.UIControls", ClassName = "CMSUIPage"},
         };
 
         public sealed override async Task RegisterCodeFixesAsync(CodeFixContext context)
@@ -48,7 +48,7 @@ namespace BugHunter.Analyzers.CmsBaseClassesRules.CodeFixes
                    CodeAction.Create(
                        title: $"Inherit from {classAndItsNamespace.ClassName} instead",
                        createChangedDocument: c => baseTypeCodeFixHelper.ReplaceExpressionWith(classDeclaration, newClassDeclaration, classAndItsNamespace.ClassNamespace),
-                       equivalenceKey: nameof(UserControlBaseCodeFixProvider) + classAndItsNamespace.ClassName),
+                       equivalenceKey: nameof(PageBaseCodeFixProvider) + classAndItsNamespace.ClassName),
                    diagnostic);
             }
         }

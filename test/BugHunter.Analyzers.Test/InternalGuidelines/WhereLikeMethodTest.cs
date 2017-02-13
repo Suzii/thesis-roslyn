@@ -1,6 +1,7 @@
 using BugHunter.Analyzers.InternalGuidelinesRules.Analyzers;
 using BugHunter.Analyzers.InternalGuidelinesRules.CodeFixes;
 using BugHunter.Analyzers.Test.CmsApiReplacementsTests.Constants;
+using BugHunter.TestUtils;
 using BugHunter.TestUtils.Helpers;
 using BugHunter.TestUtils.Verifiers;
 using Microsoft.CodeAnalysis;

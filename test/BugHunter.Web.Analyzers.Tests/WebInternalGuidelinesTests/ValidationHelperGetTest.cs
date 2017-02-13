@@ -1,12 +1,13 @@
 ﻿using System;
-using BugHunter.Analyzers.WebInternalGuidelinesRules.Analyzers;
-using BugHunter.Analyzers.WebInternalGuidelinesRules.CodeFixes;
+using BugHunter.TestUtils;
 using BugHunter.TestUtils.Helpers;
 using BugHunter.TestUtils.Verifiers;
+using BugHunter.Web.Analyzers.WebInternalGuidelinesRules.Analyzers;
+using BugHunter.Web.Analyzers.WebInternalGuidelinesRules.CodeFixes;
 using Microsoft.CodeAnalysis;
 using NUnit.Framework;
 
-namespace BugHunter.Analyzers.Test.WebInternalGuidelinesTests
+namespace BugHunter.Web.Analyzers.Tests.WebInternalGuidelinesTests
 {
     [TestFixture]
     public class ValidationHelperGetTest : CodeFixVerifier<ValidationHelperGetAnalyzer, ValidationHelperGetCodeFixProvider>

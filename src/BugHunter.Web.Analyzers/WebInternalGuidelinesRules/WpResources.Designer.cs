@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace BugHunter.Analyzers.WebInternalGuidelinesRules {
+namespace BugHunter.Web.Analyzers.WebInternalGuidelinesRules {
     using System;
     using System.Reflection;
     
@@ -40,7 +40,7 @@ namespace BugHunter.Analyzers.WebInternalGuidelinesRules {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("BugHunter.Analyzers.WebInternalGuidelinesRules.WpResources", typeof(WpResources).GetTypeInfo().Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("BugHunter.Web.Analyzers.WebInternalGuidelinesRules.WpResources", typeof(WpResources).GetTypeInfo().Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

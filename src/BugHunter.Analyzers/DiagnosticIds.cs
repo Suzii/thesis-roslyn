@@ -23,20 +23,12 @@
         public const string HTTP_REQUEST_QUERY_STRING = "BH1013";
         
         // CmsBaseClasses
-        public const string WEB_PART_BASE = "BH4000";
-        public const string UI_WEB_PART_BASE = "BH4002";
-        public const string PAGE_BASE = "BH6000";
-        public const string USER_CONTROL_BASE = "BH5000";
         public const string MODULE_REGISTRATION = "BH10X5";
         
         // InternalGuidelines
         public const string WHERE_LIKE_METHOD = "BH10X1";
         public const string EVENT_LOG_ARGUMENTS = "BH10X2";
-
-        // WebInternalGuidelines
-        public const string CONNECTION_HELPER_EXECUTE_QUERY = "BH10X4";
-        public const string VALIDATION_HELPER_GET = "BH4001";
-
+        
         // AbstractionOverImplementation
         public const string LUCENE_SEARCH_DOCUMENT = "BH10X3";
 

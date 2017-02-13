@@ -1,12 +1,13 @@
 ﻿using System.Linq;
-using BugHunter.Analyzers.CmsBaseClassesRules.Analyzers;
-using BugHunter.Analyzers.CmsBaseClassesRules.CodeFixes;
+using BugHunter.TestUtils;
 using BugHunter.TestUtils.Helpers;
 using BugHunter.TestUtils.Verifiers;
+using BugHunter.Web.Analyzers.CmsBaseClassesRules.Analyzers;
+using BugHunter.Web.Analyzers.CmsBaseClassesRules.CodeFixes;
 using Microsoft.CodeAnalysis;
 using NUnit.Framework;
 
-namespace BugHunter.Analyzers.Test.CmsBaseClassesTests
+namespace BugHunter.Web.Analyzers.Tests.CmsBaseClassesTests
 {
     [TestFixture]
     public class UserControlBaseTest : CodeFixVerifier<UserControlBaseAnalyzer, UserControlBaseCodeFixProvider>

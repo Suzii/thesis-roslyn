@@ -1,4 +1,5 @@
 ﻿using BugHunter.Analyzers.CmsBaseClassesRules.Analyzers;
+using BugHunter.TestUtils;
 using BugHunter.TestUtils.Helpers;
 using BugHunter.TestUtils.Verifiers;
 using Microsoft.CodeAnalysis;
