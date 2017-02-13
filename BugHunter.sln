@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BugHunter.Test", "test\BugHunter.Test\BugHunter.Test.csproj", "{69617204-1677-4779-B987-BEBC14150215}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BugHunter.Analyzers.Test", "test\BugHunter.Analyzers.Test\BugHunter.Analyzers.Test.csproj", "{69617204-1677-4779-B987-BEBC14150215}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BugHunter.Vsix", "src\BugHunter.Vsix\BugHunter.Vsix.csproj", "{DF90A2AE-D1E5-4EEF-AA16-2990F5E05587}"
 EndProject
@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BugHunter.Core.Tests", "tes
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BugHunter.Core", "src\BugHunter.Core\BugHunter.Core.csproj", "{656A8756-6AF4-44D7-8728-D09A50A40A04}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BugHunter", "src\BugHunter\BugHunter.csproj", "{94312E36-802C-40FA-A07E-F479E74B61C2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BugHunter.Analyzers", "src\BugHunter.Analyzers\BugHunter.Analyzers.csproj", "{94312E36-802C-40FA-A07E-F479E74B61C2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BugHunter.PerformanceTest", "test\BugHunter.PerformanceTest\BugHunter.PerformanceTest.csproj", "{EABFC61A-E553-4F75-A1D6-FB5E8891D659}"
 EndProject

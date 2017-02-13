@@ -79,7 +79,7 @@
       <Project>{656a8756-6af4-44d7-8728-d09a50a40a04}</Project>
       <Name>BugHunter.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\src\BugHunter\BugHunter.csproj">
+    <ProjectReference Include="..\..\src\BugHunter.Analyzers\BugHunter.Analyzers.csproj">
       <Project>{94312e36-802c-40fa-a07e-f479e74b61c2}</Project>
       <Name>BugHunter</Name>
     </ProjectReference>

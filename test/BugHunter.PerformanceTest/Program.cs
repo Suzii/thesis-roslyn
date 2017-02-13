@@ -12,7 +12,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Threading;
-using BugHunter.CmsApiReplacementRules.Analyzers;
+using BugHunter.Analyzers.CmsApiReplacementRules.Analyzers;
 using BugHunter.PerformanceTest.Helpers;
 using BugHunter.PerformanceTest.Models;
 using Microsoft.CodeAnalysis;
