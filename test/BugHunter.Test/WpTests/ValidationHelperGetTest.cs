@@ -35,6 +35,7 @@ namespace BugHunter.Test.WpTests
         }
 
         [TestCase(@"GetDouble(""0"", 0)", @"GetDoubleSystem(""0"", 0)")]
+        [TestCase(@"GetDouble(""0"", 0, ""en-us"")", @"GetDoubleSystem(""0"", 0)")]
         [TestCase(@"GetDouble(""0"", 0, CultureInfo.CurrentUICulture)", @"GetDoubleSystem(""0"", 0)")]
         [TestCase(@"GetDecimal(""0"", 0)", @"GetDecimalSystem(""0"", 0)")]
         [TestCase(@"GetDecimal(""0"", 0, CultureInfo.CurrentUICulture)", @"GetDecimalSystem(""0"", 0)")]
