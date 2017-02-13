@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Linq;
-using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,13 +14,13 @@ using System.Windows.Threading;
 using BugHunter.Analyzers.CmsApiReplacementRules.Analyzers;
 using BugHunter.PerformanceTest.Helpers;
 using BugHunter.PerformanceTest.Models;
+using BugHunter.Web.Analyzers.CmsBaseClassesRules.Analyzers;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeActions;
 using Microsoft.CodeAnalysis.CodeFixes;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Diagnostics;
 using Microsoft.CodeAnalysis.MSBuild;
-using Microsoft.CodeAnalysis.VisualBasic;
 using File = System.IO.File;
 using Path = System.IO.Path;
 
@@ -374,13 +373,14 @@ namespace BugHunter.PerformanceTest
 
         private static ImmutableArray<DiagnosticAnalyzer> GetAllAnalyzers()
         {
-            var assembly = typeof(ClientScriptMethodsAnalyzer).Assembly;
+            var analyzersAssembly = typeof(ClientScriptMethodsAnalyzer).Assembly;
+            var webAnalyzersAssembly = typeof(WebPartBaseAnalyzer).Assembly;
 
             var diagnosticAnalyzerType = typeof(DiagnosticAnalyzer);
 
             var analyzers = ImmutableArray.CreateBuilder<DiagnosticAnalyzer>();
 
-            foreach (var type in assembly.GetTypes())
+            foreach (var type in analyzersAssembly.GetTypes().Union(webAnalyzersAssembly.GetTypes()))
             {
                 if (type.IsSubclassOf(diagnosticAnalyzerType) && !type.IsAbstract)
                 {
@@ -393,13 +393,14 @@ namespace BugHunter.PerformanceTest
 
         private static ImmutableDictionary<string, ImmutableList<CodeFixProvider>> GetAllCodeFixers()
         {
-            var assembly = typeof(ClientScriptMethodsAnalyzer).Assembly;
+            var analyzersAssembly = typeof(ClientScriptMethodsAnalyzer).Assembly;
+            var webAnalyzersAssembly = typeof(WebPartBaseAnalyzer).Assembly;
 
             var codeFixProviderType = typeof(CodeFixProvider);
 
             var providers = new Dictionary<string, ImmutableList<CodeFixProvider>>();
 
-            foreach (var type in assembly.GetTypes())
+            foreach (var type in analyzersAssembly.GetTypes().Union(webAnalyzersAssembly.GetTypes()))
             {
                 if (!type.IsSubclassOf(codeFixProviderType) || type.IsAbstract)
                 {

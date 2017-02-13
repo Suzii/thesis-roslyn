@@ -83,6 +83,10 @@
       <Project>{94312e36-802c-40fa-a07e-f479e74b61c2}</Project>
       <Name>BugHunter</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\src\BugHunter.Web.Analyzers\BugHunter.Web.Analyzers.csproj">
+      <Project>{14e74fd2-d9f7-460d-a504-a915efcc0dd1}</Project>
+      <Name>BugHunter.Web.Analyzers</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Analyzer Include="..\..\packages\Microsoft.CodeAnalysis.Analyzers.1.1.0\analyzers\dotnet\cs\Microsoft.CodeAnalysis.Analyzers.dll" />
