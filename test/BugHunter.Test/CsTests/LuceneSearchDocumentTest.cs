@@ -114,7 +114,7 @@ namespace SampleTestProject.CsSamples
 {
     public class SampleClass
     {
-        private boolean Method()
+        private bool Method()
         {
             LuceneSearchDocument badVariable = null;
             return badVariable == null;
@@ -138,7 +138,7 @@ namespace SampleTestProject.CsSamples
 {
     public class SampleClass
     {
-        private boolean Method()
+        private bool Method()
         {
             ISearchDocument badVariable = null;
             return badVariable == null;
@@ -156,7 +156,7 @@ namespace SampleTestProject.CsSamples
 {
     public class SampleClass
     {
-        private boolean Method()
+        private bool Method()
         {
             CMS.Search.Lucene3.LuceneSearchDocument badVariable = null;
             return badVariable == null;
@@ -179,7 +179,7 @@ namespace SampleTestProject.CsSamples
 {
     public class SampleClass
     {
-        private boolean Method()
+        private bool Method()
         {
             ISearchDocument badVariable = null;
             return badVariable == null;

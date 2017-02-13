@@ -30,25 +30,6 @@ namespace BugHunter.Test.StringMethodsTests
             VerifyCSharpDiagnostic(test);
         }
 
-        [TestCase(@"CompareTo(""a"", StringComparison.InvariantCultureIgnoreCase)")]
-        [TestCase(@"CompareTo(""a"", false, CultureInfo.CurrentCulture)")]
-        public void AllowedOverloadCalled_NoDiagnostic(string methodUsed)
-        {
-            var test = $@"namespace SampleTestProject.CsSamples 
-{{
-    public class SampleClass
-    {{
-        public void SampleMethod()
-        {{
-            var original = ""Original string"";
-            var result = original.{methodUsed};
-        }}
-    }}
-}}";
-
-            VerifyCSharpDiagnostic(test);
-        }
-
         [Test, TestCaseSource(nameof(TestSource))]
         public void InputWithIncident_SimpleMemberAccess_SurfacesDiagnostic(string methodUsed, string codeFix, int codeFixNumber)
         {

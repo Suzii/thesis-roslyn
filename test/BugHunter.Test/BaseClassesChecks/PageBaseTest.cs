@@ -13,7 +13,7 @@ namespace BugHunter.Test.BaseClassesChecks
     {
         protected override MetadataReference[] GetAdditionalReferences()
         {
-            return ReferencesHelper.BasicReferences.Union(new[] { ReferencesHelper.CMSBaseWebUI, ReferencesHelper.SystemWebReference, ReferencesHelper.SystemWebUIReference }).ToArray();
+            return ReferencesHelper.BasicReferences.Union(new[] { ReferencesHelper.CMSBaseWebUI, ReferencesHelper.SystemWebReference, ReferencesHelper.SystemWebUIReference, ReferencesHelper.CMSUIControls }).ToArray();
         }
 
         private readonly FakeFileInfo _pagesFakeFileInfo = new FakeFileInfo {FileExtension= "aspx.cs"};
@@ -69,7 +69,9 @@ namespace BugHunter.Test.BaseClassesChecks
         [TestCase("CMS.UIControls.AbstractCMSPage")]
         public void OkayInput_ClassExtendingCMSClass_NoDiagnostic(string oldUsage)
         {
-            var test = $@"namespace SampleTestProject.CsSamples
+            var test = $@"using CMS.UIControls;
+
+namespace SampleTestProject.CsSamples
 {{
     public partial class SampleClass: {oldUsage}
     {{

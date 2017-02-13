@@ -69,7 +69,9 @@ namespace BugHunter.Test.BaseClassesChecks
         [TestCase("CMS.Base.Web.UI.AbstractUserControl")]
         public void OkayInput_ClassExtendingCMSClass_NoDiagnostic(string oldUsage)
         {
-            var test = $@"namespace SampleTestProject.CsSamples
+            var test = $@"using CMS.Base.Web.UI;
+
+namespace SampleTestProject.CsSamples
 {{
     public partial class SampleClass: {oldUsage}
     {{

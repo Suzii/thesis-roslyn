@@ -31,10 +31,13 @@ namespace BugHunter.Test.StringMethodsTests
         }
 
         [TestCase(@"Equals(""a"", StringComparison.InvariantCultureIgnoreCase)")]
-        [TestCase(@"Equals(""a"", false, CultureInfo.CurrentCulture)")]
         public void AllowedOverloadCalled_NoDiagnostic(string methodUsed)
         {
-            var test = $@"namespace SampleTestProject.CsSamples 
+
+            var test = $@"using System;
+using System.Globalization;
+
+namespace SampleTestProject.CsSamples 
 {{
     public class SampleClass
     {{
@@ -45,7 +48,6 @@ namespace BugHunter.Test.StringMethodsTests
         }}
     }}
 }}";
-
             VerifyCSharpDiagnostic(test);
         }
 

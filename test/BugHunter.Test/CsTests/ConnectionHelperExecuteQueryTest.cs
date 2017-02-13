@@ -1,4 +1,5 @@
-﻿using BugHunter.CsRules.Analyzers;
+﻿using System.Linq;
+using BugHunter.CsRules.Analyzers;
 using BugHunter.Test.Verifiers;
 using Microsoft.CodeAnalysis;
 using NUnit.Framework;
@@ -10,7 +11,7 @@ namespace BugHunter.Test.CsTests
     {
         protected override MetadataReference[] GetAdditionalReferences()
         {
-            return ReferencesHelper.BasicReferences;
+            return ReferencesHelper.BasicReferences.Union(ReferencesHelper.GetReferencesFor(typeof(System.Data.DataSet))).ToArray();
         }
 
         private DiagnosticResult GetDiagnosticResult(params string[] messageArgumentStrings)
@@ -35,16 +36,18 @@ namespace BugHunter.Test.CsTests
         [TestCase(@"\this\should\prevent\from\diagnostic\being\raised")]
         public void OkInput_ClassOnExcludedPath_NoDiagnostic(string excludedPath)
         {
-            var test = @"namespace SampleTestProject.CsSamples
-{{
+            var test = @"using System.Data;
+
+namespace SampleTestProject.CsSamples
+{
     public partial class SampleClass
-    {{
+    {
         public void SampleMethod()
-        {{
+        {
             CMS.DataEngine.ConnectionHelper.ExecuteQuery(null);
-        }}
-    }}
-}}";
+        }
+    }
+}";
             var fakeFileInfo = new FakeFileInfo {FileLoaction = excludedPath};
             VerifyCSharpDiagnostic(test, fakeFileInfo);
         }
@@ -56,21 +59,23 @@ namespace BugHunter.Test.CsTests
         [TestCase("master.cs")]
         public void InputWithError_ExecuteQueryCalledFromUi_SurfacesDiagnostic(string fileExtension)
         {
-            var test = $@"using CMS.DataEngine;
+            var test = @"using System.Data;
+
+using CMS.DataEngine;
 
 namespace SampleTestProject.CsSamples
-{{
+{
     public partial class SampleClass
-    {{
-        public void SampleMethod() {{
+    {
+        public void SampleMethod() {
             ConnectionHelper.ExecuteQuery(null);
             CMS.DataEngine.ConnectionHelper.ExecuteQuery(null);
-        }}
-    }}
-}}";
+        }
+    }
+}";
             var fakeFileInfo = new FakeFileInfo {FileExtension = fileExtension};
-            var expectedDiagnostic1 = GetDiagnosticResult("ConnectionHelper.ExecuteQuery()").WithLocation(8, 13, fakeFileInfo);
-            var expectedDiagnostic2 = GetDiagnosticResult("CMS.DataEngine.ConnectionHelper.ExecuteQuery()").WithLocation(9, 13, fakeFileInfo);
+            var expectedDiagnostic1 = GetDiagnosticResult("ConnectionHelper.ExecuteQuery()").WithLocation(10, 13, fakeFileInfo);
+            var expectedDiagnostic2 = GetDiagnosticResult("CMS.DataEngine.ConnectionHelper.ExecuteQuery()").WithLocation(11, 13, fakeFileInfo);
 
             VerifyCSharpDiagnostic(test, fakeFileInfo, expectedDiagnostic1, expectedDiagnostic2);
         }

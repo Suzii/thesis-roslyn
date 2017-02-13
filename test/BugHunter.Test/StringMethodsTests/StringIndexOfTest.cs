@@ -35,18 +35,19 @@ namespace BugHunter.Test.StringMethodsTests
         }
 
         [TestCase(@"IndexOf(""a"", StringComparison.InvariantCultureIgnoreCase)")]
-        [TestCase(@"IndexOf(""a"", false, CultureInfo.CurrentCulture)")]
         [TestCase(@"IndexOf('a')")]
         [TestCase(@"IndexOf('a', 0)")]
         [TestCase(@"IndexOf('a', 0, 1)")]
         [TestCase(@"LastIndexOf(""a"", StringComparison.InvariantCultureIgnoreCase)")]
-        [TestCase(@"LastIndexOf(""a"", false, CultureInfo.CurrentCulture)")]
         [TestCase(@"LastIndexOf('a')")]
         [TestCase(@"LastIndexOf('a', 0)")]
         [TestCase(@"LastIndexOf('a', 0, 1)")]
         public void AllowedOverloadCalled_NoDiagnostic(string methodUsed)
         {
-            var test = $@"namespace SampleTestProject.CsSamples 
+            var test = $@"using System;
+using System.Globalization;
+
+namespace SampleTestProject.CsSamples 
 {{
     public class SampleClass
     {{
@@ -57,7 +58,6 @@ namespace BugHunter.Test.StringMethodsTests
         }}
     }}
 }}";
-
             VerifyCSharpDiagnostic(test);
         }
 

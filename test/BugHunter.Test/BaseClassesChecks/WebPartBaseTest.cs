@@ -181,7 +181,7 @@ namespace SampleTestProject.CsSamples
         {
             var test = $@"namespace SampleTestProject.CsSamples
 {{
-    public class SampleClass : System.Web.UI.WebControls.WebParts.Part
+    public class SampleClass : System.Web.UI.WebControls.WebParts.WebPart
     {{
     }}
 }}";
@@ -209,7 +209,7 @@ namespace SampleTestProject.CsSamples
 {{
     public class SampleClass : System.IDisposable
     {{
-        public override void Dispose() {{ }}
+        public void Dispose() {{ }}
     }}
 }}";
             var fakeFileInfo = new FakeFileInfo { FileLoaction = fileLocation };
@@ -223,7 +223,7 @@ namespace SampleTestProject.CsSamples
 {{
     public class SampleClass : {baseClassToExtend}, System.IDisposable
     {{
-        public override void Dispose() {{ }}
+        public void Dispose() {{ }}
     }}
 }}";
 
@@ -235,9 +235,8 @@ namespace SampleTestProject.CsSamples
         {
             var test = $@"namespace SampleTestProject.CsSamples
 {{
-    public class SampleClass : System.Web.UI.WebControls.WebParts.Part, System.IDisposable
+    public class SampleClass : System.Web.UI.WebControls.WebParts.WebPart, System.IDisposable
     {{
-        public override void Dispose() {{ }}
     }}
 }}";
             var fakeFileInfo = new FakeFileInfo {FileLoaction = fileLocation};
@@ -251,7 +250,6 @@ namespace SampleTestProject.CsSamples
 {{
     public class SampleClass : {baseClassToExtend}, System.IDisposable
     {{
-        public override void Dispose() {{ }}
     }}
 }}";
 

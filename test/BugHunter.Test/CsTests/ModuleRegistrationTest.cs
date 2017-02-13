@@ -92,7 +92,10 @@ namespace SampleTestProject.CsSamples
         [Test]
         public void InputWithError_ModuleNotRegistered_SurfacesDiagnostic()
         {
-            var test = @"namespace SampleTestProject.CsSamples
+            var test = @"using CMS;
+using CMS.Core;
+
+namespace SampleTestProject.CsSamples
 {
     public class MyModule : CMS.DataEngine.Module
     {
@@ -105,7 +108,7 @@ namespace SampleTestProject.CsSamples
         }
     }
 }";
-            var expectedDiagnostic = GetDiagnosticResult("MyModule").WithLocation(3, 18);
+            var expectedDiagnostic = GetDiagnosticResult("MyModule").WithLocation(6, 18);
 
             VerifyCSharpDiagnostic(test, expectedDiagnostic);
 
@@ -170,7 +173,10 @@ namespace SampleTestProject.CsSamples
         [Test]
         public void InputWithError_WrongModuleRegistered_SurfacesDiagnostic()
         {
-            var test = @"[assembly: CMS.RegisterModule(typeof(System.String))]
+            var test = @"using CMS;
+using CMS.Core;
+
+[assembly: CMS.RegisterModule(typeof(System.String))]
 namespace SampleTestProject.CsSamples
 {
     public class MyModule : CMS.DataEngine.Module
@@ -184,7 +190,7 @@ namespace SampleTestProject.CsSamples
         }
     }
 }";
-            var expectedDiagnostic = GetDiagnosticResult("MyModule").WithLocation(4, 18);
+            var expectedDiagnostic = GetDiagnosticResult("MyModule").WithLocation(7, 18);
 
             VerifyCSharpDiagnostic(test, expectedDiagnostic);
 

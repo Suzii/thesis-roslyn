@@ -69,12 +69,12 @@ namespace BugHunter.Test.Verifiers
         private void VerifyFix(DiagnosticAnalyzer analyzer, CodeFixProvider codeFixProvider, string oldSource, string newSource, MetadataReference[] references, int? codeFixIndex, bool allowNewCompilerDiagnostics, FakeFileInfo fakeFileInfo)
         {
             var document = CreateDocument(oldSource, references, fakeFileInfo);
-            var analyzerDiagnostics = GetSortedDiagnosticsFromDocuments(analyzer, new[] { document });
             var compilerDiagnostics = CodeFixVerifier.GetCompilerDiagnostics(document).ToList();
+            Assert.IsEmpty(compilerDiagnostics.Where(diag => diag.Severity == DiagnosticSeverity.Warning || diag.Severity == DiagnosticSeverity.Error), "Unable to compile original source code.");
+
+            var analyzerDiagnostics = GetSortedDiagnosticsFromDocuments(analyzer, new[] { document });
             var attempts = analyzerDiagnostics.Length;
-
-            Assert.IsEmpty(compilerDiagnostics.Where(diag => diag.Severity == DiagnosticSeverity.Warning), "Unable to compile original source code.");
-
+            
             for (int i = 0; i < attempts; ++i)
             {
                 var actions = new List<CodeAction>();

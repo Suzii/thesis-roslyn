@@ -48,7 +48,10 @@ namespace BugHunter.Test.StringMethodsTests
         [TestCase(@"Compare(""a"", 0, ""b"", 1, 1, StringComparison.InvariantCultureIgnoreCase)")]
         public void AllowedOverloadCalled_NoDiagnostic(string methodUsed)
         {
-            var test = $@"namespace SampleTestProject.CsSamples 
+            var test = $@"using System;
+using System.Globalization;
+
+namespace SampleTestProject.CsSamples 
 {{
     public class SampleClass
     {{

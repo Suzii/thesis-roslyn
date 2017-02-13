@@ -30,7 +30,10 @@ namespace BugHunter.Test.StringMethodsTests
         [TestCase("ToUpper(CultureInfo.InvariantCulture)")]
         public void AllowedOverloadCalled_NoDiagnostic(string methodUsed)
         {
-            var test = $@"namespace SampleTestProject.CsSamples 
+            var test = $@"using System;
+using System.Globalization;
+
+namespace SampleTestProject.CsSamples 
 {{
     public class SampleClass
     {{

@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
+using NUnit.Framework;
 
 namespace BugHunter.Test.Verifiers
 {
@@ -51,6 +52,10 @@ namespace BugHunter.Test.Verifiers
             var projects = new HashSet<Project>();
             foreach (var document in documents)
             {
+                // check that original documents are compilable
+                var compilerDiagnostics = CodeFixVerifier.GetCompilerDiagnostics(document).ToList();
+                Assert.IsEmpty(compilerDiagnostics.Where(diag => diag.Severity == DiagnosticSeverity.Warning || diag.Severity == DiagnosticSeverity.Error), "Unable to compile original source code.");
+
                 projects.Add(document.Project);
             }
 
