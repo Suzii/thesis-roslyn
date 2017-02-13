@@ -36,94 +36,124 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="BaseClassesRules\Analyzers\PageBaseAnalyzer.cs" />
-    <Compile Include="BaseClassesRules\Analyzers\UserControlBaseAnalyzer.cs" />
-    <Compile Include="BaseClassesRules\Analyzers\WebPartBaseAnalyzer.cs" />
-    <Compile Include="BaseClassesRules\CodeFixes\PageBaseCodeFixProvider.cs" />
-    <Compile Include="BaseClassesRules\CodeFixes\UserControlBaseCodeFixProvider.cs" />
-    <Compile Include="BaseClassesRules\CodeFixes\WebPartBaseCodeFixProvider.cs" />
-    <Compile Include="CsRules\Analyzers\EventLogArgumentsDiagnosticFormatter.cs" />
-    <Compile Include="CsRules\Analyzers\ConnectionHelperExecuteQueryAnalyzer.cs" />
-    <Compile Include="CsRules\Analyzers\HttpResponseCookiesAnalyzer.cs" />
-    <Compile Include="CsRules\Analyzers\HttpRequestCookiesAnalyzer.cs" />
-    <Compile Include="CsRules\Analyzers\HttpRequestBrowserAnalyzer.cs" />
-    <Compile Include="CsRules\Analyzers\HttpResponseRedirectAnalyzer.cs" />
-    <Compile Include="CsRules\Analyzers\HttpRequestUrlAnalyzer.cs" />
-    <Compile Include="CsRules\Analyzers\FormsAuthenticationSignOut.cs" />
-    <Compile Include="CsRules\Analyzers\HttpRequestQueryAnalyzer.cs" />
-    <Compile Include="CsRules\Analyzers\LuceneSearchDocumentAnalyzer.cs" />
-    <Compile Include="CsRules\Analyzers\ModuleRegistrationAnalyzer.cs" />
-    <Compile Include="CsRules\Analyzers\PageIsCallbackAnalyzer.cs" />
-    <Compile Include="CsRules\CodeFixes\ModuleRegistrationCodeFixProvider.cs" />
-    <Compile Include="FilePaths.cs" />
-    <Compile Include="CsRules\CsResources.Designer.cs">
+    <Compile Include="AbstractionOverImplementation\AbstractionOverImplementationResources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>CsResources.resx</DependentUpon>
+      <DependentUpon>AbstractionOverImplementationResources.resx</DependentUpon>
     </Compile>
-    <Compile Include="StringMethodsRules\Analyzers\BaseStringComparisonMethodsAnalyzer.cs" />
-    <Compile Include="StringMethodsRules\Analyzers\StringCompareToMethodAnalyzer.cs" />
-    <Compile Include="StringMethodsRules\Analyzers\StringStartAndEndsWithMethodsAnalyzer.cs" />
-    <Compile Include="StringMethodsRules\Analyzers\StringCompareStaticMethodAnalyzer.cs" />
-    <Compile Include="StringMethodsRules\Analyzers\StringEqualsMethodAnalyzer.cs" />
-    <Compile Include="StringMethodsRules\Analyzers\StringIndexOfMethodsAnalyzer.cs" />
-    <Compile Include="StringMethodsRules\Analyzers\StringManipulationMethodsAnalyzer.cs" />
-    <Compile Include="CsRules\Analyzers\PageIsPostBackAnalyzer.cs" />
-    <Compile Include="CsRules\Analyzers\HttpSessionSessionIdAnalyzer.cs" />
-    <Compile Include="CsRules\Analyzers\HttpSessionElementAccessAnalyzer.cs" />
-    <Compile Include="CsRules\Analyzers\ClientScriptMethodsAnalyzer.cs" />
-    <Compile Include="CsRules\Analyzers\WhereLikeMethodAnalyzer.cs" />
-    <Compile Include="CsRules\CodeFixes\FormsAuthenticationSignOutCodeFixProvider.cs" />
-    <Compile Include="CsRules\CodeFixes\HttpRequestCookiesCodeFixProvider.cs" />
-    <Compile Include="CsRules\CodeFixes\LuceneSearchDocumentCodeFixProvider.cs" />
-    <Compile Include="CsRules\CodeFixes\HttpResponseRedirectCodeFixProvider.cs" />
-    <Compile Include="CsRules\CodeFixes\HttpResponseCookiesCodeFixProvider.cs" />
-    <Compile Include="CsRules\CodeFixes\HttpRequestUrlCodeFixProvider.cs" />
-    <Compile Include="CsRules\CodeFixes\HttpRequestBrowserCodeFixProvider.cs" />
-    <Compile Include="CsRules\CodeFixes\HttpSessionElementAccessSetCodeFixProvider.cs" />
-    <Compile Include="CsRules\CodeFixes\HttpSessionElementAccessGetCodeFixProvider.cs" />
-    <Compile Include="CsRules\CodeFixes\PageIsCallbackCodeFixProvider.cs" />
-    <Compile Include="StringMethodsRules\CodeFixes\StringCompareStaticMethodCodeFixProvider.cs" />
-    <Compile Include="StringMethodsRules\CodeFixes\StringCompareToMethodCodeFixProvider.cs" />
-    <Compile Include="StringMethodsRules\CodeFixes\StringComparisonMethodsWithModifierCodeFixProvider.cs" />
-    <Compile Include="StringMethodsRules\CodeFixes\StringComparisonOptions.cs" />
-    <Compile Include="StringMethodsRules\CodeFixes\StringManipultionMethodsCodeFixProvider.cs" />
-    <Compile Include="CsRules\CodeFixes\PageIsPostBackCodeFixProvider.cs" />
-    <Compile Include="CsRules\CodeFixes\HttpSessionSessionIdCodeFixProvider.cs" />
-    <Compile Include="CsRules\CodeFixes\ClientScriptMethodsCodeFixProvider.cs" />
+    <Compile Include="CmsApiReplacementRules\CmsApiReplacementsResources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CmsApiReplacementsResources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="CmsBaseClassesRules\Analyzers\PageBaseAnalyzer.cs" />
+    <Compile Include="CmsBaseClassesRules\Analyzers\UserControlBaseAnalyzer.cs" />
+    <Compile Include="CmsBaseClassesRules\Analyzers\WebPartBaseAnalyzer.cs" />
+    <Compile Include="CmsBaseClassesRules\CodeFixes\PageBaseCodeFixProvider.cs" />
+    <Compile Include="CmsBaseClassesRules\CodeFixes\UserControlBaseCodeFixProvider.cs" />
+    <Compile Include="CmsBaseClassesRules\CodeFixes\WebPartBaseCodeFixProvider.cs" />
+    <Compile Include="InternalGuidelinesRules\Analyzers\EventLogArgumentsDiagnosticFormatter.cs" />
+    <Compile Include="WebInternalGuidelinesRules\Analyzers\ConnectionHelperExecuteQueryAnalyzer.cs" />
+    <Compile Include="CmsApiReplacementRules\Analyzers\HttpResponseCookiesAnalyzer.cs" />
+    <Compile Include="CmsApiReplacementRules\Analyzers\HttpRequestCookiesAnalyzer.cs" />
+    <Compile Include="CmsApiReplacementRules\Analyzers\HttpRequestBrowserAnalyzer.cs" />
+    <Compile Include="CmsApiReplacementRules\Analyzers\HttpResponseRedirectAnalyzer.cs" />
+    <Compile Include="CmsApiReplacementRules\Analyzers\HttpRequestUrlAnalyzer.cs" />
+    <Compile Include="CmsApiReplacementRules\Analyzers\FormsAuthenticationSignOut.cs" />
+    <Compile Include="CmsApiReplacementRules\Analyzers\HttpRequestQueryAnalyzer.cs" />
+    <Compile Include="AbstractionOverImplementation\Analyzers\LuceneSearchDocumentAnalyzer.cs" />
+    <Compile Include="CmsBaseClassesRules\Analyzers\ModuleRegistrationAnalyzer.cs" />
+    <Compile Include="CmsApiReplacementRules\Analyzers\PageIsCallbackAnalyzer.cs" />
+    <Compile Include="CmsBaseClassesRules\CodeFixes\ModuleRegistrationCodeFixProvider.cs" />
+    <Compile Include="FilePaths.cs" />
+    <Compile Include="InternalGuidelinesRules\InternalGuidelinesResources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>InternalGuidelinesResources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="StringAndCultureRules\Analyzers\BaseStringComparisonMethodsAnalyzer.cs" />
+    <Compile Include="StringAndCultureRules\Analyzers\StringCompareToMethodAnalyzer.cs" />
+    <Compile Include="StringAndCultureRules\Analyzers\StringStartAndEndsWithMethodsAnalyzer.cs" />
+    <Compile Include="StringAndCultureRules\Analyzers\StringCompareStaticMethodAnalyzer.cs" />
+    <Compile Include="StringAndCultureRules\Analyzers\StringEqualsMethodAnalyzer.cs" />
+    <Compile Include="StringAndCultureRules\Analyzers\StringIndexOfMethodsAnalyzer.cs" />
+    <Compile Include="StringAndCultureRules\Analyzers\StringManipulationMethodsAnalyzer.cs" />
+    <Compile Include="CmsApiReplacementRules\Analyzers\PageIsPostBackAnalyzer.cs" />
+    <Compile Include="CmsApiReplacementRules\Analyzers\HttpSessionSessionIdAnalyzer.cs" />
+    <Compile Include="CmsApiReplacementRules\Analyzers\HttpSessionElementAccessAnalyzer.cs" />
+    <Compile Include="CmsApiReplacementRules\Analyzers\ClientScriptMethodsAnalyzer.cs" />
+    <Compile Include="InternalGuidelinesRules\Analyzers\WhereLikeMethodAnalyzer.cs" />
+    <Compile Include="CmsApiReplacementRules\CodeFixes\FormsAuthenticationSignOutCodeFixProvider.cs" />
+    <Compile Include="CmsApiReplacementRules\CodeFixes\HttpRequestCookiesCodeFixProvider.cs" />
+    <Compile Include="AbstractionOverImplementation\CodeFixes\LuceneSearchDocumentCodeFixProvider.cs" />
+    <Compile Include="CmsApiReplacementRules\CodeFixes\HttpResponseRedirectCodeFixProvider.cs" />
+    <Compile Include="CmsApiReplacementRules\CodeFixes\HttpResponseCookiesCodeFixProvider.cs" />
+    <Compile Include="CmsApiReplacementRules\CodeFixes\HttpRequestUrlCodeFixProvider.cs" />
+    <Compile Include="CmsApiReplacementRules\CodeFixes\HttpRequestBrowserCodeFixProvider.cs" />
+    <Compile Include="CmsApiReplacementRules\CodeFixes\HttpSessionElementAccessSetCodeFixProvider.cs" />
+    <Compile Include="CmsApiReplacementRules\CodeFixes\HttpSessionElementAccessGetCodeFixProvider.cs" />
+    <Compile Include="CmsApiReplacementRules\CodeFixes\PageIsCallbackCodeFixProvider.cs" />
+    <Compile Include="StringAndCultureRules\CodeFixes\StringCompareStaticMethodCodeFixProvider.cs" />
+    <Compile Include="StringAndCultureRules\CodeFixes\StringCompareToMethodCodeFixProvider.cs" />
+    <Compile Include="StringAndCultureRules\CodeFixes\StringComparisonMethodsWithModifierCodeFixProvider.cs" />
+    <Compile Include="StringAndCultureRules\CodeFixes\StringComparisonOptions.cs" />
+    <Compile Include="StringAndCultureRules\CodeFixes\StringManipultionMethodsCodeFixProvider.cs" />
+    <Compile Include="CmsApiReplacementRules\CodeFixes\PageIsPostBackCodeFixProvider.cs" />
+    <Compile Include="CmsApiReplacementRules\CodeFixes\HttpSessionSessionIdCodeFixProvider.cs" />
+    <Compile Include="CmsApiReplacementRules\CodeFixes\ClientScriptMethodsCodeFixProvider.cs" />
     <Compile Include="DiagnosticIds.cs" />
-    <Compile Include="CsRules\Analyzers\EventLogArgumentsAnalyzer.cs" />
-    <Compile Include="CsRules\Analyzers\HttpRequestUserHostAddressAnalyzer.cs" />
-    <Compile Include="CsRules\CodeFixes\WhereLikeMethodCodeFixProvider.cs" />
-    <Compile Include="CsRules\CodeFixes\HttpRequestUserHostAddressCodeFixProvider.cs" />
-    <Compile Include="CsRules\CodeFixes\EventLogArgumentsCodeFixProvider.cs" />
+    <Compile Include="InternalGuidelinesRules\Analyzers\EventLogArgumentsAnalyzer.cs" />
+    <Compile Include="CmsApiReplacementRules\Analyzers\HttpRequestUserHostAddressAnalyzer.cs" />
+    <Compile Include="InternalGuidelinesRules\CodeFixes\WhereLikeMethodCodeFixProvider.cs" />
+    <Compile Include="CmsApiReplacementRules\CodeFixes\HttpRequestUserHostAddressCodeFixProvider.cs" />
+    <Compile Include="InternalGuidelinesRules\CodeFixes\EventLogArgumentsCodeFixProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StringMethodsRules\StringMethodsResources.Designer.cs">
+    <Compile Include="StringAndCultureRules\StringMethodsResources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>StringMethodsResources.resx</DependentUpon>
     </Compile>
-    <Compile Include="CsRules\Analyzers\SystemIOAnalyzer.cs" />
-    <Compile Include="WpRules\Analyzers\ValidationHelperGetAnalyzer.cs" />
-    <Compile Include="WpRules\CodeFixes\ValidationHelperGetCodeFixProvider.cs" />
-    <Compile Include="WpRules\WpResources.Designer.cs">
+    <Compile Include="SystemIoRules\Analyzers\SystemIOAnalyzer.cs" />
+    <Compile Include="SystemIoRules\SystemIoResources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SystemIoResources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="WebInternalGuidelinesRules\Analyzers\ValidationHelperGetAnalyzer.cs" />
+    <Compile Include="WebInternalGuidelinesRules\CodeFixes\ValidationHelperGetCodeFixProvider.cs" />
+    <Compile Include="WebInternalGuidelinesRules\WpResources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>WpResources.resx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="CsRules\CsResources.resx">
+    <EmbeddedResource Include="AbstractionOverImplementation\AbstractionOverImplementationResources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>CsResources.Designer.cs</LastGenOutput>
+      <LastGenOutput>AbstractionOverImplementationResources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="StringMethodsRules\StringMethodsResources.resx">
+    <EmbeddedResource Include="CmsApiReplacementRules\CmsApiReplacementsResources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>CmsApiReplacementsResources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="InternalGuidelinesRules\InternalGuidelinesResources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>InternalGuidelinesResources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StringAndCultureRules\StringMethodsResources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>StringMethodsResources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="WpRules\WpResources.resx">
+    <EmbeddedResource Include="SystemIoRules\SystemIoResources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>SystemIoResources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WebInternalGuidelinesRules\WpResources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>WpResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>

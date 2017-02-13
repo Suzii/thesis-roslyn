@@ -12,6 +12,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Threading;
+using BugHunter.CmsApiReplacementRules.Analyzers;
 using BugHunter.PerformanceTest.Helpers;
 using BugHunter.PerformanceTest.Models;
 using Microsoft.CodeAnalysis;
@@ -373,7 +374,7 @@ namespace BugHunter.PerformanceTest
 
         private static ImmutableArray<DiagnosticAnalyzer> GetAllAnalyzers()
         {
-            var assembly = typeof(BugHunter.CsRules.Analyzers.ClientScriptMethodsAnalyzer).Assembly;
+            var assembly = typeof(ClientScriptMethodsAnalyzer).Assembly;
 
             var diagnosticAnalyzerType = typeof(DiagnosticAnalyzer);
 
@@ -392,7 +393,7 @@ namespace BugHunter.PerformanceTest
 
         private static ImmutableDictionary<string, ImmutableList<CodeFixProvider>> GetAllCodeFixers()
         {
-            var assembly = typeof(BugHunter.CsRules.Analyzers.ClientScriptMethodsAnalyzer).Assembly;
+            var assembly = typeof(ClientScriptMethodsAnalyzer).Assembly;
 
             var codeFixProviderType = typeof(CodeFixProvider);
 

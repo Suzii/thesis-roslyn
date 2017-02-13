@@ -37,7 +37,7 @@
         public const string CONNECTION_HELPER_EXECUTE_QUERY = "BH10X4";
         public const string VALIDATION_HELPER_GET = "BH4001";
 
-        // UseAbstraction
+        // AbstractionOverImplementation
         public const string LUCENE_SEARCH_DOCUMENT = "BH10X3";
 
         // StringAndCulture

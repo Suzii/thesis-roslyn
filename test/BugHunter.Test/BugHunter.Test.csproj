@@ -654,37 +654,37 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BaseClassesChecks\PageBaseTest.cs" />
-    <Compile Include="BaseClassesChecks\UserControlBaseTest.cs" />
-    <Compile Include="CsTests\FormsAuthenticationSignOutTest.cs" />
-    <Compile Include="CsTests\HttpRequestQueryStringTest.cs" />
-    <Compile Include="CsTests\ConnectionHelperExecuteQueryTest.cs" />
-    <Compile Include="CsTests\ModuleRegistrationTest.cs" />
-    <Compile Include="CsTests\SystemIOTest.cs" />
-    <Compile Include="CsTests\LuceneSearchDocumentTest.cs" />
-    <Compile Include="CsTests\HttpRequestCookiesTest.cs" />
-    <Compile Include="CsTests\HttpResponseCookiesTest.cs" />
-    <Compile Include="CsTests\HttpRequestBrowserTest.cs" />
-    <Compile Include="CsTests\HttpRequestUrlTest.cs" />
-    <Compile Include="CsTests\HttpResponseRedirectTest.cs" />
-    <Compile Include="CsTests\HttpSessionElementAccessGetTest.cs" />
-    <Compile Include="CsTests\HttpSessionElementAccessSetTest.cs" />
-    <Compile Include="CsTests\PageIsCallbackTest.cs" />
+    <Compile Include="CmsBaseClassesTests\PageBaseTest.cs" />
+    <Compile Include="CmsBaseClassesTests\UserControlBaseTest.cs" />
+    <Compile Include="CmsApiReplacementsTests\FormsAuthenticationSignOutTest.cs" />
+    <Compile Include="CmsApiReplacementsTests\HttpRequestQueryStringTest.cs" />
+    <Compile Include="WebInternalGuidelinesTests\ConnectionHelperExecuteQueryTest.cs" />
+    <Compile Include="CmsBaseClassesTests\ModuleRegistrationTest.cs" />
+    <Compile Include="SystemIoTests\SystemIOTest.cs" />
+    <Compile Include="AbstractionOverImplementationTests\LuceneSearchDocumentTest.cs" />
+    <Compile Include="CmsApiReplacementsTests\HttpRequestCookiesTest.cs" />
+    <Compile Include="CmsApiReplacementsTests\HttpResponseCookiesTest.cs" />
+    <Compile Include="CmsApiReplacementsTests\HttpRequestBrowserTest.cs" />
+    <Compile Include="CmsApiReplacementsTests\HttpRequestUrlTest.cs" />
+    <Compile Include="CmsApiReplacementsTests\HttpResponseRedirectTest.cs" />
+    <Compile Include="CmsApiReplacementsTests\HttpSessionElementAccessGetTest.cs" />
+    <Compile Include="CmsApiReplacementsTests\HttpSessionElementAccessSetTest.cs" />
+    <Compile Include="CmsApiReplacementsTests\PageIsCallbackTest.cs" />
     <Compile Include="Helpers\DiagnosticResultExtensions.cs" />
     <Compile Include="Helpers\FakeFileInfo.cs" />
-    <Compile Include="StringMethodsTests\StringCompareToTest.cs" />
-    <Compile Include="StringMethodsTests\StringCompareStaticMethodTest.cs" />
-    <Compile Include="StringMethodsTests\StringEqualsStaticMethodTest.cs" />
-    <Compile Include="StringMethodsTests\StringEqualsTest.cs" />
-    <Compile Include="StringMethodsTests\StringStartsEndsWithTest.cs" />
-    <Compile Include="StringMethodsTests\StringIndexOfTest.cs" />
-    <Compile Include="StringMethodsTests\StringManipulationMethodsTest.cs" />
-    <Compile Include="CsTests\PageIsPostBackTest.cs" />
-    <Compile Include="CsTests\HttpSessionSessionIdTest.cs" />
-    <Compile Include="CsTests\HttpRequestUserHostAddressTest.cs" />
-    <Compile Include="CsTests\EventLogArgumentsTest.cs" />
-    <Compile Include="CsTests\ClientScriptMethodsTest.cs" />
-    <Compile Include="CsTests\WhereLikeMethodTest.cs" />
+    <Compile Include="StringAndCultureTests\StringCompareToTest.cs" />
+    <Compile Include="StringAndCultureTests\StringCompareStaticMethodTest.cs" />
+    <Compile Include="StringAndCultureTests\StringEqualsStaticMethodTest.cs" />
+    <Compile Include="StringAndCultureTests\StringEqualsTest.cs" />
+    <Compile Include="StringAndCultureTests\StringStartsEndsWithTest.cs" />
+    <Compile Include="StringAndCultureTests\StringIndexOfTest.cs" />
+    <Compile Include="StringAndCultureTests\StringManipulationMethodsTest.cs" />
+    <Compile Include="CmsApiReplacementsTests\PageIsPostBackTest.cs" />
+    <Compile Include="CmsApiReplacementsTests\HttpSessionSessionIdTest.cs" />
+    <Compile Include="CmsApiReplacementsTests\HttpRequestUserHostAddressTest.cs" />
+    <Compile Include="InternalGuidelines\EventLogArgumentsTest.cs" />
+    <Compile Include="CmsApiReplacementsTests\ClientScriptMethodsTest.cs" />
+    <Compile Include="InternalGuidelines\WhereLikeMethodTest.cs" />
     <Compile Include="ReferencesHelper.cs" />
     <Compile Include="Shared\MessagesConstants.cs" />
     <Compile Include="Verifiers\CodeFixVerifier.cs" />
@@ -693,8 +693,8 @@
     <Compile Include="Helpers\DiagnosticResult.cs" />
     <Compile Include="Helpers\DiagnosticVerifier.Helper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="BaseClassesChecks\WebPartBaseTest.cs" />
-    <Compile Include="WpTests\ValidationHelperGetTest.cs" />
+    <Compile Include="CmsBaseClassesTests\WebPartBaseTest.cs" />
+    <Compile Include="WebInternalGuidelinesTests\ValidationHelperGetTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
