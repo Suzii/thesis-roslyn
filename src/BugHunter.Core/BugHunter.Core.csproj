@@ -102,7 +102,8 @@
     <Compile Include="Extensions\IEnumerableExtensions.cs" />
     <Compile Include="Extensions\InvocationExpressionSyntaxExtensions.cs" />
     <Compile Include="Extensions\TypeSymbolExtensions.cs" />
-    <Compile Include="Helpers\ApiReplacementRuleBuilder.cs" />
+    <Compile Include="Helpers\DiagnosticDescriptionBuilders\BaseClassesInheritanceRuleBuilder.cs" />
+    <Compile Include="Helpers\DiagnosticDescriptionBuilders\ApiReplacementRuleBuilder.cs" />
     <Compile Include="Helpers\CodeFixes\ClassDeclarationCodeFixHelper.cs" />
     <Compile Include="Helpers\CodeFixes\CodeFixHelper.cs" />
     <Compile Include="Helpers\CodeFixes\MemberInvocationCodeFixHelper.cs" />

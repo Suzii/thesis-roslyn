@@ -44,7 +44,7 @@ namespace BugHunter.Analyzers.AbstractionOverImplementation.CodeFixes
             
             context.RegisterCodeFix(
                 CodeAction.Create(
-                    title: CodeFixMessageBuilder.GetMessage(newIdentifierNameNode),
+                    title: CodeFixMessageBuilder.GetReplaceWithMessage(newIdentifierNameNode),
                     createChangedDocument: c => editor.ReplaceExpressionWith(diagnosedNode, newIdentifierNameNode, usingNamespace),
                     equivalenceKey: nameof(LuceneSearchDocumentCodeFixProvider)),
                 diagnostic);

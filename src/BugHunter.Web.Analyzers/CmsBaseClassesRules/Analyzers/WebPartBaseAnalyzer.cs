@@ -4,6 +4,7 @@ using System.Linq;
 using BugHunter.Core;
 using BugHunter.Core.Analyzers;
 using BugHunter.Core.Extensions;
+using BugHunter.Core.Helpers.DiagnosticDescriptionBuilders;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
 
@@ -18,22 +19,8 @@ namespace BugHunter.Web.Analyzers.CmsBaseClassesRules.Analyzers
         public const string WEB_PART_DIAGNOSTIC_ID = DiagnosticIds.WEB_PART_BASE;
         public const string UI_WEB_PART_DIAGNOSTIC_ID = DiagnosticIds.UI_WEB_PART_BASE;
 
-        // TODO think of nicer messages
-        private static readonly DiagnosticDescriptor WebPartRule = new DiagnosticDescriptor(WEB_PART_DIAGNOSTIC_ID,
-                title: "Web Part must inherit the right class",
-                messageFormat: "'{0}' should inherit from CMS<something>WebPart.",
-                category: AnalyzerCategories.CmsBaseClasses,
-                defaultSeverity: DiagnosticSeverity.Warning,
-                isEnabledByDefault: true,
-                description: "Web Part must inherit the right class.");
-
-        private static readonly DiagnosticDescriptor UiWebPartRule = new DiagnosticDescriptor(UI_WEB_PART_DIAGNOSTIC_ID,
-        title: "UI Web Part must inherit the right class",
-        messageFormat: "'{0}' should inherit from CMS<something>WebPart.",
-        category: AnalyzerCategories.CmsBaseClasses,
-        defaultSeverity: DiagnosticSeverity.Warning,
-        isEnabledByDefault: true,
-        description: "Web Part must inherit the right class.");
+        private static readonly DiagnosticDescriptor WebPartRule = BaseClassesInheritanceRuleBuilder.GetRule(WEB_PART_DIAGNOSTIC_ID, "Web Part", "some abstract CMS WebPart");
+        private static readonly DiagnosticDescriptor UiWebPartRule = BaseClassesInheritanceRuleBuilder.GetRule(UI_WEB_PART_DIAGNOSTIC_ID, "UI Web Part", "some abstract CMS UI WebPart");
 
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(WebPartRule, UiWebPartRule);
 

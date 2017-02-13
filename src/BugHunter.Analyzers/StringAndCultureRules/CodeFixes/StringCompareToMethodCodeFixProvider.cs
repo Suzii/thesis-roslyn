@@ -58,7 +58,7 @@ namespace BugHunter.Analyzers.StringAndCultureRules.CodeFixes
 
                 context.RegisterCodeFix(
                     CodeAction.Create(
-                        title: CodeFixMessageBuilder.GetMessage(newInvocation),
+                        title: CodeFixMessageBuilder.GetReplaceWithMessage(newInvocation),
                         createChangedDocument: c => editor.ReplaceExpressionWith(invocation, newInvocation, namespacesToBeReferenced),
                         equivalenceKey:
                         $"{nameof(StringCompareToMethodCodeFixProvider)}-{strignComparisonOption}"),

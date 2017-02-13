@@ -21,7 +21,7 @@ namespace BugHunter.Web.Analyzers.Tests.WebInternalGuidelinesTests
             return new DiagnosticResult
             {
                 Id = DiagnosticIds.CONNECTION_HELPER_EXECUTE_QUERY,
-                Message = $"'{messageArgumentStrings[0]}' should not be called directly from this file. Move logic to codebehind.",
+                Message = $"'{messageArgumentStrings[0]}' should not be called directly from this file. Move the logic to codebehind instead.",
                 Severity = DiagnosticSeverity.Warning,
             };
         }

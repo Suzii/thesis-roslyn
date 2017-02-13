@@ -37,14 +37,14 @@ namespace BugHunter.Web.Analyzers.Tests.CmsBaseClassesTests
                     return new DiagnosticResult
                     {
                         Id = DiagnosticIds.UI_WEB_PART_BASE,
-                        Message = $"'{messageArguments[0]}' should inherit from CMS<something>WebPart.",
+                        Message = $"'{messageArguments[0]}' should inherit from some abstract CMS UI WebPart.",
                         Severity = DiagnosticSeverity.Warning,
                     };
                 case SolutionFolders.WEB_PARTS:
                     return new DiagnosticResult
                     {
                         Id = DiagnosticIds.WEB_PART_BASE,
-                        Message = $"'{messageArguments[0]}' should inherit from CMS<something>WebPart.",
+                        Message = $"'{messageArguments[0]}' should inherit from some abstract CMS WebPart.",
                         Severity = DiagnosticSeverity.Warning,
                     };
                 default:

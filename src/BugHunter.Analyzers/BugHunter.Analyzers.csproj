@@ -46,6 +46,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CmsApiReplacementsResources.resx</DependentUpon>
     </Compile>
+    <Compile Include="CmsBaseClassesRules\CmsBaseClassesResources.Designer.cs">
+      <DependentUpon>CmsBaseClassesResources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
     <Compile Include="InternalGuidelinesRules\Analyzers\EventLogArgumentsDiagnosticFormatter.cs" />
     <Compile Include="InternalGuidelinesRules\InternalGuidelinesResources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -122,6 +127,11 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>CmsApiReplacementsResources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CmsBaseClassesRules\CmsBaseClassesResources.resx">
+      <SubType>Designer</SubType>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>CmsBaseClassesResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="InternalGuidelinesRules\InternalGuidelinesResources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

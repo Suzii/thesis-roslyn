@@ -37,8 +37,8 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.CodeFixes
             var codeFix1 = SyntaxFactory.ParseExpression("UrlHelper.Redirect");
             var codeFix2 = SyntaxFactory.ParseExpression("UrlHelper.LocalRedirect");
 
-            var message1 = $"{CodeFixMessageBuilder.GetMessage(codeFix2)} {CmsApiReplacementsResources.RedirectCodeFixLocal}";
-            var message2 = $"{CodeFixMessageBuilder.GetMessage(codeFix2)} {CmsApiReplacementsResources.RedirectCodeFixExternal}";
+            var message1 = $"{CodeFixMessageBuilder.GetReplaceWithMessage(codeFix2)} {CmsApiReplacementsResources.RedirectCodeFixLocal}";
+            var message2 = $"{CodeFixMessageBuilder.GetReplaceWithMessage(codeFix2)} {CmsApiReplacementsResources.RedirectCodeFixExternal}";
 
             var diagnostic = context.Diagnostics.First();
             

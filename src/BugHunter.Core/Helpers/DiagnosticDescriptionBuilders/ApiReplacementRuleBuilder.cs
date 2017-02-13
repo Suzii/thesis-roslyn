@@ -1,7 +1,7 @@
 ﻿using BugHunter.Core.ResourceBuilder;
 using Microsoft.CodeAnalysis;
 
-namespace BugHunter.Core.Helpers
+namespace BugHunter.Core.Helpers.DiagnosticDescriptionBuilders
 {
     public static class ApiReplacementRuleBuilder
     {

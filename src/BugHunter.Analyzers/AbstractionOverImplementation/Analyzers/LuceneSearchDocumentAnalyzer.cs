@@ -20,6 +20,7 @@ namespace BugHunter.Analyzers.AbstractionOverImplementation.Analyzers
             defaultSeverity: DiagnosticSeverity.Warning,
             isEnabledByDefault: true,
             description: new LocalizableResourceString(nameof(AbstractionOverImplementationResources.LuceneSearchDocument_Description), AbstractionOverImplementationResources.ResourceManager, typeof(AbstractionOverImplementationResources)));
+
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
 
         public override void Initialize(AnalysisContext context)
@@ -46,7 +47,7 @@ namespace BugHunter.Analyzers.AbstractionOverImplementation.Analyzers
                 return;
             }
             
-            // if direct parent is QualifiedName, surface diagnostic fo whole
+            // if direct parent is QualifiedName, surface diagnostic for whole QualifiedName
             var diagnosedNode = identifierNameNode.Parent.IsKind(SyntaxKind.QualifiedName)
                 ? identifierNameNode.Parent
                 : identifierNameNode;

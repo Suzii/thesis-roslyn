@@ -43,7 +43,7 @@ namespace BugHunter.Analyzers.InternalGuidelinesRules.CodeFixes
 
             context.RegisterCodeFix(
                 CodeAction.Create(
-                    title: CodeFixMessageBuilder.GetMessage(newArgumentName),
+                    title: CodeFixMessageBuilder.GetReplaceWithMessage(newArgumentName),
                     createChangedDocument: c => ReplaceEventTypeArgument(context.Document, invocationExpression, c, newArgumentName),
                     equivalenceKey: nameof(EventLogArgumentsCodeFixProvider)),
                 diagnostic);

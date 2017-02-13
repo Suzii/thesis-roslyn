@@ -39,14 +39,14 @@ namespace BugHunter.Analyzers.StringAndCultureRules.CodeFixes
 
             context.RegisterCodeFix(
                 CodeAction.Create(
-                    title: CodeFixMessageBuilder.GetMessage(newInvocation1),
+                    title: CodeFixMessageBuilder.GetReplaceWithMessage(newInvocation1),
                     createChangedDocument: c => editor.ReplaceExpressionWith(invocation, newInvocation1),
                     equivalenceKey: $"{nameof(StringManipultionMethodsCodeFixProvider)}-InvariantCulture"),
                 diagnostic);
 
             context.RegisterCodeFix(
                 CodeAction.Create(
-                    title: CodeFixMessageBuilder.GetMessage(newInvocation2),
+                    title: CodeFixMessageBuilder.GetReplaceWithMessage(newInvocation2),
                     createChangedDocument: c => editor.ReplaceExpressionWith(invocation, newInvocation2),
                     equivalenceKey: $"{nameof(StringManipultionMethodsCodeFixProvider)}-CurrentCulture"),
                 diagnostic);

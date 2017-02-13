@@ -88,6 +88,11 @@
     <Compile Include="CmsBaseClassesRules\Analyzers\PageBaseAnalyzer.cs" />
     <Compile Include="CmsBaseClassesRules\Analyzers\UserControlBaseAnalyzer.cs" />
     <Compile Include="CmsBaseClassesRules\Analyzers\WebPartBaseAnalyzer.cs" />
+    <Compile Include="CmsBaseClassesRules\CmsBaseClassesResources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CmsBaseClassesResources.resx</DependentUpon>
+    </Compile>
     <Compile Include="CmsBaseClassesRules\CodeFixes\PageBaseCodeFixProvider.cs" />
     <Compile Include="CmsBaseClassesRules\CodeFixes\UserControlBaseCodeFixProvider.cs" />
     <Compile Include="CmsBaseClassesRules\CodeFixes\WebPartBaseCodeFixProvider.cs" />
@@ -97,16 +102,21 @@
     <Compile Include="WebInternalGuidelinesRules\Analyzers\ConnectionHelperExecuteQueryAnalyzer.cs" />
     <Compile Include="WebInternalGuidelinesRules\Analyzers\ValidationHelperGetAnalyzer.cs" />
     <Compile Include="WebInternalGuidelinesRules\CodeFixes\ValidationHelperGetCodeFixProvider.cs" />
-    <Compile Include="WebInternalGuidelinesRules\WpResources.Designer.cs">
+    <Compile Include="WebInternalGuidelinesRules\WebInternalGuidelinesResources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>WpResources.resx</DependentUpon>
+      <DependentUpon>WebInternalGuidelinesResources.resx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="WebInternalGuidelinesRules\WpResources.resx">
+    <EmbeddedResource Include="CmsBaseClassesRules\CmsBaseClassesResources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>WpResources.Designer.cs</LastGenOutput>
+      <LastGenOutput>CmsBaseClassesResources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WebInternalGuidelinesRules\WebInternalGuidelinesResources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>WebInternalGuidelinesResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

@@ -117,48 +117,23 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ApiReplacements_CodeFix" xml:space="preserve">
-    <value>Replace with '{0}'.</value>
-    <comment>0 - suggested code fix</comment>
+  <data name="RedirectCodeFixLocal" xml:space="preserve">
+    <value>Use when redirecting to local URL.</value>
+    <comment>0 - forbidden usage</comment>
   </data>
-  <data name="ApiReplacements_Description" xml:space="preserve">
-    <value>'{0}' should not be used. Use '{1}' instead.</value>
-    <comment>0 - forbidden usage, 1 - suggested usage</comment>
+  <data name="RedirectCodeFixExternal" xml:space="preserve">
+    <value>Use when redirecting to external URL.</value>
   </data>
-  <data name="ApiReplacements_Description_NoSuggestion" xml:space="preserve">
-    <value>'{0}' should not be used.</value>
-    <comment>0 - forbidden usage, 1 - suggested usage</comment>
+  <data name="ModuleRegistration_Title" xml:space="preserve">
+    <value>Module or ModuleEntry must be registered.</value>
   </data>
-  <data name="ApiReplacements_MessageFormat" xml:space="preserve">
-    <value>'{0}' should not be used. Use '{1}' instead.</value>
-    <comment>0 - forbidden usage, 1 - suggested usage</comment>
+  <data name="ModuleRegistration_MessageFormat" xml:space="preserve">
+    <value>Module or ModuleEntry '{0}' is not registered in the same file where it is declared. Add assembly attribute [assembly: RegisterModule(typeof({0}))] to the file.</value>
   </data>
-  <data name="ApiReplacements_MessageFormat_NoSuggestion" xml:space="preserve">
-    <value>'{0}' should not be used.</value>
-    <comment>0 - forbidden usage, 1 - suggested usage</comment>
+  <data name="ModuleRegistration_Description" xml:space="preserve">
+    <value>Modules and ModuleEntries must be registered in the same file where they are declared. Add assembly attribute [assembly: RegisterModule(typeof(&lt;ClassName&gt;))] to the file.</value>
   </data>
-  <data name="ApiReplacements_Title" xml:space="preserve">
-    <value>'{0}' should not be used. Use '{1}' instead.</value>
-    <comment>0 - forbidden usage, 1 - suggested usage</comment>
-  </data>
-  <data name="ApiReplacements_Title_NoSuggestion" xml:space="preserve">
-    <value>'{0}' should not be used.</value>
-    <comment>0 - forbidden usage, 1 - suggested usage</comment>
-  </data>
-  <data name="BaseClasses_Description" xml:space="preserve">
-    <value>{0} must inherit from right class.</value>
-    <comment>0 - type of file</comment>
-  </data>
-  <data name="BaseClasses_InheritFrom_CodeFix" xml:space="preserve">
-    <value>Inherit from '{0}' instead.</value>
-    <comment>0 - name of base class to inherit from</comment>
-  </data>
-  <data name="BaseClasses_MessageFormat" xml:space="preserve">
-    <value>'{0}' should inherit from {1}.</value>
-    <comment>0 - forbidden usage, 1 - suggested usage</comment>
-  </data>
-  <data name="BaseClasses_Title" xml:space="preserve">
-    <value>{0} must inherit from right class.</value>
-    <comment>0 - type of file</comment>
+  <data name="ModuleRegistration_CodeFix" xml:space="preserve">
+    <value>Add attribute: {0}.</value>
   </data>
 </root>

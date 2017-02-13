@@ -123,5 +123,41 @@ namespace BugHunter.Core.ResourceBuilder {
                 return ResourceManager.GetString("ApiReplacements_Title_NoSuggestion", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} must inherit from right class..
+        /// </summary>
+        internal static string BaseClasses_Description {
+            get {
+                return ResourceManager.GetString("BaseClasses_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Inherit from &apos;{0}&apos; instead..
+        /// </summary>
+        internal static string BaseClasses_InheritFrom_CodeFix {
+            get {
+                return ResourceManager.GetString("BaseClasses_InheritFrom_CodeFix", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;{0}&apos; should inherit from {1}..
+        /// </summary>
+        internal static string BaseClasses_MessageFormat {
+            get {
+                return ResourceManager.GetString("BaseClasses_MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} must inherit from right class..
+        /// </summary>
+        internal static string BaseClasses_Title {
+            get {
+                return ResourceManager.GetString("BaseClasses_Title", resourceCulture);
+            }
+        }
     }
 }

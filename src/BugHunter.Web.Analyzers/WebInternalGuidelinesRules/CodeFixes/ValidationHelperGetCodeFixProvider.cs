@@ -43,7 +43,7 @@ namespace BugHunter.Web.Analyzers.WebInternalGuidelinesRules.CodeFixes
             var diagnostic = context.Diagnostics.First();
             context.RegisterCodeFix(
                 CodeAction.Create(
-                    title: CodeFixMessageBuilder.GetMessage(newInvocation),
+                    title: CodeFixMessageBuilder.GetReplaceWithMessage(newInvocation),
                     createChangedDocument: c => editor.ReplaceExpressionWith(enclosingInvocation, newInvocation, "CMS.Helpers"),
                     equivalenceKey: nameof(ValidationHelperGetCodeFixProvider)),
                 diagnostic);

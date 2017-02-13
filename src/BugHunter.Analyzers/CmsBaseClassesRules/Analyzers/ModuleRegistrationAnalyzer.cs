@@ -19,14 +19,13 @@ namespace BugHunter.Analyzers.CmsBaseClassesRules.Analyzers
     {
         public const string DIAGNOSTIC_ID = DiagnosticIds.MODULE_REGISTRATION;
 
-        // TODO think of nicer messages
         private static readonly DiagnosticDescriptor Rule = new DiagnosticDescriptor(DIAGNOSTIC_ID,
-                title: "Module or ModuleEntry must be registered.",
-                messageFormat: "Module or ModuleEntry '{0}' is not registered in the same file where it is declared. Add assembly attribute [assembly: RegisterModule(typeof({0}))] to the file.",
+                title: new LocalizableResourceString(nameof(CmsBaseClassesResources.ModuleRegistration_Title), CmsBaseClassesResources.ResourceManager, typeof(CmsBaseClassesResources)),
+                messageFormat: new LocalizableResourceString(nameof(CmsBaseClassesResources.ModuleRegistration_MessageFormat), CmsBaseClassesResources.ResourceManager, typeof(CmsBaseClassesResources)),
                 category: AnalyzerCategories.CmsBaseClasses,
                 defaultSeverity: DiagnosticSeverity.Warning,
                 isEnabledByDefault: true,
-                description: "Modules and ModuleEntries must be registered in the same file where they are declared. Add assembly attribute [assembly: RegisterModule(typeof(XY))] to the file.");
+                description: new LocalizableResourceString(nameof(CmsBaseClassesResources.ModuleRegistration_Description), CmsBaseClassesResources.ResourceManager, typeof(CmsBaseClassesResources)));
 
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
 

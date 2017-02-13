@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using BugHunter.Core.Extensions;
 using BugHunter.Core.Helpers.CodeFixes;
 using BugHunter.Core.Models;
+using BugHunter.Core.ResourceBuilder;
 using BugHunter.Web.Analyzers.CmsBaseClassesRules.Analyzers;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeActions;
@@ -46,7 +47,7 @@ namespace BugHunter.Web.Analyzers.CmsBaseClassesRules.CodeFixes
                 var newClassDeclaration = classDeclaration.WithBaseClass(classAndItsNamespace.ClassName);
                 context.RegisterCodeFix(
                    CodeAction.Create(
-                       title: $"Inherit from {classAndItsNamespace.ClassName} instead",
+                       title: CodeFixMessageBuilder.GetInheritFromMessage(classAndItsNamespace.ClassName),
                        createChangedDocument: c => baseTypeCodeFixHelper.ReplaceExpressionWith(classDeclaration, newClassDeclaration, classAndItsNamespace.ClassNamespace),
                        equivalenceKey: nameof(UserControlBaseCodeFixProvider) + classAndItsNamespace.ClassName),
                    diagnostic);

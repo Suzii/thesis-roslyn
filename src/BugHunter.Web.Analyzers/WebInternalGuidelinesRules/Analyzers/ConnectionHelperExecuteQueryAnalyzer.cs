@@ -13,12 +13,12 @@ namespace BugHunter.Web.Analyzers.WebInternalGuidelinesRules.Analyzers
         public const string DIAGNOSTIC_ID = DiagnosticIds.CONNECTION_HELPER_EXECUTE_QUERY;
 
         private static readonly DiagnosticDescriptor Rule = new DiagnosticDescriptor(DIAGNOSTIC_ID,
-                title: "Do not use ExecuteQuery in UI.",
-                messageFormat: "'{0}()' should not be called directly from this file. Move logic to codebehind.",
+                title: new LocalizableResourceString(nameof(WebInternalGuidelinesResources.ConnectionHelperExecuteQuery_Title), WebInternalGuidelinesResources.ResourceManager, typeof(WebInternalGuidelinesResources)),
+                messageFormat: new LocalizableResourceString(nameof(WebInternalGuidelinesResources.ConnectionHelperExecuteQuery_MessageFormat), WebInternalGuidelinesResources.ResourceManager, typeof(WebInternalGuidelinesResources)),
                 category: AnalyzerCategories.WebInternalGuidelines,
                 defaultSeverity: DiagnosticSeverity.Warning,
                 isEnabledByDefault: true,
-                description: "'ExecuteQuery()' should not be called directly from this file. Move logic to codebehind.");
+                description: new LocalizableResourceString(nameof(WebInternalGuidelinesResources.ConnectionHelperExecuteQuery_Description), WebInternalGuidelinesResources.ResourceManager, typeof(WebInternalGuidelinesResources)));
 
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
 

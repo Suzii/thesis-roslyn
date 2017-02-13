@@ -117,20 +117,23 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ValidationHelperGet_CodeFix" xml:space="preserve">
-    <value>Replace with '{0}'.</value>
-    <comment>0 - suggested code fix</comment>
-  </data>
-  <data name="ValidationHelperGet_Description" xml:space="preserve">
-    <value>Do not use Get..() methods on ValidatinoHelper. Use Get..System() instead to ensure specific culture representation.</value>
+  <data name="RedirectCodeFixLocal" xml:space="preserve">
+    <value>Use when redirecting to local URL.</value>
     <comment>0 - forbidden usage</comment>
   </data>
-  <data name="ValidationHelperGet_MessageFormat" xml:space="preserve">
-    <value>Do not use {0}(). Use Get method with 'System' instead to ensure specific culture representation.</value>
-    <comment>0 - forbidden usage</comment>
+  <data name="RedirectCodeFixExternal" xml:space="preserve">
+    <value>Use when redirecting to external URL.</value>
   </data>
-  <data name="ValidationHelperGet_Title" xml:space="preserve">
-    <value>Do not use Get..() methods on ValidatinoHelper.</value>
-    <comment>0 - forbidden usage</comment>
+  <data name="ModuleRegistration_Title" xml:space="preserve">
+    <value>Module or ModuleEntry must be registered.</value>
+  </data>
+  <data name="ModuleRegistration_MessageFormat" xml:space="preserve">
+    <value>Module or ModuleEntry '{0}' is not registered in the same file where it is declared. Add assembly attribute [assembly: RegisterModule(typeof({0}))] to the file.</value>
+  </data>
+  <data name="ModuleRegistration_Description" xml:space="preserve">
+    <value>Modules and ModuleEntries must be registered in the same file where they are declared. Add assembly attribute [assembly: RegisterModule(typeof(&lt;ClassName&gt;))] to the file.</value>
+  </data>
+  <data name="ModuleRegistration_CodeFix" xml:space="preserve">
+    <value>Add attribute: {0}.</value>
   </data>
 </root>

@@ -49,21 +49,21 @@ namespace BugHunter.Analyzers.InternalGuidelinesRules.CodeFixes
 
             context.RegisterCodeFix(
                 CodeAction.Create(
-                    title: CodeFixMessageBuilder.GetMessage(containsMethodName),
+                    title: CodeFixMessageBuilder.GetReplaceWithMessage(containsMethodName),
                     createChangedDocument: c => ReplaceWithDifferentMethodCall(context.Document, memberAccessExpression, c, containsMethodName),
                     equivalenceKey: "Contains()"),
                 diagnostic);
 
             context.RegisterCodeFix(
                 CodeAction.Create(
-                    title: CodeFixMessageBuilder.GetMessage(startsWithMethodName),
+                    title: CodeFixMessageBuilder.GetReplaceWithMessage(startsWithMethodName),
                     createChangedDocument: c => ReplaceWithDifferentMethodCall(context.Document, memberAccessExpression, c, startsWithMethodName),
                     equivalenceKey: "StartsWith()"),
                 diagnostic);
 
             context.RegisterCodeFix(
                 CodeAction.Create(
-                    title: CodeFixMessageBuilder.GetMessage(endsWithMethodName),
+                    title: CodeFixMessageBuilder.GetReplaceWithMessage(endsWithMethodName),
                     createChangedDocument: c => ReplaceWithDifferentMethodCall(context.Document, memberAccessExpression, c, endsWithMethodName),
                     equivalenceKey: "EndsWith()"),
                 diagnostic);

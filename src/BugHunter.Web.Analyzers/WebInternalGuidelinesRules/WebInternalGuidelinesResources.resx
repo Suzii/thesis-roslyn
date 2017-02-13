@@ -117,48 +117,29 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ApiReplacements_CodeFix" xml:space="preserve">
+  <data name="ValidationHelperGet_CodeFix" xml:space="preserve">
     <value>Replace with '{0}'.</value>
     <comment>0 - suggested code fix</comment>
   </data>
-  <data name="ApiReplacements_Description" xml:space="preserve">
-    <value>'{0}' should not be used. Use '{1}' instead.</value>
-    <comment>0 - forbidden usage, 1 - suggested usage</comment>
+  <data name="ValidationHelperGet_Description" xml:space="preserve">
+    <value>Do not use Get..() methods on ValidatinoHelper. Use Get..System() instead to ensure specific culture representation.</value>
+    <comment>0 - forbidden usage</comment>
   </data>
-  <data name="ApiReplacements_Description_NoSuggestion" xml:space="preserve">
-    <value>'{0}' should not be used.</value>
-    <comment>0 - forbidden usage, 1 - suggested usage</comment>
+  <data name="ValidationHelperGet_MessageFormat" xml:space="preserve">
+    <value>Do not use {0}(). Use Get method with 'System' instead to ensure specific culture representation.</value>
+    <comment>0 - forbidden usage</comment>
   </data>
-  <data name="ApiReplacements_MessageFormat" xml:space="preserve">
-    <value>'{0}' should not be used. Use '{1}' instead.</value>
-    <comment>0 - forbidden usage, 1 - suggested usage</comment>
+  <data name="ValidationHelperGet_Title" xml:space="preserve">
+    <value>Do not use Get..() methods on ValidatinoHelper.</value>
+    <comment>0 - forbidden usage</comment>
   </data>
-  <data name="ApiReplacements_MessageFormat_NoSuggestion" xml:space="preserve">
-    <value>'{0}' should not be used.</value>
-    <comment>0 - forbidden usage, 1 - suggested usage</comment>
+  <data name="ConnectionHelperExecuteQuery_Title" xml:space="preserve">
+    <value>Do not use ExecuteQuery in UI.</value>
   </data>
-  <data name="ApiReplacements_Title" xml:space="preserve">
-    <value>'{0}' should not be used. Use '{1}' instead.</value>
-    <comment>0 - forbidden usage, 1 - suggested usage</comment>
+  <data name="ConnectionHelperExecuteQuery_MessageFormat" xml:space="preserve">
+    <value>'{0}()' should not be called directly from this file. Move the logic to codebehind instead.</value>
   </data>
-  <data name="ApiReplacements_Title_NoSuggestion" xml:space="preserve">
-    <value>'{0}' should not be used.</value>
-    <comment>0 - forbidden usage, 1 - suggested usage</comment>
-  </data>
-  <data name="BaseClasses_Description" xml:space="preserve">
-    <value>{0} must inherit from right class.</value>
-    <comment>0 - type of file</comment>
-  </data>
-  <data name="BaseClasses_InheritFrom_CodeFix" xml:space="preserve">
-    <value>Inherit from '{0}' instead.</value>
-    <comment>0 - name of base class to inherit from</comment>
-  </data>
-  <data name="BaseClasses_MessageFormat" xml:space="preserve">
-    <value>'{0}' should inherit from {1}.</value>
-    <comment>0 - forbidden usage, 1 - suggested usage</comment>
-  </data>
-  <data name="BaseClasses_Title" xml:space="preserve">
-    <value>{0} must inherit from right class.</value>
-    <comment>0 - type of file</comment>
+  <data name="ConnectionHelperExecuteQuery_Description" xml:space="preserve">
+    <value>'ExecuteQuery()' should not be called directly from the presentation layer. Move the logic to codebehind instead.</value>
   </data>
 </root>

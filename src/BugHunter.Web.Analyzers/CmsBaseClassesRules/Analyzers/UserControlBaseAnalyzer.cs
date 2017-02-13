@@ -1,9 +1,9 @@
 ﻿using System.Collections.Immutable;
 using System.Linq;
-using BugHunter.Core;
 using BugHunter.Core.Analyzers;
 using BugHunter.Core.Constants;
 using BugHunter.Core.Extensions;
+using BugHunter.Core.Helpers.DiagnosticDescriptionBuilders;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
 
@@ -17,14 +17,7 @@ namespace BugHunter.Web.Analyzers.CmsBaseClassesRules.Analyzers
     {
         public const string DIAGNOSTIC_ID = DiagnosticIds.USER_CONTROL_BASE;
 
-        // TODO think of nicer messages
-        private static readonly DiagnosticDescriptor Rule = new DiagnosticDescriptor(DIAGNOSTIC_ID,
-                title: "User control must inherit the right class",
-                messageFormat: "'{0}' should inherit from some abstract CMSControl.",
-                category: AnalyzerCategories.CmsBaseClasses,
-                defaultSeverity: DiagnosticSeverity.Warning,
-                isEnabledByDefault: true,
-                description: "User control must inherit the right class.");
+        private static readonly DiagnosticDescriptor Rule = BaseClassesInheritanceRuleBuilder.GetRule(DIAGNOSTIC_ID, "User Control", "some abstract CMSUserControl");
 
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
 
