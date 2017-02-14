@@ -41,6 +41,7 @@ namespace BugHunter.Core.Helpers
                 throw new ArgumentNullException(nameof(memberAccess));
             }
 
+            // return _semanticModel.GetSymbolInfo(memberAccess.Expression).Symbol.ContainingType;
             if (memberAccess.Expression is LiteralExpressionSyntax || memberAccess.Expression is IdentifierNameSyntax || memberAccess.Expression is PredefinedTypeSyntax)
             {
                 return _semanticModel.GetTypeInfo(memberAccess.Expression).Type;

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='utf-8' />
+<title>SourcesWithErrorsBenchmark</title>
+
+<style type="text/css">
+	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
+	td, th { padding: 6px 13px; border: 1px solid #ddd; }
+	tr { background-color: #fff; border-top: 1px solid #ccc; }
+	tr:nth-child(even) { background: #f8f8f8; }
+</style>
+</head>
+<body>
+<pre><code>
+BenchmarkDotNet=v0.10.1, OS=Microsoft Windows NT 6.1.7601 Service Pack 1
+Processor=Intel(R) Core(TM) i5-4690 CPU 3.50GHz, ProcessorCount=4
+Frequency=3410107 Hz, Resolution=293.2459 ns, Timer=TSC
+  [Host]     : Clr 4.0.30319.42000, 32bit LegacyJIT-v4.6.1087.0
+  MySuperJob : Clr 4.0.30319.42000, 32bit LegacyJIT-v4.6.1087.0
+</code></pre>
+<pre><code></code></pre>
+
+<table>
+<thead><tr><th>                                             Method</th><th> Mean</th><th>StdErr</th><th>StdDev</th><th> Min</th><th>  Max</th><th>Op/s</th><th>Rank</th>
+</tr>
+</thead><tbody><tr><td>                                   FilesCompilation</td><td>39.1436 ms</td><td>14.6396 ms</td><td>41.4072 ms</td><td>0.4036 ms</td><td>78.0739 ms</td><td>25.55</td><td>1</td>
+</tr><tr><td>                           AnalyzerV0_EmptyCallback</td><td>182.1482 ms</td><td>66.0439 ms</td><td>186.8002 ms</td><td>7.1908 ms</td><td>364.8475 ms</td><td>5.49</td><td>1</td>
+</tr><tr><td>AnalyzerV7_CompilationStartAndSyntaxTreeAndFulltextSearch</td><td>187.6183 ms</td><td>66.5703 ms</td><td>188.2892 ms</td><td>11.3493 ms</td><td>365.5712 ms</td><td>5.33</td><td>1</td>
+</tr><tr><td>           AnalyzerV6_CompilationStartAndSyntaxTree</td><td>187.7618 ms</td><td>66.6163 ms</td><td>188.4194 ms</td><td>11.2999 ms</td><td>364.8088 ms</td><td>5.33</td><td>1</td>
+</tr><tr><td>AnalyzerV5_CompilationStartSyntaxNodeAndCompilationEnd</td><td>194.8179 ms</td><td>68.8995 ms</td><td>194.8772 ms</td><td>12.3705 ms</td><td>378.9150 ms</td><td>5.13</td><td>1</td>
+</tr><tr><td>                     AnalyzerV1_SyntxNodeRegistered</td><td>195.0909 ms</td><td>68.6469 ms</td><td>194.1627 ms</td><td>13.0413 ms</td><td>378.8175 ms</td><td>5.13</td><td>1</td>
+</tr><tr><td>           AnalyzerV4_CompilationStartAndSyntaxNode</td><td>205.2978 ms</td><td>69.3732 ms</td><td>196.2172 ms</td><td>21.2054 ms</td><td>392.6408 ms</td><td>4.87</td><td>1</td>
+</tr></tbody></table>
+</body>
+</html>

@@ -8,7 +8,7 @@ using NUnit.Framework;
 namespace BugHunter.Analyzers.Test.SystemIoTests
 {
     [TestFixture]
-    public class SystemIOTest : CodeFixVerifier<SystemIOAnalyzer>
+    public class SystemIOTest : CodeFixVerifier<SystemIOAnalyzer_V7_CompilationStartAndSyntaxTreeAndFulltextSearch>
     {
         protected override MetadataReference[] GetAdditionalReferences()
         {

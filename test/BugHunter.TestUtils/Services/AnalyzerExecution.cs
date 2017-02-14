@@ -18,12 +18,25 @@ namespace BugHunter.TestUtils.Services
         /// <returns>An IEnumerable of Diagnostics that surfaced in the source code, sorted by Location</returns>
         public static Diagnostic[] GetSortedDiagnosticsFromDocuments(DiagnosticAnalyzer analyzer, Document[] documents)
         {
+            return GetSortedDiagnosticsFromDocuments(new[] { analyzer }, documents);
+        }
+
+        /// <summary>
+        /// Given analyzers and a document to apply it to, run the analyzer and gather an array of diagnostics found in it.
+        /// The returned diagnostics are then ordered by location in the source document.
+        /// </summary>
+        /// <param name="analyzers">The analyzers to run on the documents</param>
+        /// <param name="documents">The Documents that the analyzer will be run on</param>
+        /// <returns>An IEnumerable of Diagnostics that surfaced in the source code, sorted by Location</returns>
+        public static Diagnostic[] GetSortedDiagnosticsFromDocuments(DiagnosticAnalyzer[] analyzers, Document[] documents)
+        {
             var projects = new HashSet<Project>();
             foreach (var document in documents)
             {
                 // check that original documents are compilable
                 var compilerDiagnostics = ProjectCompilation.GetCompilerDiagnostics(document).ToList();
-                Assert.IsEmpty(compilerDiagnostics.Where(diag => diag.Severity == DiagnosticSeverity.Warning || diag.Severity == DiagnosticSeverity.Error), "Unable to compile original source code.");
+                Assert.IsEmpty(compilerDiagnostics.Where(diag => diag.Severity == DiagnosticSeverity.Error), "Unable to compile original source code.");
+                //Assert.IsEmpty(compilerDiagnostics.Where(diag => diag.Severity == DiagnosticSeverity.Warning), "Original source code contains compiler warnings.");
 
                 projects.Add(document.Project);
             }
@@ -31,7 +44,7 @@ namespace BugHunter.TestUtils.Services
             var diagnostics = new List<Diagnostic>();
             foreach (var project in projects)
             {
-                var compilationWithAnalyzers = project.GetCompilationAsync().Result.WithAnalyzers(ImmutableArray.Create(analyzer));
+                var compilationWithAnalyzers = project.GetCompilationAsync().Result.WithAnalyzers(ImmutableArray.Create(analyzers));
                 var diags = compilationWithAnalyzers.GetAnalyzerDiagnosticsAsync().Result;
                 foreach (var diag in diags)
                 {

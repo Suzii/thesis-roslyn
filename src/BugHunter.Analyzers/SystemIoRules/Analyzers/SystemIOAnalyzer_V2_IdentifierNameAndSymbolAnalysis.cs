@@ -3,7 +3,6 @@ using System.Linq;
 using BugHunter.Core;
 using BugHunter.Core.DiagnosticsFormatting;
 using BugHunter.Core.Extensions;
-using BugHunter.Core.Helpers;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -13,9 +12,11 @@ namespace BugHunter.Analyzers.SystemIoRules.Analyzers
 {
     /// <summary>
     /// Searches for usages of <see cref="System.IO"/> and their access to anything other than <c>Exceptions</c> or <c>Stream</c>
+    /// 
+    /// Version with callback on IdentifierName and analyzing Symbol directly
     /// </summary>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class SystemIOAnalyzer : DiagnosticAnalyzer
+    public class SystemIOAnalyzer_V2_IdentifierNameAndSymbolAnalysis : DiagnosticAnalyzer
     {
         private static readonly string[] WhiteListedTypes =
         {
@@ -23,37 +24,8 @@ namespace BugHunter.Analyzers.SystemIoRules.Analyzers
             "System.IO.Stream"
         };
 
-        private static readonly string[] WhiteListedIdentifierNames =
-        {
-            "System.IO.IOException",
-            "System.IO.DirectoryNotFoundException",
-            "System.IO.DriveNotFoundException",
-            "System.IO.EndOfStreamException",
-            "System.IO.FileLoadException",
-            "System.IO.FileNotFoundException",
-            "System.IO.PathTooLongException",
-            "System.IO.PipeException",
-
-            "System.IO.Stream",
-            "Microsoft.JScript.COMCharStream",
-            "System.Data.OracleClient.OracleBFile",
-            "System.Data.OracleClient.OracleLob",
-            "System.Data.SqlTypes.SqlFileStream",
-            "System.IO.BufferedStream",
-            "System.IO.Compression.DeflateStream",
-            "System.IO.Compression.GZipStream",
-            "System.IO.FileStream",
-            "System.IO.MemoryStream",
-            "System.IO.Pipes.PipeStream",
-            "System.IO.UnmanagedMemoryStream",
-            "System.Net.Security.AuthenticatedStream",
-            "System.Net.Sockets.NetworkStream",
-            "System.Printing.PrintQueueStream",
-            "System.Security.Cryptography.CryptoStream",
-        };
-
         public const string DIAGNOSTIC_ID = DiagnosticIds.SYSTEM_IO;
-        
+
         private static readonly DiagnosticDescriptor Rule = new DiagnosticDescriptor(DIAGNOSTIC_ID,
                 title: new LocalizableResourceString(nameof(SystemIoResources.SystemIo_Title), SystemIoResources.ResourceManager, typeof(SystemIoResources)),
                 messageFormat: new LocalizableResourceString(nameof(SystemIoResources.SystemIo_MessageFormat), SystemIoResources.ResourceManager, typeof(SystemIoResources)),
@@ -64,6 +36,8 @@ namespace BugHunter.Analyzers.SystemIoRules.Analyzers
 
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
 
+        private static readonly IDiagnosticFormatter DiagnosticFormatter = DiagnosticFormatterFactory.CreateDefaultFormatter();
+
         public override void Initialize(AnalysisContext context)
         {
             context.RegisterSyntaxNodeAction(c => Analyze(Rule, c), SyntaxKind.IdentifierName);
@@ -71,54 +45,39 @@ namespace BugHunter.Analyzers.SystemIoRules.Analyzers
 
         private void Analyze(DiagnosticDescriptor rule, SyntaxNodeAnalysisContext context)
         {
+            if (!CheckPreConditions(context))
+            {
+                return;
+            }
+
             var identifierNameSyntax = (IdentifierNameSyntax)context.Node;
-            if (identifierNameSyntax == null)
+            if (identifierNameSyntax == null || identifierNameSyntax.IsVar)
             {
                 return;
             }
 
-            if (identifierNameSyntax.IsVar || !(context.SemanticModel.GetSymbolInfo(identifierNameSyntax).Symbol is ITypeSymbol))
+            var symbol = context.SemanticModel.GetSymbolInfo(identifierNameSyntax).Symbol as INamedTypeSymbol;
+            if (symbol == null)
             {
                 return;
             }
 
-
-            var semanticModelBrowser = new SemanticModelBrowser(context);
-            var identifierNameTypeSymbol = semanticModelBrowser.GetNamedTypeSymbol(identifierNameSyntax);
-            if (identifierNameTypeSymbol == null)
+            var symbolContainingNamespace = symbol.ContainingNamespace;
+            if (!symbolContainingNamespace.ToString().Equals("System.IO"))
             {
                 return;
             }
 
-            if (!CheckPreConditions(context) || 
-                !IsInSystemIONamespace(context, identifierNameTypeSymbol) ||
-                IsWhiteListed(context, identifierNameTypeSymbol))
+            var exceptionType = context.SemanticModel.Compilation.GetTypeByMetadataName("System.IO.IOException");
+            var streamType = context.SemanticModel.Compilation.GetTypeByMetadataName("System.IO.Stream");
+
+            if (symbol.ConstructedFrom.IsDerivedFromClassOrInterface(exceptionType) || symbol.ConstructedFrom.IsDerivedFromClassOrInterface(streamType))
             {
                 return;
             }
 
             var diagnostic = CreateDiagnostic(rule, identifierNameSyntax);
-
             context.ReportDiagnostic(diagnostic);
-        }
-
-        private bool IsInSystemIONamespace(SyntaxNodeAnalysisContext context, INamedTypeSymbol identifierNameTypeSymbol)
-        {
-            return identifierNameTypeSymbol.ContainingNamespace.ToString().Equals("System.IO");
-        }
-
-        private bool IsWhiteListed(SyntaxNodeAnalysisContext context, INamedTypeSymbol identifierNameTypeSymbol)
-        {
-            if (identifierNameTypeSymbol != null && WhiteListedIdentifierNames.Contains(identifierNameTypeSymbol.ToString()))
-            {
-                return true;
-            }
-
-            return 
-                WhiteListedTypes.Any(
-                    whiteListedType =>
-                        identifierNameTypeSymbol.IsDerivedFromClassOrInterface(
-                            context.SemanticModel.Compilation.GetTypeByMetadataName(whiteListedType)));
         }
 
         private bool CheckPreConditions(SyntaxNodeAnalysisContext context)
@@ -126,7 +85,7 @@ namespace BugHunter.Analyzers.SystemIoRules.Analyzers
             // TODO check if file is generated
             return true;
         }
-        
+
         private Diagnostic CreateDiagnostic(DiagnosticDescriptor rule, IdentifierNameSyntax identifierName)
         {
             var rootIdentifierName = identifierName.AncestorsAndSelf().Last(n => n.IsKind(SyntaxKind.QualifiedName) || n.IsKind(SyntaxKind.IdentifierName));
@@ -138,9 +97,8 @@ namespace BugHunter.Analyzers.SystemIoRules.Analyzers
                 diagnosedNode = diagnosedNode.Parent as ExpressionSyntax;
             }
 
-            var diagnosticFormatter = DiagnosticFormatterFactory.CreateDefaultFormatter();
-            var usedAs = diagnosticFormatter.GetDiagnosedUsage(diagnosedNode);
-            var location = diagnosticFormatter.GetLocation(diagnosedNode);
+            var usedAs = DiagnosticFormatter.GetDiagnosedUsage(diagnosedNode);
+            var location = DiagnosticFormatter.GetLocation(diagnosedNode);
 
             return Diagnostic.Create(rule, location, usedAs);
         }

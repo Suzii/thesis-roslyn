@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='utf-8' />
+<title>SourcesFromConsoleAppBenchmark</title>
+
+<style type="text/css">
+	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
+	td, th { padding: 6px 13px; border: 1px solid #ddd; }
+	tr { background-color: #fff; border-top: 1px solid #ccc; }
+	tr:nth-child(even) { background: #f8f8f8; }
+</style>
+</head>
+<body>
+<pre><code>
+BenchmarkDotNet=v0.10.1, OS=Microsoft Windows NT 6.1.7601 Service Pack 1
+Processor=Intel(R) Core(TM) i5-4690 CPU 3.50GHz, ProcessorCount=4
+Frequency=3410107 Hz, Resolution=293.2459 ns, Timer=TSC
+  [Host]     : Clr 4.0.30319.42000, 32bit LegacyJIT-v4.6.1087.0
+  MySuperJob : Clr 4.0.30319.42000, 32bit LegacyJIT-v4.6.1087.0
+</code></pre>
+<pre><code></code></pre>
+
+<table>
+<thead><tr><th>                                             Method</th><th> Mean</th><th>StdErr</th><th>StdDev</th><th>  Min</th><th>  Max</th><th>Op/s</th><th>Rank</th>
+</tr>
+</thead><tbody><tr><td>                                   FilesCompilation</td><td>39.8990 ms</td><td>14.6158 ms</td><td>41.3397 ms</td><td>1.2099 ms</td><td>78.9250 ms</td><td>25.06</td><td>1</td>
+</tr><tr><td>                           AnalyzerV0_EmptyCallback</td><td>288.0242 ms</td><td>72.3243 ms</td><td>204.5639 ms</td><td>95.7107 ms</td><td>479.9828 ms</td><td>3.47</td><td>2</td>
+</tr><tr><td>AnalyzerV7_CompilationStartAndSyntaxTreeAndFulltextSearch</td><td>288.3118 ms</td><td>73.0750 ms</td><td>206.6872 ms</td><td>94.1913 ms</td><td>482.2743 ms</td><td>3.47</td><td>2</td>
+</tr><tr><td>AnalyzerV5_CompilationStartSyntaxNodeAndCompilationEnd</td><td>329.5385 ms</td><td>76.7348 ms</td><td>217.0387 ms</td><td>125.6920 ms</td><td>533.5451 ms</td><td>3.03</td><td>2</td>
+</tr><tr><td>                     AnalyzerV1_SyntxNodeRegistered</td><td>332.2952 ms</td><td>76.1919 ms</td><td>215.5032 ms</td><td>128.6693 ms</td><td>535.9179 ms</td><td>3.01</td><td>2</td>
+</tr><tr><td>           AnalyzerV6_CompilationStartAndSyntaxTree</td><td>342.3416 ms</td><td>74.1659 ms</td><td>209.7729 ms</td><td>143.6646 ms</td><td>541.1830 ms</td><td>2.92</td><td>2</td>
+</tr></tbody></table>
+</body>
+</html>

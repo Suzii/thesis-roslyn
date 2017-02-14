@@ -479,7 +479,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Benchmarks\SystemIoAnalyzerBenchmark.cs" />
+    <Compile Include="Configuration\BaseConfig.cs" />
+    <Compile Include="Benchmarks\AnalysisRunner.cs" />
+    <Compile Include="Benchmarks\SystemIo\SourcesFromConsoleAppBenchmark.cs" />
+    <Compile Include="Benchmarks\SystemIo\SourcesWithErrorsBenchmark.cs" />
+    <Compile Include="Benchmarks\SystemIo\SourcesWithNoErrorsBenchmark.cs" />
+    <Compile Include="Configuration\DevelopmentConfig.cs" />
+    <Compile Include="Configuration\ProductionConfig.cs" />
+    <Compile Include="Configuration\QuickResponseConfig.cs" />
+    <Compile Include="Constants.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

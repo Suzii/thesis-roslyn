@@ -40,5 +40,10 @@
         /// Category for analyzers reporting forbidden usage of System.IO API where CMS equivalents should be used
         /// </summary>
         public const string SystemIo = "SystemIo";
+
+        /// <summary>
+        /// Category of analyzers solely for benchmarking purposes
+        /// </summary>
+        public const string BenchmarkingBaselines = "BenchmarkingBaselines";
     }
 }
