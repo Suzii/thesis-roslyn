@@ -13,7 +13,7 @@ namespace BugHunter.Web.Analyzers.Tests.WebInternalGuidelinesTests
     {
         protected override MetadataReference[] GetAdditionalReferences()
         {
-            return ReferencesHelper.BasicReferences.Union(ReferencesHelper.GetReferencesFor(typeof(System.Data.DataSet))).ToArray();
+            return ReferencesHelper.CMSBasicReferences.Union(ReferencesHelper.GetReferencesFor(typeof(System.Data.DataSet))).ToArray();
         }
 
         private DiagnosticResult GetDiagnosticResult(params string[] messageArgumentStrings)

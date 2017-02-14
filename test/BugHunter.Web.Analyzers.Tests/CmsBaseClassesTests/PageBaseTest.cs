@@ -14,7 +14,10 @@ namespace BugHunter.Web.Analyzers.Tests.CmsBaseClassesTests
     {
         protected override MetadataReference[] GetAdditionalReferences()
         {
-            return ReferencesHelper.BasicReferences.Union(new[] { ReferencesHelper.CMSBaseWebUI, ReferencesHelper.SystemWebReference, ReferencesHelper.SystemWebUIReference, ReferencesHelper.CMSUIControls }).ToArray();
+            return ReferencesHelper.CMSBasicReferences
+                .Union(new[] { ReferencesHelper.CMSBaseWebUI, ReferencesHelper.SystemWebReference, ReferencesHelper.SystemWebUIReference })
+                .Union(ReferencesHelper.GetReferencesFor(typeof(CMS.UIControls.CMSAbstractUIWebpart)))
+                .ToArray();
         }
 
         private readonly FakeFileInfo _pagesFakeFileInfo = new FakeFileInfo {FileExtension= "aspx.cs"};

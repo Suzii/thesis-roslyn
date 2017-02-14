@@ -15,7 +15,14 @@ namespace BugHunter.Analyzers.Test.AbstractionOverImplementationTests
     {
         protected override MetadataReference[] GetAdditionalReferences()
         {
-            return ReferencesHelper.BasicReferences.Union(ReferencesHelper.CMSSearchLucerne3References).ToArray();
+            return ReferencesHelper.CMSBasicReferences.Union(
+                ReferencesHelper.GetReferencesFor(
+                    typeof(CMS.Search.ISearchProvider),
+                    typeof(Lucene.Net.Search.BooleanClause),
+                    typeof(WorldNet.Net.SynExpand),
+                    typeof(CMS.Search.Lucene3.LuceneSearchDocument)
+                ))
+                .ToArray();
         }
 
         [Test]
@@ -46,7 +53,7 @@ namespace SampleTestProject.CsSamples
                 Id = DiagnosticIds.LUCENE_SEARCH_DOCUMENT,
                 Message = string.Format(MessagesConstants.MESSAGE, "LuceneSearchDocument", "ISearchDocument"),
                 Severity = DiagnosticSeverity.Warning,
-                Locations = new[] {new DiagnosticResultLocation("Test0.cs", 7, 17)}
+                Locations = new[] { new DiagnosticResultLocation("Test0.cs", 7, 17) }
             };
 
             VerifyCSharpDiagnostic(test, expectedDiagnostic);

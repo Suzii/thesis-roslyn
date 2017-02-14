@@ -609,10 +609,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ReferencesHelper.cs" />
-    <Compile Include="Verifiers\CodeFixVerifier.Helper.cs" />
+    <Compile Include="Services\AnalyzerExecution.cs" />
+    <Compile Include="Services\ProjectCompilation.cs" />
     <Compile Include="Helpers\DiagnosticResult.cs" />
     <Compile Include="Helpers\DiagnosticResultExtensions.cs" />
-    <Compile Include="Verifiers\DiagnosticVerifier.Helper.cs" />
     <Compile Include="Helpers\FakeFileInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Verifiers\CodeFixVerifier.cs" />

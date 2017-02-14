@@ -14,7 +14,7 @@ namespace BugHunter.Web.Analyzers.Tests.CmsBaseClassesTests
     {
         protected override MetadataReference[] GetAdditionalReferences()
         {
-            return ReferencesHelper.BasicReferences.Union(new[] { ReferencesHelper.CMSBaseWebUI, ReferencesHelper.SystemWebReference, ReferencesHelper.SystemWebUIReference }).ToArray();
+            return ReferencesHelper.CMSBasicReferences.Union(new[] { ReferencesHelper.CMSBaseWebUI, ReferencesHelper.SystemWebReference, ReferencesHelper.SystemWebUIReference }).ToArray();
         }
 
         private readonly FakeFileInfo _userControlFakeFileInfo = new FakeFileInfo { FileExtension= "ascx.cs" };

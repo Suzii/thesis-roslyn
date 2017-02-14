@@ -1,47 +1,43 @@
 ﻿using System;
 using System.Linq;
 using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
 
 namespace BugHunter.TestUtils
 {
     public class ReferencesHelper
     {
-        // Kentico.Libraries
-        public static readonly MetadataReference CMSCoreReference = MetadataReference.CreateFromFile(typeof(CMS.Core.ModuleName).Assembly.Location);
-        public static readonly MetadataReference CMSBaseReference = MetadataReference.CreateFromFile(typeof(CMS.Base.BaseModule).Assembly.Location);
-        public static readonly MetadataReference CMSDataEngineReference = MetadataReference.CreateFromFile(typeof(CMS.DataEngine.TypeCondition).Assembly.Location);
-        public static readonly MetadataReference CMSHelpersReference = MetadataReference.CreateFromFile(typeof(CMS.Helpers.AJAXHelper).Assembly.Location);
-        public static readonly MetadataReference CMSIOReference = MetadataReference.CreateFromFile(typeof(CMS.IO.AbstractFile).Assembly.Location);
-        public static readonly MetadataReference CMSEventLogReference = MetadataReference.CreateFromFile(typeof(CMS.EventLog.EventType).Assembly.Location);
-        public static readonly MetadataReference CMSMembershipReference = MetadataReference.CreateFromFile(typeof(CMS.Membership.AuthenticationHelper).Assembly.Location);
-        public static readonly MetadataReference[] CMSSearchLucerne3References =
-        {
-            MetadataReference.CreateFromFile(typeof(CMS.Search.ISearchProvider).Assembly.Location),
-            MetadataReference.CreateFromFile(typeof(Lucene.Net.Search.BooleanClause).Assembly.Location),
-            MetadataReference.CreateFromFile(typeof(WorldNet.Net.SynExpand).Assembly.Location),
-            MetadataReference.CreateFromFile(typeof(CMS.Search.Lucene3.LuceneSearchDocument).Assembly.Location)
+        // System
+        private static readonly MetadataReference CorlibReference = MetadataReference.CreateFromFile(typeof(object).Assembly.Location);
+        private static readonly MetadataReference SystemReference = MetadataReference.CreateFromFile(typeof(Uri).Assembly.Location);
+        private static readonly MetadataReference SystemCoreReference = MetadataReference.CreateFromFile(typeof(Enumerable).Assembly.Location);
+        private static readonly MetadataReference CSharpSymbolsReference = MetadataReference.CreateFromFile(typeof(CSharpCompilation).Assembly.Location);
+        private static readonly MetadataReference CodeAnalysisReference = MetadataReference.CreateFromFile(typeof(Compilation).Assembly.Location);
+
+        public static readonly MetadataReference[] CoreDotNetReferences = {
+            CorlibReference,
+            SystemReference,
+            SystemCoreReference,
+            CSharpSymbolsReference,
+            CodeAnalysisReference
         };
-
-        // Kentico.Librarie.Web.Ui
-        public static readonly MetadataReference CMSBaseWebUI = MetadataReference.CreateFromFile(typeof(CMS.Base.Web.UI.ScriptHelper).Assembly.Location);
-        public static readonly MetadataReference CMSUIControls = MetadataReference.CreateFromFile(typeof(CMS.UIControls.CMSAbstractUIWebpart).Assembly.Location);
-        public static readonly MetadataReference CMSEcommerceWebUI = MetadataReference.CreateFromFile(typeof(CMS.Ecommerce.Web.UI.CMSAuthorizeNetProvider).Assembly.Location);
-        public static readonly MetadataReference CMSPortalEngineWebUI = MetadataReference.CreateFromFile(typeof(CMS.PortalEngine.Web.UI.BaseEditMenu).Assembly.Location);
-
 
         // System.Web
         public static readonly MetadataReference SystemWebReference = MetadataReference.CreateFromFile(typeof(System.Web.HttpRequest).Assembly.Location);
         public static readonly MetadataReference SystemWebUIReference = MetadataReference.CreateFromFile(typeof(System.Web.UI.Control).Assembly.Location);
 
-        public static readonly MetadataReference[] BasicReferences =
-        {
-            CMSCoreReference,
-            CMSBaseReference,
-            CMSDataEngineReference,
-            CMSHelpersReference,
-            CMSIOReference,
-            CMSEventLogReference
-        };
+        // Kentico.Libraries
+        public static readonly MetadataReference[] CMSBasicReferences = ReferencesHelper.GetReferencesFor(
+            typeof(CMS.Core.ModuleName),
+            typeof(CMS.Base.BaseModule),
+            typeof(CMS.DataEngine.TypeCondition),
+            typeof(CMS.Helpers.AJAXHelper),
+            typeof(CMS.IO.AbstractFile),
+            typeof(CMS.EventLog.EventType)
+            );
+
+        // Kentico.Librarie.Web.Ui
+        public static readonly MetadataReference CMSBaseWebUI = MetadataReference.CreateFromFile(typeof(CMS.Base.Web.UI.ScriptHelper).Assembly.Location);
 
         public static MetadataReference[] GetReferencesFor(params Type[] types)
         {

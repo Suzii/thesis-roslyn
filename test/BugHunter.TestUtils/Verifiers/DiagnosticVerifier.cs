@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Text;
 using BugHunter.TestUtils.Helpers;
+using BugHunter.TestUtils.Services;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
 using NUnit.Framework;
@@ -73,7 +74,8 @@ namespace BugHunter.TestUtils.Verifiers
         /// <param name="fakeFileInfo">Fake file info generated files should have</param>
         private void VerifyDiagnostics(string[] sources, DiagnosticAnalyzer analyzer, MetadataReference[] references, FakeFileInfo fakeFileInfo = null, params DiagnosticResult[] expected)
         {
-            var diagnostics = GetSortedDiagnostics(sources, analyzer, references, fakeFileInfo);
+            var documents = ProjectCompilation.GetDocuments(sources, references, fakeFileInfo);
+            var diagnostics = AnalyzerExecution.GetSortedDiagnosticsFromDocuments(analyzer, documents);
             VerifyDiagnosticResults(diagnostics, analyzer, expected);
         }
 

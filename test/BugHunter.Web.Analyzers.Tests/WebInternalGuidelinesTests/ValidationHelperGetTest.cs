@@ -14,7 +14,7 @@ namespace BugHunter.Web.Analyzers.Tests.WebInternalGuidelinesTests
     {
         protected override MetadataReference[] GetAdditionalReferences()
         {
-            return new[] {ReferencesHelper.CMSHelpersReference};
+            return ReferencesHelper.CMSBasicReferences;
         }
 
         private DiagnosticResult GetDiagnosticResult(params string[] messageArguments)

@@ -15,7 +15,7 @@ namespace BugHunter.Analyzers.Test.CmsApiReplacementsTests
     {
         protected override MetadataReference[] GetAdditionalReferences()
         {
-            return ReferencesHelper.BasicReferences.Union(new[] { ReferencesHelper.SystemWebReference, ReferencesHelper.CMSBaseWebUI }).ToArray();
+            return ReferencesHelper.CMSBasicReferences.Union(new[] { ReferencesHelper.SystemWebReference, ReferencesHelper.CMSBaseWebUI }).ToArray();
         }
 
         [Test]

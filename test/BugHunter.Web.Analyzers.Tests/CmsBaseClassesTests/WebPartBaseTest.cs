@@ -15,15 +15,17 @@ namespace BugHunter.Web.Analyzers.Tests.CmsBaseClassesTests
     {
         protected override MetadataReference[] GetAdditionalReferences()
         {
-            return ReferencesHelper.BasicReferences.Union(new[]
+            return ReferencesHelper.CMSBasicReferences.Union(new[]
             {
                 ReferencesHelper.CMSBaseWebUI,
                 ReferencesHelper.SystemWebReference,
                 ReferencesHelper.SystemWebUIReference,
-                ReferencesHelper.CMSPortalEngineWebUI,
-                ReferencesHelper.CMSEcommerceWebUI,
-                ReferencesHelper.CMSUIControls
-            }).ToArray();
+            }).Union(
+                ReferencesHelper.GetReferencesFor(
+                    typeof(CMS.PortalEngine.Web.UI.BaseEditMenu),
+                    typeof(CMS.Ecommerce.Web.UI.CMSAuthorizeNetProvider),
+                    typeof(CMS.UIControls.CMSAbstractUIWebpart))
+            ).ToArray();
         }
 
         private readonly FakeFileInfo _uiWebPartFakeFileInfo = new FakeFileInfo() { FileLoaction = SolutionFolders.UI_WEB_PARTS };

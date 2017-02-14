@@ -13,7 +13,7 @@ namespace BugHunter.Analyzers.Test.InternalGuidelines
     {
         protected override MetadataReference[] GetAdditionalReferences()
         {
-            return ReferencesHelper.BasicReferences;
+            return ReferencesHelper.CMSBasicReferences;
         }
 
         [Test]

@@ -13,7 +13,7 @@ namespace BugHunter.Analyzers.Test.CmsBaseClassesTests
     {
         protected override MetadataReference[] GetAdditionalReferences()
         {
-            return ReferencesHelper.BasicReferences;
+            return ReferencesHelper.CMSBasicReferences;
         }
 
         private DiagnosticResult GetDiagnosticResult(params string[] messageArgumentStrings)
