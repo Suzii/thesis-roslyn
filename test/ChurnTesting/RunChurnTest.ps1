@@ -33,7 +33,7 @@ function Download-NuGetIfNecessary {
 
 function Build-BugHunterSolution {
     &$NuGet update -Self -Verbosity quiet
-	&$NuGet install Microsoft.CodeAnalysis -Version 1.1.0 -OutputDirectory ..\..\packages -Verbosity quiet
+	&$NuGet install Microsoft.CodeAnalysis -Version 1.3.2 -OutputDirectory ..\..\packages -Verbosity quiet
 	
 	# Make sure the project binaries are up-to-date
 	&$NuGet restore ..\..\BugHunter.sln -Verbosity quiet
@@ -44,21 +44,21 @@ function Build-BugHunterSolution {
 }
 
 function Copy-TestingToolAndItsDependencies {
-    If (Test-Path .\bin\PerformaceTester-Roslyn.1.1.0) {
-		Remove-Item .\bin\PerformaceTester-Roslyn.1.1.0 -Force -Recurse
+    If (Test-Path .\bin\PerformaceTester-Roslyn.1.3.2) {
+		Remove-Item .\bin\PerformaceTester-Roslyn.1.3.2 -Force -Recurse
 	}
 
-	New-Item .\bin\PerformaceTester-Roslyn.1.1.0 -ItemType Directory
-	Copy-Item ..\BugHunter.PerformanceTest\bin\Debug\* .\bin\PerformaceTester-Roslyn.1.1.0
-	Copy-Item .\PerformaceTester-Roslyn.1.1.exe.config .\bin\PerformaceTester-Roslyn.1.1.0\PerformaceTester.exe.config
+	New-Item .\bin\PerformaceTester-Roslyn.1.3.2 -ItemType Directory
+	Copy-Item ..\BugHunter.PerformanceTest\bin\Debug\* .\bin\PerformaceTester-Roslyn.1.3.2
+	Copy-Item .\PerformaceTester-Roslyn.1.1.exe.config .\bin\PerformaceTester-Roslyn.1.3.2\PerformaceTester.exe.config
 
-	Copy-Item ..\..\packages\Microsoft.CodeAnalysis.Common.1.1.0\lib\net45\*.dll .\bin\PerformaceTester-Roslyn.1.1.0
-	Copy-Item ..\..\packages\Microsoft.CodeAnalysis.Workspaces.Common.1.1.0\lib\net45\*.dll .\bin\PerformaceTester-Roslyn.1.1.0
-	Copy-Item ..\..\packages\System.Collections.Immutable.1.1.37\lib\dotnet\*.dll .\bin\PerformaceTester-Roslyn.1.1.0
-	Copy-Item ..\..\packages\System.Reflection.Metadata.1.1.0\lib\dotnet5.2\*.dll .\bin\PerformaceTester-Roslyn.1.1.0
-	Copy-Item ..\..\packages\Microsoft.Composition.1.0.27\lib\portable-net45+win8+wp8+wpa81\*.dll .\bin\PerformaceTester-Roslyn.1.1.0
-	Copy-Item ..\..\packages\Microsoft.CodeAnalysis.CSharp.1.1.0\lib\net45\*.dll .\bin\PerformaceTester-Roslyn.1.1.0
-	Copy-Item ..\..\packages\Microsoft.CodeAnalysis.CSharp.Workspaces.1.1.0\lib\net45\*.dll .\bin\PerformaceTester-Roslyn.1.1.0
+	Copy-Item ..\..\packages\Microsoft.CodeAnalysis.Common.1.3.2\lib\net45\*.dll .\bin\PerformaceTester-Roslyn.1.3.2
+	Copy-Item ..\..\packages\Microsoft.CodeAnalysis.Workspaces.Common.1.3.2\lib\net45\*.dll .\bin\PerformaceTester-Roslyn.1.3.2
+	Copy-Item ..\..\packages\System.Collections.Immutable.1.1.37\lib\dotnet\*.dll .\bin\PerformaceTester-Roslyn.1.3.2
+	Copy-Item ..\..\packages\System.Reflection.Metadata.1.2.0\lib\portable-net45+win8\*.dll .\bin\PerformaceTester-Roslyn.1.3.2
+	Copy-Item ..\..\packages\Microsoft.Composition.1.0.27\lib\portable-net45+win8+wp8+wpa81\*.dll .\bin\PerformaceTester-Roslyn.1.3.2
+	Copy-Item ..\..\packages\Microsoft.CodeAnalysis.CSharp.1.3.2\lib\net45\*.dll .\bin\PerformaceTester-Roslyn.1.3.2
+	Copy-Item ..\..\packages\Microsoft.CodeAnalysis.CSharp.Workspaces.1.3.2\lib\net45\*.dll .\bin\PerformaceTester-Roslyn.1.3.2
 }
 
 Try {
@@ -90,7 +90,7 @@ Try {
 	}
 	
     Write-Output "Running build with analyzers on $PathToTestSolution..."
-    .\bin\PerformaceTester-Roslyn.1.1.0\BugHunter.PerformanceTest.exe $PathToTestSolution /all /log:dump\SampleProject-1.1.0.txt /stats
+    .\bin\PerformaceTester-Roslyn.1.3.2\BugHunter.PerformanceTest.exe $PathToTestSolution /all /log:dump\SampleProject-1.3.2.txt /stats
 }
 Catch {
     $Error | Out-String | Write-Error
