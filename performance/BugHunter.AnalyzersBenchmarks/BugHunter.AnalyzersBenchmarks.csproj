@@ -479,6 +479,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Benchmarks\BaseClasses\PageBaseBenchmark.cs" />
     <Compile Include="Configuration\BaseConfig.cs" />
     <Compile Include="Benchmarks\AnalysisRunner.cs" />
     <Compile Include="Benchmarks\SystemIo\SourcesFromConsoleAppBenchmark.cs" />
@@ -502,6 +503,14 @@
     <ProjectReference Include="..\..\src\BugHunter.Analyzers\BugHunter.Analyzers.csproj">
       <Project>{94312E36-802C-40FA-A07E-F479E74B61C2}</Project>
       <Name>BugHunter.Analyzers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\BugHunter.Core\BugHunter.Core.csproj">
+      <Project>{656A8756-6AF4-44D7-8728-D09A50A40A04}</Project>
+      <Name>BugHunter.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\BugHunter.Web.Analyzers\BugHunter.Web.Analyzers.csproj">
+      <Project>{14E74FD2-D9F7-460D-A504-A915EFCC0DD1}</Project>
+      <Name>BugHunter.Web.Analyzers</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\test\BugHunter.TestUtils\BugHunter.TestUtils.csproj">
       <Project>{51413D47-6598-40A4-9BC7-91D88742B9DA}</Project>

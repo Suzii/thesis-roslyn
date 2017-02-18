@@ -41,6 +41,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AbstractionOverImplementationResources.resx</DependentUpon>
     </Compile>
+    <Compile Include="BenchmarkingBaselineAnalyzers\SyntaxNodeClassDeclarationBaselineAnalyzer.cs" />
     <Compile Include="CmsApiReplacementRules\CmsApiReplacementsResources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
