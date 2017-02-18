@@ -2,7 +2,6 @@
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using NUnit.Framework;
-using NUnit.Framework.Internal;
 
 namespace BugHunter.Core.Tests.Extensions
 {

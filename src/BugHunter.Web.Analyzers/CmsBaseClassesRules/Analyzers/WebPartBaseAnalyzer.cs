@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Immutable;
 using System.Linq;
-using BugHunter.Core;
 using BugHunter.Core.Analyzers;
 using BugHunter.Core.Extensions;
 using BugHunter.Core.Helpers.DiagnosticDescriptionBuilders;

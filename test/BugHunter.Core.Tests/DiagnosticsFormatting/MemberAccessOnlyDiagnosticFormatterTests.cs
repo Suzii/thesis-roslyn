@@ -2,7 +2,6 @@
 using BugHunter.Core.DiagnosticsFormatting;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Text;
 using NUnit.Framework;
 
