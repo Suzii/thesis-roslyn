@@ -503,7 +503,7 @@
       <Project>{94312E36-802C-40FA-A07E-F479E74B61C2}</Project>
       <Name>BugHunter.Analyzers</Name>
     </ProjectReference>
-    <ProjectReference Include="..\BugHunter.TestUtils\BugHunter.TestUtils.csproj">
+    <ProjectReference Include="..\..\test\BugHunter.TestUtils\BugHunter.TestUtils.csproj">
       <Project>{51413D47-6598-40A4-9BC7-91D88742B9DA}</Project>
       <Name>BugHunter.TestUtils</Name>
     </ProjectReference>

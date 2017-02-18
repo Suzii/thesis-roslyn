@@ -13,7 +13,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BugHunter.Core", "src\BugHu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BugHunter.Analyzers", "src\BugHunter.Analyzers\BugHunter.Analyzers.csproj", "{94312E36-802C-40FA-A07E-F479E74B61C2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BugHunter.PerformanceTest", "test\BugHunter.PerformanceTest\BugHunter.PerformanceTest.csproj", "{EABFC61A-E553-4F75-A1D6-FB5E8891D659}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BugHunter.PerformanceTest", "performance\BugHunter.PerformanceTest\BugHunter.PerformanceTest.csproj", "{EABFC61A-E553-4F75-A1D6-FB5E8891D659}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BugHunter.Web.Analyzers", "src\BugHunter.Web.Analyzers\BugHunter.Web.Analyzers.csproj", "{14E74FD2-D9F7-460D-A504-A915EFCC0DD1}"
 EndProject
@@ -27,7 +27,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Performance", "Performance"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Analyzers", "Analyzers", "{B611CCFE-FC58-4E12-A76A-10BA4E214ED7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BugHunter.AnalyzersBenchmarks", "test\BugHunter.AnalyzersBenchmarks\BugHunter.AnalyzersBenchmarks.csproj", "{EF3DB98B-683A-4D43-87AA-402984C2C86D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BugHunter.AnalyzersBenchmarks", "performance\BugHunter.AnalyzersBenchmarks\BugHunter.AnalyzersBenchmarks.csproj", "{EF3DB98B-683A-4D43-87AA-402984C2C86D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
