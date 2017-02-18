@@ -34,12 +34,7 @@
         /// Category for analyzers reporting suspicious usage of String comparison and manipulation methods without culture specification
         /// </summary>
         StringAndCulture,
-
-        /// <summary>
-        /// Category for analyzers reporting forbidden usage of System.IO API where CMS equivalents should be used
-        /// </summary>
-        SystemIo,
-
+        
         /// <summary>
         /// Category of analyzers solely for benchmarking purposes
         /// </summary>

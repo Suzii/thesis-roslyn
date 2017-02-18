@@ -1,11 +1,11 @@
 ﻿using System.Linq;
-using BugHunter.Analyzers.SystemIoRules.Analyzers;
+using BugHunter.Analyzers.CmsApiReplacementRules.Analyzers;
 using BugHunter.TestUtils.Helpers;
 using BugHunter.TestUtils.Verifiers;
 using Microsoft.CodeAnalysis;
 using NUnit.Framework;
 
-namespace BugHunter.Analyzers.Test.SystemIoTests
+namespace BugHunter.Analyzers.Test.CmsApiReplacementsTests
 {
     [TestFixture]
     public class SystemIOTest : CodeFixVerifier<SystemIOAnalyzer_V7_CompilationStartAndSyntaxTreeAndFulltextSearch>

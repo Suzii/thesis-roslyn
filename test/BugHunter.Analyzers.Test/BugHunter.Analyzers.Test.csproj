@@ -630,7 +630,7 @@
     <Compile Include="CmsApiReplacementsTests\FormsAuthenticationSignOutTest.cs" />
     <Compile Include="CmsApiReplacementsTests\HttpRequestQueryStringTest.cs" />
     <Compile Include="CmsBaseClassesTests\ModuleRegistrationTest.cs" />
-    <Compile Include="SystemIoTests\SystemIOTest.cs" />
+    <Compile Include="CmsApiReplacementsTests\SystemIOTest.cs" />
     <Compile Include="AbstractionOverImplementationTests\LuceneSearchDocumentTest.cs" />
     <Compile Include="CmsApiReplacementsTests\HttpRequestCookiesTest.cs" />
     <Compile Include="CmsApiReplacementsTests\HttpResponseCookiesTest.cs" />

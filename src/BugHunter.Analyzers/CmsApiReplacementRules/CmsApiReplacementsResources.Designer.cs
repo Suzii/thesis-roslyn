@@ -78,5 +78,32 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules {
                 return ResourceManager.GetString("RedirectCodeFixLocal", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;System.IO&apos; namespace should not be used directly. Use equivalent method from namespace &apos;CMS.IO&apos;..
+        /// </summary>
+        internal static string SystemIo_Description {
+            get {
+                return ResourceManager.GetString("SystemIo_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;{0}&apos; should not use &apos;System.IO&apos; directly. Use equivalent method from namespace &apos;CMS.IO&apos;..
+        /// </summary>
+        internal static string SystemIo_MessageFormat {
+            get {
+                return ResourceManager.GetString("SystemIo_MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do not use System.IO.
+        /// </summary>
+        internal static string SystemIo_Title {
+            get {
+                return ResourceManager.GetString("SystemIo_Title", resourceCulture);
+            }
+        }
     }
 }

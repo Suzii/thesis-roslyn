@@ -8,7 +8,7 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
 
-namespace BugHunter.Analyzers.SystemIoRules.Analyzers
+namespace BugHunter.Analyzers.CmsApiReplacementRules.Analyzers
 {
     /// <summary>
     /// Searches for usages of <see cref="System.IO"/> and their access to anything other than <c>Exceptions</c> or <c>Stream</c>
@@ -27,12 +27,12 @@ namespace BugHunter.Analyzers.SystemIoRules.Analyzers
         public const string DIAGNOSTIC_ID = DiagnosticIds.SYSTEM_IO;
 
         private static readonly DiagnosticDescriptor Rule = new DiagnosticDescriptor(DIAGNOSTIC_ID,
-                title: new LocalizableResourceString(nameof(SystemIoResources.SystemIo_Title), SystemIoResources.ResourceManager, typeof(SystemIoResources)),
-                messageFormat: new LocalizableResourceString(nameof(SystemIoResources.SystemIo_MessageFormat), SystemIoResources.ResourceManager, typeof(SystemIoResources)),
-                category: nameof(AnalyzerCategories.SystemIo),
+                title: new LocalizableResourceString(nameof(CmsApiReplacementsResources.SystemIo_Title), CmsApiReplacementsResources.ResourceManager, typeof(CmsApiReplacementsResources)),
+                messageFormat: new LocalizableResourceString(nameof(CmsApiReplacementsResources.SystemIo_MessageFormat), CmsApiReplacementsResources.ResourceManager, typeof(CmsApiReplacementsResources)),
+                category: nameof(AnalyzerCategories.CmsApiReplacements),
                 defaultSeverity: DiagnosticSeverity.Warning,
                 isEnabledByDefault: true,
-                description: new LocalizableResourceString(nameof(SystemIoResources.SystemIo_Description), SystemIoResources.ResourceManager, typeof(SystemIoResources)));
+                description: new LocalizableResourceString(nameof(CmsApiReplacementsResources.SystemIo_Description), CmsApiReplacementsResources.ResourceManager, typeof(CmsApiReplacementsResources)));
 
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
 
