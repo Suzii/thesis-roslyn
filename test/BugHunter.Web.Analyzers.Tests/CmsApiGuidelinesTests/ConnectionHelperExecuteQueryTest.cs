@@ -6,7 +6,7 @@ using BugHunter.Web.Analyzers.CmsApiGuidelinesRules.Analyzers;
 using Microsoft.CodeAnalysis;
 using NUnit.Framework;
 
-namespace BugHunter.Web.Analyzers.Tests.WebInternalGuidelinesTests
+namespace BugHunter.Web.Analyzers.Tests.CmsApiGuidelinesTests
 {
     [TestFixture]
     public class ConnectionHelperExecuteQueryTest : CodeFixVerifier<ConnectionHelperExecuteQueryAnalyzer>

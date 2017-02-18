@@ -7,7 +7,7 @@ using BugHunter.Web.Analyzers.CmsApiGuidelinesRules.CodeFixes;
 using Microsoft.CodeAnalysis;
 using NUnit.Framework;
 
-namespace BugHunter.Web.Analyzers.Tests.WebInternalGuidelinesTests
+namespace BugHunter.Web.Analyzers.Tests.CmsApiGuidelinesTests
 {
     [TestFixture]
     public class ValidationHelperGetTest : CodeFixVerifier<ValidationHelperGetAnalyzer, ValidationHelperGetCodeFixProvider>

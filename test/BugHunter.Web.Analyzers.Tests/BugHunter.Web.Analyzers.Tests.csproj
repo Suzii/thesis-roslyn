@@ -624,8 +624,8 @@
     <Compile Include="CmsBaseClassesTests\UserControlBaseTest.cs" />
     <Compile Include="CmsBaseClassesTests\WebPartBaseTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WebInternalGuidelinesTests\ConnectionHelperExecuteQueryTest.cs" />
-    <Compile Include="WebInternalGuidelinesTests\ValidationHelperGetTest.cs" />
+    <Compile Include="CmsApiGuidelinesTests\ConnectionHelperExecuteQueryTest.cs" />
+    <Compile Include="CmsApiGuidelinesTests\ValidationHelperGetTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
