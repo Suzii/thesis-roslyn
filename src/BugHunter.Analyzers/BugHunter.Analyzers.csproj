@@ -51,11 +51,11 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Include="InternalGuidelinesRules\Analyzers\EventLogArgumentsDiagnosticFormatter.cs" />
-    <Compile Include="InternalGuidelinesRules\InternalGuidelinesResources.Designer.cs">
+    <Compile Include="CmsApiGuidelinesRules\Analyzers\EventLogArgumentsDiagnosticFormatter.cs" />
+    <Compile Include="CmsApiGuidelinesRules\CmsApiGuidelinesResources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>InternalGuidelinesResources.resx</DependentUpon>
+      <DependentUpon>CmsApiGuidelinesResources.resx</DependentUpon>
     </Compile>
     <Compile Include="StringAndCultureRules\StringMethodsResources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -90,7 +90,7 @@
     <Compile Include="CmsApiReplacementRules\Analyzers\HttpSessionSessionIdAnalyzer.cs" />
     <Compile Include="CmsApiReplacementRules\Analyzers\HttpSessionElementAccessAnalyzer.cs" />
     <Compile Include="CmsApiReplacementRules\Analyzers\ClientScriptMethodsAnalyzer.cs" />
-    <Compile Include="InternalGuidelinesRules\Analyzers\WhereLikeMethodAnalyzer.cs" />
+    <Compile Include="CmsApiGuidelinesRules\Analyzers\WhereLikeMethodAnalyzer.cs" />
     <Compile Include="CmsApiReplacementRules\CodeFixes\FormsAuthenticationSignOutCodeFixProvider.cs" />
     <Compile Include="CmsApiReplacementRules\CodeFixes\HttpRequestCookiesCodeFixProvider.cs" />
     <Compile Include="AbstractionOverImplementation\CodeFixes\LuceneSearchDocumentCodeFixProvider.cs" />
@@ -110,11 +110,11 @@
     <Compile Include="CmsApiReplacementRules\CodeFixes\HttpSessionSessionIdCodeFixProvider.cs" />
     <Compile Include="CmsApiReplacementRules\CodeFixes\ClientScriptMethodsCodeFixProvider.cs" />
     <Compile Include="DiagnosticIds.cs" />
-    <Compile Include="InternalGuidelinesRules\Analyzers\EventLogArgumentsAnalyzer.cs" />
+    <Compile Include="CmsApiGuidelinesRules\Analyzers\EventLogArgumentsAnalyzer.cs" />
     <Compile Include="CmsApiReplacementRules\Analyzers\HttpRequestUserHostAddressAnalyzer.cs" />
-    <Compile Include="InternalGuidelinesRules\CodeFixes\WhereLikeMethodCodeFixProvider.cs" />
+    <Compile Include="CmsApiGuidelinesRules\CodeFixes\WhereLikeMethodCodeFixProvider.cs" />
     <Compile Include="CmsApiReplacementRules\CodeFixes\HttpRequestUserHostAddressCodeFixProvider.cs" />
-    <Compile Include="InternalGuidelinesRules\CodeFixes\EventLogArgumentsCodeFixProvider.cs" />
+    <Compile Include="CmsApiGuidelinesRules\CodeFixes\EventLogArgumentsCodeFixProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CmsApiReplacementRules\Analyzers\SystemIOAnalyzer_V1_IdentifierNameAndSemanticModelBrowser.cs" />
   </ItemGroup>
@@ -134,9 +134,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>CmsBaseClassesResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="InternalGuidelinesRules\InternalGuidelinesResources.resx">
+    <EmbeddedResource Include="CmsApiGuidelinesRules\CmsApiGuidelinesResources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>InternalGuidelinesResources.Designer.cs</LastGenOutput>
+      <LastGenOutput>CmsApiGuidelinesResources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="StringAndCultureRules\StringMethodsResources.resx">

@@ -2,7 +2,7 @@
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-namespace BugHunter.Analyzers.InternalGuidelinesRules.Analyzers
+namespace BugHunter.Analyzers.CmsApiGuidelinesRules.Analyzers
 {
     internal class EventLogArgumentsDiagnosticFormatter : IDiagnosticFormatter
     {

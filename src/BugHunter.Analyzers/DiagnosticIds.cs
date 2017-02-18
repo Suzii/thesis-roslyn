@@ -25,7 +25,7 @@
         // CmsBaseClasses
         public const string MODULE_REGISTRATION = "BH10X5";
         
-        // InternalGuidelines
+        // CmsApiGuidelines
         public const string WHERE_LIKE_METHOD = "BH10X1";
         public const string EVENT_LOG_ARGUMENTS = "BH10X2";
         

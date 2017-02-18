@@ -5,7 +5,7 @@ using BugHunter.Core.Constants;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
 
-namespace BugHunter.Web.Analyzers.WebInternalGuidelinesRules.Analyzers
+namespace BugHunter.Web.Analyzers.CmsApiGuidelinesRules.Analyzers
 {
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     public class ConnectionHelperExecuteQueryAnalyzer : BaseMemberAccessAnalyzer
@@ -13,12 +13,12 @@ namespace BugHunter.Web.Analyzers.WebInternalGuidelinesRules.Analyzers
         public const string DIAGNOSTIC_ID = DiagnosticIds.CONNECTION_HELPER_EXECUTE_QUERY;
 
         private static readonly DiagnosticDescriptor Rule = new DiagnosticDescriptor(DIAGNOSTIC_ID,
-                title: new LocalizableResourceString(nameof(WebInternalGuidelinesResources.ConnectionHelperExecuteQuery_Title), WebInternalGuidelinesResources.ResourceManager, typeof(WebInternalGuidelinesResources)),
-                messageFormat: new LocalizableResourceString(nameof(WebInternalGuidelinesResources.ConnectionHelperExecuteQuery_MessageFormat), WebInternalGuidelinesResources.ResourceManager, typeof(WebInternalGuidelinesResources)),
-                category: nameof(AnalyzerCategories.WebInternalGuidelines),
+                title: new LocalizableResourceString(nameof(CmsApiGuidelinesResources.ConnectionHelperExecuteQuery_Title), CmsApiGuidelinesResources.ResourceManager, typeof(CmsApiGuidelinesResources)),
+                messageFormat: new LocalizableResourceString(nameof(CmsApiGuidelinesResources.ConnectionHelperExecuteQuery_MessageFormat), CmsApiGuidelinesResources.ResourceManager, typeof(CmsApiGuidelinesResources)),
+                category: nameof(AnalyzerCategories.CmsApiGuidelines),
                 defaultSeverity: DiagnosticSeverity.Warning,
                 isEnabledByDefault: true,
-                description: new LocalizableResourceString(nameof(WebInternalGuidelinesResources.ConnectionHelperExecuteQuery_Description), WebInternalGuidelinesResources.ResourceManager, typeof(WebInternalGuidelinesResources)));
+                description: new LocalizableResourceString(nameof(CmsApiGuidelinesResources.ConnectionHelperExecuteQuery_Description), CmsApiGuidelinesResources.ResourceManager, typeof(CmsApiGuidelinesResources)));
 
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
 

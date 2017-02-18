@@ -99,13 +99,13 @@
     <Compile Include="DiagnosticIds.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SolutionFolders.cs" />
-    <Compile Include="WebInternalGuidelinesRules\Analyzers\ConnectionHelperExecuteQueryAnalyzer.cs" />
-    <Compile Include="WebInternalGuidelinesRules\Analyzers\ValidationHelperGetAnalyzer.cs" />
-    <Compile Include="WebInternalGuidelinesRules\CodeFixes\ValidationHelperGetCodeFixProvider.cs" />
-    <Compile Include="WebInternalGuidelinesRules\WebInternalGuidelinesResources.Designer.cs">
+    <Compile Include="CmsApiGuidelinesRules\Analyzers\ConnectionHelperExecuteQueryAnalyzer.cs" />
+    <Compile Include="CmsApiGuidelinesRules\Analyzers\ValidationHelperGetAnalyzer.cs" />
+    <Compile Include="CmsApiGuidelinesRules\CodeFixes\ValidationHelperGetCodeFixProvider.cs" />
+    <Compile Include="CmsApiGuidelinesRules\CmsApiGuidelinesResources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>WebInternalGuidelinesResources.resx</DependentUpon>
+      <DependentUpon>CmsApiGuidelinesResources.resx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -114,9 +114,9 @@
       <LastGenOutput>CmsBaseClassesResources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="WebInternalGuidelinesRules\WebInternalGuidelinesResources.resx">
+    <EmbeddedResource Include="CmsApiGuidelinesRules\CmsApiGuidelinesResources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>WebInternalGuidelinesResources.Designer.cs</LastGenOutput>
+      <LastGenOutput>CmsApiGuidelinesResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

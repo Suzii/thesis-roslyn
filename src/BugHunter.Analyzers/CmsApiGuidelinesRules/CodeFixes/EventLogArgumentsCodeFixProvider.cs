@@ -4,7 +4,7 @@ using System.Composition;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using BugHunter.Analyzers.InternalGuidelinesRules.Analyzers;
+using BugHunter.Analyzers.CmsApiGuidelinesRules.Analyzers;
 using BugHunter.Core.Helpers.CodeFixes;
 using BugHunter.Core.ResourceBuilder;
 using Microsoft.CodeAnalysis;
@@ -13,7 +13,7 @@ using Microsoft.CodeAnalysis.CodeFixes;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-namespace BugHunter.Analyzers.InternalGuidelinesRules.CodeFixes
+namespace BugHunter.Analyzers.CmsApiGuidelinesRules.CodeFixes
 {
     [ExportCodeFixProvider(LanguageNames.CSharp, Name = nameof(EventLogArgumentsCodeFixProvider)), Shared]
     public class EventLogArgumentsCodeFixProvider : CodeFixProvider

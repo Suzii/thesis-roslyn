@@ -5,14 +5,14 @@ using System.Threading.Tasks;
 using BugHunter.Core.Extensions;
 using BugHunter.Core.Helpers.CodeFixes;
 using BugHunter.Core.ResourceBuilder;
-using BugHunter.Web.Analyzers.WebInternalGuidelinesRules.Analyzers;
+using BugHunter.Web.Analyzers.CmsApiGuidelinesRules.Analyzers;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeActions;
 using Microsoft.CodeAnalysis.CodeFixes;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-namespace BugHunter.Web.Analyzers.WebInternalGuidelinesRules.CodeFixes
+namespace BugHunter.Web.Analyzers.CmsApiGuidelinesRules.CodeFixes
 {
     [ExportCodeFixProvider(LanguageNames.CSharp, Name = nameof(ValidationHelperGetCodeFixProvider)), Shared]
     public class ValidationHelperGetCodeFixProvider : CodeFixProvider

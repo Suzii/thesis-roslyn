@@ -1,5 +1,5 @@
-using BugHunter.Analyzers.InternalGuidelinesRules.Analyzers;
-using BugHunter.Analyzers.InternalGuidelinesRules.CodeFixes;
+using BugHunter.Analyzers.CmsApiGuidelinesRules.Analyzers;
+using BugHunter.Analyzers.CmsApiGuidelinesRules.CodeFixes;
 using BugHunter.Analyzers.Test.CmsApiReplacementsTests.Constants;
 using BugHunter.TestUtils;
 using BugHunter.TestUtils.Helpers;
@@ -7,7 +7,7 @@ using BugHunter.TestUtils.Verifiers;
 using Microsoft.CodeAnalysis;
 using NUnit.Framework;
 
-namespace BugHunter.Analyzers.Test.InternalGuidelines
+namespace BugHunter.Analyzers.Test.CmsApiGuidelines
 {
     [TestFixture]
     public class WhereLikeMethodTest : CodeFixVerifier<WhereLikeMethodAnalyzer, WhereLikeMethodCodeFixProvider>

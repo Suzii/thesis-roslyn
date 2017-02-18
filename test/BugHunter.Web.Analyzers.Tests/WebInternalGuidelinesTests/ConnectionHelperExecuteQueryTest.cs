@@ -2,7 +2,7 @@ using System.Linq;
 using BugHunter.TestUtils;
 using BugHunter.TestUtils.Helpers;
 using BugHunter.TestUtils.Verifiers;
-using BugHunter.Web.Analyzers.WebInternalGuidelinesRules.Analyzers;
+using BugHunter.Web.Analyzers.CmsApiGuidelinesRules.Analyzers;
 using Microsoft.CodeAnalysis;
 using NUnit.Framework;
 

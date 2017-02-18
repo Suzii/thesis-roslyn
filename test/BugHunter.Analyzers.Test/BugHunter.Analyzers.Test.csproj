@@ -650,9 +650,9 @@
     <Compile Include="CmsApiReplacementsTests\PageIsPostBackTest.cs" />
     <Compile Include="CmsApiReplacementsTests\HttpSessionSessionIdTest.cs" />
     <Compile Include="CmsApiReplacementsTests\HttpRequestUserHostAddressTest.cs" />
-    <Compile Include="InternalGuidelines\EventLogArgumentsTest.cs" />
+    <Compile Include="CmsApiGuidelines\EventLogArgumentsTest.cs" />
     <Compile Include="CmsApiReplacementsTests\ClientScriptMethodsTest.cs" />
-    <Compile Include="InternalGuidelines\WhereLikeMethodTest.cs" />
+    <Compile Include="CmsApiGuidelines\WhereLikeMethodTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

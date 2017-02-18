@@ -7,7 +7,7 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
 
-namespace BugHunter.Analyzers.InternalGuidelinesRules.Analyzers
+namespace BugHunter.Analyzers.CmsApiGuidelinesRules.Analyzers
 {
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     public class EventLogArgumentsAnalyzer : BaseMemberInvocationAnalyzer
@@ -15,12 +15,12 @@ namespace BugHunter.Analyzers.InternalGuidelinesRules.Analyzers
         public const string DIAGNOSTIC_ID = DiagnosticIds.EVENT_LOG_ARGUMENTS;
 
         private static readonly DiagnosticDescriptor Rule = new DiagnosticDescriptor(DIAGNOSTIC_ID,
-            title: new LocalizableResourceString(nameof(InternalGuidelinesResources.EventLogArguments_Title), InternalGuidelinesResources.ResourceManager, typeof(InternalGuidelinesResources)),
-            messageFormat: new LocalizableResourceString(nameof(InternalGuidelinesResources.EventLogArguments_MessageFormat), InternalGuidelinesResources.ResourceManager, typeof(InternalGuidelinesResources)),
-            category: nameof(AnalyzerCategories.InternalGuidelines),
+            title: new LocalizableResourceString(nameof(CmsApiGuidelinesResources.EventLogArguments_Title), CmsApiGuidelinesResources.ResourceManager, typeof(CmsApiGuidelinesResources)),
+            messageFormat: new LocalizableResourceString(nameof(CmsApiGuidelinesResources.EventLogArguments_MessageFormat), CmsApiGuidelinesResources.ResourceManager, typeof(CmsApiGuidelinesResources)),
+            category: nameof(AnalyzerCategories.CmsApiGuidelines),
             defaultSeverity: DiagnosticSeverity.Warning,
             isEnabledByDefault: true,
-            description: new LocalizableResourceString(nameof(InternalGuidelinesResources.EventLogArguments_Description), InternalGuidelinesResources.ResourceManager, typeof(InternalGuidelinesResources)));
+            description: new LocalizableResourceString(nameof(CmsApiGuidelinesResources.EventLogArguments_Description), CmsApiGuidelinesResources.ResourceManager, typeof(CmsApiGuidelinesResources)));
 
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
 
