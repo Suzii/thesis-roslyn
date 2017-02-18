@@ -22,7 +22,7 @@ namespace BugHunter.Analyzers.CmsBaseClassesRules.Analyzers
         private static readonly DiagnosticDescriptor Rule = new DiagnosticDescriptor(DIAGNOSTIC_ID,
                 title: new LocalizableResourceString(nameof(CmsBaseClassesResources.ModuleRegistration_Title), CmsBaseClassesResources.ResourceManager, typeof(CmsBaseClassesResources)),
                 messageFormat: new LocalizableResourceString(nameof(CmsBaseClassesResources.ModuleRegistration_MessageFormat), CmsBaseClassesResources.ResourceManager, typeof(CmsBaseClassesResources)),
-                category: AnalyzerCategories.CmsBaseClasses,
+                category: nameof(AnalyzerCategories.CmsBaseClasses),
                 defaultSeverity: DiagnosticSeverity.Warning,
                 isEnabledByDefault: true,
                 description: new LocalizableResourceString(nameof(CmsBaseClassesResources.ModuleRegistration_Description), CmsBaseClassesResources.ResourceManager, typeof(CmsBaseClassesResources)));

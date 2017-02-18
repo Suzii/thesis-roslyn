@@ -15,7 +15,7 @@ namespace BugHunter.Analyzers.InternalGuidelinesRules.Analyzers
         private static readonly DiagnosticDescriptor Rule = new DiagnosticDescriptor(DIAGNOSTIC_ID,
             title: new LocalizableResourceString(nameof(InternalGuidelinesResources.WhereLikeMethod_Title), InternalGuidelinesResources.ResourceManager, typeof(InternalGuidelinesResources)),
             messageFormat: new LocalizableResourceString(nameof(InternalGuidelinesResources.WhereLikeMethod_MessageFormat), InternalGuidelinesResources.ResourceManager, typeof(InternalGuidelinesResources)),
-            category: AnalyzerCategories.AbstractionOverImplementation,
+            category: nameof(AnalyzerCategories.AbstractionOverImplementation),
             defaultSeverity: DiagnosticSeverity.Warning,
             isEnabledByDefault: true,
             description: new LocalizableResourceString(nameof(InternalGuidelinesResources.WhereLikeMethod_Description), InternalGuidelinesResources.ResourceManager, typeof(InternalGuidelinesResources)));

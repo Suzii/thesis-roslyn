@@ -17,7 +17,7 @@ namespace BugHunter.Analyzers.InternalGuidelinesRules.Analyzers
         private static readonly DiagnosticDescriptor Rule = new DiagnosticDescriptor(DIAGNOSTIC_ID,
             title: new LocalizableResourceString(nameof(InternalGuidelinesResources.EventLogArguments_Title), InternalGuidelinesResources.ResourceManager, typeof(InternalGuidelinesResources)),
             messageFormat: new LocalizableResourceString(nameof(InternalGuidelinesResources.EventLogArguments_MessageFormat), InternalGuidelinesResources.ResourceManager, typeof(InternalGuidelinesResources)),
-            category: AnalyzerCategories.InternalGuidelines,
+            category: nameof(AnalyzerCategories.InternalGuidelines),
             defaultSeverity: DiagnosticSeverity.Warning,
             isEnabledByDefault: true,
             description: new LocalizableResourceString(nameof(InternalGuidelinesResources.EventLogArguments_Description), InternalGuidelinesResources.ResourceManager, typeof(InternalGuidelinesResources)));
