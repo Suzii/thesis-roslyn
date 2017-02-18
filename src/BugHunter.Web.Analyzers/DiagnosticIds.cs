@@ -6,13 +6,13 @@
     internal static class DiagnosticIds
     {
         // CmsBaseClasses
-        public const string WEB_PART_BASE = "BH4000";
-        public const string UI_WEB_PART_BASE = "BH4002";
-        public const string PAGE_BASE = "BH6000";
-        public const string USER_CONTROL_BASE = "BH5000";
+        public const string WEB_PART_BASE = "BH3500";
+        public const string UI_WEB_PART_BASE = "BH3501";
+        public const string PAGE_BASE = "BH3502";
+        public const string USER_CONTROL_BASE = "BH3503";
         
-        // WebInternalGuidelines
-        public const string CONNECTION_HELPER_EXECUTE_QUERY = "BH10X4";
-        public const string VALIDATION_HELPER_GET = "BH4001";
+        // CmsApiGuideliness
+        public const string VALIDATION_HELPER_GET = "BH2500";
+        public const string CONNECTION_HELPER_EXECUTE_QUERY = "BH2501";
     }
 }
