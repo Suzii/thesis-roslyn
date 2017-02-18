@@ -23,12 +23,12 @@ namespace BugHunter.AnalyzersBenchmarks
         {
             Console.WriteLine("Benchmarks execution started. This is gonna take a while, go make yourself a coffee...");
 
-            var totalTime1 = BenchmarkRunner.Run<SourcesWithNoErrorsBenchmark>(config).TotalTime;
+            //var totalTime1 = BenchmarkRunner.Run<SourcesWithNoErrorsBenchmark>(config).TotalTime;
             var totalTime2 = BenchmarkRunner.Run<SourcesWithErrorsBenchmark>(config).TotalTime;
             //var totalTime3 = BenchmarkRunner.Run<SourcesFromConsoleAppBenchmark>(config).TotalTime;
 
             Console.WriteLine($@"Benchmarks executed. Total times:");
-            Console.WriteLine($@"SourcesWithNoErrorsBenchmark: {totalTime1:mm\:ss\.ff}");
+            //Console.WriteLine($@"SourcesWithNoErrorsBenchmark: {totalTime1:mm\:ss\.ff}");
             Console.WriteLine($@"SourcesWithErrorsBenchmark: {totalTime2:mm\:ss\.ff}");
             //Console.WriteLine($@"SourcesFromConsoleAppBenchmark: {totalTime3:mm\:ss\.ff}");
         }

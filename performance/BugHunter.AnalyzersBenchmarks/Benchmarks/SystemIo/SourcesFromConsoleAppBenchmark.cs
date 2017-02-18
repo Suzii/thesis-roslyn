@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using BenchmarkDotNet.Attributes;
 using BugHunter.Analyzers.BenchmarkingBaselineAnalyzers;
@@ -6,6 +8,7 @@ using BugHunter.Analyzers.CmsApiReplacementRules.Analyzers;
 using BugHunter.TestUtils;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
+using SampleProjectGenerator.CodeGenerators;
 
 namespace BugHunter.AnalyzersBenchmarks.Benchmarks.SystemIo
 {
@@ -30,11 +33,21 @@ namespace BugHunter.AnalyzersBenchmarks.Benchmarks.SystemIo
                     typeof(CMS.Search.Lucene3.LuceneSearchDocument)
                 ))
                 .ToArray();
-            
-            _sources = Directory.GetFiles(Path.Combine(Constants.PATH_TO_SAMPLE_PROJECT, @"ConsoleApp"))
-                .Where(fileName => fileName.EndsWith(".cs"))
-                .Select(File.ReadAllText)
-                .ToArray();
+
+            _sources = GetAllConsoleAppClassCodeGenerators().SelectMany(generator => generator.GenerateClasses(10, 2)).ToArray();
+        }
+
+        private static IEnumerable<IClassCodeGenerator> GetAllConsoleAppClassCodeGenerators()
+        {
+            var generatorInterface = typeof(IClassCodeGenerator);
+            var codeGenerators = generatorInterface.Assembly
+                .GetTypes()
+                .Where(type => generatorInterface.IsAssignableFrom(type) && !type.IsAbstract)
+                .Where(generator => generator.Namespace != null && generator.Namespace.Contains("ConsoleApp"))
+                .Select(Activator.CreateInstance)
+                .Cast<IClassCodeGenerator>();
+
+            return codeGenerators;
         }
 
         [Benchmark(Baseline = false)]
@@ -46,31 +59,31 @@ namespace BugHunter.AnalyzersBenchmarks.Benchmarks.SystemIo
         [Benchmark(Baseline = true)]
         public int AnalyzerV0_EmptyCallback()
         {
-            return AnalysisRunner.RunAnalysis(_sources, _additionalReferences, _systemIoV0);
+            return AnalysisRunner.RunAnalysis(_sources, _additionalReferences, null, _systemIoV0);
         }
 
         [Benchmark]
         public int AnalyzerV1_SyntxNodeRegistered()
         {
-            return AnalysisRunner.RunAnalysis(_sources, _additionalReferences, _systemIoV2);
+            return AnalysisRunner.RunAnalysis(_sources, _additionalReferences, null, _systemIoV2);
         }
 
         [Benchmark]
         public int AnalyzerV5_CompilationStartSyntaxNodeAndCompilationEnd()
         {
-            return AnalysisRunner.RunAnalysis(_sources, _additionalReferences, _systemIoV5);
+            return AnalysisRunner.RunAnalysis(_sources, _additionalReferences, null, _systemIoV5);
         }
 
         [Benchmark]
         public int AnalyzerV6_CompilationStartAndSyntaxTree()
         {
-            return AnalysisRunner.RunAnalysis(_sources, _additionalReferences, _systemIoV6);
+            return AnalysisRunner.RunAnalysis(_sources, _additionalReferences, null, _systemIoV6);
         }
 
         [Benchmark]
         public int AnalyzerV7_CompilationStartAndSyntaxTreeAndFulltextSearch()
         {
-            return AnalysisRunner.RunAnalysis(_sources, _additionalReferences, _systemIoV7);
+            return AnalysisRunner.RunAnalysis(_sources, _additionalReferences, null, _systemIoV7);
         }
     }
 }

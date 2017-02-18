@@ -1,9 +1,13 @@
-﻿namespace BugHunter.AnalyzersBenchmarks
+﻿using System;
+using System.IO;
+
+namespace BugHunter.AnalyzersBenchmarks
 {
     public static class Constants
     {
-        public const string PATH_TO_SAMPLE_PROJECT =
-            //@"C:\Users\zuzanad\code\thesis\thesis-sample-test-project\SampleProject";
-            @"D:\code\thesis\thesis-sample-test-project\SampleProject";
+        public static readonly string PathToSampleProject = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\..\..\thesis-sample-test-project\SampleProject"));
+
+        //@"C:\Users\zuzanad\code\thesis\thesis-sample-test-project\SampleProject";
+        //@"D:\code\thesis\thesis-sample-test-project\SampleProject";
     }
 }

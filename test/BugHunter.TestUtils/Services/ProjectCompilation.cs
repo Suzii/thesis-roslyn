@@ -16,7 +16,7 @@ namespace BugHunter.TestUtils.Services
     public static class ProjectCompilation
     {
         internal static string TestProjectName = "TestProject";
-        internal static FakeFileInfo DefaultFileInfo = new FakeFileInfo { FileLoaction = "", FileNamePrefix = "Test", FileExtension = "cs" };
+        internal static FakeFileInfo DefaultFileInfo = new FakeFileInfo { FileLocation = "", FileName = "Test", FileExtension = "cs" };
 
         #region Set up compilation and documents
         /// <summary>
@@ -99,7 +99,7 @@ namespace BugHunter.TestUtils.Services
             var count = 0;
             foreach (var source in sources)
             {
-                var newFileName = $"{fakeFileInfo.FileLoaction}{fakeFileInfo.FileNamePrefix}{count++}.{fakeFileInfo.FileExtension}";
+                var newFileName = fakeFileInfo.GetFullFilePath(count++); //$"{fakeFileInfo.FileLocation}{fakeFileInfo.FileName}{count++}.{fakeFileInfo.FileExtension}");
                 var documentId = DocumentId.CreateNewId(projectId, debugName: newFileName);
                 var sourceText = SourceText.From(source);
 

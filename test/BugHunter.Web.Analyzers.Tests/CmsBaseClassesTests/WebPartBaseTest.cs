@@ -28,8 +28,8 @@ namespace BugHunter.Web.Analyzers.Tests.CmsBaseClassesTests
             ).ToArray();
         }
 
-        private readonly FakeFileInfo _uiWebPartFakeFileInfo = new FakeFileInfo() { FileLoaction = SolutionFolders.UI_WEB_PARTS };
-        private readonly FakeFileInfo _webPartFakeFileInfo = new FakeFileInfo() { FileLoaction = SolutionFolders.WEB_PARTS };
+        private readonly FakeFileInfo _uiWebPartFakeFileInfo = new FakeFileInfo() { FileLocation = SolutionFolders.UI_WEB_PARTS };
+        private readonly FakeFileInfo _webPartFakeFileInfo = new FakeFileInfo() { FileLocation = SolutionFolders.WEB_PARTS };
         
         private static DiagnosticResult GetDiagnosticResult(string projectPath, params string[] messageArguments)
         {
@@ -88,7 +88,7 @@ namespace BugHunter.Web.Analyzers.Tests.CmsBaseClassesTests
     {{
     }}
 }}";
-            VerifyCSharpDiagnostic(test, new FakeFileInfo {FileLoaction = excludedPath});
+            VerifyCSharpDiagnostic(test, new FakeFileInfo {FileLocation = excludedPath});
         }
 
         [TestCase(nameof(CMS.UIControls.CMSAbstractUIWebpart), "using CMS.UIControls;\r\n\r\n", SolutionFolders.UI_WEB_PARTS)]
@@ -111,7 +111,7 @@ namespace BugHunter.Web.Analyzers.Tests.CmsBaseClassesTests
     {{
     }}
 }}";
-            VerifyCSharpDiagnostic(test, new FakeFileInfo {FileLoaction = fileLocation});
+            VerifyCSharpDiagnostic(test, new FakeFileInfo {FileLocation = fileLocation});
         }
 
         [Test]
@@ -168,7 +168,7 @@ namespace SampleTestProject.CsSamples
 }}";
 
             var line = string.IsNullOrEmpty(usings) ? 3 : 5;
-            var fakeFileInfo = new FakeFileInfo() {FileLoaction = fileLocation};
+            var fakeFileInfo = new FakeFileInfo() {FileLocation = fileLocation};
             var expectedDiagnostic = GetDiagnosticResult(fileLocation, "SampleClass").WithLocation(line, 18, fakeFileInfo);
 
             VerifyCSharpDiagnostic(test, fakeFileInfo, expectedDiagnostic);
@@ -194,7 +194,7 @@ namespace SampleTestProject.CsSamples
     {{
     }}
 }}";
-            var fakeFileInfo = new FakeFileInfo { FileLoaction = fileLocation };
+            var fakeFileInfo = new FakeFileInfo { FileLocation = fileLocation };
             var expectedDiagnostic = GetDiagnosticResult(fileLocation, "SampleClass").WithLocation(3, 18, fakeFileInfo);
 
             VerifyCSharpDiagnostic(test, fakeFileInfo, expectedDiagnostic);
@@ -221,7 +221,7 @@ namespace SampleTestProject.CsSamples
         public void Dispose() {{ }}
     }}
 }}";
-            var fakeFileInfo = new FakeFileInfo { FileLoaction = fileLocation };
+            var fakeFileInfo = new FakeFileInfo { FileLocation = fileLocation };
             var expectedDiagnostic = GetDiagnosticResult(fileLocation, "SampleClass").WithLocation(3, 18, fakeFileInfo);
             
             VerifyCSharpDiagnostic(test, fakeFileInfo, expectedDiagnostic);
@@ -248,7 +248,7 @@ namespace SampleTestProject.CsSamples
     {{
     }}
 }}";
-            var fakeFileInfo = new FakeFileInfo {FileLoaction = fileLocation};
+            var fakeFileInfo = new FakeFileInfo {FileLocation = fileLocation};
             var expectedDiagnostic = GetDiagnosticResult(fileLocation, "SampleClass").WithLocation(3, 18, fakeFileInfo);
 
             VerifyCSharpDiagnostic(test, fakeFileInfo, expectedDiagnostic);

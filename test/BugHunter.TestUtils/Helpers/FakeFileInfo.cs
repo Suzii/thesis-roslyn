@@ -1,20 +1,34 @@
-﻿namespace BugHunter.TestUtils.Helpers
+﻿using System.IO;
+
+namespace BugHunter.TestUtils.Helpers
 {
     public class FakeFileInfo
     {
-        public FakeFileInfo()
+        public FakeFileInfo() : this("Test")
         {
-            FileLoaction = "";
-            FileNamePrefix = "Test";
+        }
+
+        public FakeFileInfo(string namePrefix, int index = 0)
+        {
+            FileLocation = "";
+            FileName = $"{namePrefix}{index}";
             FileExtension = "cs";
         }
 
         public string FileExtension { get; set; }
 
-        public string FileNamePrefix { get; set; }
+        public string FileName { get; set; }
 
-        public string FileLoaction { get; set; }
+        public string FileLocation { get; set; }
 
-        public string GetFullFilePath(int index) => $"{FileLoaction}{FileNamePrefix}{index}.{FileExtension}";
+        public string FullFilePath => Path.Combine(FileLocation, $"{FileName}.{FileExtension}");
+
+        /// <summary>
+        /// Combine FileInfo into file name with path and ensure uniqueness by passing additional index parameter
+        /// </summary>
+        /// <param name="index">Index of file to be added as suffix of filename in combined full path</param>
+        /// <returns>Full file path with index as file name suffix</returns>
+        public string GetFullFilePath(int index) => $"{FileLocation}{FileName}{index}.{FileExtension}";
+
     }
 }

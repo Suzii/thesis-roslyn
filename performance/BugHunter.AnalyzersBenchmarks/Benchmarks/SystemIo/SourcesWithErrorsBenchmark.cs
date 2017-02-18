@@ -31,13 +31,8 @@ namespace BugHunter.AnalyzersBenchmarks.Benchmarks.SystemIo
                     typeof(CMS.Search.Lucene3.LuceneSearchDocument)
                 ))
                 .ToArray();
-            
-            _sources = Directory.GetFiles(Path.Combine(Constants.PATH_TO_SAMPLE_PROJECT, @"ConsoleApp"))
-                .Where(fileName => fileName.EndsWith(".cs"))
-                .Where(fileName => fileName.Contains("SystemIo"))
-                .Take(10)
-                .Select(File.ReadAllText)
-                .ToArray();
+
+            _sources = new SampleProjectGenerator.CodeGenerators.ConsoleApp.Implementation.SystemIo().GenerateClasses(10, 10);
         }
 
         [Benchmark(Baseline = false)]
@@ -49,37 +44,37 @@ namespace BugHunter.AnalyzersBenchmarks.Benchmarks.SystemIo
         [Benchmark(Baseline = true)]
         public int AnalyzerV0_EmptyCallback()
         {
-            return AnalysisRunner.RunAnalysis(_sources, _additionalReferences, _systemIoV0);
+            return AnalysisRunner.RunAnalysis(_sources, _additionalReferences, null, _systemIoV0);
         }
 
         [Benchmark]
         public int AnalyzerV1_SyntxNodeRegistered()
         {
-            return AnalysisRunner.RunAnalysis(_sources, _additionalReferences, _systemIoV2);
+            return AnalysisRunner.RunAnalysis(_sources, _additionalReferences, null, _systemIoV2);
         }
 
         [Benchmark]
         public int AnalyzerV4_CompilationStartAndSyntaxNode()
         {
-            return AnalysisRunner.RunAnalysis(_sources, _additionalReferences, _systemIoV4);
+            return AnalysisRunner.RunAnalysis(_sources, _additionalReferences, null, _systemIoV4);
         }
 
         [Benchmark]
         public int AnalyzerV5_CompilationStartSyntaxNodeAndCompilationEnd()
         {
-            return AnalysisRunner.RunAnalysis(_sources, _additionalReferences, _systemIoV5);
+            return AnalysisRunner.RunAnalysis(_sources, _additionalReferences, null, _systemIoV5);
         }
         
         [Benchmark]
         public int AnalyzerV6_CompilationStartAndSyntaxTree()
         {
-            return AnalysisRunner.RunAnalysis(_sources, _additionalReferences, _systemIoV6);
+            return AnalysisRunner.RunAnalysis(_sources, _additionalReferences, null, _systemIoV6);
         }
 
         [Benchmark]
         public int AnalyzerV7_CompilationStartAndSyntaxTreeAndFulltextSearch()
         {
-            return AnalysisRunner.RunAnalysis(_sources, _additionalReferences, _systemIoV7);
+            return AnalysisRunner.RunAnalysis(_sources, _additionalReferences, null, _systemIoV7);
         }
     }
 }

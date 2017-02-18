@@ -35,7 +35,7 @@ namespace BugHunter.Web.Analyzers.Tests.CmsApiGuidelinesTests
         }
 
         [TestCase(@"")]
-        [TestCase(@"\this\should\prevent\from\diagnostic\being\raised")]
+        [TestCase(@"this\should\prevent\from\diagnostic\being\raised")]
         public void OkInput_ClassOnExcludedPath_NoDiagnostic(string excludedPath)
         {
             var test = @"using System.Data;
@@ -50,7 +50,7 @@ namespace SampleTestProject.CsSamples
         }
     }
 }";
-            var fakeFileInfo = new FakeFileInfo {FileLoaction = excludedPath};
+            var fakeFileInfo = new FakeFileInfo {FileLocation = excludedPath};
             VerifyCSharpDiagnostic(test, fakeFileInfo);
         }
 
