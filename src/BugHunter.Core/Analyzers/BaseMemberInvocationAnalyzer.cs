@@ -75,7 +75,7 @@ namespace BugHunter.Core.Analyzers
 
 
             var searchedTargetType = context.SemanticModel.Compilation.GetTypeByMetadataName(accessedType);
-            var actualTargetType = new SemanticModelBrowser(context).GetMemberAccessTarget(memberAccess) as INamedTypeSymbol;
+            var actualTargetType = context.SemanticModel.GetTypeInfo(memberAccess.Expression).Type as INamedTypeSymbol;
             if (searchedTargetType == null ||
                 actualTargetType == null ||
                 !actualTargetType.IsDerivedFromClassOrInterface(searchedTargetType))
