@@ -23,6 +23,9 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.Analyzers
 
         public override void Initialize(AnalysisContext context)
         {
+            context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.None);
+            context.EnableConcurrentExecution();
+
             RegisterAction(Rule, context, "System.Web.SessionState.HttpSessionState", "SessionID");
             RegisterAction(Rule, context, "System.Web.HttpSessionStateBase", "SessionID");
         }

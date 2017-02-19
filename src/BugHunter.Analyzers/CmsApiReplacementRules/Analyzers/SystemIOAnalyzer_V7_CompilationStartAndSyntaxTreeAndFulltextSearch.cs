@@ -39,6 +39,8 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.Analyzers
 
         public override void Initialize(AnalysisContext context)
         {
+            context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.None);
+
             context.RegisterCompilationStartAction(compilationStartAnalysisContext =>
             {
                 var compilationaAnalyzer = new CompilationAnalyzer(compilationStartAnalysisContext.Compilation);
@@ -113,7 +115,6 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.Analyzers
 
             private bool CheckPreConditions(SyntaxTreeAnalysisContext context)
             {
-                // TODO check if file is generated
                 return true;
             }
 

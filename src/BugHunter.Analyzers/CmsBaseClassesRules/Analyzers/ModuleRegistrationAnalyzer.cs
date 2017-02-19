@@ -31,6 +31,8 @@ namespace BugHunter.Analyzers.CmsBaseClassesRules.Analyzers
 
         public override void Initialize(AnalysisContext context)
         {
+            context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.None);
+            
             context.RegisterCompilationStartAction(compilationContext =>
             {
                 var moduleEntryType = compilationContext.Compilation.GetTypeByMetadataName("CMS.Core.ModuleEntry");
@@ -43,7 +45,6 @@ namespace BugHunter.Analyzers.CmsBaseClassesRules.Analyzers
                 // TODO try different order of expressions to tweak with performance and do some benchmarks
                 compilationContext.RegisterSyntaxTreeAction(syntaxTreeAnalysisContext =>
                 {
-                    // TODO prefilter generated flies
                     var filePath = syntaxTreeAnalysisContext.Tree.FilePath;
                     if (string.IsNullOrEmpty(filePath))
                     {

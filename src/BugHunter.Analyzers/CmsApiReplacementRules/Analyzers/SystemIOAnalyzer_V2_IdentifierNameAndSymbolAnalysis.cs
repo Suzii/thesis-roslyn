@@ -40,6 +40,8 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.Analyzers
 
         public override void Initialize(AnalysisContext context)
         {
+            context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.None);
+
             context.RegisterSyntaxNodeAction(c => Analyze(Rule, c), SyntaxKind.IdentifierName);
         }
 
@@ -82,7 +84,6 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.Analyzers
 
         private bool CheckPreConditions(SyntaxNodeAnalysisContext context)
         {
-            // TODO check if file is generated
             return true;
         }
 

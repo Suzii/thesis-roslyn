@@ -40,13 +40,15 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.Analyzers
 
         public override void Initialize(AnalysisContext context)
         {
+            context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.None);
+
             context.RegisterCompilationStartAction(compilationStartAnalysisContext =>
             {
-                var compilationaAnalyzer = new CompilationaAnalyzer(compilationStartAnalysisContext.Compilation);
+                var compilationAnalyzer = new CompilationaAnalyzer(compilationStartAnalysisContext.Compilation);
 
-                compilationStartAnalysisContext.RegisterSyntaxTreeAction(systaxTreeContext => compilationaAnalyzer.Analyze(systaxTreeContext));
+                compilationStartAnalysisContext.RegisterSyntaxTreeAction(systaxTreeContext => compilationAnalyzer.Analyze(systaxTreeContext));
 
-                compilationStartAnalysisContext.RegisterCompilationEndAction(compilationEndContext => compilationaAnalyzer.Evaluate(compilationEndContext));
+                compilationStartAnalysisContext.RegisterCompilationEndAction(compilationEndContext => compilationAnalyzer.Evaluate(compilationEndContext));
             });
         }
 
@@ -108,7 +110,6 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.Analyzers
 
             private bool CheckPreConditions(SyntaxTreeAnalysisContext context)
             {
-                // TODO check if file is generated
                 return true;
             }
 

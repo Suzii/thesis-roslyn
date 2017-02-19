@@ -24,6 +24,9 @@ namespace BugHunter.Web.Analyzers.CmsApiGuidelinesRules.Analyzers
 
         public override void Initialize(AnalysisContext context)
         {
+            context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.None);
+            context.EnableConcurrentExecution();
+
             RegisterAction(Rule, context, "CMS.DataEngine.ConnectionHelper", "ExecuteQuery");
         }
 

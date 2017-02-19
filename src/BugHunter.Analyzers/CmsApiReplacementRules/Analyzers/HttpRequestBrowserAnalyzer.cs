@@ -16,6 +16,9 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.Analyzers
         
         public override void Initialize(AnalysisContext context)
         {
+            context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.None);
+            context.EnableConcurrentExecution();
+
             RegisterAction(Rule, context, "System.Web.HttpBrowserCapabilities", "Browser");
             RegisterAction(Rule, context, "System.Web.HttpBrowserCapabilitiesBase", "Browser");
         }

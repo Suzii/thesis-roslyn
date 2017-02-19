@@ -20,6 +20,9 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.Analyzers
 
         public override void Initialize(AnalysisContext context)
         {
+            context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.None);
+            context.EnableConcurrentExecution();
+
             RegisterAction(Rule, context, "System.Web.HttpResponse", "Cookies");
             RegisterAction(Rule, context, "System.Web.HttpResponseBase", "Cookies");
         }

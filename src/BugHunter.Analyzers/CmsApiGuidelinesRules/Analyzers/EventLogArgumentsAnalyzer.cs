@@ -22,10 +22,17 @@ namespace BugHunter.Analyzers.CmsApiGuidelinesRules.Analyzers
             isEnabledByDefault: true,
             description: new LocalizableResourceString(nameof(CmsApiGuidelinesResources.EventLogArguments_Description), CmsApiGuidelinesResources.ResourceManager, typeof(CmsApiGuidelinesResources)));
 
+        private static readonly IDiagnosticFormatter _diagnosticFormatter = new EventLogArgumentsDiagnosticFormatter();
+
+        protected override IDiagnosticFormatter DiagnosticFormatter => _diagnosticFormatter;
+
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
 
         public override void Initialize(AnalysisContext context)
         {
+            context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.None);
+            context.EnableConcurrentExecution();
+
             RegisterAction(Rule, context, "CMS.EventLog.EventLogProvider", "LogEvent");
         }
 
@@ -42,10 +49,5 @@ namespace BugHunter.Analyzers.CmsApiGuidelinesRules.Analyzers
 
             return forbiddenEventTypeArgs.Contains(firstArgumentText);
         }
-
-
-        private static readonly IDiagnosticFormatter _diagnosticFormatter = new EventLogArgumentsDiagnosticFormatter();
-
-        protected override IDiagnosticFormatter DiagnosticFormatter => _diagnosticFormatter;
     }
 }

@@ -18,6 +18,9 @@ namespace BugHunter.Analyzers.StringAndCultureRules.Analyzers
 
         public override void Initialize(AnalysisContext context)
         {
+            context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.None);
+            context.EnableConcurrentExecution();
+
             RegisterAction(Rule, context, "System.String", "Compare");
         }
     }
