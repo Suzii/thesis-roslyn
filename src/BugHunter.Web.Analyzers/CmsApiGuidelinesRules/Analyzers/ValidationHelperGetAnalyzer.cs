@@ -30,9 +30,9 @@ namespace BugHunter.Web.Analyzers.CmsApiGuidelinesRules.Analyzers
             RegisterAction(Rule, context, "CMS.Helpers.ValidationHelper", "GetDouble", "GetDecimal", "GetDate", "GetDateTime");
         }
 
-        protected override IDiagnosticFormatter GetDiagnosticFormatter()
-        {
-            return DiagnosticFormatterFactory.CreateMemberAccessOnlyFormatter();
-        }
+
+        private static readonly IDiagnosticFormatter _diagnosticFormatter = DiagnosticFormatterFactory.CreateMemberAccessOnlyFormatter();
+
+        protected override IDiagnosticFormatter DiagnosticFormatter => _diagnosticFormatter;
     }
 }

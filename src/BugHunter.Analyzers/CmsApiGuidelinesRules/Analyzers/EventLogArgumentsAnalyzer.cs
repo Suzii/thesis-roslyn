@@ -43,9 +43,9 @@ namespace BugHunter.Analyzers.CmsApiGuidelinesRules.Analyzers
             return forbiddenEventTypeArgs.Contains(firstArgumentText);
         }
 
-        protected override IDiagnosticFormatter GetDiagnosticFormatter()
-        {
-            return new EventLogArgumentsDiagnosticFormatter();
-        }
+
+        private static readonly IDiagnosticFormatter _diagnosticFormatter = new EventLogArgumentsDiagnosticFormatter();
+
+        protected override IDiagnosticFormatter DiagnosticFormatter => _diagnosticFormatter;
     }
 }

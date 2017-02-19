@@ -36,10 +36,10 @@ namespace BugHunter.Analyzers.StringAndCultureRules.Analyzers
         {
             return invocationExpression.ArgumentList.Arguments.Count == 0;
         }
-        
-        protected override IDiagnosticFormatter GetDiagnosticFormatter()
-        {
-            return DiagnosticFormatterFactory.CreateMemberInvocationOnlyFormatter();
-        }
+
+
+        private static readonly IDiagnosticFormatter _diagnosticFormatter = DiagnosticFormatterFactory.CreateMemberInvocationOnlyFormatter();
+
+        protected override IDiagnosticFormatter DiagnosticFormatter => _diagnosticFormatter;
     }
 }

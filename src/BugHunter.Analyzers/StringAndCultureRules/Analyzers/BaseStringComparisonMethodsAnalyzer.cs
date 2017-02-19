@@ -21,10 +21,9 @@ namespace BugHunter.Analyzers.StringAndCultureRules.Analyzers
                 description: new LocalizableResourceString(nameof(StringMethodsResources.StringComparisonMethods_Description), StringMethodsResources.ResourceManager, typeof(StringMethodsResources)));
         }
 
-        protected override IDiagnosticFormatter GetDiagnosticFormatter()
-        {
-            return DiagnosticFormatterFactory.CreateMemberInvocationOnlyFormatter();
-        }
+        private static readonly IDiagnosticFormatter _diagnosticFormatter = DiagnosticFormatterFactory.CreateMemberInvocationOnlyFormatter();
+
+        protected override IDiagnosticFormatter DiagnosticFormatter => _diagnosticFormatter;
 
         // If method is already called with StringComparison argument, no need for diagnostic
         protected override bool CheckPostConditions(SyntaxNodeAnalysisContext expression, InvocationExpressionSyntax invocationExpression)

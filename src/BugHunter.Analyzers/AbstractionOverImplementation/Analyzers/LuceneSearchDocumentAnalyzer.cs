@@ -25,6 +25,7 @@ namespace BugHunter.Analyzers.AbstractionOverImplementation.Analyzers
 
         public override void Initialize(AnalysisContext context)
         {
+            // TODO perform benchmarks
             context.RegisterSyntaxNodeAction(Analyze, SyntaxKind.IdentifierName);
         }
 

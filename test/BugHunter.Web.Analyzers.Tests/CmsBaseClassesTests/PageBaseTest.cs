@@ -10,7 +10,7 @@ using NUnit.Framework;
 namespace BugHunter.Web.Analyzers.Tests.CmsBaseClassesTests
 {
     [TestFixture]
-    public class PageBaseTest : CodeFixVerifier<PageBaseAnalyzer_V4_NamedTypeSymbolToStringWithoutCOmpilationStart, PageBaseCodeFixProvider>
+    public class PageBaseTest : CodeFixVerifier<PageBaseAnalyzer_V1_SyntaxTree, PageBaseCodeFixProvider>
     {
         protected override MetadataReference[] GetAdditionalReferences()
         {

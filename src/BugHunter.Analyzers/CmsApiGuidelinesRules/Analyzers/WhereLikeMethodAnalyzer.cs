@@ -27,9 +27,9 @@ namespace BugHunter.Analyzers.CmsApiGuidelinesRules.Analyzers
             RegisterAction(Rule, context, accessedType, "WhereLike", "WhereNotLike");
         }
 
-        protected override IDiagnosticFormatter GetDiagnosticFormatter()
-        {
-            return DiagnosticFormatterFactory.CreateMemberInvocationOnlyFormatter();
-        }
+
+        private static readonly IDiagnosticFormatter _diagnosticFormatter = DiagnosticFormatterFactory.CreateMemberInvocationOnlyFormatter();
+
+        protected override IDiagnosticFormatter DiagnosticFormatter => _diagnosticFormatter;
     }
 }
