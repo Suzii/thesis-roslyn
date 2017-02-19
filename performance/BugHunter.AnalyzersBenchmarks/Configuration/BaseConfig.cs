@@ -2,6 +2,7 @@ using BenchmarkDotNet.Columns;
 using BenchmarkDotNet.Configs;
 using BenchmarkDotNet.Exporters;
 using BenchmarkDotNet.Jobs;
+using BenchmarkDotNet.Order;
 
 namespace BugHunter.AnalyzersBenchmarks.Configuration
 {
@@ -22,6 +23,7 @@ namespace BugHunter.AnalyzersBenchmarks.Configuration
                 StatisticColumn.OperationsPerSecond);
 
             Add(HtmlExporter.Default, MarkdownExporter.GitHub);
+            Set(new DefaultOrderProvider(SummaryOrderPolicy.FastestToSlowest));
         }
     }
 }
