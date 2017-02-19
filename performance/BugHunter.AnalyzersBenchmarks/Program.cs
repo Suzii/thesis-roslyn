@@ -11,11 +11,13 @@ namespace BugHunter.AnalyzersBenchmarks
     {
         static void Main(string[] args)
         {
-            var congig = new QuickResponseConfig();
+            var config = new DevelopmentConfig();
 
             //RunBenchmarks(congig);
             //RunSystemIOAnalysis();
-            RunPageBaseAnalysis();
+
+            RunBenchmarksForPage(config);
+            //RunPageBaseAnalysis();
 
             Console.WriteLine("Press Enter to exit...");
             Console.ReadLine();
@@ -38,6 +40,18 @@ namespace BugHunter.AnalyzersBenchmarks
             Console.WriteLine($@"PageBaseBenchmark: {totalTime4:mm\:ss\.ff}");
         }
 
+        private static void RunBenchmarksForPage(ManualConfig config)
+        {
+            Console.WriteLine("Benchmarks execution started. This is gonna take a while, go make yourself a coffee...");
+
+            var totalTime1 = BenchmarkRunner.Run<PageBaseBenchmark>(config).TotalTime;
+            var totalTime2 = BenchmarkRunner.Run<PageBaseBenchmarkNoDiagnosticCode>(config).TotalTime;
+
+            Console.WriteLine($@"Benchmarks executed. Total times:");
+            Console.WriteLine($@"PageBaseBenchmark: {totalTime1:mm\:ss\.ff}");
+            Console.WriteLine($@"PageBaseBenchmarkNoDiagnosticCode: {totalTime2:mm\:ss\.ff}");
+        }
+
         private static void RunSystemIOAnalysis()
         {
             var numberOfDiagnosticsRaised = new SourcesWithErrorsBenchmark().AnalyzerV5_CompilationStartSyntaxNodeAndCompilationEnd();
@@ -47,9 +61,9 @@ namespace BugHunter.AnalyzersBenchmarks
         private static void RunPageBaseAnalysis()
         {
             var pageBaseBenchmark = new PageBaseBenchmark();
-            pageBaseBenchmark.FilesCompilation();
-            var numberOfDiagnosticsRaised = pageBaseBenchmark.AnalyzerV1_SyntxNodeRegistered();
-            Console.WriteLine($@"Analysis finished. Total of {numberOfDiagnosticsRaised} diagnostics found.");
+            var numberOfDiagnosticsRaised1 = pageBaseBenchmark.AnalyzerV1_SyntxNodeRegistered();
+            var numberOfDiagnosticsRaised2 = pageBaseBenchmark.AnalyzerV2_NamedTypeSymbolRegistered();
+            Console.WriteLine($@"Analysis finished. Total of {numberOfDiagnosticsRaised1} and {numberOfDiagnosticsRaised2} diagnostics found.");
         }
     }
 }

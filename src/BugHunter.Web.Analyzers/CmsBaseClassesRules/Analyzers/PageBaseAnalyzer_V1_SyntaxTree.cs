@@ -13,7 +13,7 @@ namespace BugHunter.Web.Analyzers.CmsBaseClassesRules.Analyzers
     /// Checks if Page file inherits from right class.
     /// </summary>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class PageBaseAnalyzer : BaseClassDeclarationSyntaxAnalyzer
+    public class PageBaseAnalyzer_V1_SyntaxTree : BaseClassDeclarationSyntaxAnalyzer
     {
         public const string DIAGNOSTIC_ID = DiagnosticIds.PAGE_BASE;
 

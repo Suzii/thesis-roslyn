@@ -10,9 +10,9 @@ namespace BugHunter.AnalyzersBenchmarks.Configuration
             Run =
             {
                 RunStrategy = RunStrategy.ColdStart,
-                LaunchCount = 1,
+                LaunchCount = 2,
                 TargetCount = 2,
-                WarmupCount = 0,
+                WarmupCount = 4,
                 UnrollFactor = 1,
                 InvocationCount = 1,
             },

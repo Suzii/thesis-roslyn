@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using BenchmarkDotNet.Attributes;
-using BugHunter.Analyzers.BenchmarkingBaselineAnalyzers;
 using BugHunter.TestUtils;
 using BugHunter.TestUtils.Helpers;
 using BugHunter.Web.Analyzers.CmsBaseClassesRules.Analyzers;
@@ -10,7 +9,7 @@ using SampleProjectGenerator.CodeGenerators.BaseClassRules.Implementation;
 
 namespace BugHunter.AnalyzersBenchmarks.Benchmarks.BaseClasses
 {
-    public class PageBaseBenchmark
+    public class PageBaseBenchmarkNoDiagnosticCode
     {
         //private readonly DiagnosticAnalyzer _v0 = new SyntaxNodeClassDeclarationBaselineAnalyzer();
         private readonly DiagnosticAnalyzer _v1 = new PageBaseAnalyzer_V1_SyntaxTree();
@@ -22,14 +21,14 @@ namespace BugHunter.AnalyzersBenchmarks.Benchmarks.BaseClasses
         private readonly string[] _sources;
         private readonly FakeFileInfo _fakeFileInfo;
 
-        public PageBaseBenchmark()
+        public PageBaseBenchmarkNoDiagnosticCode()
         {
             _additionalReferences = ReferencesHelper.CMSBasicReferences
                 .Union(new[] { ReferencesHelper.CMSBaseWebUI, ReferencesHelper.SystemWebReference, ReferencesHelper.SystemWebUIReference, ReferencesHelper.CMSUiControls })
                 .ToArray();
 
-            var codeGenerator = new PageBase();
-            _sources = codeGenerator.GenerateClasses(2000, 1000);
+            var codeGenerator = new UserControlBase();//new PageBase();
+            _sources = codeGenerator.GenerateClasses(1000, 500).Union(new WebPartBase().GenerateClasses(1000, 500)).ToArray();
             _fakeFileInfo = codeGenerator.GetFakeFileInfo(0);
         }
 

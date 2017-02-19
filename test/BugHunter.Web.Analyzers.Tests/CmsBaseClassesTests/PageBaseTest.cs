@@ -10,7 +10,7 @@ using NUnit.Framework;
 namespace BugHunter.Web.Analyzers.Tests.CmsBaseClassesTests
 {
     [TestFixture]
-    public class PageBaseTest : CodeFixVerifier<PageBaseAnalyzer, PageBaseCodeFixProvider>
+    public class PageBaseTest : CodeFixVerifier<PageBaseAnalyzer_V4_NamedTypeSymbolToStringWithoutCOmpilationStart, PageBaseCodeFixProvider>
     {
         protected override MetadataReference[] GetAdditionalReferences()
         {
@@ -93,6 +93,11 @@ namespace SampleTestProject.CsSamples
 {{
     public partial class SampleClass: {oldUsage}
     {{
+        public string GetName() 
+        {{
+            var name = nameof(SampleClass);
+            return name;
+        }}
     }}
 }}";
             var expectedDiagnostic = GetDiagnosticResult("SampleClass").WithLocation(5, 26, _pagesFakeFileInfo);

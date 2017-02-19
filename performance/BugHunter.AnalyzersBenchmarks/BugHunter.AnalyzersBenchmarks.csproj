@@ -479,6 +479,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Benchmarks\BaseClasses\PageBaseBenchmarkNoDiagnosticCode.cs" />
     <Compile Include="Benchmarks\BaseClasses\PageBaseBenchmark.cs" />
     <Compile Include="Configuration\BaseConfig.cs" />
     <Compile Include="Benchmarks\AnalysisRunner.cs" />

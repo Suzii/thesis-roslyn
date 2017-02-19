@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='utf-8' />
+<title>PageBaseBenchmark</title>
+
+<style type="text/css">
+	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
+	td, th { padding: 6px 13px; border: 1px solid #ddd; }
+	tr { background-color: #fff; border-top: 1px solid #ccc; }
+	tr:nth-child(even) { background: #f8f8f8; }
+</style>
+</head>
+<body>
+<pre><code>
+BenchmarkDotNet=v0.10.1, OS=Microsoft Windows NT 6.2.9200.0
+Processor=Intel(R) Core(TM) i5-6200U CPU 2.30GHz, ProcessorCount=4
+Frequency=2343751 Hz, Resolution=426.6665 ns, Timer=TSC
+  [Host]     : Clr 4.0.30319.42000, 32bit LegacyJIT-v4.6.1586.0
+  DefaultJob : Clr 4.0.30319.42000, 32bit LegacyJIT-v4.6.1586.0
+</code></pre>
+<pre><code></code></pre>
+
+<table>
+<thead><tr><th>                        Method</th><th>Mean</th><th>StdErr</th><th>StdDev</th><th>Min</th><th>Max</th><th>Op/s</th><th>Rank</th>
+</tr>
+</thead><tbody><tr><td>AnalyzerV2_NamedTypeSymbolRegistered</td><td>1.4889 s</td><td>0.0033 s</td><td>0.0129 s</td><td>1.4694 s</td><td>1.5107 s</td><td>0.67</td><td>1</td>
+</tr><tr><td>AnalyzerV1_SyntxNodeRegistered</td><td>1.4934 s</td><td>0.0039 s</td><td>0.0151 s</td><td>1.4654 s</td><td>1.5176 s</td><td>0.67</td><td>1</td>
+</tr></tbody></table>
+</body>
+</html>

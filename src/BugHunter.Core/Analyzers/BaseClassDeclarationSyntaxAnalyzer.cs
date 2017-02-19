@@ -36,5 +36,12 @@ namespace BugHunter.Core.Analyzers
             var diagnostic = Diagnostic.Create(rule, location, classDeclaration.Identifier.ToString());
             return diagnostic;
         }
+
+        protected static Diagnostic CreateDiagnostic(INamedTypeSymbol namedTypeSymbol, DiagnosticDescriptor rule)
+        {
+            var locations = namedTypeSymbol.Locations;
+            var diag = Diagnostic.Create(rule, locations.FirstOrDefault(), locations, namedTypeSymbol.ToDisplayString());
+            return diag;
+        }
     }
 }
