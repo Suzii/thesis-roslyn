@@ -3,6 +3,7 @@
     public enum ProjectType
     {
         ConsoleApp,
-        WebApp
+        WebApp,
+        None
     }
 }

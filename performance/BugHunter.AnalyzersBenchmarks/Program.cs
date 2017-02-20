@@ -2,6 +2,7 @@
 using BenchmarkDotNet.Configs;
 using BenchmarkDotNet.Running;
 using BugHunter.AnalyzersBenchmarks.Benchmarks.BaseClasses;
+using BugHunter.AnalyzersBenchmarks.Benchmarks.CallbacksBinding;
 using BugHunter.AnalyzersBenchmarks.Benchmarks.SystemIo;
 using BugHunter.AnalyzersBenchmarks.Configuration;
 
@@ -11,13 +12,19 @@ namespace BugHunter.AnalyzersBenchmarks
     {
         static void Main(string[] args)
         {
-            var config = new DevelopmentConfig();
+            var config = new ProductionConfig();
 
             //RunBenchmarks(congig);
             //RunSystemIOAnalysis();
 
-            RunBenchmarksForPage(config);
+            //RunBenchmarksForPage(config);
             //RunPageBaseAnalysis();
+
+
+            var totalTime = BenchmarkRunner.Run<SingleVsDoubleCallbackBenchmark>(config).TotalTime;
+            Console.WriteLine($@"Benchmarks executed. Total time:  {totalTime:mm\:ss\.ff}");
+            //var analyzerV1SingleCallback = new SingleVsDoubleCallbackBenchmark().AnalyzerV1_SingleCallback();
+            //Console.WriteLine("Done... " + analyzerV1SingleCallback);
 
             Console.WriteLine("Press Enter to exit...");
             Console.ReadLine();

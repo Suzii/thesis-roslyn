@@ -480,10 +480,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BenchmarkingBaselineAnalyzers\DiagnosticIds.cs" />
+    <Compile Include="BenchmarkingBaselineAnalyzers\MemberAccessTwoCallbacksAnalyzer.cs" />
+    <Compile Include="BenchmarkingBaselineAnalyzers\MemberAccessEmptyCallbacksAnalyzer.cs" />
+    <Compile Include="BenchmarkingBaselineAnalyzers\MemberAccessSingleCallbackAnalyzer.cs" />
     <Compile Include="BenchmarkingBaselineAnalyzers\SyntaxNodeClassDeclarationBaselineAnalyzer.cs" />
     <Compile Include="BenchmarkingBaselineAnalyzers\SyntaxNodeIdentifierNameBaselineAnalyzer.cs" />
     <Compile Include="Benchmarks\BaseClasses\PageBaseBenchmarkNoDiagnosticCode.cs" />
     <Compile Include="Benchmarks\BaseClasses\PageBaseBenchmark.cs" />
+    <Compile Include="Benchmarks\CallbacksBinding\SingleVsDoubleCallbackBenchmark.cs" />
     <Compile Include="Configuration\BaseConfig.cs" />
     <Compile Include="Benchmarks\AnalysisRunner.cs" />
     <Compile Include="Benchmarks\SystemIo\SourcesFromConsoleAppBenchmark.cs" />
