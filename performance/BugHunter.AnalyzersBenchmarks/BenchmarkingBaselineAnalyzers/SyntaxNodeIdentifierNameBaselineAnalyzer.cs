@@ -1,10 +1,11 @@
 ﻿using System.Collections.Immutable;
+using BugHunter.Analyzers;
 using BugHunter.Core;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Diagnostics;
 
-namespace BugHunter.Analyzers.BenchmarkingBaselineAnalyzers
+namespace BugHunter.AnalyzersBenchmarks.BenchmarkingBaselineAnalyzers
 {
     /// <summary>
     /// This class serves as a baseline for all analyzers that have callbacks to SyntaxNodeAction of type <c>SyntaxKind.IdentifierName</c>

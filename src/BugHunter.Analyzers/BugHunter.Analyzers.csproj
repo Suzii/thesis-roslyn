@@ -41,7 +41,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AbstractionOverImplementationResources.resx</DependentUpon>
     </Compile>
-    <Compile Include="BenchmarkingBaselineAnalyzers\SyntaxNodeClassDeclarationBaselineAnalyzer.cs" />
     <Compile Include="CmsApiReplacementRules\CmsApiReplacementsResources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -67,7 +66,6 @@
     <Compile Include="CmsApiReplacementRules\Analyzers\SystemIOAnalyzer_V6_CompilationStartAndSyntaxTree.cs" />
     <Compile Include="CmsApiReplacementRules\Analyzers\SystemIOAnalyzer_V5_CompilationStartWithBagForDiagnosedNodes.cs" />
     <Compile Include="CmsApiReplacementRules\Analyzers\SystemIOAnalyzer_V4_CompilationStart.cs" />
-    <Compile Include="BenchmarkingBaselineAnalyzers\SyntaxNodeIdentifierNameBaselineAnalyzer.cs" />
     <Compile Include="CmsApiReplacementRules\Analyzers\SystemIOAnalyzer_V2_IdentifierNameAndSymbolAnalysis.cs" />
     <Compile Include="CmsApiReplacementRules\Analyzers\HttpResponseCookiesAnalyzer.cs" />
     <Compile Include="CmsApiReplacementRules\Analyzers\HttpRequestCookiesAnalyzer.cs" />

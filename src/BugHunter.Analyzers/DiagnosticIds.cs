@@ -41,13 +41,5 @@
         public const string STRING_STARTS_ENDS_WITH_METHODS = "BH4003";
         public const string STRING_INDEX_OF_METHODS = "BH4004";
         public const string STRING_COMPARE_STATIC_METHOD = "BH4005";
-
-        // This is section for artificial IDs only for benchmarking purposes
-        public const string ALL_SYNTAX_NODES = "BHXXX0";
-        public const string SYNTAX_NODE_IDENTIFIER_NAME = "BHXXX1";
-        public const string SYNTAX_NODE_MEMBER_ACCESS = "BHXXX2";
-        public const string SYNTAX_NODE_INVOCATION_EXPRESSION = "BHXXX3";
-        public const string SYNTAX_NODE_ELEMENT_ACCESS = "BHXXX4";
-        public const string SYNTAX_NODE_CLASS_DECLARATION = "BHXXX5";
     }
 }

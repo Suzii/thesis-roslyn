@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using BenchmarkDotNet.Attributes;
-using BugHunter.Analyzers.BenchmarkingBaselineAnalyzers;
 using BugHunter.TestUtils;
 using BugHunter.TestUtils.Helpers;
 using BugHunter.Web.Analyzers.CmsBaseClassesRules.Analyzers;

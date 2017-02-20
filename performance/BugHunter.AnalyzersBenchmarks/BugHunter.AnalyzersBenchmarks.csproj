@@ -479,6 +479,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BenchmarkingBaselineAnalyzers\DiagnosticIds.cs" />
+    <Compile Include="BenchmarkingBaselineAnalyzers\SyntaxNodeClassDeclarationBaselineAnalyzer.cs" />
+    <Compile Include="BenchmarkingBaselineAnalyzers\SyntaxNodeIdentifierNameBaselineAnalyzer.cs" />
     <Compile Include="Benchmarks\BaseClasses\PageBaseBenchmarkNoDiagnosticCode.cs" />
     <Compile Include="Benchmarks\BaseClasses\PageBaseBenchmark.cs" />
     <Compile Include="Configuration\BaseConfig.cs" />

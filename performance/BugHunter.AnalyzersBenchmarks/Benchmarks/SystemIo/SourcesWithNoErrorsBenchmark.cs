@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using BenchmarkDotNet.Attributes;
-using BugHunter.Analyzers.BenchmarkingBaselineAnalyzers;
 using BugHunter.Analyzers.CmsApiReplacementRules.Analyzers;
+using BugHunter.AnalyzersBenchmarks.BenchmarkingBaselineAnalyzers;
 using BugHunter.TestUtils;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
