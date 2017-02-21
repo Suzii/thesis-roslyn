@@ -63,19 +63,33 @@
 //            Console.WriteLine($@"Loaded solution in {stopwatch.Elapsed:mm\:ss\.ff}");
 //            stopwatch.Restart();
 
-//            var csharpProjects = solution.Projects.Where(i => i.Language == LanguageNames.CSharp).ToList();
+//            var csharpProjects = solution.Projects.Where(i => i.Language == LanguageNames.CSharp && !IsProjectExcluded(i)).ToList();
 
 //            Console.WriteLine("Number of projects: \t\t\t{0,12:N}", csharpProjects.Count);
 //            Console.WriteLine("Number of documents:\t\t\t{0,12:N}", csharpProjects.Sum(x => x.DocumentIds.Count));
 
-//            var statistics = await StatisticsHelper.GetAnalyzerStatisticsAsync(csharpProjects, cancellationToken).ConfigureAwait(true);
-
+//            var statistics = await StatisticsHelper.GetAnalyzerStatisticsAsync(csharpProjects, cancellationToken, IsProjectExcluded).ConfigureAwait(true);
+             
 //            StatisticsHelper.PrintStatistics(statistics);
 
-//            Console.WriteLine($@"The end. Stats computed in {stopwatch.Elapsed:mm\:ss\.ff} Press any key to continue...");
-//            Console.ReadKey();
+//            Console.WriteLine($@"The end. Stats computed in {stopwatch.Elapsed:mm\:ss\.ff} Press ESC to continue...");
+//            while(Console.ReadKey().Key!= ConsoleKey.Escape);
 //        }
 
-        
+//        private static bool IsProjectExcluded(Project project)
+//        {
+//            var thirdPartyProjects = new[]
+//            {
+//                "Contrib.WordNet.SynExpand",
+//                "FiftyOne",
+//                "ITHitWebDAVServer",
+//                "Lucene.Net.v3",
+//                "PDFClown",
+//                "QRCodeLib",
+//            };
+
+//            Console.WriteLine(project.FilePath);
+//            return project.FilePath.Contains("Tests") || thirdPartyProjects.Any(thirdPartyProject => project.FilePath.Contains(thirdPartyProject));
+//        }
 //    }
 //}

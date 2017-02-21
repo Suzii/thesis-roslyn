@@ -1,3 +1,4 @@
+All projects:
 Loaded solution in 04:34.44
 Number of projects:                           255,00
 Number of documents:                       14 796,00
@@ -11,3 +12,17 @@ Number of syntax nodes:                 8 550 249,00
 - invocationExpression:                   312 491,00
 - elementAccess:                           27 073,00
 The end. Stats computed in 01:29.11 Press any key to continue...
+
+Excluded test projects and 3rd party libs folder:
+Number of projects:                           125,00
+Number of documents:                       10 946,00
+Number of syntax tokens:                7 623 360,00
+Number of syntax trivia:                4 847 696,00
+Number of syntax nodes:                 6 251 817,00
+- identifierName:                       1 414 438,00
+- classDeclaration:                        10 142,00
+- objectCreation:                          22 359,00
+- memberAccess:                           350 045,00
+- invocationExpression:                   215 865,00
+- elementAccess:                           18 101,00
+The end. Stats computed in 01:15.60 Press ESC to continue...

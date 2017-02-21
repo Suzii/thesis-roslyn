@@ -25,11 +25,12 @@ namespace BugHunter.PerformanceTest
             Console.WriteLine("- elementAccess:       \t\t\t{0,12:N}", statistics.NodesStatistic.NumberElementAccessExpressionNodes);
         }
 
-        public static Task<Statistic> GetAnalyzerStatisticsAsync(IEnumerable<Project> projects, CancellationToken cancellationToken)
+        public static Task<Statistic> GetAnalyzerStatisticsAsync(IEnumerable<Project> projects, CancellationToken cancellationToken, Func<Project, bool> isProjectExcluded)
         {
             var sums = new ConcurrentBag<Statistic>();
+            var projectsToBeAnalyzed = projects.Where(project => !isProjectExcluded(project));
 
-            Parallel.ForEach(projects.SelectMany(i => i.Documents), document =>
+            Parallel.ForEach(projectsToBeAnalyzed.SelectMany(i => i.Documents), document =>
             {
                 var documentStatistics = GetAnalyzerStatisticsAsync(document, cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult();
                 sums.Add(documentStatistics);

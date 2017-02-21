@@ -3,7 +3,6 @@ using System.Linq;
 using BugHunter.Core;
 using BugHunter.Core.DiagnosticsFormatting;
 using BugHunter.Core.Extensions;
-using BugHunter.Core.Helpers;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;

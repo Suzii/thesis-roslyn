@@ -1,0 +1,101 @@
+// ================================ 1st RUN v.1.0.0.0 =====================================
+
+[C:\TFS\CMS\MAIN\CMSSolution\CMS\CMSApp.csproj]
+   (TaskId:7424)
+  Total analyzer execution time: 3.036 seconds. (TaskId:7424)
+  NOTE: Elapsed time may be less than analyzer execution time because analyzers can run concurrently. (TaskId:7424)
+   (TaskId:7424)
+  Time (s)    %   Analyzer (TaskId:7424)
+     3.036   99   BugHunter.Web.Analyzers, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null (TaskId:7424)
+     1.733   57      BugHunter.Web.Analyzers.CmsApiGuidelinesRules.Analyzers.ConnectionHelperExecuteQueryAnalyzer (TaskId:7424)
+     0.601   19      BugHunter.Web.Analyzers.CmsApiGuidelinesRules.Analyzers.ValidationHelperGetAnalyzer (TaskId:7424)
+     0.512   16      BugHunter.Web.Analyzers.CmsBaseClassesRules.Analyzers.UserControlBaseAnalyzer (TaskId:7424)
+     0.163    5      BugHunter.Web.Analyzers.CmsBaseClassesRules.Analyzers.WebPartBaseAnalyzer (TaskId:7424)
+     0.027   <1      BugHunter.Web.Analyzers.CmsBaseClassesRules.Analyzers.PageBaseAnalyzer (TaskId:7424)
+   (TaskId:7424)
+   
+   
+    160 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:05:54.53
+
+// ================================ 2nd RUN v.1.0.0.0 =====================================
+[C:\TFS\CMS\MAIN\CMSSolution\CMS\CMSApp.csproj]
+   (TaskId:7424)
+  Total analyzer execution time: 2.116 seconds. (TaskId:7424)
+  NOTE: Elapsed time may be less than analyzer execution time because analyzers can run concurrently. (TaskId:7424)
+   (TaskId:7424)
+  Time (s)    %   Analyzer (TaskId:7424)
+     2.116  100   BugHunter.Web.Analyzers, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null (TaskId:7424)
+     1.165   55      BugHunter.Web.Analyzers.CmsApiGuidelinesRules.Analyzers.ConnectionHelperExecuteQueryAnalyzer (TaskId:7424)
+     0.572   27      BugHunter.Web.Analyzers.CmsBaseClassesRules.Analyzers.UserControlBaseAnalyzer (TaskId:7424)
+     0.227   10      BugHunter.Web.Analyzers.CmsBaseClassesRules.Analyzers.WebPartBaseAnalyzer (TaskId:7424)
+     0.131    6      BugHunter.Web.Analyzers.CmsApiGuidelinesRules.Analyzers.ValidationHelperGetAnalyzer (TaskId:7424)
+     0.022    1      BugHunter.Web.Analyzers.CmsBaseClassesRules.Analyzers.PageBaseAnalyzer (TaskId:7424)
+   (TaskId:7424)
+
+C:\TFS\CMS\MAIN\CMSSolution\CMSApp_Internal\CMSApp_Internal.csproj
+ Total analyzer execution time: 0.018 seconds. (TaskId:8587)
+  NOTE: Elapsed time may be less than analyzer execution time because analyzers can run concurrently. (TaskId:8587)
+  Time (s)    %   Analyzer (TaskId:8587)
+  0.018  100   BugHunter.Web.Analyzers, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null (TaskId:8587)
+  0.007   37      BugHunter.Web.Analyzers.CmsApiGuidelinesRules.Analyzers.ValidationHelperGetAnalyzer (TaskId:8587)
+  0.004   22      BugHunter.Web.Analyzers.CmsApiGuidelinesRules.Analyzers.ConnectionHelperExecuteQueryAnalyzer (TaskId:8587)
+  0.003   17      BugHunter.Web.Analyzers.CmsBaseClassesRules.Analyzers.WebPartBaseAnalyzer (TaskId:8587)
+  0.002   12      BugHunter.Web.Analyzers.CmsBaseClassesRules.Analyzers.PageBaseAnalyzer (TaskId:8587)
+  0.002    9      BugHunter.Web.Analyzers.CmsBaseClassesRules.Analyzers.UserControlBaseAnalyzer (TaskId:8587)
+  Output Item(s): CscCommandLineArgs= (TaskId:8587)
+Done executing task "Csc". (TaskId:8587)
+
+    160 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:06:12.93
+
+// ================================ 3rd RUN v.1.0.65446.whatever =====================================
+[C:\TFS\CMS\MAIN\CMSSolution\CMS\CMSApp.csproj]
+   (TaskId:7424)
+  Total analyzer execution time: 1.726 seconds. (TaskId:7424)
+  NOTE: Elapsed time may be less than analyzer execution time because analyzers can run concurrently. (TaskId:7424)
+   (TaskId:7424)
+  Time (s)    %   Analyzer (TaskId:7424)
+     1.726  100   BugHunter.Web.Analyzers, Version=1.0.6261.30947, Culture=neutral, PublicKeyToken=null (TaskId:7424)
+     1.383   80      BugHunter.Web.Analyzers.CmsApiGuidelinesRules.Analyzers.ConnectionHelperExecuteQueryAnalyzer (TaskId:7424)
+     0.234   13      BugHunter.Web.Analyzers.CmsBaseClassesRules.Analyzers.WebPartBaseAnalyzer (TaskId:7424)
+     0.073    4      BugHunter.Web.Analyzers.CmsApiGuidelinesRules.Analyzers.ValidationHelperGetAnalyzer (TaskId:7424)
+     0.028    1      BugHunter.Web.Analyzers.CmsBaseClassesRules.Analyzers.PageBaseAnalyzer (TaskId:7424)
+     0.009   <1      BugHunter.Web.Analyzers.CmsBaseClassesRules.Analyzers.UserControlBaseAnalyzer (TaskId:7424)
+   (TaskId:7424)
+  Output Item(s): CscCommandLineArgs= (TaskId:7424)
+  
+C:\TFS\CMS\MAIN\CMSSolution\CMSApp_Internal\CMSApp_Internal.csproj
+  Total analyzer execution time: 0.018 seconds. (TaskId:8587)
+  NOTE: Elapsed time may be less than analyzer execution time because analyzers can run concurrently. (TaskId:8587)
+  Time (s)    %   Analyzer (TaskId:8587)
+  0.018  100   BugHunter.Web.Analyzers, Version=1.0.6261.30947, Culture=neutral, PublicKeyToken=null (TaskId:8587)
+  0.007   39      BugHunter.Web.Analyzers.CmsApiGuidelinesRules.Analyzers.ValidationHelperGetAnalyzer (TaskId:8587)
+  0.004   22      BugHunter.Web.Analyzers.CmsApiGuidelinesRules.Analyzers.ConnectionHelperExecuteQueryAnalyzer (TaskId:8587)
+  0.003   14      BugHunter.Web.Analyzers.CmsBaseClassesRules.Analyzers.WebPartBaseAnalyzer (TaskId:8587)
+  0.002   12      BugHunter.Web.Analyzers.CmsBaseClassesRules.Analyzers.UserControlBaseAnalyzer (TaskId:8587)
+  0.002   10      BugHunter.Web.Analyzers.CmsBaseClassesRules.Analyzers.PageBaseAnalyzer (TaskId:8587)
+  Output Item(s): CscCommandLineArgs= (TaskId:8587)
+  
+    159 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:05:49.57
+
+
+// ================================ 4th RUN v.1.0.65446.whatever =====================================
+Total analyzer execution time: 1.482 seconds. (TaskId:5749)
+  NOTE: Elapsed time may be less than analyzer execution time because analyzers can run concurrently. (TaskId:5749)
+   (TaskId:5749)
+  Time (s)    %   Analyzer (TaskId:5749)
+     1.482  100   BugHunter.Web.Analyzers, Version=1.0.6261.30947, Culture=neutral, PublicKeyToken=null (TaskId:5749)
+     1.129   76      BugHunter.Web.Analyzers.CmsApiGuidelinesRules.Analyzers.ConnectionHelperExecuteQueryAnalyzer (TaskId:5749)
+     0.236   15      BugHunter.Web.Analyzers.CmsBaseClassesRules.Analyzers.WebPartBaseAnalyzer (TaskId:5749)
+     0.071    4      BugHunter.Web.Analyzers.CmsApiGuidelinesRules.Analyzers.ValidationHelperGetAnalyzer (TaskId:5749)
+     0.038    2      BugHunter.Web.Analyzers.CmsBaseClassesRules.Analyzers.PageBaseAnalyzer (TaskId:5749)
+     0.008   <1      BugHunter.Web.Analyzers.CmsBaseClassesRules.Analyzers.UserControlBaseAnalyzer (TaskId:5749)
+   (TaskId:5749)

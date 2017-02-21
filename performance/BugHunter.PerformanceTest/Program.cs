@@ -110,8 +110,8 @@ namespace BugHunter.PerformanceTest
                 Console.WriteLine("Number of projects: \t\t{0,10:N}", csharpProjects.Count);
                 Console.WriteLine("Number of documents:\t\t{0,10:N}", csharpProjects.Sum(x => x.DocumentIds.Count));
 
-                var statistics = await StatisticsHelper.GetAnalyzerStatisticsAsync(csharpProjects, cancellationToken).ConfigureAwait(true);
-                
+                var statistics = await StatisticsHelper.GetAnalyzerStatisticsAsync(csharpProjects, cancellationToken, _ => true).ConfigureAwait(true);
+
                 StatisticsHelper.PrintStatistics(statistics);
             }
 

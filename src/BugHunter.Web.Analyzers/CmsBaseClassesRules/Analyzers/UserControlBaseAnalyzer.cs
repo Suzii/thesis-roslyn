@@ -1,8 +1,6 @@
 ﻿using System.Collections.Immutable;
 using System.Linq;
 using BugHunter.Core.Analyzers;
-using BugHunter.Core.Constants;
-using BugHunter.Core.Extensions;
 using BugHunter.Core.Helpers.DiagnosticDescriptionBuilders;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
@@ -23,48 +21,70 @@ namespace BugHunter.Web.Analyzers.CmsBaseClassesRules.Analyzers
 
         public override void Initialize(AnalysisContext context)
         {
-            context.RegisterCompilationStartAction(compilationContext =>
+            context.RegisterSymbolAction(symbolAnalysisContext =>
             {
-                var systemWebUiControlType = compilationContext.Compilation.GetTypeByMetadataName("System.Web.UI.UserControl");
-                if (systemWebUiControlType == null)
+                context.EnableConcurrentExecution();
+                context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.None);
+
+                var namedTypeSymbol = symbolAnalysisContext.Symbol as INamedTypeSymbol;
+                if (namedTypeSymbol == null || namedTypeSymbol.IsAbstract)
                 {
                     return;
                 }
 
-                compilationContext.RegisterSyntaxTreeAction(syntaxTreeAnalysisContext =>
+                var baseTypeSymbol = namedTypeSymbol.BaseType;
+                if (baseTypeSymbol == null || !baseTypeSymbol.ToString().Equals("System.Web.UI.UserControl"))
                 {
-                    var filePath = syntaxTreeAnalysisContext.Tree.FilePath;
-                    if (string.IsNullOrEmpty(filePath) || !filePath.EndsWith(FileExtensions.CONTROLS))
-                    {
-                        return;
-                    }
+                    return;
+                }
 
-                    var publicPartialInstantiableClassDeclarations = GetAllClassDeclarations(syntaxTreeAnalysisContext)
-                        .Where(classDeclarationSyntax
-                            => classDeclarationSyntax.IsPublic()
-                            && !classDeclarationSyntax.IsAbstract()
-                            && classDeclarationSyntax.IsPartial())
-                        .ToArray();
+                var location = namedTypeSymbol.Locations.FirstOrDefault();
+                var diagnostic = Diagnostic.Create(Rule, location, namedTypeSymbol.Name.ToString());
+                symbolAnalysisContext.ReportDiagnostic(diagnostic);
+            }, SymbolKind.NamedType);
 
-                    if (!publicPartialInstantiableClassDeclarations.Any())
-                    {
-                        return;
-                    }
+            //context.RegisterCompilationStartAction(compilationContext =>
+            //{
+            //    var systemWebUiControlType = compilationContext.Compilation.GetTypeByMetadataName("System.Web.UI.UserControl");
+            //    if (systemWebUiControlType == null)
+            //    {
+            //        return;
+            //    }
+
+            //    compilationContext.RegisterSyntaxTreeAction(syntaxTreeAnalysisContext =>
+            //    {
+            //        var filePath = syntaxTreeAnalysisContext.Tree.FilePath;
+            //        if (string.IsNullOrEmpty(filePath) || !filePath.EndsWith(FileExtensions.CONTROLS))
+            //        {
+            //            return;
+            //        }
+
+            //        var publicPartialInstantiableClassDeclarations = GetAllClassDeclarations(syntaxTreeAnalysisContext)
+            //            .Where(classDeclarationSyntax
+            //                => classDeclarationSyntax.IsPublic()
+            //                && !classDeclarationSyntax.IsAbstract()
+            //                && classDeclarationSyntax.IsPartial())
+            //            .ToArray();
+
+            //        if (!publicPartialInstantiableClassDeclarations.Any())
+            //        {
+            //            return;
+            //        }
 
 
-                    var semanticModel = compilationContext.Compilation.GetSemanticModel(syntaxTreeAnalysisContext.Tree);
+            //        var semanticModel = compilationContext.Compilation.GetSemanticModel(syntaxTreeAnalysisContext.Tree);
 
-                    foreach (var classDeclaration in publicPartialInstantiableClassDeclarations)
-                    {
-                        var baseTypeTypeSymbol = GetBaseTypeSymbol(classDeclaration, semanticModel);
-                        if (baseTypeTypeSymbol != null && baseTypeTypeSymbol.Equals(systemWebUiControlType))
-                        {
-                            var diagnostic = CreateDiagnostic(syntaxTreeAnalysisContext, classDeclaration, Rule);
-                            syntaxTreeAnalysisContext.ReportDiagnostic(diagnostic);
-                        }
-                    }
-                });
-            });
+            //        foreach (var classDeclaration in publicPartialInstantiableClassDeclarations)
+            //        {
+            //            var baseTypeTypeSymbol = GetBaseTypeSymbol(classDeclaration, semanticModel);
+            //            if (baseTypeTypeSymbol != null && baseTypeTypeSymbol.Equals(systemWebUiControlType))
+            //            {
+            //                var diagnostic = CreateDiagnostic(syntaxTreeAnalysisContext, classDeclaration, Rule);
+            //                syntaxTreeAnalysisContext.ReportDiagnostic(diagnostic);
+            //            }
+            //        }
+            //    });
+            //});
         }
     }
 }
