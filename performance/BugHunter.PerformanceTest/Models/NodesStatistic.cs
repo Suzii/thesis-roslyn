@@ -12,13 +12,19 @@
 
         public int NumberOfIdentifierNameNodes { get;}
 
-        public NodesStatistic(int numberOfNodexTOtal, int numberOfMemberAccessExpressionNodes, int numberOfInvocationExpressionNodes, int numberOfElementAccessExpressionNodes, int numberOfIdentifierNameNodes)
+        public int NumberOfObjectCreationNodes { get; }
+
+        public int NumberOfClassDeclarationNodes { get; }
+
+        public NodesStatistic(int numberOfNodexTOtal, int numberOfMemberAccessExpressionNodes, int numberOfInvocationExpressionNodes, int numberOfElementAccessExpressionNodes, int numberOfIdentifierNameNodes, int numberOfObjectCreationNodes, int numberOfClassDeclarationNodes)
         {
             NumberofNodesTotal = numberOfNodexTOtal;
             NumberOfMemberAccessExpressionNodes = numberOfMemberAccessExpressionNodes;
             NumberOfInvocationExpressionNodes = numberOfInvocationExpressionNodes;
             NumberElementAccessExpressionNodes = numberOfElementAccessExpressionNodes;
             NumberOfIdentifierNameNodes = numberOfIdentifierNameNodes;
+            NumberOfObjectCreationNodes = numberOfObjectCreationNodes;
+            NumberOfClassDeclarationNodes = numberOfClassDeclarationNodes;
         }
 
         public static NodesStatistic operator +(NodesStatistic statistic1, NodesStatistic statistic2)
@@ -28,7 +34,9 @@
                 statistic1.NumberOfMemberAccessExpressionNodes + statistic2.NumberOfMemberAccessExpressionNodes,
                 statistic1.NumberOfInvocationExpressionNodes + statistic2.NumberOfInvocationExpressionNodes,
                 statistic1.NumberElementAccessExpressionNodes + statistic2.NumberElementAccessExpressionNodes,
-                statistic1.NumberOfIdentifierNameNodes + statistic2.NumberOfIdentifierNameNodes);
+                statistic1.NumberOfIdentifierNameNodes + statistic2.NumberOfIdentifierNameNodes, 
+                statistic1.NumberOfObjectCreationNodes + statistic2.NumberOfObjectCreationNodes, 
+                statistic1.NumberOfClassDeclarationNodes + statistic2.NumberOfClassDeclarationNodes);
         }
     }
 }

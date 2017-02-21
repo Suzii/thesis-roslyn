@@ -1,0 +1,13 @@
+Loaded solution in 04:34.44
+Number of projects:                           255,00
+Number of documents:                       14 796,00
+Number of syntax tokens:                10 225 516,00
+Number of syntax trivia:                6 452 332,00
+Number of syntax nodes:                 8 550 249,00
+- identifierName:                       2 006 647,00
+- classDeclaration:                        15 831,00
+- objectCreation:                          42 766,00
+- memberAccess:                           500 499,00
+- invocationExpression:                   312 491,00
+- elementAccess:                           27 073,00
+The end. Stats computed in 01:29.11 Press any key to continue...

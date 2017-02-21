@@ -101,7 +101,7 @@ namespace BugHunter.PerformanceTest
             var solutionPath = args.SingleOrDefault(i => !i.StartsWith("/", StringComparison.Ordinal));
             var solution = await workspace.OpenSolutionAsync(solutionPath, cancellationToken).ConfigureAwait(false);
 
-            Console.WriteLine($"Loaded solution in {stopwatch.ElapsedMilliseconds}ms");
+            Console.WriteLine($@"Loaded solution in {stopwatch.Elapsed:mm\:ss\.ff}");
 
             if (args.Contains("/stats"))
             {
@@ -110,15 +110,9 @@ namespace BugHunter.PerformanceTest
                 Console.WriteLine("Number of projects: \t\t{0,10:N}", csharpProjects.Count);
                 Console.WriteLine("Number of documents:\t\t{0,10:N}", csharpProjects.Sum(x => x.DocumentIds.Count));
 
-                var statistics = await GetAnalyzerStatisticsAsync(csharpProjects, cancellationToken).ConfigureAwait(true);
+                var statistics = await StatisticsHelper.GetAnalyzerStatisticsAsync(csharpProjects, cancellationToken).ConfigureAwait(true);
                 
-                Console.WriteLine("Number of syntax tokens:\t{0,10:N}", statistics.NumberOfTokens);
-                Console.WriteLine("Number of syntax trivia:\t{0,10:N}", statistics.NumberOfTrivia);
-                Console.WriteLine("Number of syntax nodes:\t\t{0,10:N}", statistics.NodesStatistic.NumberofNodesTotal);
-                Console.WriteLine("- memberAccess:        \t\t{0,10:N}", statistics.NodesStatistic.NumberOfMemberAccessExpressionNodes);
-                Console.WriteLine("- invocationExpression:\t\t{0,10:N}", statistics.NodesStatistic.NumberOfInvocationExpressionNodes);
-                Console.WriteLine("- elementAccess:       \t\t{0,10:N}", statistics.NodesStatistic.NumberElementAccessExpressionNodes);
-                Console.WriteLine("- identifierName:      \t\t{0,10:N}", statistics.NodesStatistic.NumberOfIdentifierNameNodes);
+                StatisticsHelper.PrintStatistics(statistics);
             }
 
             var force = args.Contains("/force");
@@ -128,7 +122,7 @@ namespace BugHunter.PerformanceTest
             var diagnostics = await GetAnalyzerDiagnosticsAsync(solution, solutionPath, analyzers, force, cancellationToken).ConfigureAwait(true);
             var allDiagnostics = diagnostics.SelectMany(i => i.Value).ToImmutableArray();
 
-            Console.WriteLine($"Found {allDiagnostics.Length} diagnostics in {stopwatch.ElapsedMilliseconds}ms");
+            Console.WriteLine($@"Found {allDiagnostics.Length} diagnostics in {stopwatch.Elapsed:mm\:ss\.ff}");
 
             foreach (var group in allDiagnostics.GroupBy(i => i.Id).OrderBy(i => i.Key, StringComparer.OrdinalIgnoreCase))
             {
@@ -311,38 +305,6 @@ namespace BugHunter.PerformanceTest
             return codeActions;
         }
 
-        private static Task<Statistic> GetAnalyzerStatisticsAsync(IEnumerable<Project> projects, CancellationToken cancellationToken)
-        {
-            var sums = new ConcurrentBag<Statistic>();
-
-            Parallel.ForEach(projects.SelectMany(i => i.Documents), document =>
-            {
-                var documentStatistics = GetAnalyzerStatisticsAsync(document, cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult();
-                sums.Add(documentStatistics);
-            });
-
-            var sum = sums.Aggregate(new Statistic(new NodesStatistic(0, 0, 0, 0, 0), 0, 0), (currentResult, value) => currentResult + value);
-            return Task.FromResult(sum);
-        }
-
-        private static async Task<Statistic> GetAnalyzerStatisticsAsync(Document document, CancellationToken cancellationToken)
-        {
-            var tree = await document.GetSyntaxTreeAsync(cancellationToken).ConfigureAwait(false);
-            var root = await tree.GetRootAsync(cancellationToken).ConfigureAwait(false);
-            var numberOfTokens = root.DescendantTokens(descendIntoTrivia: true).Count();
-            var numberOfTrivia = root.DescendantTrivia(descendIntoTrivia: true).Count();
-            var nodes = root.DescendantNodesAndSelf(descendIntoTrivia: true).ToArray();
-            
-            var numberOfNodes = nodes.Length;
-            var numberOfMemberAccesses = nodes.Count(n => n.IsKind(SyntaxKind.SimpleMemberAccessExpression));
-            var numberOfInvocations = nodes.Count(n => n.IsKind(SyntaxKind.InvocationExpression));
-            var numberOfElementAccesses = nodes.Count(n => n.IsKind(SyntaxKind.ElementAccessExpression));
-            var numberOfIdentifierNames = nodes.Count(n => n.IsKind(SyntaxKind.IdentifierName));
-            var nodesStats = new NodesStatistic(numberOfNodes, numberOfMemberAccesses, numberOfInvocations, numberOfElementAccesses, numberOfIdentifierNames);
-          
-            return new Statistic(nodesStats, numberOfTokens, numberOfTrivia);
-        }
-
         private static IEnumerable<DiagnosticAnalyzer> FilterAnalyzers(IEnumerable<DiagnosticAnalyzer> analyzers, string[] args)
         {
             var useAll = args.Contains("/all");
@@ -417,7 +379,7 @@ namespace BugHunter.PerformanceTest
 
             return providers.ToImmutableDictionary();
         }
-        
+
         // TODO what is this good for?????
         private static ImmutableDictionary<FixAllProvider, ImmutableHashSet<string>> GetAllFixAllProviders(IEnumerable<CodeFixProvider> providers)
         {
