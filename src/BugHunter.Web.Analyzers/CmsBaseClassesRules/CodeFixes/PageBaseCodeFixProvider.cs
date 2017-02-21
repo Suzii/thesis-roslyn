@@ -17,7 +17,7 @@ namespace BugHunter.Web.Analyzers.CmsBaseClassesRules.CodeFixes
     public class PageBaseCodeFixProvider : CodeFixProvider
     {
         public sealed override ImmutableArray<string> FixableDiagnosticIds
-            => ImmutableArray.Create(PageBaseAnalyzer_V1_SyntaxTree.DIAGNOSTIC_ID);
+            => ImmutableArray.Create(PageBaseAnalyzer.DIAGNOSTIC_ID);
 
         public sealed override FixAllProvider GetFixAllProvider()
         {

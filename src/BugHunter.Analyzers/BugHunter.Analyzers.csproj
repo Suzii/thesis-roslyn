@@ -62,11 +62,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>StringMethodsResources.resx</DependentUpon>
     </Compile>
-    <Compile Include="CmsApiReplacementRules\Analyzers\SystemIOAnalyzer_V7_CompilationStartAndSyntaxTreeAndFulltextSearch.cs" />
-    <Compile Include="CmsApiReplacementRules\Analyzers\SystemIOAnalyzer_V6_CompilationStartAndSyntaxTree.cs" />
-    <Compile Include="CmsApiReplacementRules\Analyzers\SystemIOAnalyzer_V5_CompilationStartWithBagForDiagnosedNodes.cs" />
-    <Compile Include="CmsApiReplacementRules\Analyzers\SystemIOAnalyzer_V4_CompilationStart.cs" />
-    <Compile Include="CmsApiReplacementRules\Analyzers\SystemIOAnalyzer_V2_IdentifierNameAndSymbolAnalysis.cs" />
     <Compile Include="CmsApiReplacementRules\Analyzers\HttpResponseCookiesAnalyzer.cs" />
     <Compile Include="CmsApiReplacementRules\Analyzers\HttpRequestCookiesAnalyzer.cs" />
     <Compile Include="CmsApiReplacementRules\Analyzers\HttpRequestBrowserAnalyzer.cs" />
@@ -115,7 +110,7 @@
     <Compile Include="CmsApiReplacementRules\CodeFixes\HttpRequestUserHostAddressCodeFixProvider.cs" />
     <Compile Include="CmsApiGuidelinesRules\CodeFixes\EventLogArgumentsCodeFixProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="CmsApiReplacementRules\Analyzers\SystemIOAnalyzer_V1_IdentifierNameAndSemanticModelBrowser.cs" />
+    <Compile Include="CmsApiReplacementRules\Analyzers\SystemIOAnalyzer.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="AbstractionOverImplementation\AbstractionOverImplementationResources.resx">

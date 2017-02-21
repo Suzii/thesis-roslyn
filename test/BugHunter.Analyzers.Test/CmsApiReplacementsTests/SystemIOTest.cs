@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.IO;
+using System.Linq;
 using BugHunter.Analyzers.CmsApiReplacementRules.Analyzers;
 using BugHunter.TestUtils.Helpers;
 using BugHunter.TestUtils.Verifiers;
@@ -8,7 +9,7 @@ using NUnit.Framework;
 namespace BugHunter.Analyzers.Test.CmsApiReplacementsTests
 {
     [TestFixture]
-    public class SystemIOTest : CodeFixVerifier<SystemIOAnalyzer_V7_CompilationStartAndSyntaxTreeAndFulltextSearch>
+    public class SystemIOTest : CodeFixVerifier<SystemIOAnalyzer>
     {
         protected override MetadataReference[] GetAdditionalReferences()
         {
@@ -135,6 +136,8 @@ namespace SampleTestProject.CsSamples
         }
     }
 }";
+            var s= new System.IO.BinaryReader(Stream.Null);
+
             var objectCreationDiagnostic = CreateDiagnosticResult(@"new System.IO.DirectoryInfo(System.IO.Path.GetFullPath(""./some/path""))", 13, 29);
             var nestedInObjectCreationDiagnostic = CreateDiagnosticResult(@"System.IO.Path.GetFullPath(""./some/path"")", 13, 57);
             var nestedInMemberAccessDiagnostic = CreateDiagnosticResult("System.IO.Path.DirectorySeparatorChar", 14, 66);

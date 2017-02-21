@@ -107,7 +107,6 @@
     <Compile Include="DiagnosticsFormatting\MemberInvocationDiagnosticFormatterTests.cs" />
     <Compile Include="Extensions\ClassDeclarationSyntaxExtenstionsTest.cs" />
     <Compile Include="Extensions\InvocationExpressionSyntaxExtenstionsTest.cs" />
-    <Compile Include="HelpersTests\SemanticModelBrowserTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

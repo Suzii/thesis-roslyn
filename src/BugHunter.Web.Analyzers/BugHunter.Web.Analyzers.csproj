@@ -85,10 +85,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CmsBaseClassesRules\Analyzers\PageBaseAnalyzer_V1_SyntaxTree.cs" />
-    <Compile Include="CmsBaseClassesRules\Analyzers\PageBaseAnalyzer_V4_NamedTypeSymbolToStringWithoutCOmpilationStart.cs" />
-    <Compile Include="CmsBaseClassesRules\Analyzers\PageBaseAnalyzer_V3_NamedTypeSymbolToString.cs" />
-    <Compile Include="CmsBaseClassesRules\Analyzers\PageBaseAnalyzer_V2_NamedTypeSymbol.cs" />
+    <Compile Include="CmsBaseClassesRules\Analyzers\PageBaseAnalyzer.cs" />
     <Compile Include="CmsBaseClassesRules\Analyzers\UserControlBaseAnalyzer.cs" />
     <Compile Include="CmsBaseClassesRules\Analyzers\WebPartBaseAnalyzer.cs" />
     <Compile Include="CmsBaseClassesRules\CmsBaseClassesResources.Designer.cs">

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
+using BugHunter.Analyzers.CmsApiReplacementRules.Analyzers;
 using BugHunter.Core;
 using BugHunter.Core.DiagnosticsFormatting;
 using BugHunter.Core.Extensions;
@@ -9,13 +10,13 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
 
-namespace BugHunter.Analyzers.CmsApiReplacementRules.Analyzers
+namespace BugHunter.AnalyzersBenchmarks.Benchmarks.SystemIo.Analyzers
 {
     /// <summary>
     /// Searches for usages of <see cref="System.IO"/> and their access to anything other than <c>Exceptions</c> or <c>Stream</c>
     /// </summary>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class SystemIOAnalyzer_V5_CompilationStartWithBagForDiagnosedNodes : DiagnosticAnalyzer
+    public class SystemIOAnalyzer_V5_CompilationStartAndSyntaxNodeWithBagForDiagnosedNodes : DiagnosticAnalyzer
     {
         private static readonly string[] WhiteListedTypeNames =
         {
@@ -23,7 +24,7 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.Analyzers
             "System.IO.Stream"
         };
 
-        public const string DIAGNOSTIC_ID = DiagnosticIds.SYSTEM_IO;
+        public const string DIAGNOSTIC_ID = SystemIOAnalyzer.DIAGNOSTIC_ID;
 
         private static readonly DiagnosticDescriptor Rule = new DiagnosticDescriptor(DIAGNOSTIC_ID,
                 title: new LocalizableResourceString(nameof(CmsApiReplacementsResources.SystemIo_Title), CmsApiReplacementsResources.ResourceManager, typeof(CmsApiReplacementsResources)),
@@ -69,11 +70,6 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.Analyzers
 
             public void Analyze(SyntaxNodeAnalysisContext context)
             {
-                if (!CheckPreConditions(context))
-                {
-                    return;
-                }
-
                 var identifierNameSyntax = (IdentifierNameSyntax)context.Node;
                 if (identifierNameSyntax == null || identifierNameSyntax.IsVar)
                 {
@@ -100,11 +96,6 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.Analyzers
                 _badNodes.Add(identifierNameSyntax);
             }
 
-            private bool CheckPreConditions(SyntaxNodeAnalysisContext context)
-            {
-                return true;
-            }
-
             public void Evaluate(CompilationAnalysisContext compilationEndContext)
             {
                 foreach (var identifierNameSyntax in _badNodes)
@@ -114,7 +105,7 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.Analyzers
                 }
             }
 
-            private Diagnostic CreateDiagnostic(DiagnosticDescriptor rule, IdentifierNameSyntax identifierName)
+            private static Diagnostic CreateDiagnostic(DiagnosticDescriptor rule, IdentifierNameSyntax identifierName)
             {
                 var rootIdentifierName = identifierName.AncestorsAndSelf().Last(n => n.IsKind(SyntaxKind.QualifiedName) || n.IsKind(SyntaxKind.IdentifierName));
                 var diagnosedNode = rootIdentifierName;

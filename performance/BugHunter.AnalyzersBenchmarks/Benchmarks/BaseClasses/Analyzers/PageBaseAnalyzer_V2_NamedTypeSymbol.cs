@@ -2,10 +2,11 @@
 using System.Linq;
 using BugHunter.Core.Analyzers;
 using BugHunter.Core.Helpers.DiagnosticDescriptionBuilders;
+using BugHunter.Web.Analyzers.CmsBaseClassesRules.Analyzers;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
 
-namespace BugHunter.Web.Analyzers.CmsBaseClassesRules.Analyzers
+namespace BugHunter.AnalyzersBenchmarks.Benchmarks.BaseClasses.Analyzers
 {
     /// <summary>
     /// Checks if Page file inherits from right class.
@@ -13,7 +14,7 @@ namespace BugHunter.Web.Analyzers.CmsBaseClassesRules.Analyzers
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     public class PageBaseAnalyzer_V2_NamedTypeSymbol : BaseClassDeclarationSyntaxAnalyzer
     {
-        public const string DIAGNOSTIC_ID = DiagnosticIds.PAGE_BASE;
+        public const string DIAGNOSTIC_ID = PageBaseAnalyzer.DIAGNOSTIC_ID;
 
         private static readonly DiagnosticDescriptor Rule = BaseClassesInheritanceRuleBuilder.GetRule(DIAGNOSTIC_ID, "Page", "some abstract CMSPage");
 

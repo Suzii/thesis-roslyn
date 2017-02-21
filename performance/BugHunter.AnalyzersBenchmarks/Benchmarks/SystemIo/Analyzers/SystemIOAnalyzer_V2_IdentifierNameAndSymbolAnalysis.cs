@@ -1,5 +1,6 @@
 ﻿using System.Collections.Immutable;
 using System.Linq;
+using BugHunter.Analyzers.CmsApiReplacementRules.Analyzers;
 using BugHunter.Core;
 using BugHunter.Core.DiagnosticsFormatting;
 using BugHunter.Core.Extensions;
@@ -8,21 +9,23 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
 
-namespace BugHunter.Analyzers.CmsApiReplacementRules.Analyzers
+namespace BugHunter.AnalyzersBenchmarks.Benchmarks.SystemIo.Analyzers
 {
     /// <summary>
     /// Searches for usages of <see cref="System.IO"/> and their access to anything other than <c>Exceptions</c> or <c>Stream</c>
+    /// 
+    /// Version with callback on IdentifierName and analyzing Symbol directly
     /// </summary>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class SystemIOAnalyzer_V4_CompilationStart : DiagnosticAnalyzer
+    public class SystemIOAnalyzer_V2_IdentifierNameAndSymbolAnalysis : DiagnosticAnalyzer
     {
-        private static readonly string[] WhiteListedTypeNames =
+        private static readonly string[] WhiteListedTypes =
         {
             "System.IO.IOException",
             "System.IO.Stream"
         };
 
-        public const string DIAGNOSTIC_ID = DiagnosticIds.SYSTEM_IO;
+        public const string DIAGNOSTIC_ID = SystemIOAnalyzer.DIAGNOSTIC_ID;
 
         private static readonly DiagnosticDescriptor Rule = new DiagnosticDescriptor(DIAGNOSTIC_ID,
                 title: new LocalizableResourceString(nameof(CmsApiReplacementsResources.SystemIo_Title), CmsApiReplacementsResources.ResourceManager, typeof(CmsApiReplacementsResources)),
@@ -38,32 +41,14 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.Analyzers
 
         public override void Initialize(AnalysisContext context)
         {
+            context.EnableConcurrentExecution();
             context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.None);
 
-            context.RegisterCompilationStartAction(compilationStartAnalysisContext =>
-            {
-                var whitelistedTypes = WhiteListedTypeNames
-                    .Select(compilationStartAnalysisContext.Compilation.GetTypeByMetadataName)
-                    .ToArray();
-
-                compilationStartAnalysisContext.RegisterSyntaxNodeAction(nodeAnalyzsisContext => Analyze(nodeAnalyzsisContext, whitelistedTypes), SyntaxKind.IdentifierName);
-            });
+            context.RegisterSyntaxNodeAction(c => Analyze(Rule, c), SyntaxKind.IdentifierName);
         }
 
-        private void Analyze(SyntaxNodeAnalysisContext context, INamedTypeSymbol[] allowedSystemIoTypes)
+        private void Analyze(DiagnosticDescriptor rule, SyntaxNodeAnalysisContext context)
         {
-            var syntaxNode = (CompilationUnitSyntax)context.SemanticModel.SyntaxTree.GetRoot();
-            if (!syntaxNode.ToString().Contains("System.IO"))
-            {
-                return;
-            }
-
-
-            if (!CheckPreConditions(context))
-            {
-                return;
-            }
-
             var identifierNameSyntax = (IdentifierNameSyntax)context.Node;
             if (identifierNameSyntax == null || identifierNameSyntax.IsVar)
             {
@@ -82,21 +67,20 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.Analyzers
                 return;
             }
 
-            if (allowedSystemIoTypes.Any(allowedType => symbol.ConstructedFrom.IsDerivedFromClassOrInterface(allowedType)))
+            var exceptionType = context.SemanticModel.Compilation.GetTypeByMetadataName("System.IO.IOException");
+            var streamType = context.SemanticModel.Compilation.GetTypeByMetadataName("System.IO.Stream");
+
+            if (symbol.ConstructedFrom.IsDerivedFromClassOrInterface(exceptionType)
+             || symbol.ConstructedFrom.IsDerivedFromClassOrInterface(streamType))
             {
                 return;
             }
 
-            var diagnostic = CreateDiagnostic(Rule, identifierNameSyntax);
+            var diagnostic = CreateDiagnostic(rule, identifierNameSyntax);
             context.ReportDiagnostic(diagnostic);
         }
 
-        private bool CheckPreConditions(SyntaxNodeAnalysisContext context)
-        {
-            return true;
-        }
-
-        private Diagnostic CreateDiagnostic(DiagnosticDescriptor rule, IdentifierNameSyntax identifierName)
+        private static Diagnostic CreateDiagnostic(DiagnosticDescriptor rule, IdentifierNameSyntax identifierName)
         {
             var rootIdentifierName = identifierName.AncestorsAndSelf().Last(n => n.IsKind(SyntaxKind.QualifiedName) || n.IsKind(SyntaxKind.IdentifierName));
             var diagnosedNode = rootIdentifierName;

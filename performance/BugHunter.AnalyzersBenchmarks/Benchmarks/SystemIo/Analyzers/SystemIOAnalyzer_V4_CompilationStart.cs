@@ -1,5 +1,6 @@
 ﻿using System.Collections.Immutable;
 using System.Linq;
+using BugHunter.Analyzers.CmsApiReplacementRules.Analyzers;
 using BugHunter.Core;
 using BugHunter.Core.DiagnosticsFormatting;
 using BugHunter.Core.Extensions;
@@ -8,23 +9,21 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
 
-namespace BugHunter.Analyzers.CmsApiReplacementRules.Analyzers
+namespace BugHunter.AnalyzersBenchmarks.Benchmarks.SystemIo.Analyzers
 {
     /// <summary>
     /// Searches for usages of <see cref="System.IO"/> and their access to anything other than <c>Exceptions</c> or <c>Stream</c>
-    /// 
-    /// Version with callback on IdentifierName and analyzing Symbol directly
     /// </summary>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class SystemIOAnalyzer_V2_IdentifierNameAndSymbolAnalysis : DiagnosticAnalyzer
+    public class SystemIOAnalyzer_V4_CompilationStart : DiagnosticAnalyzer
     {
-        private static readonly string[] WhiteListedTypes =
+        private static readonly string[] WhiteListedTypeNames =
         {
             "System.IO.IOException",
             "System.IO.Stream"
         };
 
-        public const string DIAGNOSTIC_ID = DiagnosticIds.SYSTEM_IO;
+        public const string DIAGNOSTIC_ID = SystemIOAnalyzer.DIAGNOSTIC_ID;
 
         private static readonly DiagnosticDescriptor Rule = new DiagnosticDescriptor(DIAGNOSTIC_ID,
                 title: new LocalizableResourceString(nameof(CmsApiReplacementsResources.SystemIo_Title), CmsApiReplacementsResources.ResourceManager, typeof(CmsApiReplacementsResources)),
@@ -42,12 +41,20 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.Analyzers
         {
             context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.None);
 
-            context.RegisterSyntaxNodeAction(c => Analyze(Rule, c), SyntaxKind.IdentifierName);
+            context.RegisterCompilationStartAction(compilationStartAnalysisContext =>
+            {
+                var whitelistedTypes = WhiteListedTypeNames
+                    .Select(compilationStartAnalysisContext.Compilation.GetTypeByMetadataName)
+                    .ToArray();
+
+                compilationStartAnalysisContext.RegisterSyntaxNodeAction(nodeAnalyzsisContext => Analyze(nodeAnalyzsisContext, whitelistedTypes), SyntaxKind.IdentifierName);
+            });
         }
 
-        private void Analyze(DiagnosticDescriptor rule, SyntaxNodeAnalysisContext context)
+        private void Analyze(SyntaxNodeAnalysisContext context, INamedTypeSymbol[] allowedSystemIoTypes)
         {
-            if (!CheckPreConditions(context))
+            var syntaxNode = (CompilationUnitSyntax)context.SemanticModel.SyntaxTree.GetRoot();
+            if (!syntaxNode.ToString().Contains(".IO"))
             {
                 return;
             }
@@ -70,21 +77,13 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.Analyzers
                 return;
             }
 
-            var exceptionType = context.SemanticModel.Compilation.GetTypeByMetadataName("System.IO.IOException");
-            var streamType = context.SemanticModel.Compilation.GetTypeByMetadataName("System.IO.Stream");
-
-            if (symbol.ConstructedFrom.IsDerivedFromClassOrInterface(exceptionType) || symbol.ConstructedFrom.IsDerivedFromClassOrInterface(streamType))
+            if (allowedSystemIoTypes.Any(allowedType => symbol.ConstructedFrom.IsDerivedFromClassOrInterface(allowedType)))
             {
                 return;
             }
 
-            var diagnostic = CreateDiagnostic(rule, identifierNameSyntax);
+            var diagnostic = CreateDiagnostic(Rule, identifierNameSyntax);
             context.ReportDiagnostic(diagnostic);
-        }
-
-        private bool CheckPreConditions(SyntaxNodeAnalysisContext context)
-        {
-            return true;
         }
 
         private Diagnostic CreateDiagnostic(DiagnosticDescriptor rule, IdentifierNameSyntax identifierName)

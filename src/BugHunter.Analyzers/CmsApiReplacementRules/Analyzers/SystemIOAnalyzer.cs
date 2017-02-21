@@ -17,7 +17,7 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.Analyzers
     /// Version with callback on IdentifierName and using SemanticModelBrowser
     /// </summary>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class SystemIOAnalyzer_V1_IdentifierNameAndSemanticModelBrowser : DiagnosticAnalyzer
+    public class SystemIOAnalyzer : DiagnosticAnalyzer
     {
         private static readonly string[] WhiteListedTypes =
         {
@@ -70,6 +70,7 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.Analyzers
 
         public override void Initialize(AnalysisContext context)
         {
+            context.EnableConcurrentExecution();
             context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.None);
 
             context.RegisterSyntaxNodeAction(c => Analyze(Rule, c), SyntaxKind.IdentifierName);
@@ -78,27 +79,24 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.Analyzers
         private void Analyze(DiagnosticDescriptor rule, SyntaxNodeAnalysisContext context)
         {
             var identifierNameSyntax = (IdentifierNameSyntax)context.Node;
-            if (identifierNameSyntax == null)
+            if (identifierNameSyntax == null || identifierNameSyntax.IsVar)
             {
                 return;
             }
 
-            if (identifierNameSyntax.IsVar || !(context.SemanticModel.GetSymbolInfo(identifierNameSyntax).Symbol is ITypeSymbol))
-            {
-                return;
-            }
-
-
-            var semanticModelBrowser = new SemanticModelBrowser(context);
-            var identifierNameTypeSymbol = semanticModelBrowser.GetNamedTypeSymbol(identifierNameSyntax);
+            var identifierNameTypeSymbol = context.SemanticModel.GetSymbolInfo(identifierNameSyntax).Symbol as INamedTypeSymbol;
             if (identifierNameTypeSymbol == null)
             {
                 return;
             }
 
-            if (!CheckPreConditions(context) ||
-                !IsInSystemIONamespace(context, identifierNameTypeSymbol) ||
-                IsWhiteListed(context, identifierNameTypeSymbol))
+            var symbolContainingNamespace = identifierNameTypeSymbol.ContainingNamespace;
+            if (!symbolContainingNamespace.ToString().Equals("System.IO"))
+            {
+                return;
+            }
+
+            if (IsWhiteListed(context, identifierNameTypeSymbol))
             {
                 return;
             }
@@ -108,12 +106,7 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.Analyzers
             context.ReportDiagnostic(diagnostic);
         }
 
-        private bool IsInSystemIONamespace(SyntaxNodeAnalysisContext context, INamedTypeSymbol identifierNameTypeSymbol)
-        {
-            return identifierNameTypeSymbol.ContainingNamespace.ToString().Equals("System.IO");
-        }
-
-        private bool IsWhiteListed(SyntaxNodeAnalysisContext context, INamedTypeSymbol identifierNameTypeSymbol)
+        private static bool IsWhiteListed(SyntaxNodeAnalysisContext context, INamedTypeSymbol identifierNameTypeSymbol)
         {
             if (identifierNameTypeSymbol != null && WhiteListedIdentifierNames.Contains(identifierNameTypeSymbol.ToString()))
             {
@@ -127,12 +120,7 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.Analyzers
                             context.SemanticModel.Compilation.GetTypeByMetadataName(whiteListedType)));
         }
 
-        private bool CheckPreConditions(SyntaxNodeAnalysisContext context)
-        {
-            return true;
-        }
-
-        private Diagnostic CreateDiagnostic(DiagnosticDescriptor rule, IdentifierNameSyntax identifierName)
+        private static Diagnostic CreateDiagnostic(DiagnosticDescriptor rule, IdentifierNameSyntax identifierName)
         {
             var rootIdentifierName = identifierName.AncestorsAndSelf().Last(n => n.IsKind(SyntaxKind.QualifiedName) || n.IsKind(SyntaxKind.IdentifierName));
             var diagnosedNode = rootIdentifierName;

@@ -10,7 +10,7 @@ using NUnit.Framework;
 namespace BugHunter.Web.Analyzers.Tests.CmsBaseClassesTests
 {
     [TestFixture]
-    public class PageBaseTest : CodeFixVerifier<PageBaseAnalyzer_V1_SyntaxTree, PageBaseCodeFixProvider>
+    public class PageBaseTest : CodeFixVerifier<PageBaseAnalyzer, PageBaseCodeFixProvider>
     {
         protected override MetadataReference[] GetAdditionalReferences()
         {
@@ -39,6 +39,7 @@ namespace BugHunter.Web.Analyzers.Tests.CmsBaseClassesTests
             VerifyCSharpDiagnostic(test);
         }
 
+        [Ignore("Implementation has change and is now agnostic of file paths")]
         [TestCase(@"cs", @"")]
         [TestCase(@"cs", @": System.Web.UI.Page")]
         [TestCase(@"this.should.prevent.from.diagnostic.being.raised.cs", @"")]
