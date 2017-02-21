@@ -17,11 +17,11 @@ namespace SampleProjectGenerator.CodeGenerators.BaseClassRules.Implementation
             return $@"
     public class ModuleRegistration{index} : CMS.DataEngine.Module
     {{
-        public MyModule(CMS.Core.ModuleMetadata metadata, bool isInstallable = false) : base(metadata, isInstallable)
+        public ModuleRegistration{index}(CMS.Core.ModuleMetadata metadata, bool isInstallable = false) : base(metadata, isInstallable)
         {{
         }}
 
-        public MyModule(string moduleName, bool isInstallable = false) : base(moduleName, isInstallable)
+        public ModuleRegistration{index}(string moduleName, bool isInstallable = false) : base(moduleName, isInstallable)
         {{
         }}
     }}";

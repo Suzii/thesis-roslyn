@@ -8,8 +8,20 @@ namespace SampleProjectGenerator.CodeGenerators.WebApp.Implementation
 
         protected override int NumberOfDiagnosticsInBody { get; } = 2;
 
-        protected override string GetClassBodyToRepeat(int iterationNumber)
+        protected override string GetClassPrefix(int index)
         {
+            return $@"using System;
+using System.Globalization;
+using CMS.Helpers;
+
+namespace ConsoleApp.Controllers
+{{
+    public class {GetFakeFileInfo(index).FileName}
+    {{";
+        }
+
+        protected override string GetClassBodyToRepeat(int iterationNumber)
+        { 
             return $@"
         public void SampleMethodA{iterationNumber}()
         {{

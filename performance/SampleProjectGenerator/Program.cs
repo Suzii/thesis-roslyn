@@ -8,7 +8,7 @@ namespace SampleProjectGenerator
 {
     internal class Program
     {
-        private static readonly int DesiredNumberOfDiagnosticsTotal = 10;
+        private static readonly int DesiredNumberOfDiagnosticsTotal = 50;
 
         private static readonly int NumberOfFilesPerAnalyzer = 2;
         
@@ -29,6 +29,11 @@ namespace SampleProjectGenerator
 
             foreach (var codeGenerator in classCodeGenerators)
             {
+                if (codeGenerator.ProjectType==ProjectType.None)
+                {
+                    continue;
+                }
+
                 var generatedClasses = codeGenerator.GenerateClasses(DesiredNumberOfDiagnosticsTotal, NumberOfFilesPerAnalyzer);
 
                 for (int i = 0; i < NumberOfFilesPerAnalyzer; i++)
