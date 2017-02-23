@@ -22,4 +22,3 @@ function Run-MsBuildWithReportAnalyzer
 }
 
 Run-MsBuildWithReportAnalyzer -ProjectOrSolutionFilePath "C:\TFS\CMS\MAIN\CMSSolution\CMSSolution.sln" -OutputFile "C:\tmp\msbuild-output.txt"
-
