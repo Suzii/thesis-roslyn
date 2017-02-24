@@ -69,11 +69,11 @@
 //            Console.WriteLine("Number of documents:\t\t\t{0,12:N}", csharpProjects.Sum(x => x.DocumentIds.Count));
 
 //            var statistics = await StatisticsHelper.GetAnalyzerStatisticsAsync(csharpProjects, cancellationToken, IsProjectExcluded).ConfigureAwait(true);
-             
+
 //            StatisticsHelper.PrintStatistics(statistics);
 
 //            Console.WriteLine($@"The end. Stats computed in {stopwatch.Elapsed:mm\:ss\.ff} Press ESC to continue...");
-//            while(Console.ReadKey().Key!= ConsoleKey.Escape);
+//            while (Console.ReadKey().Key != ConsoleKey.Escape) ;
 //        }
 
 //        private static bool IsProjectExcluded(Project project)

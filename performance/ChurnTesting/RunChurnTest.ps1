@@ -3,7 +3,9 @@ Param([switch] $Local)
 
 $NuGet = "..\..\.nuget\nuget.exe"
 $Git = "$Env:ProgramFiles\Git\bin\git.exe"
+
 $PathToTestSolution = "..\..\..\thesis-sample-test-project\SampleProject\SampleProject.sln"
+#$PathToTestSolution = "C:\TFS\CMS\MAIN\CMSSolution\CMSSolution.sln"
 
 function Clone-SampleProject {
     $PathToTestSolution = ".\bin\repo"

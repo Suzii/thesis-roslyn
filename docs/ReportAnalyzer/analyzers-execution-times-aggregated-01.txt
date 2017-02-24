@@ -1,3 +1,4 @@
+-- 23.2.2017 initial versions of analyzer with eabled concurrent execution and no analysis on generated files
 13,371 - BugHunter.Analyzers.CmsApiReplacementRules.Analyzers.SystemIOAnalyzer
 2,05 - BugHunter.Analyzers.CmsBaseClassesRules.Analyzers.ModuleRegistrationAnalyzer
 1,145 - BugHunter.Analyzers.CmsApiReplacementRules.Analyzers.HttpSessionElementAccessAnalyzer

@@ -1,0 +1,7 @@
+634,517 s 		- BugHunter.SystemIO.Analyzers.Analyzers.V4_CompilationStartAndIdentifierName_SymbolAnalysis
+57,461 s 		- BugHunter.SystemIO.Analyzers.Analyzers.V6_CompilationStartAndSyntaxTree_LookForIdentifierNames
+22,023 s 		- BugHunter.SystemIO.Analyzers.Analyzers.V5_CompilationStartIdentifierNameAndEnd_SymbolAnalysis_WithBag
+9,210 s 		- BugHunter.SystemIO.Analyzers.Analyzers.V7_CompilationStartSyntaxTreeAndEnd_FulltextSearchAndSymbolAnallysis_WithBag
+7,669 s 		- BugHunter.SystemIO.Analyzers.Analyzers.V1_IdentifierName_StrignAndSymbolComparison
+7,083 s 		- BugHunter.SystemIO.Analyzers.Analyzers.V2_IdentifierName_SymbolAnalysis
+0,415 s 		- BugHunter.SystemIO.Analyzers.Analyzers.V0EmptyCallbackOnIdentiferName

@@ -10,14 +10,16 @@ namespace ReportAnalyzerTimesParser
 {
     class Program
     {
-        private static readonly Regex ExecutionTimesForProjectRegex = new Regex(@"Total analyzer execution time(.*\n){4}((?:.*\n){24})", RegexOptions.Multiline);
-        private static readonly Regex ExecutionTimePerAnalyzerRegex = new Regex(@"[\s]*[<]?((?:\d+)\.(?:\d+))[^B]*([A-Za-z\.]+)", RegexOptions.Compiled);
+        private static readonly Regex ExecutionTimesForProjectRegex = new Regex(@"Total analyzer execution time: (.*) seconds(?:.*\n){1,4}\s*Time(?:.*\n){2}((?:.*\n){7})", RegexOptions.Multiline);
+
+        
+        private static readonly Regex ExecutionTimePerAnalyzerRegex = new Regex(@"[\s]*[<]?((?:\d+)\.(?:\d+))[^B]*([\S]+)", RegexOptions.Compiled);
 
         static void Main(string[] args)
         {
-            const string inputFilePath = @"C:\tmp\msbuild-output.txt";
-            const string outputFilePath = @"C:\tmp\analyzers-execution-times.txt";
-            const string aggregatedOutputFilePath = @"C:\tmp\analyzers-execution-times-aggregated.txt";
+            const string inputFilePath = @"C:\tmp\msbuild-output-systemio.txt";
+            const string outputFilePath = @"C:\tmp\analyzers-execution-times-systemio.txt";
+            const string aggregatedOutputFilePath = @"C:\tmp\analyzers-execution-times-aggregated-systemio.txt";
             
             var inputFileContent = string.Join(Environment.NewLine, File.ReadLines(inputFilePath));
 

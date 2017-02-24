@@ -14,6 +14,7 @@ using System.Windows.Threading;
 using BugHunter.Analyzers.CmsApiReplacementRules.Analyzers;
 using BugHunter.PerformanceTest.Helpers;
 using BugHunter.PerformanceTest.Models;
+using BugHunter.SystemIO.Analyzers.Analyzers;
 using BugHunter.Web.Analyzers.CmsBaseClassesRules.Analyzers;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeActions;
@@ -337,12 +338,16 @@ namespace BugHunter.PerformanceTest
         {
             var analyzersAssembly = typeof(ClientScriptMethodsAnalyzer).Assembly;
             var webAnalyzersAssembly = typeof(WebPartBaseAnalyzer).Assembly;
+            var systemIOAnalyzers = typeof(V1_IdentifierName_StrignAndSymbolComparison).Assembly;
+
+            // var typesFromAnalyzerAssemblies = analyzersAssembly.GetTypes().Union(webAnalyzersAssembly.GetTypes());
+            var typesFromAnalyzerAssemblies = systemIOAnalyzers.GetTypes();
 
             var diagnosticAnalyzerType = typeof(DiagnosticAnalyzer);
 
             var analyzers = ImmutableArray.CreateBuilder<DiagnosticAnalyzer>();
 
-            foreach (var type in analyzersAssembly.GetTypes().Union(webAnalyzersAssembly.GetTypes()))
+            foreach (var type in typesFromAnalyzerAssemblies)
             {
                 if (type.IsSubclassOf(diagnosticAnalyzerType) && !type.IsAbstract)
                 {

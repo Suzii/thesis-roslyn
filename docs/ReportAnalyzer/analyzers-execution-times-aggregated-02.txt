@@ -1,0 +1,25 @@
+-- 24.2.2017 initial versions of analyzer with eabled concurrent execution and no analysis on generated files
+15,896 - BugHunter.Analyzers.CmsApiReplacementRules.Analyzers.SystemIOAnalyzer
+2,198 - BugHunter.Analyzers.CmsBaseClassesRules.Analyzers.ModuleRegistrationAnalyzer
+0,904 - BugHunter.Analyzers.CmsApiReplacementRules.Analyzers.HttpSessionElementAccessAnalyzer
+0,502 - BugHunter.Analyzers.CmsApiReplacementRules.Analyzers.HttpRequestBrowserAnalyzer
+0,497 - BugHunter.Analyzers.CmsApiGuidelinesRules.Analyzers.WhereLikeMethodAnalyzer
+0,42 - BugHunter.Analyzers.CmsApiReplacementRules.Analyzers.ClientScriptMethodsAnalyzer
+0,405 - BugHunter.Analyzers.CmsApiReplacementRules.Analyzers.HttpRequestCookiesAnalyzer
+0,379 - BugHunter.Analyzers.StringAndCultureRules.Analyzers.StringCompareStaticMethodAnalyzer
+0,378 - BugHunter.Analyzers.AbstractionOverImplementation.Analyzers.LuceneSearchDocumentAnalyzer
+0,344 - BugHunter.Analyzers.CmsApiReplacementRules.Analyzers.HttpRequestQueryStringAnalyzer
+0,33 - BugHunter.Analyzers.CmsApiReplacementRules.Analyzers.HttpRequestUserHostAddressAnalyzer
+0,251 - BugHunter.Analyzers.CmsApiReplacementRules.Analyzers.HttpResponseRedirectAnalyzer
+0,197 - BugHunter.Analyzers.CmsApiReplacementRules.Analyzers.HttpRequestUrlAnalyzer
+0,185 - BugHunter.Analyzers.CmsApiReplacementRules.Analyzers.PageIsPostBackAnalyzer
+0,184 - BugHunter.Analyzers.CmsApiReplacementRules.Analyzers.HttpSessionSessionIdAnalyzer
+0,156 - BugHunter.Analyzers.CmsApiReplacementRules.Analyzers.HttpResponseCookiesAnalyzer
+0,145 - BugHunter.Analyzers.StringAndCultureRules.Analyzers.StringEqualsMethodAnalyzer
+0,142 - BugHunter.Analyzers.CmsApiReplacementRules.Analyzers.PageIsCallbackAnalyzer
+0,141 - BugHunter.Analyzers.StringAndCultureRules.Analyzers.StringIndexOfMethodsAnalyzer
+0,139 - BugHunter.Analyzers.CmsApiReplacementRules.Analyzers.FormsAuthenticationSignOut
+0,136 - BugHunter.Analyzers.CmsApiGuidelinesRules.Analyzers.EventLogArgumentsAnalyzer
+0,136 - BugHunter.Analyzers.StringAndCultureRules.Analyzers.StringStartAndEndsWithMethodsAnalyzer
+0,134 - BugHunter.Analyzers.StringAndCultureRules.Analyzers.StringCompareToMethodAnalyzer
+0,13 - BugHunter.Analyzers.StringAndCultureRules.Analyzers.StringManipulationMethodsAnalyzer

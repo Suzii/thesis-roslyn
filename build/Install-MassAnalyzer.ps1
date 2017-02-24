@@ -133,7 +133,7 @@ function Install-MassAnalyzer
     } 
 }
 
-Install-MassAnalyzer -SolutionPath "C:\TFS\CMS\MAIN\CMSSolution" -PackageName "BugHunter.Analyzers" -PackageVersion 1.0.6263.25017 -PackageFileNames @("BugHunter.Analyzers.dll", "BugHunter.Core.dll")
+Install-MassAnalyzer -SolutionPath "C:\TFS\CMS\MAIN\CMSSolution" -PackageName "BugHunter.SystemIO.Analyzers" -PackageVersion 1.0.6264.23780 -PackageFileNames @("BugHunter.SystemIO.Analyzers.dll", "BugHunter.Core.dll")
 
 # Then run if necessary
 # cd C:\TFS\CMS\MAIN\CMSSolution\.nuget

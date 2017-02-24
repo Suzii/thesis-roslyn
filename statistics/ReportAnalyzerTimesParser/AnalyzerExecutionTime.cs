@@ -23,7 +23,7 @@ namespace ReportAnalyzerTimesParser
 
         public override string ToString()
         {
-            return $"{ExecutionTime} \t- {AnalyzerName}";
+            return $"{ExecutionTime:##0.000 s} \t\t- {AnalyzerName}";
         }
     }
 }
