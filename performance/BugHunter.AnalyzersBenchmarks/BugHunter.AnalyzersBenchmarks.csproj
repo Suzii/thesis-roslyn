@@ -492,17 +492,6 @@
     <Compile Include="Benchmarks\BaseClasses\PageBaseBenchmarkNoDiagnosticCode.cs" />
     <Compile Include="Benchmarks\BaseClasses\PageBaseBenchmark.cs" />
     <Compile Include="Benchmarks\CallbacksBinding\SingleVsDoubleCallbackBenchmark.cs" />
-    <Compile Include="Benchmarks\SystemIo\Analyzers\CmsApiReplacementsResources.Designer.cs">
-      <DependentUpon>CmsApiReplacementsResources.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="Benchmarks\SystemIo\Analyzers\SystemIOAnalyzer_V1_IdentifierNameWithStrignAndTypesComparison.cs" />
-    <Compile Include="Benchmarks\SystemIo\Analyzers\SystemIOAnalyzer_V2_IdentifierNameAndSymbolAnalysis.cs" />
-    <Compile Include="Benchmarks\SystemIo\Analyzers\SystemIOAnalyzer_V4_CompilationStart.cs" />
-    <Compile Include="Benchmarks\SystemIo\Analyzers\SystemIOAnalyzer_V5_CompilationStartAndSyntaxNodeWithBagForDiagnosedNodes.cs" />
-    <Compile Include="Benchmarks\SystemIo\Analyzers\SystemIOAnalyzer_V6_CompilationStartAndSyntaxTree.cs" />
-    <Compile Include="Benchmarks\SystemIo\Analyzers\SystemIOAnalyzer_V7_CompilationStartAndSyntaxTreeAndFulltextSearch.cs" />
     <Compile Include="Configuration\BaseConfig.cs" />
     <Compile Include="Benchmarks\AnalysisRunner.cs" />
     <Compile Include="Benchmarks\SystemIo\SourcesFromConsoleAppBenchmark.cs" />
@@ -531,6 +520,10 @@
       <Project>{656A8756-6AF4-44D7-8728-D09A50A40A04}</Project>
       <Name>BugHunter.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\src\BugHunter.SystemIO.Analyzers\BugHunter.SystemIO.Analyzers.csproj">
+      <Project>{D76F57E5-C4F0-4593-AA83-613301C7F5AB}</Project>
+      <Name>BugHunter.SystemIO.Analyzers</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\src\BugHunter.Web.Analyzers\BugHunter.Web.Analyzers.csproj">
       <Project>{14E74FD2-D9F7-460D-A504-A915EFCC0DD1}</Project>
       <Name>BugHunter.Web.Analyzers</Name>
@@ -545,13 +538,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />
-  <ItemGroup>
-    <EmbeddedResource Include="Benchmarks\SystemIo\Analyzers\CmsApiReplacementsResources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>CmsApiReplacementsResources.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\..\packages\Kentico.Libraries.Dependencies.10.0.9\build\net45\Kentico.Libraries.Dependencies.targets" Condition="Exists('..\..\packages\Kentico.Libraries.Dependencies.10.0.9\build\net45\Kentico.Libraries.Dependencies.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

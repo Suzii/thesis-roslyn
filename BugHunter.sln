@@ -31,6 +31,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BugHunter.AnalyzersBenchmar
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleProjectGenerator", "performance\SampleProjectGenerator\SampleProjectGenerator.csproj", "{B9621BE2-C4B7-40DE-9B0C-42E46EB4A14F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BugHunter.SystemIO.Analyzers", "src\BugHunter.SystemIO.Analyzers\BugHunter.SystemIO.Analyzers.csproj", "{D76F57E5-C4F0-4593-AA83-613301C7F5AB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -81,6 +83,10 @@ Global
 		{B9621BE2-C4B7-40DE-9B0C-42E46EB4A14F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B9621BE2-C4B7-40DE-9B0C-42E46EB4A14F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B9621BE2-C4B7-40DE-9B0C-42E46EB4A14F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D76F57E5-C4F0-4593-AA83-613301C7F5AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D76F57E5-C4F0-4593-AA83-613301C7F5AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D76F57E5-C4F0-4593-AA83-613301C7F5AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D76F57E5-C4F0-4593-AA83-613301C7F5AB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -96,5 +102,6 @@ Global
 		{F99CA936-387A-4B12-B9D6-877F3B0440B8} = {B741B288-9DB6-41A7-A7C2-8456558D006A}
 		{EF3DB98B-683A-4D43-87AA-402984C2C86D} = {C2097BE4-A3ED-49C9-9CB7-8BF13E6FB395}
 		{B9621BE2-C4B7-40DE-9B0C-42E46EB4A14F} = {C2097BE4-A3ED-49C9-9CB7-8BF13E6FB395}
+		{D76F57E5-C4F0-4593-AA83-613301C7F5AB} = {B611CCFE-FC58-4E12-A76A-10BA4E214ED7}
 	EndGlobalSection
 EndGlobal

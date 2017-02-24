@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using BenchmarkDotNet.Attributes;
-using BugHunter.Analyzers.CmsApiReplacementRules.Analyzers;
 using BugHunter.AnalyzersBenchmarks.BenchmarkingBaselineAnalyzers;
-using BugHunter.AnalyzersBenchmarks.Benchmarks.SystemIo.Analyzers;
+using BugHunter.SystemIO.Analyzers.Analyzers;
 using BugHunter.TestUtils;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
@@ -16,10 +14,10 @@ namespace BugHunter.AnalyzersBenchmarks.Benchmarks.SystemIo
     public class SourcesFromConsoleAppBenchmark
     {
         private readonly DiagnosticAnalyzer _systemIoV0 = new SyntaxNodeIdentifierNameBaselineAnalyzer();
-        private readonly DiagnosticAnalyzer _systemIoV2 = new SystemIOAnalyzer_V2_IdentifierNameAndSymbolAnalysis();
-        private readonly DiagnosticAnalyzer _systemIoV5 = new SystemIOAnalyzer_V5_CompilationStartAndSyntaxNodeWithBagForDiagnosedNodes();
-        private readonly DiagnosticAnalyzer _systemIoV6 = new SystemIOAnalyzer_V6_CompilationStartAndSyntaxTree();
-        private readonly DiagnosticAnalyzer _systemIoV7 = new SystemIOAnalyzer_V7_CompilationStartAndSyntaxTreeAndFulltextSearch();
+        private readonly DiagnosticAnalyzer _systemIoV2 = new V2_IdentifierName_SymbolAnalysis();
+        private readonly DiagnosticAnalyzer _systemIoV5 = new V5_CompilationStartIdentifierNameAndEnd_SymbolAnalysis_WithBag();
+        private readonly DiagnosticAnalyzer _systemIoV6 = new V6_CompilationStartAndSyntaxTree_LookForIdentifierNames();
+        private readonly DiagnosticAnalyzer _systemIoV7 = new V7_CompilationStartSyntaxTreeAndEnd_FulltextSearchAndSymbolAnallysis_WithBag();
 
         private readonly MetadataReference[] _additionalReferences;
         private readonly string[] _sources;

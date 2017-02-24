@@ -1,6 +1,5 @@
 ﻿using System.Collections.Immutable;
 using System.Linq;
-using BugHunter.Analyzers.CmsApiReplacementRules.Analyzers;
 using BugHunter.Core;
 using BugHunter.Core.DiagnosticsFormatting;
 using BugHunter.Core.Extensions;
@@ -9,7 +8,7 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
 
-namespace BugHunter.AnalyzersBenchmarks.Benchmarks.SystemIo.Analyzers
+namespace BugHunter.SystemIO.Analyzers.Analyzers
 {
     /// <summary>
     /// Searches for usages of <see cref="System.IO"/> and their access to anything other than <c>Exceptions</c> or <c>Stream</c>
@@ -17,14 +16,8 @@ namespace BugHunter.AnalyzersBenchmarks.Benchmarks.SystemIo.Analyzers
     /// Version with callback on IdentifierName and using SemanticModelBrowser
     /// </summary>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class SystemIOAnalyzer_V1_IdentifierNameWithStrignAndTypesComparison : DiagnosticAnalyzer
+    public class V1_IdentifierName_StrignAndSymbolComparison : DiagnosticAnalyzer
     {
-        private static readonly string[] WhiteListedTypes =
-        {
-            "System.IO.IOException",
-            "System.IO.Stream"
-        };
-
         private static readonly string[] WhiteListedIdentifierNames =
         {
             "System.IO.IOException",
@@ -54,19 +47,11 @@ namespace BugHunter.AnalyzersBenchmarks.Benchmarks.SystemIo.Analyzers
             "System.Security.Cryptography.CryptoStream",
         };
 
-        public const string DIAGNOSTIC_ID = SystemIOAnalyzer.DIAGNOSTIC_ID;
+        public const string DIAGNOSTIC_ID = "V0";
 
-        private static readonly DiagnosticDescriptor Rule = new DiagnosticDescriptor(DIAGNOSTIC_ID,
-                title: new LocalizableResourceString(nameof(CmsApiReplacementsResources.SystemIo_Title), CmsApiReplacementsResources.ResourceManager, typeof(CmsApiReplacementsResources)),
-                messageFormat: new LocalizableResourceString(nameof(CmsApiReplacementsResources.SystemIo_MessageFormat), CmsApiReplacementsResources.ResourceManager, typeof(CmsApiReplacementsResources)),
-                category: nameof(AnalyzerCategories.CmsApiReplacements),
-                defaultSeverity: DiagnosticSeverity.Warning,
-                isEnabledByDefault: true,
-                description: new LocalizableResourceString(nameof(CmsApiReplacementsResources.SystemIo_Description), CmsApiReplacementsResources.ResourceManager, typeof(CmsApiReplacementsResources)));
+        private static readonly DiagnosticDescriptor Rule = AnalyzerHelper.GetRule(DIAGNOSTIC_ID);
 
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
-
-        private static readonly IDiagnosticFormatter DiagnosticFormatter = DiagnosticFormatterFactory.CreateDefaultFormatter();
 
         public override void Initialize(AnalysisContext context)
         {
@@ -101,7 +86,7 @@ namespace BugHunter.AnalyzersBenchmarks.Benchmarks.SystemIo.Analyzers
                 return;
             }
 
-            var diagnostic = CreateDiagnostic(rule, identifierNameSyntax);
+            var diagnostic = AnalyzerHelper.CreateDiagnostic(rule, identifierNameSyntax);
 
             context.ReportDiagnostic(diagnostic);
         }
@@ -114,27 +99,10 @@ namespace BugHunter.AnalyzersBenchmarks.Benchmarks.SystemIo.Analyzers
             }
 
             return
-                WhiteListedTypes.Any(
+                AnalyzerHelper.WhiteListedTypeNames.Any(
                     whiteListedType =>
                         identifierNameTypeSymbol.IsDerivedFromClassOrInterface(
                             context.SemanticModel.Compilation.GetTypeByMetadataName(whiteListedType)));
-        }
-
-        private static Diagnostic CreateDiagnostic(DiagnosticDescriptor rule, IdentifierNameSyntax identifierName)
-        {
-            var rootIdentifierName = identifierName.AncestorsAndSelf().Last(n => n.IsKind(SyntaxKind.QualifiedName) || n.IsKind(SyntaxKind.IdentifierName));
-            var diagnosedNode = rootIdentifierName;
-            while (diagnosedNode?.Parent != null && (diagnosedNode.Parent.IsKind(SyntaxKind.ObjectCreationExpression) ||
-                                                     diagnosedNode.Parent.IsKind(SyntaxKind.SimpleMemberAccessExpression) ||
-                                                     diagnosedNode.Parent.IsKind(SyntaxKind.InvocationExpression)))
-            {
-                diagnosedNode = diagnosedNode.Parent as ExpressionSyntax;
-            }
-
-            var usedAs = DiagnosticFormatter.GetDiagnosedUsage(diagnosedNode);
-            var location = DiagnosticFormatter.GetLocation(diagnosedNode);
-
-            return Diagnostic.Create(rule, location, usedAs);
         }
     }
 }
