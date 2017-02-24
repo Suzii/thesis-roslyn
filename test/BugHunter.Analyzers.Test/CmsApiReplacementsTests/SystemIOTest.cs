@@ -19,9 +19,6 @@ namespace BugHunter.Analyzers.Test.CmsApiReplacementsTests
     [TestFixture]
     public class SystemIOTestV2 : SystemIOTest<V2_IdentifierName_SymbolAnalysis> { }
 
-    //[TestFixture]
-    //public class SystemIOTestV3 : SystemIOTest<V4_CompilationStartAndIdentifierName_SymbolAnalysis> { }
-
     [TestFixture]
     public class SystemIOTestV4 : SystemIOTest<V4_CompilationStartAndIdentifierName_SymbolAnalysis> { }
 
@@ -33,6 +30,12 @@ namespace BugHunter.Analyzers.Test.CmsApiReplacementsTests
 
     [TestFixture]
     public class SystemIOTestV7 : SystemIOTest<V7_CompilationStartSyntaxTreeAndEnd_FulltextSearchAndSymbolAnallysis_WithBag> { }
+
+    [TestFixture]
+    public class SystemIOTestV8 : SystemIOTest<V8_CompilationStartSyntaxTreeAndEnd_FulltextSearchAndSymbolParallelAnallysis_WithBag> { }
+
+    [TestFixture]
+    public class SystemIOTestV9 : SystemIOTest<V9_CompilationStartSyntaxTreeAndEnd_FulltextSearchAndSymbolParallelExecutionAndAnallysis_WithBag> { }
 
     public class SystemIOTest<TAnalyzer> : CodeFixVerifier<TAnalyzer> where TAnalyzer : DiagnosticAnalyzer, new()
     {

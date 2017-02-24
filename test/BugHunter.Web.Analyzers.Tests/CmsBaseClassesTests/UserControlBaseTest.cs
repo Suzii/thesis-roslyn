@@ -37,6 +37,7 @@ namespace BugHunter.Web.Analyzers.Tests.CmsBaseClassesTests
             VerifyCSharpDiagnostic(test);
         }
 
+        [Ignore("Implementation has change and is now agnostic of file paths")]
         [TestCase(@"cs", @"")]
         [TestCase(@"cs", @": System.Web.UI.UserControl")]
         [TestCase(@"this.should.prevent.from.diagnostic.being.raised.cs", @"")]
