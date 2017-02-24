@@ -1,15 +1,40 @@
 ﻿using System.IO;
 using System.Linq;
 using BugHunter.Analyzers.CmsApiReplacementRules.Analyzers;
+using BugHunter.SystemIO.Analyzers.Analyzers;
 using BugHunter.TestUtils.Helpers;
 using BugHunter.TestUtils.Verifiers;
 using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.Diagnostics;
 using NUnit.Framework;
 
 namespace BugHunter.Analyzers.Test.CmsApiReplacementsTests
 {
     [TestFixture]
-    public class SystemIOTest : CodeFixVerifier<SystemIOAnalyzer>
+    public class SystemIOTestLive : SystemIOTest<SystemIOAnalyzer> { }
+
+    [TestFixture]
+    public class SystemIOTestV1 : SystemIOTest<V1_IdentifierName_StrignAndSymbolComparison> { }
+
+    [TestFixture]
+    public class SystemIOTestV2 : SystemIOTest<V2_IdentifierName_SymbolAnalysis> { }
+
+    //[TestFixture]
+    //public class SystemIOTestV3 : SystemIOTest<V4_CompilationStartAndIdentifierName_SymbolAnalysis> { }
+
+    [TestFixture]
+    public class SystemIOTestV4 : SystemIOTest<V4_CompilationStartAndIdentifierName_SymbolAnalysis> { }
+
+    [TestFixture]
+    public class SystemIOTestV5 : SystemIOTest<V5_CompilationStartIdentifierNameAndEnd_SymbolAnalysis_WithBag> { }
+
+    [TestFixture]
+    public class SystemIOTestV6 : SystemIOTest<V6_CompilationStartAndSyntaxTree_LookForIdentifierNames> { }
+
+    [TestFixture]
+    public class SystemIOTestV7 : SystemIOTest<V7_CompilationStartSyntaxTreeAndEnd_FulltextSearchAndSymbolAnallysis_WithBag> { }
+
+    public class SystemIOTest<TAnalyzer> : CodeFixVerifier<TAnalyzer> where TAnalyzer : DiagnosticAnalyzer, new()
     {
         protected override MetadataReference[] GetAdditionalReferences()
         {

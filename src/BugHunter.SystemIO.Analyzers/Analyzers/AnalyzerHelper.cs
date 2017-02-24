@@ -15,7 +15,7 @@ namespace BugHunter.SystemIO.Analyzers.Analyzers
             "System.IO.Stream"
         };
 
-        public static DiagnosticDescriptor GetRule(string diagnosticId) => new DiagnosticDescriptor(diagnosticId,
+        public static DiagnosticDescriptor GetRule(string diagnosticId) => new DiagnosticDescriptor("BH1014",
                 title: new LocalizableResourceString(nameof(Resources.SystemIo_Title), Resources.ResourceManager, typeof(Resources)),
                 messageFormat: new LocalizableResourceString(nameof(Resources.SystemIo_MessageFormat), Resources.ResourceManager, typeof(Resources)),
                 category: nameof(AnalyzerCategories.CmsApiReplacements),
