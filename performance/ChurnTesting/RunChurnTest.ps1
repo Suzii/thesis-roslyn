@@ -4,8 +4,8 @@ Param([switch] $Local)
 $NuGet = "..\..\.nuget\nuget.exe"
 $Git = "$Env:ProgramFiles\Git\bin\git.exe"
 
-$PathToTestSolution = "..\..\..\thesis-sample-test-project\SampleProject\SampleProject.sln"
-#$PathToTestSolution = "C:\TFS\CMS\MAIN\CMSSolution\CMSSolution.sln"
+#$PathToTestSolution = "..\..\..\thesis-sample-test-project\SampleProject\SampleProject.sln"
+$PathToTestSolution = "C:\TFS\CMS\MAIN\CMSSolution\CMSSolution.sln"
 
 function Clone-SampleProject {
     $PathToTestSolution = ".\bin\repo"
@@ -100,7 +100,7 @@ Catch {
 }
 Finally {
 	# Clean-up
-	Write-Host "Deleting temprary data..."
+	Write-Host "Deleting temporary data..."
 	Remove-Item .\bin -Force -Recurse
 }
 

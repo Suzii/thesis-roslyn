@@ -111,7 +111,7 @@ namespace BugHunter.PerformanceTest
                 Console.WriteLine("Number of projects: \t\t{0,10:N}", csharpProjects.Count);
                 Console.WriteLine("Number of documents:\t\t{0,10:N}", csharpProjects.Sum(x => x.DocumentIds.Count));
 
-                var statistics = await StatisticsHelper.GetAnalyzerStatisticsAsync(csharpProjects, cancellationToken, _ => true).ConfigureAwait(true);
+                var statistics = await StatisticsHelper.GetAnalyzerStatisticsAsync(csharpProjects, cancellationToken, _ => false).ConfigureAwait(true);
 
                 StatisticsHelper.PrintStatistics(statistics);
             }
@@ -175,7 +175,7 @@ namespace BugHunter.PerformanceTest
                 string uniqueMessage = $"{diagnostic.Item1}: {diagnostic.Item2}";
                 completeOutput.AppendLine(message);
                 if (uniqueLines.Add(uniqueMessage))
-                {
+                { 
                     uniqueOutput.AppendLine(message);
                 }
             }
@@ -338,10 +338,10 @@ namespace BugHunter.PerformanceTest
         {
             var analyzersAssembly = typeof(ClientScriptMethodsAnalyzer).Assembly;
             var webAnalyzersAssembly = typeof(WebPartBaseAnalyzer).Assembly;
-            var systemIOAnalyzers = typeof(V1_IdentifierName_StrignAndSymbolComparison).Assembly;
+            // var systemIOAnalyzers = typeof(V1_IdentifierName_StrignAndSymbolComparison).Assembly;
 
-            // var typesFromAnalyzerAssemblies = analyzersAssembly.GetTypes().Union(webAnalyzersAssembly.GetTypes());
-            var typesFromAnalyzerAssemblies = systemIOAnalyzers.GetTypes();
+            var typesFromAnalyzerAssemblies = analyzersAssembly.GetTypes().Union(webAnalyzersAssembly.GetTypes());
+            // var typesFromAnalyzerAssemblies = systemIOAnalyzers.GetTypes();
 
             var diagnosticAnalyzerType = typeof(DiagnosticAnalyzer);
 

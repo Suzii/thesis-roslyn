@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Text;
 using BugHunter.TestUtils.Helpers;
 
@@ -21,7 +22,7 @@ namespace SampleProjectGenerator.CodeGenerators
             var result = new StringBuilder();
 
             result.AppendLine(GetClassPrefix(index));
-            var numberOfBodyRepetitions = desiredNumberOfDiagnosticsPerFile/NumberOfDiagnosticsInBody;
+            var numberOfBodyRepetitions = Math.Max(desiredNumberOfDiagnosticsPerFile/NumberOfDiagnosticsInBody, 1);
 
             Enumerable.Range(1, numberOfBodyRepetitions)
                 .Select(GetClassBodyToRepeat)

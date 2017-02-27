@@ -24,35 +24,6 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.Analyzers
             "System.IO.Stream"
         };
 
-        private static readonly string[] WhiteListedIdentifierNames =
-        {
-            "System.IO.IOException",
-            "System.IO.DirectoryNotFoundException",
-            "System.IO.DriveNotFoundException",
-            "System.IO.EndOfStreamException",
-            "System.IO.FileLoadException",
-            "System.IO.FileNotFoundException",
-            "System.IO.PathTooLongException",
-            "System.IO.PipeException",
-
-            "System.IO.Stream",
-            "Microsoft.JScript.COMCharStream",
-            "System.Data.OracleClient.OracleBFile",
-            "System.Data.OracleClient.OracleLob",
-            "System.Data.SqlTypes.SqlFileStream",
-            "System.IO.BufferedStream",
-            "System.IO.Compression.DeflateStream",
-            "System.IO.Compression.GZipStream",
-            "System.IO.FileStream",
-            "System.IO.MemoryStream",
-            "System.IO.Pipes.PipeStream",
-            "System.IO.UnmanagedMemoryStream",
-            "System.Net.Security.AuthenticatedStream",
-            "System.Net.Sockets.NetworkStream",
-            "System.Printing.PrintQueueStream",
-            "System.Security.Cryptography.CryptoStream",
-        };
-
         public const string DIAGNOSTIC_ID = DiagnosticIds.SYSTEM_IO;
 
         private static readonly DiagnosticDescriptor Rule = new DiagnosticDescriptor(DIAGNOSTIC_ID,
@@ -83,40 +54,29 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.Analyzers
                 return;
             }
 
-            var identifierNameTypeSymbol = context.SemanticModel.GetSymbolInfo(identifierNameSyntax).Symbol as INamedTypeSymbol;
-            if (identifierNameTypeSymbol == null)
+            var symbol = context.SemanticModel.GetSymbolInfo(identifierNameSyntax).Symbol as INamedTypeSymbol;
+            if (symbol == null)
             {
                 return;
             }
 
-            var symbolContainingNamespace = identifierNameTypeSymbol.ContainingNamespace;
+            var symbolContainingNamespace = symbol.ContainingNamespace;
             if (!symbolContainingNamespace.ToString().Equals("System.IO"))
             {
                 return;
             }
 
-            if (IsWhiteListed(context, identifierNameTypeSymbol))
+            var exceptionType = context.SemanticModel.Compilation.GetTypeByMetadataName("System.IO.IOException");
+            var streamType = context.SemanticModel.Compilation.GetTypeByMetadataName("System.IO.Stream");
+
+            if (symbol.ConstructedFrom.IsDerivedFromClassOrInterface(exceptionType)
+             || symbol.ConstructedFrom.IsDerivedFromClassOrInterface(streamType))
             {
                 return;
             }
 
             var diagnostic = CreateDiagnostic(rule, identifierNameSyntax);
-
             context.ReportDiagnostic(diagnostic);
-        }
-
-        private static bool IsWhiteListed(SyntaxNodeAnalysisContext context, INamedTypeSymbol identifierNameTypeSymbol)
-        {
-            if (identifierNameTypeSymbol != null && WhiteListedIdentifierNames.Contains(identifierNameTypeSymbol.ToString()))
-            {
-                return true;
-            }
-
-            return
-                WhiteListedTypes.Any(
-                    whiteListedType =>
-                        identifierNameTypeSymbol.IsDerivedFromClassOrInterface(
-                            context.SemanticModel.Compilation.GetTypeByMetadataName(whiteListedType)));
         }
 
         private static Diagnostic CreateDiagnostic(DiagnosticDescriptor rule, IdentifierNameSyntax identifierName)

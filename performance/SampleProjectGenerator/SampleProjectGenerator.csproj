@@ -65,7 +65,6 @@
     <Compile Include="CodeGenerators\WebApp\Implementation\HttpSessionElementAccessGet.cs" />
     <Compile Include="CodeGenerators\WebApp\Implementation\HttpSessionElementAccessSet.cs" />
     <Compile Include="CodeGenerators\WebApp\Implementation\PageIsCallback.cs" />
-    <Compile Include="CodeGenerators\WebApp\Implementation\ValidationHelperGet.cs" />
     <Compile Include="CodeGenerators\WebApp\Implementation\PageIsPostBack.cs" />
     <Compile Include="CodeGenerators\WebApp\Implementation\HttpSessionId.cs" />
     <Compile Include="CodeGenerators\WebApp\Implementation\HttpResponseRedirect.cs" />

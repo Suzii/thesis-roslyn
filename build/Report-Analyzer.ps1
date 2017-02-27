@@ -21,4 +21,32 @@ function Run-MsBuildWithReportAnalyzer
     echo "Build finished. Results can be found in $OutputFile"
 }
 
-Run-MsBuildWithReportAnalyzer -ProjectOrSolutionFilePath "C:\TFS\CMS\MAIN\CMSSolution\CMSSolution.sln" -OutputFile "C:\tmp\msbuild-output-systemio.txt"
+<#
+  .SYNOPSIS
+  Taks the $inputFile path to the MSBuild log and runs a console app that aggregates execution times of analyzers and writes them to $OutputFile
+  .EXAMPLE
+  Aggregate-AnalyzerExecutionTimes -inputFile "C:\tmp\msbuild-output.txt" -OutputFile "C:\tmp\analyzers-execution-times-aggregated.txt"
+#>
+function Aggregate-AnalyzerExecutionTimes
+{
+    param(
+    [string] $InputFile,
+    [string] $OutputFile)
+    
+    $AggregateReportAnalyzerResults = "..\statistics\ReportAnalyzerTimesParser\bin\Release\ReportAnalyzerTimesParser.exe";
+    
+    &$AggregateReportAnalyzerResults /in=$InputFile /out=$OutputFile
+}
+
+# CMSSolution
+$AnalyzedProjectOrSolution = "C:\TFS\CMS\MAIN\CMSSolution\CMSSolution.sln"
+# Other project
+# $AnalyzedProjectOrSolution = "C:\TFS\CMS\MAIN\CMSSolution\Blogs\Blogs.csproj"
+
+$TmpFolder = "C:\tmp"
+$MsBuildLogFile = "$TmpFolder\msbuild-output-2.txt"
+$AggregateedResults = "$TmpFolder\analyzers-execution-times-aggregated-2.txt"
+
+Run-MsBuildWithReportAnalyzer -ProjectOrSolutionFilePath $AnalyzedProjectOrSolution -OutputFile $MsBuildLogFile
+
+Aggregate-AnalyzerExecutionTimes -InputFile $MsBuildLogFile -OutputFile $AggregateedResults

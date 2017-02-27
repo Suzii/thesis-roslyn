@@ -8,9 +8,9 @@ namespace SampleProjectGenerator
 {
     internal class Program
     {
-        private static readonly int DesiredNumberOfDiagnosticsTotal = 50;
+        private static readonly int DesiredNumberOfDiagnosticsTotal = 350;
 
-        private static readonly int NumberOfFilesPerAnalyzer = 2;
+        private static readonly int NumberOfFilesPerAnalyzer = 70;
         
         private static void Main(string[] args)
         {

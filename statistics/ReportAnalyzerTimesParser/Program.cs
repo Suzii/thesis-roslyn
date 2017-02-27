@@ -1,87 +1,43 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Text.RegularExpressions;
 
 namespace ReportAnalyzerTimesParser
 {
     class Program
     {
-        private static readonly Regex ExecutionTimesForProjectRegex = new Regex(@"Total analyzer execution time: (.*) seconds(?:.*\n){1,4}\s*Time(?:.*\n){2}((?:.*\n){7})", RegexOptions.Multiline);
-
-        
-        private static readonly Regex ExecutionTimePerAnalyzerRegex = new Regex(@"[\s]*[<]?((?:\d+)\.(?:\d+))[^B]*([\S]+)", RegexOptions.Compiled);
-
-        static void Main(string[] args)
+        static int Main(string[] args)
         {
-            const string inputFilePath = @"C:\tmp\msbuild-output-systemio.txt";
-            const string outputFilePath = @"C:\tmp\analyzers-execution-times-systemio.txt";
-            const string aggregatedOutputFilePath = @"C:\tmp\analyzers-execution-times-aggregated-systemio.txt";
-            
-            var inputFileContent = string.Join(Environment.NewLine, File.ReadLines(inputFilePath));
+            var inputFilePath = args.FirstOrDefault(arg => arg.StartsWith("/in="))?.Substring(4);
+            var aggregatedOutputFilePath = args.FirstOrDefault(arg => arg.StartsWith("/out="))?.Substring(5);
 
-            var executionTimesPerProject = ExecutionTimesForProjectRegex
-                .Matches(inputFileContent)
-                .Cast<Match>()
-                .Select(match => match.Groups[2])
-                .Select(group => group.Value)
-                .ToList();
-
-            var analyzerExecutionTimesPerProject = executionTimesPerProject
-                .Select(GetAnalyzerExecutionTimes)
-                .ToList();
-
-            var aggregatedRusultsPerAnalyzer = AggregatedResultsPerAnalyzer(analyzerExecutionTimesPerProject);
-
-            var resultsInFancyString = ResultsInFancyString(analyzerExecutionTimesPerProject);
-            File.WriteAllText(outputFilePath, resultsInFancyString);
-
-            var aggregatedResultsInFancyString = aggregatedRusultsPerAnalyzer.Select(time => time.ToString());
-            File.WriteAllLines(aggregatedOutputFilePath, aggregatedResultsInFancyString);
-
-            Console.WriteLine("Press ESC to exit...");
-            while (Console.ReadKey().Key == ConsoleKey.Escape) { }
-        }
-        
-        private static IEnumerable<AnalyzerExecutionTime> AggregatedResultsPerAnalyzer(IEnumerable<IEnumerable<AnalyzerExecutionTime>> analyzerExecutionTimesPerProject)
-        {
-            var aggregatedExecutionTimes = new Dictionary<string, double>();
-            foreach (var executionTimesForPoject in analyzerExecutionTimesPerProject)
+            if (string.IsNullOrEmpty(inputFilePath) || string.IsNullOrEmpty(aggregatedOutputFilePath))
             {
-                foreach (var singleExecutionTime in executionTimesForPoject)
-                {
-                    double currentTime;
-                    var wasFound = aggregatedExecutionTimes.TryGetValue(singleExecutionTime.AnalyzerName, out currentTime);
-                    var aggregatedExecutionTime = singleExecutionTime.ExecutionTime + (wasFound ? currentTime : 0);
-                    aggregatedExecutionTimes[singleExecutionTime.AnalyzerName] = aggregatedExecutionTime;
-                }
+                PrintHelp();
+                return -1;
             }
 
-            var result =  aggregatedExecutionTimes
-                .Select(pair => new AnalyzerExecutionTime {AnalyzerName = pair.Key, ExecutionTime = pair.Value})
-                .ToList();
+            if (!File.Exists(inputFilePath))
+            {
+                Console.WriteLine($"File {inputFilePath} does not exist.");
+                PrintHelp();
+                return -1;
+            }
+            
+            Console.WriteLine($"Reading contents of {inputFilePath}");
+            var inputFileContent = string.Join(Environment.NewLine, File.ReadLines(inputFilePath));
 
-            result.Sort((time1, time2) => time2.ExecutionTime.CompareTo(time1.ExecutionTime));
+            var executionTimesPerProject = new MsBuildLogParser().GetAnalyzerExecutionTimesForProjects(inputFileContent);
 
-            return result;
-        }
+            var aggregatedRusultsPerAnalyzer = new AnalyzerExecutionTimesAggregator().GetAggregatedResultsPerAnalyzer(executionTimesPerProject);
+            
+            var aggregatedResultsInFancyString = aggregatedRusultsPerAnalyzer.Select(time => time.ToString());
+            File.WriteAllLines(aggregatedOutputFilePath, aggregatedResultsInFancyString);
+            Console.WriteLine($"Execution times aggregated and written to {aggregatedOutputFilePath}");
 
-        private static IEnumerable<AnalyzerExecutionTime> GetAnalyzerExecutionTimes(string projectExecutionTimes)
-        {
-            return ExecutionTimePerAnalyzerRegex
-                .Matches(projectExecutionTimes)
-                .Cast<Match>()
-                .Select(projectExecutionTimeMatch
-                    => new AnalyzerExecutionTime
-                    {
-                        ExecutionTime =
-                            double.Parse(projectExecutionTimeMatch.Groups[1].Value, NumberStyles.AllowDecimalPoint,
-                                NumberFormatInfo.InvariantInfo),
-                        AnalyzerName = projectExecutionTimeMatch.Groups[2].Value
-                    });
+            return 0;
         }
 
         private static string ResultsInFancyString(IList<IEnumerable<AnalyzerExecutionTime>> analyzerExecutionTimesPerProject)
@@ -97,6 +53,12 @@ namespace ReportAnalyzerTimesParser
             }
 
             return result.ToString();
+        }
+
+        private static void PrintHelp()
+        {
+            Console.WriteLine(@"Usage:");
+            Console.WriteLine(@"ReportAnalyzerTimesParse.exe /in=C:\tmp\ms-build-output.txt /out=C:\tmp\analyzers-execution-times-aggregated.txt");
         }
     }
 }
