@@ -33,6 +33,7 @@ function Aggregate-AnalyzerExecutionTimes
     [string] $InputFile,
     [string] $OutputFile)
     
+<<<<<<< HEAD
     $AggregateReportAnalyzerResults = "..\statistics\ReportAnalyzerTimesParser\bin\Release\ReportAnalyzerTimesParser.exe";
     
     &$AggregateReportAnalyzerResults /in=$InputFile /out=$OutputFile
