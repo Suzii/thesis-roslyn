@@ -43,15 +43,36 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.Analyzers
             context.EnableConcurrentExecution();
             context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.None);
 
-            context.RegisterSyntaxNodeAction(c => Analyze(Rule, c), SyntaxKind.IdentifierName);
+            context.RegisterSyntaxNodeAction(Analyze, SyntaxKind.IdentifierName);
         }
 
-        private void Analyze(DiagnosticDescriptor rule, SyntaxNodeAnalysisContext context)
+        private void Analyze(SyntaxNodeAnalysisContext context)
         {
             var identifierNameSyntax = (IdentifierNameSyntax)context.Node;
             if (identifierNameSyntax == null || identifierNameSyntax.IsVar)
             {
                 return;
+            }
+
+            var usings = identifierNameSyntax
+                .AncestorsAndSelf(true)
+                .OfType<CompilationUnitSyntax>()
+                .SingleOrDefault()
+                .Usings;
+
+            if (usings.Select(u => u.ToString()).All(u => !u.Contains("System.IO")))
+            {
+                // identifier name must be fully qualified - look for System.IO there
+                var rootIdentifierName = identifierNameSyntax
+                    .AncestorsAndSelf()
+                    .Last(n => n.IsKind(SyntaxKind.QualifiedName)
+                    || n.IsKind(SyntaxKind.IdentifierName) 
+                    || n.IsKind(SyntaxKind.SimpleMemberAccessExpression));
+
+                if (!rootIdentifierName.ToString().Contains("System.IO"))
+                {
+                    return;
+                }
             }
 
             var symbol = context.SemanticModel.GetSymbolInfo(identifierNameSyntax).Symbol as INamedTypeSymbol;
@@ -75,7 +96,7 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.Analyzers
                 return;
             }
 
-            var diagnostic = CreateDiagnostic(rule, identifierNameSyntax);
+            var diagnostic = CreateDiagnostic(Rule, identifierNameSyntax);
             context.ReportDiagnostic(diagnostic);
         }
 

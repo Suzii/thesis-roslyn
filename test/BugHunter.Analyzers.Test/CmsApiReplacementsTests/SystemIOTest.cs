@@ -13,29 +13,29 @@ namespace BugHunter.Analyzers.Test.CmsApiReplacementsTests
     [TestFixture]
     public class SystemIOTestLive : SystemIOTest<SystemIOAnalyzer> { }
 
-    [TestFixture]
-    public class SystemIOTestV1 : SystemIOTest<V1_IdentifierName_StrignAndSymbolComparison> { }
+    //[TestFixture]
+    //public class SystemIOTestV1 : SystemIOTest<V1_IdentifierName_StrignAndSymbolComparison> { }
 
-    [TestFixture]
-    public class SystemIOTestV2 : SystemIOTest<V2_IdentifierName_SymbolAnalysis> { }
+    //[TestFixture]
+    //public class SystemIOTestV2 : SystemIOTest<V2_IdentifierName_SymbolAnalysis> { }
 
-    [TestFixture]
-    public class SystemIOTestV4 : SystemIOTest<V4_CompilationStartAndIdentifierName_SymbolAnalysis> { }
+    //[TestFixture]
+    //public class SystemIOTestV4 : SystemIOTest<V4_CompilationStartAndIdentifierName_SymbolAnalysis> { }
 
-    [TestFixture]
-    public class SystemIOTestV5 : SystemIOTest<V5_CompilationStartIdentifierNameAndEnd_SymbolAnalysis_WithBag> { }
+    //[TestFixture]
+    //public class SystemIOTestV5 : SystemIOTest<V5_CompilationStartIdentifierNameAndEnd_SymbolAnalysis_WithBag> { }
 
-    [TestFixture]
-    public class SystemIOTestV6 : SystemIOTest<V6_CompilationStartAndSyntaxTree_LookForIdentifierNames> { }
+    //[TestFixture]
+    //public class SystemIOTestV6 : SystemIOTest<V6_CompilationStartAndSyntaxTree_LookForIdentifierNames> { }
 
-    [TestFixture]
-    public class SystemIOTestV7 : SystemIOTest<V7_CompilationStartSyntaxTreeAndEnd_FulltextSearchAndSymbolAnallysis_WithBag> { }
+    //[TestFixture]
+    //public class SystemIOTestV7 : SystemIOTest<V7_CompilationStartSyntaxTreeAndEnd_FulltextSearchAndSymbolAnallysis_WithBag> { }
 
-    [TestFixture]
-    public class SystemIOTestV8 : SystemIOTest<V8_CompilationStartSyntaxTreeAndEnd_FulltextSearchAndSymbolParallelAnallysis_WithBag> { }
+    //[TestFixture]
+    //public class SystemIOTestV8 : SystemIOTest<V8_CompilationStartSyntaxTreeAndEnd_FulltextSearchAndSymbolParallelAnallysis_WithBag> { }
 
-    [TestFixture]
-    public class SystemIOTestV9 : SystemIOTest<V9_CompilationStartSyntaxTreeAndEnd_FulltextSearchAndSymbolParallelExecutionAndAnallysis_WithBag> { }
+    //[TestFixture]
+    //public class SystemIOTestV9 : SystemIOTest<V9_CompilationStartSyntaxTreeAndEnd_FulltextSearchAndSymbolParallelExecutionAndAnallysis_WithBag> { }
 
     public class SystemIOTest<TAnalyzer> : CodeFixVerifier<TAnalyzer> where TAnalyzer : DiagnosticAnalyzer, new()
     {
@@ -165,7 +165,7 @@ namespace SampleTestProject.CsSamples
     }
 }";
             var s= new System.IO.BinaryReader(Stream.Null);
-
+            
             var objectCreationDiagnostic = CreateDiagnosticResult(@"new System.IO.DirectoryInfo(System.IO.Path.GetFullPath(""./some/path""))", 13, 29);
             var nestedInObjectCreationDiagnostic = CreateDiagnosticResult(@"System.IO.Path.GetFullPath(""./some/path"")", 13, 57);
             var nestedInMemberAccessDiagnostic = CreateDiagnosticResult("System.IO.Path.DirectorySeparatorChar", 14, 66);
@@ -182,6 +182,23 @@ namespace SampleTestProject.CsSamples
                 Severity = DiagnosticSeverity.Warning,
                 Locations = new[] { new DiagnosticResultLocation("Test0.cs", row, column) }
             };
+        }
+    }
+}
+
+namespace SampleTestProject.CsSamples
+{
+    public class SampleClass
+    {
+        public static void HelperMethod(char c)
+        {
+            // Do nothing
+        }
+
+        public void SampleMethod()
+        {
+            var directory = new System.IO.DirectoryInfo(System.IO.Path.GetFullPath("./ some / path"));
+            SampleTestProject.CsSamples.SampleClass.HelperMethod(System.IO.Path.DirectorySeparatorChar);
         }
     }
 }

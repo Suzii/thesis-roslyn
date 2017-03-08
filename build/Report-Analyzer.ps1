@@ -51,3 +51,5 @@ $AggregateedResults = "$TmpFolder\analyzers-execution-times-aggregated-2.txt"
 Run-MsBuildWithReportAnalyzer -ProjectOrSolutionFilePath $AnalyzedProjectOrSolution -OutputFile $MsBuildLogFile
 
 Aggregate-AnalyzerExecutionTimes -InputFile $MsBuildLogFile -OutputFile $AggregateedResults
+
+# measure-command 1000x build + azure data analysis

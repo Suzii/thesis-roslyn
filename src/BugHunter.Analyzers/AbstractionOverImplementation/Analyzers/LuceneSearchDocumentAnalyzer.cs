@@ -25,36 +25,44 @@ namespace BugHunter.Analyzers.AbstractionOverImplementation.Analyzers
 
         public override void Initialize(AnalysisContext context)
         {
-            context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.None);
             context.EnableConcurrentExecution();
+            context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.None);
 
-            // TODO perform benchmarks
             context.RegisterSyntaxNodeAction(Analyze, SyntaxKind.IdentifierName);
         }
 
         private static void Analyze(SyntaxNodeAnalysisContext context)
         {
+            // TODO move to constant
             var forbiddenTypeFullyQualified = "CMS.Search.Lucene3.LuceneSearchDocument";
             var forbiddenType = "LuceneSearchDocument";
-            var identifierNameNode = (IdentifierNameSyntax)context.Node;
-            var identifierName = identifierNameNode.Identifier.ToString();
+
+            var identifierNameSyntax = (IdentifierNameSyntax)context.Node;
+            if (identifierNameSyntax == null || identifierNameSyntax.IsVar)
+            {
+                return;
+            }
+
+            var identifierName = identifierNameSyntax.Identifier.ToString();
             if (identifierName != forbiddenType)
             {
                 return;
             }
 
             var searchedTargetType = context.SemanticModel.Compilation.GetTypeByMetadataName(forbiddenTypeFullyQualified);
-            var actualTargetTypeInfo = context.SemanticModel.GetTypeInfo(identifierNameNode);
+            var actualTargetTypeInfo = context.SemanticModel.GetTypeInfo(identifierNameSyntax);
             var actualTargetType = actualTargetTypeInfo.Type;
-            if (searchedTargetType == null || actualTargetType == null || !(actualTargetType as INamedTypeSymbol).IsDerivedFromClassOrInterface(searchedTargetType))
+            if (searchedTargetType == null 
+                || actualTargetType == null 
+                || !(actualTargetType as INamedTypeSymbol).IsDerivedFromClassOrInterface(searchedTargetType))
             {
                 return;
             }
             
             // if direct parent is QualifiedName, surface diagnostic for whole QualifiedName
-            var diagnosedNode = identifierNameNode.Parent.IsKind(SyntaxKind.QualifiedName)
-                ? identifierNameNode.Parent
-                : identifierNameNode;
+            var diagnosedNode = identifierNameSyntax.Parent.IsKind(SyntaxKind.QualifiedName)
+                ? identifierNameSyntax.Parent
+                : identifierNameSyntax;
 
             var warningLocation = diagnosedNode.GetLocation();
             var diagnostic = Diagnostic.Create(Rule, warningLocation, diagnosedNode);
