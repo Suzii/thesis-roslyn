@@ -1,6 +1,5 @@
 ﻿using System.Collections.Immutable;
 using System.Linq;
-using BugHunter.Core.DiagnosticsFormatting;
 using BugHunter.Core.Extensions;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
@@ -13,12 +12,10 @@ namespace BugHunter.SystemIO.Analyzers.Analyzers
     /// Searches for usages of <see cref="System.IO"/> and their access to anything other than <c>Exceptions</c> or <c>Stream</c>
     /// </summary>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class V4_CompilationStartAndIdentifierName_SymbolAnalysis : DiagnosticAnalyzer
+    public class V04_CompilationStartAndIdentifierName_SymbolAnalysis : DiagnosticAnalyzer
     {
-        public const string DIAGNOSTIC_ID = "v4";
-
+        public const string DIAGNOSTIC_ID = "V04";
         private static readonly DiagnosticDescriptor Rule = AnalyzerHelper.GetRule(DIAGNOSTIC_ID);
-
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
 
         public override void Initialize(AnalysisContext context)
@@ -32,13 +29,13 @@ namespace BugHunter.SystemIO.Analyzers.Analyzers
                     .Select(compilationStartAnalysisContext.Compilation.GetTypeByMetadataName)
                     .ToArray();
 
-                compilationStartAnalysisContext.RegisterSyntaxNodeAction(nodeAnalyzsisContext => Analyze(nodeAnalyzsisContext, whitelistedTypes), SyntaxKind.IdentifierName);
+                compilationStartAnalysisContext.RegisterSyntaxNodeAction(nodeAnalysisContext => Analyze(nodeAnalysisContext, whitelistedTypes), SyntaxKind.IdentifierName);
             });
         }
 
-        private void Analyze(SyntaxNodeAnalysisContext context, INamedTypeSymbol[] allowedSystemIoTypes)
+        private static void Analyze(SyntaxNodeAnalysisContext context, INamedTypeSymbol[] allowedSystemIoTypes)
         {
-            var syntaxNode = (CompilationUnitSyntax)context.SemanticModel.SyntaxTree.GetRoot();
+            var syntaxNode = context.SemanticModel.SyntaxTree.GetRoot();
             if (!syntaxNode.ToString().Contains(".IO"))
             {
                 return;

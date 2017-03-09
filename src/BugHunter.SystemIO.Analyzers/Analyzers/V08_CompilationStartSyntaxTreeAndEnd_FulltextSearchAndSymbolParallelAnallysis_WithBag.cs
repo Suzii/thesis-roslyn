@@ -1,8 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections.Concurrent;
 using System.Collections.Immutable;
 using System.Linq;
-using BugHunter.Core;
-using BugHunter.Core.DiagnosticsFormatting;
+using System.Threading.Tasks;
 using BugHunter.Core.Extensions;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
@@ -15,36 +14,34 @@ namespace BugHunter.SystemIO.Analyzers.Analyzers
     /// Searches for usages of <see cref="System.IO"/> and their access to anything other than <c>Exceptions</c> or <c>Stream</c>
     /// </summary>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class V6_CompilationStartAndSyntaxTree_LookForIdentifierNames : DiagnosticAnalyzer
+    public class V08_CompilationStartSyntaxTreeAndEnd_FulltextSearchAndSymbolParallelAnallysis_WithBag : DiagnosticAnalyzer
     {
-        public const string DIAGNOSTIC_ID = "v6";
-
+        public const string DIAGNOSTIC_ID = "V08";
         private static readonly DiagnosticDescriptor Rule = AnalyzerHelper.GetRule(DIAGNOSTIC_ID);
-
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
 
         public override void Initialize(AnalysisContext context)
         {
-            context.EnableConcurrentExecution();
+            // context.EnableConcurrentExecution();
             context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.None);
 
             context.RegisterCompilationStartAction(compilationStartAnalysisContext =>
             {
-                var compilationAnalyzer = new CompilationaAnalyzer(compilationStartAnalysisContext.Compilation);
+                var compilationaAnalyzer = new CompilationAnalyzer(compilationStartAnalysisContext.Compilation);
 
-                compilationStartAnalysisContext.RegisterSyntaxTreeAction(systaxTreeContext => compilationAnalyzer.Analyze(systaxTreeContext));
+                compilationStartAnalysisContext.RegisterSyntaxTreeAction(systaxTreeContext => compilationaAnalyzer.Analyze(systaxTreeContext));
 
-                compilationStartAnalysisContext.RegisterCompilationEndAction(compilationEndContext => compilationAnalyzer.Evaluate(compilationEndContext));
+                compilationStartAnalysisContext.RegisterCompilationEndAction(compilationEndContext => compilationaAnalyzer.Evaluate(compilationEndContext));
             });
         }
 
-        class CompilationaAnalyzer
+        private class CompilationAnalyzer
         {
             private readonly Compilation _compilation;
             private readonly INamedTypeSymbol[] _whitelistedTypes;
-            private readonly List<IdentifierNameSyntax> _badNodes;
+            private readonly ConcurrentBag<IdentifierNameSyntax> _badNodes;
 
-            public CompilationaAnalyzer(Compilation compilation)
+            public CompilationAnalyzer(Compilation compilation)
             {
                 _compilation = compilation;
 
@@ -52,50 +49,56 @@ namespace BugHunter.SystemIO.Analyzers.Analyzers
                     .Select(compilation.GetTypeByMetadataName)
                     .ToArray();
 
-                _badNodes = new List<IdentifierNameSyntax>();
+                _badNodes = new ConcurrentBag<IdentifierNameSyntax>();
             }
 
             public void Analyze(SyntaxTreeAnalysisContext context)
             {
                 var syntaxTree = context.Tree;
+
+                if (!syntaxTree.ToString().Contains(".IO"))
+                {
+                    return;
+                }
+
                 var identifierNameSyntaxs = syntaxTree.GetRoot().DescendantNodesAndSelf().OfType<IdentifierNameSyntax>();
                 var semanticModel = _compilation.GetSemanticModel(syntaxTree);
 
-                foreach (var identifierNameSyntax in identifierNameSyntaxs)
+                Parallel.ForEach(identifierNameSyntaxs, (identifierNameSyntax) =>
                 {
                     if (identifierNameSyntax == null || identifierNameSyntax.IsVar)
                     {
-                        continue;
+                        return;
                     }
 
                     var symbol = semanticModel.GetSymbolInfo(identifierNameSyntax).Symbol as INamedTypeSymbol;
                     if (symbol == null)
                     {
-                        continue;
+                        return;
                     }
 
                     var symbolContainingNamespace = symbol.ContainingNamespace;
                     if (!symbolContainingNamespace.ToString().Equals("System.IO"))
                     {
-                        continue;
+                        return;
                     }
 
                     if (_whitelistedTypes.Any(allowedType => symbol.ConstructedFrom.IsDerivedFromClassOrInterface(allowedType)))
                     {
-                        continue;
+                        return;
                     }
 
                     _badNodes.Add(identifierNameSyntax);
-                }
+                });
             }
 
             public void Evaluate(CompilationAnalysisContext compilationEndContext)
             {
-                foreach (var identifierNameSyntax in _badNodes)
+                Parallel.ForEach(_badNodes, (identifierNameSyntax) =>
                 {
                     var diagnostic = AnalyzerHelper.CreateDiagnostic(Rule, identifierNameSyntax);
                     compilationEndContext.ReportDiagnostic(diagnostic);
-                }
+                });
             }
         }
     }

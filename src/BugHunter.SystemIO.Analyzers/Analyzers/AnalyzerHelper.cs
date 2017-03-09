@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using BugHunter.Core;
+﻿using BugHunter.Core;
 using BugHunter.Core.DiagnosticsFormatting;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
@@ -27,19 +26,29 @@ namespace BugHunter.SystemIO.Analyzers.Analyzers
 
         public static Diagnostic CreateDiagnostic(DiagnosticDescriptor rule, IdentifierNameSyntax identifierName)
         {
-            var rootIdentifierName = identifierName.AncestorsAndSelf().Last(n => n.IsKind(SyntaxKind.QualifiedName) || n.IsKind(SyntaxKind.IdentifierName));
-            var diagnosedNode = rootIdentifierName;
-            while (diagnosedNode?.Parent != null && (diagnosedNode.Parent.IsKind(SyntaxKind.ObjectCreationExpression) ||
-                                                     diagnosedNode.Parent.IsKind(SyntaxKind.SimpleMemberAccessExpression) ||
-                                                     diagnosedNode.Parent.IsKind(SyntaxKind.InvocationExpression)))
-            {
-                diagnosedNode = diagnosedNode.Parent as ExpressionSyntax;
-            }
+            var rootOfDottedExpression = GetOuterMostParentOfDottedExpression(identifierName);
+            var diagnosedNode = rootOfDottedExpression.Parent.IsKind(SyntaxKind.ObjectCreationExpression)
+                ? rootOfDottedExpression.Parent
+                : rootOfDottedExpression;
 
             var usedAs = DiagnosticFormatter.GetDiagnosedUsage(diagnosedNode);
             var location = DiagnosticFormatter.GetLocation(diagnosedNode);
 
             return Diagnostic.Create(rule, location, usedAs);
+        }
+
+        // TODO add unit tests
+        private static SyntaxNode GetOuterMostParentOfDottedExpression(IdentifierNameSyntax identifierNameSyntax)
+        {
+            SyntaxNode diagnosedNode = identifierNameSyntax;
+            while (diagnosedNode?.Parent != null && (diagnosedNode.Parent.IsKind(SyntaxKind.QualifiedName) ||
+                                                     diagnosedNode.Parent.IsKind(SyntaxKind.SimpleMemberAccessExpression) ||
+                                                     diagnosedNode.Parent.IsKind(SyntaxKind.InvocationExpression)))
+            {
+                diagnosedNode = diagnosedNode.Parent;
+            }
+
+            return diagnosedNode;
         }
     }
 }

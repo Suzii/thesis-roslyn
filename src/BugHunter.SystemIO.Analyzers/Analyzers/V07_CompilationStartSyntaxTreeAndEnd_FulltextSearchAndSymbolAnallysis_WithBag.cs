@@ -1,5 +1,4 @@
-﻿using System.Collections.Concurrent;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using System.Threading.Tasks;
@@ -15,12 +14,10 @@ namespace BugHunter.SystemIO.Analyzers.Analyzers
     /// Searches for usages of <see cref="System.IO"/> and their access to anything other than <c>Exceptions</c> or <c>Stream</c>
     /// </summary>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class V9_CompilationStartSyntaxTreeAndEnd_FulltextSearchAndSymbolParallelExecutionAndAnallysis_WithBag : DiagnosticAnalyzer
+    public class V07_CompilationStartSyntaxTreeAndEnd_FulltextSearchAndSymbolAnallysis_WithBag : DiagnosticAnalyzer
     {
-        public const string DIAGNOSTIC_ID = "v9";
-
+        public const string DIAGNOSTIC_ID = "V07";
         private static readonly DiagnosticDescriptor Rule = AnalyzerHelper.GetRule(DIAGNOSTIC_ID);
-
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
 
         public override void Initialize(AnalysisContext context)
@@ -38,11 +35,11 @@ namespace BugHunter.SystemIO.Analyzers.Analyzers
             });
         }
 
-        class CompilationAnalyzer
+        private class CompilationAnalyzer
         {
             private readonly Compilation _compilation;
             private readonly INamedTypeSymbol[] _whitelistedTypes;
-            private readonly ConcurrentBag<IdentifierNameSyntax> _badNodes;
+            private readonly List<IdentifierNameSyntax> _badNodes;
 
             public CompilationAnalyzer(Compilation compilation)
             {
@@ -52,7 +49,7 @@ namespace BugHunter.SystemIO.Analyzers.Analyzers
                     .Select(compilation.GetTypeByMetadataName)
                     .ToArray();
 
-                _badNodes = new ConcurrentBag<IdentifierNameSyntax>();
+                _badNodes = new List<IdentifierNameSyntax>();
             }
 
             public void Analyze(SyntaxTreeAnalysisContext context)
@@ -67,41 +64,41 @@ namespace BugHunter.SystemIO.Analyzers.Analyzers
                 var identifierNameSyntaxs = syntaxTree.GetRoot().DescendantNodesAndSelf().OfType<IdentifierNameSyntax>();
                 var semanticModel = _compilation.GetSemanticModel(syntaxTree);
 
-                Parallel.ForEach(identifierNameSyntaxs, (identifierNameSyntax) =>
+                foreach (var identifierNameSyntax in identifierNameSyntaxs)
                 {
                     if (identifierNameSyntax == null || identifierNameSyntax.IsVar)
                     {
-                        return;
+                        continue;
                     }
 
                     var symbol = semanticModel.GetSymbolInfo(identifierNameSyntax).Symbol as INamedTypeSymbol;
                     if (symbol == null)
                     {
-                        return;
+                        continue;
                     }
 
                     var symbolContainingNamespace = symbol.ContainingNamespace;
                     if (!symbolContainingNamespace.ToString().Equals("System.IO"))
                     {
-                        return;
+                        continue;
                     }
 
                     if (_whitelistedTypes.Any(allowedType => symbol.ConstructedFrom.IsDerivedFromClassOrInterface(allowedType)))
                     {
-                        return;
+                        continue;
                     }
 
                     _badNodes.Add(identifierNameSyntax);
-                });
+                }
             }
 
             public void Evaluate(CompilationAnalysisContext compilationEndContext)
             {
-                foreach (var identifierNameSyntax in _badNodes)
+                Parallel.ForEach(_badNodes, (identifierNameSyntax) =>
                 {
                     var diagnostic = AnalyzerHelper.CreateDiagnostic(Rule, identifierNameSyntax);
                     compilationEndContext.ReportDiagnostic(diagnostic);
-                }
+                });
             }
         }
     }

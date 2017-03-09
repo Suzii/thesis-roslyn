@@ -33,7 +33,6 @@ function Aggregate-AnalyzerExecutionTimes
     [string] $InputFile,
     [string] $OutputFile)
     
-<<<<<<< HEAD
     $AggregateReportAnalyzerResults = "..\statistics\ReportAnalyzerTimesParser\bin\Release\ReportAnalyzerTimesParser.exe";
     
     &$AggregateReportAnalyzerResults /in=$InputFile /out=$OutputFile
@@ -44,9 +43,9 @@ $AnalyzedProjectOrSolution = "C:\TFS\CMS\MAIN\CMSSolution\CMSSolution.sln"
 # Other project
 # $AnalyzedProjectOrSolution = "C:\TFS\CMS\MAIN\CMSSolution\Blogs\Blogs.csproj"
 
-$TmpFolder = "C:\tmp"
-$MsBuildLogFile = "$TmpFolder\msbuild-output-2.txt"
-$AggregateedResults = "$TmpFolder\analyzers-execution-times-aggregated-2.txt"
+$TmpFolder = "C:\tmp" 
+$MsBuildLogFile = "$TmpFolder\msbuild-output-2017-03-09.txt"
+$AggregateedResults = "$TmpFolder\analyzers-execution-times-aggregated-systemio-2017-03-09-v1.txt"
 
 Run-MsBuildWithReportAnalyzer -ProjectOrSolutionFilePath $AnalyzedProjectOrSolution -OutputFile $MsBuildLogFile
 

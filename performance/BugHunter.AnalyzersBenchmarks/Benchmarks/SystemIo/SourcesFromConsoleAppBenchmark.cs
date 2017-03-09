@@ -14,10 +14,10 @@ namespace BugHunter.AnalyzersBenchmarks.Benchmarks.SystemIo
     public class SourcesFromConsoleAppBenchmark
     {
         private readonly DiagnosticAnalyzer _systemIoV0 = new SyntaxNodeIdentifierNameBaselineAnalyzer();
-        private readonly DiagnosticAnalyzer _systemIoV2 = new V2_IdentifierName_SymbolAnalysis();
-        private readonly DiagnosticAnalyzer _systemIoV5 = new V5_CompilationStartIdentifierNameAndEnd_SymbolAnalysis_WithBag();
-        private readonly DiagnosticAnalyzer _systemIoV6 = new V6_CompilationStartAndSyntaxTree_LookForIdentifierNames();
-        private readonly DiagnosticAnalyzer _systemIoV7 = new V7_CompilationStartSyntaxTreeAndEnd_FulltextSearchAndSymbolAnallysis_WithBag();
+        private readonly DiagnosticAnalyzer _systemIoV2 = new V02_IdentifierName_SymbolAnalysis();
+        private readonly DiagnosticAnalyzer _systemIoV5 = new V05_CompilationStartIdentifierNameAndEnd_SymbolAnalysis_WithBag();
+        private readonly DiagnosticAnalyzer _systemIoV6 = new V06_CompilationStartAndSyntaxTree_LookForIdentifierNames();
+        private readonly DiagnosticAnalyzer _systemIoV7 = new V07_CompilationStartSyntaxTreeAndEnd_FulltextSearchAndSymbolAnallysis_WithBag();
 
         private readonly MetadataReference[] _additionalReferences;
         private readonly string[] _sources;

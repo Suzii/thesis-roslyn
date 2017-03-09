@@ -1,7 +1,4 @@
 ﻿using System.Collections.Immutable;
-using System.Linq;
-using BugHunter.Core;
-using BugHunter.Core.DiagnosticsFormatting;
 using BugHunter.Core.Extensions;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
@@ -16,12 +13,10 @@ namespace BugHunter.SystemIO.Analyzers.Analyzers
     /// Version with callback on IdentifierName and analyzing Symbol directly
     /// </summary>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class V2_IdentifierName_SymbolAnalysis : DiagnosticAnalyzer
+    public class V02_IdentifierName_SymbolAnalysis : DiagnosticAnalyzer
     {
-        public const string DIAGNOSTIC_ID = "v2";
-
+        public const string DIAGNOSTIC_ID = "V02";
         private static readonly DiagnosticDescriptor Rule = AnalyzerHelper.GetRule(DIAGNOSTIC_ID);
-
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
 
         public override void Initialize(AnalysisContext context)
@@ -29,10 +24,10 @@ namespace BugHunter.SystemIO.Analyzers.Analyzers
             context.EnableConcurrentExecution();
             context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.None);
 
-            context.RegisterSyntaxNodeAction(c => Analyze(Rule, c), SyntaxKind.IdentifierName);
+            context.RegisterSyntaxNodeAction(Analyze, SyntaxKind.IdentifierName);
         }
 
-        private void Analyze(DiagnosticDescriptor rule, SyntaxNodeAnalysisContext context)
+        private static void Analyze(SyntaxNodeAnalysisContext context)
         {
             var identifierNameSyntax = (IdentifierNameSyntax)context.Node;
             if (identifierNameSyntax == null || identifierNameSyntax.IsVar)
@@ -61,7 +56,7 @@ namespace BugHunter.SystemIO.Analyzers.Analyzers
                 return;
             }
 
-            var diagnostic = AnalyzerHelper.CreateDiagnostic(rule, identifierNameSyntax);
+            var diagnostic = AnalyzerHelper.CreateDiagnostic(Rule, identifierNameSyntax);
             context.ReportDiagnostic(diagnostic);
         }
     }

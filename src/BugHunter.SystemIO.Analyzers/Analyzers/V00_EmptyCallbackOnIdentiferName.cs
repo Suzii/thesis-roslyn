@@ -11,21 +11,21 @@ namespace BugHunter.SystemIO.Analyzers.Analyzers
     /// Version with callback on IdentifierName and using SemanticModelBrowser
     /// </summary>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class V0EmptyCallbackOnIdentiferName : DiagnosticAnalyzer
+    public class V00_EmptyCallbackOnIdentiferName : DiagnosticAnalyzer
     {
-        public const string DIAGNOSTIC_ID = "V0";
-
-        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(AnalyzerHelper.GetRule(DIAGNOSTIC_ID));
+        public const string DIAGNOSTIC_ID = "V00";
+        private static readonly DiagnosticDescriptor Rule = AnalyzerHelper.GetRule(DIAGNOSTIC_ID);
+        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
 
         public override void Initialize(AnalysisContext context)
         {
             context.EnableConcurrentExecution();
             context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.None);
 
-            context.RegisterSyntaxNodeAction(c => Analyze(c), SyntaxKind.IdentifierName);
+            context.RegisterSyntaxNodeAction(c => Analyze(c, Rule), SyntaxKind.IdentifierName);
         }
 
-        private void Analyze(SyntaxNodeAnalysisContext context)
+        private static void Analyze(SyntaxNodeAnalysisContext context, DiagnosticDescriptor rule)
         {
             // empty callback serves only as baseline for performance tests
         }

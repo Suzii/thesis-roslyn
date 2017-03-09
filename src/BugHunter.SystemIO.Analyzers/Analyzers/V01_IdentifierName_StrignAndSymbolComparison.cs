@@ -1,7 +1,5 @@
 ﻿using System.Collections.Immutable;
 using System.Linq;
-using BugHunter.Core;
-using BugHunter.Core.DiagnosticsFormatting;
 using BugHunter.Core.Extensions;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
@@ -16,7 +14,7 @@ namespace BugHunter.SystemIO.Analyzers.Analyzers
     /// Version with callback on IdentifierName and using SemanticModelBrowser
     /// </summary>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class V1_IdentifierName_StrignAndSymbolComparison : DiagnosticAnalyzer
+    public class V01_IdentifierName_StrignAndSymbolComparison : DiagnosticAnalyzer
     {
         private static readonly string[] WhiteListedIdentifierNames =
         {
@@ -47,10 +45,8 @@ namespace BugHunter.SystemIO.Analyzers.Analyzers
             "System.Security.Cryptography.CryptoStream",
         };
 
-        public const string DIAGNOSTIC_ID = "V0";
-
+        public const string DIAGNOSTIC_ID = "V01";
         private static readonly DiagnosticDescriptor Rule = AnalyzerHelper.GetRule(DIAGNOSTIC_ID);
-
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
 
         public override void Initialize(AnalysisContext context)
@@ -58,10 +54,10 @@ namespace BugHunter.SystemIO.Analyzers.Analyzers
             context.EnableConcurrentExecution();
             context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.None);
 
-            context.RegisterSyntaxNodeAction(c => Analyze(Rule, c), SyntaxKind.IdentifierName);
+            context.RegisterSyntaxNodeAction(c => Analyze(c), SyntaxKind.IdentifierName);
         }
 
-        private void Analyze(DiagnosticDescriptor rule, SyntaxNodeAnalysisContext context)
+        private static void Analyze(SyntaxNodeAnalysisContext context)
         {
             var identifierNameSyntax = (IdentifierNameSyntax)context.Node;
             if (identifierNameSyntax == null || identifierNameSyntax.IsVar)
@@ -86,7 +82,7 @@ namespace BugHunter.SystemIO.Analyzers.Analyzers
                 return;
             }
 
-            var diagnostic = AnalyzerHelper.CreateDiagnostic(rule, identifierNameSyntax);
+            var diagnostic = AnalyzerHelper.CreateDiagnostic(Rule, identifierNameSyntax);
 
             context.ReportDiagnostic(diagnostic);
         }

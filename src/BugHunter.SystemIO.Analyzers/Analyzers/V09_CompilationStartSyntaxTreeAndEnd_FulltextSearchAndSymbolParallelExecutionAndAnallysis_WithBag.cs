@@ -1,5 +1,4 @@
 ﻿using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using System.Threading.Tasks;
@@ -15,17 +14,15 @@ namespace BugHunter.SystemIO.Analyzers.Analyzers
     /// Searches for usages of <see cref="System.IO"/> and their access to anything other than <c>Exceptions</c> or <c>Stream</c>
     /// </summary>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class V8_CompilationStartSyntaxTreeAndEnd_FulltextSearchAndSymbolParallelAnallysis_WithBag : DiagnosticAnalyzer
+    public class V09_CompilationStartSyntaxTreeAndEnd_FulltextSearchAndSymbolParallelExecutionAndAnallysis_WithBag : DiagnosticAnalyzer
     {
-        public const string DIAGNOSTIC_ID = "v8";
-
+        public const string DIAGNOSTIC_ID = "V09";
         private static readonly DiagnosticDescriptor Rule = AnalyzerHelper.GetRule(DIAGNOSTIC_ID);
-
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
 
         public override void Initialize(AnalysisContext context)
         {
-            // context.EnableConcurrentExecution();
+            context.EnableConcurrentExecution();
             context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.None);
 
             context.RegisterCompilationStartAction(compilationStartAnalysisContext =>
@@ -38,7 +35,7 @@ namespace BugHunter.SystemIO.Analyzers.Analyzers
             });
         }
 
-        class CompilationAnalyzer
+        private class CompilationAnalyzer
         {
             private readonly Compilation _compilation;
             private readonly INamedTypeSymbol[] _whitelistedTypes;
@@ -97,11 +94,11 @@ namespace BugHunter.SystemIO.Analyzers.Analyzers
 
             public void Evaluate(CompilationAnalysisContext compilationEndContext)
             {
-                foreach (var identifierNameSyntax in _badNodes)
+                Parallel.ForEach(_badNodes, (identifierNameSyntax) =>
                 {
                     var diagnostic = AnalyzerHelper.CreateDiagnostic(Rule, identifierNameSyntax);
                     compilationEndContext.ReportDiagnostic(diagnostic);
-                }
+                });
             }
         }
     }

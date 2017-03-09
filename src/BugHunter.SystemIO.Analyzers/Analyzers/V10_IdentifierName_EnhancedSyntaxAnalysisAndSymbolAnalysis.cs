@@ -1,7 +1,5 @@
-﻿using System.Collections.Concurrent;
-using System.Collections.Immutable;
+﻿using System.Collections.Immutable;
 using System.Linq;
-using BugHunter.Core;
 using BugHunter.Core.DiagnosticsFormatting;
 using BugHunter.Core.Extensions;
 using Microsoft.CodeAnalysis;
@@ -9,26 +7,18 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
 
-namespace BugHunter.Analyzers.CmsApiReplacementRules.Analyzers
+namespace BugHunter.SystemIO.Analyzers.Analyzers
 {
     /// <summary>
     /// Searches for usages of <see cref="System.IO"/> and their access to anything other than <c>Exceptions</c> or <c>Stream</c>
     /// 
-    /// Version with callback on IdentifierName and using SemanticModelBrowser
+    /// Version with callback on IdentifierName and analyzing Symbol directly
     /// </summary>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class SystemIOAnalyzer : DiagnosticAnalyzer
+    public class V10_IdentifierName_EnhancedSyntaxAnalysisAndSymbolAnalysis : DiagnosticAnalyzer
     {
-        public const string DIAGNOSTIC_ID = DiagnosticIds.SYSTEM_IO;
-
-        private static readonly DiagnosticDescriptor Rule = new DiagnosticDescriptor(DIAGNOSTIC_ID,
-                title: new LocalizableResourceString(nameof(CmsApiReplacementsResources.SystemIo_Title), CmsApiReplacementsResources.ResourceManager, typeof(CmsApiReplacementsResources)),
-                messageFormat: new LocalizableResourceString(nameof(CmsApiReplacementsResources.SystemIo_MessageFormat), CmsApiReplacementsResources.ResourceManager, typeof(CmsApiReplacementsResources)),
-                category: nameof(AnalyzerCategories.CmsApiReplacements),
-                defaultSeverity: DiagnosticSeverity.Warning,
-                isEnabledByDefault: true,
-                description: new LocalizableResourceString(nameof(CmsApiReplacementsResources.SystemIo_Description), CmsApiReplacementsResources.ResourceManager, typeof(CmsApiReplacementsResources)));
-
+        public const string DIAGNOSTIC_ID = "V10";
+        private static readonly DiagnosticDescriptor Rule = AnalyzerHelper.GetRule(DIAGNOSTIC_ID);
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
 
         private static readonly IDiagnosticFormatter DiagnosticFormatter = DiagnosticFormatterFactory.CreateDefaultFormatter();
@@ -38,15 +28,10 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.Analyzers
             context.EnableConcurrentExecution();
             context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.None);
 
-            context.RegisterCompilationStartAction(compilationStartContext =>
-            {
-                var filesWithSystemIoUsing = new ConcurrentDictionary<string, bool?>();
-
-                compilationStartContext.RegisterSyntaxNodeAction(c => Analyze(c, filesWithSystemIoUsing), SyntaxKind.IdentifierName);
-            });
+            context.RegisterSyntaxNodeAction(Analyze, SyntaxKind.IdentifierName);
         }
 
-        private static void Analyze(SyntaxNodeAnalysisContext context, ConcurrentDictionary<string, bool?> filesWithSystemIoUsing)
+        private static void Analyze(SyntaxNodeAnalysisContext context)
         {
             var identifierNameSyntax = (IdentifierNameSyntax)context.Node;
             if (identifierNameSyntax == null || identifierNameSyntax.IsVar)
@@ -55,8 +40,7 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.Analyzers
             }
 
             // quick only syntax based analysis
-            var fileContainsSystemIoUsing = FileContainsSystemIoUsing(identifierNameSyntax, filesWithSystemIoUsing);
-            if (fileContainsSystemIoUsing.HasValue && !fileContainsSystemIoUsing.Value)
+            if (!FileContainsSystemIoUsing(identifierNameSyntax))
             {
                 // identifier name must be fully qualified - look for System.IO there
                 var rootIdentifierName = GetOuterMostParentOfDottedExpression(identifierNameSyntax);
@@ -122,33 +106,18 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.Analyzers
             return diagnosedNode;
         }
 
-        private static bool? FileContainsSystemIoUsing(SyntaxNode identifierNameSyntax,
-            ConcurrentDictionary<string, bool?> filesWithSystemIoUsing)
+        private static bool FileContainsSystemIoUsing(SyntaxNode identifierNameSyntax)
         {
-            var syntaxTree = identifierNameSyntax.SyntaxTree;
+            var allUsings = identifierNameSyntax
+                .AncestorsAndSelf()
+                .OfType<CompilationUnitSyntax>()
+                .SingleOrDefault()
+                .Usings;
 
-            bool? result;
-            var contains = filesWithSystemIoUsing.TryGetValue(syntaxTree.FilePath, out result);
+            var systemIoUsings = allUsings
+                .Where(u => u.ToString().Contains("System.IO"));
 
-            if (contains)
-            {
-                return result;
-            }
-
-            var root = syntaxTree.HasCompilationUnitRoot ? syntaxTree.GetCompilationUnitRoot() : null;
-
-            if (root == null)
-            {
-                return filesWithSystemIoUsing
-                    .AddOrUpdate(syntaxTree.FilePath, key => null, (key, originalVal) => null);
-            }
-
-            var containsSystemIoUsing = root
-                .Usings
-                .Any(u => u.ToString().Contains("System.IO"));
-
-            return filesWithSystemIoUsing
-                .AddOrUpdate(syntaxTree.FilePath, key => containsSystemIoUsing, (key, originalVal) => containsSystemIoUsing);
+            return systemIoUsings.Any();
         }
     }
 }
