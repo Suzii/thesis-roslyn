@@ -45,7 +45,7 @@ $AnalyzedProjectOrSolution = "C:\TFS\CMS\MAIN\CMSSolution\CMSSolution.sln"
 
 $TmpFolder = "C:\tmp" 
 $MsBuildLogFile = "$TmpFolder\msbuild-output-2017-03-09.txt"
-$AggregateedResults = "$TmpFolder\analyzers-execution-times-aggregated-systemio-2017-03-09-v1.txt"
+$AggregateedResults = "$TmpFolder\analyzers-execution-times-aggregated-2017-03-09-v2.txt"
 
 Run-MsBuildWithReportAnalyzer -ProjectOrSolutionFilePath $AnalyzedProjectOrSolution -OutputFile $MsBuildLogFile
 
