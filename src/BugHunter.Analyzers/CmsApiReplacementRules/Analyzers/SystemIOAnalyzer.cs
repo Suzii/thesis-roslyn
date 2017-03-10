@@ -62,9 +62,10 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.Analyzers
                 var rootIdentifierName = GetOuterMostParentOfDottedExpression(identifierNameSyntax);
 
                 // if not System.IO or if exception or string are used, return
-                if (!rootIdentifierName.ToString().Contains("System.IO")
-                    || rootIdentifierName.ToString().Contains("IOException")
-                    || rootIdentifierName.ToString().Contains("Stream"))
+                var rootIdentifierNameText = rootIdentifierName.ToString();
+                if (!rootIdentifierNameText.Contains("System.IO")
+                    || rootIdentifierNameText.Contains("IOException")
+                    || rootIdentifierNameText.Contains("Stream"))
                 {
                     return;
                 }
