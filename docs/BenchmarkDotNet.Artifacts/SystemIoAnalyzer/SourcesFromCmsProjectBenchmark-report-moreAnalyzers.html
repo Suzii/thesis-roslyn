@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='utf-8' />
+<title>SourcesFromCmsProjectBenchmark</title>
+
+<style type="text/css">
+	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
+	td, th { padding: 6px 13px; border: 1px solid #ddd; }
+	tr { background-color: #fff; border-top: 1px solid #ccc; }
+	tr:nth-child(even) { background: #f8f8f8; }
+</style>
+</head>
+<body>
+<pre><code>
+BenchmarkDotNet=v0.10.1, OS=Microsoft Windows NT 6.1.7601 Service Pack 1
+Processor=Intel(R) Core(TM) i5-4690 CPU 3.50GHz, ProcessorCount=4
+Frequency=3410166 Hz, Resolution=293.2409 ns, Timer=TSC
+  [Host]     : Clr 4.0.30319.42000, 32bit LegacyJIT-v4.6.1590.0
+  DefaultJob : Clr 4.0.30319.42000, 32bit LegacyJIT-v4.6.1590.0
+</code></pre>
+<pre><code></code></pre>
+
+<table>
+<thead><tr><th>                                                                                     Method</th><th> Mean</th><th>StdErr</th><th>StdDev</th><th>  Min</th><th>  Max</th><th>Op/s</th><th>Rank</th>
+</tr>
+</thead><tbody><tr><td>                                                                           FilesCompilation</td><td>129.9144 ms</td><td>0.3597 ms</td><td>1.2970 ms</td><td>127.8314 ms</td><td>132.8673 ms</td><td>7.7</td><td>1</td>
+</tr><tr><td>              V07_CompilationStartSyntaxTreeAndEnd_FulltextSearchAndSymbolAnallysis_WithBag</td><td>550.1189 ms</td><td>1.4064 ms</td><td>5.2623 ms</td><td>540.3562 ms</td><td>561.0656 ms</td><td>1.82</td><td>2</td>
+</tr><tr><td>V09_CompilationStartSyntaxTreeAndEnd_FulltextSearchAndSymbolParallelExecutionAndAnallysis_WithBag</td><td>555.6788 ms</td><td>1.4941 ms</td><td>5.7865 ms</td><td>548.9945 ms</td><td>567.9327 ms</td><td>1.8</td><td>3</td>
+</tr><tr><td>      V08_CompilationStartSyntaxTreeAndEnd_FulltextSearchAndSymbolParallelAnallysis_WithBag</td><td>557.1247 ms</td><td>1.7661 ms</td><td>6.6083 ms</td><td>548.0534 ms</td><td>570.2527 ms</td><td>1.79</td><td>3</td>
+</tr><tr><td>                                                                   AnalyzerV0_EmptyCallback</td><td>565.0965 ms</td><td>0.9976 ms</td><td>3.8638 ms</td><td>556.3371 ms</td><td>570.3154 ms</td><td>1.77</td><td>4</td>
+</tr><tr><td>                V11_IdentifierName_EnhancedSyntaxAnalysisAndSymbolAnalysisWithCachedResults</td><td>581.3765 ms</td><td>1.1987 ms</td><td>4.6425 ms</td><td>575.1781 ms</td><td>590.6556 ms</td><td>1.72</td><td>5</td>
+</tr><tr><td>                                 V10_IdentifierName_EnhancedSyntaxAnalysisAndSymbolAnalysis</td><td>608.8452 ms</td><td>1.8531 ms</td><td>7.1770 ms</td><td>593.7262 ms</td><td>620.7412 ms</td><td>1.64</td><td>6</td>
+</tr><tr><td>                                                          V02_IdentifierName_SymbolAnalysis</td><td>612.6760 ms</td><td>0.8265 ms</td><td>3.0926 ms</td><td>608.1127 ms</td><td>618.6452 ms</td><td>1.63</td><td>6</td>
+</tr><tr><td>                            V05_CompilationStartIdentifierNameAndEnd_SymbolAnalysis_WithBag</td><td>628.5240 ms</td><td>2.4027 ms</td><td>9.3056 ms</td><td>610.7276 ms</td><td>647.1918 ms</td><td>1.59</td><td>7</td>
+</tr></tbody></table>
+</body>
+</html>

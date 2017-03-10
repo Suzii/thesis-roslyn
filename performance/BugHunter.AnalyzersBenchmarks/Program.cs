@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using BenchmarkDotNet.Configs;
 using BenchmarkDotNet.Running;
 using BugHunter.AnalyzersBenchmarks.Benchmarks.BaseClasses;
@@ -14,15 +15,15 @@ namespace BugHunter.AnalyzersBenchmarks
         {
             var config = new ProductionConfig();
 
-            //RunBenchmarks(congig);
+            RunBenchmarks(config);
             //RunSystemIOAnalysis();
 
             //RunBenchmarksForPage(config);
             //RunPageBaseAnalysis();
 
 
-            var totalTime = BenchmarkRunner.Run<SingleVsDoubleCallbackBenchmark>(config).TotalTime;
-            Console.WriteLine($@"Benchmarks executed. Total time:  {totalTime:mm\:ss\.ff}");
+            //var totalTime = BenchmarkRunner.Run<SingleVsDoubleCallbackBenchmark>(config).TotalTime;
+            //Console.WriteLine($@"Benchmarks executed. Total time:  {totalTime:mm\:ss\.ff}");
             //var analyzerV1SingleCallback = new SingleVsDoubleCallbackBenchmark().AnalyzerV1_SingleCallback();
             //Console.WriteLine("Done... " + analyzerV1SingleCallback);
 
@@ -34,17 +35,19 @@ namespace BugHunter.AnalyzersBenchmarks
         {
             Console.WriteLine("Benchmarks execution started. This is gonna take a while, go make yourself a coffee...");
 
-            var totalTime1 = BenchmarkRunner.Run<SourcesWithNoErrorsBenchmark>(config).TotalTime;
-            var totalTime2 = BenchmarkRunner.Run<SourcesWithErrorsBenchmark>(config).TotalTime;
-            var totalTime3 = BenchmarkRunner.Run<SourcesFromConsoleAppBenchmark>(config).TotalTime;
+            //var totalTime1 = BenchmarkRunner.Run<SourcesWithNoErrorsBenchmark>(config).TotalTime;
+            //var totalTime2 = BenchmarkRunner.Run<SourcesWithErrorsBenchmark>(config).TotalTime;
+            //var totalTime3 = BenchmarkRunner.Run<SourcesFromConsoleAppBenchmark>(config).TotalTime;
+            var totalTime4 = BenchmarkRunner.Run<SourcesFromCmsProjectBenchmark>(config).TotalTime;
 
-            var totalTime4 = BenchmarkRunner.Run<PageBaseBenchmark>(config).TotalTime;
+            //var totalTime4 = BenchmarkRunner.Run<PageBaseBenchmark>(config).TotalTime;
 
             Console.WriteLine($@"Benchmarks executed. Total times:");
-            Console.WriteLine($@"SourcesWithNoErrorsBenchmark: {totalTime1:mm\:ss\.ff}");
-            Console.WriteLine($@"SourcesWithErrorsBenchmark: {totalTime2:mm\:ss\.ff}");
-            Console.WriteLine($@"SourcesFromConsoleAppBenchmark: {totalTime3:mm\:ss\.ff}");
-            Console.WriteLine($@"PageBaseBenchmark: {totalTime4:mm\:ss\.ff}");
+            //Console.WriteLine($@"SourcesWithNoErrorsBenchmark: {totalTime1:mm\:ss\.ff}");
+            //Console.WriteLine($@"SourcesWithErrorsBenchmark: {totalTime2:mm\:ss\.ff}");
+            //Console.WriteLine($@"SourcesFromConsoleAppBenchmark: {totalTime3:mm\:ss\.ff}");
+            Console.WriteLine($@"SourcesFromCmsProjectBenchmark: {totalTime4:mm\:ss\.ff}");
+            //Console.WriteLine($@"PageBaseBenchmark: {totalTime4:mm\:ss\.ff}");
         }
 
         private static void RunBenchmarksForPage(ManualConfig config)
@@ -61,7 +64,7 @@ namespace BugHunter.AnalyzersBenchmarks
 
         private static void RunSystemIOAnalysis()
         {
-            var numberOfDiagnosticsRaised = new SourcesWithErrorsBenchmark().AnalyzerV5_CompilationStartSyntaxNodeAndCompilationEnd();
+            var numberOfDiagnosticsRaised = new SourcesFromCmsProjectBenchmark().V11_IdentifierName_EnhancedSyntaxAnalysisAndSymbolAnalysisWithCachedResults();
             Console.WriteLine($@"Analysis finished. Total of {numberOfDiagnosticsRaised} diagnostics found.");
         }
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using BugHunter.TestUtils.Helpers;
 using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Formatting;
 using Microsoft.CodeAnalysis.Simplification;
 using Microsoft.CodeAnalysis.Text;
@@ -83,12 +84,20 @@ namespace BugHunter.TestUtils.Services
         /// <returns>A Project created out of the Documents created from the source strings</returns>
         public static Project CreateProject(string[] sources, MetadataReference[] references, FakeFileInfo fakeFileInfo)
         {
+            var solution = CreateSolutionWithSingleProject(sources, references, fakeFileInfo);
+
+            return solution.Projects.SingleOrDefault();
+        }
+
+        public static Solution CreateSolutionWithSingleProject(string[] sources, MetadataReference[] references, FakeFileInfo fakeFileInfo)
+        {
             fakeFileInfo = fakeFileInfo ?? DefaultFileInfo;
             var projectId = ProjectId.CreateNewId(debugName: TestProjectName);
 
             var solution = new AdhocWorkspace()
                 .CurrentSolution
                 .AddProject(projectId, TestProjectName, TestProjectName, LanguageNames.CSharp)
+                .WithProjectCompilationOptions(projectId, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary))
                 .AddMetadataReferences(projectId, ReferencesHelper.CoreDotNetReferences);
 
             if (references != null)
@@ -99,14 +108,14 @@ namespace BugHunter.TestUtils.Services
             var count = 0;
             foreach (var source in sources)
             {
-                var newFileName = fakeFileInfo.GetFullFilePath(count++); //$"{fakeFileInfo.FileLocation}{fakeFileInfo.FileName}{count++}.{fakeFileInfo.FileExtension}");
+                var newFileName = fakeFileInfo.GetFullFilePath(count++);
                 var documentId = DocumentId.CreateNewId(projectId, debugName: newFileName);
                 var sourceText = SourceText.From(source);
-
+                
                 solution = solution.AddDocument(documentId, newFileName, sourceText);
             }
 
-            return solution.GetProject(projectId);
+            return solution;
         }
     #endregion
     }
