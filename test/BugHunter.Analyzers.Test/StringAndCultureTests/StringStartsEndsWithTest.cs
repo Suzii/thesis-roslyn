@@ -43,7 +43,9 @@ namespace BugHunter.Analyzers.Test.StringAndCultureTests
         }
 
         [TestCase(@"StartsWith(""a"", StringComparison.InvariantCultureIgnoreCase)")]
+        [TestCase(@"StartsWith(""a"", sc)")]
         [TestCase(@"StartsWith(""a"", false, CultureInfo.CurrentCulture)")]
+        [TestCase(@"StartsWith(""a"", false, ci)")]
         [TestCase(@"EndsWith(""a"", StringComparison.InvariantCultureIgnoreCase)")]
         [TestCase(@"EndsWith(""a"", false, CultureInfo.CurrentCulture)")]
         public void AllowedOverloadCalled_NoDiagnostic(string methodUsed)
@@ -57,6 +59,9 @@ namespace SampleTestProject.CsSamples
     {{
         public void SampleMethod()
         {{
+            var ci = CultureInfo.CurrentCulture;
+            var sc = StringComparison.InvariantCultureIgnoreCase;
+
             var original = ""Original string"";
             var result = original.{methodUsed};
         }}

@@ -26,6 +26,10 @@ namespace BugHunter.Analyzers.StringAndCultureRules.Analyzers
 
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
 
+        private static readonly IDiagnosticFormatter _diagnosticFormatter = DiagnosticFormatterFactory.CreateMemberInvocationOnlyFormatter();
+
+        protected override IDiagnosticFormatter DiagnosticFormatter => _diagnosticFormatter;
+
         public override void Initialize(AnalysisContext context)
         {
             context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.None);
@@ -35,14 +39,9 @@ namespace BugHunter.Analyzers.StringAndCultureRules.Analyzers
         }
 
         // If method is already called with StringComparison argument, no need for diagnostic
-        protected override bool CheckPostConditions(SyntaxNodeAnalysisContext expression, InvocationExpressionSyntax invocationExpression)
+        protected override bool CheckPostConditions(SyntaxNodeAnalysisContext context, InvocationExpressionSyntax invocationExpression)
         {
             return invocationExpression.ArgumentList.Arguments.Count == 0;
         }
-
-
-        private static readonly IDiagnosticFormatter _diagnosticFormatter = DiagnosticFormatterFactory.CreateMemberInvocationOnlyFormatter();
-
-        protected override IDiagnosticFormatter DiagnosticFormatter => _diagnosticFormatter;
     }
 }

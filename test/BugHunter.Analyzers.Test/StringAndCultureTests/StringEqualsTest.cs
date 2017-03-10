@@ -39,6 +39,7 @@ namespace BugHunter.Analyzers.Test.StringAndCultureTests
             VerifyCSharpDiagnostic(test);
         }
 
+        [TestCase(@"Equals(""a"", sc)")]
         [TestCase(@"Equals(""a"", StringComparison.InvariantCultureIgnoreCase)")]
         public void AllowedOverloadCalled_NoDiagnostic(string methodUsed)
         {
@@ -52,6 +53,7 @@ namespace SampleTestProject.CsSamples
     {{
         public void SampleMethod()
         {{
+            var sc = StringComparison.InvariantCultureIgnoreCase;
             var original = ""Original string"";
             var result = original.{methodUsed};
         }}

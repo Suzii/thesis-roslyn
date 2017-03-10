@@ -26,23 +26,38 @@ namespace BugHunter.Analyzers.StringAndCultureRules.Analyzers
         protected override IDiagnosticFormatter DiagnosticFormatter => _diagnosticFormatter;
 
         // If method is already called with StringComparison argument, no need for diagnostic
-        protected override bool CheckPostConditions(SyntaxNodeAnalysisContext expression, InvocationExpressionSyntax invocationExpression)
+        protected override bool CheckPostConditions(SyntaxNodeAnalysisContext context, InvocationExpressionSyntax invocationExpression)
         {
             var arguments = invocationExpression.ArgumentList.Arguments;
 
-            return arguments.Any() && !arguments.Any(a => IsStringComparison(a) || IsCultureInfo(a));
+            return arguments.Any() && !arguments.Any(a => IsStringComparison(a, context) || IsCultureInfo(a, context));
         }
         
-        // TODO check for proper type not just string
-        private bool IsStringComparison(ArgumentSyntax argument)
+        private bool IsStringComparison(ArgumentSyntax argument, SyntaxNodeAnalysisContext context)
         {
-            return argument.Expression.ToString().Contains("StringComparison");
+            return IsOfType(argument, context, "StringComparison", "System.StringComparison");
         }
 
-        // TODO check for proper type not just string
-        private bool IsCultureInfo(ArgumentSyntax argument)
+        private bool IsCultureInfo(ArgumentSyntax argument, SyntaxNodeAnalysisContext context)
         {
-            return argument.Expression.ToString().Contains("CultureInfo");
+            return IsOfType(argument, context, "CultureInfo", "System.Globalization.CultureInfo");
+        }
+
+        private bool IsOfType(ArgumentSyntax argument, SyntaxNodeAnalysisContext context, string typeName, string typeFullName)
+        {
+            if (argument.Expression.ToString().Contains(typeName))
+            {
+                return true;
+            }
+
+            var argumentType = context.SemanticModel.GetTypeInfo(argument.Expression).Type as INamedTypeSymbol;
+            if (argumentType == null)
+            {
+                return false;
+            }
+
+            var searchedTypeInfo = context.Compilation.GetTypeByMetadataName(typeFullName);
+            return argumentType.Equals(searchedTypeInfo);
         }
     }
 }

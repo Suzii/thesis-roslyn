@@ -1,4 +1,5 @@
 using System.Collections.Immutable;
+using System.Linq;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
@@ -25,14 +26,34 @@ namespace BugHunter.Analyzers.StringAndCultureRules.Analyzers
             RegisterAction(Rule, context, "System.String", "IndexOf", "LastIndexOf");
         }
 
-        protected override bool CheckPostConditions(SyntaxNodeAnalysisContext expression, InvocationExpressionSyntax invocationExpression)
+        protected override bool CheckPostConditions(SyntaxNodeAnalysisContext context, InvocationExpressionSyntax invocationExpression)
         {
-            return base.CheckPostConditions(expression, invocationExpression) && !IsFirstArgumentChar(invocationExpression);
+
+            return base.CheckPostConditions(context, invocationExpression) && !IsFirstArgumentChar(context, invocationExpression);
         }
 
-        private static bool IsFirstArgumentChar(InvocationExpressionSyntax invocationExpression)
+        private static bool IsFirstArgumentChar(SyntaxNodeAnalysisContext context, InvocationExpressionSyntax invocationExpression)
         {
-            return invocationExpression.ArgumentList.Arguments.First().Expression.ToString().Trim().StartsWith("'");
+            var firstArgument = invocationExpression
+                .ArgumentList
+                .Arguments
+                .FirstOrDefault()
+                ?.Expression;
+
+            if (firstArgument == null)
+            {
+                return false;
+            }
+
+            if (firstArgument.ToString().StartsWith("'"))
+            {
+                return true;
+            }
+
+            // it can be a variable of type char
+            var firstArgumentType = context.SemanticModel.GetTypeInfo(firstArgument).Type;
+
+            return firstArgumentType?.SpecialType == SpecialType.System_Char;
         }
     }
 }

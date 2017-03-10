@@ -43,7 +43,9 @@ namespace BugHunter.Analyzers.Test.StringAndCultureTests
         }
 
         [TestCase(@"IndexOf(""a"", StringComparison.InvariantCultureIgnoreCase)")]
+        [TestCase(@"IndexOf(""a"", sc)")]
         [TestCase(@"IndexOf('a')")]
+        [TestCase(@"IndexOf(someChar)")]
         [TestCase(@"IndexOf('a', 0)")]
         [TestCase(@"IndexOf('a', 0, 1)")]
         [TestCase(@"LastIndexOf(""a"", StringComparison.InvariantCultureIgnoreCase)")]
@@ -61,6 +63,8 @@ namespace SampleTestProject.CsSamples
     {{
         public void SampleMethod()
         {{
+            var someChar = 'a';
+            var sc = StringComparison.InvariantCultureIgnoreCase;
             var original = ""Original string"";
             var result = original.{methodUsed};
         }}

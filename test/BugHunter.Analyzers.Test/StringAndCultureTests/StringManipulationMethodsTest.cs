@@ -32,6 +32,7 @@ namespace BugHunter.Analyzers.Test.StringAndCultureTests
 
         [TestCase("ToLowerInvariant()")]
         [TestCase("ToLower(CultureInfo.CurrentCulture)")]
+        [TestCase("ToLower(ci)")]
         [TestCase("ToLower(CultureInfo.InvariantCulture)")]
         [TestCase("ToUpperInvariant()")]
         [TestCase("ToUpper(CultureInfo.CurrentCulture)")]
@@ -48,6 +49,7 @@ namespace SampleTestProject.CsSamples
         public void SampleMethod()
         {{
             var original = ""Original string"";
+            var ci = CultureInfo.CurrentCulture;
             var updated = original.{methodUsed};
         }}
     }}

@@ -50,8 +50,10 @@ namespace BugHunter.Analyzers.Test.StringAndCultureTests
         }
 
         [TestCase(@"Compare(""a"", ""b"", false, CultureInfo.CurrentCulture)")]
+        [TestCase(@"Compare(""a"", ""b"", false, ci)")]
         [TestCase(@"Compare(""a"", ""b"", CultureInfo.CurrentCulture, CompareOptions.IgnoreCase)")]
         [TestCase(@"Compare(""a"", ""b"", StringComparison.InvariantCultureIgnoreCase)")]
+        [TestCase(@"Compare(""a"", ""b"", sc)")]
         [TestCase(@"Compare(""a"", 0, ""b"", 1, 1, false, CultureInfo.CurrentCulture)")]
         [TestCase(@"Compare(""a"", 0, ""b"", 1, 1, StringComparison.InvariantCultureIgnoreCase)")]
         public void AllowedOverloadCalled_NoDiagnostic(string methodUsed)
@@ -65,6 +67,8 @@ namespace SampleTestProject.CsSamples
     {{
         public void SampleMethod()
         {{
+            var ci = CultureInfo.CurrentCulture;
+            var sc = StringComparison.InvariantCultureIgnoreCase;
             var result = string.{methodUsed};
         }}
     }}
