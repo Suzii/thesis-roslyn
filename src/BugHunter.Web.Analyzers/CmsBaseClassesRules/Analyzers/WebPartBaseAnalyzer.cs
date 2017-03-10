@@ -94,6 +94,7 @@ namespace BugHunter.Web.Analyzers.CmsBaseClassesRules.Analyzers
                         }
 
                         var diagnostic = CreateDiagnostic(syntaxTreeAnalysisContext, classDeclaration, ruleToBeUsed);
+
                         syntaxTreeAnalysisContext.ReportDiagnostic(diagnostic);
                     }
                 });

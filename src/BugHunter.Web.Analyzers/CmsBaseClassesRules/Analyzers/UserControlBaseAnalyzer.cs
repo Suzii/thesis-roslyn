@@ -40,6 +40,7 @@ namespace BugHunter.Web.Analyzers.CmsBaseClassesRules.Analyzers
 
                 var location = namedTypeSymbol.Locations.FirstOrDefault();
                 var diagnostic = Diagnostic.Create(Rule, location, namedTypeSymbol.Name.ToString());
+
                 symbolAnalysisContext.ReportDiagnostic(diagnostic);
             }, SymbolKind.NamedType);
 
