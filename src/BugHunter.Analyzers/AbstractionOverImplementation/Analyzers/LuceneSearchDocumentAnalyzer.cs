@@ -25,17 +25,16 @@ namespace BugHunter.Analyzers.AbstractionOverImplementation.Analyzers
 
         public override void Initialize(AnalysisContext context)
         {
-            context.EnableConcurrentExecution();
             context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.None);
+            context.EnableConcurrentExecution();
 
             context.RegisterSyntaxNodeAction(Analyze, SyntaxKind.IdentifierName);
         }
 
         private static void Analyze(SyntaxNodeAnalysisContext context)
         {
-            // TODO move to constant
-            var forbiddenTypeFullyQualified = "CMS.Search.Lucene3.LuceneSearchDocument";
-            var forbiddenType = "LuceneSearchDocument";
+            const string forbiddenTypeFullyQualified = "CMS.Search.Lucene3.LuceneSearchDocument";
+            const string forbiddenType = "LuceneSearchDocument";
 
             var identifierNameSyntax = (IdentifierNameSyntax)context.Node;
             if (identifierNameSyntax == null || identifierNameSyntax.IsVar)
@@ -51,10 +50,10 @@ namespace BugHunter.Analyzers.AbstractionOverImplementation.Analyzers
 
             var searchedTargetType = context.SemanticModel.Compilation.GetTypeByMetadataName(forbiddenTypeFullyQualified);
             var actualTargetTypeInfo = context.SemanticModel.GetTypeInfo(identifierNameSyntax);
-            var actualTargetType = actualTargetTypeInfo.Type;
-            if (searchedTargetType == null 
-                || actualTargetType == null 
-                || !(actualTargetType as INamedTypeSymbol).IsDerivedFromClassOrInterface(searchedTargetType))
+            var actualTargetType = actualTargetTypeInfo.Type as INamedTypeSymbol;
+            if (searchedTargetType == null || 
+                actualTargetType == null || 
+                !actualTargetType.IsDerivedFromClassOrInterface(searchedTargetType))
             {
                 return;
             }
@@ -66,6 +65,7 @@ namespace BugHunter.Analyzers.AbstractionOverImplementation.Analyzers
 
             var warningLocation = diagnosedNode.GetLocation();
             var diagnostic = Diagnostic.Create(Rule, warningLocation, diagnosedNode);
+
             context.ReportDiagnostic(diagnostic);
         }
     }

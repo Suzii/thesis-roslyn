@@ -24,6 +24,8 @@ namespace BugHunter.Analyzers.CmsApiGuidelinesRules.Analyzers
 
         private static readonly IDiagnosticFormatter _diagnosticFormatter = new EventLogArgumentsDiagnosticFormatter();
 
+        private static readonly string[] ForbiddenEventTypeArgs = new[] { "\"I\"", "\"W\"", "\"E\"" };
+
         protected override IDiagnosticFormatter DiagnosticFormatter => _diagnosticFormatter;
 
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
@@ -36,18 +38,17 @@ namespace BugHunter.Analyzers.CmsApiGuidelinesRules.Analyzers
             RegisterAction(Rule, context, "CMS.EventLog.EventLogProvider", "LogEvent");
         }
 
-        protected override bool CheckPostConditions(SyntaxNodeAnalysisContext expression, InvocationExpressionSyntax invocationExpression)
+        protected override bool CheckPostConditions(SyntaxNodeAnalysisContext context, InvocationExpressionSyntax invocationExpression)
         {
             if (invocationExpression.ArgumentList.Arguments.Count == 0)
             {
                 return false;
             }
 
-            var forbiddenEventTypeArgs = new[] { "\"I\"", "\"W\"", "\"E\"" };
             var eventTypeArgument = invocationExpression.ArgumentList.Arguments.First();
             var firstArgumentText = eventTypeArgument.Expression.ToString();
 
-            return forbiddenEventTypeArgs.Contains(firstArgumentText);
+            return ForbiddenEventTypeArgs.Contains(firstArgumentText);
         }
     }
 }
