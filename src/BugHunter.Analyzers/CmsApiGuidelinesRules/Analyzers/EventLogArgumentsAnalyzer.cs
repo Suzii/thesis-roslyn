@@ -24,7 +24,7 @@ namespace BugHunter.Analyzers.CmsApiGuidelinesRules.Analyzers
 
         private static readonly IDiagnosticFormatter _diagnosticFormatter = new EventLogArgumentsDiagnosticFormatter();
 
-        private static readonly string[] ForbiddenEventTypeArgs = new[] { "\"I\"", "\"W\"", "\"E\"" };
+        private static readonly string[] ForbiddenEventTypeArgs = { "\"I\"", "\"W\"", "\"E\"" };
 
         protected override IDiagnosticFormatter DiagnosticFormatter => _diagnosticFormatter;
 

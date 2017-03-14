@@ -56,21 +56,13 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.Analyzers
 
         private static Diagnostic GetDiagnostic(ElementAccessExpressionSyntax elementAccess)
         {
-            if (!IsUsedForAssignment(elementAccess))
+            if (!elementAccess.IsBeingAssigned())
             {
                 return Diagnostic.Create(RuleForGet, elementAccess.GetLocation(), elementAccess);
             }
 
             var assignmentExpression = elementAccess.FirstAncestorOrSelf<AssignmentExpressionSyntax>();
             return Diagnostic.Create(RuleForSet, assignmentExpression.GetLocation(), elementAccess);
-        }
-
-        private static bool IsUsedForAssignment(ElementAccessExpressionSyntax elementAccess)
-        {
-            // look for parent of type SimpleAssignmentexpressionSyntax and make sure elementAccess is part of LHS of this assignment
-            var assignmentExpression = elementAccess.FirstAncestorOrSelf<AssignmentExpressionSyntax>();
-
-            return assignmentExpression?.Left.Contains(elementAccess) ?? false;
         }
     }
 }

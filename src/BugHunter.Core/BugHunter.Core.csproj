@@ -110,6 +110,7 @@
     <Compile Include="Extensions\ClassDeclarationSyntaxExtensions.cs" />
     <Compile Include="Extensions\IEnumerableExtensions.cs" />
     <Compile Include="Extensions\InvocationExpressionSyntaxExtensions.cs" />
+    <Compile Include="Extensions\SyntaxNodeExtensions.cs" />
     <Compile Include="Extensions\TypeSymbolExtensions.cs" />
     <Compile Include="Helpers\DiagnosticDescriptionBuilders\BaseClassesInheritanceRuleBuilder.cs" />
     <Compile Include="Helpers\DiagnosticDescriptionBuilders\ApiReplacementRuleBuilder.cs" />
