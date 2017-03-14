@@ -45,7 +45,30 @@ namespace BugHunter.Analyzers.Test.CmsBaseClassesTests
 }}";
             VerifyCSharpDiagnostic(test);
         }
-        
+
+        [Test]
+        public void OkayInput_AbstractModuleNotRegistered_NoDiagnostic()
+        {
+            var test = @"using CMS;
+using CMS.Core;
+using SampleTestProject.CsSamples;
+
+namespace SampleTestProject.CsSamples
+{
+    public abstract class MyModule : CMS.DataEngine.Module
+    {
+        public MyModule(ModuleMetadata metadata, bool isInstallable = false) : base(metadata, isInstallable)
+        {
+        }
+
+        public MyModule(string moduleName, bool isInstallable = false) : base(moduleName, isInstallable)
+        {
+        }
+    }
+}";
+            VerifyCSharpDiagnostic(test);
+        }
+
         [Test]
         public void OkayInput_ModuleIsRegistered_NoDiagnostic()
         {

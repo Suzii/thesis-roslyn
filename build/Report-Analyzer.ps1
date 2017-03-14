@@ -45,7 +45,7 @@ $AnalyzedProjectOrSolution = "C:\TFS\CMS\MAIN\CMSSolution\CMSSolution.sln"
 
 $TmpFolder = "C:\tmp" 
 $MsBuildLogFile = "$TmpFolder\msbuild-output-2017-03-14.txt"
-$AggregateedResults = "$TmpFolder\analyzers-execution-times-aggregated-2017-03-14-isDerivedFrom-optimization-2.txt"
+$AggregateedResults = "$TmpFolder\analyzers-execution-times-aggregated-2017-03-14-moduleRegistrationSymbolAnaysis.txt"
 
 Run-MsBuildWithReportAnalyzer -ProjectOrSolutionFilePath $AnalyzedProjectOrSolution -OutputFile $MsBuildLogFile
 

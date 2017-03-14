@@ -31,53 +31,45 @@ namespace BugHunter.Analyzers.CmsBaseClassesRules.Analyzers
 
         public override void Initialize(AnalysisContext context)
         {
+            context.EnableConcurrentExecution();
             context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.None);
             
-            context.RegisterCompilationStartAction(compilationContext =>
+            context.RegisterSymbolAction(symbolAnalysisContext =>
             {
-                var moduleEntryType = compilationContext.Compilation.GetTypeByMetadataName("CMS.Core.ModuleEntry");
-                var moduleType = compilationContext.Compilation.GetTypeByMetadataName("CMS.DataEngine.Module");
-                if (moduleEntryType == null || moduleType == null)
+                var namedTypeSymbol = symbolAnalysisContext.Symbol as INamedTypeSymbol;
+
+                if (namedTypeSymbol == null ||
+                    namedTypeSymbol.IsAbstract ||
+                    (!namedTypeSymbol.IsDerivedFrom("CMS.Core.ModuleEntry", symbolAnalysisContext.Compilation) &&
+                    !namedTypeSymbol.IsDerivedFrom("CMS.DataEngine.Module", symbolAnalysisContext.Compilation)))
                 {
                     return;
                 }
 
-                // TODO try different order of expressions to tweak with performance and do some benchmarks
-                compilationContext.RegisterSyntaxTreeAction(syntaxTreeAnalysisContext =>
+                // if it is partial definition we might get some false positive diagnostics
+                var syntaxTree = namedTypeSymbol.Locations.FirstOrDefault()?.SourceTree;
+
+                var registeredModuleTypeSyntaxes = GetRegisteredModuleTypeSyntaxes(syntaxTree);
+
+                var moduleTypeSyntaxes = registeredModuleTypeSyntaxes as IList<TypeSyntax> ?? registeredModuleTypeSyntaxes.ToList();
+                if (moduleTypeSyntaxes.Any())
                 {
-                    var filePath = syntaxTreeAnalysisContext.Tree.FilePath;
-                    if (string.IsNullOrEmpty(filePath))
+                    var semanticModel = symbolAnalysisContext.Compilation.GetSemanticModel(syntaxTree);
+                    var registeredModuleTypes = moduleTypeSyntaxes
+                        .Select(typeSyntax => semanticModel.GetSymbolInfo(typeSyntax).Symbol);
+
+                    if (IsModuleRegistered(registeredModuleTypes, namedTypeSymbol))
                     {
                         return;
                     }
+                }
 
-                    var publicInstantiableClassDeclarations = GetAllClassDeclarations(syntaxTreeAnalysisContext)
-                        .Where(classDeclarationSyntax
-                            => classDeclarationSyntax.IsPublic()
-                            && !classDeclarationSyntax.IsAbstract())
-                        .ToArray();
+                var location = namedTypeSymbol.Locations.FirstOrDefault();
+                var diagnostic = Diagnostic.Create(Rule, location, namedTypeSymbol.Name.ToString());
 
-                    if (!publicInstantiableClassDeclarations.Any())
-                    {
-                        return;
-                    }
+                symbolAnalysisContext.ReportDiagnostic(diagnostic);
 
-                    var semanticModel = compilationContext.Compilation.GetSemanticModel(syntaxTreeAnalysisContext.Tree);
-                    var registeredModuleTypeSyntaxes = GetRegisteredModuleTypeSyntaxes(syntaxTreeAnalysisContext);
-                    var registeredModuleTypes = registeredModuleTypeSyntaxes.Select(typeSyntax => semanticModel.GetSymbolInfo(typeSyntax).Symbol);
-
-                    foreach (var classDeclaration in publicInstantiableClassDeclarations)
-                    {
-                        var classTypeSymbol = semanticModel.GetDeclaredSymbol(classDeclaration);
-                        // TODO maybe move the first check up?
-                        if (IsModuleOrModuleEntry(classTypeSymbol, moduleEntryType, moduleType) && !IsModuleRegistered(registeredModuleTypes, classTypeSymbol))
-                        {
-                            var diagnostic = CreateDiagnostic(syntaxTreeAnalysisContext, classDeclaration, Rule);
-                            syntaxTreeAnalysisContext.ReportDiagnostic(diagnostic);
-                        }
-                    }
-                });
-            });
+            }, SymbolKind.NamedType);
         }
 
         private static bool IsModuleOrModuleEntry(INamedTypeSymbol classTypeSymbol, INamedTypeSymbol moduleEntryType, INamedTypeSymbol moduleType)
@@ -91,15 +83,9 @@ namespace BugHunter.Analyzers.CmsBaseClassesRules.Analyzers
             return registeredModules.Any(registeredModule => registeredModule.Equals(moduleToBeChecked));
         }
 
-        private static IEnumerable<TypeSyntax> GetRegisteredModuleTypeSyntaxes(SyntaxTreeAnalysisContext syntaxTreeAnalysisContext)
+        private static IEnumerable<TypeSyntax> GetRegisteredModuleTypeSyntaxes(SyntaxTree syntaxTree)
         {
-            var allAttributeListSyntaxes = syntaxTreeAnalysisContext
-                .Tree
-                .GetRoot()
-                .DescendantNodesAndSelf()
-                .OfType<AttributeListSyntax>();
-
-            var assemblyAttributeListSyntaxes = allAttributeListSyntaxes
+            var assemblyAttributeListSyntaxes = GetAttributeListSyntaxes(syntaxTree)
                 .Where(attributeList => attributeList.Target.Identifier.IsKind(SyntaxKind.AssemblyKeyword));
 
             var registerModuleAssemblyAttributes = assemblyAttributeListSyntaxes
@@ -114,6 +100,19 @@ namespace BugHunter.Analyzers.CmsBaseClassesRules.Analyzers
                 .Select(typeOfExpression => typeOfExpression.Type);
 
             return registeredModuleTypeSyntaxes;
+        }
+
+        private static IEnumerable<AttributeListSyntax> GetAttributeListSyntaxes(SyntaxTree syntaxTree)
+        {
+            if (syntaxTree.HasCompilationUnitRoot)
+            {
+                return syntaxTree.GetCompilationUnitRoot().AttributeLists;
+            }
+
+            return syntaxTree
+                .GetRoot()
+                .DescendantNodesAndSelf()
+                .OfType<AttributeListSyntax>();
         }
     }
 }
