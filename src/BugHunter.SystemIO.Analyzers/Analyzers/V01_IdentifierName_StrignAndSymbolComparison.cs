@@ -97,8 +97,7 @@ namespace BugHunter.SystemIO.Analyzers.Analyzers
             return
                 AnalyzerHelper.WhiteListedTypeNames.Any(
                     whiteListedType =>
-                        identifierNameTypeSymbol.IsDerivedFromClassOrInterface(
-                            context.SemanticModel.Compilation.GetTypeByMetadataName(whiteListedType)));
+                        identifierNameTypeSymbol.IsDerivedFrom(whiteListedType, context.Compilation));
         }
     }
 }

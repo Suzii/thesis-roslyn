@@ -59,7 +59,7 @@ namespace BugHunter.SystemIO.Analyzers.Analyzers
                 return;
             }
 
-            if (allowedSystemIoTypes.Any(allowedType => symbol.ConstructedFrom.IsDerivedFromClassOrInterface(allowedType)))
+            if (allowedSystemIoTypes.Any(allowedType => symbol.ConstructedFrom.IsDerivedFrom(allowedType)))
             {
                 return;
             }

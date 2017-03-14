@@ -1,3 +1,8 @@
+The first three analyzers are a lot slower than the rest. SystemIO seems like to be optimizes already, but the other two will be examined in next versions.
+
+Other interesting thing is that all Http... analyzers are almost twice as slow. Will take alook as well.
+
+
 2,713 s 		- BugHunter.Analyzers.CmsApiReplacementRules.Analyzers.SystemIOAnalyzer
 2,360 s 		- BugHunter.Analyzers.CmsBaseClassesRules.Analyzers.ModuleRegistrationAnalyzer
 1,169 s 		- BugHunter.Analyzers.CmsApiReplacementRules.Analyzers.HttpSessionElementAccessAnalyzer

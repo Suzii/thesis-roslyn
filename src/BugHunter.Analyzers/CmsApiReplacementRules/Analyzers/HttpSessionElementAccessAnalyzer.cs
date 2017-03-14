@@ -29,50 +29,45 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.Analyzers
             context.RegisterSyntaxNodeAction(Analyze, SyntaxKind.ElementAccessExpression);
         }
 
-        private void Analyze(SyntaxNodeAnalysisContext context)
+        private static void Analyze(SyntaxNodeAnalysisContext context)
         {
             var compilation = context.SemanticModel.Compilation;
             var elementAccess = (ElementAccessExpressionSyntax)context.Node;
+            if (elementAccess == null)
+            {
+                return;
+            }
+
             var accessedTypeSymbol = context.SemanticModel.GetTypeInfo(elementAccess.Expression).Type as INamedTypeSymbol;
-            
             if (accessedTypeSymbol == null || (!IsHttpSession(accessedTypeSymbol, compilation) && !IsHttpSessionBase(accessedTypeSymbol, compilation)))
             {
                 return;
+            }
 
-            }
-            
-            if (IsUsedForAssignment(elementAccess))
-            {
-                var assignmentExpression = elementAccess.FirstAncestorOrSelf<AssignmentExpressionSyntax>();
-                var diagnostic = Diagnostic.Create(RuleForSet, assignmentExpression.GetLocation(), elementAccess);
-                context.ReportDiagnostic(diagnostic);
-            }
-            else
-            {
-                var diagnostic = Diagnostic.Create(RuleForGet, elementAccess.GetLocation(), elementAccess);
-                context.ReportDiagnostic(diagnostic);
-            }
+            var diagnostic = GetDiagnostic(elementAccess);
+            context.ReportDiagnostic(diagnostic);
         }
 
         private static bool IsHttpSession(INamedTypeSymbol accessedTypeSymbol, Compilation compilation)
-        {
-            var sessionType = "System.Web.SessionState.HttpSessionState";
-            var sessionTypeSymbol = compilation.GetTypeByMetadataName(sessionType);
-
-            return sessionTypeSymbol != null && accessedTypeSymbol.IsDerivedFromClassOrInterface(sessionTypeSymbol);
-        }
+            => accessedTypeSymbol?.IsDerivedFrom("System.Web.SessionState.HttpSessionState", compilation) ?? false;
 
         private static bool IsHttpSessionBase(INamedTypeSymbol accessedTypeSymbol, Compilation compilation)
-        {
-            var sessionBaseType = "System.Web.HttpSessionStateBase";
-            var sessionBaseTypeSymbol = compilation.GetTypeByMetadataName(sessionBaseType);
+            => accessedTypeSymbol?.IsDerivedFrom("System.Web.HttpSessionStateBase", compilation) ?? false;
 
-            return sessionBaseTypeSymbol != null && accessedTypeSymbol.IsDerivedFromClassOrInterface(sessionBaseTypeSymbol);
+        private static Diagnostic GetDiagnostic(ElementAccessExpressionSyntax elementAccess)
+        {
+            if (!IsUsedForAssignment(elementAccess))
+            {
+                return Diagnostic.Create(RuleForGet, elementAccess.GetLocation(), elementAccess);
+            }
+
+            var assignmentExpression = elementAccess.FirstAncestorOrSelf<AssignmentExpressionSyntax>();
+            return Diagnostic.Create(RuleForSet, assignmentExpression.GetLocation(), elementAccess);
         }
 
-        private bool IsUsedForAssignment(ElementAccessExpressionSyntax elementAccess)
+        private static bool IsUsedForAssignment(ElementAccessExpressionSyntax elementAccess)
         {
-            // look for parent of type SimpleAssignmentexpressionSyntax and make sure elementAccess is an lvalue of this assignment
+            // look for parent of type SimpleAssignmentexpressionSyntax and make sure elementAccess is part of LHS of this assignment
             var assignmentExpression = elementAccess.FirstAncestorOrSelf<AssignmentExpressionSyntax>();
 
             return assignmentExpression?.Left.Contains(elementAccess) ?? false;

@@ -77,7 +77,7 @@ namespace BugHunter.SystemIO.Analyzers.Analyzers
                         continue;
                     }
 
-                    if (_whitelistedTypes.Any(allowedType => symbol.ConstructedFrom.IsDerivedFromClassOrInterface(allowedType)))
+                    if (_whitelistedTypes.Any(allowedType => symbol.ConstructedFrom.IsDerivedFrom(allowedType)))
                     {
                         continue;
                     }

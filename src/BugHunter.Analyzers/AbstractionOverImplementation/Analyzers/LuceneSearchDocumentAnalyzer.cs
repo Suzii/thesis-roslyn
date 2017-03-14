@@ -48,12 +48,9 @@ namespace BugHunter.Analyzers.AbstractionOverImplementation.Analyzers
                 return;
             }
 
-            var searchedTargetType = context.SemanticModel.Compilation.GetTypeByMetadataName(forbiddenTypeFullyQualified);
-            var actualTargetTypeInfo = context.SemanticModel.GetTypeInfo(identifierNameSyntax);
-            var actualTargetType = actualTargetTypeInfo.Type as INamedTypeSymbol;
-            if (searchedTargetType == null || 
-                actualTargetType == null || 
-                !actualTargetType.IsDerivedFromClassOrInterface(searchedTargetType))
+            var actualTargetType = context.SemanticModel.GetTypeInfo(identifierNameSyntax).Type as INamedTypeSymbol;
+            if (actualTargetType == null || 
+                !actualTargetType.IsDerivedFrom(forbiddenTypeFullyQualified, context.Compilation))
             {
                 return;
             }

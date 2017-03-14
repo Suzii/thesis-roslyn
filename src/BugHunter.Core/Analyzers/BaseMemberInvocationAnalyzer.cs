@@ -41,15 +41,9 @@ namespace BugHunter.Core.Analyzers
                 return false;
             }
 
-
-            var searchedTargetType = context.SemanticModel.Compilation.GetTypeByMetadataName(accessedType);
             var actualTargetType = context.SemanticModel.GetTypeInfo(memberAccess.Expression).Type as INamedTypeSymbol;
-            if (searchedTargetType == null || actualTargetType == null)
-            {
-                return false;
-            }
 
-            return actualTargetType.IsDerivedFromClassOrInterface(searchedTargetType);
+            return actualTargetType?.IsDerivedFrom(accessedType, context.Compilation) ?? false;
         }
     }
 }

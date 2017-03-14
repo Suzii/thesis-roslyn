@@ -78,7 +78,7 @@ namespace BugHunter.Web.Analyzers.CmsBaseClassesRules.Analyzers
                     }
 
                     var semanticModel = compilationContext.Compilation.GetSemanticModel(syntaxTreeAnalysisContext.Tree);
-
+                    
                     foreach (var classDeclaration in publicInstantiableClassDeclarations)
                     {
                         var baseTypeTypeSymbol = GetBaseTypeSymbol(classDeclaration, semanticModel);

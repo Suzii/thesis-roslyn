@@ -41,8 +41,9 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.CodeFixes
 
             var semanticModel = await context.Document.GetSemanticModelAsync();
             var enclosingClassType  = semanticModel.GetDeclaredSymbol(enclosingClassName);
-            var uiControlType = semanticModel.Compilation.GetTypeByMetadataName("System.Web.UI.Control");
-            if (enclosingClassType == null || uiControlType == null || !enclosingClassType.IsDerivedFromClassOrInterface(uiControlType))
+            var uiControlType = "System.Web.UI.Control";
+            if (enclosingClassType == null || 
+                !enclosingClassType.IsDerivedFrom(uiControlType, semanticModel.Compilation))
             {
                 return;
             }

@@ -82,11 +82,12 @@ namespace BugHunter.Core.Extensions
 
         /// <summary>
         /// Determines if derived from baseType. Includes itself, all base classes and all interfaces.
+        /// Consider using the second overload as the performance should be better.
         /// </summary>
         /// <param name="type">Type.</param>
         /// <param name="baseType">Base type.</param>
         /// <returns><c>true</c> if is derived from the specified type baseType; otherwise, <c>false</c>.</returns>
-        public static bool IsDerivedFromClassOrInterface(this INamedTypeSymbol type, INamedTypeSymbol baseType)
+        public static bool IsDerivedFrom(this INamedTypeSymbol type, INamedTypeSymbol baseType)
         {
             if (baseType == null)
             {
@@ -111,6 +112,25 @@ namespace BugHunter.Core.Extensions
             var interfaces = type.AllInterfaces.Select(i => i.SafelyConstructUnboundGenericType());
 
             return interfaces.Contains(baseType);
+        }
+
+        /// <summary>
+        /// Determines if derived from baseType. Includes itself, all base classes and all interfaces.
+        /// </summary>
+        /// <param name="type">Type to check</param>
+        /// <param name="baseTypeOrInterfaceName">Fully qualified name of the class or interface the <paramref name="type"/> should be derived from</param>
+        /// <param name="compilation">Containing compilation</param>
+        /// <returns><c>true</c> if is derived from the specified type baseType; otherwise, <c>false</c>.</returns>
+        public static bool IsDerivedFrom(this INamedTypeSymbol type, string baseTypeOrInterfaceName, Compilation compilation)
+        {
+            if (type.Name == baseTypeOrInterfaceName)
+            {
+                return true;
+            }
+
+            var baseClassOrInterfaceType = compilation.GetTypeByMetadataName(baseTypeOrInterfaceName);
+
+            return baseClassOrInterfaceType != null && type.IsDerivedFrom(baseClassOrInterfaceType);
         }
 
         /// <summary>

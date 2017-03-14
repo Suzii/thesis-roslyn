@@ -82,7 +82,7 @@ namespace BugHunter.Analyzers.CmsBaseClassesRules.Analyzers
 
         private static bool IsModuleOrModuleEntry(INamedTypeSymbol classTypeSymbol, INamedTypeSymbol moduleEntryType, INamedTypeSymbol moduleType)
         {
-            return classTypeSymbol != null && (classTypeSymbol.IsDerivedFromClassOrInterface(moduleEntryType) || classTypeSymbol.IsDerivedFromClassOrInterface(moduleType));
+            return classTypeSymbol != null && (classTypeSymbol.IsDerivedFrom(moduleEntryType) || classTypeSymbol.IsDerivedFrom(moduleType));
         }
 
         private static bool IsModuleRegistered(IEnumerable<ISymbol> registeredModuleTypes, INamedTypeSymbol moduleToBeChecked)

@@ -73,11 +73,8 @@ namespace BugHunter.SystemIO.Analyzers.Analyzers
                 return;
             }
 
-            var exceptionType = context.SemanticModel.Compilation.GetTypeByMetadataName("System.IO.IOException");
-            var streamType = context.SemanticModel.Compilation.GetTypeByMetadataName("System.IO.Stream");
-
-            if (symbol.ConstructedFrom.IsDerivedFromClassOrInterface(exceptionType)
-             || symbol.ConstructedFrom.IsDerivedFromClassOrInterface(streamType))
+            if (symbol.ConstructedFrom.IsDerivedFrom("System.IO.IOException", context.Compilation) ||
+                symbol.ConstructedFrom.IsDerivedFrom("System.IO.Stream", context.Compilation))
             {
                 return;
             }
