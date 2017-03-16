@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeFixes;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
@@ -11,10 +12,9 @@ namespace BugHunter.Core.Helpers.CodeFixes
         {
         }
 
-        public async Task<ClassDeclarationSyntax> GetDiagnosedClassDeclarationSyntax(string diagnosticId)
+        public async Task<ClassDeclarationSyntax> GetDiagnosedClassDeclarationSyntax(Diagnostic diagnostic)
         {
             var root = await GetDocumentRoot();
-            var diagnostic = GetFirstDiagnostic(diagnosticId);
             var classDeclaration = root
                 .FindNode(diagnostic.Location.SourceSpan)
                 .AncestorsAndSelf()

@@ -41,14 +41,13 @@ namespace BugHunter.Web.Analyzers.CmsBaseClassesRules.CodeFixes
             var baseTypeCodeFixHelper = new ClassDeclarationCodeFixHelper(context);
 
             var diagnostic = baseTypeCodeFixHelper.GetFirstDiagnostic(FixableDiagnosticIds.ToArray());
-            var diagnosticId = diagnostic.Id;
-            var classDeclaration = await baseTypeCodeFixHelper.GetDiagnosedClassDeclarationSyntax(diagnosticId);
+            var classDeclaration = await baseTypeCodeFixHelper.GetDiagnosedClassDeclarationSyntax(diagnostic);
             if (classDeclaration == null)
             {
                 return;
             }
 
-            var suggestions = diagnosticId == DiagnosticIds.UI_WEB_PART_BASE
+            var suggestions = diagnostic.Id == DiagnosticIds.UI_WEB_PART_BASE
                 ? UiWebPartBaseClasses
                 : WebPartBaseClasses;
 

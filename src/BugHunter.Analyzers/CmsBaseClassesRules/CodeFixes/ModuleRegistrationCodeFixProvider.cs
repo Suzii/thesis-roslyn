@@ -26,8 +26,7 @@ namespace BugHunter.Analyzers.CmsBaseClassesRules.CodeFixes
             var classDeclarationCodeFixHelper = new ClassDeclarationCodeFixHelper(context);
 
             var diagnostic = classDeclarationCodeFixHelper.GetFirstDiagnostic(FixableDiagnosticIds.ToArray());
-            var diagnosticId = diagnostic.Id;
-            var classDeclaration = await classDeclarationCodeFixHelper.GetDiagnosedClassDeclarationSyntax(diagnosticId);
+            var classDeclaration = await classDeclarationCodeFixHelper.GetDiagnosedClassDeclarationSyntax(diagnostic);
             if (classDeclaration == null)
             {
                 return;
