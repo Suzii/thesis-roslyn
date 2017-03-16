@@ -45,7 +45,7 @@ namespace SampleTestProject.CsSamples
             var expectedDiagnostic = new DiagnosticResult
             {
                 Id = DiagnosticIds.HTTP_REQUEST_URL,
-                Message = string.Format(MessagesConstants.MESSAGE, "request.Url", "RequestContext.Url"),
+                Message = string.Format(MessagesConstants.MESSAGE, "request.Url", "RequestContext.URL"),
                 Severity = DiagnosticSeverity.Warning,
                 Locations = new[] { new DiagnosticResultLocation("Test0.cs", 9, 23) }
             };
@@ -86,7 +86,7 @@ namespace SampleTestProject.CsSamples
             var expectedDiagnostic = new DiagnosticResult
             {
                 Id = DiagnosticIds.HTTP_REQUEST_URL,
-                Message = string.Format(MessagesConstants.MESSAGE, $"{requestInstance}.Url", "RequestContext.Url"),
+                Message = string.Format(MessagesConstants.MESSAGE, $"{requestInstance}.Url", "RequestContext.URL"),
                 Severity = DiagnosticSeverity.Warning,
                 Locations = new[] { new DiagnosticResultLocation("Test0.cs", 8, 23) }
             };
@@ -127,7 +127,7 @@ namespace SampleTestProject.CsSamples
             var expectedDiagnostic = new DiagnosticResult
             {
                 Id = DiagnosticIds.HTTP_REQUEST_URL,
-                Message = string.Format(MessagesConstants.MESSAGE, "request.Url", "RequestContext.Url"),
+                Message = string.Format(MessagesConstants.MESSAGE, "request.Url", "RequestContext.URL"),
                 Severity = DiagnosticSeverity.Warning,
                 Locations = new[] { new DiagnosticResultLocation("Test0.cs", 9, 23) }
             };
