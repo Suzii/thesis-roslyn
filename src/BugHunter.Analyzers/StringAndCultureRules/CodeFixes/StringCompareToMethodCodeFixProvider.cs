@@ -45,7 +45,7 @@ namespace BugHunter.Analyzers.StringAndCultureRules.CodeFixes
                 return;
             }
 
-            var namespacesToBeReferenced = "System";
+            const string namespacesToBeReferenced = "System";
             var firstString = SyntaxFactory.Argument(memberAccess.Expression);
             var secondString = invocation.ArgumentList.Arguments.First();
             var staticInvocation = SyntaxFactory.ParseExpression("string.Compare()") as InvocationExpressionSyntax;
@@ -64,7 +64,7 @@ namespace BugHunter.Analyzers.StringAndCultureRules.CodeFixes
             }
         }
 
-        private bool IsChainedMemberAccesses(MemberAccessExpressionSyntax memberAccess)
+        private static bool IsChainedMemberAccesses(MemberAccessExpressionSyntax memberAccess)
         {
             return memberAccess.DescendantNodes().OfType<MemberAccessExpressionSyntax>().Any();
         }

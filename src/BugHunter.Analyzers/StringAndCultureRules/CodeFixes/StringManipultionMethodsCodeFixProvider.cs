@@ -45,7 +45,7 @@ namespace BugHunter.Analyzers.StringAndCultureRules.CodeFixes
             context.RegisterCodeFix(
                 CodeAction.Create(
                     title: CodeFixMessageBuilder.GetReplaceWithMessage(newInvocation2),
-                    createChangedDocument: c => editor.ReplaceExpressionWith(invocation, newInvocation2),
+                    createChangedDocument: c => editor.ReplaceExpressionWith(invocation, newInvocation2, "System.Globalization"),
                     equivalenceKey: $"{nameof(StringManipultionMethodsCodeFixProvider)}-CurrentCulture"),
                 diagnostic);
         }

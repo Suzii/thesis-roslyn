@@ -58,11 +58,11 @@ namespace SampleTestProject.CsSamples
             VerifyCSharpDiagnostic(test);
         }
 
-        [TestCase("ToLower()", "ToLowerInvariant()", 0)]
-        [TestCase("ToLower()", "ToLower(CultureInfo.CurrentCulture)", 1)]
-        [TestCase("ToUpper()", "ToUpperInvariant()", 0)]
-        [TestCase("ToUpper()", "ToUpper(CultureInfo.CurrentCulture)", 1)]
-        public void InputWithIncident_SimpleMemberAccess_SurfacesDiagnostic(string methodUsed, string codeFix, int codeFixNumber)
+        [TestCase("ToLower()", "ToLowerInvariant()", null, 0)]
+        [TestCase("ToLower()", "ToLower(CultureInfo.CurrentCulture)", "using System.Globalization;\r\n\r\n", 1)]
+        [TestCase("ToUpper()", "ToUpperInvariant()", null, 0)]
+        [TestCase("ToUpper()", "ToUpper(CultureInfo.CurrentCulture)", "using System.Globalization;\r\n\r\n", 1)]
+        public void InputWithIncident_SimpleMemberAccess_SurfacesDiagnostic(string methodUsed, string codeFix, string usings, int codeFixNumber)
         {   
             var test = $@"namespace SampleTestProject.CsSamples 
 {{
@@ -79,7 +79,7 @@ namespace SampleTestProject.CsSamples
             var expectedDiagnostic = GetDiagnosticResult(methodUsed).WithLocation(8, 36);
             VerifyCSharpDiagnostic(test, expectedDiagnostic);
 
-            var expectedFix = $@"namespace SampleTestProject.CsSamples 
+            var expectedFix = $@"{usings}namespace SampleTestProject.CsSamples 
 {{
     public class SampleClass
     {{
@@ -93,11 +93,11 @@ namespace SampleTestProject.CsSamples
             VerifyCSharpFix(test, expectedFix, codeFixNumber);
         }
 
-        [TestCase("ToLower()", "ToLowerInvariant()", 0)]
-        [TestCase("ToLower()", "ToLower(CultureInfo.CurrentCulture)", 1)]
-        [TestCase("ToUpper()", "ToUpperInvariant()", 0)]
-        [TestCase("ToUpper()", "ToUpper(CultureInfo.CurrentCulture)", 1)]
-        public void InputWithIncident_FollowUpMemberAccess_SurfacesDiagnostic(string methodUsed, string codeFix, int codeFixNumber)
+        [TestCase("ToLower()", "ToLowerInvariant()", null, 0)]
+        [TestCase("ToLower()", "ToLower(CultureInfo.CurrentCulture)", "using System.Globalization;\r\n\r\n", 1)]
+        [TestCase("ToUpper()", "ToUpperInvariant()", null, 0)]
+        [TestCase("ToUpper()", "ToUpper(CultureInfo.CurrentCulture)", "using System.Globalization;\r\n\r\n", 1)]
+        public void InputWithIncident_FollowUpMemberAccess_SurfacesDiagnostic(string methodUsed, string codeFix, string usings, int codeFixNumber)
         {
             var test = $@"namespace SampleTestProject.CsSamples 
 {{
@@ -110,11 +110,10 @@ namespace SampleTestProject.CsSamples
         }}
     }}
 }}";
-
             var expectedDiagnostic = GetDiagnosticResult(methodUsed).WithLocation(8, 36);
             VerifyCSharpDiagnostic(test, expectedDiagnostic);
 
-            var expectedFix = $@"namespace SampleTestProject.CsSamples 
+            var expectedFix = $@"{usings}namespace SampleTestProject.CsSamples 
 {{
     public class SampleClass
     {{
@@ -128,11 +127,11 @@ namespace SampleTestProject.CsSamples
             VerifyCSharpFix(test, expectedFix, codeFixNumber);
         }
 
-        [TestCase("ToLower()", "ToLowerInvariant()", 0)]
-        [TestCase("ToLower()", "ToLower(CultureInfo.CurrentCulture)", 1)]
-        [TestCase("ToUpper()", "ToUpperInvariant()", 0)]
-        [TestCase("ToUpper()", "ToUpper(CultureInfo.CurrentCulture)", 1)]
-        public void InputWithIncident_PrecedingMemberAccess_SurfacesDiagnostic(string methodUsed, string codeFix, int codeFixNumber)
+        [TestCase("ToLower()", "ToLowerInvariant()", null, 0)]
+        [TestCase("ToLower()", "ToLower(CultureInfo.CurrentCulture)", "using System.Globalization;\r\n\r\n", 1)]
+        [TestCase("ToUpper()", "ToUpperInvariant()", null, 0)]
+        [TestCase("ToUpper()", "ToUpper(CultureInfo.CurrentCulture)", "using System.Globalization;\r\n\r\n", 1)]
+        public void InputWithIncident_PrecedingMemberAccess_SurfacesDiagnostic(string methodUsed, string codeFix, string usings, int codeFixNumber)
         {
             var test = $@"namespace SampleTestProject.CsSamples 
 {{
@@ -149,7 +148,7 @@ namespace SampleTestProject.CsSamples
             var expectedDiagnostic = GetDiagnosticResult(methodUsed).WithLocation(8, 49);
             VerifyCSharpDiagnostic(test, expectedDiagnostic);
 
-            var expectedFix = $@"namespace SampleTestProject.CsSamples 
+            var expectedFix = $@"{usings}namespace SampleTestProject.CsSamples 
 {{
     public class SampleClass
     {{

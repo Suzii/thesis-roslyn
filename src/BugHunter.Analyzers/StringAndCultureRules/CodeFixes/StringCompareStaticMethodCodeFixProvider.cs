@@ -34,8 +34,8 @@ namespace BugHunter.Analyzers.StringAndCultureRules.CodeFixes
                 return;
             }
 
+            const string namespacesToBeReferenced = "System";
             var tempInvocation = invocation;
-            var namespacesToBeReferenced = "System";
             var strignComparisonOptions = StringComparisonOptions.GetAll();
 
             // if it was diagnosed and overload with three or six arguments is called it must be:

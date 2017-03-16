@@ -33,7 +33,7 @@ namespace BugHunter.Analyzers.StringAndCultureRules.CodeFixes
                 return;
             }
 
-            var namespacesToBeReferenced = "System";
+            const string namespacesToBeReferenced = "System";
 
             foreach (var strignComparisonOption in StringComparisonOptions.GetAll())
             {
