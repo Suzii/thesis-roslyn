@@ -21,9 +21,7 @@ namespace BugHunter.Web.Analyzers.CmsApiGuidelinesRules.CodeFixes
             => ImmutableArray.Create(ValidationHelperGetAnalyzer.DIAGNOSTIC_ID);
 
         public sealed override FixAllProvider GetFixAllProvider()
-        {
-            return WellKnownFixAllProviders.BatchFixer;
-        }
+            => WellKnownFixAllProviders.BatchFixer;
 
         public sealed override async Task RegisterCodeFixesAsync(CodeFixContext context)
         {

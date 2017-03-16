@@ -24,9 +24,7 @@ namespace BugHunter.Analyzers.StringAndCultureRules.CodeFixes
             => ImmutableArray.Create(StringCompareToMethodAnalyzer.DIAGNOSTIC_ID);
 
         public sealed override FixAllProvider GetFixAllProvider()
-        {
-            return WellKnownFixAllProviders.BatchFixer;
-        }
+            => WellKnownFixAllProviders.BatchFixer;
 
         public sealed override async Task RegisterCodeFixesAsync(CodeFixContext context)
         {

@@ -22,9 +22,7 @@ namespace BugHunter.Analyzers.CmsApiGuidelinesRules.CodeFixes
             => ImmutableArray.Create(EventLogArgumentsAnalyzer.DIAGNOSTIC_ID);
 
         public sealed override FixAllProvider GetFixAllProvider()
-        {
-            return WellKnownFixAllProviders.BatchFixer;
-        }
+            => WellKnownFixAllProviders.BatchFixer;
 
         public sealed override async Task RegisterCodeFixesAsync(CodeFixContext context)
         {
@@ -60,7 +58,7 @@ namespace BugHunter.Analyzers.CmsApiGuidelinesRules.CodeFixes
             var newInvocationExpression = invocationExpression.WithArgumentList(newArgumentList);
 
             var newRoot = root.ReplaceNode(invocationExpression, newInvocationExpression);
-            newRoot = UsingsHelper.EnsureUsings((CompilationUnitSyntax)newRoot, GetNamespaceNameToBeReferenced());
+            newRoot = UsingsHelper.EnsureUsings((CompilationUnitSyntax)newRoot, "CMS.EventLog");
             var newDocument = document.WithSyntaxRoot(newRoot);
 
             return newDocument;
@@ -79,11 +77,6 @@ namespace BugHunter.Analyzers.CmsApiGuidelinesRules.CodeFixes
                 default:
                     throw new ArgumentOutOfRangeException(nameof(oldArgument));
             }
-        }
-
-        private string GetNamespaceNameToBeReferenced()
-        {
-            return "CMS.EventLog";
         }
     }
 }

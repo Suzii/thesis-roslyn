@@ -20,9 +20,7 @@ namespace BugHunter.Web.Analyzers.CmsBaseClassesRules.CodeFixes
             => ImmutableArray.Create(UserControlBaseAnalyzer.DIAGNOSTIC_ID);
 
         public sealed override FixAllProvider GetFixAllProvider()
-        {
-            return WellKnownFixAllProviders.BatchFixer;
-        }
+            => WellKnownFixAllProviders.BatchFixer;
 
         private static readonly ClassAndItsNamespace[] SuggestedBaseClasses =
         {

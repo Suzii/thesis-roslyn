@@ -20,12 +20,10 @@ namespace BugHunter.Web.Analyzers.CmsBaseClassesRules.CodeFixes
             => ImmutableArray.Create(WebPartBaseAnalyzer.WEB_PART_DIAGNOSTIC_ID, WebPartBaseAnalyzer.UI_WEB_PART_DIAGNOSTIC_ID);
 
         public sealed override FixAllProvider GetFixAllProvider()
-        {
-            return WellKnownFixAllProviders.BatchFixer;
-        }
+            => WellKnownFixAllProviders.BatchFixer;
 
         private static readonly ClassAndItsNamespace[] UiWebPartBaseClasses =
-{
+        {
             new ClassAndItsNamespace { ClassNamespace = "CMS.UIControls", ClassName = "CMSAbstractUIWebpart"},
         };
 

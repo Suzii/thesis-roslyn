@@ -20,9 +20,7 @@ namespace BugHunter.Analyzers.AbstractionOverImplementation.CodeFixes
             => ImmutableArray.Create(LuceneSearchDocumentAnalyzer.DIAGNOSTIC_ID);
 
         public sealed override FixAllProvider GetFixAllProvider()
-        {
-            return WellKnownFixAllProviders.BatchFixer;
-        }
+            => WellKnownFixAllProviders.BatchFixer;
 
         public sealed override async Task RegisterCodeFixesAsync(CodeFixContext context)
         {
@@ -31,15 +29,15 @@ namespace BugHunter.Analyzers.AbstractionOverImplementation.CodeFixes
             
             var editor = new CodeFixHelper(context);
             var root = await context.Document.GetSyntaxRootAsync(context.CancellationToken);
-            NameSyntax diagnosedNode = root.FindNode(diagnosticSpan).FirstAncestorOrSelf<QualifiedNameSyntax>() ??
-                                       (NameSyntax) root.FindNode(diagnosticSpan).FirstAncestorOrSelf<IdentifierNameSyntax>();
+            var diagnosedNode = root.FindNode(diagnosticSpan).FirstAncestorOrSelf<QualifiedNameSyntax>() ??
+                                (NameSyntax) root.FindNode(diagnosticSpan).FirstAncestorOrSelf<IdentifierNameSyntax>();
 
             if (diagnosedNode == null)
             {
                 return;
             }
 
-            var usingNamespace = "CMS.DataEngine";
+            const string usingNamespace = "CMS.DataEngine";
             var newIdentifierNameNode = SyntaxFactory.ParseExpression("ISearchDocument");
             
             context.RegisterCodeFix(

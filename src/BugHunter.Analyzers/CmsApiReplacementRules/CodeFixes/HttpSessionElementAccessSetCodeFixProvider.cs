@@ -20,9 +20,7 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.CodeFixes
             => ImmutableArray.Create(HttpSessionElementAccessAnalyzer.DIAGNOSTIC_ID_SET);
 
         public sealed override FixAllProvider GetFixAllProvider()
-        {
-            return WellKnownFixAllProviders.BatchFixer;
-        }
+            => WellKnownFixAllProviders.BatchFixer;
 
         public sealed override async Task RegisterCodeFixesAsync(CodeFixContext context)
         {
