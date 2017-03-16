@@ -212,7 +212,7 @@ namespace SampleTestProject.CsSamples
         }
 
         [Test, TestCaseSource(nameof(CodeFixesTestSource))]
-        public void InputWithError_ClassImplementingSomeInterface_ProvidesCodefixes(string fileLocation, string baseClassToExtend, string namespaceToBeUsed, int codeFixNumber)
+        public void InputWithNoError_ClassOnlyImplementingSomeInterface_NoDiagnostic(string fileLocation, string baseClassToExtend, string namespaceToBeUsed, int codeFixNumber)
         {
             var test = $@"namespace SampleTestProject.CsSamples
 {{
@@ -222,21 +222,8 @@ namespace SampleTestProject.CsSamples
     }}
 }}";
             var fakeFileInfo = new FakeFileInfo { FileLocation = fileLocation };
-            var expectedDiagnostic = GetDiagnosticResult(fileLocation, "SampleClass").WithLocation(3, 18, fakeFileInfo);
-            
-            VerifyCSharpDiagnostic(test, fakeFileInfo, expectedDiagnostic);
 
-            var expectedFix = $@"using {namespaceToBeUsed};
-
-namespace SampleTestProject.CsSamples
-{{
-    public class SampleClass : {baseClassToExtend}, System.IDisposable
-    {{
-        public void Dispose() {{ }}
-    }}
-}}";
-
-            VerifyCSharpFix(test, expectedFix, codeFixNumber, false, fakeFileInfo);
+            VerifyCSharpDiagnostic(test, fakeFileInfo);
         }
 
         [Test, TestCaseSource(nameof(CodeFixesTestSource))]

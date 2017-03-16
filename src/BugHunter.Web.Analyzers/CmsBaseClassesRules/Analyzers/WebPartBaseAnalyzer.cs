@@ -43,62 +43,95 @@ namespace BugHunter.Web.Analyzers.CmsBaseClassesRules.Analyzers
             context.EnableConcurrentExecution();
             context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.None);
 
-            context.RegisterCompilationStartAction(compilationContext =>
+            context.RegisterSymbolAction(symbolAnalysisContext =>
             {
-                // leave here for performance optimization
-                var uiWebPartBaseTypes = UiWebPartBases.Select(compilationContext.Compilation.GetTypeByMetadataName).ToArray();
-                var webPartBaseTypes = WebPartBases.Select(compilationContext.Compilation.GetTypeByMetadataName).ToArray();
-
-                if (uiWebPartBaseTypes.Union(webPartBaseTypes).Any(baseType => baseType == null))
+                var namedTypeSymbol = symbolAnalysisContext.Symbol as INamedTypeSymbol;
+                if (namedTypeSymbol == null || namedTypeSymbol.IsAbstract)
                 {
                     return;
                 }
 
-                compilationContext.RegisterSyntaxTreeAction(syntaxTreeAnalysisContext =>
+                // Symbol is defined in multiple locations if it is a partial class -- all locations need to be checked
+                var symbolFilePaths = namedTypeSymbol.Locations.Select(location => location?.SourceTree?.FilePath).ToArray();
+                var isInWebPartsFolder = symbolFilePaths.Any(FileIsInWebPartsFolder);
+                if (!isInWebPartsFolder)
                 {
-                    var filePath = syntaxTreeAnalysisContext.Tree.FilePath;
-                    if (!FileIsInWebPartsFolder(filePath))
-                    {
-                        return;
-                    }
+                    return;
+                }
 
-                    var isUIWebPart = IsUIWebPart(filePath);
-                    var enforcedWebPatBaseTypes = isUIWebPart ? uiWebPartBaseTypes : webPartBaseTypes;
-                    var ruleToBeUsed = isUIWebPart ? UiWebPartRule : WebPartRule;
+                var isUiWebPart = symbolFilePaths.Any(IsUIWebPart);
+                var allowedBaseTypeNames = isUiWebPart ? UiWebPartBases : WebPartBases;
+                var ruleToBeUsed = isUiWebPart ? UiWebPartRule : WebPartRule;
 
-                    var publicInstantiableClassDeclarations = GetAllClassDeclarations(syntaxTreeAnalysisContext)
-                        .Where(classDeclarationSyntax
-                            => classDeclarationSyntax.IsPublic()
-                            && !classDeclarationSyntax.IsAbstract())
-                        .ToArray();
+                var baseTypeSymbol = namedTypeSymbol.BaseType;
+                var doesNotExtendAnything = baseTypeSymbol?.SpecialType == SpecialType.System_Object;
+                var inheritsFromOneOfRequiredTypes = allowedBaseTypeNames.Any(allowedTypeName => allowedTypeName.Equals(baseTypeSymbol?.ToString()));
+                if (doesNotExtendAnything || inheritsFromOneOfRequiredTypes)
+                {
+                    return;
+                }
 
-                    if (!publicInstantiableClassDeclarations.Any())
-                    {
-                        return;
-                    }
+                // TODO how to use all locations
+                var diagnostic = Diagnostic.Create(ruleToBeUsed, namedTypeSymbol.Locations.FirstOrDefault(), namedTypeSymbol.Name);
+                symbolAnalysisContext.ReportDiagnostic(diagnostic);
+            }, SymbolKind.NamedType);
 
-                    var semanticModel = compilationContext.Compilation.GetSemanticModel(syntaxTreeAnalysisContext.Tree);
+            //context.RegisterCompilationStartAction(compilationContext =>
+            //{
+            //    // leave here for performance optimization
+            //    var uiWebPartBaseTypes = UiWebPartBases.Select(compilationContext.Compilation.GetTypeByMetadataName).ToArray();
+            //    var webPartBaseTypes = WebPartBases.Select(compilationContext.Compilation.GetTypeByMetadataName).ToArray();
+
+            //    if (uiWebPartBaseTypes.Union(webPartBaseTypes).Any(baseType => baseType == null))
+            //    {
+            //        return;
+            //    }
+
+            //    compilationContext.RegisterSyntaxTreeAction(syntaxTreeAnalysisContext =>
+            //    {
+            //        var filePath = syntaxTreeAnalysisContext.Tree.FilePath;
+            //        if (!FileIsInWebPartsFolder(filePath))
+            //        {
+            //            return;
+            //        }
+
+            //        var isUIWebPart = IsUIWebPart(filePath);
+            //        var enforcedWebPatBaseTypes = isUIWebPart ? uiWebPartBaseTypes : webPartBaseTypes;
+            //        var ruleToBeUsed = isUIWebPart ? UiWebPartRule : WebPartRule;
+
+            //        var publicInstantiableClassDeclarations = GetAllClassDeclarations(syntaxTreeAnalysisContext)
+            //            .Where(classDeclarationSyntax
+            //                => classDeclarationSyntax.IsPublic()
+            //                && !classDeclarationSyntax.IsAbstract())
+            //            .ToArray();
+
+            //        if (!publicInstantiableClassDeclarations.Any())
+            //        {
+            //            return;
+            //        }
+
+            //        var semanticModel = compilationContext.Compilation.GetSemanticModel(syntaxTreeAnalysisContext.Tree);
                     
-                    foreach (var classDeclaration in publicInstantiableClassDeclarations)
-                    {
-                        var baseTypeTypeSymbol = GetBaseTypeSymbol(classDeclaration, semanticModel);
-                        if (baseTypeTypeSymbol == null)
-                        {
-                            continue;
-                        }
+            //        foreach (var classDeclaration in publicInstantiableClassDeclarations)
+            //        {
+            //            var baseTypeTypeSymbol = GetBaseTypeSymbol(classDeclaration, semanticModel);
+            //            if (baseTypeTypeSymbol == null)
+            //            {
+            //                continue;
+            //            }
 
-                        // if class inherits from one of enforced base types, skip
-                        if (enforcedWebPatBaseTypes.Any(enforcedWebPartBase => baseTypeTypeSymbol.Equals(enforcedWebPartBase)))
-                        {
-                            continue;
-                        }
+            //            // if class inherits from one of enforced base types, skip
+            //            if (enforcedWebPatBaseTypes.Any(enforcedWebPartBase => baseTypeTypeSymbol.Equals(enforcedWebPartBase)))
+            //            {
+            //                continue;
+            //            }
 
-                        var diagnostic = CreateDiagnostic(syntaxTreeAnalysisContext, classDeclaration, ruleToBeUsed);
+            //            var diagnostic = CreateDiagnostic(syntaxTreeAnalysisContext, classDeclaration, ruleToBeUsed);
 
-                        syntaxTreeAnalysisContext.ReportDiagnostic(diagnostic);
-                    }
-                });
-            });
+            //            syntaxTreeAnalysisContext.ReportDiagnostic(diagnostic);
+            //        }
+            //    });
+            //});
         }
         
         private static bool FileIsInWebPartsFolder(string filePath)
