@@ -12,31 +12,7 @@ namespace BugHunter.Analyzers.Test.CmsApiReplacementsTests
 {
     [TestFixture]
     public class SystemIOTestLive : SystemIOTest<SystemIOAnalyzer> { }
-
-    //[TestFixture]
-    //public class SystemIOTestV1 : SystemIOTest<V1_IdentifierName_StrignAndSymbolComparison> { }
-
-    //[TestFixture]
-    //public class SystemIOTestV2 : SystemIOTest<V2_IdentifierName_SymbolAnalysis> { }
-
-    //[TestFixture]
-    //public class SystemIOTestV4 : SystemIOTest<V4_CompilationStartAndIdentifierName_SymbolAnalysis> { }
-
-    //[TestFixture]
-    //public class SystemIOTestV5 : SystemIOTest<V5_CompilationStartIdentifierNameAndEnd_SymbolAnalysis_WithBag> { }
-
-    //[TestFixture]
-    //public class SystemIOTestV6 : SystemIOTest<V6_CompilationStartAndSyntaxTree_LookForIdentifierNames> { }
-
-    //[TestFixture]
-    //public class SystemIOTestV7 : SystemIOTest<V7_CompilationStartSyntaxTreeAndEnd_FulltextSearchAndSymbolAnallysis_WithBag> { }
-
-    //[TestFixture]
-    //public class SystemIOTestV8 : SystemIOTest<V8_CompilationStartSyntaxTreeAndEnd_FulltextSearchAndSymbolParallelAnallysis_WithBag> { }
-
-    //[TestFixture]
-    //public class SystemIOTestV9 : SystemIOTest<V9_CompilationStartSyntaxTreeAndEnd_FulltextSearchAndSymbolParallelExecutionAndAnallysis_WithBag> { }
-
+    
     public class SystemIOTest<TAnalyzer> : CodeFixVerifier<TAnalyzer> where TAnalyzer : DiagnosticAnalyzer, new()
     {
         protected override MetadataReference[] GetAdditionalReferences()
@@ -64,6 +40,25 @@ namespace SampleTestProject.CsSamples
         public {returnInMethodSignature} SampleMethod()
         {{ 
             return {returnInMethodBody};
+        }}
+    }}
+}}";
+
+            VerifyCSharpDiagnostic(test);
+        }
+
+        [TestCase("using System.IO;\r\n", "Stream.Null", "SeekOrigin.Begin")]
+        [TestCase("", "System.IO.Stream.Null", "System.IO.SeekOrigin.Begin")]
+        public void OkInput_IOStreamWithSeekOrigin_NoDiagnostic(string usingDirectives, string streamInstance, string seekOrigin)
+        {
+            var test = $@"{usingDirectives}
+namespace SampleTestProject.CsSamples
+{{
+    public class SampleClass
+    {{
+        public void SampleMethod()
+        {{ 
+            var stream = {streamInstance}.Seek(0, {seekOrigin});
         }}
     }}
 }}";

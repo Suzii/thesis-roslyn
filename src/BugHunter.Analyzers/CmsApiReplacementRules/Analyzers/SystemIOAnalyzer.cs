@@ -65,7 +65,8 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.Analyzers
                 var rootIdentifierNameText = rootIdentifierName.ToString();
                 if (!rootIdentifierNameText.Contains("System.IO")
                     || rootIdentifierNameText.Contains("IOException")
-                    || rootIdentifierNameText.Contains("Stream"))
+                    || rootIdentifierNameText.Contains("Stream")
+                    || rootIdentifierNameText.Contains("SeekOrigin"))
                 {
                     return;
                 }
@@ -77,6 +78,7 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.Analyzers
                 return;
             }
 
+            // leave like this, not StartsWith() - e.g. System.IO.Compression is okay
             var symbolContainingNamespace = symbol.ContainingNamespace;
             if (!symbolContainingNamespace.ToString().Equals("System.IO"))
             {
@@ -84,7 +86,8 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.Analyzers
             }
             
             if (symbol.ConstructedFrom.IsDerivedFrom("System.IO.IOException", context.Compilation) || 
-                symbol.ConstructedFrom.IsDerivedFrom("System.IO.Stream", context.Compilation))
+                symbol.ConstructedFrom.IsDerivedFrom("System.IO.Stream", context.Compilation) ||
+                symbol.ConstructedFrom.IsDerivedFrom("System.IO.SeekOrigin", context.Compilation))
             {
                 return;
             }
