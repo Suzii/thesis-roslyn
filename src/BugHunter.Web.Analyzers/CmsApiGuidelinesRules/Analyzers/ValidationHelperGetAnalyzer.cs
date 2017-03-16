@@ -1,9 +1,11 @@
-﻿using System.Collections.Immutable;
+﻿using System;
+using System.Collections.Immutable;
 using BugHunter.Core;
 using BugHunter.Core.Analyzers;
 using BugHunter.Core.DiagnosticsFormatting;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
+using BugHunter.Core.Extensions;
 
 namespace BugHunter.Web.Analyzers.CmsApiGuidelinesRules.Analyzers
 {
@@ -39,6 +41,18 @@ namespace BugHunter.Web.Analyzers.CmsApiGuidelinesRules.Analyzers
                 "GetDecimal", 
                 "GetDate", 
                 "GetDateTime");
+        }
+        
+        protected override bool CheckPreConditions(SyntaxNodeAnalysisContext context)
+        {
+            return base.CheckPreConditions(context) && FileIsInWebPartsFolder(context.Node.SyntaxTree.FilePath);
+        }
+
+        private static bool FileIsInWebPartsFolder(string filePath)
+        {
+            return !string.IsNullOrEmpty(filePath) &&
+                   !filePath.Contains("_files\\") &&
+                   (filePath.Contains(SolutionFolders.UI_WEB_PARTS, StringComparison.OrdinalIgnoreCase) || filePath.Contains(SolutionFolders.WEB_PARTS, StringComparison.OrdinalIgnoreCase));
         }
     }
 }

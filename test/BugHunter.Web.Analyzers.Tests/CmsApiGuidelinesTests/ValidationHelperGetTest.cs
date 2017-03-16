@@ -27,12 +27,36 @@ namespace BugHunter.Web.Analyzers.Tests.CmsApiGuidelinesTests
             };
         }
 
+        private readonly FakeFileInfo _fakeFileInfo = new FakeFileInfo { FileLocation = SolutionFolders.WEB_PARTS };
+
         [Test]
         public void EmptyInput_NoDiagnostic()
         {
             var test = @"";
 
             VerifyCSharpDiagnostic(test);
+        }
+
+        [TestCase(@"something\_files")]
+        [TestCase(@"this\is\an\excluded\path")]
+        public void OkInput_ClassOnExcludedPath_NoDiagnostic(string excludedPath)
+        {
+            var test = $@"using System;
+using System.Globalization;
+using CMS.Helpers;
+
+namespace SampleTestProject.CsSamples
+{{
+    public class SampleClass
+    {{
+        public void SampleMethod()
+        {{
+            ValidationHelper.GetDouble(""0"", 0).ToString();
+        }}
+    }}
+}}";
+            var fakeFileInfo = new FakeFileInfo { FileLocation = excludedPath };
+            VerifyCSharpDiagnostic(test, fakeFileInfo);
         }
 
         [TestCase(@"GetDouble(""0"", 0)", @"GetDoubleSystem(""0"", 0)")]
@@ -61,9 +85,9 @@ namespace SampleTestProject.CsSamples
         }}
     }}
 }}";
-            var expectedDiagnostic = GetDiagnosticResult(oldUsage.Substring(0, oldUsage.IndexOf("(", StringComparison.Ordinal))).WithLocation(11, 30);
+            var expectedDiagnostic = GetDiagnosticResult(oldUsage.Substring(0, oldUsage.IndexOf("(", StringComparison.Ordinal))).WithLocation(11, 30, _fakeFileInfo);
 
-            VerifyCSharpDiagnostic(test, expectedDiagnostic);
+            VerifyCSharpDiagnostic(test, _fakeFileInfo, expectedDiagnostic);
             var expectedFix = $@"using System;
 using System.Globalization;
 using CMS.Helpers;
@@ -79,7 +103,7 @@ namespace SampleTestProject.CsSamples
     }}
 }}";
 
-            VerifyCSharpFix(test, expectedFix, null, true);
+            VerifyCSharpFix(test, expectedFix, null, true, _fakeFileInfo);
         }
     }
 }
