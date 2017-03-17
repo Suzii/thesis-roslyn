@@ -16,9 +16,15 @@ namespace BugHunter.Core.Extensions
         /// <param name="namedTypeSymbol">TypeSymbol to be examined</param>
         /// <returns>True if <param name="namedTypeSymbol"></param>is nested</returns>
         public static bool IsNested(this INamedTypeSymbol namedTypeSymbol)
-        {
-            return namedTypeSymbol.ContainingSymbol.Kind == SymbolKind.NamedType; 
-        }
+            => namedTypeSymbol.ContainingSymbol.Kind == SymbolKind.NamedType; 
+
+        /// <summary>
+        /// Determines whether <param name="namedTypeSymbol"></param> has only <see cref="object"/> in inheritance hierarchy
+        /// </summary>
+        /// <param name="namedTypeSymbol">TypeSymbol to be examined</param>
+        /// <returns>True if type symbol only extends <see cref="object"/></returns>
+        public static bool ExtendsOnlyObject(this INamedTypeSymbol namedTypeSymbol)
+            => namedTypeSymbol?.BaseType?.SpecialType == SpecialType.System_Object;
 
         /// <summary>
         /// Gets the invoke method for a delegate type.
