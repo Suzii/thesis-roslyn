@@ -91,6 +91,23 @@ namespace BugHunter.Web.Analyzers.Tests.CmsBaseClassesTests
             VerifyCSharpDiagnostic(test, new FakeFileInfo {FileLocation = excludedPath});
         }
 
+        [Test]
+        public void OkInput_NestedClass_NoDiagnostic()
+        {
+            var test = $@"namespace SampleTestProject.CsSamples
+{{
+    public class SampleClass : CMS.PortalEngine.Web.UI.CMSAbstractWebPart
+    {{
+
+         public class NestedNoDiagnostic {{ }}
+
+         internal enum NestedEnumNoDiagnostic {{ }}
+    }}
+}}";
+
+            VerifyCSharpDiagnostic(test, new FakeFileInfo { FileLocation = SolutionFolders.WEB_PARTS });
+        }
+
         [TestCase(nameof(CMS.UIControls.CMSAbstractUIWebpart), "using CMS.UIControls;\r\n\r\n", SolutionFolders.UI_WEB_PARTS)]
         [TestCase(nameof(CMS.PortalEngine.Web.UI.CMSAbstractWebPart), "using CMS.PortalEngine.Web.UI;\r\n\r\n", SolutionFolders.WEB_PARTS)]
         [TestCase(nameof(CMS.PortalEngine.Web.UI.CMSAbstractEditableWebPart), "using CMS.PortalEngine.Web.UI;\r\n\r\n", SolutionFolders.WEB_PARTS)]

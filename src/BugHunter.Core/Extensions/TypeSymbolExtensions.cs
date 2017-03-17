@@ -11,6 +11,16 @@ namespace BugHunter.Core.Extensions
     public static class TypeSymbolExtensions
     {
         /// <summary>
+        /// Determines whether <param name="namedTypeSymbol"></param> is a nested in some other named type
+        /// </summary>
+        /// <param name="namedTypeSymbol">TypeSymbol to be examined</param>
+        /// <returns>True if <param name="namedTypeSymbol"></param>is nested</returns>
+        public static bool IsNested(this INamedTypeSymbol namedTypeSymbol)
+        {
+            return namedTypeSymbol.ContainingSymbol.Kind == SymbolKind.NamedType; 
+        }
+
+        /// <summary>
         /// Gets the invoke method for a delegate type.
         /// </summary>
         /// <remarks>

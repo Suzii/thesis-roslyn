@@ -46,7 +46,7 @@ namespace BugHunter.Web.Analyzers.CmsBaseClassesRules.Analyzers
             context.RegisterSymbolAction(symbolAnalysisContext =>
             {
                 var namedTypeSymbol = symbolAnalysisContext.Symbol as INamedTypeSymbol;
-                if (namedTypeSymbol == null || namedTypeSymbol.IsAbstract)
+                if (namedTypeSymbol == null || namedTypeSymbol.IsAbstract || namedTypeSymbol.IsNested())
                 {
                     return;
                 }
