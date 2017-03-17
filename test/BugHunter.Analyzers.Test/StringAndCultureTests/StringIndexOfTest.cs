@@ -12,14 +12,19 @@ namespace BugHunter.Analyzers.Test.StringAndCultureTests
     {
         static readonly object[] TestSource =
         {
-            new object[] { @"IndexOf(""a"")", @"IndexOf(""a"", StringComparison.CurrentCulture)", 0 },
-            new object[] { @"IndexOf(""a"")", @"IndexOf(""a"", StringComparison.CurrentCultureIgnoreCase)", 1 },
-            new object[] { @"IndexOf(""a"")", @"IndexOf(""a"", StringComparison.InvariantCulture)", 2 },
-            new object[] { @"IndexOf(""a"")", @"IndexOf(""a"", StringComparison.InvariantCultureIgnoreCase)", 3 },
-            new object[] { @"LastIndexOf(""a"")", @"LastIndexOf(""a"", StringComparison.CurrentCulture)", 0 },
-            new object[] { @"LastIndexOf(""a"")", @"LastIndexOf(""a"", StringComparison.CurrentCultureIgnoreCase)", 1 },
-            new object[] { @"LastIndexOf(""a"")", @"LastIndexOf(""a"", StringComparison.InvariantCulture)", 2 },
-            new object[] { @"LastIndexOf(""a"")", @"LastIndexOf(""a"", StringComparison.InvariantCultureIgnoreCase)", 3 },
+            new object[] { @"IndexOf(""a"")", @"IndexOf(""a"", StringComparison.Ordinal)", 0 },
+            new object[] { @"IndexOf(""a"")", @"IndexOf(""a"", StringComparison.OrdinalIgnoreCase)", 1 },
+            new object[] { @"IndexOf(""a"")", @"IndexOf(""a"", StringComparison.CurrentCulture)", 2 },
+            new object[] { @"IndexOf(""a"")", @"IndexOf(""a"", StringComparison.CurrentCultureIgnoreCase)", 3 },
+            new object[] { @"IndexOf(""a"")", @"IndexOf(""a"", StringComparison.InvariantCulture)", 4 },
+            new object[] { @"IndexOf(""a"")", @"IndexOf(""a"", StringComparison.InvariantCultureIgnoreCase)", 5 },
+
+            new object[] { @"LastIndexOf(""a"")", @"LastIndexOf(""a"", StringComparison.Ordinal)", 0 },
+            new object[] { @"LastIndexOf(""a"")", @"LastIndexOf(""a"", StringComparison.OrdinalIgnoreCase)", 1 },
+            new object[] { @"LastIndexOf(""a"")", @"LastIndexOf(""a"", StringComparison.CurrentCulture)", 2 },
+            new object[] { @"LastIndexOf(""a"")", @"LastIndexOf(""a"", StringComparison.CurrentCultureIgnoreCase)", 3 },
+            new object[] { @"LastIndexOf(""a"")", @"LastIndexOf(""a"", StringComparison.InvariantCulture)", 4 },
+            new object[] { @"LastIndexOf(""a"")", @"LastIndexOf(""a"", StringComparison.InvariantCultureIgnoreCase)", 5 },
         };
 
         protected override MetadataReference[] GetAdditionalReferences() => null;

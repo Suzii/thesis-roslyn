@@ -12,10 +12,12 @@ namespace BugHunter.Analyzers.Test.StringAndCultureTests
     {
         static readonly object[] TestSource =
         {
-            new object[] { @"Equals(""a"", ""b"")", @"Equals(""a"", ""b"", StringComparison.CurrentCulture)", 0 },
-            new object[] { @"Equals(""a"", ""b"")", @"Equals(""a"", ""b"", StringComparison.CurrentCultureIgnoreCase)", 1 },
-            new object[] { @"Equals(""a"", ""b"")", @"Equals(""a"", ""b"", StringComparison.InvariantCulture)", 2 },
-            new object[] { @"Equals(""a"", ""b"")", @"Equals(""a"", ""b"", StringComparison.InvariantCultureIgnoreCase)", 3 },
+            new object[] { @"Equals(""a"", ""b"")", @"Equals(""a"", ""b"", StringComparison.Ordinal)", 0 },
+            new object[] { @"Equals(""a"", ""b"")", @"Equals(""a"", ""b"", StringComparison.OrdinalIgnoreCase)", 1 },
+            new object[] { @"Equals(""a"", ""b"")", @"Equals(""a"", ""b"", StringComparison.CurrentCulture)", 2 },
+            new object[] { @"Equals(""a"", ""b"")", @"Equals(""a"", ""b"", StringComparison.CurrentCultureIgnoreCase)", 3 },
+            new object[] { @"Equals(""a"", ""b"")", @"Equals(""a"", ""b"", StringComparison.InvariantCulture)", 4 },
+            new object[] { @"Equals(""a"", ""b"")", @"Equals(""a"", ""b"", StringComparison.InvariantCultureIgnoreCase)", 5 },
         };
 
         protected override MetadataReference[] GetAdditionalReferences() => null;

@@ -24,14 +24,19 @@ namespace BugHunter.Analyzers.Test.StringAndCultureTests
 
         static readonly object[] TestSource =
         {
-            new object[] { @"StartsWith(""a"")", @"StartsWith(""a"", StringComparison.CurrentCulture)", 0 },
-            new object[] { @"StartsWith(""a"")", @"StartsWith(""a"", StringComparison.CurrentCultureIgnoreCase)", 1 },
-            new object[] { @"StartsWith(""a"")", @"StartsWith(""a"", StringComparison.InvariantCulture)", 2 },
-            new object[] { @"StartsWith(""a"")", @"StartsWith(""a"", StringComparison.InvariantCultureIgnoreCase)", 3 },
-            new object[] { @"EndsWith(""a"")", @"EndsWith(""a"", StringComparison.CurrentCulture)", 0 },
-            new object[] { @"EndsWith(""a"")", @"EndsWith(""a"", StringComparison.CurrentCultureIgnoreCase)", 1 },
-            new object[] { @"EndsWith(""a"")", @"EndsWith(""a"", StringComparison.InvariantCulture)", 2 },
-            new object[] { @"EndsWith(""a"")", @"EndsWith(""a"", StringComparison.InvariantCultureIgnoreCase)", 3 },
+            new object[] { @"StartsWith(""a"")", @"StartsWith(""a"", StringComparison.Ordinal)", 0 },
+            new object[] { @"StartsWith(""a"")", @"StartsWith(""a"", StringComparison.OrdinalIgnoreCase)", 1 },
+            new object[] { @"StartsWith(""a"")", @"StartsWith(""a"", StringComparison.CurrentCulture)", 2 },
+            new object[] { @"StartsWith(""a"")", @"StartsWith(""a"", StringComparison.CurrentCultureIgnoreCase)", 3 },
+            new object[] { @"StartsWith(""a"")", @"StartsWith(""a"", StringComparison.InvariantCulture)", 4 },
+            new object[] { @"StartsWith(""a"")", @"StartsWith(""a"", StringComparison.InvariantCultureIgnoreCase)", 5 },
+
+            new object[] { @"EndsWith(""a"")", @"EndsWith(""a"", StringComparison.Ordinal)", 0 },
+            new object[] { @"EndsWith(""a"")", @"EndsWith(""a"", StringComparison.OrdinalIgnoreCase)", 1 },
+            new object[] { @"EndsWith(""a"")", @"EndsWith(""a"", StringComparison.CurrentCulture)", 2 },
+            new object[] { @"EndsWith(""a"")", @"EndsWith(""a"", StringComparison.CurrentCultureIgnoreCase)", 3 },
+            new object[] { @"EndsWith(""a"")", @"EndsWith(""a"", StringComparison.InvariantCulture)", 4 },
+            new object[] { @"EndsWith(""a"")", @"EndsWith(""a"", StringComparison.InvariantCultureIgnoreCase)", 5 },
         };
 
         [Test]

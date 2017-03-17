@@ -12,10 +12,12 @@ namespace BugHunter.Analyzers.Test.StringAndCultureTests
     {
         static readonly object[] TestSource =
         {
-            new object[] { @"CompareTo(""a"")", @"string.Compare(""aa"", ""a"", StringComparison.CurrentCulture)", 0 },
-            new object[] { @"CompareTo(""a"")", @"string.Compare(""aa"", ""a"", StringComparison.CurrentCultureIgnoreCase)", 1 },
-            new object[] { @"CompareTo(""a"")", @"string.Compare(""aa"", ""a"", StringComparison.InvariantCulture)", 2 },
-            new object[] { @"CompareTo(""a"")", @"string.Compare(""aa"", ""a"", StringComparison.InvariantCultureIgnoreCase)", 3 },
+            new object[] { @"CompareTo(""a"")", @"string.Compare(""aa"", ""a"", StringComparison.Ordinal)", 0 },
+            new object[] { @"CompareTo(""a"")", @"string.Compare(""aa"", ""a"", StringComparison.OrdinalIgnoreCase)", 1 },
+            new object[] { @"CompareTo(""a"")", @"string.Compare(""aa"", ""a"", StringComparison.CurrentCulture)", 2 },
+            new object[] { @"CompareTo(""a"")", @"string.Compare(""aa"", ""a"", StringComparison.CurrentCultureIgnoreCase)", 3 },
+            new object[] { @"CompareTo(""a"")", @"string.Compare(""aa"", ""a"", StringComparison.InvariantCulture)", 4 },
+            new object[] { @"CompareTo(""a"")", @"string.Compare(""aa"", ""a"", StringComparison.InvariantCultureIgnoreCase)", 5 },
         };
 
         protected override MetadataReference[] GetAdditionalReferences() => null;

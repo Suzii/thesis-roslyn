@@ -13,20 +13,26 @@ namespace BugHunter.Analyzers.Test.StringAndCultureTests
     {
         static readonly object[] TestSource =
         {
-            new object[] { @"Compare(""a"", ""aa"")", @"Compare(""a"", ""aa"", StringComparison.CurrentCulture)", 0 },
-            new object[] { @"Compare(""a"", ""aa"")", @"Compare(""a"", ""aa"", StringComparison.CurrentCultureIgnoreCase)", 1 },
-            new object[] { @"Compare(""a"", ""aa"")", @"Compare(""a"", ""aa"", StringComparison.InvariantCulture)", 2 },
-            new object[] { @"Compare(""a"", ""aa"")", @"Compare(""a"", ""aa"", StringComparison.InvariantCultureIgnoreCase)", 3 },
+            new object[] { @"Compare(""a"", ""aa"")", @"Compare(""a"", ""aa"", StringComparison.Ordinal)", 0 },
+            new object[] { @"Compare(""a"", ""aa"")", @"Compare(""a"", ""aa"", StringComparison.OrdinalIgnoreCase)", 1 },
+            new object[] { @"Compare(""a"", ""aa"")", @"Compare(""a"", ""aa"", StringComparison.CurrentCulture)", 2 },
+            new object[] { @"Compare(""a"", ""aa"")", @"Compare(""a"", ""aa"", StringComparison.CurrentCultureIgnoreCase)", 3 },
+            new object[] { @"Compare(""a"", ""aa"")", @"Compare(""a"", ""aa"", StringComparison.InvariantCulture)", 4 },
+            new object[] { @"Compare(""a"", ""aa"")", @"Compare(""a"", ""aa"", StringComparison.InvariantCultureIgnoreCase)", 5 },
 
-            new object[] { @"Compare(""a"", ""aa"", true)", @"Compare(""a"", ""aa"", StringComparison.CurrentCultureIgnoreCase)", 0 },
-            new object[] { @"Compare(""a"", ""aa"", true)", @"Compare(""a"", ""aa"", StringComparison.InvariantCultureIgnoreCase)", 1 },
-            new object[] { @"Compare(""a"", ""aa"", false)", @"Compare(""a"", ""aa"", StringComparison.CurrentCulture)", 0 },
-            new object[] { @"Compare(""a"", ""aa"", false)", @"Compare(""a"", ""aa"", StringComparison.InvariantCulture)", 1 },
+            new object[] { @"Compare(""a"", ""aa"", true)", @"Compare(""a"", ""aa"", StringComparison.OrdinalIgnoreCase)", 0 },
+            new object[] { @"Compare(""a"", ""aa"", true)", @"Compare(""a"", ""aa"", StringComparison.CurrentCultureIgnoreCase)", 1 },
+            new object[] { @"Compare(""a"", ""aa"", true)", @"Compare(""a"", ""aa"", StringComparison.InvariantCultureIgnoreCase)", 2 },
+            new object[] { @"Compare(""a"", ""aa"", false)", @"Compare(""a"", ""aa"", StringComparison.Ordinal)", 0 },
+            new object[] { @"Compare(""a"", ""aa"", false)", @"Compare(""a"", ""aa"", StringComparison.CurrentCulture)", 1 },
+            new object[] { @"Compare(""a"", ""aa"", false)", @"Compare(""a"", ""aa"", StringComparison.InvariantCulture)", 2 },
 
-            new object[] { @"Compare(""a"", 0, ""aa"", 0, 1, true)", @"Compare(""a"", 0, ""aa"", 0, 1, StringComparison.CurrentCultureIgnoreCase)", 0 },
-            new object[] { @"Compare(""a"", 0, ""aa"", 0, 1, true)", @"Compare(""a"", 0, ""aa"", 0, 1, StringComparison.InvariantCultureIgnoreCase)", 1 },
-            new object[] { @"Compare(""a"", 0, ""aa"", 0, 1, false)", @"Compare(""a"", 0, ""aa"", 0, 1, StringComparison.CurrentCulture)", 0 },
-            new object[] { @"Compare(""a"", 0, ""aa"", 0, 1, false)", @"Compare(""a"", 0, ""aa"", 0, 1, StringComparison.InvariantCulture)", 1 },
+            new object[] { @"Compare(""a"", 0, ""aa"", 0, 1, true)", @"Compare(""a"", 0, ""aa"", 0, 1, StringComparison.OrdinalIgnoreCase)", 0 },
+            new object[] { @"Compare(""a"", 0, ""aa"", 0, 1, true)", @"Compare(""a"", 0, ""aa"", 0, 1, StringComparison.CurrentCultureIgnoreCase)", 1 },
+            new object[] { @"Compare(""a"", 0, ""aa"", 0, 1, true)", @"Compare(""a"", 0, ""aa"", 0, 1, StringComparison.InvariantCultureIgnoreCase)", 2 },
+            new object[] { @"Compare(""a"", 0, ""aa"", 0, 1, false)", @"Compare(""a"", 0, ""aa"", 0, 1, StringComparison.Ordinal)", 0 },
+            new object[] { @"Compare(""a"", 0, ""aa"", 0, 1, false)", @"Compare(""a"", 0, ""aa"", 0, 1, StringComparison.CurrentCulture)", 1 },
+            new object[] { @"Compare(""a"", 0, ""aa"", 0, 1, false)", @"Compare(""a"", 0, ""aa"", 0, 1, StringComparison.InvariantCulture)", 2 },
         };
 
         protected override MetadataReference[] GetAdditionalReferences() => null;
@@ -159,7 +165,7 @@ namespace SampleTestProject.CsSamples
         }}
     }}
 }}";
-            Assert.Throws<ArgumentOutOfRangeException>(() => VerifyCSharpFix(test, test, 2));
+            Assert.Throws<ArgumentOutOfRangeException>(() => VerifyCSharpFix(test, test, 3));
         }
     }
 }
