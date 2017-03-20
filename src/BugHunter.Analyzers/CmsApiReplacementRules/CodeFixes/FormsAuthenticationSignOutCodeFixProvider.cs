@@ -23,23 +23,23 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.CodeFixes
 
         public sealed override async Task RegisterCodeFixesAsync(CodeFixContext context)
         {
-            var editor = new MemberAccessCodeFixHelper(context);
-            var memberAccess = await editor.GetDiagnosedMemberAccess();
+            var editor = new MemberInvocationCodeFixHelper(context);
+            var invocationExpression = await editor.GetDiagnosedInvocation();
 
-            if (memberAccess == null)
+            if (invocationExpression == null)
             {
                 return;
             }
 
             var usingNamespace = "CMS.Membership";
             // parenthesis (for method invocation) will be reused from previous code
-            var newMemberAccess = SyntaxFactory.ParseExpression("AuthenticationHelper.SignOut");
+            var newExpressionBody = SyntaxFactory.ParseExpression("AuthenticationHelper.SignOut");
             var diagnostic = context.Diagnostics.First();
 
             context.RegisterCodeFix(
                 CodeAction.Create(
-                    title: CodeFixMessageBuilder.GetReplaceWithMessage(newMemberAccess),
-                    createChangedDocument: c => editor.ReplaceExpressionWith(memberAccess, newMemberAccess, usingNamespace),
+                    title: CodeFixMessageBuilder.GetReplaceWithMessage(newExpressionBody),
+                    createChangedDocument: c => editor.ReplaceExpressionWith(invocationExpression.Expression, newExpressionBody, usingNamespace),
                     equivalenceKey: nameof(FormsAuthenticationSignOutCodeFixProvider)),
                 diagnostic);
         }

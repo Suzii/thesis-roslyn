@@ -10,7 +10,7 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.Analyzers
     /// Searches for usages of <see cref="System.Web.Security.FormsAuthentication"/> and their access to SignOut member
     /// </summary>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class FormsAuthenticationSignOut : BaseMemberAccessAnalyzer
+    public class FormsAuthenticationSignOut : BaseMemberInvocationAnalyzer
     {
         public const string DIAGNOSTIC_ID = DiagnosticIds.FORMS_AUTHENTICATION_SIGN_OUT;
 

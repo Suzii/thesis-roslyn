@@ -32,7 +32,8 @@ namespace BugHunter.Core.Analyzers
             // invocation expression is not part of member access
             if (memberAccess == null)
             {
-                return false;
+                // TODO it can be child of a ConditionalAccessExpression
+                return false; 
             }
 
             var memberName = memberAccess.Name.ToString();
