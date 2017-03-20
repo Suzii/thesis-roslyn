@@ -2,7 +2,6 @@
 using System.Collections.Immutable;
 using System.Linq;
 using BugHunter.Core;
-using BugHunter.Core.Analyzers;
 using BugHunter.Core.Extensions;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
@@ -15,7 +14,7 @@ namespace BugHunter.Analyzers.CmsBaseClassesRules.Analyzers
     /// Checks Modules and ModuleEntries are registered in file where they are declared
     /// </summary>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class ModuleRegistrationAnalyzer : BaseClassDeclarationSyntaxAnalyzer
+    public class ModuleRegistrationAnalyzer : DiagnosticAnalyzer
     {
         public const string DIAGNOSTIC_ID = DiagnosticIds.MODULE_REGISTRATION;
 

@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Threading.Tasks;
 using BenchmarkDotNet.Configs;
 using BenchmarkDotNet.Running;
 using BugHunter.AnalyzersBenchmarks.Benchmarks.BaseClasses;
-using BugHunter.AnalyzersBenchmarks.Benchmarks.CallbacksBinding;
 using BugHunter.AnalyzersBenchmarks.Benchmarks.SystemIo;
 using BugHunter.AnalyzersBenchmarks.Configuration;
 

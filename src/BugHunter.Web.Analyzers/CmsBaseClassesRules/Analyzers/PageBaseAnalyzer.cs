@@ -1,6 +1,5 @@
 ﻿using System.Collections.Immutable;
 using System.Linq;
-using BugHunter.Core.Analyzers;
 using BugHunter.Core.Helpers.DiagnosticDescriptionBuilders;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
@@ -11,7 +10,7 @@ namespace BugHunter.Web.Analyzers.CmsBaseClassesRules.Analyzers
     /// Checks if Page file inherits from right class.
     /// </summary>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class PageBaseAnalyzer : BaseClassDeclarationSyntaxAnalyzer
+    public class PageBaseAnalyzer : DiagnosticAnalyzer
     {
         public const string DIAGNOSTIC_ID = DiagnosticIds.PAGE_BASE;
 

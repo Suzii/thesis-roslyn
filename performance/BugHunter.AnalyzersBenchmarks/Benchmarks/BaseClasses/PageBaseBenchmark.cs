@@ -3,7 +3,6 @@ using BenchmarkDotNet.Attributes;
 using BugHunter.AnalyzersBenchmarks.Benchmarks.BaseClasses.Analyzers;
 using BugHunter.TestUtils;
 using BugHunter.TestUtils.Helpers;
-using BugHunter.Web.Analyzers.CmsBaseClassesRules.Analyzers;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
 using SampleProjectGenerator.CodeGenerators.BaseClassRules.Implementation;

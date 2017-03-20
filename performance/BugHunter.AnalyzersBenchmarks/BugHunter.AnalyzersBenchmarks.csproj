@@ -486,6 +486,7 @@
     <Compile Include="BenchmarkingBaselineAnalyzers\MemberAccessSingleCallbackAnalyzer.cs" />
     <Compile Include="BenchmarkingBaselineAnalyzers\SyntaxNodeClassDeclarationBaselineAnalyzer.cs" />
     <Compile Include="BenchmarkingBaselineAnalyzers\SyntaxNodeIdentifierNameBaselineAnalyzer.cs" />
+    <Compile Include="Benchmarks\BaseClasses\Analyzers\BaseClassDeclarationSyntaxAnalyzer.cs" />
     <Compile Include="Benchmarks\BaseClasses\Analyzers\PageBaseAnalyzer_V1_SyntaxTree.cs" />
     <Compile Include="Benchmarks\BaseClasses\Analyzers\PageBaseAnalyzer_V2_NamedTypeSymbol.cs" />
     <Compile Include="Benchmarks\BaseClasses\Analyzers\PageBaseAnalyzer_V3_NamedTypeSymbolToString.cs" />

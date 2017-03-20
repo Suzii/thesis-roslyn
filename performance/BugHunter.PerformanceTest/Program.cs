@@ -2,7 +2,6 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics;
@@ -13,13 +12,10 @@ using System.Threading.Tasks;
 using System.Windows.Threading;
 using BugHunter.Analyzers.CmsApiReplacementRules.Analyzers;
 using BugHunter.PerformanceTest.Helpers;
-using BugHunter.PerformanceTest.Models;
-using BugHunter.SystemIO.Analyzers.Analyzers;
 using BugHunter.Web.Analyzers.CmsBaseClassesRules.Analyzers;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeActions;
 using Microsoft.CodeAnalysis.CodeFixes;
-using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Diagnostics;
 using Microsoft.CodeAnalysis.MSBuild;
 using File = System.IO.File;
