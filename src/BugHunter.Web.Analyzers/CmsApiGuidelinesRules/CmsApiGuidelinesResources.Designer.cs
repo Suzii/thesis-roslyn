@@ -107,7 +107,7 @@ namespace BugHunter.Web.Analyzers.CmsApiGuidelinesRules {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Do not use {0}(). Use Get method with &apos;System&apos; instead to ensure specific culture representation..
+        ///   Looks up a localized string similar to Do not use {0}. Use Get method with &apos;System&apos; instead to ensure specific culture representation..
         /// </summary>
         internal static string ValidationHelperGet_MessageFormat {
             get {

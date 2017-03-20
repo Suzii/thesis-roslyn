@@ -126,7 +126,7 @@
     <comment>0 - forbidden usage</comment>
   </data>
   <data name="ValidationHelperGet_MessageFormat" xml:space="preserve">
-    <value>Do not use {0}(). Use Get method with 'System' instead to ensure specific culture representation.</value>
+    <value>Do not use {0}. Use Get method with 'System' instead to ensure specific culture representation.</value>
     <comment>0 - forbidden usage</comment>
   </data>
   <data name="ValidationHelperGet_Title" xml:space="preserve">

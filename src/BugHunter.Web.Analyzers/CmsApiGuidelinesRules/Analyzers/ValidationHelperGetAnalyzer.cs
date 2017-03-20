@@ -13,7 +13,7 @@ namespace BugHunter.Web.Analyzers.CmsApiGuidelinesRules.Analyzers
     /// Searches for usages of <c>CMS.Helpers.ValidationHelper</c> and their access to <c>GetDouble</c>, <c>GetDateTime</c> methods
     /// </summary>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class ValidationHelperGetAnalyzer : BaseMemberAccessAnalyzer
+    public class ValidationHelperGetAnalyzer : BaseMemberInvocationAnalyzer
     {
         public const string DIAGNOSTIC_ID = DiagnosticIds.VALIDATION_HELPER_GET;
         
@@ -27,7 +27,7 @@ namespace BugHunter.Web.Analyzers.CmsApiGuidelinesRules.Analyzers
 
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
 
-        private static readonly IDiagnosticFormatter _diagnosticFormatter = DiagnosticFormatterFactory.CreateMemberAccessOnlyFormatter();
+        private static readonly IDiagnosticFormatter _diagnosticFormatter = DiagnosticFormatterFactory.CreateMemberInvocationOnlyFormatter(true);
 
         protected override IDiagnosticFormatter DiagnosticFormatter => _diagnosticFormatter;
 

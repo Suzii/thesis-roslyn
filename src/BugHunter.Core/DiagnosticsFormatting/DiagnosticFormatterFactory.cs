@@ -24,10 +24,17 @@ namespace BugHunter.Core.DiagnosticsFormatting
             return new MemberInvocationDiagnosticFormatter();
         }
 
-        public static IDiagnosticFormatter CreateMemberInvocationOnlyFormatter()
+        public static IDiagnosticFormatter CreateMemberInvocationOnlyFormatter(bool stripOfArgsFromMessage = false)
         {
+            if (stripOfArgsFromMessage)
+            {
+                return new MemberInvocationOnlyNoArgsDiagnosticFormatter();
+            }
+
             return new MemberInvocationOnlyDiagnosticFormatter();
         }
+
+
 
         public static IDiagnosticFormatter CreateFormatter<TFormatter>()
             where TFormatter : IDiagnosticFormatter, new()

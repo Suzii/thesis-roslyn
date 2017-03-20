@@ -25,24 +25,25 @@ namespace BugHunter.Web.Analyzers.CmsApiGuidelinesRules.CodeFixes
 
         public sealed override async Task RegisterCodeFixesAsync(CodeFixContext context)
         {
-            var editor = new MemberAccessCodeFixHelper(context);
-            var memberAccess = await editor.GetDiagnosedMemberAccess();
+            var editor = new MemberInvocationCodeFixHelper(context);
+            var invocationExpression = await editor.GetDiagnosedInvocation();
 
-            var enclosingInvocation = memberAccess?.FirstAncestorOrSelf<InvocationExpressionSyntax>();
-            if (enclosingInvocation == null)
+            if (invocationExpression == null)
             {
                 return;
             }
 
-            var argumentsToSustain = enclosingInvocation.ArgumentList.Arguments.Take(2).ToArray();
-            var newInvocation = SyntaxFactory.ParseExpression($"ValidationHelper.{memberAccess.Name}System()") as InvocationExpressionSyntax;
+            var argumentsToSustain = invocationExpression.ArgumentList.Arguments.Take(2).ToArray();
+            var newInvocation =
+                SyntaxFactory.InvocationExpression(
+                    SyntaxFactory.ParseExpression($"{invocationExpression.Expression}System"));
             newInvocation = newInvocation.AppendArguments(argumentsToSustain);
 
             var diagnostic = context.Diagnostics.First();
             context.RegisterCodeFix(
                 CodeAction.Create(
                     title: CodeFixMessageBuilder.GetReplaceWithMessage(newInvocation),
-                    createChangedDocument: c => editor.ReplaceExpressionWith(enclosingInvocation, newInvocation, "CMS.Helpers"),
+                    createChangedDocument: c => editor.ReplaceExpressionWith(invocationExpression, newInvocation, "CMS.Helpers"),
                     equivalenceKey: nameof(ValidationHelperGetCodeFixProvider)),
                 diagnostic);
         }
