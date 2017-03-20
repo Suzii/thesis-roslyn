@@ -7,11 +7,11 @@ using Microsoft.CodeAnalysis.Diagnostics;
 namespace BugHunter.Analyzers.CmsApiReplacementRules.Analyzers
 {
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class HttpResponseRedirectAnalyzer : BaseMemberAccessAnalyzer
+    public class HttpResponseRedirectAnalyzer : BaseMemberInvocationAnalyzer
     {
         public const string DIAGNOSTIC_ID = DiagnosticIds.HTTP_RESPONSE_REDIRECT;
 
-        private static readonly DiagnosticDescriptor Rule = ApiReplacementRuleBuilder.GetRule(DIAGNOSTIC_ID, "Response.Redirect");
+        private static readonly DiagnosticDescriptor Rule = ApiReplacementRuleBuilder.GetRule(DIAGNOSTIC_ID, "Response.Redirect()");
 
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
 

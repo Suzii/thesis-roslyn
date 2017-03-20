@@ -23,17 +23,17 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.CodeFixes
 
         public sealed override async Task RegisterCodeFixesAsync(CodeFixContext context)
         {
-            var editor = new MemberAccessCodeFixHelper(context);
-            var memberAccess = await editor.GetDiagnosedMemberAccess();
+            var editor = new MemberInvocationCodeFixHelper(context);
+            var invocationExpression = await editor.GetDiagnosedInvocation();
 
-            if (memberAccess == null)
+            if (invocationExpression == null)
             {
                 return;
             }
 
             var usingNamespace = "CMS.Helpers";
-            var codeFix1 = SyntaxFactory.ParseExpression("UrlHelper.Redirect");
-            var codeFix2 = SyntaxFactory.ParseExpression("UrlHelper.LocalRedirect");
+            var codeFix1 = SyntaxFactory.InvocationExpression(SyntaxFactory.ParseExpression("UrlHelper.Redirect"), invocationExpression.ArgumentList);
+            var codeFix2 = SyntaxFactory.InvocationExpression(SyntaxFactory.ParseExpression("UrlHelper.LocalRedirect"), invocationExpression.ArgumentList);
 
             var message1 = $"{CodeFixMessageBuilder.GetReplaceWithMessage(codeFix2)} {CmsApiReplacementsResources.RedirectCodeFixLocal}";
             var message2 = $"{CodeFixMessageBuilder.GetReplaceWithMessage(codeFix2)} {CmsApiReplacementsResources.RedirectCodeFixExternal}";
@@ -43,14 +43,14 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.CodeFixes
             context.RegisterCodeFix(
                 CodeAction.Create(
                     title: message1,
-                    createChangedDocument: c => editor.ReplaceExpressionWith(memberAccess, codeFix1, usingNamespace),
+                    createChangedDocument: c => editor.ReplaceExpressionWith(invocationExpression, codeFix1, usingNamespace),
                     equivalenceKey: nameof(HttpResponseRedirectCodeFixProvider)),
                 diagnostic);
 
             context.RegisterCodeFix(
                 CodeAction.Create(
                     title: message2,
-                    createChangedDocument: c => editor.ReplaceExpressionWith(memberAccess, codeFix2, usingNamespace),
+                    createChangedDocument: c => editor.ReplaceExpressionWith(invocationExpression, codeFix2, usingNamespace),
                     equivalenceKey: nameof(HttpResponseRedirectCodeFixProvider) + "Local"),
                     diagnostic);
         }

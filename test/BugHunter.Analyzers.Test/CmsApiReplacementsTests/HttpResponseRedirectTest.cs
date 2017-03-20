@@ -18,6 +18,16 @@ namespace BugHunter.Analyzers.Test.CmsApiReplacementsTests
             return ReferencesHelper.CMSBasicReferences.Union(new[] { ReferencesHelper.SystemWebReference }).ToArray();
         }
 
+        private static DiagnosticResult CreateDiagnosticResult(params object[] messageArgs)
+        {
+            return new DiagnosticResult
+            {
+                Id = DiagnosticIds.HTTP_RESPONSE_REDIRECT,
+                Message = string.Format(MessagesConstants.MESSAGE_NO_SUGGESTION, messageArgs),
+                Severity = DiagnosticSeverity.Warning,
+            };
+        }
+
         [Test]
         public void EmptyInput_NoDiagnostic()
         {
@@ -44,13 +54,7 @@ namespace SampleTestProject.CsSamples
         }}
     }}
 }}";
-            var expectedDiagnostic = new DiagnosticResult
-            {
-                Id = DiagnosticIds.HTTP_RESPONSE_REDIRECT,
-                Message = string.Format(MessagesConstants.MESSAGE_NO_SUGGESTION, $"r.Redirect"),
-                Severity = DiagnosticSeverity.Warning,
-                Locations = new[] { new DiagnosticResultLocation("Test0.cs", 9, 13) }
-            };
+            var expectedDiagnostic = CreateDiagnosticResult(@"r.Redirect(""url"")").WithLocation(9, 13);
 
             VerifyCSharpDiagnostic(test, expectedDiagnostic);
 
@@ -88,13 +92,7 @@ namespace SampleTestProject.CsSamples
         }}
     }}
 }}";
-            var expectedDiagnostic = new DiagnosticResult
-            {
-                Id = DiagnosticIds.HTTP_RESPONSE_REDIRECT,
-                Message = string.Format(MessagesConstants.MESSAGE_NO_SUGGESTION, $"{instance}.Redirect"),
-                Severity = DiagnosticSeverity.Warning,
-                Locations = new[] { new DiagnosticResultLocation("Test0.cs", 8, 13) }
-            };
+            var expectedDiagnostic = CreateDiagnosticResult($@"{instance}.Redirect(""url"")").WithLocation(8, 13);
 
             VerifyCSharpDiagnostic(test, expectedDiagnostic);
 
