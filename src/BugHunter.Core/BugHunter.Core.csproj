@@ -92,6 +92,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AnalysisHelpers\AccessExpressionHelper.cs" />
     <Compile Include="AnalyzerCategories.cs" />
     <Compile Include="Analyzers\BaseMemberAccessAnalyzer.cs" />
     <Compile Include="Analyzers\BaseMemberInvocationAnalyzer.cs" />
