@@ -21,7 +21,7 @@ namespace BugHunter.Web.Analyzers.Tests.CmsApiGuidelinesTests
             return new DiagnosticResult
             {
                 Id = DiagnosticIds.CONNECTION_HELPER_EXECUTE_QUERY,
-                Message = $"'{messageArgumentStrings[0]}' should not be called directly from this file. Move the logic to codebehind instead.",
+                Message = "'ExecuteQuery()' should not be called directly from this file. Move the logic to codebehind instead.",
                 Severity = DiagnosticSeverity.Warning,
             };
         }
@@ -76,8 +76,8 @@ namespace SampleTestProject.CsSamples
     }
 }";
             var fakeFileInfo = new FakeFileInfo {FileExtension = fileExtension};
-            var expectedDiagnostic1 = GetDiagnosticResult("ConnectionHelper.ExecuteQuery()").WithLocation(10, 13, fakeFileInfo);
-            var expectedDiagnostic2 = GetDiagnosticResult("CMS.DataEngine.ConnectionHelper.ExecuteQuery()").WithLocation(11, 13, fakeFileInfo);
+            var expectedDiagnostic1 = GetDiagnosticResult().WithLocation(10, 30, fakeFileInfo);
+            var expectedDiagnostic2 = GetDiagnosticResult().WithLocation(11, 45, fakeFileInfo);
 
             VerifyCSharpDiagnostic(test, fakeFileInfo, expectedDiagnostic1, expectedDiagnostic2);
         }

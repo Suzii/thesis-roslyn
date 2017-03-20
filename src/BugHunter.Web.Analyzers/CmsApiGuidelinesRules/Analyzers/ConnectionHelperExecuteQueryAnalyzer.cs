@@ -2,13 +2,14 @@ using System.Collections.Immutable;
 using BugHunter.Core;
 using BugHunter.Core.Analyzers;
 using BugHunter.Core.Constants;
+using BugHunter.Core.DiagnosticsFormatting;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
 
 namespace BugHunter.Web.Analyzers.CmsApiGuidelinesRules.Analyzers
 {
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class ConnectionHelperExecuteQueryAnalyzer : BaseMemberAccessAnalyzer
+    public class ConnectionHelperExecuteQueryAnalyzer : BaseMemberInvocationAnalyzer
     {
         public const string DIAGNOSTIC_ID = DiagnosticIds.CONNECTION_HELPER_EXECUTE_QUERY;
 
@@ -22,6 +23,10 @@ namespace BugHunter.Web.Analyzers.CmsApiGuidelinesRules.Analyzers
 
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
 
+        private static readonly IDiagnosticFormatter _diagnosticFormatter = DiagnosticFormatterFactory.CreateMemberInvocationOnlyFormatter(true);
+
+        protected override IDiagnosticFormatter DiagnosticFormatter => _diagnosticFormatter;
+        
         public override void Initialize(AnalysisContext context)
         {
             context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.None);

@@ -137,7 +137,7 @@
     <value>Do not use ExecuteQuery in UI.</value>
   </data>
   <data name="ConnectionHelperExecuteQuery_MessageFormat" xml:space="preserve">
-    <value>'{0}()' should not be called directly from this file. Move the logic to codebehind instead.</value>
+    <value>'{0}' should not be called directly from this file. Move the logic to codebehind instead.</value>
   </data>
   <data name="ConnectionHelperExecuteQuery_Description" xml:space="preserve">
     <value>'ExecuteQuery()' should not be called directly from the presentation layer. Move the logic to codebehind instead.</value>

@@ -71,7 +71,7 @@ namespace BugHunter.Web.Analyzers.CmsApiGuidelinesRules {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &apos;{0}()&apos; should not be called directly from this file. Move the logic to codebehind instead..
+        ///   Looks up a localized string similar to &apos;{0}&apos; should not be called directly from this file. Move the logic to codebehind instead..
         /// </summary>
         internal static string ConnectionHelperExecuteQuery_MessageFormat {
             get {
