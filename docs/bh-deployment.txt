@@ -20,3 +20,10 @@ Applying old BH config - suppressing System.IO in:
 * about 130 false positive errors that should have been on excluded path (ValidationHelperGetAnalyzer), amendment to implementation, errors are gone
 
 * in helper files that wrap the actually forbidden methods, we used pragmas on whole file explicitely in the code
+
+
+=========
+build boxes and Update 3 -> needed for right version of code analysis dlls (https://github.com/dotnet/roslyn/issues/6737
+
+)
+http://teamcity/viewLog.html?buildId=278506&buildTypeId=Cms_CmsSolutionWarnings&tab=buildLog#_state=3,522&focus=529
