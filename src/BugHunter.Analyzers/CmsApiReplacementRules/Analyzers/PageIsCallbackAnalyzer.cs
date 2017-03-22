@@ -1,7 +1,8 @@
 ﻿using System.Collections.Immutable;
-using BugHunter.Core.Analyzers;
 using BugHunter.Core.Helpers.DiagnosticDescriptionBuilders;
+using BugHunter.Core._experiment;
 using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Diagnostics;
 
 namespace BugHunter.Analyzers.CmsApiReplacementRules.Analyzers
@@ -10,7 +11,7 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.Analyzers
     /// Searches for usages of <see cref="System.Web.UI.Page"/> and their access to IsCallback member
     /// </summary>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class PageIsCallbackAnalyzer : BaseMemberAccessAnalyzer
+    public class PageIsCallbackAnalyzer : DiagnosticAnalyzer
     {
         public const string DIAGNOSTIC_ID = DiagnosticIds.PAGE_IS_CALLBACK;
 
@@ -18,12 +19,29 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.Analyzers
 
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
 
+        private readonly IAccessAnalyzer _memberAccessAnalyzer = new SimpleMemberAccessAnalyzer("System.Web.UI.Page", "IsCallback");
+        private readonly ConditionalAccessAnalyzer _conditionalAccessAnalyzer = new ConditionalAccessAnalyzer("System.Web.UI.Page", "IsCallback");
+
         public override void Initialize(AnalysisContext context)
         {
             context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.None);
             context.EnableConcurrentExecution();
 
-            RegisterAction(Rule, context, "System.Web.UI.Page", "IsCallback");
+            context.RegisterSyntaxNodeAction(syntaxNodeContext =>
+            {
+                if (_memberAccessAnalyzer.IsForbiddenUsage(syntaxNodeContext))
+                {
+                    _memberAccessAnalyzer.ReportDiagnostic(syntaxNodeContext, Rule);
+                }
+
+                if (_conditionalAccessAnalyzer.IsForbiddenUsage(syntaxNodeContext))
+                {
+                    _conditionalAccessAnalyzer.ReportDiagnostic(syntaxNodeContext, Rule);
+                }
+
+            }, 
+            SyntaxKind.SimpleMemberAccessExpression,
+            SyntaxKind.ConditionalAccessExpression);
         }
     }
 }

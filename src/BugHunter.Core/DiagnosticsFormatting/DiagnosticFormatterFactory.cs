@@ -34,6 +34,10 @@ namespace BugHunter.Core.DiagnosticsFormatting
             return new MemberInvocationOnlyDiagnosticFormatter();
         }
 
+        public static IDiagnosticFormatter CreateConditionalAccessFormatter()
+        {
+            return new ConditionalAccessDiagnosticFormatter();
+        }
 
 
         public static IDiagnosticFormatter CreateFormatter<TFormatter>()

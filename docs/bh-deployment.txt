@@ -27,3 +27,5 @@ build boxes and Update 3 -> needed for right version of code analysis dlls (http
 
 )
 http://teamcity/viewLog.html?buildId=278506&buildTypeId=Cms_CmsSolutionWarnings&tab=buildLog#_state=3,522&focus=529
+
+Request redirect in original BH vs response redirect - no way to find out

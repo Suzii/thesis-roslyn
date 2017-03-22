@@ -101,6 +101,7 @@
     <Compile Include="DiagnosticsFormatting\DiagnosticFormatterFactory.cs" />
     <Compile Include="DiagnosticsFormatting\IDiagnosticFormatter.cs" />
     <Compile Include="DiagnosticsFormatting\Implementation\DefaultDiagnosticFormatter.cs" />
+    <Compile Include="DiagnosticsFormatting\Implementation\ConditionalAccessDiagnosticFormatter.cs" />
     <Compile Include="DiagnosticsFormatting\Implementation\MemberAccessOnlyDiagnosticFormatter.cs" />
     <Compile Include="DiagnosticsFormatting\Implementation\MemberAccessDiagnosticFormatterBase.cs" />
     <Compile Include="DiagnosticsFormatting\Implementation\MemberInvocationDiagnosticFormatterBase.cs" />
@@ -130,6 +131,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="_experiment\IAccessAnalyzer.cs" />
+    <Compile Include="_experiment\ConditionalAccessAnalyzer.cs" />
+    <Compile Include="_experiment\SimpleMemberAccessAnalyzer.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ResourceBuilder\Resources.resx">
