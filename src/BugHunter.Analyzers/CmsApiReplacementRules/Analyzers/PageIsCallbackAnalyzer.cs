@@ -2,7 +2,6 @@
 using BugHunter.Core.Helpers.DiagnosticDescriptionBuilders;
 using BugHunter.Core._experiment;
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Diagnostics;
 
 namespace BugHunter.Analyzers.CmsApiReplacementRules.Analyzers
@@ -17,20 +16,19 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.Analyzers
 
         private static readonly DiagnosticDescriptor Rule = ApiReplacementRuleBuilder.GetRule(DIAGNOSTIC_ID, "Page.IsCallback", "RequestHelper.IsCallback()");
 
-        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
+        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics 
+            => ImmutableArray.Create(Rule);
 
-        private readonly IAccessAnalyzer _memberAccessAnalyzer = new SimpleMemberAccessAnalyzer(Rule, "System.Web.UI.Page", "IsCallback");
-        private readonly ConditionalAccessAnalyzer _conditionalAccessAnalyzer = new ConditionalAccessAnalyzer(Rule, "System.Web.UI.Page", "IsCallback");
+        private static readonly ApiReplacementConfig Config = new ApiReplacementConfig(
+            Rule, 
+            ImmutableHashSet.Create("System.Web.UI.Page"),
+            ImmutableHashSet.Create("IsCallback"));
+        
+        private static readonly ApiReplacementForMemberAnalyzer ApiReplacementForMemberAnalyzer = new ApiReplacementForMemberAnalyzer(Config);
 
-        // TODO: Pull this whole method to BaseApiReplacementForMem?? should be same for all api replacement member analyzers
         public override void Initialize(AnalysisContext context)
         {
-            context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.None);
-            context.EnableConcurrentExecution();
-
-            // TODO consider registering compilation action first, get the INamedTypeSymbol and pass to underlying analyzers
-            context.RegisterSyntaxNodeAction(_memberAccessAnalyzer.Run, SyntaxKind.SimpleMemberAccessExpression);
-            context.RegisterSyntaxNodeAction(_conditionalAccessAnalyzer.Run, SyntaxKind.ConditionalAccessExpression);
+            ApiReplacementForMemberAnalyzer.RegisterAnalyzers(context);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using BugHunter.Core.DiagnosticsFormatting;
+﻿using System.Linq;
+using BugHunter.Core.DiagnosticsFormatting;
 using BugHunter.Core.Extensions;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
@@ -7,25 +8,20 @@ using Microsoft.CodeAnalysis.Diagnostics;
 
 namespace BugHunter.Core._experiment
 {
-    // TODO diagnostic formatter set by generic
     public class SimpleMemberAccessAnalyzer : IAccessAnalyzer
     {
-        private readonly DiagnosticDescriptor _rule;
-        private readonly string _forbiddenTypeName;
-        private readonly string _forbiddenMemberName;
-        private readonly IDiagnosticFormatter<MemberAccessExpressionSyntax> _formatter;
+        protected readonly ApiReplacementConfig Config;
+        protected readonly IDiagnosticFormatter<MemberAccessExpressionSyntax> Formatter;
 
-        public SimpleMemberAccessAnalyzer(DiagnosticDescriptor rule, string forbiddenTypeName, string forbiddenMemberName) 
-            : this(rule, forbiddenTypeName, forbiddenMemberName, DiagnosticFormatterFactory.CreateMemberAccessFormatter())
+        public SimpleMemberAccessAnalyzer(ApiReplacementConfig config) 
+            : this(DiagnosticFormatterFactory.CreateMemberAccessFormatter())
         {
+            Config = config;
         }
 
-        public SimpleMemberAccessAnalyzer(DiagnosticDescriptor rule, string forbiddenTypeName, string forbiddenMemberName, IDiagnosticFormatter<MemberAccessExpressionSyntax> formatter)
+        public SimpleMemberAccessAnalyzer(IDiagnosticFormatter<MemberAccessExpressionSyntax> formatter)
         {
-            _rule = rule;
-            _forbiddenTypeName = forbiddenTypeName;
-            _forbiddenMemberName = forbiddenMemberName;
-            _formatter = formatter;
+            Formatter = formatter;
         }
 
         public void Run(SyntaxNodeAnalysisContext context)
@@ -49,21 +45,21 @@ namespace BugHunter.Core._experiment
         protected bool IsForbiddenUsage(SyntaxNodeAnalysisContext context, MemberAccessExpressionSyntax memberAccess)
         {
             var memberName = memberAccess.Name.ToString();
-            if (memberName != _forbiddenMemberName)
+            if (Config.ForbiddenMembers.All(forbiddenMember => forbiddenMember != memberName))
             {
                 return false;
             }
 
             var actualTargetType = context.SemanticModel.GetTypeInfo(memberAccess.Expression).Type as INamedTypeSymbol;
 
-            return actualTargetType?.IsDerivedFrom(_forbiddenTypeName, context.Compilation) ?? false;
+            return actualTargetType != null && Config.ForbiddenTypes.Any(forbidenType => actualTargetType.IsDerivedFrom(forbidenType, context.Compilation));
         }
 
         protected Diagnostic CreateDiagnostic(MemberAccessExpressionSyntax memberAccess)
         {
-            var location = _formatter.GetLocation(memberAccess);
-            var diagnosedUsage = _formatter.GetDiagnosedUsage(memberAccess);
-            var diagnostic = Diagnostic.Create(_rule, location, diagnosedUsage);
+            var location = Formatter.GetLocation(memberAccess);
+            var diagnosedUsage = Formatter.GetDiagnosedUsage(memberAccess);
+            var diagnostic = Diagnostic.Create(Config.Rule, location, diagnosedUsage);
 
             return diagnostic;
         }
