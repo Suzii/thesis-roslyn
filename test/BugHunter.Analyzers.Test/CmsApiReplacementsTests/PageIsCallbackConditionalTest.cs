@@ -11,7 +11,7 @@ using NUnit.Framework;
 namespace BugHunter.Analyzers.Test.CmsApiReplacementsTests
 {
     [TestFixture]
-    public class PageIsCallbackConditionalTest : CodeFixVerifier<PageIsCallbackAnalyzer, PageIsCallbackCodeFixProvider>
+    public class PageIsCallbackConditionalTest : CodeFixVerifier<PageIsCallbackAnalyzer>
     {
         protected override MetadataReference[] GetAdditionalReferences()
         {
@@ -50,20 +50,6 @@ namespace SampleTestProject.CsSamples
             };
             
             VerifyCSharpDiagnostic(test, expectedDiagnostic);
-
-            var expectedFix = $@"using CMS.Helpers;
-
-namespace SampleTestProject.CsSamples 
-{{
-    public class SampleClass
-    {{
-        public void SampleMethod()
-        {{
-            var isPostBack = RequestHelper.IsCallback();
-        }}
-    }}
-}}";
-            // VerifyCSharpFix(test, expectedFix);
         }
 
         [Test]
@@ -94,21 +80,6 @@ namespace SampleTestProject.CsSamples
             };
 
             VerifyCSharpDiagnostic(test, expectedDiagnostic);
-
-            var expectedFix = $@"using CMS.Helpers;
-
-namespace SampleTestProject.CsSamples 
-{{
-    public class SampleClass
-    {{
-        public void SampleMethod()
-        {{
-            var page = new System.Web.UI.Page();
-            var answer = RequestHelper.IsCallback().ToString();
-        }}
-    }}
-}}";
-            //VerifyCSharpFix(test, expectedFix);
         }
     }
 }
