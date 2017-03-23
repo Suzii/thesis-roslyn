@@ -7,32 +7,47 @@ using Microsoft.CodeAnalysis.Diagnostics;
 
 namespace BugHunter.Core._experiment
 {
+    // TODO diagnostic formatter set by generic
     public class SimpleMemberAccessAnalyzer : IAccessAnalyzer
     {
+        private readonly DiagnosticDescriptor _rule;
         private readonly string _forbiddenTypeName;
         private readonly string _forbiddenMemberName;
         private readonly IDiagnosticFormatter _formatter;
 
-        public SimpleMemberAccessAnalyzer(string forbiddenTypeName, string forbiddenMemberName) 
-            : this(forbiddenTypeName, forbiddenMemberName, DiagnosticFormatterFactory.CreateMemberAccessFormatter())
+        public SimpleMemberAccessAnalyzer(DiagnosticDescriptor rule, string forbiddenTypeName, string forbiddenMemberName) 
+            : this(rule, forbiddenTypeName, forbiddenMemberName, DiagnosticFormatterFactory.CreateMemberAccessFormatter())
         {
         }
 
-        public SimpleMemberAccessAnalyzer(string forbiddenTypeName, string forbiddenMemberName, IDiagnosticFormatter formatter)
+        public SimpleMemberAccessAnalyzer(DiagnosticDescriptor rule, string forbiddenTypeName, string forbiddenMemberName, IDiagnosticFormatter formatter)
         {
+            _rule = rule;
             _forbiddenTypeName = forbiddenTypeName;
             _forbiddenMemberName = forbiddenMemberName;
             _formatter = formatter;
         }
 
-        public bool IsForbiddenUsage(SyntaxNodeAnalysisContext context)
+        public void Run(SyntaxNodeAnalysisContext context)
         {
-            var memberAccess = context.Node as MemberAccessExpressionSyntax;
+            var memberAccess = (MemberAccessExpressionSyntax)context.Node;
             if (memberAccess == null)
             {
-                return false;
+                return;
             }
 
+            if (!IsForbiddenUsage(context, memberAccess))
+            {
+                return;
+            }
+
+            var diagnostic = CreateDiagnostic(memberAccess);
+            context.ReportDiagnostic(diagnostic);
+        }
+
+
+        protected bool IsForbiddenUsage(SyntaxNodeAnalysisContext context, MemberAccessExpressionSyntax memberAccess)
+        {
             var memberName = memberAccess.Name.ToString();
             if (memberName != _forbiddenMemberName)
             {
@@ -44,13 +59,13 @@ namespace BugHunter.Core._experiment
             return actualTargetType?.IsDerivedFrom(_forbiddenTypeName, context.Compilation) ?? false;
         }
 
-        public void ReportDiagnostic(SyntaxNodeAnalysisContext context, DiagnosticDescriptor descriptor)
+        protected Diagnostic CreateDiagnostic(MemberAccessExpressionSyntax memberAccess)
         {
-            var location = _formatter.GetLocation(context.Node);
-            var diagnosedUsage = _formatter.GetDiagnosedUsage(context.Node);
-            var diagnostic = Diagnostic.Create(descriptor, location, diagnosedUsage);
+            var location = _formatter.GetLocation(memberAccess);
+            var diagnosedUsage = _formatter.GetDiagnosedUsage(memberAccess);
+            var diagnostic = Diagnostic.Create(_rule, location, diagnosedUsage);
 
-            context.ReportDiagnostic(diagnostic);
+            return diagnostic;
         }
     }
 }

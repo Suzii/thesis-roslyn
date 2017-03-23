@@ -11,6 +11,7 @@ namespace BugHunter.Core.Analyzers
     /// <summary>
     /// Used for analysis of MemberAccess which Invocation at the same time such as "whereCondition.WhereLike(...)"
     /// </summary>
+    // TODO rewrite according to https://github.com/dotnet/roslyn-analyzers/blob/master/src/Microsoft.CodeAnalysis.Analyzers/CSharp/CSharpImmutableObjectMethodAnalyzer.cs
     public abstract class BaseMemberInvocationAnalyzer : BaseMemberAccessOrInvocationAnalyzer<InvocationExpressionSyntax>
     {
         private static readonly IDiagnosticFormatter _diagnosticFormatter = DiagnosticFormatterFactory.CreateMemberInvocationFormatter();

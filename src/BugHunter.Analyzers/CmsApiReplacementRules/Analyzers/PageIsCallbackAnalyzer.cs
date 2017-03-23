@@ -19,29 +19,17 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.Analyzers
 
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
 
-        private readonly IAccessAnalyzer _memberAccessAnalyzer = new SimpleMemberAccessAnalyzer("System.Web.UI.Page", "IsCallback");
-        private readonly ConditionalAccessAnalyzer _conditionalAccessAnalyzer = new ConditionalAccessAnalyzer("System.Web.UI.Page", "IsCallback");
+        private readonly IAccessAnalyzer _memberAccessAnalyzer = new SimpleMemberAccessAnalyzer(Rule, "System.Web.UI.Page", "IsCallback");
+        private readonly ConditionalAccessAnalyzer _conditionalAccessAnalyzer = new ConditionalAccessAnalyzer(Rule, "System.Web.UI.Page", "IsCallback");
 
         public override void Initialize(AnalysisContext context)
         {
             context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.None);
             context.EnableConcurrentExecution();
 
-            context.RegisterSyntaxNodeAction(syntaxNodeContext =>
-            {
-                if (_memberAccessAnalyzer.IsForbiddenUsage(syntaxNodeContext))
-                {
-                    _memberAccessAnalyzer.ReportDiagnostic(syntaxNodeContext, Rule);
-                }
-
-                if (_conditionalAccessAnalyzer.IsForbiddenUsage(syntaxNodeContext))
-                {
-                    _conditionalAccessAnalyzer.ReportDiagnostic(syntaxNodeContext, Rule);
-                }
-
-            }, 
-            SyntaxKind.SimpleMemberAccessExpression,
-            SyntaxKind.ConditionalAccessExpression);
+            // TODO register compilation action first, get the INamedTypeSymbol and pass to underlying analyzers
+            context.RegisterSyntaxNodeAction(_memberAccessAnalyzer.Run, SyntaxKind.SimpleMemberAccessExpression);
+            context.RegisterSyntaxNodeAction(_conditionalAccessAnalyzer.Run, SyntaxKind.ConditionalAccessExpression);
         }
     }
 }

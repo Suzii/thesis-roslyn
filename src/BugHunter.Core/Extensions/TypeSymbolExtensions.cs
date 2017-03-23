@@ -89,7 +89,7 @@ namespace BugHunter.Core.Extensions
                 yield return currentType;
                 currentType = currentType.BaseType;
             }
-
+            
             foreach (var inter in type.AllInterfaces)
             {
                 yield return inter;
