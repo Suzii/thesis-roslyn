@@ -102,6 +102,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AnalysisHelpers\AccessExpressionHelperTests.cs" />
+    <Compile Include="DiagnosticsFormatting\ConditionalAccessDiagnosticFormatterTests.cs" />
+    <Compile Include="DiagnosticsFormatting\AssertLocation.cs" />
     <Compile Include="DiagnosticsFormatting\MemberAccessOnlyDiagnosticFormatterTests.cs" />
     <Compile Include="DiagnosticsFormatting\MemberInvocationOnlyDiagnosticFormatterTests - Copy.cs" />
     <Compile Include="DiagnosticsFormatting\MemberAccessDiagnosticFormatterTests.cs" />

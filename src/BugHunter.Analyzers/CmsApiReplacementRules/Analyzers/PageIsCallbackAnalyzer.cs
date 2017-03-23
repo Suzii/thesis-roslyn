@@ -22,12 +22,13 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.Analyzers
         private readonly IAccessAnalyzer _memberAccessAnalyzer = new SimpleMemberAccessAnalyzer(Rule, "System.Web.UI.Page", "IsCallback");
         private readonly ConditionalAccessAnalyzer _conditionalAccessAnalyzer = new ConditionalAccessAnalyzer(Rule, "System.Web.UI.Page", "IsCallback");
 
+        // TODO: Pull this whole method to BaseApiReplacementForMem?? should be same for all api replacement member analyzers
         public override void Initialize(AnalysisContext context)
         {
             context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.None);
             context.EnableConcurrentExecution();
 
-            // TODO register compilation action first, get the INamedTypeSymbol and pass to underlying analyzers
+            // TODO consider registering compilation action first, get the INamedTypeSymbol and pass to underlying analyzers
             context.RegisterSyntaxNodeAction(_memberAccessAnalyzer.Run, SyntaxKind.SimpleMemberAccessExpression);
             context.RegisterSyntaxNodeAction(_conditionalAccessAnalyzer.Run, SyntaxKind.ConditionalAccessExpression);
         }
