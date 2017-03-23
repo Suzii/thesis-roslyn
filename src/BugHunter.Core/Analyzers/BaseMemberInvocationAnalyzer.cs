@@ -14,7 +14,7 @@ namespace BugHunter.Core.Analyzers
     // TODO rewrite according to https://github.com/dotnet/roslyn-analyzers/blob/master/src/Microsoft.CodeAnalysis.Analyzers/CSharp/CSharpImmutableObjectMethodAnalyzer.cs
     public abstract class BaseMemberInvocationAnalyzer : BaseMemberAccessOrInvocationAnalyzer<InvocationExpressionSyntax>
     {
-        private static readonly IDiagnosticFormatter _diagnosticFormatter = DiagnosticFormatterFactory.CreateMemberInvocationFormatter();
+        private static readonly IDiagnosticFormatter<InvocationExpressionSyntax> _diagnosticFormatter = DiagnosticFormatterFactory.CreateMemberInvocationFormatter();
 
         protected void RegisterAction(DiagnosticDescriptor rule, AnalysisContext context, string accessedType, string methodName, params string[] additionalMethodNames)
         {
@@ -23,7 +23,7 @@ namespace BugHunter.Core.Analyzers
             context.RegisterSyntaxNodeAction(c => Analyze(rule, c, accessedType, forbiddenMemberNames), SyntaxKind.InvocationExpression);
         }
 
-        protected override IDiagnosticFormatter DiagnosticFormatter => _diagnosticFormatter;
+        protected override IDiagnosticFormatter<InvocationExpressionSyntax> DiagnosticFormatter => _diagnosticFormatter;
 
         protected override bool CheckMainConditions(SyntaxNodeAnalysisContext context, string accessedType, ISet<string> methodNames)
         {

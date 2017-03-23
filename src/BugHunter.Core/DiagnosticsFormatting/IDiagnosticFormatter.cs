@@ -2,10 +2,11 @@
 
 namespace BugHunter.Core.DiagnosticsFormatting
 {
-    public interface IDiagnosticFormatter
+    public interface IDiagnosticFormatter<in TSyntaxKind>
+        where TSyntaxKind : SyntaxNode
     {
-        Location GetLocation(SyntaxNode expression);
+        Location GetLocation(TSyntaxKind expression);
 
-        string GetDiagnosedUsage(SyntaxNode expression);
+        string GetDiagnosedUsage(TSyntaxKind expression);
     }
 }

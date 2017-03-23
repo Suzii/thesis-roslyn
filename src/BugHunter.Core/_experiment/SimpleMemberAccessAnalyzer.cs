@@ -13,14 +13,14 @@ namespace BugHunter.Core._experiment
         private readonly DiagnosticDescriptor _rule;
         private readonly string _forbiddenTypeName;
         private readonly string _forbiddenMemberName;
-        private readonly IDiagnosticFormatter _formatter;
+        private readonly IDiagnosticFormatter<MemberAccessExpressionSyntax> _formatter;
 
         public SimpleMemberAccessAnalyzer(DiagnosticDescriptor rule, string forbiddenTypeName, string forbiddenMemberName) 
             : this(rule, forbiddenTypeName, forbiddenMemberName, DiagnosticFormatterFactory.CreateMemberAccessFormatter())
         {
         }
 
-        public SimpleMemberAccessAnalyzer(DiagnosticDescriptor rule, string forbiddenTypeName, string forbiddenMemberName, IDiagnosticFormatter formatter)
+        public SimpleMemberAccessAnalyzer(DiagnosticDescriptor rule, string forbiddenTypeName, string forbiddenMemberName, IDiagnosticFormatter<MemberAccessExpressionSyntax> formatter)
         {
             _rule = rule;
             _forbiddenTypeName = forbiddenTypeName;

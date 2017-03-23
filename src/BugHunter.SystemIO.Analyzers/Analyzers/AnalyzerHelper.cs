@@ -22,7 +22,7 @@ namespace BugHunter.SystemIO.Analyzers.Analyzers
                 isEnabledByDefault: true,
                 description: new LocalizableResourceString(nameof(Resources.SystemIo_Description), Resources.ResourceManager, typeof(Resources)));
 
-        private static readonly IDiagnosticFormatter DiagnosticFormatter = DiagnosticFormatterFactory.CreateDefaultFormatter();
+        private static readonly IDiagnosticFormatter<SyntaxNode> DiagnosticFormatter = DiagnosticFormatterFactory.CreateDefaultFormatter();
 
         public static Diagnostic CreateDiagnostic(DiagnosticDescriptor rule, IdentifierNameSyntax identifierName)
         {

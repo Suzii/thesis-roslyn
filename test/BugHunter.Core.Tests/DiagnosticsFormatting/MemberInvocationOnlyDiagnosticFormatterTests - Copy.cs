@@ -11,7 +11,7 @@ namespace BugHunter.Core.Tests.DiagnosticsFormatting
     [TestFixture]
     public class MemberInvocationOnlyDiagnosticFormatterTests
     {
-        private IDiagnosticFormatter _diagnosticFormatter;
+        private IDiagnosticFormatter<InvocationExpressionSyntax> _diagnosticFormatter;
 
         [SetUp]
         public void SetUp()

@@ -1,47 +1,35 @@
 ﻿using BugHunter.Core.DiagnosticsFormatting.Implementation;
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace BugHunter.Core.DiagnosticsFormatting
 {
     public static class DiagnosticFormatterFactory
     {
-        public static IDiagnosticFormatter CreateDefaultFormatter()
-        {
-            return new DefaultDiagnosticFormatter();
-        }
+        public static IDiagnosticFormatter<SyntaxNode> CreateDefaultFormatter()
+            => new DefaultDiagnosticFormatter();
 
-        public static IDiagnosticFormatter CreateMemberAccessFormatter()
-        {
-            return new MemberAccessDiagnosticFormatter();
-        }
+        public static IDiagnosticFormatter<MemberAccessExpressionSyntax> CreateMemberAccessFormatter()
+            =>new MemberAccessDiagnosticFormatter();
 
-        public static IDiagnosticFormatter CreateMemberAccessOnlyFormatter()
-        {
-            return new MemberAccessOnlyDiagnosticFormatter();
-        }
+        public static IDiagnosticFormatter<MemberAccessExpressionSyntax> CreateMemberAccessOnlyFormatter()
+            => new MemberAccessOnlyDiagnosticFormatter();
 
-        public static IDiagnosticFormatter CreateMemberInvocationFormatter()
-        {
-            return new MemberInvocationDiagnosticFormatter();
-        }
+        public static IDiagnosticFormatter<InvocationExpressionSyntax> CreateMemberInvocationFormatter()
+            => new MemberInvocationDiagnosticFormatter();
 
-        public static IDiagnosticFormatter CreateMemberInvocationOnlyFormatter(bool stripOfArgsFromMessage = false)
-        {
-            if (stripOfArgsFromMessage)
-            {
-                return new MemberInvocationOnlyNoArgsDiagnosticFormatter();
-            }
+        public static IDiagnosticFormatter<InvocationExpressionSyntax> CreateMemberInvocationOnlyFormatter(bool stripOfArgsFromMessage = false)
+            => stripOfArgsFromMessage
+            ? (IDiagnosticFormatter<InvocationExpressionSyntax>) new MemberInvocationOnlyNoArgsDiagnosticFormatter()        
+            : (IDiagnosticFormatter<InvocationExpressionSyntax>) new MemberInvocationOnlyDiagnosticFormatter();
 
-            return new MemberInvocationOnlyDiagnosticFormatter();
-        }
-
-        public static IDiagnosticFormatter CreateConditionalAccessFormatter()
-        {
-            return new ConditionalAccessDiagnosticFormatter();
-        }
+        public static IDiagnosticFormatter<ConditionalAccessExpressionSyntax> CreateConditionalAccessFormatter()
+            => new ConditionalAccessDiagnosticFormatter();
 
 
-        public static IDiagnosticFormatter CreateFormatter<TFormatter>()
-            where TFormatter : IDiagnosticFormatter, new()
+        public static IDiagnosticFormatter<TSyntaxNode> CreateFormatter<TFormatter, TSyntaxNode>()
+            where TFormatter : IDiagnosticFormatter<TSyntaxNode>, new()
+            where TSyntaxNode : SyntaxNode
         {
             return new TFormatter();
         }

@@ -3,6 +3,7 @@ using BugHunter.Core;
 using BugHunter.Core.Analyzers;
 using BugHunter.Core.DiagnosticsFormatting;
 using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
 
 namespace BugHunter.Analyzers.CmsApiGuidelinesRules.Analyzers
@@ -22,9 +23,9 @@ namespace BugHunter.Analyzers.CmsApiGuidelinesRules.Analyzers
             isEnabledByDefault: true,
             description: new LocalizableResourceString(nameof(CmsApiGuidelinesResources.WhereLikeMethod_Description), CmsApiGuidelinesResources.ResourceManager, typeof(CmsApiGuidelinesResources)));
 
-        private static readonly IDiagnosticFormatter _diagnosticFormatter = DiagnosticFormatterFactory.CreateMemberInvocationOnlyFormatter();
+        private static readonly IDiagnosticFormatter<InvocationExpressionSyntax> _diagnosticFormatter = DiagnosticFormatterFactory.CreateMemberInvocationOnlyFormatter();
 
-        protected override IDiagnosticFormatter DiagnosticFormatter => _diagnosticFormatter;
+        protected override IDiagnosticFormatter<InvocationExpressionSyntax> DiagnosticFormatter => _diagnosticFormatter;
 
         public override void Initialize(AnalysisContext context)
         {

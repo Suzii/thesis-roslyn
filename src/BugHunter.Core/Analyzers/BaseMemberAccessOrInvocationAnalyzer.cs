@@ -1,13 +1,14 @@
 ﻿using System.Collections.Generic;
 using BugHunter.Core.DiagnosticsFormatting;
 using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
 
 namespace BugHunter.Core.Analyzers
 {
     public abstract class BaseMemberAccessOrInvocationAnalyzer<TSyntaxNode> : DiagnosticAnalyzer where TSyntaxNode : SyntaxNode
     {
-        protected abstract IDiagnosticFormatter DiagnosticFormatter { get; }
+        protected abstract IDiagnosticFormatter<TSyntaxNode> DiagnosticFormatter { get; }
 
         protected void Analyze(DiagnosticDescriptor rule, SyntaxNodeAnalysisContext context, string accessedType, ISet<string> forbiddenMemberNames)
         {

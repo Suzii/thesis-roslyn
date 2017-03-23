@@ -1,21 +1,18 @@
 ﻿using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace BugHunter.Core.DiagnosticsFormatting.Implementation
 {
-    internal class MemberAccessOnlyDiagnosticFormatter : MemberAccessDiagnosticFormatterBase, IDiagnosticFormatter
+    internal class MemberAccessOnlyDiagnosticFormatter : IDiagnosticFormatter<MemberAccessExpressionSyntax>
     {
-        public Location GetLocation(SyntaxNode expression)
+        public Location GetLocation(MemberAccessExpressionSyntax memberAccess)
         {
-            var memberAccess = GetMemberAccess(expression);
-
-            return memberAccess.Name.GetLocation();
+            return memberAccess?.Name?.GetLocation();
         }
 
-        public string GetDiagnosedUsage(SyntaxNode expression)
+        public string GetDiagnosedUsage(MemberAccessExpressionSyntax memberAccess)
         {
-            var memberAccess = GetMemberAccess(expression);
-
-            return memberAccess.Name.ToString();
+            return memberAccess?.Name?.Identifier.ValueText;
         }
     }
 }

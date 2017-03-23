@@ -1,5 +1,4 @@
 using System;
-using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace BugHunter.Core.DiagnosticsFormatting.Implementation
@@ -15,32 +14,13 @@ namespace BugHunter.Core.DiagnosticsFormatting.Implementation
         /// <returns>Underlying member access</returns>
         protected static MemberAccessExpressionSyntax GetUnderlyingMemberAccess(InvocationExpressionSyntax invocationExpression)
         {
-            var invocationExpressionSyntax = invocationExpression as InvocationExpressionSyntax;
-            var memberAccessExpressionSyntax = invocationExpressionSyntax?.Expression as MemberAccessExpressionSyntax;
+            var memberAccessExpressionSyntax = invocationExpression?.Expression as MemberAccessExpressionSyntax;
             if (memberAccessExpressionSyntax == null)
             {
                 throw new ArgumentException(nameof(invocationExpression));
             }
 
             return memberAccessExpressionSyntax;
-        }
-
-        /// <summary>
-        /// Returns <see cref="InvocationExpressionSyntax"/> casted from <param name="expression"></param>
-        /// 
-        /// Throws <see cref="ArgumentException"/> if unable to cast <param name="expression"></param> to <see cref="InvocationExpressionSyntax"/>
-        /// </summary>
-        /// <param name="expression">Expression</param>
-        /// <returns>Casted invocation expression</returns>
-        protected static InvocationExpressionSyntax GetInvocationExpression(SyntaxNode expression)
-        {
-            var invocationExpressionSyntax = expression as InvocationExpressionSyntax;
-            if (invocationExpressionSyntax == null)
-            {
-                throw new ArgumentException(nameof(expression));
-            }
-
-            return invocationExpressionSyntax;
         }
     }
 }

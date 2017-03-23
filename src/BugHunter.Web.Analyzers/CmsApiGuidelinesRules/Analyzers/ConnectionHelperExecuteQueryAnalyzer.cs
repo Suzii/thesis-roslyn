@@ -4,6 +4,7 @@ using BugHunter.Core.Analyzers;
 using BugHunter.Core.Constants;
 using BugHunter.Core.DiagnosticsFormatting;
 using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
 
 namespace BugHunter.Web.Analyzers.CmsApiGuidelinesRules.Analyzers
@@ -23,10 +24,10 @@ namespace BugHunter.Web.Analyzers.CmsApiGuidelinesRules.Analyzers
 
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
 
-        private static readonly IDiagnosticFormatter _diagnosticFormatter = DiagnosticFormatterFactory.CreateMemberInvocationOnlyFormatter(true);
+        private static readonly IDiagnosticFormatter<InvocationExpressionSyntax> _diagnosticFormatter = DiagnosticFormatterFactory.CreateMemberInvocationOnlyFormatter(true);
 
-        protected override IDiagnosticFormatter DiagnosticFormatter => _diagnosticFormatter;
-        
+        protected override IDiagnosticFormatter<InvocationExpressionSyntax> DiagnosticFormatter => _diagnosticFormatter;
+
         public override void Initialize(AnalysisContext context)
         {
             context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.None);

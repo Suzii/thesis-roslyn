@@ -13,9 +13,9 @@ namespace BugHunter.Core.Analyzers
     /// </summary>
     public abstract class BaseMemberAccessAnalyzer : BaseMemberAccessOrInvocationAnalyzer<MemberAccessExpressionSyntax>
     {
-        private static readonly IDiagnosticFormatter _diagnosticFormatter = DiagnosticFormatterFactory.CreateMemberAccessFormatter();
+        private static readonly IDiagnosticFormatter<MemberAccessExpressionSyntax> _diagnosticFormatter = DiagnosticFormatterFactory.CreateMemberAccessFormatter();
 
-        protected override IDiagnosticFormatter DiagnosticFormatter => _diagnosticFormatter;
+        protected override IDiagnosticFormatter<MemberAccessExpressionSyntax> DiagnosticFormatter => _diagnosticFormatter;
 
         protected void RegisterAction(DiagnosticDescriptor rule, AnalysisContext context, string accessedType, string memberName, params string[] additionalMemberNames)
         {

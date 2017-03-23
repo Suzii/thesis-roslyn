@@ -1,17 +1,18 @@
 using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace BugHunter.Core.DiagnosticsFormatting.Implementation
 {
-    internal class MemberInvocationDiagnosticFormatter : MemberInvocationDiagnosticFormatterBase, IDiagnosticFormatter
+    internal class MemberInvocationDiagnosticFormatter : MemberInvocationDiagnosticFormatterBase, IDiagnosticFormatter<InvocationExpressionSyntax>
     {
-        public Location GetLocation(SyntaxNode expression)
+        public Location GetLocation(InvocationExpressionSyntax invocation)
         {
-            return expression.GetLocation();
+            return invocation?.GetLocation();
         }
 
-        public string GetDiagnosedUsage(SyntaxNode expression)
+        public string GetDiagnosedUsage(InvocationExpressionSyntax invocation)
         {
-            return $"{expression}";
+            return $"{invocation}";
         }
     }
 }

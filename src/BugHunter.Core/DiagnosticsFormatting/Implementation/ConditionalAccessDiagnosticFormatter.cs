@@ -3,21 +3,16 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace BugHunter.Core.DiagnosticsFormatting.Implementation
 {
-    internal class ConditionalAccessDiagnosticFormatter : MemberAccessDiagnosticFormatterBase, IDiagnosticFormatter
+    // TODO add more complex logic to get rid of possible follow up member accesses in WhenNotNul that are part of whole ConditionalAccess
+    internal class ConditionalAccessDiagnosticFormatter : IDiagnosticFormatter<ConditionalAccessExpressionSyntax>
     {
-        public Location GetLocation(SyntaxNode expression)
+        public Location GetLocation(ConditionalAccessExpressionSyntax expression)
         {
-            //var conditionalAccess = (ConditionalAccessExpressionSyntax) expression;
-
-            //return conditionalAccess.GetLocation();
             return expression.GetLocation();
         }
 
-        public string GetDiagnosedUsage(SyntaxNode expression)
+        public string GetDiagnosedUsage(ConditionalAccessExpressionSyntax expression)
         {
-            //var memberAccess = GetMemberAccess(expression);
-
-            //return $"{memberAccess.Expression}.{memberAccess.Name}";
             return expression.ToString();
         }
     }

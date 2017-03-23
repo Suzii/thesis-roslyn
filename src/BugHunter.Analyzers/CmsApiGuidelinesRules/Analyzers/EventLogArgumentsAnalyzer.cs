@@ -22,11 +22,11 @@ namespace BugHunter.Analyzers.CmsApiGuidelinesRules.Analyzers
             isEnabledByDefault: true,
             description: new LocalizableResourceString(nameof(CmsApiGuidelinesResources.EventLogArguments_Description), CmsApiGuidelinesResources.ResourceManager, typeof(CmsApiGuidelinesResources)));
 
-        private static readonly IDiagnosticFormatter _diagnosticFormatter = new EventLogArgumentsDiagnosticFormatter();
+        private static readonly IDiagnosticFormatter<InvocationExpressionSyntax> _diagnosticFormatter = new EventLogArgumentsDiagnosticFormatter();
 
         private static readonly string[] ForbiddenEventTypeArgs = { "\"I\"", "\"W\"", "\"E\"" };
 
-        protected override IDiagnosticFormatter DiagnosticFormatter => _diagnosticFormatter;
+        protected override IDiagnosticFormatter<InvocationExpressionSyntax> DiagnosticFormatter => _diagnosticFormatter;
 
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
 
