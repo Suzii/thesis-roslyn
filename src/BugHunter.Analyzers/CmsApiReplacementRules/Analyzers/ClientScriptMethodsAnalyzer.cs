@@ -1,7 +1,9 @@
 using System.Collections.Immutable;
 using BugHunter.Core.Analyzers;
 using BugHunter.Core.Helpers.DiagnosticDescriptionBuilders;
+using BugHunter.Core._experiment;
 using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Diagnostics;
 
 namespace BugHunter.Analyzers.CmsApiReplacementRules.Analyzers
@@ -15,18 +17,31 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.Analyzers
 
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
 
+        private readonly IAccessAnalyzer _arrayDeclarationAnalyzer = new MemberInvocationAnalyzer(Rule, "System.Web.UI.ClientScriptManager", "RegisterArrayDeclaration");
+        private readonly IAccessAnalyzer _scriptBlockAnalyzer = new MemberInvocationAnalyzer(Rule, "System.Web.UI.ClientScriptManager", "RegisterClientScriptBlock");
+        private readonly IAccessAnalyzer _scriptIncludeAnalyzer = new MemberInvocationAnalyzer(Rule, "System.Web.UI.ClientScriptManager", "RegisterClientScriptInclude");
+        private readonly IAccessAnalyzer _startupScriptAnalyzer = new MemberInvocationAnalyzer(Rule, "System.Web.UI.ClientScriptManager", "RegisterStartupScript");
+
         public override void Initialize(AnalysisContext context)
         {
             context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.None);
             context.EnableConcurrentExecution();
 
-            var accessedType = "System.Web.UI.ClientScriptManager";
+            context.RegisterSyntaxNodeAction(syntaxNodeContext =>
+            {
+                _arrayDeclarationAnalyzer.Run(syntaxNodeContext);
+                _scriptBlockAnalyzer.Run(syntaxNodeContext);
+                _scriptIncludeAnalyzer.Run(syntaxNodeContext);
+                _startupScriptAnalyzer.Run(syntaxNodeContext);
+            }, SyntaxKind.InvocationExpression);
 
-            RegisterAction(Rule, context, accessedType, 
-                "RegisterArrayDeclaration",
-                "RegisterClientScriptBlock",
-                "RegisterClientScriptInclude",
-                "RegisterStartupScript");
+            //var accessedType = "System.Web.UI.ClientScriptManager";
+
+            //RegisterAction(Rule, context, accessedType, 
+            //    "RegisterArrayDeclaration",
+            //    "RegisterClientScriptBlock",
+            //    "RegisterClientScriptInclude",
+            //    "RegisterStartupScript");
         }
     }
 }
