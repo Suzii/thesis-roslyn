@@ -108,34 +108,46 @@ namespace BugHunter.TestUtils.Verifiers
                 var actual = actualResults.ElementAt(i);
                 var expected = expectedResults[i];
 
-                if (expected.Line == -1 && expected.Column == -1)
-                {
-                    Assert.AreEqual(Location.None, actual.Location,
-                        $"Expected:\nA project diagnostic with No location\nActual:\n{FormatDiagnostics(analyzer, actual)}");
-                }
-                else
-                {
-                    VerifyDiagnosticLocation(analyzer, actual, actual.Location, expected.Locations.First());
-                    var additionalLocations = actual.AdditionalLocations.ToArray();
-
-                    Assert.AreEqual(expected.Locations.Length - 1, additionalLocations.Length,
-                        $"Expected {expected.Locations.Length - 1} additional locations but got {additionalLocations.Length} for Diagnostic:\r\n    {FormatDiagnostics(analyzer, actual)}\r\n");
-
-                    for (int j = 0; j < additionalLocations.Length; ++j)
-                    {
-                        VerifyDiagnosticLocation(analyzer, actual, additionalLocations[j], expected.Locations[j + 1]);
-                    }
-                }
-
-                Assert.AreEqual(expected.Id, actual.Id,
-                        $"Expected diagnostic id to be \"{expected.Id}\" was \"{actual.Id}\"\r\n\r\nDiagnostic:\r\n    {FormatDiagnostics(analyzer, actual)}\r\n");
-
-                Assert.AreEqual(expected.Severity, actual.Severity,
-                        $"Expected diagnostic severity to be \"{expected.Severity}\" was \"{actual.Severity}\"\r\n\r\nDiagnostic:\r\n    {FormatDiagnostics(analyzer, actual)}\r\n");
-
-                Assert.AreEqual(expected.Message, actual.GetMessage(),
-                        $"Expected diagnostic message to be \"{expected.Message}\" was \"{actual.GetMessage()}\"\r\n\r\nDiagnostic:\r\n    {FormatDiagnostics(analyzer, actual)}\r\n");
+                VerifyDiagnosticResult(analyzer, expected, actual);
             }
+        }
+
+        /// <summary>
+        /// Checks the actual Diagnostic found and compares it to the corresponding DiagnosticResult.
+        /// Diagnostics are considered equal only if the DiagnosticResultLocation, Id, Severity, and Message of the DiagnosticResult match the actual diagnostic.
+        /// </summary>
+        /// <param name="actual">The Diagnostic found by the compiler after running the analyzer on the source code</param>
+        /// <param name="analyzer">The analyzer that was being run on the sources</param>
+        /// <param name="expected">Diagnostic Result that should have appeared in the code</param>
+        private static void VerifyDiagnosticResult(DiagnosticAnalyzer analyzer, DiagnosticResult expected, Diagnostic actual)
+        {
+            if (expected.Line == -1 && expected.Column == -1)
+            {
+                Assert.AreEqual(Location.None, actual.Location,
+                    $"Expected:\nA project diagnostic with No location\nActual:\n{FormatDiagnostics(analyzer, actual)}");
+            }
+            else
+            {
+                VerifyDiagnosticLocation(analyzer, actual, actual.Location, expected.Locations.First());
+                var additionalLocations = actual.AdditionalLocations.ToArray();
+
+                Assert.AreEqual(expected.Locations.Length - 1, additionalLocations.Length,
+                    $"Expected {expected.Locations.Length - 1} additional locations but got {additionalLocations.Length} for Diagnostic:\r\n    {FormatDiagnostics(analyzer, actual)}\r\n");
+
+                for (int j = 0; j < additionalLocations.Length; ++j)
+                {
+                    VerifyDiagnosticLocation(analyzer, actual, additionalLocations[j], expected.Locations[j + 1]);
+                }
+            }
+
+            Assert.AreEqual(expected.Id, actual.Id,
+                $"Expected diagnostic id to be \"{expected.Id}\" was \"{actual.Id}\"\r\n\r\nDiagnostic:\r\n    {FormatDiagnostics(analyzer, actual)}\r\n");
+
+            Assert.AreEqual(expected.Severity, actual.Severity,
+                $"Expected diagnostic severity to be \"{expected.Severity}\" was \"{actual.Severity}\"\r\n\r\nDiagnostic:\r\n    {FormatDiagnostics(analyzer, actual)}\r\n");
+
+            Assert.AreEqual(expected.Message, actual.GetMessage(),
+                $"Expected diagnostic message to be \"{expected.Message}\" was \"{actual.GetMessage()}\"\r\n\r\nDiagnostic:\r\n    {FormatDiagnostics(analyzer, actual)}\r\n");
         }
 
         /// <summary>
@@ -177,7 +189,7 @@ namespace BugHunter.TestUtils.Verifiers
         /// <param name="analyzer">The analyzer that this verifier tests</param>
         /// <param name="diagnostics">The Diagnostics to be formatted</param>
         /// <returns>The Diagnostics formatted as a string</returns>
-        private static string FormatDiagnostics(DiagnosticAnalyzer analyzer, params Diagnostic[] diagnostics)
+        protected static string FormatDiagnostics(DiagnosticAnalyzer analyzer, params Diagnostic[] diagnostics)
         {
             var builder = new StringBuilder();
             for (int i = 0; i < diagnostics.Length; ++i)
