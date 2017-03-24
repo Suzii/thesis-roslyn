@@ -1,4 +1,5 @@
-﻿using BugHunter.Core.DiagnosticsFormatting;
+﻿using System.Linq;
+using BugHunter.Core.DiagnosticsFormatting;
 using BugHunter.Core.Extensions;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
@@ -9,26 +10,28 @@ namespace BugHunter.Core._experiment
 {
     public class MemberInvocationAnalyzer : IAccessAnalyzer
     {
-        private readonly DiagnosticDescriptor _rule;
-        private readonly string _forbiddenTypeName;
-        private readonly string _forbiddenMemberName;
-        private readonly IDiagnosticFormatter<InvocationExpressionSyntax> _formatter;
+        protected readonly ApiReplacementConfig Config;
+        protected readonly IDiagnosticFormatter<InvocationExpressionSyntax> Formatter;
 
-        public MemberInvocationAnalyzer(DiagnosticDescriptor rule, string forbiddenTypeName, string forbiddenMemberName) 
-            : this(rule, forbiddenTypeName, forbiddenMemberName, DiagnosticFormatterFactory.CreateMemberInvocationFormatter())
+        public MemberInvocationAnalyzer(ApiReplacementConfig config) 
+            : this(config, DiagnosticFormatterFactory.CreateMemberInvocationFormatter())
         {
         }
 
-        public MemberInvocationAnalyzer(DiagnosticDescriptor rule, string forbiddenTypeName, string forbiddenMemberName, IDiagnosticFormatter<InvocationExpressionSyntax> formatter)
+        private MemberInvocationAnalyzer(ApiReplacementConfig config, IDiagnosticFormatter<InvocationExpressionSyntax> formatter)
         {
-            _rule = rule;
-            _forbiddenTypeName = forbiddenTypeName;
-            _forbiddenMemberName = forbiddenMemberName;
-            _formatter = formatter;
+            Config = config;
+            Formatter = formatter;
         }
 
         public void Run(SyntaxNodeAnalysisContext context)
         {
+            var filePath = context.Node?.SyntaxTree?.FilePath;
+            if (!IsOnForbiddenPath(filePath))
+            {
+                return;
+            }
+
             var invocation = (InvocationExpressionSyntax)context.Node;
             if (invocation == null)
             {
@@ -36,7 +39,12 @@ namespace BugHunter.Core._experiment
             }
 
             IMethodSymbol methodSymbol;
-            if (!IsForbiddenUsage(context, invocation, out methodSymbol))
+            if (!IsForbiddenMethodOnForbiddenType(context, invocation, out methodSymbol))
+            {
+                return;
+            }
+
+            if (!IsForbiddenUsage(methodSymbol))
             {
                 return;
             }
@@ -45,27 +53,31 @@ namespace BugHunter.Core._experiment
             context.ReportDiagnostic(diagnostic);
         }
 
+        protected bool IsOnForbiddenPath(string filePath)
+            => true;
 
-        protected bool IsForbiddenUsage(SyntaxNodeAnalysisContext context, InvocationExpressionSyntax invocation, out IMethodSymbol methodSymbol)
+        protected bool IsForbiddenMethodOnForbiddenType(SyntaxNodeAnalysisContext context, InvocationExpressionSyntax invocation, out IMethodSymbol methodSymbol)
         {
             // TODO analyze based on syntax first
+            // check for simpleMemberAccess as child or find MemberBindingExpression.. 
+            // if child is IdentifierName, it is not a member invocation but a direct one
             
-            // rest...
             var semanticModel = context.SemanticModel;
-            methodSymbol = semanticModel.GetSymbolInfo(invocation).Symbol as IMethodSymbol;
-            if (methodSymbol == null)
+            var invokedMethodSymbol = semanticModel.GetSymbolInfo(invocation).Symbol as IMethodSymbol;
+            methodSymbol = invokedMethodSymbol;
+            if (invokedMethodSymbol == null)
             {
                 return false;
             }
 
-            if (methodSymbol.Name != _forbiddenMemberName)
+            if (Config.ForbiddenMembers.All(forbiddenMember => forbiddenMember != invokedMethodSymbol.Name))
             {
                 return false;
             }
 
-            var forbiddenReceiverType = semanticModel.Compilation.GetTypeByMetadataName(_forbiddenTypeName);
-            var recreiverTypeSymbol = methodSymbol.ReceiverType as INamedTypeSymbol;
-            if (recreiverTypeSymbol == null || forbiddenReceiverType == null || !forbiddenReceiverType.IsDerivedFrom(recreiverTypeSymbol))
+            var receiverTypeSymbol = invokedMethodSymbol.ReceiverType as INamedTypeSymbol;
+            if (receiverTypeSymbol == null || 
+                Config.ForbiddenTypes.All(forbiddenType => !receiverTypeSymbol.IsDerivedFrom(forbiddenType, context.Compilation)))
             {
                 return false;
             }
@@ -73,11 +85,14 @@ namespace BugHunter.Core._experiment
             return true;
         }
 
+        protected bool IsForbiddenUsage(IMethodSymbol methodSymbol)
+            => true;
+
         protected Diagnostic CreateDiagnostic(InvocationExpressionSyntax invocation)
         {
-            var location = _formatter.GetLocation(invocation);
-            var diagnosedUsage = _formatter.GetDiagnosedUsage(invocation);
-            var diagnostic = Diagnostic.Create(_rule, location, diagnosedUsage);
+            var location = Formatter.GetLocation(invocation);
+            var diagnosedUsage = Formatter.GetDiagnosedUsage(invocation);
+            var diagnostic = Diagnostic.Create(Config.Rule, location, diagnosedUsage);
 
             return diagnostic;
         }

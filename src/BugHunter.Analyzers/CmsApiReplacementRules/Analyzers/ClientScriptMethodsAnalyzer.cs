@@ -17,23 +17,19 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.Analyzers
 
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
 
-        private readonly IAccessAnalyzer _arrayDeclarationAnalyzer = new MemberInvocationAnalyzer(Rule, "System.Web.UI.ClientScriptManager", "RegisterArrayDeclaration");
-        private readonly IAccessAnalyzer _scriptBlockAnalyzer = new MemberInvocationAnalyzer(Rule, "System.Web.UI.ClientScriptManager", "RegisterClientScriptBlock");
-        private readonly IAccessAnalyzer _scriptIncludeAnalyzer = new MemberInvocationAnalyzer(Rule, "System.Web.UI.ClientScriptManager", "RegisterClientScriptInclude");
-        private readonly IAccessAnalyzer _startupScriptAnalyzer = new MemberInvocationAnalyzer(Rule, "System.Web.UI.ClientScriptManager", "RegisterStartupScript");
+        private static readonly ApiReplacementConfig Config = new ApiReplacementConfig(
+            Rule,
+            ImmutableHashSet.Create("System.Web.UI.ClientScriptManager"),
+            ImmutableHashSet.Create("RegisterArrayDeclaration", "RegisterClientScriptBlock", "RegisterClientScriptInclude", "RegisterStartupScript"));
+
+        private static readonly IAccessAnalyzer _memeberInvocationAnalyzer = new MemberInvocationAnalyzer(Config);
 
         public override void Initialize(AnalysisContext context)
         {
             context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.None);
             context.EnableConcurrentExecution();
 
-            context.RegisterSyntaxNodeAction(syntaxNodeContext =>
-            {
-                _arrayDeclarationAnalyzer.Run(syntaxNodeContext);
-                _scriptBlockAnalyzer.Run(syntaxNodeContext);
-                _scriptIncludeAnalyzer.Run(syntaxNodeContext);
-                _startupScriptAnalyzer.Run(syntaxNodeContext);
-            }, SyntaxKind.InvocationExpression);
+            context.RegisterSyntaxNodeAction(_memeberInvocationAnalyzer.Run, SyntaxKind.InvocationExpression);
 
             //var accessedType = "System.Web.UI.ClientScriptManager";
 
