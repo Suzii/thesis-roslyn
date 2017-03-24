@@ -14,10 +14,16 @@ namespace BugHunter.Analyzers.Test.CmsApiReplacementsTests
     
     public class SystemIOTest<TAnalyzer> : CodeFixVerifier<TAnalyzer> where TAnalyzer : DiagnosticAnalyzer, new()
     {
-        protected override MetadataReference[] GetAdditionalReferences()
-        {
-            return new MetadataReference[] {};
-        }
+        protected override MetadataReference[] GetAdditionalReferences() => null;
+
+        private static DiagnosticResult CreateDiagnosticResult(string messageArg, int row, int column)
+            => new DiagnosticResult
+            {
+                Id = DiagnosticIds.SYSTEM_IO,
+                Message = $"'{messageArg}' should not use 'System.IO' directly. Use equivalent method from namespace 'CMS.IO'.",
+                Severity = DiagnosticSeverity.Warning,
+                Locations = new[] { new DiagnosticResultLocation("Test0.cs", row, column) }
+            };
 
         [Test]
         public void EmptyInput_NoDiagnostic()
@@ -165,17 +171,6 @@ namespace SampleTestProject.CsSamples
             var nestedInMemberAccessDiagnostic = CreateDiagnosticResult("System.IO.Path.DirectorySeparatorChar", 14, 66);
 
             VerifyCSharpDiagnostic(test, objectCreationDiagnostic, nestedInObjectCreationDiagnostic, nestedInMemberAccessDiagnostic);
-        }
-
-        private static DiagnosticResult CreateDiagnosticResult(string messageArg, int row, int column)
-        {
-            return new DiagnosticResult
-            {
-                Id = DiagnosticIds.SYSTEM_IO,
-                Message = $"'{messageArg}' should not use 'System.IO' directly. Use equivalent method from namespace 'CMS.IO'.",
-                Severity = DiagnosticSeverity.Warning,
-                Locations = new[] { new DiagnosticResultLocation("Test0.cs", row, column) }
-            };
         }
     }
 }

@@ -14,9 +14,15 @@ namespace BugHunter.Analyzers.Test.CmsApiReplacementsTests
     public class ClientScriptMethodsTest : CodeFixVerifier<ClientScriptMethodsAnalyzer, ClientScriptMethodsCodeFixProvider>
     {
         protected override MetadataReference[] GetAdditionalReferences()
-        {
-            return ReferencesHelper.CMSBasicReferences.Union(new[] { ReferencesHelper.SystemWebReference, ReferencesHelper.CMSBaseWebUI }).ToArray();
-        }
+            => ReferencesHelper.CMSBasicReferences.Union(new[] { ReferencesHelper.SystemWebReference, ReferencesHelper.CMSBaseWebUI }).ToArray();
+
+        private static DiagnosticResult CreateDiagnosticResult(params object[] messageArgs)
+            => new DiagnosticResult
+            {
+                Id = DiagnosticIds.CLIENT_SCRIPT_METHODS,
+                Message = string.Format(MessagesConstants.MESSAGE_NO_SUGGESTION, messageArgs),
+                Severity = DiagnosticSeverity.Warning,
+            };
 
         [Test]
         public void EmptyInput_NoDiagnostic()
@@ -44,13 +50,7 @@ namespace SampleTestProject.CsSamples
         }}
     }}
 }}";
-            var expectedDiagnostic = new DiagnosticResult
-            {
-                Id = DiagnosticIds.CLIENT_SCRIPT_METHODS,
-                Message = string.Format(MessagesConstants.MESSAGE_NO_SUGGESTION, $"clientScript.{methodInvocation}"),
-                Severity = DiagnosticSeverity.Warning,
-                Locations = new[] { new DiagnosticResultLocation("Test0.cs", 9, 13) }
-            };
+            var expectedDiagnostic = CreateDiagnosticResult($"clientScript.{methodInvocation}").WithLocation(9, 13);
 
             VerifyCSharpDiagnostic(test, expectedDiagnostic);
 
@@ -87,13 +87,7 @@ namespace SampleTestProject.CsSamples
         }}
     }}
 }}";
-            var expectedDiagnostic = new DiagnosticResult
-            {
-                Id = DiagnosticIds.CLIENT_SCRIPT_METHODS,
-                Message = string.Format(MessagesConstants.MESSAGE_NO_SUGGESTION, $"new System.Web.UI.Page().ClientScript.{methodInvocation}"),
-                Severity = DiagnosticSeverity.Warning,
-                Locations = new[] { new DiagnosticResultLocation("Test0.cs", 8, 13) }
-            };
+            var expectedDiagnostic = CreateDiagnosticResult($"new System.Web.UI.Page().ClientScript.{methodInvocation}").WithLocation(8, 13);
 
             VerifyCSharpDiagnostic(test, expectedDiagnostic);
 
@@ -129,14 +123,8 @@ namespace SampleTestProject.CsSamples
         }}
     }}
 }}";
-            var expectedDiagnostic = new DiagnosticResult
-            {
-                Id = DiagnosticIds.CLIENT_SCRIPT_METHODS,
-                Message = string.Format(MessagesConstants.MESSAGE_NO_SUGGESTION, $"new System.Web.UI.Page().ClientScript.{methodInvocation}"),
-                Severity = DiagnosticSeverity.Warning,
-                Locations = new[] { new DiagnosticResultLocation("Test0.cs", 8, 13) }
-            };
-
+            var expectedDiagnostic = CreateDiagnosticResult($"new System.Web.UI.Page().ClientScript.{methodInvocation}").WithLocation(8, 13);
+            
             VerifyCSharpDiagnostic(test, expectedDiagnostic);
 
             // SampleClass does not inherit from System.Web.UI.Control, verify no codefix is applied

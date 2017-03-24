@@ -12,9 +12,15 @@ namespace BugHunter.Analyzers.Test.CmsApiReplacementsTests
     public class HttpRequestQueryStringTest : CodeFixVerifier<HttpRequestQueryStringAnalyzer>
     {
         protected override MetadataReference[] GetAdditionalReferences()
-        {
-            return new[] {ReferencesHelper.SystemWebReference};
-        }
+            => new[] {ReferencesHelper.SystemWebReference};
+
+        private static DiagnosticResult CreateDiagnosticResult(params object[] messageArgs)
+            => new DiagnosticResult
+            {
+                Id = DiagnosticIds.HTTP_REQUEST_QUERY_STRING,
+                Message = string.Format(MessagesConstants.MESSAGE, messageArgs),
+                Severity = DiagnosticSeverity.Warning,
+            };
 
         [Test]
         public void EmptyInput_NoDiagnostic()
@@ -40,13 +46,7 @@ namespace SampleTestProject.CsSamples
         }}
     }}
 }}";
-            var expectedDiagnostic = new DiagnosticResult
-            {
-                Id = DiagnosticIds.HTTP_REQUEST_QUERY_STRING,
-                Message = string.Format(MessagesConstants.MESSAGE, @"request.QueryString", "QueryHelper.Get<Type>()"),
-                Severity = DiagnosticSeverity.Warning,
-                Locations = new[] { new DiagnosticResultLocation("Test0.cs", 9, 23) }
-            };
+            var expectedDiagnostic = CreateDiagnosticResult(@"request.QueryString", "QueryHelper.Get<Type>()").WithLocation(9, 23);
 
             VerifyCSharpDiagnostic(test, expectedDiagnostic);
         }
@@ -66,13 +66,7 @@ namespace SampleTestProject.CsSamples
         }}
     }}
 }}";
-            var expectedDiagnostic = new DiagnosticResult
-            {
-                Id = DiagnosticIds.HTTP_REQUEST_QUERY_STRING,
-                Message = string.Format(MessagesConstants.MESSAGE, $@"{requestInstance}.QueryString", "QueryHelper.Get<Type>()"),
-                Severity = DiagnosticSeverity.Warning,
-                Locations = new[] { new DiagnosticResultLocation("Test0.cs", 8, 23) }
-            };
+            var expectedDiagnostic = CreateDiagnosticResult($@"{requestInstance}.QueryString", "QueryHelper.Get<Type>()").WithLocation(8, 23);
 
             VerifyCSharpDiagnostic(test, expectedDiagnostic);
         }
@@ -93,13 +87,7 @@ namespace SampleTestProject.CsSamples
         }}
     }}
 }}";
-            var expectedDiagnostic = new DiagnosticResult
-            {
-                Id = DiagnosticIds.HTTP_REQUEST_QUERY_STRING,
-                Message = string.Format(MessagesConstants.MESSAGE, @"request.QueryString", "QueryHelper.Get<Type>()"),
-                Severity = DiagnosticSeverity.Warning,
-                Locations = new[] { new DiagnosticResultLocation("Test0.cs", 9, 23) }
-            };
+            var expectedDiagnostic = CreateDiagnosticResult($@"request.QueryString", "QueryHelper.Get<Type>()").WithLocation(9, 23);
 
             VerifyCSharpDiagnostic(test, expectedDiagnostic);
         }

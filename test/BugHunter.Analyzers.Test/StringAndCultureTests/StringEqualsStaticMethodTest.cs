@@ -24,14 +24,12 @@ namespace BugHunter.Analyzers.Test.StringAndCultureTests
 
 
         private DiagnosticResult GetDiagnosticResult(string methodUsed)
-        {
-            return new DiagnosticResult
+            => new DiagnosticResult
             {
                 Id = DiagnosticIds.STRING_EQUALS_METHOD,
                 Message = $"'{methodUsed}' used without specifying StringComparison.",
                 Severity = DiagnosticSeverity.Warning,
             };
-        }
 
         [Test]
         public void EmptyInput_NoDiagnostic()

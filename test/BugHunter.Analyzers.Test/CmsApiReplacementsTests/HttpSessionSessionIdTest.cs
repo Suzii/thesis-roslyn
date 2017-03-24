@@ -14,9 +14,15 @@ namespace BugHunter.Analyzers.Test.CmsApiReplacementsTests
     public class HttpSessionSessionIdTest : CodeFixVerifier<HttpSessionSessionIdAnalyzer, HttpSessionSessionIdCodeFixProvider>
     {
         protected override MetadataReference[] GetAdditionalReferences()
-        {
-            return ReferencesHelper.CMSBasicReferences.Union(new[] {ReferencesHelper.SystemWebReference}).ToArray();
-        }
+            => ReferencesHelper.CMSBasicReferences.Union(new[] {ReferencesHelper.SystemWebReference}).ToArray();
+
+        private static DiagnosticResult CreateDiagnosticResult(params object[] messageArgs)
+            => new DiagnosticResult
+            {
+                Id = DiagnosticIds.HTTP_SESSION_SESSION_ID,
+                Message = string.Format(MessagesConstants.MESSAGE, messageArgs),
+                Severity = DiagnosticSeverity.Warning,
+            };
 
         [Test]
         public void EmptyInput_NoDiagnostic()
@@ -43,13 +49,7 @@ namespace SampleTestProject.CsSamples
     }}
 }}";
 
-            var expectedDiagnostic = new DiagnosticResult
-            {
-                Id = DiagnosticIds.HTTP_SESSION_SESSION_ID,
-                Message = string.Format(MessagesConstants.MESSAGE, $"session.SessionID", "SessionHelper.GetSessionID()"),
-                Severity = DiagnosticSeverity.Warning,
-                Locations = new[] { new DiagnosticResultLocation("Test0.cs", 9, 29) }
-            };
+            var expectedDiagnostic = CreateDiagnosticResult("session.SessionID", "SessionHelper.GetSessionID()").WithLocation(9, 29);
             
             VerifyCSharpDiagnostic(test, expectedDiagnostic);
 
@@ -85,13 +85,7 @@ namespace SampleTestProject.CsSamples
     }}
 }}";
 
-            var expectedDiagnostic = new DiagnosticResult
-            {
-                Id = DiagnosticIds.HTTP_SESSION_SESSION_ID,
-                Message = string.Format(MessagesConstants.MESSAGE, $"{sessionInstance}.SessionID", "SessionHelper.GetSessionID()"),
-                Severity = DiagnosticSeverity.Warning,
-                Locations = new[] { new DiagnosticResultLocation("Test0.cs", 8, 29) }
-            };
+            var expectedDiagnostic = CreateDiagnosticResult($"{sessionInstance}.SessionID", "SessionHelper.GetSessionID()").WithLocation(8, 29);
 
             VerifyCSharpDiagnostic(test, expectedDiagnostic);
 
@@ -127,13 +121,7 @@ namespace SampleTestProject.CsSamples
     }}
 }}";
 
-            var expectedDiagnostic = new DiagnosticResult
-            {
-                Id = DiagnosticIds.HTTP_SESSION_SESSION_ID,
-                Message = string.Format(MessagesConstants.MESSAGE, $"session.SessionID", "SessionHelper.GetSessionID()"),
-                Severity = DiagnosticSeverity.Warning,
-                Locations = new[] { new DiagnosticResultLocation("Test0.cs", 9, 29) }
-            };
+            var expectedDiagnostic = CreateDiagnosticResult("session.SessionID", "SessionHelper.GetSessionID()").WithLocation(9, 29);
 
             VerifyCSharpDiagnostic(test, expectedDiagnostic);
 

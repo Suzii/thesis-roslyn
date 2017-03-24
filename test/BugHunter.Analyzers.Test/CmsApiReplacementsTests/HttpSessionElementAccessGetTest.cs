@@ -13,9 +13,15 @@ namespace BugHunter.Analyzers.Test.CmsApiReplacementsTests
     public class HttpSessionElementAccessGetTest : CodeFixVerifier<HttpSessionElementAccessAnalyzer, HttpSessionElementAccessGetCodeFixProvider>
     {
         protected override MetadataReference[] GetAdditionalReferences()
-        {
-            return ReferencesHelper.CMSBasicReferences.Union(new[] {ReferencesHelper.SystemWebReference}).ToArray();
-        }
+            => ReferencesHelper.CMSBasicReferences.Union(new[] {ReferencesHelper.SystemWebReference}).ToArray();
+
+        private static DiagnosticResult CreateDiagnosticResult(params object[] messageArgs)
+            => new DiagnosticResult
+            {
+                Id = DiagnosticIds.HTTP_SESSION_ELEMENT_ACCESS_GET,
+                Message = string.Format(@"'{0}' should not be used. Use 'SessionHelper.GetValue()' instead.", messageArgs),
+                Severity = DiagnosticSeverity.Warning,
+            };
 
         [Test]
         public void EmptyInput_NoDiagnostic()
@@ -42,13 +48,7 @@ namespace SampleTestProject.CsSamples
     }}
 }}";
 
-            var expectedDiagnostic = new DiagnosticResult
-            {
-                Id = DiagnosticIds.HTTP_SESSION_ELEMENT_ACCESS_GET,
-                Message = @"'session[""aKey""]' should not be used. Use 'SessionHelper.GetValue()' instead.",
-                Severity = DiagnosticSeverity.Warning,
-                Locations = new[] { new DiagnosticResultLocation("Test0.cs", 9, 26) }
-            };
+            var expectedDiagnostic = CreateDiagnosticResult(@"session[""aKey""]").WithLocation(9, 26);
             
             VerifyCSharpDiagnostic(test, expectedDiagnostic);
 
@@ -84,13 +84,7 @@ namespace SampleTestProject.CsSamples
     }}
 }}";
 
-            var expectedDiagnostic = new DiagnosticResult
-            {
-                Id = DiagnosticIds.HTTP_SESSION_ELEMENT_ACCESS_GET,
-                Message = $@"'{sessionInstance}[""aKey""]' should not be used. Use 'SessionHelper.GetValue()' instead.",
-                Severity = DiagnosticSeverity.Warning,
-                Locations = new[] { new DiagnosticResultLocation("Test0.cs", 8, 26) }
-            };
+            var expectedDiagnostic = CreateDiagnosticResult($@"{sessionInstance}[""aKey""]").WithLocation(8, 26);
 
             VerifyCSharpDiagnostic(test, expectedDiagnostic);
 
@@ -126,13 +120,7 @@ namespace SampleTestProject.CsSamples
     }}
 }}";
 
-            var expectedDiagnostic = new DiagnosticResult
-            {
-                Id = DiagnosticIds.HTTP_SESSION_ELEMENT_ACCESS_GET,
-                Message = @"'session[""aKey""]' should not be used. Use 'SessionHelper.GetValue()' instead.",
-                Severity = DiagnosticSeverity.Warning,
-                Locations = new[] { new DiagnosticResultLocation("Test0.cs", 9, 26) }
-            };
+            var expectedDiagnostic = CreateDiagnosticResult(@"session[""aKey""]").WithLocation(9, 26);
 
             VerifyCSharpDiagnostic(test, expectedDiagnostic);
 

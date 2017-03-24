@@ -14,9 +14,15 @@ namespace BugHunter.Analyzers.Test.CmsApiReplacementsTests
     public class HttpResponseCookiesTest : CodeFixVerifier<HttpResponseCookiesAnalyzer, HttpResponseCookiesCodeFixProvider>
     {
         protected override MetadataReference[] GetAdditionalReferences()
-        {
-            return ReferencesHelper.CMSBasicReferences.Union(new[] { ReferencesHelper.SystemWebReference }).ToArray();
-        }
+            => ReferencesHelper.CMSBasicReferences.Union(new[] { ReferencesHelper.SystemWebReference }).ToArray();
+        
+        private static DiagnosticResult CreateDiagnosticResult(params object[] messageArgs)
+            => new DiagnosticResult
+            {
+                Id = DiagnosticIds.HTTP_RESPONSE_COOKIES,
+                Message = string.Format(MessagesConstants.MESSAGE, messageArgs),
+                Severity = DiagnosticSeverity.Warning,
+            };
 
         [Test]
         public void EmptyInput_NoDiagnostic()
@@ -42,13 +48,7 @@ namespace SampleTestProject.CsSamples
         }}
     }}
 }}";
-            var expectedDiagnostic = new DiagnosticResult
-            {
-                Id = DiagnosticIds.HTTP_RESPONSE_COOKIES,
-                Message = string.Format(MessagesConstants.MESSAGE, "r.Cookies", "CookieHelper.ResponseCookies"),
-                Severity = DiagnosticSeverity.Warning,
-                Locations = new[] { new DiagnosticResultLocation("Test0.cs", 9, 27) }
-            };
+            var expectedDiagnostic = CreateDiagnosticResult("r.Cookies", "CookieHelper.ResponseCookies").WithLocation(9, 27);
 
             VerifyCSharpDiagnostic(test, expectedDiagnostic);
 
@@ -83,13 +83,7 @@ namespace SampleTestProject.CsSamples
         }}
     }}
 }}";
-            var expectedDiagnostic = new DiagnosticResult
-            {
-                Id = DiagnosticIds.HTTP_RESPONSE_COOKIES,
-                Message = string.Format(MessagesConstants.MESSAGE, $"{instance}.Cookies", "CookieHelper.ResponseCookies"),
-                Severity = DiagnosticSeverity.Warning,
-                Locations = new[] { new DiagnosticResultLocation("Test0.cs", 8, 27) }
-            };
+            var expectedDiagnostic = CreateDiagnosticResult($"{instance}.Cookies", "CookieHelper.ResponseCookies").WithLocation(8, 27);
 
             VerifyCSharpDiagnostic(test, expectedDiagnostic);
 
@@ -125,13 +119,7 @@ namespace SampleTestProject.CsSamples
         }}
     }}
 }}";
-            var expectedDiagnostic = new DiagnosticResult
-            {
-                Id = DiagnosticIds.HTTP_RESPONSE_COOKIES,
-                Message = string.Format(MessagesConstants.MESSAGE, "r.Cookies", "CookieHelper.ResponseCookies"),
-                Severity = DiagnosticSeverity.Warning,
-                Locations = new[] { new DiagnosticResultLocation("Test0.cs", 10, 27) }
-            };
+            var expectedDiagnostic = CreateDiagnosticResult("r.Cookies", "CookieHelper.ResponseCookies").WithLocation(10, 27);
 
             VerifyCSharpDiagnostic(test, expectedDiagnostic);
 

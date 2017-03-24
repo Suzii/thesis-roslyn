@@ -14,9 +14,15 @@ namespace BugHunter.Analyzers.Test.CmsApiReplacementsTests
     public class HttpRequestUrlTest : CodeFixVerifier<HttpRequestUrlAnalyzer, HttpRequestUrlCodeFixProvider>
     {
         protected override MetadataReference[] GetAdditionalReferences()
-        {
-            return ReferencesHelper.CMSBasicReferences.Union(new[] {ReferencesHelper.SystemWebReference}).ToArray();
-        }
+            => ReferencesHelper.CMSBasicReferences.Union(new[] {ReferencesHelper.SystemWebReference}).ToArray();
+
+        private static DiagnosticResult CreateDiagnosticResult(params object[] messageArgs)
+            => new DiagnosticResult
+            {
+                Id = DiagnosticIds.HTTP_REQUEST_URL,
+                Message = string.Format(MessagesConstants.MESSAGE, messageArgs),
+                Severity = DiagnosticSeverity.Warning,
+            };
 
         [Test]
         public void EmptyInput_NoDiagnostic()
@@ -42,13 +48,7 @@ namespace SampleTestProject.CsSamples
         }}
     }}
 }}";
-            var expectedDiagnostic = new DiagnosticResult
-            {
-                Id = DiagnosticIds.HTTP_REQUEST_URL,
-                Message = string.Format(MessagesConstants.MESSAGE, "request.Url", "RequestContext.URL"),
-                Severity = DiagnosticSeverity.Warning,
-                Locations = new[] { new DiagnosticResultLocation("Test0.cs", 9, 23) }
-            };
+            var expectedDiagnostic = CreateDiagnosticResult("request.Url", "RequestContext.URL").WithLocation(9, 23);
 
             VerifyCSharpDiagnostic(test, expectedDiagnostic);
 
@@ -83,13 +83,7 @@ namespace SampleTestProject.CsSamples
         }}
     }}
 }}";
-            var expectedDiagnostic = new DiagnosticResult
-            {
-                Id = DiagnosticIds.HTTP_REQUEST_URL,
-                Message = string.Format(MessagesConstants.MESSAGE, $"{requestInstance}.Url", "RequestContext.URL"),
-                Severity = DiagnosticSeverity.Warning,
-                Locations = new[] { new DiagnosticResultLocation("Test0.cs", 8, 23) }
-            };
+            var expectedDiagnostic = CreateDiagnosticResult($"{requestInstance}.Url", "RequestContext.URL").WithLocation(8, 23);
 
             VerifyCSharpDiagnostic(test, expectedDiagnostic);
 
@@ -124,13 +118,7 @@ namespace SampleTestProject.CsSamples
         }}
     }}
 }}";
-            var expectedDiagnostic = new DiagnosticResult
-            {
-                Id = DiagnosticIds.HTTP_REQUEST_URL,
-                Message = string.Format(MessagesConstants.MESSAGE, "request.Url", "RequestContext.URL"),
-                Severity = DiagnosticSeverity.Warning,
-                Locations = new[] { new DiagnosticResultLocation("Test0.cs", 9, 23) }
-            };
+            var expectedDiagnostic = CreateDiagnosticResult("request.Url", "RequestContext.URL").WithLocation(9, 23);
 
             VerifyCSharpDiagnostic(test, expectedDiagnostic);
 

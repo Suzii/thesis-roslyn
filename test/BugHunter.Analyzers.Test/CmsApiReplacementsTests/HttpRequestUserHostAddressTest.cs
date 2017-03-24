@@ -14,9 +14,16 @@ namespace BugHunter.Analyzers.Test.CmsApiReplacementsTests
     public class HttpRequestUserHostAddressTest : CodeFixVerifier<HttpRequestUserHostAddressAnalyzer, HttpRequestUserHostAddressCodeFixProvider>
     {
         protected override MetadataReference[] GetAdditionalReferences()
-        {
-            return ReferencesHelper.CMSBasicReferences.Union(new[] {ReferencesHelper.SystemWebReference}).ToArray();
-        }
+            => ReferencesHelper.CMSBasicReferences.Union(new[] {ReferencesHelper.SystemWebReference}).ToArray();
+
+        private static DiagnosticResult CreateDiagnosticResult(params object[] messageArgs)
+            => new DiagnosticResult
+            {
+                Id = DiagnosticIds.HTTP_REQUEST_USER_HOST_ADDRESS,
+                Message = string.Format(MessagesConstants.MESSAGE, messageArgs),
+                Severity = DiagnosticSeverity.Warning,
+            };
+
 
         [Test]
         public void EmptyInput_NoDiagnostic()
@@ -42,13 +49,7 @@ namespace SampleTestProject.CsSamples
         }}
     }}
 }}";
-            var expectedDiagnostic = new DiagnosticResult
-            {
-                Id = DiagnosticIds.HTTP_REQUEST_USER_HOST_ADDRESS,
-                Message = string.Format(MessagesConstants.MESSAGE, "request.UserHostAddress", "RequestContext.UserHostAddress"),
-                Severity = DiagnosticSeverity.Warning,
-                Locations = new[] { new DiagnosticResultLocation("Test0.cs", 9, 27) }
-            };
+            var expectedDiagnostic = CreateDiagnosticResult("request.UserHostAddress", "RequestContext.UserHostAddress").WithLocation(9, 27);
 
             VerifyCSharpDiagnostic(test, expectedDiagnostic);
 
@@ -83,13 +84,7 @@ namespace SampleTestProject.CsSamples
         }}
     }}
 }}";
-            var expectedDiagnostic = new DiagnosticResult
-            {
-                Id = DiagnosticIds.HTTP_REQUEST_USER_HOST_ADDRESS,
-                Message = string.Format(MessagesConstants.MESSAGE, $"{requestInstance}.UserHostAddress", "RequestContext.UserHostAddress"),
-                Severity = DiagnosticSeverity.Warning,
-                Locations = new[] { new DiagnosticResultLocation("Test0.cs", 8, 27) }
-            };
+            var expectedDiagnostic = CreateDiagnosticResult($"{requestInstance}.UserHostAddress", "RequestContext.UserHostAddress").WithLocation(8, 27);
 
             VerifyCSharpDiagnostic(test, expectedDiagnostic);
 
@@ -124,13 +119,7 @@ namespace SampleTestProject.CsSamples
         }}
     }}
 }}";
-            var expectedDiagnostic = new DiagnosticResult
-            {
-                Id = DiagnosticIds.HTTP_REQUEST_USER_HOST_ADDRESS,
-                Message = string.Format(MessagesConstants.MESSAGE, "request.UserHostAddress", "RequestContext.UserHostAddress"),
-                Severity = DiagnosticSeverity.Warning,
-                Locations = new[] { new DiagnosticResultLocation("Test0.cs", 9, 27) }
-            };
+            var expectedDiagnostic = CreateDiagnosticResult("request.UserHostAddress", "RequestContext.UserHostAddress").WithLocation(9, 27);
 
             VerifyCSharpDiagnostic(test, expectedDiagnostic);
 

@@ -23,14 +23,12 @@ namespace BugHunter.Analyzers.Test.StringAndCultureTests
         protected override MetadataReference[] GetAdditionalReferences() => null;
 
         private DiagnosticResult GetDiagnosticResult(string methodUsed)
-        {
-            return new DiagnosticResult
+            => new DiagnosticResult
             {
                 Id = DiagnosticIds.STRING_COMPARE_TO_METHOD,
                 Message = $"'{methodUsed}' used without specifying StringComparison.",
                 Severity = DiagnosticSeverity.Warning,
             };
-        }
 
         [Test]
         public void EmptyInput_NoDiagnostic()

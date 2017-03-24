@@ -14,19 +14,15 @@ namespace BugHunter.Analyzers.Test.CmsApiReplacementsTests
     public class FormsAuthenticationSignOutTest : CodeFixVerifier<FormsAuthenticationSignOut, FormsAuthenticationSignOutCodeFixProvider>
     {
         protected override MetadataReference[] GetAdditionalReferences()
-        {
-            return ReferencesHelper.CMSBasicReferences.Union(ReferencesHelper.GetReferencesFor(typeof(System.Web.HtmlString), typeof(CMS.Membership.AuthenticationHelper))).ToArray();
-        }
+            => ReferencesHelper.CMSBasicReferences.Union(ReferencesHelper.GetReferencesFor(typeof(System.Web.HtmlString), typeof(CMS.Membership.AuthenticationHelper))).ToArray();
 
         private static DiagnosticResult CreateDiagnosticResult(params object[] messageArgs)
-        {
-            return new DiagnosticResult
+            => new DiagnosticResult
             {
                 Id = DiagnosticIds.FORMS_AUTHENTICATION_SIGN_OUT,
                 Message = string.Format(MessagesConstants.MESSAGE, messageArgs),
                 Severity = DiagnosticSeverity.Warning,
             };
-        }
 
         [Test]
         public void EmptyInput_NoDiagnostic()
@@ -51,9 +47,7 @@ namespace SampleTestProject.CsSamples
         }}
     }}
 }}";
-            var expectedDiagnostic =
-                CreateDiagnosticResult("FormsAuthentication.SignOut()", "AuthenticationHelper.SignOut()")
-                    .WithLocation(9, 13);
+            var expectedDiagnostic = CreateDiagnosticResult("FormsAuthentication.SignOut()", "AuthenticationHelper.SignOut()").WithLocation(9, 13);
 
             VerifyCSharpDiagnostic(test, expectedDiagnostic);
 
@@ -87,9 +81,7 @@ namespace SampleTestProject.CsSamples
         }}
     }}
 }}";
-            var expectedDiagnostic =
-                CreateDiagnosticResult("System.Web.Security.FormsAuthentication.SignOut()", "AuthenticationHelper.SignOut()")
-                    .WithLocation(8, 13);
+            var expectedDiagnostic = CreateDiagnosticResult("System.Web.Security.FormsAuthentication.SignOut()", "AuthenticationHelper.SignOut()").WithLocation(8, 13);
 
             VerifyCSharpDiagnostic(test, expectedDiagnostic);
 

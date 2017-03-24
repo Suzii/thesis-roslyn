@@ -13,14 +13,12 @@ namespace BugHunter.Analyzers.Test.StringAndCultureTests
         protected override MetadataReference[] GetAdditionalReferences() => null;
 
         private DiagnosticResult GetDiagnosticResult(string methodUsed)
-        {
-            return new DiagnosticResult
+            => new DiagnosticResult
             {
                 Id = DiagnosticIds.STRING_MANIPULATION_METHODS,
                 Message = $"'{methodUsed}' used without specifying CultureInfo.",
                 Severity = DiagnosticSeverity.Warning,
             };
-        }
 
         [Test]
         public void EmptyInput_NoDiagnostic()

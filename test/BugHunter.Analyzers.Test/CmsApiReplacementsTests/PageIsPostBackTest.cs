@@ -14,9 +14,15 @@ namespace BugHunter.Analyzers.Test.CmsApiReplacementsTests
     public class PageIsPostBackTest : CodeFixVerifier<PageIsPostBackAnalyzer, PageIsPostBackCodeFixProvider>
     {
         protected override MetadataReference[] GetAdditionalReferences()
-        {
-            return ReferencesHelper.CMSBasicReferences.Union(new[] {ReferencesHelper.SystemWebReference}).ToArray();
-        }
+            => ReferencesHelper.CMSBasicReferences.Union(new[] {ReferencesHelper.SystemWebReference}).ToArray();
+
+        private static DiagnosticResult CreateDiagnosticResult(params object[] messageArgs)
+            => new DiagnosticResult
+            {
+                Id = DiagnosticIds.PAGE_IS_POST_BACK,
+                Message = string.Format(MessagesConstants.MESSAGE, messageArgs),
+                Severity = DiagnosticSeverity.Warning,
+            };
 
         [Test]
         public void EmptyInput_NoDiagnostic()
@@ -41,13 +47,7 @@ namespace SampleTestProject.CsSamples
     }}
 }}";
 
-            var expectedDiagnostic = new DiagnosticResult
-            {
-                Id = DiagnosticIds.PAGE_IS_POST_BACK,
-                Message = string.Format(MessagesConstants.MESSAGE, $"new System.Web.UI.Page().IsPostBack", "RequestHelper.IsPostBack()"),
-                Severity = DiagnosticSeverity.Warning,
-                Locations = new[] { new DiagnosticResultLocation("Test0.cs", 8, 30) }
-            };
+            var expectedDiagnostic = CreateDiagnosticResult("new System.Web.UI.Page().IsPostBack", "RequestHelper.IsPostBack()").WithLocation(8, 30);
             
             VerifyCSharpDiagnostic(test, expectedDiagnostic);
 
@@ -82,13 +82,7 @@ namespace SampleTestProject.CsSamples
     }}
 }}";
 
-            var expectedDiagnostic = new DiagnosticResult
-            {
-                Id = DiagnosticIds.PAGE_IS_POST_BACK,
-                Message = string.Format(MessagesConstants.MESSAGE, "page.IsPostBack", "RequestHelper.IsPostBack()"),
-                Severity = DiagnosticSeverity.Warning,
-                Locations = new[] { new DiagnosticResultLocation("Test0.cs", 9, 26) }
-            };
+            var expectedDiagnostic = CreateDiagnosticResult("page.IsPostBack", "RequestHelper.IsPostBack()").WithLocation(9, 26);
 
             VerifyCSharpDiagnostic(test, expectedDiagnostic);
 

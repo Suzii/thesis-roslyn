@@ -14,9 +14,15 @@ namespace BugHunter.Analyzers.Test.CmsApiReplacementsTests
     public class HttpRequestBrowserTest : CodeFixVerifier<HttpRequestBrowserAnalyzer, HttpRequestBrowserCodeFixProvider>
     {
         protected override MetadataReference[] GetAdditionalReferences()
-        {
-            return ReferencesHelper.CMSBasicReferences.Union(new[] { ReferencesHelper.SystemWebReference }).ToArray();
-        }
+            =>ReferencesHelper.CMSBasicReferences.Union(new[] { ReferencesHelper.SystemWebReference }).ToArray();
+
+        private static DiagnosticResult CreateDiagnosticResult(params object[] messageArgs)
+            => new DiagnosticResult
+            {
+                Id = DiagnosticIds.HTTP_REQUEST_BROWSER,
+                Message = string.Format(MessagesConstants.MESSAGE, messageArgs),
+                Severity = DiagnosticSeverity.Warning,
+            };
 
         [Test]
         public void EmptyInput_NoDiagnostic()
@@ -42,13 +48,7 @@ namespace SampleTestProject.CsSamples
         }}
     }}
 }}";
-            var expectedDiagnostic = new DiagnosticResult
-            {
-                Id = DiagnosticIds.HTTP_REQUEST_BROWSER,
-                Message = string.Format(MessagesConstants.MESSAGE, "request.Browser.Browser", "BrowserHelper.GetBrowser()"),
-                Severity = DiagnosticSeverity.Warning,
-                Locations = new[] { new DiagnosticResultLocation("Test0.cs", 9, 27) }
-            };
+            var expectedDiagnostic = CreateDiagnosticResult("request.Browser.Browser", "BrowserHelper.GetBrowser()").WithLocation(9, 27);
 
             VerifyCSharpDiagnostic(test, expectedDiagnostic);
 
@@ -85,14 +85,8 @@ namespace SampleTestProject.CsSamples
         }}
     }}
 }}";
-            var expectedDiagnostic = new DiagnosticResult
-            {
-                Id = DiagnosticIds.HTTP_REQUEST_BROWSER,
-                Message = string.Format(MessagesConstants.MESSAGE, "browserInfo.Browser", "BrowserHelper.GetBrowser()"),
-                Severity = DiagnosticSeverity.Warning,
-                Locations = new[] { new DiagnosticResultLocation("Test0.cs", 10, 27) }
-            };
-
+            var expectedDiagnostic = CreateDiagnosticResult("browserInfo.Browser", "BrowserHelper.GetBrowser()").WithLocation(10, 27);
+            
             VerifyCSharpDiagnostic(test, expectedDiagnostic);
 
             var expectedFix = $@"using CMS.Helpers;
@@ -129,13 +123,8 @@ namespace SampleTestProject.CsSamples
         }}
     }}
 }}";
-            var expectedDiagnostic = new DiagnosticResult
-            {
-                Id = DiagnosticIds.HTTP_REQUEST_BROWSER,
-                Message = string.Format(MessagesConstants.MESSAGE, "browserInfo.Browser", "BrowserHelper.GetBrowser()"),
-                Severity = DiagnosticSeverity.Warning,
-                Locations = new[] { new DiagnosticResultLocation("Test0.cs", 10, 27) }
-            };
+
+            var expectedDiagnostic = CreateDiagnosticResult("browserInfo.Browser", "BrowserHelper.GetBrowser()").WithLocation(10, 27);
 
             VerifyCSharpDiagnostic(test, expectedDiagnostic);
 
