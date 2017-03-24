@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using BugHunter.Core.ApiReplacementAnalysis;
 using BugHunter.Core.DiagnosticsFormatting;
 using BugHunter.Core.Extensions;
 using Microsoft.CodeAnalysis;
@@ -6,21 +7,21 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
 
-namespace BugHunter.Core._experiment
+namespace BugHunter.Core.Analyzers
 {
-    public class SimpleMemberAccessAnalyzer : IAccessAnalyzer
+    public class SimpleMemberAccessAnalyzer : ISyntaxNodeAnalyzer
     {
         protected readonly ApiReplacementConfig Config;
         protected readonly IDiagnosticFormatter<MemberAccessExpressionSyntax> Formatter;
 
         public SimpleMemberAccessAnalyzer(ApiReplacementConfig config) 
-            : this(DiagnosticFormatterFactory.CreateMemberAccessFormatter())
+            : this(config, DiagnosticFormatterFactory.CreateMemberAccessFormatter())
         {
-            Config = config;
         }
 
-        public SimpleMemberAccessAnalyzer(IDiagnosticFormatter<MemberAccessExpressionSyntax> formatter)
+        public SimpleMemberAccessAnalyzer(ApiReplacementConfig config, IDiagnosticFormatter<MemberAccessExpressionSyntax> formatter)
         {
+            Config = config;
             Formatter = formatter;
         }
 

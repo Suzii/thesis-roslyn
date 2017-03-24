@@ -1,15 +1,16 @@
-﻿using Microsoft.CodeAnalysis.CSharp;
+﻿using BugHunter.Core.Analyzers;
+using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Diagnostics;
 
-namespace BugHunter.Core._experiment
+namespace BugHunter.Core.ApiReplacementAnalysis
 {
     public class ApiReplacementForMemberAnalyzer
     {
         private readonly ApiReplacementConfig _config;
         private readonly bool _locationOnlyOnMember;
-        // TODO Plus add possibility to configure from outside
-        private SimpleMemberAccessAnalyzer _simpleMemberAccessAnalyzer;
-        private ConditionalAccessAnalyzer _conditionalAccessAnalyzer;
+        // TODO: add possibility to configure from the outside
+        private ISyntaxNodeAnalyzer _simpleMemberAccessAnalyzer;
+        private ISyntaxNodeAnalyzer _conditionalAccessAnalyzer;
 
         public ApiReplacementForMemberAnalyzer(ApiReplacementConfig config, bool locationOnlyOnMember = false)
         {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using BugHunter.Core.ApiReplacementAnalysis;
 using BugHunter.Core.DiagnosticsFormatting;
 using BugHunter.Core.Extensions;
 using Microsoft.CodeAnalysis;
@@ -7,9 +8,9 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
 
-namespace BugHunter.Core._experiment
+namespace BugHunter.Core.Analyzers
 {
-    public class ConditionalAccessAnalyzer : IAccessAnalyzer
+    public class ConditionalAccessAnalyzer : ISyntaxNodeAnalyzer
     {
         protected readonly ApiReplacementConfig Config;
         protected readonly IDiagnosticFormatter<ConditionalAccessExpressionSyntax> Formatter;

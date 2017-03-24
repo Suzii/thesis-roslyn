@@ -101,7 +101,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AnalysisHelpers\AccessExpressionHelperTests.cs" />
     <Compile Include="DiagnosticsFormatting\ConditionalAccessDiagnosticFormatterTests.cs" />
     <Compile Include="DiagnosticsFormatting\AssertLocation.cs" />
     <Compile Include="DiagnosticsFormatting\MemberAccessOnlyDiagnosticFormatterTests.cs" />
@@ -131,6 +130,9 @@
       <Project>{51413d47-6598-40a4-9bc7-91d88742b9da}</Project>
       <Name>BugHunter.TestUtils</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="AnalysisHelpers\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
