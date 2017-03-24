@@ -1,5 +1,5 @@
 ﻿using System.Collections.Immutable;
-using BugHunter.Core.Analyzers;
+using BugHunter.Core.ApiReplacementAnalysis;
 using BugHunter.Core.Helpers.DiagnosticDescriptionBuilders;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
@@ -10,7 +10,7 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.Analyzers
     /// Searches for usages of <see cref="System.Web.UI.Page"/> and their access to IsPostBack member
     /// </summary>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class PageIsPostBackAnalyzer : BaseMemberAccessAnalyzer
+    public class PageIsPostBackAnalyzer : DiagnosticAnalyzer
     {
         public const string DIAGNOSTIC_ID = DiagnosticIds.PAGE_IS_POST_BACK;
 
@@ -18,12 +18,16 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.Analyzers
 
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
 
+        private static readonly ApiReplacementConfig apiReplacementConfig = new ApiReplacementConfig(
+                    Rule,
+                    ImmutableHashSet.Create("System.Web.UI.Page"),
+                    ImmutableHashSet.Create("IsPostBack"));
+
+        private static readonly ApiReplacementForMemberAnalyzer apiReplacementAnalyzer = new ApiReplacementForMemberAnalyzer(apiReplacementConfig);
+
         public override void Initialize(AnalysisContext context)
         {
-            context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.None);
-            context.EnableConcurrentExecution();
-
-            RegisterAction(Rule, context, "System.Web.UI.Page", "IsPostBack");
+            apiReplacementAnalyzer.RegisterAnalyzers(context);
         }
     }
 }

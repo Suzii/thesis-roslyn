@@ -61,7 +61,7 @@ namespace BugHunter.Core.Analyzers
             var location = Formatter.GetLocation(conditionalAccess);
             var diagnosedUsage = Formatter.GetDiagnosedUsage(conditionalAccess);
             var diagnostic = Diagnostic.Create(Config.Rule, location, diagnosedUsage);
-
+            
             return diagnostic;
         }
     }

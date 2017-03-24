@@ -15,14 +15,12 @@ namespace BugHunter.Core.Tests.Analyzers
         protected override MetadataReference[] GetAdditionalReferences() => null;
 
         private static DiagnosticResult CreateDiagnosticResult(params object[] messageArgs)
-        {
-            return new DiagnosticResult
+            => new DiagnosticResult
             {
                 Id = "FAKE_ID",
                 Message = string.Format(@"'{0}' should not be used.", messageArgs),
                 Severity = DiagnosticSeverity.Warning,
             };
-        }
 
         private static string FakeClassSource = @"
 namespace OkayNamespace

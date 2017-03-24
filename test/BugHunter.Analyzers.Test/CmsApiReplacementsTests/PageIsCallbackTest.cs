@@ -14,9 +14,15 @@ namespace BugHunter.Analyzers.Test.CmsApiReplacementsTests
     public class PageIsCallbackTest : CodeFixVerifier<PageIsCallbackAnalyzer, PageIsCallbackCodeFixProvider>
     {
         protected override MetadataReference[] GetAdditionalReferences()
-        {
-            return ReferencesHelper.CMSBasicReferences.Union(new[] {ReferencesHelper.SystemWebReference}).ToArray();
-        }
+            => ReferencesHelper.CMSBasicReferences.Union(new[] {ReferencesHelper.SystemWebReference}).ToArray();
+
+        private static DiagnosticResult CreateDiagnosticResult(params object[] messageArgs)
+            => new DiagnosticResult
+            {
+                Id = DiagnosticIds.PAGE_IS_CALLBACK,
+                Message = string.Format(MessagesConstants.MESSAGE, messageArgs),
+                Severity = DiagnosticSeverity.Warning,
+            };
 
         [Test]
         public void EmptyInput_NoDiagnostic()
@@ -41,14 +47,7 @@ namespace SampleTestProject.CsSamples
     }}
 }}";
 
-            var expectedDiagnostic = new DiagnosticResult
-            {
-                Id = DiagnosticIds.PAGE_IS_CALLBACK,
-                Message = string.Format(MessagesConstants.MESSAGE, $"new System.Web.UI.Page().IsCallback", "RequestHelper.IsCallback()"),
-                Severity = DiagnosticSeverity.Warning,
-                Locations = new[] { new DiagnosticResultLocation("Test0.cs", 8, 30) }
-            };
-            
+            var expectedDiagnostic = CreateDiagnosticResult($"new System.Web.UI.Page().IsCallback", "RequestHelper.IsCallback()").WithLocation(8, 30);
             VerifyCSharpDiagnostic(test, expectedDiagnostic);
 
             var expectedFix = $@"using CMS.Helpers;
@@ -67,6 +66,28 @@ namespace SampleTestProject.CsSamples
         }
 
         [Test]
+        public void InputWithIncident_ConditionalAccess_SurfacesDiagnostic()
+        {
+            var test = $@"
+namespace SampleTestProject.CsSamples 
+{{
+    public class SampleClass
+    {{
+        public void SampleMethod()
+        {{
+            var isPostBack = new System.Web.UI.Page()?.IsCallback;
+        }}
+    }}
+}}";
+
+            var expectedDiagnostic = CreateDiagnosticResult($"new System.Web.UI.Page()?.IsCallback", "RequestHelper.IsCallback()").WithLocation(8, 30);
+
+            VerifyCSharpDiagnostic(test, expectedDiagnostic);
+            // No fix
+            VerifyCSharpFix(test, test);
+        }
+
+        [Test]
         public void InputWithIncident_FollowUpMemberAccess_SurfacesDiagnostic()
         {
             var test = $@"
@@ -82,13 +103,7 @@ namespace SampleTestProject.CsSamples
     }}
 }}";
 
-            var expectedDiagnostic = new DiagnosticResult
-            {
-                Id = DiagnosticIds.PAGE_IS_CALLBACK,
-                Message = string.Format(MessagesConstants.MESSAGE, $"page.IsCallback", "RequestHelper.IsCallback()"),
-                Severity = DiagnosticSeverity.Warning,
-                Locations = new[] { new DiagnosticResultLocation("Test0.cs", 9, 26) }
-            };
+            var expectedDiagnostic = CreateDiagnosticResult("page.IsCallback", "RequestHelper.IsCallback()").WithLocation(9, 26);
 
             VerifyCSharpDiagnostic(test, expectedDiagnostic);
 
@@ -106,6 +121,29 @@ namespace SampleTestProject.CsSamples
     }}
 }}";
             VerifyCSharpFix(test, expectedFix);
+        }
+
+        [Test]
+        public void InputWithIncident_ConditionalAccessWithFollowUpMemberAccess_SurfacesDiagnostic()
+        {
+            var test = $@"
+namespace SampleTestProject.CsSamples 
+{{
+    public class SampleClass
+    {{
+        public void SampleMethod()
+        {{
+            var page = new System.Web.UI.Page();
+            var answer = page?.IsCallback.ToString();
+        }}
+    }}
+}}";
+
+            var expectedDiagnostic = CreateDiagnosticResult("page?.IsCallback", "RequestHelper.IsCallback()").WithLocation(9, 26); 
+
+            VerifyCSharpDiagnostic(test, expectedDiagnostic);
+            // No fix
+            VerifyCSharpFix(test, test);
         }
     }
 }

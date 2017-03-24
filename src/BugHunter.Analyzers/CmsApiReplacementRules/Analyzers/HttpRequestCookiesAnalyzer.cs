@@ -1,5 +1,5 @@
 ﻿using System.Collections.Immutable;
-using BugHunter.Core.Analyzers;
+using BugHunter.Core.ApiReplacementAnalysis;
 using BugHunter.Core.Helpers.DiagnosticDescriptionBuilders;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
@@ -10,7 +10,7 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.Analyzers
     /// Searches for usage of <see cref="System.Web.HttpCookie"/> as properties of <see cref="System.Web.HttpRequest"/>
     /// </summary>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class HttpRequestCookiesAnalyzer : BaseMemberAccessAnalyzer
+    public class HttpRequestCookiesAnalyzer : DiagnosticAnalyzer
     {
         public const string DIAGNOSTIC_ID = DiagnosticIds.HTTP_REQUEST_COOKIES;
 
@@ -18,13 +18,16 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.Analyzers
             
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
 
+        private static readonly ApiReplacementConfig apiReplacementConfig = new ApiReplacementConfig(
+                    Rule,
+                    ImmutableHashSet.Create("System.Web.HttpRequest", "System.Web.HttpRequestBase"),
+                    ImmutableHashSet.Create("Cookies"));
+
+        private static readonly ApiReplacementForMemberAnalyzer apiReplacementAnalyzer = new ApiReplacementForMemberAnalyzer(apiReplacementConfig);
+
         public override void Initialize(AnalysisContext context)
         {
-            context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.None);
-            context.EnableConcurrentExecution();
-
-            RegisterAction(Rule, context, "System.Web.HttpRequest", "Cookies");
-            RegisterAction(Rule, context, "System.Web.HttpRequestBase", "Cookies");
+            apiReplacementAnalyzer.RegisterAnalyzers(context);
         }
     }
 }

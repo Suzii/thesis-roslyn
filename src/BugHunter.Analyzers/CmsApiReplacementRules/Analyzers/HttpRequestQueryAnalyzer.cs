@@ -1,5 +1,5 @@
 ﻿using System.Collections.Immutable;
-using BugHunter.Core.Analyzers;
+using BugHunter.Core.ApiReplacementAnalysis;
 using BugHunter.Core.Helpers.DiagnosticDescriptionBuilders;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
@@ -7,21 +7,24 @@ using Microsoft.CodeAnalysis.Diagnostics;
 namespace BugHunter.Analyzers.CmsApiReplacementRules.Analyzers
 {
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class HttpRequestQueryStringAnalyzer : BaseMemberAccessAnalyzer
+    public class HttpRequestQueryStringAnalyzer : DiagnosticAnalyzer
     {
         public const string DIAGNOSTIC_ID = DiagnosticIds.HTTP_REQUEST_QUERY_STRING;
 
         private static readonly DiagnosticDescriptor Rule = ApiReplacementRuleBuilder.GetRule(DIAGNOSTIC_ID, "QueryString[]", "QueryHelper.Get<Type>()");
 
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
-        
+
+        private static readonly ApiReplacementConfig apiReplacementConfig = new ApiReplacementConfig(
+            Rule,
+            ImmutableHashSet.Create("System.Web.HttpRequest", "System.Web.HttpRequestBase"),
+            ImmutableHashSet.Create("QueryString"));
+
+        private static readonly ApiReplacementForMemberAnalyzer apiReplacementAnalyzer = new ApiReplacementForMemberAnalyzer(apiReplacementConfig);
+
         public override void Initialize(AnalysisContext context)
         {
-            context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.None);
-            context.EnableConcurrentExecution();
-
-            RegisterAction(Rule, context, "System.Web.HttpRequest", "QueryString");
-            RegisterAction(Rule, context, "System.Web.HttpRequestBase", "QueryString");
+            apiReplacementAnalyzer.RegisterAnalyzers(context);
         }
     }
 }
