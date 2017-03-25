@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Immutable;
+﻿using System.Collections.Immutable;
 using BugHunter.Core;
 using BugHunter.Core.Analyzers;
+using BugHunter.Core.ApiReplacementAnalysis;
 using BugHunter.Core.DiagnosticsFormatting;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
-using BugHunter.Core.Extensions;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.CodeAnalysis.CSharp;
 
 namespace BugHunter.Web.Analyzers.CmsApiGuidelinesRules.Analyzers
 {
@@ -14,7 +13,7 @@ namespace BugHunter.Web.Analyzers.CmsApiGuidelinesRules.Analyzers
     /// Searches for usages of <c>CMS.Helpers.ValidationHelper</c> and their access to <c>GetDouble</c>, <c>GetDateTime</c> methods
     /// </summary>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class ValidationHelperGetAnalyzer : BaseMemberInvocationAnalyzer
+    public class ValidationHelperGetAnalyzer : DiagnosticAnalyzer
     {
         public const string DIAGNOSTIC_ID = DiagnosticIds.VALIDATION_HELPER_GET;
         
@@ -28,32 +27,30 @@ namespace BugHunter.Web.Analyzers.CmsApiGuidelinesRules.Analyzers
 
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
 
-        private static readonly IDiagnosticFormatter<InvocationExpressionSyntax> _diagnosticFormatter = DiagnosticFormatterFactory.CreateMemberInvocationOnlyFormatter(true);
+       private static readonly ApiReplacementConfig config = new ApiReplacementConfig(Rule,
+            new[] { "CMS.Helpers.ValidationHelper" },
+            new[] { "GetDouble", "GetDecimal", "GetDate", "GetDateTime" });
 
-        protected override IDiagnosticFormatter<InvocationExpressionSyntax> DiagnosticFormatter => _diagnosticFormatter;
+        private static readonly ISyntaxNodeAnalyzer analyzer = new Analyzer(config);
 
         public override void Initialize(AnalysisContext context)
         {
             context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.None);
             context.EnableConcurrentExecution();
 
-            RegisterAction(Rule, context, "CMS.Helpers.ValidationHelper",
-                "GetDouble", 
-                "GetDecimal", 
-                "GetDate", 
-                "GetDateTime");
-        }
-        
-        protected override bool IsOnForbiddenPath(string filePath)
-        {
-            return FileIsInWebPartsFolder(filePath);
+            context.RegisterSyntaxNodeAction(analyzer.Run, SyntaxKind.InvocationExpression);
         }
 
-        private static bool FileIsInWebPartsFolder(string filePath)
+        internal class Analyzer : MemberInvocationAnalyzer
         {
-            return !string.IsNullOrEmpty(filePath) &&
-                   !filePath.Contains("_files\\") &&
-                   (filePath.Contains(SolutionFolders.UI_WEB_PARTS, StringComparison.OrdinalIgnoreCase) || filePath.Contains(SolutionFolders.WEB_PARTS, StringComparison.OrdinalIgnoreCase));
+            public Analyzer(ApiReplacementConfig config) : base(config, DiagnosticFormatterFactory.CreateMemberInvocationOnlyFormatter(true))
+            {
+            }
+
+            protected override bool IsOnForbiddenPath(string filePath)
+            {
+                return SolutionFolders.FileIsInWebPartsFolder(filePath);
+            }
         }
     }
 }
