@@ -44,8 +44,8 @@ $AnalyzedProjectOrSolution = "C:\TFS\CMS\MAIN\CMSSolution\CMSSolution.sln"
 # $AnalyzedProjectOrSolution = "C:\TFS\CMS\MAIN\CMSSolution\Blogs\Blogs.csproj"
 
 $TmpFolder = "C:\tmp" 
-$MsBuildLogFile = "$TmpFolder\msbuild-output-2017-03-14.txt"
-$AggregateedResults = "$TmpFolder\analyzers-execution-times-aggregated-2017-03-14-moduleRegistrationSymbolAnaysis.txt"
+$MsBuildLogFile = "$TmpFolder\msbuild-output-2017-03-25.txt"
+$AggregateedResults = "$TmpFolder\aggregated-2017-03-25-withConditionalAccess-method-syntax-heuristics.txt"
 
 Run-MsBuildWithReportAnalyzer -ProjectOrSolutionFilePath $AnalyzedProjectOrSolution -OutputFile $MsBuildLogFile
 

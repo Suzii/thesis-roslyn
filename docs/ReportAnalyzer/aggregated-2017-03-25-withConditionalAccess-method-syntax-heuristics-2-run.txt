@@ -1,0 +1,26 @@
+Heuristics on syntax node seem to have helped
+
+3,010 s 		- BugHunter.Analyzers.CmsApiReplacementRules.Analyzers.SystemIOAnalyzer
+0,889 s 		- BugHunter.Analyzers.CmsApiReplacementRules.Analyzers.HttpSessionElementAccessAnalyzer
+0,575 s 		- BugHunter.Analyzers.CmsBaseClassesRules.Analyzers.ModuleRegistrationAnalyzer
+0,438 s 		- BugHunter.Analyzers.StringAndCultureRules.Analyzers.StringStartAndEndsWithMethodsAnalyzer
+0,421 s 		- BugHunter.Analyzers.StringAndCultureRules.Analyzers.StringCompareStaticMethodAnalyzer
+0,380 s 		- BugHunter.Analyzers.AbstractionOverImplementation.Analyzers.LuceneSearchDocumentAnalyzer
+0,300 s 		- BugHunter.Analyzers.StringAndCultureRules.Analyzers.StringManipulationMethodsAnalyzer
+0,275 s 		- BugHunter.Analyzers.CmsApiGuidelinesRules.Analyzers.EventLogArgumentsAnalyzer
+0,268 s 		- BugHunter.Analyzers.CmsApiGuidelinesRules.Analyzers.WhereLikeMethodAnalyzer
+0,264 s 		- BugHunter.Analyzers.CmsApiReplacementRules.Analyzers.HttpResponseRedirectAnalyzer
+0,231 s 		- BugHunter.Analyzers.CmsApiReplacementRules.Analyzers.HttpRequestQueryStringAnalyzer
+0,221 s 		- BugHunter.Analyzers.CmsApiReplacementRules.Analyzers.ClientScriptMethodsAnalyzer
+0,178 s 		- BugHunter.Analyzers.CmsApiReplacementRules.Analyzers.PageIsPostBackAnalyzer
+0,173 s 		- BugHunter.Analyzers.CmsApiReplacementRules.Analyzers.HttpRequestBrowserAnalyzer
+0,157 s 		- BugHunter.Analyzers.StringAndCultureRules.Analyzers.StringEqualsMethodAnalyzer
+0,150 s 		- BugHunter.Analyzers.CmsApiReplacementRules.Analyzers.HttpSessionSessionIdAnalyzer
+0,145 s 		- BugHunter.Analyzers.CmsApiReplacementRules.Analyzers.HttpRequestUrlAnalyzer
+0,145 s 		- BugHunter.Analyzers.StringAndCultureRules.Analyzers.StringIndexOfMethodsAnalyzer
+0,144 s 		- BugHunter.Analyzers.CmsApiReplacementRules.Analyzers.HttpResponseCookiesAnalyzer
+0,143 s 		- BugHunter.Analyzers.CmsApiReplacementRules.Analyzers.PageIsCallbackAnalyzer
+0,142 s 		- BugHunter.Analyzers.CmsApiReplacementRules.Analyzers.HttpRequestUserHostAddressAnalyzer
+0,140 s 		- BugHunter.Analyzers.CmsApiReplacementRules.Analyzers.HttpRequestCookiesAnalyzer
+0,138 s 		- BugHunter.Analyzers.CmsApiReplacementRules.Analyzers.FormsAuthenticationSignOutAnalyzer
+0,136 s 		- BugHunter.Analyzers.StringAndCultureRules.Analyzers.StringCompareToMethodAnalyzer

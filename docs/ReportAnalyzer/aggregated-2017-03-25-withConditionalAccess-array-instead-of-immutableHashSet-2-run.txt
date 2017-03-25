@@ -1,0 +1,26 @@
+With no optimization on member invocation analyzer the ones using it are clearly wasy slower than member (conditional) access, otherwise pretty ok
+
+2,850 s 		- BugHunter.Analyzers.CmsApiReplacementRules.Analyzers.SystemIOAnalyzer
+1,533 s 		- BugHunter.Analyzers.CmsApiReplacementRules.Analyzers.ClientScriptMethodsAnalyzer
+0,879 s 		- BugHunter.Analyzers.CmsApiReplacementRules.Analyzers.HttpSessionElementAccessAnalyzer
+0,665 s 		- BugHunter.Analyzers.CmsApiReplacementRules.Analyzers.HttpResponseRedirectAnalyzer
+0,590 s 		- BugHunter.Analyzers.CmsBaseClassesRules.Analyzers.ModuleRegistrationAnalyzer
+0,561 s 		- BugHunter.Analyzers.CmsApiReplacementRules.Analyzers.FormsAuthenticationSignOutAnalyzer
+0,355 s 		- BugHunter.Analyzers.CmsApiReplacementRules.Analyzers.HttpRequestUserHostAddressAnalyzer
+0,281 s 		- BugHunter.Analyzers.CmsApiReplacementRules.Analyzers.HttpSessionSessionIdAnalyzer
+0,266 s 		- BugHunter.Analyzers.StringAndCultureRules.Analyzers.StringIndexOfMethodsAnalyzer
+0,266 s 		- BugHunter.Analyzers.AbstractionOverImplementation.Analyzers.LuceneSearchDocumentAnalyzer
+0,238 s 		- BugHunter.Analyzers.StringAndCultureRules.Analyzers.StringCompareStaticMethodAnalyzer
+0,191 s 		- BugHunter.Analyzers.StringAndCultureRules.Analyzers.StringEqualsMethodAnalyzer
+0,186 s 		- BugHunter.Analyzers.CmsApiReplacementRules.Analyzers.PageIsPostBackAnalyzer
+0,162 s 		- BugHunter.Analyzers.CmsApiReplacementRules.Analyzers.HttpRequestQueryStringAnalyzer
+0,146 s 		- BugHunter.Analyzers.CmsApiReplacementRules.Analyzers.HttpRequestBrowserAnalyzer
+0,145 s 		- BugHunter.Analyzers.CmsApiReplacementRules.Analyzers.HttpRequestUrlAnalyzer
+0,143 s 		- BugHunter.Analyzers.CmsApiReplacementRules.Analyzers.PageIsCallbackAnalyzer
+0,142 s 		- BugHunter.Analyzers.StringAndCultureRules.Analyzers.StringStartAndEndsWithMethodsAnalyzer
+0,138 s 		- BugHunter.Analyzers.CmsApiReplacementRules.Analyzers.HttpResponseCookiesAnalyzer
+0,137 s 		- BugHunter.Analyzers.CmsApiReplacementRules.Analyzers.HttpRequestCookiesAnalyzer
+0,136 s 		- BugHunter.Analyzers.StringAndCultureRules.Analyzers.StringCompareToMethodAnalyzer
+0,135 s 		- BugHunter.Analyzers.CmsApiGuidelinesRules.Analyzers.EventLogArgumentsAnalyzer
+0,133 s 		- BugHunter.Analyzers.CmsApiGuidelinesRules.Analyzers.WhereLikeMethodAnalyzer
+0,130 s 		- BugHunter.Analyzers.StringAndCultureRules.Analyzers.StringManipulationMethodsAnalyzer
