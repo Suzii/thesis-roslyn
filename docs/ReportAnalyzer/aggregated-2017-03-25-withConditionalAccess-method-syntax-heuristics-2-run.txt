@@ -1,4 +1,5 @@
 Heuristics on syntax node seem to have helped
+Where like and Event log args not yet changed
 
 3,010 s 		- BugHunter.Analyzers.CmsApiReplacementRules.Analyzers.SystemIOAnalyzer
 0,889 s 		- BugHunter.Analyzers.CmsApiReplacementRules.Analyzers.HttpSessionElementAccessAnalyzer

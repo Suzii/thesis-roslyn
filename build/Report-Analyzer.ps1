@@ -45,7 +45,7 @@ $AnalyzedProjectOrSolution = "C:\TFS\CMS\MAIN\CMSSolution\CMSSolution.sln"
 
 $TmpFolder = "C:\tmp" 
 $MsBuildLogFile = "$TmpFolder\msbuild-output-2017-03-25.txt"
-$AggregateedResults = "$TmpFolder\aggregated-2017-03-25-withConditionalAccess-method-syntax-heuristics.txt"
+$AggregateedResults = "$TmpFolder\aggregated-2017-03-25-withConditionalAccess-eventLogAndWhereLike-2-run.txt"
 
 Run-MsBuildWithReportAnalyzer -ProjectOrSolutionFilePath $AnalyzedProjectOrSolution -OutputFile $MsBuildLogFile
 
