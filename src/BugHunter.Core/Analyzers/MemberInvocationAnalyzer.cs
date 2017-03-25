@@ -53,19 +53,20 @@ namespace BugHunter.Core.Analyzers
 
         protected bool IsForbiddenMethodOnForbiddenType(SyntaxNodeAnalysisContext context, InvocationExpressionSyntax invocation, out IMethodSymbol methodSymbol)
         {
-            // TODO analyze based on syntax first
-            // check for simpleMemberAccess as child or find MemberBindingExpression.. 
-            // if child is IdentifierName, it is not a member invocation but a direct one
+            if (CanBeSkippedBasedOnSyntaxOnly(invocation))
+            {
+                methodSymbol = null;
+                return false;
+            }
             
-            var semanticModel = context.SemanticModel;
-            var invokedMethodSymbol = semanticModel.GetSymbolInfo(invocation).Symbol as IMethodSymbol;
+            var invokedMethodSymbol = context.SemanticModel.GetSymbolInfo(invocation).Symbol as IMethodSymbol;
             methodSymbol = invokedMethodSymbol;
             if (invokedMethodSymbol == null)
             {
                 return false;
             }
 
-            if (Config.ForbiddenMembers.All(forbiddenMember => forbiddenMember != invokedMethodSymbol.Name))
+            if (!Config.ForbiddenMembers.Contains(invokedMethodSymbol.Name))
             {
                 return false;
             }
@@ -77,6 +78,28 @@ namespace BugHunter.Core.Analyzers
                 return false;
             }
 
+            return true;
+        }
+
+        private bool CanBeSkippedBasedOnSyntaxOnly(InvocationExpressionSyntax invocationExpression)
+        {
+            // either has underlying member access expression
+            if (invocationExpression.Expression.IsKind(SyntaxKind.SimpleMemberAccessExpression))
+            {
+                var memberAccess = (MemberAccessExpressionSyntax)invocationExpression.Expression;
+
+                // invoked member is not one of forbidden member names, can skip
+                return !Config.ForbiddenMembers.Contains(memberAccess?.Name?.Identifier.ValueText);
+            }
+            // or was invoked within conditional access expression
+
+            if (invocationExpression.Expression.IsKind(SyntaxKind.MemberBindingExpression))
+            {
+                var memberBinding = (MemberBindingExpressionSyntax) invocationExpression.Expression;
+                return !Config.ForbiddenMembers.Contains(memberBinding?.Name?.Identifier.ValueText);
+            }
+
+            // or is not a member invocation but a direct one
             return true;
         }
 

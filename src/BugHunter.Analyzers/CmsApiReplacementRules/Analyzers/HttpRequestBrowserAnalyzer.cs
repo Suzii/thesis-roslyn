@@ -15,8 +15,8 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.Analyzers
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
 
         private static readonly ApiReplacementConfig apiReplacementConfig = new ApiReplacementConfig(Rule,
-            ImmutableHashSet.Create("System.Web.HttpBrowserCapabilities", "System.Web.HttpBrowserCapabilitiesBase"),
-            ImmutableHashSet.Create("Browser"));
+            new []{ "System.Web.HttpBrowserCapabilities", "System.Web.HttpBrowserCapabilitiesBase"},
+            new []{ "Browser"});
 
         private static readonly ApiReplacementForMemberAnalyzer apiReplacementAnalyzer = new ApiReplacementForMemberAnalyzer(apiReplacementConfig);
 

@@ -16,8 +16,8 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.Analyzers
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
 
         private static readonly ApiReplacementConfig config = new ApiReplacementConfig(Rule,
-            ImmutableHashSet.Create("System.Web.UI.ClientScriptManager"), 
-            ImmutableHashSet.Create("RegisterArrayDeclaration", "RegisterClientScriptBlock", "RegisterClientScriptInclude", "RegisterStartupScript"));
+            new[] { "System.Web.UI.ClientScriptManager"},
+            new []{ "RegisterArrayDeclaration", "RegisterClientScriptBlock", "RegisterClientScriptInclude", "RegisterStartupScript"});
 
         private static readonly ApiReplacementForMethodAnalyzer analyzer = new ApiReplacementForMethodAnalyzer(config);
 

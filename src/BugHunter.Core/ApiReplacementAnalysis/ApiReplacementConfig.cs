@@ -10,7 +10,7 @@ namespace BugHunter.Core.ApiReplacementAnalysis
     /// </summary>
     public class ApiReplacementConfig
     {
-        public ApiReplacementConfig(DiagnosticDescriptor rule, IImmutableSet<string> forbiddenTypes, IImmutableSet<string> forbiddenMembers)
+        public ApiReplacementConfig(DiagnosticDescriptor rule, string[] forbiddenTypes, string[] forbiddenMembers)
         {
             Rule = rule;
             ForbiddenTypes = forbiddenTypes;
@@ -25,11 +25,11 @@ namespace BugHunter.Core.ApiReplacementAnalysis
         /// <summary>
         /// Fully qualified names of types whose <see cref="ForbiddenMembers"/> should be diagnosed
         /// </summary>
-        public IImmutableSet<string> ForbiddenTypes { get; }
+        public string[] ForbiddenTypes { get; }
 
         /// <summary>
         /// Member names of <see cref="ForbiddenTypes"/> that should be diagnosed
         /// </summary>
-        public IImmutableSet<string> ForbiddenMembers { get; }
+        public string[] ForbiddenMembers { get; }
     }
 }

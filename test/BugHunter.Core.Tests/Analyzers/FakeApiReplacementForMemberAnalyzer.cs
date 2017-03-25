@@ -17,8 +17,8 @@ namespace BugHunter.Core.Tests.Analyzers
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
 
         private static readonly ApiReplacementConfig apiReplacementConfig = new ApiReplacementConfig(Rule,
-            ImmutableHashSet.Create("FakeNamespace.FakeClass"),
-            ImmutableHashSet.Create("FakeMember"));
+            new []{ "FakeNamespace.FakeClass"},
+            new []{ "FakeMember"});
 
         private static readonly ApiReplacementForMemberAnalyzer apiReplacementAnalyzer = new ApiReplacementForMemberAnalyzer(apiReplacementConfig);
 
