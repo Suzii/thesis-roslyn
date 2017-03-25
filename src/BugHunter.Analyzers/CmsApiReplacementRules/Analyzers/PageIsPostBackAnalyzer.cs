@@ -18,10 +18,9 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.Analyzers
 
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
 
-        private static readonly ApiReplacementConfig apiReplacementConfig = new ApiReplacementConfig(
-                    Rule,
-                    ImmutableHashSet.Create("System.Web.UI.Page"),
-                    ImmutableHashSet.Create("IsPostBack"));
+        private static readonly ApiReplacementConfig apiReplacementConfig = new ApiReplacementConfig(Rule,
+            ImmutableHashSet.Create("System.Web.UI.Page"),
+            ImmutableHashSet.Create("IsPostBack"));
 
         private static readonly ApiReplacementForMemberAnalyzer apiReplacementAnalyzer = new ApiReplacementForMemberAnalyzer(apiReplacementConfig);
 

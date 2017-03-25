@@ -1,4 +1,5 @@
 ﻿using BugHunter.Core.Analyzers;
+using BugHunter.Core.DiagnosticsFormatting;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Diagnostics;
 
@@ -6,19 +7,13 @@ namespace BugHunter.Core.ApiReplacementAnalysis
 {
     public class ApiReplacementForMemberAnalyzer
     {
-        private readonly ApiReplacementConfig _config;
-        private readonly bool _locationOnlyOnMember;
-        // TODO: add possibility to configure from the outside
-        private ISyntaxNodeAnalyzer _simpleMemberAccessAnalyzer;
-        private ISyntaxNodeAnalyzer _conditionalAccessAnalyzer;
+        private readonly ISyntaxNodeAnalyzer _simpleMemberAccessAnalyzer;
+        private readonly ISyntaxNodeAnalyzer _conditionalAccessAnalyzer;
 
-        public ApiReplacementForMemberAnalyzer(ApiReplacementConfig config, bool locationOnlyOnMember = false)
+        public ApiReplacementForMemberAnalyzer(ApiReplacementConfig config)
         {
-            _config = config;
-            _locationOnlyOnMember = locationOnlyOnMember;
-
-            _simpleMemberAccessAnalyzer = new SimpleMemberAccessAnalyzer(config);
-            _conditionalAccessAnalyzer = new ConditionalAccessAnalyzer(config);
+            _simpleMemberAccessAnalyzer = new SimpleMemberAccessAnalyzer(config, DiagnosticFormatterFactory.CreateMemberAccessFormatter());
+            _conditionalAccessAnalyzer = new ConditionalAccessAnalyzer(config, DiagnosticFormatterFactory.CreateConditionalAccessFormatter());
         }
 
         public void RegisterAnalyzers(AnalysisContext analysisContext)

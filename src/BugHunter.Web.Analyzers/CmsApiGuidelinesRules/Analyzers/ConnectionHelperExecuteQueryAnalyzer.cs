@@ -36,9 +36,9 @@ namespace BugHunter.Web.Analyzers.CmsApiGuidelinesRules.Analyzers
             RegisterAction(Rule, context, "CMS.DataEngine.ConnectionHelper", "ExecuteQuery");
         }
 
-        protected override bool CheckPreConditions(SyntaxNodeAnalysisContext context)
+        protected override bool IsOnForbiddenPath(string filePath)
         {
-            return base.CheckPreConditions(context) && IsUiFile(context.Node.SyntaxTree.FilePath);
+            return IsUiFile(filePath);
         }
 
         private bool IsUiFile(string filePath)

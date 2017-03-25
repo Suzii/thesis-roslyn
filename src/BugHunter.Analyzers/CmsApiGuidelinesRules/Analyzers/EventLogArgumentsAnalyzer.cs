@@ -38,7 +38,19 @@ namespace BugHunter.Analyzers.CmsApiGuidelinesRules.Analyzers
             RegisterAction(Rule, context, "CMS.EventLog.EventLogProvider", "LogEvent");
         }
 
-        protected override bool CheckPostConditions(SyntaxNodeAnalysisContext context, InvocationExpressionSyntax invocationExpression)
+        /// <summary>
+        /// Checks whether first argument provided is one of forbidden ones
+        /// 
+        /// Note that analysis has to be performed on syntax since it always is a string, but we want to achieve that not plain string is passed but rather a constant defined in CMS.EventLog.EventType
+        /// TODO Known limitations: 
+        /// When a variable is passed, there is no way of finding out whether the variable was created from a plain string or an constant defined in EventType class (it is not an enum),
+        /// therefore no diagnostic is provided
+        /// </summary>
+        /// <param name="context">Analysis context</param>
+        /// <param name="invocationExpression">Invocation expression to be analyzed</param>
+        /// <param name="methodSymbol">Method symbol for <param name="invocationExpression"></param></param>
+        /// <returns>Tru if forbidden usage is detected, false otherwise</returns>
+        protected override bool CheckPostConditions(SyntaxNodeAnalysisContext context, InvocationExpressionSyntax invocationExpression, IMethodSymbol methodSymbol)
         {
             if (invocationExpression.ArgumentList.Arguments.Count == 0)
             {

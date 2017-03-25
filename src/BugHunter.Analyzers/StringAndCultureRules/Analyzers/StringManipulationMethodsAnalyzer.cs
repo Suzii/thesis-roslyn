@@ -39,7 +39,7 @@ namespace BugHunter.Analyzers.StringAndCultureRules.Analyzers
         }
 
         // If method is already called with StringComparison argument, no need for diagnostic
-        protected override bool CheckPostConditions(SyntaxNodeAnalysisContext context, InvocationExpressionSyntax invocationExpression)
+        protected override bool CheckPostConditions(SyntaxNodeAnalysisContext context, InvocationExpressionSyntax invocationExpression, IMethodSymbol methodSymbol)
         {
             return invocationExpression.ArgumentList.Arguments.Count == 0;
         }

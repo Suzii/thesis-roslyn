@@ -13,9 +13,16 @@ namespace BugHunter.Analyzers.Test.CmsApiGuidelines
     public class WhereLikeMethodTest : CodeFixVerifier<WhereLikeMethodAnalyzer, WhereLikeMethodCodeFixProvider>
     {
         protected override MetadataReference[] GetAdditionalReferences()
-        {
-            return ReferencesHelper.CMSBasicReferences;
-        }
+            => ReferencesHelper.CMSBasicReferences;
+
+        private static DiagnosticResult CreateDiagnosticResult(string usage)
+            => new DiagnosticResult
+            {
+                Id = DiagnosticIds.WHERE_LIKE_METHOD,
+                Message = string.Format(MessagesConstants.MESSAGE_NO_SUGGESTION, usage),
+                Severity = DiagnosticSeverity.Warning,
+            };
+
 
         [Test]
         public void EmptyInput_NoDiagnostic()
@@ -42,16 +49,11 @@ namespace SampleTestProject.CsSamples
         {{
             var whereCondition = new CMS.DataEngine.WhereCondition();
             whereCondition = whereCondition.{oldMethodCall}(""columnName"", ""value"");
+            //whereCondition = whereCondition?.{oldMethodCall}(""columnName"", ""value"");
         }}
     }}
 }}";
-            var expectedDiagnostic = new DiagnosticResult
-            {
-                Id = DiagnosticIds.WHERE_LIKE_METHOD,
-                Message = string.Format(MessagesConstants.MESSAGE_NO_SUGGESTION, $@"{oldMethodCall}(""columnName"", ""value"")"),
-                Severity = DiagnosticSeverity.Warning,
-                Locations = new[] { new DiagnosticResultLocation("Test0.cs", 9, 45) }
-            };
+            var expectedDiagnostic = CreateDiagnosticResult($@"{oldMethodCall}(""columnName"", ""value"")").WithLocation(9, 45);
 
             VerifyCSharpDiagnostic(test, expectedDiagnostic);
 
@@ -64,6 +66,7 @@ namespace SampleTestProject.CsSamples
         {{
             var whereCondition = new CMS.DataEngine.WhereCondition();
             whereCondition = whereCondition.{newMethodCall}(""columnName"", ""value"");
+            //whereCondition = whereCondition?.{oldMethodCall}(""columnName"", ""value"");
         }}
     }}
 }}";
@@ -87,18 +90,20 @@ namespace SampleTestProject.CsSamples
         {{
             var whereCondition = new CMS.DataEngine.WhereCondition();
             whereCondition = whereCondition.{oldMethodCall}(""columnName"", ""value"").WhereTrue(""this is gonna be tricky"");
+            //whereCondition = whereCondition?.{oldMethodCall}(""columnName"", ""value"").WhereTrue(""this is gonna be tricky"");
+            //whereCondition = whereCondition.{oldMethodCall}(""columnName"", ""value"")?.WhereTrue(""this is gonna be tricky"");
+            //whereCondition = whereCondition?.{oldMethodCall}(""columnName"", ""value"")?.WhereTrue(""this is gonna be tricky"");
         }}
     }}
 }}";
-            var expectedDiagnostic = new DiagnosticResult
-            {
-                Id = DiagnosticIds.WHERE_LIKE_METHOD,
-                Message = string.Format(MessagesConstants.MESSAGE_NO_SUGGESTION, $@"{oldMethodCall}(""columnName"", ""value"")"),
-                Severity = DiagnosticSeverity.Warning,
-                Locations = new[] { new DiagnosticResultLocation("Test0.cs", 9, 45) }
-            };
+            var expectedDiagnostic = CreateDiagnosticResult($@"{oldMethodCall}(""columnName"", ""value"")");
 
-            VerifyCSharpDiagnostic(test, expectedDiagnostic);
+            VerifyCSharpDiagnostic(test, 
+                expectedDiagnostic.WithLocation(9, 45)
+                //expectedDiagnostic.WithLocation(10, 45),
+                //expectedDiagnostic.WithLocation(11, 45),
+                //expectedDiagnostic.WithLocation(12, 45)
+                );
 
             var expectedFix = $@"
 namespace SampleTestProject.CsSamples
@@ -109,6 +114,9 @@ namespace SampleTestProject.CsSamples
         {{
             var whereCondition = new CMS.DataEngine.WhereCondition();
             whereCondition = whereCondition.{newMethodCall}(""columnName"", ""value"").WhereTrue(""this is gonna be tricky"");
+            //whereCondition = whereCondition?.{oldMethodCall}(""columnName"", ""value"").WhereTrue(""this is gonna be tricky"");
+            //whereCondition = whereCondition.{oldMethodCall}(""columnName"", ""value"")?.WhereTrue(""this is gonna be tricky"");
+            //whereCondition = whereCondition?.{oldMethodCall}(""columnName"", ""value"")?.WhereTrue(""this is gonna be tricky"");
         }}
     }}
 }}";
@@ -135,13 +143,7 @@ namespace SampleTestProject.CsSamples
         }}
     }}
 }}";
-            var expectedDiagnostic = new DiagnosticResult
-            {
-                Id = DiagnosticIds.WHERE_LIKE_METHOD,
-                Message = string.Format(MessagesConstants.MESSAGE_NO_SUGGESTION, $@"{oldMethodCall}(""columnName"", ""value"")"),
-                Severity = DiagnosticSeverity.Warning,
-                Locations = new[] { new DiagnosticResultLocation("Test0.cs", 9, 50) }
-            };
+            var expectedDiagnostic = CreateDiagnosticResult($@"{oldMethodCall}(""columnName"", ""value"")").WithLocation(9, 50);
 
             VerifyCSharpDiagnostic(test, expectedDiagnostic);
 
@@ -179,13 +181,7 @@ namespace SampleTestProject.CsSamples
         }}
     }}
 }}";
-            var expectedDiagnostic = new DiagnosticResult
-            {
-                Id = DiagnosticIds.WHERE_LIKE_METHOD,
-                Message = string.Format(MessagesConstants.MESSAGE_NO_SUGGESTION, $@"{oldMethodCall}(""columnName"", ""value"")"),
-                Severity = DiagnosticSeverity.Warning,
-                Locations = new[] { new DiagnosticResultLocation("Test0.cs", 8, 70) }
-            };
+            var expectedDiagnostic = CreateDiagnosticResult($@"{oldMethodCall}(""columnName"", ""value"")").WithLocation(8, 70);
 
             VerifyCSharpDiagnostic(test, expectedDiagnostic);
 

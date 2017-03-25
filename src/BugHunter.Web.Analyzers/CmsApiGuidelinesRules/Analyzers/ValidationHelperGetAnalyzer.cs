@@ -44,9 +44,9 @@ namespace BugHunter.Web.Analyzers.CmsApiGuidelinesRules.Analyzers
                 "GetDateTime");
         }
         
-        protected override bool CheckPreConditions(SyntaxNodeAnalysisContext context)
+        protected override bool IsOnForbiddenPath(string filePath)
         {
-            return base.CheckPreConditions(context) && FileIsInWebPartsFolder(context.Node.SyntaxTree.FilePath);
+            return FileIsInWebPartsFolder(filePath);
         }
 
         private static bool FileIsInWebPartsFolder(string filePath)

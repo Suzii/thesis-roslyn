@@ -26,7 +26,7 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.CodeFixes
             var editor = new MemberInvocationCodeFixHelper(context);
             var invocationExpression = await editor.GetDiagnosedInvocation();
 
-            if (invocationExpression == null)
+            if (invocationExpression == null || !invocationExpression.Expression.IsKind(SyntaxKind.SimpleMemberAccessExpression))
             {
                 return;
             }

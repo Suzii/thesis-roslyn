@@ -14,12 +14,7 @@ namespace BugHunter.Core.Analyzers
     {
         protected readonly ApiReplacementConfig Config;
         protected readonly IDiagnosticFormatter<ConditionalAccessExpressionSyntax> Formatter;
-
-        public ConditionalAccessAnalyzer(ApiReplacementConfig config) 
-            : this(config, DiagnosticFormatterFactory.CreateConditionalAccessFormatter())
-        {
-        }
-
+        
         public ConditionalAccessAnalyzer(ApiReplacementConfig config, IDiagnosticFormatter<ConditionalAccessExpressionSyntax> formatter)
         {
             Config = config;

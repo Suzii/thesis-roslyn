@@ -25,13 +25,13 @@ namespace BugHunter.Analyzers.StringAndCultureRules.Analyzers
             RegisterAction(Rule, context, "System.String", "IndexOf", "LastIndexOf");
         }
 
-        protected override bool CheckPostConditions(SyntaxNodeAnalysisContext context, InvocationExpressionSyntax invocationExpression)
+        protected override bool CheckPostConditions(SyntaxNodeAnalysisContext context, InvocationExpressionSyntax invocationExpression, IMethodSymbol methodSymbol)
         {
 
-            return base.CheckPostConditions(context, invocationExpression) && !IsFirstArgumentChar(context, invocationExpression);
+            return base.CheckPostConditions(context, invocationExpression, methodSymbol) && !IsFirstArgumentChar(context, invocationExpression, methodSymbol);
         }
 
-        private static bool IsFirstArgumentChar(SyntaxNodeAnalysisContext context, InvocationExpressionSyntax invocationExpression)
+        private static bool IsFirstArgumentChar(SyntaxNodeAnalysisContext context, InvocationExpressionSyntax invocationExpression, IMethodSymbol methodSymbol)
         {
             var firstArgument = invocationExpression
                 .ArgumentList

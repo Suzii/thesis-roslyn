@@ -67,7 +67,7 @@
     <Compile Include="CmsApiReplacementRules\Analyzers\HttpRequestBrowserAnalyzer.cs" />
     <Compile Include="CmsApiReplacementRules\Analyzers\HttpResponseRedirectAnalyzer.cs" />
     <Compile Include="CmsApiReplacementRules\Analyzers\HttpRequestUrlAnalyzer.cs" />
-    <Compile Include="CmsApiReplacementRules\Analyzers\FormsAuthenticationSignOut.cs" />
+    <Compile Include="CmsApiReplacementRules\Analyzers\FormsAuthenticationSignOutAnalyzer.cs" />
     <Compile Include="CmsApiReplacementRules\Analyzers\HttpRequestQueryAnalyzer.cs" />
     <Compile Include="AbstractionOverImplementation\Analyzers\LuceneSearchDocumentAnalyzer.cs" />
     <Compile Include="CmsBaseClassesRules\Analyzers\ModuleRegistrationAnalyzer.cs" />

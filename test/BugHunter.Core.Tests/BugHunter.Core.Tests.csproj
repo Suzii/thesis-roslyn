@@ -101,7 +101,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Analyzers\ApiReplacementForMethodAnalyzerTests.cs" />
     <Compile Include="Analyzers\ApiReplacementForMemberAnalyzerTests.cs" />
+    <Compile Include="Analyzers\FakeApiReplacementForMethodAnalyzer.cs" />
     <Compile Include="Analyzers\FakeApiReplacementForMemberAnalyzer.cs" />
     <Compile Include="DiagnosticsFormatting\ConditionalAccessDiagnosticFormatterTests.cs" />
     <Compile Include="DiagnosticsFormatting\AssertLocation.cs" />

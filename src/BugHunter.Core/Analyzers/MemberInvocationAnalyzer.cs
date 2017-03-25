@@ -13,13 +13,8 @@ namespace BugHunter.Core.Analyzers
     {
         protected readonly ApiReplacementConfig Config;
         protected readonly IDiagnosticFormatter<InvocationExpressionSyntax> Formatter;
-
-        public MemberInvocationAnalyzer(ApiReplacementConfig config) 
-            : this(config, DiagnosticFormatterFactory.CreateMemberInvocationFormatter())
-        {
-        }
-
-        private MemberInvocationAnalyzer(ApiReplacementConfig config, IDiagnosticFormatter<InvocationExpressionSyntax> formatter)
+        
+        public MemberInvocationAnalyzer(ApiReplacementConfig config, IDiagnosticFormatter<InvocationExpressionSyntax> formatter)
         {
             Config = config;
             Formatter = formatter;
@@ -54,8 +49,7 @@ namespace BugHunter.Core.Analyzers
             context.ReportDiagnostic(diagnostic);
         }
 
-        protected bool IsOnForbiddenPath(string filePath)
-            => true;
+        protected virtual bool IsOnForbiddenPath(string filePath) => true;
 
         protected bool IsForbiddenMethodOnForbiddenType(SyntaxNodeAnalysisContext context, InvocationExpressionSyntax invocation, out IMethodSymbol methodSymbol)
         {
@@ -86,10 +80,9 @@ namespace BugHunter.Core.Analyzers
             return true;
         }
 
-        protected bool IsForbiddenUsage(IMethodSymbol methodSymbol)
-            => true;
+        protected virtual bool IsForbiddenUsage(IMethodSymbol methodSymbol) => true;
 
-        protected Diagnostic CreateDiagnostic(InvocationExpressionSyntax invocation)
+        protected virtual Diagnostic CreateDiagnostic(InvocationExpressionSyntax invocation)
         {
             var location = Formatter.GetLocation(invocation);
             var diagnosedUsage = Formatter.GetDiagnosedUsage(invocation);

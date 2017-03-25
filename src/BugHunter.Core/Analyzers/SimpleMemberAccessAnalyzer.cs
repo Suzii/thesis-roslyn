@@ -13,12 +13,7 @@ namespace BugHunter.Core.Analyzers
     {
         protected readonly ApiReplacementConfig Config;
         protected readonly IDiagnosticFormatter<MemberAccessExpressionSyntax> Formatter;
-
-        public SimpleMemberAccessAnalyzer(ApiReplacementConfig config) 
-            : this(config, DiagnosticFormatterFactory.CreateMemberAccessFormatter())
-        {
-        }
-
+        
         public SimpleMemberAccessAnalyzer(ApiReplacementConfig config, IDiagnosticFormatter<MemberAccessExpressionSyntax> formatter)
         {
             Config = config;

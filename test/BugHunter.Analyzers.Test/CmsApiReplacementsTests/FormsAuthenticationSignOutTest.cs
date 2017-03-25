@@ -11,7 +11,7 @@ using NUnit.Framework;
 namespace BugHunter.Analyzers.Test.CmsApiReplacementsTests
 {
     [TestFixture]
-    public class FormsAuthenticationSignOutTest : CodeFixVerifier<FormsAuthenticationSignOut, FormsAuthenticationSignOutCodeFixProvider>
+    public class FormsAuthenticationSignOutTest : CodeFixVerifier<FormsAuthenticationSignOutAnalyzer, FormsAuthenticationSignOutCodeFixProvider>
     {
         protected override MetadataReference[] GetAdditionalReferences()
             => ReferencesHelper.CMSBasicReferences.Union(ReferencesHelper.GetReferencesFor(typeof(System.Web.HtmlString), typeof(CMS.Membership.AuthenticationHelper))).ToArray();

@@ -93,9 +93,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AnalyzerCategories.cs" />
-    <Compile Include="Analyzers\BaseMemberAccessAnalyzer.cs" />
     <Compile Include="Analyzers\BaseMemberInvocationAnalyzer.cs" />
-    <Compile Include="Analyzers\BaseMemberAccessOrInvocationAnalyzer.cs" />
+    <Compile Include="ApiReplacementAnalysis\ApiReplacementForMethodAnalyzer.cs" />
     <Compile Include="Constants\FileExtensions.cs" />
     <Compile Include="DiagnosticsFormatting\DiagnosticFormatterFactory.cs" />
     <Compile Include="DiagnosticsFormatting\IDiagnosticFormatter.cs" />

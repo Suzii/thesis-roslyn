@@ -26,7 +26,7 @@ namespace BugHunter.Analyzers.StringAndCultureRules.Analyzers
         protected override IDiagnosticFormatter<InvocationExpressionSyntax> DiagnosticFormatter => _diagnosticFormatter;
 
         // If method is already called with StringComparison argument, no need for diagnostic
-        protected override bool CheckPostConditions(SyntaxNodeAnalysisContext context, InvocationExpressionSyntax invocationExpression)
+        protected override bool CheckPostConditions(SyntaxNodeAnalysisContext context, InvocationExpressionSyntax invocationExpression, IMethodSymbol methodSymbol)
         {
             var arguments = invocationExpression.ArgumentList.Arguments;
 

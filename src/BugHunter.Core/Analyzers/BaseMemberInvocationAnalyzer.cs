@@ -11,8 +11,7 @@ namespace BugHunter.Core.Analyzers
     /// <summary>
     /// Used for analysis of MemberAccess which Invocation at the same time such as "whereCondition.WhereLike(...)"
     /// </summary>
-    // TODO rewrite according to https://github.com/dotnet/roslyn-analyzers/blob/master/src/Microsoft.CodeAnalysis.Analyzers/CSharp/CSharpImmutableObjectMethodAnalyzer.cs
-    public abstract class BaseMemberInvocationAnalyzer : BaseMemberAccessOrInvocationAnalyzer<InvocationExpressionSyntax>
+    public abstract class BaseMemberInvocationAnalyzer : DiagnosticAnalyzer
     {
         private static readonly IDiagnosticFormatter<InvocationExpressionSyntax> _diagnosticFormatter = DiagnosticFormatterFactory.CreateMemberInvocationFormatter();
 
@@ -23,9 +22,35 @@ namespace BugHunter.Core.Analyzers
             context.RegisterSyntaxNodeAction(c => Analyze(rule, c, accessedType, forbiddenMemberNames), SyntaxKind.InvocationExpression);
         }
 
-        protected override IDiagnosticFormatter<InvocationExpressionSyntax> DiagnosticFormatter => _diagnosticFormatter;
+        protected virtual IDiagnosticFormatter<InvocationExpressionSyntax> DiagnosticFormatter => _diagnosticFormatter;
 
-        protected override bool CheckMainConditions(SyntaxNodeAnalysisContext context, string accessedType, ISet<string> methodNames)
+        protected void Analyze(DiagnosticDescriptor rule, SyntaxNodeAnalysisContext context, string accessedType, ISet<string> forbiddenMemberNames)
+        {
+            if (!IsOnForbiddenPath(context.Node?.SyntaxTree?.FilePath))
+            {
+                return;
+            }
+
+            if (!CheckMainConditions(context, accessedType, forbiddenMemberNames))
+            {
+                return;
+            }
+
+            var syntaxNode = context.Node as InvocationExpressionSyntax;
+            var invokedMethodSymbol = context.SemanticModel.GetSymbolInfo(syntaxNode).Symbol as IMethodSymbol;
+            if (!CheckPostConditions(context, syntaxNode, invokedMethodSymbol))
+            {
+                return;
+            }
+
+            var diagnostic = CreateDiagnostic(rule, syntaxNode);
+            context.ReportDiagnostic(diagnostic);
+        }
+
+        // Can be overriden by subClasses if additional checks are needed
+        protected virtual bool IsOnForbiddenPath(string filePath) => true;
+
+        protected bool CheckMainConditions(SyntaxNodeAnalysisContext context, string accessedType, ISet<string> methodNames)
         {
             var invocationExpression = (InvocationExpressionSyntax)context.Node;
             var memberAccess = invocationExpression.Expression as MemberAccessExpressionSyntax;
@@ -34,7 +59,7 @@ namespace BugHunter.Core.Analyzers
             if (memberAccess == null)
             {
                 // TODO it can be child of a ConditionalAccessExpression
-                return false; 
+                return false;
             }
 
             var memberName = memberAccess.Name.ToString();
@@ -46,6 +71,17 @@ namespace BugHunter.Core.Analyzers
             var actualTargetType = context.SemanticModel.GetTypeInfo(memberAccess.Expression).Type as INamedTypeSymbol;
 
             return actualTargetType?.IsDerivedFrom(accessedType, context.Compilation) ?? false;
+        }
+
+        // To be overriden by subClasses if additional checks are needed
+        protected virtual bool CheckPostConditions(SyntaxNodeAnalysisContext context, InvocationExpressionSyntax syntaxNode, IMethodSymbol methodSymbol) => true;
+
+        protected virtual Diagnostic CreateDiagnostic(DiagnosticDescriptor rule, InvocationExpressionSyntax syntaxNode)
+        {
+            var usedAs = DiagnosticFormatter.GetDiagnosedUsage(syntaxNode);
+            var location = DiagnosticFormatter.GetLocation(syntaxNode);
+
+            return Diagnostic.Create(rule, location, usedAs);
         }
     }
 }

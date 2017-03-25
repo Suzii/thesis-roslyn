@@ -29,6 +29,11 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.CodeFixes
             var editor = new MemberInvocationCodeFixHelper(context);
             var invocation = await editor.GetDiagnosedInvocation();
 
+            if (invocation == null || !invocation.Expression.IsKind(SyntaxKind.SimpleMemberAccessExpression))
+            {
+                return;
+            }
+
             // only apply codefix if invocation is placed in class inheriting from System.Web.Ui.Control
             // since as first argument we add 'this' and it has to have right type
             var enclosingClassName = invocation?.FirstAncestorOrSelf<ClassDeclarationSyntax>();

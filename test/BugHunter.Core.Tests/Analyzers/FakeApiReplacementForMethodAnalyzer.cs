@@ -7,20 +7,20 @@ using Microsoft.CodeAnalysis.Diagnostics;
 namespace BugHunter.Core.Tests.Analyzers
 {
 #pragma warning disable RS1001 // Missing diagnostic analyzer attribute. - only for test purposes, not a production analyzer
-    public class FakeApiReplacementForMemberAnalyzer : DiagnosticAnalyzer
+    public class FakeApiReplacementForMethodAnalyzer : DiagnosticAnalyzer
 #pragma warning restore RS1001 // Missing diagnostic analyzer attribute.
     {
         public const string DIAGNOSTIC_ID = "FAKE_ID";
 
-        private static readonly DiagnosticDescriptor Rule = ApiReplacementRuleBuilder.GetRule(DIAGNOSTIC_ID, "FakeClass.FakeMember");
+        private static readonly DiagnosticDescriptor Rule = ApiReplacementRuleBuilder.GetRule(DIAGNOSTIC_ID, "FakeClass.FakeMethod");
 
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
 
         private static readonly ApiReplacementConfig apiReplacementConfig = new ApiReplacementConfig(Rule,
             ImmutableHashSet.Create("FakeNamespace.FakeClass"),
-            ImmutableHashSet.Create("FakeMember"));
+            ImmutableHashSet.Create("FakeMethod"));
 
-        private static readonly ApiReplacementForMemberAnalyzer apiReplacementAnalyzer = new ApiReplacementForMemberAnalyzer(apiReplacementConfig);
+        private static readonly ApiReplacementForMethodAnalyzer apiReplacementAnalyzer = new ApiReplacementForMethodAnalyzer(apiReplacementConfig);
 
         public override void Initialize(AnalysisContext context)
         {
