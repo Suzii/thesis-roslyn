@@ -108,7 +108,7 @@
     <Compile Include="DiagnosticsFormatting\ConditionalAccessDiagnosticFormatterTests.cs" />
     <Compile Include="DiagnosticsFormatting\AssertLocation.cs" />
     <Compile Include="DiagnosticsFormatting\MemberAccessOnlyDiagnosticFormatterTests.cs" />
-    <Compile Include="DiagnosticsFormatting\MemberInvocationOnlyDiagnosticFormatterTests - Copy.cs" />
+    <Compile Include="DiagnosticsFormatting\MemberInvocationOnlyDiagnosticFormatterTests.cs" />
     <Compile Include="DiagnosticsFormatting\MemberAccessDiagnosticFormatterTests.cs" />
     <Compile Include="DiagnosticsFormatting\MemberInvocationDiagnosticFormatterTests.cs" />
     <Compile Include="Extensions\ClassDeclarationSyntaxExtenstionsTest.cs" />

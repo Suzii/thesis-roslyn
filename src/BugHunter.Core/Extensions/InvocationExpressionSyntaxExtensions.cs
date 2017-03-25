@@ -8,6 +8,40 @@ namespace BugHunter.Core.Extensions
     public static class InvocationExpressionSyntaxExtensions
     {
         /// <summary>
+        /// Tries to extract node representing name of the invoked method.
+        /// Returns true if the method name node could be found and populates <param name="methodNameNode"></param> with it
+        /// </summary>
+        /// <param name="invocationExpression">Invocation invocationExpression</param>
+        /// <param name="methodNameNode">Out parameter to be populated with found method name node</param>
+        /// <returns>True if name of the invoked method was found</returns>
+        public static bool TryGetMethodNameNode(this InvocationExpressionSyntax invocationExpression, out SimpleNameSyntax methodNameNode)
+        {
+            if (invocationExpression?.Expression?.IsKind(SyntaxKind.SimpleMemberAccessExpression) ?? false)
+            {
+                var memberAccess = (MemberAccessExpressionSyntax)invocationExpression.Expression;
+                methodNameNode = memberAccess.Name;
+                return true;
+            }
+
+            if (invocationExpression?.Expression?.IsKind(SyntaxKind.MemberBindingExpression) ?? false)
+            {
+                var memberBinding = (MemberBindingExpressionSyntax)invocationExpression.Expression;
+                methodNameNode = memberBinding.Name;
+                return true;
+            }
+
+            if (invocationExpression?.Expression?.IsKind(SyntaxKind.IdentifierName) ?? false)
+            {
+                var identifierName = (IdentifierNameSyntax)invocationExpression.Expression;
+                methodNameNode = identifierName;
+                return true;
+            }
+
+            methodNameNode = null;
+            return false;
+        }
+
+        /// <summary>
         /// Appends <param name="newArguments"></param> to <param name="invocation"></param>
         /// </summary>
         /// <param name="invocation">Invocation expression</param>

@@ -3,7 +3,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace BugHunter.Core.DiagnosticsFormatting.Implementation
 {
-    internal class MemberInvocationDiagnosticFormatter : MemberInvocationDiagnosticFormatterBase, IDiagnosticFormatter<InvocationExpressionSyntax>
+    internal class MemberInvocationDiagnosticFormatter : IDiagnosticFormatter<InvocationExpressionSyntax>
     {
         public Location GetLocation(InvocationExpressionSyntax invocation)
         {

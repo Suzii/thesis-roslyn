@@ -101,7 +101,6 @@
     <Compile Include="DiagnosticsFormatting\Implementation\DefaultDiagnosticFormatter.cs" />
     <Compile Include="DiagnosticsFormatting\Implementation\ConditionalAccessDiagnosticFormatter.cs" />
     <Compile Include="DiagnosticsFormatting\Implementation\MemberAccessOnlyDiagnosticFormatter.cs" />
-    <Compile Include="DiagnosticsFormatting\Implementation\MemberInvocationDiagnosticFormatterBase.cs" />
     <Compile Include="DiagnosticsFormatting\Implementation\MemberInvocationOnlyNoArgsDiagnosticFormatter.cs" />
     <Compile Include="DiagnosticsFormatting\Implementation\MemberInvocationOnlyDiagnosticFormatter.cs" />
     <Compile Include="DiagnosticsFormatting\Implementation\MemberInvocationDiagnosticFormatter.cs" />

@@ -40,7 +40,7 @@ namespace BugHunter.Core.Analyzers
                 return;
             }
 
-            if (!IsForbiddenUsage(methodSymbol))
+            if (!IsForbiddenUsage(invocation, methodSymbol))
             {
                 return;
             }
@@ -83,27 +83,16 @@ namespace BugHunter.Core.Analyzers
 
         private bool CanBeSkippedBasedOnSyntaxOnly(InvocationExpressionSyntax invocationExpression)
         {
-            // either has underlying member access expression
-            if (invocationExpression.Expression.IsKind(SyntaxKind.SimpleMemberAccessExpression))
+            SimpleNameSyntax methodNameNode;
+            if (!invocationExpression.TryGetMethodNameNode(out methodNameNode))
             {
-                var memberAccess = (MemberAccessExpressionSyntax)invocationExpression.Expression;
-
-                // invoked member is not one of forbidden member names, can skip
-                return !Config.ForbiddenMembers.Contains(memberAccess?.Name?.Identifier.ValueText);
-            }
-            // or was invoked within conditional access expression
-
-            if (invocationExpression.Expression.IsKind(SyntaxKind.MemberBindingExpression))
-            {
-                var memberBinding = (MemberBindingExpressionSyntax) invocationExpression.Expression;
-                return !Config.ForbiddenMembers.Contains(memberBinding?.Name?.Identifier.ValueText);
+                return false;
             }
 
-            // or is not a member invocation but a direct one
-            return true;
+            return !Config.ForbiddenMembers.Contains(methodNameNode.Identifier.ValueText);
         }
 
-        protected virtual bool IsForbiddenUsage(IMethodSymbol methodSymbol) => true;
+        protected virtual bool IsForbiddenUsage(InvocationExpressionSyntax invocation, IMethodSymbol methodSymbol) => true;
 
         protected virtual Diagnostic CreateDiagnostic(InvocationExpressionSyntax invocation)
         {

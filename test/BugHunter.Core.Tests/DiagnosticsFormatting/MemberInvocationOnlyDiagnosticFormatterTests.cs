@@ -45,14 +45,5 @@ namespace BugHunter.Core.Tests.DiagnosticsFormatting
 
             Assert.AreEqual(@"WhereLike(""val"", ""col"")", _diagnosticFormatter.GetDiagnosedUsage(invocation));
         }
-
-        [Test]
-        public void NoInnerMemberAccess_ThrowsException()
-        {
-            var invocation =
-                SyntaxFactory.ParseExpression(@"SomeFunction(""val"", ""col"")") as InvocationExpressionSyntax;
-
-            Assert.Throws<ArgumentException>(() => _diagnosticFormatter.GetLocation(invocation));
-        }
     }
 }

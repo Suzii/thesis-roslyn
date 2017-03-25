@@ -1,15 +1,16 @@
 using System.Collections.Immutable;
 using BugHunter.Core;
 using BugHunter.Core.Analyzers;
+using BugHunter.Core.ApiReplacementAnalysis;
 using BugHunter.Core.DiagnosticsFormatting;
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Diagnostics;
 
 namespace BugHunter.Analyzers.CmsApiGuidelinesRules.Analyzers
 {
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class WhereLikeMethodAnalyzer : BaseMemberInvocationAnalyzer
+    public class WhereLikeMethodAnalyzer : DiagnosticAnalyzer
     {
         public const string DIAGNOSTIC_ID = DiagnosticIds.WHERE_LIKE_METHOD;
 
@@ -23,17 +24,18 @@ namespace BugHunter.Analyzers.CmsApiGuidelinesRules.Analyzers
             isEnabledByDefault: true,
             description: new LocalizableResourceString(nameof(CmsApiGuidelinesResources.WhereLikeMethod_Description), CmsApiGuidelinesResources.ResourceManager, typeof(CmsApiGuidelinesResources)));
 
-        private static readonly IDiagnosticFormatter<InvocationExpressionSyntax> _diagnosticFormatter = DiagnosticFormatterFactory.CreateMemberInvocationOnlyFormatter();
+        private static readonly ApiReplacementConfig config = new ApiReplacementConfig(Rule,
+           new[] { "CMS.DataEngine.WhereConditionBase`1" },
+           new[] { "WhereLike", "WhereNotLike" });
 
-        protected override IDiagnosticFormatter<InvocationExpressionSyntax> DiagnosticFormatter => _diagnosticFormatter;
+        private static readonly ISyntaxNodeAnalyzer analyzer = new MemberInvocationAnalyzer(config, DiagnosticFormatterFactory.CreateMemberInvocationOnlyFormatter());
 
         public override void Initialize(AnalysisContext context)
         {
             context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.None);
             context.EnableConcurrentExecution();
 
-            var accessedType = "CMS.DataEngine.WhereConditionBase`1";
-            RegisterAction(Rule, context, accessedType, "WhereLike", "WhereNotLike");
+            context.RegisterSyntaxNodeAction(analyzer.Run, SyntaxKind.InvocationExpression);
         }
     }
 }

@@ -1,10 +1,11 @@
-﻿using Microsoft.CodeAnalysis;
+﻿using BugHunter.Core.Extensions;
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Text;
 
 namespace BugHunter.Core.DiagnosticsFormatting.Implementation
 {
-    internal class MemberInvocationOnlyDiagnosticFormatter : MemberInvocationDiagnosticFormatterBase, IDiagnosticFormatter<InvocationExpressionSyntax>
+    internal class MemberInvocationOnlyDiagnosticFormatter : IDiagnosticFormatter<InvocationExpressionSyntax>
     {
         /// <summary>
         /// Returns location of method invocation only. 
@@ -17,9 +18,13 @@ namespace BugHunter.Core.DiagnosticsFormatting.Implementation
         /// <returns>Location of nested method invocation</returns>
         public Location GetLocation(InvocationExpressionSyntax invocationExpression)
         {
-            var memberAccess = GetUnderlyingMemberAccess(invocationExpression);
+            SimpleNameSyntax methodNameNode;
+            if (!invocationExpression.TryGetMethodNameNode(out methodNameNode))
+            {
+                return Location.None;
+            }
 
-            var statLocation = memberAccess.Name.GetLocation().SourceSpan.Start;
+            var statLocation = methodNameNode.GetLocation().SourceSpan.Start;
             var endLocation = invocationExpression.GetLocation().SourceSpan.End;
             var location = Location.Create(invocationExpression.SyntaxTree, TextSpan.FromBounds(statLocation, endLocation));
 
@@ -28,9 +33,13 @@ namespace BugHunter.Core.DiagnosticsFormatting.Implementation
 
         public string GetDiagnosedUsage(InvocationExpressionSyntax invocationExpression)
         {
-            var memberAccess = GetUnderlyingMemberAccess(invocationExpression);
+            SimpleNameSyntax methodNameNode;
+            if (!invocationExpression.TryGetMethodNameNode(out methodNameNode))
+            {
+                return invocationExpression.ToString();
+            }
 
-            return $"{memberAccess.Name}{invocationExpression.ArgumentList}";
+            return $"{methodNameNode.Identifier.ValueText}{invocationExpression.ArgumentList}";
         }
     }
 }

@@ -49,13 +49,15 @@ namespace SampleTestProject.CsSamples
         {{
             var whereCondition = new CMS.DataEngine.WhereCondition();
             whereCondition = whereCondition.{oldMethodCall}(""columnName"", ""value"");
-            //whereCondition = whereCondition?.{oldMethodCall}(""columnName"", ""value"");
+            whereCondition = whereCondition?.{oldMethodCall}(""columnName"", ""value"");
         }}
     }}
 }}";
             var expectedDiagnostic = CreateDiagnosticResult($@"{oldMethodCall}(""columnName"", ""value"")").WithLocation(9, 45);
 
-            VerifyCSharpDiagnostic(test, expectedDiagnostic);
+            VerifyCSharpDiagnostic(test, 
+                expectedDiagnostic,
+                expectedDiagnostic.WithLocation(10, 46));
 
             var expectedFix = $@"
 namespace SampleTestProject.CsSamples
@@ -66,7 +68,7 @@ namespace SampleTestProject.CsSamples
         {{
             var whereCondition = new CMS.DataEngine.WhereCondition();
             whereCondition = whereCondition.{newMethodCall}(""columnName"", ""value"");
-            //whereCondition = whereCondition?.{oldMethodCall}(""columnName"", ""value"");
+            whereCondition = whereCondition?.{oldMethodCall}(""columnName"", ""value"");
         }}
     }}
 }}";
@@ -89,21 +91,13 @@ namespace SampleTestProject.CsSamples
         public void SampleMethod()
         {{
             var whereCondition = new CMS.DataEngine.WhereCondition();
-            whereCondition = whereCondition.{oldMethodCall}(""columnName"", ""value"").WhereTrue(""this is gonna be tricky"");
-            //whereCondition = whereCondition?.{oldMethodCall}(""columnName"", ""value"").WhereTrue(""this is gonna be tricky"");
-            //whereCondition = whereCondition.{oldMethodCall}(""columnName"", ""value"")?.WhereTrue(""this is gonna be tricky"");
-            //whereCondition = whereCondition?.{oldMethodCall}(""columnName"", ""value"")?.WhereTrue(""this is gonna be tricky"");
+            whereCondition = whereCondition.{oldMethodCall}(""columnName1"", ""value"").WhereTrue(""this is gonna be tricky"");
         }}
     }}
 }}";
-            var expectedDiagnostic = CreateDiagnosticResult($@"{oldMethodCall}(""columnName"", ""value"")");
 
-            VerifyCSharpDiagnostic(test, 
-                expectedDiagnostic.WithLocation(9, 45)
-                //expectedDiagnostic.WithLocation(10, 45),
-                //expectedDiagnostic.WithLocation(11, 45),
-                //expectedDiagnostic.WithLocation(12, 45)
-                );
+            var expectedDiagnostic = CreateDiagnosticResult($@"{oldMethodCall}(""columnName1"", ""value"")").WithLocation(9, 45);
+            VerifyCSharpDiagnostic(test, expectedDiagnostic);
 
             var expectedFix = $@"
 namespace SampleTestProject.CsSamples
@@ -113,10 +107,7 @@ namespace SampleTestProject.CsSamples
         public void SampleMethod()
         {{
             var whereCondition = new CMS.DataEngine.WhereCondition();
-            whereCondition = whereCondition.{newMethodCall}(""columnName"", ""value"").WhereTrue(""this is gonna be tricky"");
-            //whereCondition = whereCondition?.{oldMethodCall}(""columnName"", ""value"").WhereTrue(""this is gonna be tricky"");
-            //whereCondition = whereCondition.{oldMethodCall}(""columnName"", ""value"")?.WhereTrue(""this is gonna be tricky"");
-            //whereCondition = whereCondition?.{oldMethodCall}(""columnName"", ""value"")?.WhereTrue(""this is gonna be tricky"");
+            whereCondition = whereCondition.{newMethodCall}(""columnName1"", ""value"").WhereTrue(""this is gonna be tricky"");
         }}
     }}
 }}";
@@ -198,6 +189,72 @@ namespace SampleTestProject.CsSamples
 }}";
             VerifyCSharpFix(test, expectedFix, codeFixIndex);
         }
+
+        [TestCase("WhereLike")]
+        [TestCase("WhereNotLike")]
+        public void InputWithWhereLike_ConditionalAccesses_SurfacesAllDiagnostics(string methodCall)
+        {
+            var test = $@"
+namespace SampleTestProject.CsSamples
+{{
+    public class SampleClass
+    {{
+        public void SampleMethod()
+        {{
+            var whereCondition = new CMS.DataEngine.WhereCondition();
+            whereCondition = whereCondition.{methodCall}(""columnName1"", ""value"").WhereTrue(""this is gonna be tricky"");
+            whereCondition = whereCondition?.{methodCall}(""columnName2"", ""value"").WhereTrue(""this is gonna be tricky"");
+            whereCondition = whereCondition.{methodCall}(""columnName3"", ""value"")?.WhereTrue(""this is gonna be tricky"");
+            whereCondition = whereCondition?.{methodCall}(""columnName4"", ""value"")?.WhereTrue(""this is gonna be tricky"");
+        }}
+    }}
+}}";
+            
+            VerifyCSharpDiagnostic(test,
+                CreateDiagnosticResult($@"{methodCall}(""columnName1"", ""value"")").WithLocation(9, 45),
+                CreateDiagnosticResult($@"{methodCall}(""columnName2"", ""value"")").WithLocation(10, 46), 
+                CreateDiagnosticResult($@"{methodCall}(""columnName3"", ""value"")").WithLocation(11, 45),
+                CreateDiagnosticResult($@"{methodCall}(""columnName4"", ""value"")").WithLocation(12, 46));
+        }
+
+        [TestCase(@"whereCondition = whereCondition.WhereNotLike(""columnName1"", ""value"").WhereTrue(""this is gonna be tricky"");",
+                  @"whereCondition = whereCondition.WhereNotContains(""columnName1"", ""value"").WhereTrue(""this is gonna be tricky"");")]
+        [TestCase(@"whereCondition = whereCondition?.WhereNotLike(""columnName1"", ""value"").WhereTrue(""this is gonna be tricky"");",
+                  @"whereCondition = whereCondition?.WhereNotContains(""columnName1"", ""value"").WhereTrue(""this is gonna be tricky"");")]
+        [TestCase(@"whereCondition = whereCondition.WhereNotLike(""columnName1"", ""value"")?.WhereTrue(""this is gonna be tricky"");",
+                  @"whereCondition = whereCondition.WhereNotContains(""columnName1"", ""value"")?.WhereTrue(""this is gonna be tricky"");")]
+        [TestCase(@"whereCondition = whereCondition?.WhereNotLike(""columnName1"", ""value"")?.WhereTrue(""this is gonna be tricky"");",
+                  @"whereCondition = whereCondition?.WhereNotContains(""columnName1"", ""value"")?.WhereTrue(""this is gonna be tricky"");")]
+        public void InputWithWhereLike_ConditionalAccesses_AppliesFirstCodeFixInAllCases(string before, string after)
+        {
+            var test = $@"
+namespace SampleTestProject.CsSamples
+{{
+    public class SampleClass
+    {{
+        public void SampleMethod()
+        {{
+            var whereCondition = new CMS.DataEngine.WhereCondition();
+            {before}
+        }}
+    }}
+}}";
+            
+            var expectedFix = $@"
+namespace SampleTestProject.CsSamples
+{{
+    public class SampleClass
+    {{
+        public void SampleMethod()
+        {{
+            var whereCondition = new CMS.DataEngine.WhereCondition();
+            {after}
+        }}
+    }}
+}}";
+            VerifyCSharpFix(test, expectedFix, 0);
+        }
+
 
         [Test]
         public void InputWithPossibleFalsePositive_NoDiagnostic()

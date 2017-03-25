@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using BugHunter.Analyzers.CmsApiGuidelinesRules.Analyzers;
+using BugHunter.Core.Extensions;
 using BugHunter.Core.Helpers.CodeFixes;
 using BugHunter.Core.ResourceBuilder;
 using Microsoft.CodeAnalysis;
@@ -34,55 +35,58 @@ namespace BugHunter.Analyzers.CmsApiGuidelinesRules.CodeFixes
         public sealed override async Task RegisterCodeFixesAsync(CodeFixContext context)
         {
             var diagnostic = context.Diagnostics.First();
-            var memberAccessHelper = new MemberAccessCodeFixHelper(context);
-            var memberAccessExpression = await memberAccessHelper.GetClosestMemberAccess();
-            if (memberAccessExpression == null)
+            var codeFixHelper = new MemberInvocationCodeFixHelper(context);
+            var invocationExpression = await codeFixHelper.GetDiagnosedInvocation();
+            SimpleNameSyntax methodNameNode;
+            if (invocationExpression == null || !invocationExpression.TryGetMethodNameNode(out methodNameNode))
             {
                 return;
             }
 
-            var containsMethodName = GetNewMethodName(BH1000PossibleFixes.WhereContains, memberAccessExpression);
-            var startsWithMethodName = GetNewMethodName(BH1000PossibleFixes.WhereStartsWith, memberAccessExpression);
-            var endsWithMethodName = GetNewMethodName(BH1000PossibleFixes.WhereEndsWith, memberAccessExpression);
+
+
+            var containsMethodName = GetNewMethodName(BH1000PossibleFixes.WhereContains, methodNameNode);
+            var startsWithMethodName = GetNewMethodName(BH1000PossibleFixes.WhereStartsWith, methodNameNode);
+            var endsWithMethodName = GetNewMethodName(BH1000PossibleFixes.WhereEndsWith, methodNameNode);
 
             context.RegisterCodeFix(
                 CodeAction.Create(
                     title: CodeFixMessageBuilder.GetReplaceWithMessage(containsMethodName),
-                    createChangedDocument: c => ReplaceWithDifferentMethodCall(context.Document, memberAccessExpression, c, containsMethodName),
+                    createChangedDocument: c => ReplaceWithDifferentMethodCall(context.Document, methodNameNode, c, containsMethodName),
                     equivalenceKey: "Contains()"),
                 diagnostic);
 
             context.RegisterCodeFix(
                 CodeAction.Create(
                     title: CodeFixMessageBuilder.GetReplaceWithMessage(startsWithMethodName),
-                    createChangedDocument: c => ReplaceWithDifferentMethodCall(context.Document, memberAccessExpression, c, startsWithMethodName),
+                    createChangedDocument: c => ReplaceWithDifferentMethodCall(context.Document, methodNameNode, c, startsWithMethodName),
                     equivalenceKey: "StartsWith()"),
                 diagnostic);
 
             context.RegisterCodeFix(
                 CodeAction.Create(
                     title: CodeFixMessageBuilder.GetReplaceWithMessage(endsWithMethodName),
-                    createChangedDocument: c => ReplaceWithDifferentMethodCall(context.Document, memberAccessExpression, c, endsWithMethodName),
+                    createChangedDocument: c => ReplaceWithDifferentMethodCall(context.Document, methodNameNode, c, endsWithMethodName),
                     equivalenceKey: "EndsWith()"),
                 diagnostic);
         }
 
-        private async Task<Document> ReplaceWithDifferentMethodCall(Document document, MemberAccessExpressionSyntax memberAccessExpression, CancellationToken cancellationToken, string newMethodName)
+        private async Task<Document> ReplaceWithDifferentMethodCall(Document document, SimpleNameSyntax oldMethodNameNode, CancellationToken cancellationToken, string newMethodName)
         {
             var root = await document.GetSyntaxRootAsync(cancellationToken).ConfigureAwait(false);
 
             var newMethodIdentifierName = SyntaxFactory.IdentifierName(newMethodName);
-            var newMemberAccessExpression = memberAccessExpression.WithName(newMethodIdentifierName);
+            //var newMemberAccessExpression = memberAccessExpression.WithName(newMethodIdentifierName);
 
-            var newRoot = root.ReplaceNode(memberAccessExpression, newMemberAccessExpression);
+            var newRoot = root.ReplaceNode(oldMethodNameNode, newMethodIdentifierName);
             var newDocument = document.WithSyntaxRoot(newRoot);
 
             return newDocument;
         }
 
-        private string GetNewMethodName(BH1000PossibleFixes forFix, MemberAccessExpressionSyntax currentMemberAccessExpression)
+        private string GetNewMethodName(BH1000PossibleFixes forFix, SimpleNameSyntax currentMethodName)
         {
-            var isCurrentCallNegated = currentMemberAccessExpression.Name.Identifier.ToString().Contains("Not");
+            var isCurrentCallNegated = currentMethodName.Identifier.ToString().Contains("Not");
 
             switch (forFix)
             {
