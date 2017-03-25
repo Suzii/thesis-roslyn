@@ -1,16 +1,17 @@
 using System.Collections.Immutable;
 using BugHunter.Core;
 using BugHunter.Core.Analyzers;
+using BugHunter.Core.ApiReplacementAnalysis;
 using BugHunter.Core.Constants;
 using BugHunter.Core.DiagnosticsFormatting;
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Diagnostics;
 
 namespace BugHunter.Web.Analyzers.CmsApiGuidelinesRules.Analyzers
 {
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class ConnectionHelperExecuteQueryAnalyzer : BaseMemberInvocationAnalyzer
+    public class ConnectionHelperExecuteQueryAnalyzer : DiagnosticAnalyzer
     {
         public const string DIAGNOSTIC_ID = DiagnosticIds.CONNECTION_HELPER_EXECUTE_QUERY;
 
@@ -24,29 +25,33 @@ namespace BugHunter.Web.Analyzers.CmsApiGuidelinesRules.Analyzers
 
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
 
-        private static readonly IDiagnosticFormatter<InvocationExpressionSyntax> _diagnosticFormatter = DiagnosticFormatterFactory.CreateMemberInvocationOnlyFormatter(true);
+        private static readonly ApiReplacementConfig config = new ApiReplacementConfig(Rule,
+            new[] { "CMS.DataEngine.ConnectionHelper" },
+            new[] { "ExecuteQuery" });
 
-        protected override IDiagnosticFormatter<InvocationExpressionSyntax> DiagnosticFormatter => _diagnosticFormatter;
+        private static readonly ISyntaxNodeAnalyzer analyzer = new Analyzer(config);
 
         public override void Initialize(AnalysisContext context)
         {
             context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.None);
             context.EnableConcurrentExecution();
 
-            RegisterAction(Rule, context, "CMS.DataEngine.ConnectionHelper", "ExecuteQuery");
+            context.RegisterSyntaxNodeAction(analyzer.Run, SyntaxKind.InvocationExpression);
         }
 
-        protected override bool IsOnForbiddenPath(string filePath)
+        internal class Analyzer : MemberInvocationAnalyzer
         {
-            return IsUiFile(filePath);
-        }
+            public Analyzer(ApiReplacementConfig config) : base(config, DiagnosticFormatterFactory.CreateMemberInvocationFormatter())
+            {
+            }
 
-        private bool IsUiFile(string filePath)
-        {
-            return filePath.EndsWith(FileExtensions.PAGES) 
-                || filePath.EndsWith(FileExtensions.CONTROLS) 
-                || filePath.EndsWith(FileExtensions.HANDLERS)
-                || filePath.EndsWith(FileExtensions.MASTER_PAGE);
+            protected override bool IsOnForbiddenPath(string filePath)
+            {
+                return filePath.EndsWith(FileExtensions.PAGES)
+                    || filePath.EndsWith(FileExtensions.CONTROLS)
+                    || filePath.EndsWith(FileExtensions.HANDLERS)
+                    || filePath.EndsWith(FileExtensions.MASTER_PAGE);
+            }
         }
     }
 }
