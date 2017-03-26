@@ -20,6 +20,16 @@ namespace BugHunter.Analyzers.Test.StringAndCultureTests
             new object[] { @"CompareTo(""a"")", @"string.Compare(""aa"", ""a"", StringComparison.InvariantCultureIgnoreCase)", 5 },
         };
 
+        static readonly object[] TestSourceWithVariable =
+{
+            new object[] { @"CompareTo(""a"")", @"string.Compare(ouch, ""a"", StringComparison.Ordinal)", 0 },
+            new object[] { @"CompareTo(""a"")", @"string.Compare(ouch, ""a"", StringComparison.OrdinalIgnoreCase)", 1 },
+            new object[] { @"CompareTo(""a"")", @"string.Compare(ouch, ""a"", StringComparison.CurrentCulture)", 2 },
+            new object[] { @"CompareTo(""a"")", @"string.Compare(ouch, ""a"", StringComparison.CurrentCultureIgnoreCase)", 3 },
+            new object[] { @"CompareTo(""a"")", @"string.Compare(ouch, ""a"", StringComparison.InvariantCulture)", 4 },
+            new object[] { @"CompareTo(""a"")", @"string.Compare(ouch, ""a"", StringComparison.InvariantCultureIgnoreCase)", 5 },
+        };
+
         protected override MetadataReference[] GetAdditionalReferences() => null;
 
         private DiagnosticResult GetDiagnosticResult(string methodUsed)
@@ -52,7 +62,6 @@ namespace BugHunter.Analyzers.Test.StringAndCultureTests
     }}
 }}";
 
-
             var expectedDiagnostic = GetDiagnosticResult(methodUsed).WithLocation(7, 31);
             VerifyCSharpDiagnostic(test, expectedDiagnostic);
 
@@ -64,6 +73,41 @@ namespace SampleTestProject.CsSamples
     {{
         public void SampleMethod()
         {{
+            var result = {codeFix};
+        }}
+    }}
+}}";
+
+            VerifyCSharpFix(test, expectedFix, codeFixNumber);
+        }
+
+        [Test, TestCaseSource(nameof(TestSourceWithVariable))]
+        public void InputWithIncident_ConditionalMemberAccess_SurfacesDiagnostic(string methodUsed, string codeFix, int codeFixNumber)
+        {
+            var test = $@"namespace SampleTestProject.CsSamples 
+{{
+    public class SampleClass
+    {{
+        public void SampleMethod()
+        {{
+            string ouch = null;
+            var result = ouch.{methodUsed};
+        }}
+    }}
+}}";
+
+            var expectedDiagnostic = GetDiagnosticResult(methodUsed).WithLocation(8, 31);
+            VerifyCSharpDiagnostic(test, expectedDiagnostic);
+
+            var expectedFix = $@"using System;
+
+namespace SampleTestProject.CsSamples 
+{{
+    public class SampleClass
+    {{
+        public void SampleMethod()
+        {{
+            string ouch = null;
             var result = {codeFix};
         }}
     }}
@@ -104,7 +148,40 @@ namespace SampleTestProject.CsSamples
 
             VerifyCSharpFix(test, expectedFix, codeFixNumber);
         }
-        
+
+        [Test, TestCaseSource(nameof(TestSource))]
+        public void InputWithIncident_FollowUpConditionalAccess_SurfacesDiagnostic(string methodUsed, string codeFix, int codeFixNumber)
+        {
+            var test = $@"namespace SampleTestProject.CsSamples 
+{{
+    public class SampleClass
+    {{
+        public void SampleMethod()
+        {{
+            var result = ""aa"".{methodUsed}.ToString()?.ToString();
+        }}
+    }}
+}}";
+
+            var expectedDiagnostic = GetDiagnosticResult(methodUsed).WithLocation(7, 31);
+            VerifyCSharpDiagnostic(test, expectedDiagnostic);
+
+            var expectedFix = $@"using System;
+
+namespace SampleTestProject.CsSamples 
+{{
+    public class SampleClass
+    {{
+        public void SampleMethod()
+        {{
+            var result = {codeFix}.ToString()?.ToString();
+        }}
+    }}
+}}";
+
+            VerifyCSharpFix(test, expectedFix, codeFixNumber);
+        }
+
         [Test, TestCaseSource(nameof(TestSource))]
         public void InputWithIncident_PrecedingMemberAccess_SurfacesDiagnostic(string methodUsed, string codeFix, int codeFixNumber)
         {

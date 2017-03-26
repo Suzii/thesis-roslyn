@@ -10,6 +10,15 @@ namespace BugHunter.Analyzers.Test.StringAndCultureTests
     [TestFixture]
     public class StringManipulationMethodsTest : CodeFixVerifier<StringManipulationMethodsAnalyzer, StringManipulationMethodsCodeFixProvider>
     {
+        static readonly object[] TestSource =
+        {
+            new object[] {"ToLower()", "ToLowerInvariant()", null, 0},
+            new object[] {"ToLower()", "ToLower(CultureInfo.CurrentCulture)", "using System.Globalization;\r\n\r\n", 1},
+
+            new object[] {"ToUpper()", "ToUpperInvariant()", null, 0}, 
+            new object[] {"ToUpper()", "ToUpper(CultureInfo.CurrentCulture)", "using System.Globalization;\r\n\r\n", 1}, 
+        };
+
         protected override MetadataReference[] GetAdditionalReferences() => null;
 
         private DiagnosticResult GetDiagnosticResult(string methodUsed)
@@ -48,7 +57,10 @@ namespace SampleTestProject.CsSamples
         {{
             var original = ""Original string"";
             var ci = CultureInfo.CurrentCulture;
-            var updated = original.{methodUsed};
+            var updated1 = original.{methodUsed}.ToString();
+            var updated2 = original?.{methodUsed}.ToString();
+            var updated3 = original.{methodUsed}?.ToString();
+            var updated4 = original?.{methodUsed}?.ToString();
         }}
     }}
 }}";
@@ -56,10 +68,7 @@ namespace SampleTestProject.CsSamples
             VerifyCSharpDiagnostic(test);
         }
 
-        [TestCase("ToLower()", "ToLowerInvariant()", null, 0)]
-        [TestCase("ToLower()", "ToLower(CultureInfo.CurrentCulture)", "using System.Globalization;\r\n\r\n", 1)]
-        [TestCase("ToUpper()", "ToUpperInvariant()", null, 0)]
-        [TestCase("ToUpper()", "ToUpper(CultureInfo.CurrentCulture)", "using System.Globalization;\r\n\r\n", 1)]
+        [Test, TestCaseSource(nameof(TestSource))]
         public void InputWithIncident_SimpleMemberAccess_SurfacesDiagnostic(string methodUsed, string codeFix, string usings, int codeFixNumber)
         {   
             var test = $@"namespace SampleTestProject.CsSamples 
@@ -91,10 +100,39 @@ namespace SampleTestProject.CsSamples
             VerifyCSharpFix(test, expectedFix, codeFixNumber);
         }
 
-        [TestCase("ToLower()", "ToLowerInvariant()", null, 0)]
-        [TestCase("ToLower()", "ToLower(CultureInfo.CurrentCulture)", "using System.Globalization;\r\n\r\n", 1)]
-        [TestCase("ToUpper()", "ToUpperInvariant()", null, 0)]
-        [TestCase("ToUpper()", "ToUpper(CultureInfo.CurrentCulture)", "using System.Globalization;\r\n\r\n", 1)]
+        [Test, TestCaseSource(nameof(TestSource))]
+        public void InputWithIncident_ConditionalMemberAccess_SurfacesDiagnostic(string methodUsed, string codeFix, string usings, int codeFixNumber)
+        {
+            var test = $@"namespace SampleTestProject.CsSamples 
+{{
+    public class SampleClass
+    {{
+        public void SampleMethod()
+        {{
+            string original = null;
+            var updated = original?.{methodUsed};
+        }}
+    }}
+}}";
+
+            var expectedDiagnostic = GetDiagnosticResult(methodUsed).WithLocation(8, 37);
+            VerifyCSharpDiagnostic(test, expectedDiagnostic);
+
+            var expectedFix = $@"{usings}namespace SampleTestProject.CsSamples 
+{{
+    public class SampleClass
+    {{
+        public void SampleMethod()
+        {{
+            string original = null;
+            var updated = original?.{codeFix};
+        }}
+    }}
+}}";
+            VerifyCSharpFix(test, expectedFix, codeFixNumber);
+        }
+
+        [Test, TestCaseSource(nameof(TestSource))]
         public void InputWithIncident_FollowUpMemberAccess_SurfacesDiagnostic(string methodUsed, string codeFix, string usings, int codeFixNumber)
         {
             var test = $@"namespace SampleTestProject.CsSamples 
@@ -125,10 +163,69 @@ namespace SampleTestProject.CsSamples
             VerifyCSharpFix(test, expectedFix, codeFixNumber);
         }
 
-        [TestCase("ToLower()", "ToLowerInvariant()", null, 0)]
-        [TestCase("ToLower()", "ToLower(CultureInfo.CurrentCulture)", "using System.Globalization;\r\n\r\n", 1)]
-        [TestCase("ToUpper()", "ToUpperInvariant()", null, 0)]
-        [TestCase("ToUpper()", "ToUpper(CultureInfo.CurrentCulture)", "using System.Globalization;\r\n\r\n", 1)]
+        [Test, TestCaseSource(nameof(TestSource))]
+        public void InputWithIncident_FollowUpConditionalAccess_SurfacesDiagnostic(string methodUsed, string codeFix, string usings, int codeFixNumber)
+        {
+            var test = $@"namespace SampleTestProject.CsSamples 
+{{
+    public class SampleClass
+    {{
+        public void SampleMethod()
+        {{
+            var original = ""Original string"";
+            var updated = original.{methodUsed}?.ToString();
+        }}
+    }}
+}}";
+            var expectedDiagnostic = GetDiagnosticResult(methodUsed).WithLocation(8, 36);
+            VerifyCSharpDiagnostic(test, expectedDiagnostic);
+
+            var expectedFix = $@"{usings}namespace SampleTestProject.CsSamples 
+{{
+    public class SampleClass
+    {{
+        public void SampleMethod()
+        {{
+            var original = ""Original string"";
+            var updated = original.{codeFix}?.ToString();
+        }}
+    }}
+}}";
+            VerifyCSharpFix(test, expectedFix, codeFixNumber);
+        }
+
+        [Test, TestCaseSource(nameof(TestSource))]
+        public void InputWithIncident_PrecedingAndFollowUpConditionalAccess_SurfacesDiagnostic(string methodUsed, string codeFix, string usings, int codeFixNumber)
+        {
+            var test = $@"namespace SampleTestProject.CsSamples 
+{{
+    public class SampleClass
+    {{
+        public void SampleMethod()
+        {{
+            var original = ""Original string"";
+            var updated = original?.{methodUsed}?.ToString();
+        }}
+    }}
+}}";
+            var expectedDiagnostic = GetDiagnosticResult(methodUsed).WithLocation(8, 37);
+            VerifyCSharpDiagnostic(test, expectedDiagnostic);
+
+            var expectedFix = $@"{usings}namespace SampleTestProject.CsSamples 
+{{
+    public class SampleClass
+    {{
+        public void SampleMethod()
+        {{
+            var original = ""Original string"";
+            var updated = original?.{codeFix}?.ToString();
+        }}
+    }}
+}}";
+            VerifyCSharpFix(test, expectedFix, codeFixNumber);
+        }
+
+        [Test, TestCaseSource(nameof(TestSource))]
         public void InputWithIncident_PrecedingMemberAccess_SurfacesDiagnostic(string methodUsed, string codeFix, string usings, int codeFixNumber)
         {
             var test = $@"namespace SampleTestProject.CsSamples 

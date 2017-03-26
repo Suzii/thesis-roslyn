@@ -69,7 +69,8 @@ namespace SampleTestProject.CsSamples
             var someChar = 'a';
             var sc = StringComparison.InvariantCultureIgnoreCase;
             var original = ""Original string"";
-            var result = original.{methodUsed};
+            var result1 = original.{methodUsed}.ToString();
+            var result2 = original?.{methodUsed}.ToString();
         }}
     }}
 }}";
@@ -104,6 +105,41 @@ namespace SampleTestProject.CsSamples
         {{
             var original = ""Original string"";
             var result = original.{codeFix};
+        }}
+    }}
+}}";
+
+            VerifyCSharpFix(test, expectedFix, codeFixNumber);
+        }
+
+        [Test, TestCaseSource(nameof(TestSource))]
+        public void InputWithIncident_ConditionalMemberAccess_SurfacesDiagnostic(string methodUsed, string codeFix, int codeFixNumber)
+        {
+            var test = $@"namespace SampleTestProject.CsSamples 
+{{
+    public class SampleClass
+    {{
+        public void SampleMethod()
+        {{
+            string original = null;
+            var result = original?.{methodUsed};
+        }}
+    }}
+}}";
+
+            var expectedDiagnostic = GetDiagnosticResult(methodUsed).WithLocation(8, 36);
+            VerifyCSharpDiagnostic(test, expectedDiagnostic);
+
+            var expectedFix = $@"using System;
+
+namespace SampleTestProject.CsSamples 
+{{
+    public class SampleClass
+    {{
+        public void SampleMethod()
+        {{
+            string original = null;
+            var result = original?.{codeFix};
         }}
     }}
 }}";
