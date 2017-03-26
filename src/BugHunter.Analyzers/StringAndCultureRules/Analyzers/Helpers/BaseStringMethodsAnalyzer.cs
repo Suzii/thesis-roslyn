@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using BugHunter.Core.DiagnosticsFormatting;
 using BugHunter.Core.Extensions;
 using Microsoft.CodeAnalysis;
@@ -60,12 +61,10 @@ namespace BugHunter.Analyzers.StringAndCultureRules.Analyzers.Helpers
 
             return IsInvokedOnString(invokedMethodSymbol) && IsForbiddenMethodName(invokedMethodSymbol?.Name);
         }
-
-        private bool IsForbiddenMethodName(string invokedMethodName)
-            => _forbiddenMethods.Contains(invokedMethodName);
-
-        private bool IsInvokedOnString(IMethodSymbol invokedMethodSymbol)
-            => invokedMethodSymbol?.ReceiverType?.SpecialType == SpecialType.System_String;
+        
+        // If method is already called with StringComparison argument, no need for diagnostic
+        protected virtual bool IsForbiddenOverload(SyntaxNodeAnalysisContext context, InvocationExpressionSyntax invocationExpression, IMethodSymbol methodSymbol)
+            => methodSymbol.Parameters.All(argument => !IsStringComparison(argument) && !IsCultureInfo(argument));
 
         private bool CanBeSkippedBasedOnSyntaxOnly(InvocationExpressionSyntax invocationExpression)
         {
@@ -78,40 +77,17 @@ namespace BugHunter.Analyzers.StringAndCultureRules.Analyzers.Helpers
             return !IsForbiddenMethodName(methodNameNode.Identifier.ValueText);
         }
 
-        // If method is already called with StringComparison argument, no need for diagnostic
-        protected virtual bool IsForbiddenOverload(SyntaxNodeAnalysisContext context, InvocationExpressionSyntax invocationExpression, IMethodSymbol methodSymbol)
-        {
-            var arguments = invocationExpression.ArgumentList.Arguments;
+        private bool IsForbiddenMethodName(string invokedMethodName)
+           => _forbiddenMethods.Contains(invokedMethodName);
 
-            return arguments.Any() && !arguments.Any(a => IsStringComparison(a, context) || IsCultureInfo(a, context));
-        }
+        private bool IsInvokedOnString(IMethodSymbol invokedMethodSymbol)
+            => invokedMethodSymbol?.ReceiverType?.SpecialType == SpecialType.System_String;
 
-        private bool IsStringComparison(ArgumentSyntax argument, SyntaxNodeAnalysisContext context)
-        {
-            return IsOfType(argument, context, "StringComparison", "System.StringComparison");
-        }
+        private bool IsStringComparison(IParameterSymbol parameter)
+            => parameter.Type.ToDisplayString() == "System.StringComparison";
 
-        private bool IsCultureInfo(ArgumentSyntax argument, SyntaxNodeAnalysisContext context)
-        {
-            return IsOfType(argument, context, "CultureInfo", "System.Globalization.CultureInfo");
-        }
-
-        private bool IsOfType(ArgumentSyntax argument, SyntaxNodeAnalysisContext context, string typeName, string typeFullName)
-        {
-            if (argument.Expression.ToString().Contains(typeName))
-            {
-                return true;
-            }
-
-            var argumentType = ModelExtensions.GetTypeInfo(context.SemanticModel, argument.Expression).Type as INamedTypeSymbol;
-            if (argumentType == null)
-            {
-                return false;
-            }
-
-            var searchedTypeInfo = context.Compilation.GetTypeByMetadataName(typeFullName);
-            return argumentType.Equals(searchedTypeInfo);
-        }
+        private bool IsCultureInfo(IParameterSymbol parameter)
+            => parameter.Type.ToDisplayString() == "System.Globalization.CultureInfo";
 
         protected virtual Diagnostic CreateDiagnostic(InvocationExpressionSyntax syntaxNode)
         {

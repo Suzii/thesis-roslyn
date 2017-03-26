@@ -1,4 +1,5 @@
 using System.Collections.Immutable;
+using System.Linq;
 using BugHunter.Analyzers.StringAndCultureRules.Analyzers.Helpers;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -24,34 +25,9 @@ namespace BugHunter.Analyzers.StringAndCultureRules.Analyzers
         }
 
         protected override bool IsForbiddenOverload(SyntaxNodeAnalysisContext context, InvocationExpressionSyntax invocationExpression, IMethodSymbol methodSymbol)
-        {
-            return base.IsForbiddenOverload(context, invocationExpression, methodSymbol) && !IsFirstArgumentChar(context, invocationExpression, methodSymbol);
-        }
+            => base.IsForbiddenOverload(context, invocationExpression, methodSymbol) && !IsFirstArgumentChar(methodSymbol);
 
-        private static bool IsFirstArgumentChar(SyntaxNodeAnalysisContext context, InvocationExpressionSyntax invocationExpression, IMethodSymbol methodSymbol)
-        {
-            var firstArgument = invocationExpression
-                .ArgumentList
-                .Arguments
-                .FirstOrDefault()
-                ?.Expression;
-
-            if (firstArgument == null)
-            {
-                return false;
-            }
-
-            if (firstArgument.ToString().StartsWith("'"))
-            {
-                return true;
-            }
-
-            // it can be a variable of type char
-            var firstArgumentType = context.SemanticModel.GetTypeInfo(firstArgument).Type;
-
-            return firstArgumentType?.SpecialType == SpecialType.System_Char;
-        }
-
-        
+        private static bool IsFirstArgumentChar(IMethodSymbol methodSymbol)
+            => !methodSymbol.Parameters.IsEmpty && methodSymbol.Parameters.First().Type.SpecialType == SpecialType.System_Char;
     }
 }
