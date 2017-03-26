@@ -35,15 +35,15 @@ namespace BugHunter.Analyzers.StringAndCultureRules.CodeFixes
 
             const string namespacesToBeReferenced = "System";
 
-            foreach (var strignComparisonOption in StringComparisonOptions.GetAll())
+            foreach (var stringComparisonOption in StringComparisonOptions.GetAll())
             {
-                var newInvocation = invocation.AppendArguments(strignComparisonOption);
+                var newInvocation = invocation.AppendArguments(stringComparisonOption);
 
                 context.RegisterCodeFix(
                     CodeAction.Create(
                         title: CodeFixMessageBuilder.GetReplaceWithMessage(newInvocation),
                         createChangedDocument: c => editor.ReplaceExpressionWith(invocation, newInvocation, namespacesToBeReferenced),
-                        equivalenceKey: $"{nameof(StringComparisonMethodsWithModifierCodeFixProvider)}-{strignComparisonOption}"),
+                        equivalenceKey: $"{nameof(StringComparisonMethodsWithModifierCodeFixProvider)}-{stringComparisonOption}"),
                     context.Diagnostics.First());
             }
         }

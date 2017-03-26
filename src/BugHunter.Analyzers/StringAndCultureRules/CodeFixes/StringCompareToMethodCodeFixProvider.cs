@@ -30,12 +30,12 @@ namespace BugHunter.Analyzers.StringAndCultureRules.CodeFixes
         {
             var editor = new MemberInvocationCodeFixHelper(context);
             var invocation = await editor.GetDiagnosedInvocation();
-            var memberAccess = invocation?.Expression as MemberAccessExpressionSyntax;
-            if (memberAccess == null)
+            if (!IsFixable(invocation))
             {
                 return;
             }
 
+            var memberAccess = (MemberAccessExpressionSyntax)invocation.Expression;
             if (IsChainedMemberAccesses(memberAccess))
             {
                 // TODO
@@ -50,18 +50,25 @@ namespace BugHunter.Analyzers.StringAndCultureRules.CodeFixes
             var secondString = invocation.ArgumentList.Arguments.First();
             var staticInvocation = SyntaxFactory.ParseExpression("string.Compare()") as InvocationExpressionSyntax;
 
-            foreach (var strignComparisonOption in StringComparisonOptions.GetAll())
+            foreach (var stringComparisonOption in StringComparisonOptions.GetAll())
             {
-                var newInvocation = staticInvocation.AppendArguments(firstString, secondString).AppendArguments(strignComparisonOption);
+                var newInvocation = staticInvocation.AppendArguments(firstString, secondString).AppendArguments(stringComparisonOption);
 
                 context.RegisterCodeFix(
                     CodeAction.Create(
                         title: CodeFixMessageBuilder.GetReplaceWithMessage(newInvocation),
                         createChangedDocument: c => editor.ReplaceExpressionWith(invocation, newInvocation, namespacesToBeReferenced),
                         equivalenceKey:
-                        $"{nameof(StringCompareToMethodCodeFixProvider)}-{strignComparisonOption}"),
+                        $"{nameof(StringCompareToMethodCodeFixProvider)}-{stringComparisonOption}"),
                     context.Diagnostics.First());
             }
+        }
+
+        private static bool IsFixable(InvocationExpressionSyntax invocation)
+        {
+            return invocation != null && 
+                   invocation.Expression.IsKind(SyntaxKind.SimpleMemberAccessExpression) &&
+                   !invocation.Parent.IsKind(SyntaxKind.ConditionalAccessExpression);
         }
 
         private static bool IsChainedMemberAccesses(MemberAccessExpressionSyntax memberAccess)

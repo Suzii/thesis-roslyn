@@ -9,11 +9,12 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeActions;
 using Microsoft.CodeAnalysis.CodeFixes;
 using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace BugHunter.Analyzers.StringAndCultureRules.CodeFixes
 {
-    [ExportCodeFixProvider(LanguageNames.CSharp, Name = nameof(StringManipultionMethodsCodeFixProvider)), Shared]
-    public class StringManipultionMethodsCodeFixProvider : CodeFixProvider
+    [ExportCodeFixProvider(LanguageNames.CSharp, Name = nameof(StringManipulationMethodsCodeFixProvider)), Shared]
+    public class StringManipulationMethodsCodeFixProvider : CodeFixProvider
     {
         public sealed override ImmutableArray<string> FixableDiagnosticIds
             => ImmutableArray.Create(StringManipulationMethodsAnalyzer.DIAGNOSTIC_ID);
@@ -31,23 +32,33 @@ namespace BugHunter.Analyzers.StringAndCultureRules.CodeFixes
             }
 
             var diagnostic = context.Diagnostics.First();
-            var methodName = invocation.Expression.ToString();
-            var newInvocation1 = SyntaxFactory.ParseExpression($"{methodName}Invariant()");
-            var newInvocation2 = SyntaxFactory.ParseExpression($"{methodName}(CultureInfo.CurrentCulture)");
+
+            var newInvocation1 = GetNewInvocationWithInvariantMethod(invocation);
+            var newInvocation2 = GetNewInvocationWithCultureInfoParameter(invocation);
 
             context.RegisterCodeFix(
                 CodeAction.Create(
                     title: CodeFixMessageBuilder.GetReplaceWithMessage(newInvocation1),
                     createChangedDocument: c => editor.ReplaceExpressionWith(invocation, newInvocation1),
-                    equivalenceKey: $"{nameof(StringManipultionMethodsCodeFixProvider)}-InvariantCulture"),
+                    equivalenceKey: $"{nameof(StringManipulationMethodsCodeFixProvider)}-InvariantCulture"),
                 diagnostic);
 
             context.RegisterCodeFix(
                 CodeAction.Create(
                     title: CodeFixMessageBuilder.GetReplaceWithMessage(newInvocation2),
                     createChangedDocument: c => editor.ReplaceExpressionWith(invocation, newInvocation2, "System.Globalization"),
-                    equivalenceKey: $"{nameof(StringManipultionMethodsCodeFixProvider)}-CurrentCulture"),
+                    equivalenceKey: $"{nameof(StringManipulationMethodsCodeFixProvider)}-CurrentCulture"),
                 diagnostic);
+        }
+
+        private static ExpressionSyntax GetNewInvocationWithCultureInfoParameter(InvocationExpressionSyntax invocation)
+        {
+            return SyntaxFactory.ParseExpression($"{invocation.Expression}(CultureInfo.CurrentCulture)");
+        }
+
+        private static ExpressionSyntax GetNewInvocationWithInvariantMethod(InvocationExpressionSyntax invocation)
+        {
+            return SyntaxFactory.ParseExpression($"{invocation.Expression}Invariant()");
         }
     }
 }

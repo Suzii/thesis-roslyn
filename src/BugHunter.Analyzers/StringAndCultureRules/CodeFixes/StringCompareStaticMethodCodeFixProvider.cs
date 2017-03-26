@@ -36,7 +36,7 @@ namespace BugHunter.Analyzers.StringAndCultureRules.CodeFixes
 
             const string namespacesToBeReferenced = "System";
             var tempInvocation = invocation;
-            var strignComparisonOptions = StringComparisonOptions.GetAll();
+            var stringComparisonOptions = StringComparisonOptions.GetAll();
 
             // if it was diagnosed and overload with three or six arguments is called it must be:
             // public static int Compare(string strA, string strB, bool ignoreCase)
@@ -49,27 +49,27 @@ namespace BugHunter.Analyzers.StringAndCultureRules.CodeFixes
                 var ignoreCaseAttribute = originalArguments.Last().Expression.ToString();
                 bool ignoreCase;
 
-                // something went terribly wrong, user can't type :P
                 if (!bool.TryParse(ignoreCaseAttribute, out ignoreCase))
                 {
+                    // could not detect value of 'ignoreCase' argument -> no codefix provided
                     return;
                 }
 
                 tempInvocation = tempInvocation.WithArgumentList(SyntaxFactory.ArgumentList(originalArguments.RemoveAt(originalArguments.Count - 1)));
-                strignComparisonOptions = ignoreCase
+                stringComparisonOptions = ignoreCase
                     ? StringComparisonOptions.GetCaseInsensitive()
                     : StringComparisonOptions.GetCaseSensitive();
             }
 
-            foreach (var strignComparisonOption in strignComparisonOptions)
+            foreach (var stringComparisonOption in stringComparisonOptions)
             {
-                var newInvocation = tempInvocation.AppendArguments(strignComparisonOption);
+                var newInvocation = tempInvocation.AppendArguments(stringComparisonOption);
 
                 context.RegisterCodeFix(
                     CodeAction.Create(
                         title: CodeFixMessageBuilder.GetReplaceWithMessage(newInvocation),
                         createChangedDocument: c => editor.ReplaceExpressionWith(invocation, newInvocation, namespacesToBeReferenced),
-                        equivalenceKey: $"{nameof(StringCompareStaticMethodCodeFixProvider)}-{strignComparisonOption}"),
+                        equivalenceKey: $"{nameof(StringCompareStaticMethodCodeFixProvider)}-{stringComparisonOption}"),
                     context.Diagnostics.First());
             }
         }

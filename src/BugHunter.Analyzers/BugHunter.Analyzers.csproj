@@ -100,7 +100,7 @@
     <Compile Include="StringAndCultureRules\CodeFixes\StringCompareToMethodCodeFixProvider.cs" />
     <Compile Include="StringAndCultureRules\CodeFixes\StringComparisonMethodsWithModifierCodeFixProvider.cs" />
     <Compile Include="StringAndCultureRules\CodeFixes\StringComparisonOptions.cs" />
-    <Compile Include="StringAndCultureRules\CodeFixes\StringManipultionMethodsCodeFixProvider.cs" />
+    <Compile Include="StringAndCultureRules\CodeFixes\StringManipulationMethodsCodeFixProvider.cs" />
     <Compile Include="CmsApiReplacementRules\CodeFixes\PageIsPostBackCodeFixProvider.cs" />
     <Compile Include="CmsApiReplacementRules\CodeFixes\HttpSessionSessionIdCodeFixProvider.cs" />
     <Compile Include="CmsApiReplacementRules\CodeFixes\ClientScriptMethodsCodeFixProvider.cs" />

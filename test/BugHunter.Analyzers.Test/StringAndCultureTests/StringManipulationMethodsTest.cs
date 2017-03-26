@@ -8,7 +8,7 @@ using NUnit.Framework;
 namespace BugHunter.Analyzers.Test.StringAndCultureTests
 {
     [TestFixture]
-    public class StringManipulationMethodsTest : CodeFixVerifier<StringManipulationMethodsAnalyzer, StringManipultionMethodsCodeFixProvider>
+    public class StringManipulationMethodsTest : CodeFixVerifier<StringManipulationMethodsAnalyzer, StringManipulationMethodsCodeFixProvider>
     {
         protected override MetadataReference[] GetAdditionalReferences() => null;
 
