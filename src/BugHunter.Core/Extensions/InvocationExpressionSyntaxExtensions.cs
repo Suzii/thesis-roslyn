@@ -16,29 +16,26 @@ namespace BugHunter.Core.Extensions
         /// <returns>True if name of the invoked method was found</returns>
         public static bool TryGetMethodNameNode(this InvocationExpressionSyntax invocationExpression, out SimpleNameSyntax methodNameNode)
         {
-            if (invocationExpression?.Expression?.IsKind(SyntaxKind.SimpleMemberAccessExpression) ?? false)
+            var expressionKind = invocationExpression?.Expression?.Kind();
+            switch (expressionKind)
             {
-                var memberAccess = (MemberAccessExpressionSyntax)invocationExpression.Expression;
-                methodNameNode = memberAccess.Name;
-                return true;
+                case SyntaxKind.SimpleMemberAccessExpression:
+                    var memberAccess = (MemberAccessExpressionSyntax)invocationExpression.Expression;
+                    methodNameNode = memberAccess.Name;
+                    break;
+                case SyntaxKind.MemberBindingExpression:
+                    var memberBinding = (MemberBindingExpressionSyntax)invocationExpression.Expression;
+                    methodNameNode = memberBinding.Name;
+                    break;
+                case SyntaxKind.IdentifierName:
+                    methodNameNode = (IdentifierNameSyntax)invocationExpression.Expression;
+                    break;
+                default:
+                    methodNameNode = null;
+                    break;
             }
 
-            if (invocationExpression?.Expression?.IsKind(SyntaxKind.MemberBindingExpression) ?? false)
-            {
-                var memberBinding = (MemberBindingExpressionSyntax)invocationExpression.Expression;
-                methodNameNode = memberBinding.Name;
-                return true;
-            }
-
-            if (invocationExpression?.Expression?.IsKind(SyntaxKind.IdentifierName) ?? false)
-            {
-                var identifierName = (IdentifierNameSyntax)invocationExpression.Expression;
-                methodNameNode = identifierName;
-                return true;
-            }
-
-            methodNameNode = null;
-            return false;
+            return methodNameNode != null;
         }
 
         /// <summary>

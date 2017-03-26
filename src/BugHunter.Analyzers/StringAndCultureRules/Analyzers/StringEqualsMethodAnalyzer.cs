@@ -1,4 +1,5 @@
 using System.Collections.Immutable;
+using BugHunter.Analyzers.StringAndCultureRules.Analyzers.Helpers;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
 
@@ -8,20 +9,17 @@ namespace BugHunter.Analyzers.StringAndCultureRules.Analyzers
     /// Searches for usages of 'Equals()' static methods called on strings and reports their usage when no overload with StringComparison or CultureInfo argument is used
     /// </summary>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class StringEqualsMethodAnalyzer : BaseStringComparisonMethodsAnalyzer
+    public class StringEqualsMethodAnalyzer : BaseStringMethodsAnalyzer
     {
         public const string DIAGNOSTIC_ID = DiagnosticIds.STRING_EQUALS_METHOD;
 
-        private static readonly DiagnosticDescriptor Rule = CreateRule(DIAGNOSTIC_ID);
-
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
 
-        public override void Initialize(AnalysisContext context)
-        {
-            context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.None);
-            context.EnableConcurrentExecution();
+        protected override DiagnosticDescriptor Rule => StringMethodsRuleBuilder.CreateRuleForComparisonMethods(DIAGNOSTIC_ID);
 
-            RegisterAction(Rule, context, "System.String", "Equals");
+        public StringEqualsMethodAnalyzer() 
+            : base("Equals")
+        {
         }
     }
 }

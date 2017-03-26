@@ -1,4 +1,5 @@
 using System.Collections.Immutable;
+using BugHunter.Analyzers.StringAndCultureRules.Analyzers.Helpers;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
 
@@ -8,20 +9,17 @@ namespace BugHunter.Analyzers.StringAndCultureRules.Analyzers
     /// Searches for usages of 'Compare()' static methods called on strings and reports their usage when no overload with StringComparison or CultureInfo argument is used
     /// </summary>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class StringCompareStaticMethodAnalyzer : BaseStringComparisonMethodsAnalyzer
+    public class StringCompareStaticMethodAnalyzer : BaseStringMethodsAnalyzer
     {
         public const string DIAGNOSTIC_ID = DiagnosticIds.STRING_COMPARE_STATIC_METHOD;
 
-        private static readonly DiagnosticDescriptor Rule = CreateRule(DIAGNOSTIC_ID);
-
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
 
-        public override void Initialize(AnalysisContext context)
+        protected override DiagnosticDescriptor Rule => StringMethodsRuleBuilder.CreateRuleForComparisonMethods(DIAGNOSTIC_ID);
+        
+        public StringCompareStaticMethodAnalyzer() 
+            : base("Compare")
         {
-            context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.None);
-            context.EnableConcurrentExecution();
-
-            RegisterAction(Rule, context, "System.String", "Compare");
         }
     }
 }

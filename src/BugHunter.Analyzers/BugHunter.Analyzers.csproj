@@ -57,6 +57,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CmsApiGuidelinesResources.resx</DependentUpon>
     </Compile>
+    <Compile Include="StringAndCultureRules\Analyzers\Helpers\BaseStringMethodsAnalyzer.cs" />
+    <Compile Include="StringAndCultureRules\Analyzers\Helpers\StringMethodsRuleBuilder.cs" />
     <Compile Include="StringAndCultureRules\StringMethodsResources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -73,7 +75,6 @@
     <Compile Include="CmsBaseClassesRules\Analyzers\ModuleRegistrationAnalyzer.cs" />
     <Compile Include="CmsApiReplacementRules\Analyzers\PageIsCallbackAnalyzer.cs" />
     <Compile Include="CmsBaseClassesRules\CodeFixes\ModuleRegistrationCodeFixProvider.cs" />
-    <Compile Include="StringAndCultureRules\Analyzers\BaseStringComparisonMethodsAnalyzer.cs" />
     <Compile Include="StringAndCultureRules\Analyzers\StringCompareToMethodAnalyzer.cs" />
     <Compile Include="StringAndCultureRules\Analyzers\StringStartAndEndsWithMethodsAnalyzer.cs" />
     <Compile Include="StringAndCultureRules\Analyzers\StringCompareStaticMethodAnalyzer.cs" />

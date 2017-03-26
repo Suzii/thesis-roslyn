@@ -1,4 +1,5 @@
 using System.Collections.Immutable;
+using BugHunter.Analyzers.StringAndCultureRules.Analyzers.Helpers;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
@@ -9,26 +10,22 @@ namespace BugHunter.Analyzers.StringAndCultureRules.Analyzers
     /// Searches for usages of 'IndexOf()' and 'LastIndexOf()' etc. methods called on strings and reports their usage when no overload with StringComparison argument is used
     /// </summary>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class StringIndexOfMethodsAnalyzer : BaseStringComparisonMethodsAnalyzer
+    public class StringIndexOfMethodsAnalyzer : BaseStringMethodsAnalyzer
     {
         public const string DIAGNOSTIC_ID = DiagnosticIds.STRING_INDEX_OF_METHODS;
         
-        private static readonly DiagnosticDescriptor Rule = CreateRule(DIAGNOSTIC_ID);
-
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
 
-        public override void Initialize(AnalysisContext context)
-        {
-            context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.None);
-            context.EnableConcurrentExecution();
+        protected override DiagnosticDescriptor Rule => StringMethodsRuleBuilder.CreateRuleForComparisonMethods(DIAGNOSTIC_ID);
 
-            RegisterAction(Rule, context, "System.String", "IndexOf", "LastIndexOf");
+        public StringIndexOfMethodsAnalyzer()
+            : base("IndexOf", "LastIndexOf")
+        {
         }
 
-        protected override bool CheckPostConditions(SyntaxNodeAnalysisContext context, InvocationExpressionSyntax invocationExpression, IMethodSymbol methodSymbol)
+        protected override bool IsForbiddenOverload(SyntaxNodeAnalysisContext context, InvocationExpressionSyntax invocationExpression, IMethodSymbol methodSymbol)
         {
-
-            return base.CheckPostConditions(context, invocationExpression, methodSymbol) && !IsFirstArgumentChar(context, invocationExpression, methodSymbol);
+            return base.IsForbiddenOverload(context, invocationExpression, methodSymbol) && !IsFirstArgumentChar(context, invocationExpression, methodSymbol);
         }
 
         private static bool IsFirstArgumentChar(SyntaxNodeAnalysisContext context, InvocationExpressionSyntax invocationExpression, IMethodSymbol methodSymbol)
@@ -54,5 +51,7 @@ namespace BugHunter.Analyzers.StringAndCultureRules.Analyzers
 
             return firstArgumentType?.SpecialType == SpecialType.System_Char;
         }
+
+        
     }
 }
