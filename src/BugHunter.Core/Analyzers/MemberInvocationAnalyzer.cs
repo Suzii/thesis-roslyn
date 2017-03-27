@@ -45,23 +45,14 @@ namespace BugHunter.Core.Analyzers
                 return;
             }
 
-            var diagnostic = CreateDiagnostic(invocation);
+            var diagnostic = Formatter.CreateDiagnostic(Config.Rule, invocation);
             context.ReportDiagnostic(diagnostic);
         }
 
         protected virtual bool IsOnForbiddenPath(string filePath) => true;
 
         protected virtual bool IsForbiddenUsage(InvocationExpressionSyntax invocation, IMethodSymbol methodSymbol) => true;
-
-        protected virtual Diagnostic CreateDiagnostic(InvocationExpressionSyntax invocation)
-        {
-            var location = Formatter.GetLocation(invocation);
-            var diagnosedUsage = Formatter.GetDiagnosedUsage(invocation);
-            var diagnostic = Diagnostic.Create(Config.Rule, location, diagnosedUsage);
-
-            return diagnostic;
-        }
-
+        
         private bool CanBeSkippedBasedOnSyntaxOnly(InvocationExpressionSyntax invocationExpression)
         {
             SimpleNameSyntax methodNameNode;

@@ -34,7 +34,7 @@ namespace BugHunter.Core.Analyzers
                 return;
             }
 
-            var diagnostic = CreateDiagnostic(conditionalAccess);
+            var diagnostic = Formatter.CreateDiagnostic(Config.Rule, conditionalAccess);
             context.ReportDiagnostic(diagnostic);
         }
 
@@ -50,15 +50,6 @@ namespace BugHunter.Core.Analyzers
             var actualTargetType = context.SemanticModel.GetTypeInfo(conditionalAccess.Expression).Type as INamedTypeSymbol;
 
             return actualTargetType != null && Config.ForbiddenTypes.Any(forbidenType => actualTargetType.IsDerivedFrom(forbidenType, context.Compilation));
-        }
-
-        protected Diagnostic CreateDiagnostic(ConditionalAccessExpressionSyntax conditionalAccess)
-        {
-            var location = Formatter.GetLocation(conditionalAccess);
-            var diagnosedUsage = Formatter.GetDiagnosedUsage(conditionalAccess);
-            var diagnostic = Diagnostic.Create(Config.Rule, location, diagnosedUsage);
-            
-            return diagnostic;
         }
     }
 }

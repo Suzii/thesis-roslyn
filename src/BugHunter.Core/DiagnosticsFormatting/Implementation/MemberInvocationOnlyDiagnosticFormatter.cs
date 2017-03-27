@@ -59,6 +59,6 @@ namespace BugHunter.Core.DiagnosticsFormatting.Implementation
         }
 
         private string GetDiagnosedUsage(InvocationExpressionSyntax syntaxNode, SimpleNameSyntax methodNameNode)
-            => $"{methodNameNode.Identifier.ValueText}${syntaxNode.ArgumentList}";
+            => $"{methodNameNode.Identifier.ValueText}{syntaxNode.ArgumentList}";
     }
 }

@@ -103,10 +103,7 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.Analyzers
                 ? rootOfDottedExpression.Parent
                 : rootOfDottedExpression;
 
-            var usedAs = DiagnosticFormatter.GetDiagnosedUsage(diagnosedNode);
-            var location = DiagnosticFormatter.GetLocation(diagnosedNode);
-
-            return Diagnostic.Create(rule, location, usedAs);
+            return DiagnosticFormatter.CreateDiagnostic(rule, diagnosedNode);
         }
 
         // TODO add unit tests

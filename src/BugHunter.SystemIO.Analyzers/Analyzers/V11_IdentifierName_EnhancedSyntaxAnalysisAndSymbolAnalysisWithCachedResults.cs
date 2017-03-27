@@ -89,11 +89,8 @@ namespace BugHunter.SystemIO.Analyzers.Analyzers
             var diagnosedNode = rootOfDottedExpression.Parent.IsKind(SyntaxKind.ObjectCreationExpression)
                 ? rootOfDottedExpression.Parent
                 : rootOfDottedExpression;
-
-            var usedAs = DiagnosticFormatter.GetDiagnosedUsage(diagnosedNode);
-            var location = DiagnosticFormatter.GetLocation(diagnosedNode);
-
-            return Diagnostic.Create(rule, location, usedAs);
+            
+            return DiagnosticFormatter.CreateDiagnostic(rule, diagnosedNode);
         }
 
         // TODO add unit tests

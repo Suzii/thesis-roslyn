@@ -49,7 +49,7 @@ namespace BugHunter.Analyzers.StringAndCultureRules.Analyzers.Helpers
                 return;
             }
 
-            var diagnostic = CreateDiagnostic(invocationExpression);
+            var diagnostic = diagnosticFormatter.CreateDiagnostic(Rule, invocationExpression);
             context.ReportDiagnostic(diagnostic);
         }
 
@@ -82,13 +82,5 @@ namespace BugHunter.Analyzers.StringAndCultureRules.Analyzers.Helpers
 
         private bool IsCultureInfo(IParameterSymbol parameter)
             => parameter.Type.ToDisplayString() == "System.Globalization.CultureInfo";
-
-        protected virtual Diagnostic CreateDiagnostic(InvocationExpressionSyntax syntaxNode)
-        {
-            var usedAs = diagnosticFormatter.GetDiagnosedUsage(syntaxNode);
-            var location = diagnosticFormatter.GetLocation(syntaxNode);
-
-            return Diagnostic.Create(Rule, location, usedAs);
-        }
     }
 }
