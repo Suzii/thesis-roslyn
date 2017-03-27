@@ -5,32 +5,53 @@ using Microsoft.CodeAnalysis.Text;
 
 namespace BugHunter.Core.DiagnosticsFormatting.Implementation
 {
-    internal class ConditionalAccessDiagnosticFormatter : IDiagnosticFormatter<ConditionalAccessExpressionSyntax>
+    internal class ConditionalAccessDiagnosticFormatter : DefaultDiagnosticFormatter<ConditionalAccessExpressionSyntax>
     {
-        public Location GetLocation(ConditionalAccessExpressionSyntax expression)
+        public override Diagnostic CreateDiagnostic(DiagnosticDescriptor descriptor, ConditionalAccessExpressionSyntax syntaxNode)
         {
-            var firstMemberBindingExpressionOnTheRightOfTheDot = expression?.GetFirstMemberBindingExpression();
+            var firstMemberBinding = syntaxNode?.GetFirstMemberBindingExpression();
+            if (firstMemberBinding == null)
+            {
+                return Diagnostic.Create(descriptor, Location.None);
+            }
+
+            var location = GetLocation(syntaxNode, firstMemberBinding);
+            var diagnosedUsage = GetDiagnosedUsage(syntaxNode, firstMemberBinding);
+            return Diagnostic.Create(descriptor, location, diagnosedUsage);
+        }
+
+        public override Location GetLocation(ConditionalAccessExpressionSyntax syntaxNode)
+        {
+            var firstMemberBindingExpressionOnTheRightOfTheDot = syntaxNode?.GetFirstMemberBindingExpression();
             if (firstMemberBindingExpressionOnTheRightOfTheDot == null)
             {
                 return Location.None;
             }
-
-            var sourceSpanEnd = firstMemberBindingExpressionOnTheRightOfTheDot.GetLocation().SourceSpan.End;
-            var sourceSpanStart = expression.GetLocation().SourceSpan.Start;
-            var location = Location.Create(expression.SyntaxTree, TextSpan.FromBounds(sourceSpanStart, sourceSpanEnd));
+            
+            var location = GetLocation(syntaxNode, firstMemberBindingExpressionOnTheRightOfTheDot);
 
             return location;
         }
 
-        public string GetDiagnosedUsage(ConditionalAccessExpressionSyntax expression)
+        public override string GetDiagnosedUsage(ConditionalAccessExpressionSyntax syntaxNode)
         {
-            var firstMemberBindingExpressionOnTheRightOfTheDot = expression?.GetFirstMemberBindingExpression();
-            if (firstMemberBindingExpressionOnTheRightOfTheDot == null)
-            {
-                return string.Empty;
-            }
+            var firstMemberBinding = syntaxNode?.GetFirstMemberBindingExpression();
 
-            return $"{expression.Expression}{expression.OperatorToken}{firstMemberBindingExpressionOnTheRightOfTheDot.OperatorToken}{firstMemberBindingExpressionOnTheRightOfTheDot.Name}";
+            return firstMemberBinding == null 
+                ? string.Empty 
+                : GetDiagnosedUsage(syntaxNode, firstMemberBinding);
         }
+
+        private Location GetLocation(ConditionalAccessExpressionSyntax conditionalAccessExpression, MemberBindingExpressionSyntax firstMemberBindingExpression)
+        {
+            var sourceSpanEnd = firstMemberBindingExpression.GetLocation().SourceSpan.End;
+            var sourceSpanStart = conditionalAccessExpression.GetLocation().SourceSpan.Start;
+            var location = Location.Create(conditionalAccessExpression.SyntaxTree, TextSpan.FromBounds(sourceSpanStart, sourceSpanEnd));
+
+            return location;
+        }
+
+        private string GetDiagnosedUsage(ConditionalAccessExpressionSyntax syntaxNode, MemberBindingExpressionSyntax firstMemberBinding)
+            => $"{syntaxNode.Expression}{syntaxNode.OperatorToken}{firstMemberBinding.OperatorToken}{firstMemberBinding.Name}";
     }
 }

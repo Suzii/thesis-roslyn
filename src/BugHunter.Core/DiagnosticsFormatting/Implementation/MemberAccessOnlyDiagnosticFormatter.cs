@@ -3,16 +3,12 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace BugHunter.Core.DiagnosticsFormatting.Implementation
 {
-    internal class MemberAccessOnlyDiagnosticFormatter : IDiagnosticFormatter<MemberAccessExpressionSyntax>
+    internal class MemberAccessOnlyDiagnosticFormatter : DefaultDiagnosticFormatter<MemberAccessExpressionSyntax>
     {
-        public Location GetLocation(MemberAccessExpressionSyntax memberAccess)
-        {
-            return memberAccess?.Name?.GetLocation();
-        }
+        public override Location GetLocation(MemberAccessExpressionSyntax syntaxNode)
+            => syntaxNode?.Name?.GetLocation();
 
-        public string GetDiagnosedUsage(MemberAccessExpressionSyntax memberAccess)
-        {
-            return memberAccess?.Name?.Identifier.ValueText;
-        }
+        public override string GetDiagnosedUsage(MemberAccessExpressionSyntax syntaxNode)
+            => syntaxNode?.Name?.Identifier.ValueText;
     }
 }

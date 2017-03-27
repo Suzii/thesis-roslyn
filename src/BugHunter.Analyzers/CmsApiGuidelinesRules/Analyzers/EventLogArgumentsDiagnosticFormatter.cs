@@ -1,21 +1,16 @@
 ﻿using BugHunter.Core.DiagnosticsFormatting;
+using BugHunter.Core.DiagnosticsFormatting.Implementation;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace BugHunter.Analyzers.CmsApiGuidelinesRules.Analyzers
 {
-    internal class EventLogArgumentsDiagnosticFormatter : IDiagnosticFormatter<InvocationExpressionSyntax>
+    internal class EventLogArgumentsDiagnosticFormatter : DefaultDiagnosticFormatter<InvocationExpressionSyntax>
     {
-        public Location GetLocation(InvocationExpressionSyntax expression)
-        {
-            var invocationExpression = expression as InvocationExpressionSyntax;
-            return invocationExpression?.ArgumentList.Arguments.First().GetLocation();
-        }
+        public override Location GetLocation(InvocationExpressionSyntax invocationExpression)
+            => invocationExpression?.ArgumentList.Arguments.First().GetLocation();
 
-        public string GetDiagnosedUsage(InvocationExpressionSyntax expression)
-        {
-            var invocationExpression = expression as InvocationExpressionSyntax;
-            return invocationExpression?.ArgumentList.Arguments.First().ToString();
-        }
+        public override string GetDiagnosedUsage(InvocationExpressionSyntax invocationExpression)
+            => invocationExpression?.ArgumentList.Arguments.First().ToString();
     }
 }

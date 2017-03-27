@@ -7,7 +7,7 @@ namespace BugHunter.Core.DiagnosticsFormatting
     public static class DiagnosticFormatterFactory
     {
         public static IDiagnosticFormatter<SyntaxNode> CreateDefaultFormatter()
-            => new DefaultDiagnosticFormatter();
+            => new DefaultDiagnosticFormatter<SyntaxNode>();
 
         public static IDiagnosticFormatter<MemberAccessExpressionSyntax> CreateMemberAccessFormatter()
             =>new MemberAccessDiagnosticFormatter();

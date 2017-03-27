@@ -2,16 +2,16 @@ using Microsoft.CodeAnalysis;
 
 namespace BugHunter.Core.DiagnosticsFormatting.Implementation
 {
-    internal class DefaultDiagnosticFormatter : IDiagnosticFormatter<SyntaxNode>
+    public class DefaultDiagnosticFormatter<TSyntaxNode> : IDiagnosticFormatter<TSyntaxNode>
+        where TSyntaxNode: SyntaxNode
     {
-        public Location GetLocation(SyntaxNode expression)
-        {
-            return expression.GetLocation();
-        }
+        public virtual Diagnostic CreateDiagnostic(DiagnosticDescriptor descriptor, TSyntaxNode syntaxNode)
+            => Diagnostic.Create(descriptor, GetLocation(syntaxNode), GetDiagnosedUsage(syntaxNode));
 
-        public string GetDiagnosedUsage(SyntaxNode expression)
-        {
-            return expression.ToString();
-        }
+        public virtual Location GetLocation(TSyntaxNode syntaxNode)
+            => syntaxNode?.GetLocation();
+
+        public virtual string GetDiagnosedUsage(TSyntaxNode syntaxNode)
+            => syntaxNode?.ToString() ?? string.Empty;
     }
 }

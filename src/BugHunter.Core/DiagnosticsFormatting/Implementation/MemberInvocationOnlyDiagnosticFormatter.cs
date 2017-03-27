@@ -5,41 +5,60 @@ using Microsoft.CodeAnalysis.Text;
 
 namespace BugHunter.Core.DiagnosticsFormatting.Implementation
 {
-    internal class MemberInvocationOnlyDiagnosticFormatter : IDiagnosticFormatter<InvocationExpressionSyntax>
+    internal class MemberInvocationOnlyDiagnosticFormatter : DefaultDiagnosticFormatter<InvocationExpressionSyntax>
     {
+        public override Diagnostic CreateDiagnostic(DiagnosticDescriptor descriptor, InvocationExpressionSyntax syntaxNode)
+        {
+            SimpleNameSyntax methodNameNode;
+            if (!syntaxNode.TryGetMethodNameNode(out methodNameNode))
+            {
+                return Diagnostic.Create(descriptor, Location.None);
+            }
+
+            return Diagnostic.Create(descriptor, GetLocation(syntaxNode, methodNameNode), GetDiagnosedUsage(syntaxNode, methodNameNode));
+        }
+
         /// <summary>
-        /// Returns location of method invocation only. 
+        /// Returns location of method syntaxNode only. 
         /// 
         /// E.g. if Invocation like 'condition.Or().WhereLike("col", "val")' is passed,
         /// location of 'WhereLike("col", "val")' is returned.
-        /// Throws if <param name="invocationExpression"></param> cannot be casted to <see cref="MemberAccessExpressionSyntax"/>
+        /// Throws if <param name="syntaxNode"></param> cannot be casted to <see cref="MemberAccessExpressionSyntax"/>
         /// </summary>
-        /// <param name="invocationExpression">Invocation expression</param>
-        /// <returns>Location of nested method invocation</returns>
-        public Location GetLocation(InvocationExpressionSyntax invocationExpression)
+        /// <param name="syntaxNode">Invocation syntaxNode</param>
+        /// <returns>Location of nested method syntaxNode</returns>
+        public override Location GetLocation(InvocationExpressionSyntax syntaxNode)
         {
             SimpleNameSyntax methodNameNode;
-            if (!invocationExpression.TryGetMethodNameNode(out methodNameNode))
+            if (!syntaxNode.TryGetMethodNameNode(out methodNameNode))
             {
                 return Location.None;
             }
 
+            return GetLocation(syntaxNode, methodNameNode);
+        }
+
+        public override string GetDiagnosedUsage(InvocationExpressionSyntax syntaxNode)
+        {
+            SimpleNameSyntax methodNameNode;
+            if (!syntaxNode.TryGetMethodNameNode(out methodNameNode))
+            {
+                return syntaxNode.ToString();
+            }
+
+            return GetDiagnosedUsage(syntaxNode, methodNameNode);
+        }
+
+        private Location GetLocation(InvocationExpressionSyntax syntaxNode, SimpleNameSyntax methodNameNode)
+        {
             var statLocation = methodNameNode.GetLocation().SourceSpan.Start;
-            var endLocation = invocationExpression.GetLocation().SourceSpan.End;
-            var location = Location.Create(invocationExpression.SyntaxTree, TextSpan.FromBounds(statLocation, endLocation));
+            var endLocation = syntaxNode.GetLocation().SourceSpan.End;
+            var location = Location.Create(syntaxNode.SyntaxTree, TextSpan.FromBounds(statLocation, endLocation));
 
             return location;
         }
 
-        public string GetDiagnosedUsage(InvocationExpressionSyntax invocationExpression)
-        {
-            SimpleNameSyntax methodNameNode;
-            if (!invocationExpression.TryGetMethodNameNode(out methodNameNode))
-            {
-                return invocationExpression.ToString();
-            }
-
-            return $"{methodNameNode.Identifier.ValueText}{invocationExpression.ArgumentList}";
-        }
+        private string GetDiagnosedUsage(InvocationExpressionSyntax syntaxNode, SimpleNameSyntax methodNameNode)
+            => $"{methodNameNode.Identifier.ValueText}${syntaxNode.ArgumentList}";
     }
 }
