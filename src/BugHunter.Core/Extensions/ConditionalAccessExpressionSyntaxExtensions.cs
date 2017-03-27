@@ -14,6 +14,8 @@ namespace BugHunter.Core.Extensions
                 .OfType<MemberBindingExpressionSyntax>()
                 .FirstOrDefault();
 
+
+
             return firstMemberBindingExpressionOnTheRightOfTheDot;
         }
     }

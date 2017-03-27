@@ -28,19 +28,19 @@ namespace BugHunter.Core.Analyzers
                 return;
             }
 
-            var invocation = (InvocationExpressionSyntax)context.Node;
-            if (invocation == null)
+            var invocation = (InvocationExpressionSyntax) context.Node;
+            if (invocation == null || CanBeSkippedBasedOnSyntaxOnly(invocation))
             {
                 return;
             }
 
-            IMethodSymbol methodSymbol;
-            if (!IsForbiddenMethodOnForbiddenType(context, invocation, out methodSymbol))
+            var invokedMethodSymbol = context.SemanticModel.GetSymbolInfo(invocation).Symbol as IMethodSymbol;
+            if (invokedMethodSymbol == null || !IsForbiddenMethodOnForbiddenType(invocation, invokedMethodSymbol, context.Compilation))
             {
                 return;
             }
 
-            if (!IsForbiddenUsage(invocation, methodSymbol))
+            if (!IsForbiddenUsage(invocation, invokedMethodSymbol))
             {
                 return;
             }
@@ -50,47 +50,6 @@ namespace BugHunter.Core.Analyzers
         }
 
         protected virtual bool IsOnForbiddenPath(string filePath) => true;
-
-        protected bool IsForbiddenMethodOnForbiddenType(SyntaxNodeAnalysisContext context, InvocationExpressionSyntax invocation, out IMethodSymbol methodSymbol)
-        {
-            if (CanBeSkippedBasedOnSyntaxOnly(invocation))
-            {
-                methodSymbol = null;
-                return false;
-            }
-            
-            var invokedMethodSymbol = context.SemanticModel.GetSymbolInfo(invocation).Symbol as IMethodSymbol;
-            methodSymbol = invokedMethodSymbol;
-            if (invokedMethodSymbol == null)
-            {
-                return false;
-            }
-
-            if (!Config.ForbiddenMembers.Contains(invokedMethodSymbol.Name))
-            {
-                return false;
-            }
-
-            var receiverTypeSymbol = invokedMethodSymbol.ReceiverType as INamedTypeSymbol;
-            if (receiverTypeSymbol == null || 
-                Config.ForbiddenTypes.All(forbiddenType => !receiverTypeSymbol.IsDerivedFrom(forbiddenType, context.Compilation)))
-            {
-                return false;
-            }
-
-            return true;
-        }
-
-        private bool CanBeSkippedBasedOnSyntaxOnly(InvocationExpressionSyntax invocationExpression)
-        {
-            SimpleNameSyntax methodNameNode;
-            if (!invocationExpression.TryGetMethodNameNode(out methodNameNode))
-            {
-                return false;
-            }
-
-            return !Config.ForbiddenMembers.Contains(methodNameNode.Identifier.ValueText);
-        }
 
         protected virtual bool IsForbiddenUsage(InvocationExpressionSyntax invocation, IMethodSymbol methodSymbol) => true;
 
@@ -102,5 +61,33 @@ namespace BugHunter.Core.Analyzers
 
             return diagnostic;
         }
+
+        private bool CanBeSkippedBasedOnSyntaxOnly(InvocationExpressionSyntax invocationExpression)
+        {
+            SimpleNameSyntax methodNameNode;
+            if (!invocationExpression.TryGetMethodNameNode(out methodNameNode))
+            {
+                return false;
+            }
+
+            return !IsForbiddenMethod(methodNameNode.Identifier.ValueText);
+        }
+
+        private bool IsForbiddenMethodOnForbiddenType(InvocationExpressionSyntax invocation, IMethodSymbol invokedMethodSymbol, Compilation compilation)
+        {
+            if (!IsForbiddenMethod(invokedMethodSymbol.Name))
+            {
+                return false;
+            }
+
+            var receiverTypeSymbol = invokedMethodSymbol.ReceiverType as INamedTypeSymbol;
+            return receiverTypeSymbol != null && IsForbiddenType(receiverTypeSymbol, compilation);
+        }
+
+        private bool IsForbiddenMethod(string methodName)
+            => Config.ForbiddenMembers.Contains(methodName);
+
+        private bool IsForbiddenType(INamedTypeSymbol receiverTypeSymbol, Compilation compilation)
+            => Config.ForbiddenTypes.Any(forbiddenType => receiverTypeSymbol.IsDerivedFrom(forbiddenType, compilation));
     }
 }

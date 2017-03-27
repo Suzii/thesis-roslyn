@@ -22,6 +22,5 @@ namespace BugHunter.Analyzers.StringAndCultureRules.Analyzers.Helpers
             defaultSeverity: DiagnosticSeverity.Warning,
             isEnabledByDefault: true,
             description: new LocalizableResourceString(nameof(StringMethodsResources.StringManipulationMethods_Description), StringMethodsResources.ResourceManager, typeof(StringMethodsResources)));
-
     }
 }

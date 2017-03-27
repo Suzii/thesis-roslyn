@@ -18,6 +18,7 @@ namespace BugHunter.Analyzers.StringAndCultureRules.Analyzers
 
         protected override DiagnosticDescriptor Rule => StringMethodsRuleBuilder.CreateRuleForManipulationMethods(DIAGNOSTIC_ID);
         
+        // CMS solution contains overload that has one argument of type CultureInfo
         protected override bool IsForbiddenOverload(SyntaxNodeAnalysisContext context, InvocationExpressionSyntax invocationExpression, IMethodSymbol methodSymbol)
         {
             // If method is already called with StringComparison argument, no need for diagnostic

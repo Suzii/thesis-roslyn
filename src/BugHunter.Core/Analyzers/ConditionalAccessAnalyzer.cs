@@ -41,6 +41,7 @@ namespace BugHunter.Core.Analyzers
         protected bool IsForbiddenUsage(SyntaxNodeAnalysisContext context, ConditionalAccessExpressionSyntax conditionalAccess)
         {
             var whereNotNull = conditionalAccess.WhenNotNull.ToString();
+            // TODO what if usage is just prefix of forbidden member name
             if (Config.ForbiddenMembers.All(forbiddenMember => !whereNotNull.StartsWith("."+forbiddenMember, StringComparison.Ordinal)))
             {
                 return false;

@@ -16,19 +16,21 @@ namespace BugHunter.Core.Extensions
         /// <returns>True if name of the invoked method was found</returns>
         public static bool TryGetMethodNameNode(this InvocationExpressionSyntax invocationExpression, out SimpleNameSyntax methodNameNode)
         {
-            var expressionKind = invocationExpression?.Expression?.Kind();
+            var expression = invocationExpression?.Expression;
+            var expressionKind = expression?.Kind();
+
             switch (expressionKind)
             {
                 case SyntaxKind.SimpleMemberAccessExpression:
-                    var memberAccess = (MemberAccessExpressionSyntax)invocationExpression.Expression;
+                    var memberAccess = (MemberAccessExpressionSyntax)expression;
                     methodNameNode = memberAccess.Name;
                     break;
                 case SyntaxKind.MemberBindingExpression:
-                    var memberBinding = (MemberBindingExpressionSyntax)invocationExpression.Expression;
+                    var memberBinding = (MemberBindingExpressionSyntax)expression;
                     methodNameNode = memberBinding.Name;
                     break;
                 case SyntaxKind.IdentifierName:
-                    methodNameNode = (IdentifierNameSyntax)invocationExpression.Expression;
+                    methodNameNode = (IdentifierNameSyntax)expression;
                     break;
                 default:
                     methodNameNode = null;
@@ -72,7 +74,7 @@ namespace BugHunter.Core.Extensions
             }
 
             var argumentsToBeAdded = newArguments.Select(a => SyntaxFactory.Argument(SyntaxFactory.ParseExpression(a)));
-            
+
             return invocation.AppendArguments(argumentsToBeAdded.ToArray());
         }
     }

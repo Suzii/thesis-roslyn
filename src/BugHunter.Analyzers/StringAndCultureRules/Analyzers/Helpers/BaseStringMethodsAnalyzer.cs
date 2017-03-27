@@ -33,13 +33,18 @@ namespace BugHunter.Analyzers.StringAndCultureRules.Analyzers.Helpers
         protected void Analyze(SyntaxNodeAnalysisContext context)
         {
             var invocationExpression = (InvocationExpressionSyntax)context.Node;
-            IMethodSymbol methodSymbol;
-            if (!IsForbiddenStringMethod(context, invocationExpression, out methodSymbol))
+            if (invocationExpression == null || CanBeSkippedBasedOnSyntaxOnly(invocationExpression))
+            {
+                return;
+            }
+            
+            var invokedMethodSymbol = context.SemanticModel.GetSymbolInfo(invocationExpression).Symbol as IMethodSymbol;
+            if (invokedMethodSymbol == null || !IsForbiddenStringMethod(context, invocationExpression, invokedMethodSymbol))
             {
                 return;
             }
 
-            if (!IsForbiddenOverload(context, invocationExpression, methodSymbol))
+            if (!IsForbiddenOverload(context, invocationExpression, invokedMethodSymbol))
             {
                 return;
             }
@@ -48,19 +53,8 @@ namespace BugHunter.Analyzers.StringAndCultureRules.Analyzers.Helpers
             context.ReportDiagnostic(diagnostic);
         }
 
-        protected bool IsForbiddenStringMethod(SyntaxNodeAnalysisContext context, InvocationExpressionSyntax invocation, out IMethodSymbol methodSymbol)
-        {
-            methodSymbol = null;
-            if (CanBeSkippedBasedOnSyntaxOnly(invocation))
-            {
-                return false;
-            }
-
-            var invokedMethodSymbol = context.SemanticModel.GetSymbolInfo(invocation).Symbol as IMethodSymbol;
-            methodSymbol = invokedMethodSymbol;
-
-            return IsInvokedOnString(invokedMethodSymbol) && IsForbiddenMethodName(invokedMethodSymbol?.Name);
-        }
+        protected bool IsForbiddenStringMethod(SyntaxNodeAnalysisContext context, InvocationExpressionSyntax invocation, IMethodSymbol invokedMethodSymbol)
+            => IsInvokedOnString(invokedMethodSymbol) && IsForbiddenMethodName(invokedMethodSymbol?.Name);
         
         // If method is already called with StringComparison argument, no need for diagnostic
         protected virtual bool IsForbiddenOverload(SyntaxNodeAnalysisContext context, InvocationExpressionSyntax invocationExpression, IMethodSymbol methodSymbol)
