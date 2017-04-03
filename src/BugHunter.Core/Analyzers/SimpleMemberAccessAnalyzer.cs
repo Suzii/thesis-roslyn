@@ -12,9 +12,9 @@ namespace BugHunter.Core.Analyzers
     public class SimpleMemberAccessAnalyzer : ISyntaxNodeAnalyzer
     {
         protected readonly ApiReplacementConfig Config;
-        protected readonly IDiagnosticFormatter<MemberAccessExpressionSyntax> Formatter;
+        protected readonly ISyntaxNodeDiagnosticFormatter<MemberAccessExpressionSyntax> Formatter;
         
-        public SimpleMemberAccessAnalyzer(ApiReplacementConfig config, IDiagnosticFormatter<MemberAccessExpressionSyntax> formatter)
+        public SimpleMemberAccessAnalyzer(ApiReplacementConfig config, ISyntaxNodeDiagnosticFormatter<MemberAccessExpressionSyntax> formatter)
         {
             Config = config;
             Formatter = formatter;

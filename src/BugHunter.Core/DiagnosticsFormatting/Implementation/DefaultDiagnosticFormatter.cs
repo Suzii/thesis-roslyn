@@ -2,7 +2,7 @@ using Microsoft.CodeAnalysis;
 
 namespace BugHunter.Core.DiagnosticsFormatting.Implementation
 {
-    public class DefaultDiagnosticFormatter<TSyntaxNode> : IDiagnosticFormatter<TSyntaxNode>
+    public class DefaultDiagnosticFormatter<TSyntaxNode> : ISyntaxNodeDiagnosticFormatter<TSyntaxNode>
         where TSyntaxNode: SyntaxNode
     {
         public virtual Diagnostic CreateDiagnostic(DiagnosticDescriptor descriptor, TSyntaxNode syntaxNode)

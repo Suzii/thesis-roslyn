@@ -1,5 +1,4 @@
-﻿using BugHunter.Core.DiagnosticsFormatting;
-using BugHunter.Core.DiagnosticsFormatting.Implementation;
+﻿using BugHunter.Core.DiagnosticsFormatting.Implementation;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 

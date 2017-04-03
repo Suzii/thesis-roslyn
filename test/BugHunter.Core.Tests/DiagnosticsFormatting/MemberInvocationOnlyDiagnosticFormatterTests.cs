@@ -13,7 +13,7 @@ namespace BugHunter.Core.Tests.DiagnosticsFormatting
     [TestFixture]
     public class MemberInvocationOnlyDiagnosticFormatterTests
     {
-        private IDiagnosticFormatter<InvocationExpressionSyntax> _diagnosticFormatter;
+        private ISyntaxNodeDiagnosticFormatter<InvocationExpressionSyntax> _diagnosticFormatter;
         private readonly DiagnosticDescriptor _rule = new DiagnosticDescriptor("FakeID", "Title", "{0}", "Category", DiagnosticSeverity.Warning, true);
 
         [SetUp]

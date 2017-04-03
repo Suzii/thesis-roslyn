@@ -13,9 +13,9 @@ namespace BugHunter.Core.Analyzers
     public class ConditionalAccessAnalyzer : ISyntaxNodeAnalyzer
     {
         protected readonly ApiReplacementConfig Config;
-        protected readonly IDiagnosticFormatter<ConditionalAccessExpressionSyntax> Formatter;
+        protected readonly ISyntaxNodeDiagnosticFormatter<ConditionalAccessExpressionSyntax> Formatter;
         
-        public ConditionalAccessAnalyzer(ApiReplacementConfig config, IDiagnosticFormatter<ConditionalAccessExpressionSyntax> formatter)
+        public ConditionalAccessAnalyzer(ApiReplacementConfig config, ISyntaxNodeDiagnosticFormatter<ConditionalAccessExpressionSyntax> formatter)
         {
             Config = config;
             Formatter = formatter;

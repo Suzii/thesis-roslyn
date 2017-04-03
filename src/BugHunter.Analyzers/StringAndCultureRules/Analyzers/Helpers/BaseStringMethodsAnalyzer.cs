@@ -15,7 +15,7 @@ namespace BugHunter.Analyzers.StringAndCultureRules.Analyzers.Helpers
 
         private readonly string[] _forbiddenMethods;
 
-        private static readonly IDiagnosticFormatter<InvocationExpressionSyntax> diagnosticFormatter = DiagnosticFormatterFactory.CreateMemberInvocationOnlyFormatter();
+        private static readonly ISyntaxNodeDiagnosticFormatter<InvocationExpressionSyntax> diagnosticFormatter = DiagnosticFormatterFactory.CreateMemberInvocationOnlyFormatter();
 
         protected BaseStringMethodsAnalyzer(string forbiddenMethod, params string[] additionalForbiddenMethods)
         {

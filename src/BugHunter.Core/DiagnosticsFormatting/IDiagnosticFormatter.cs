@@ -2,9 +2,17 @@
 
 namespace BugHunter.Core.DiagnosticsFormatting
 {
-    public interface IDiagnosticFormatter<in TSyntaxNode>
+    public interface IDiagnosticFormatter<in TNodeOrSymbol>
+    {
+        Diagnostic CreateDiagnostic(DiagnosticDescriptor descriptor, TNodeOrSymbol nodeOrSymbol);
+    }
+
+    public interface ISyntaxNodeDiagnosticFormatter<in TSyntaxNode> : IDiagnosticFormatter<TSyntaxNode>
         where TSyntaxNode : SyntaxNode
     {
-        Diagnostic CreateDiagnostic(DiagnosticDescriptor descriptor, TSyntaxNode syntaxNode);
+    }
+
+    public interface ISymbolDiagnosticFormatter : IDiagnosticFormatter<ISymbol>
+    {
     }
 }

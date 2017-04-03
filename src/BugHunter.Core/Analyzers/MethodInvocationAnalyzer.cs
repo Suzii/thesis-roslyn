@@ -12,9 +12,9 @@ namespace BugHunter.Core.Analyzers
     public class MethodInvocationAnalyzer : ISyntaxNodeAnalyzer
     {
         protected readonly ApiReplacementConfig Config;
-        protected readonly IDiagnosticFormatter<InvocationExpressionSyntax> Formatter;
+        protected readonly ISyntaxNodeDiagnosticFormatter<InvocationExpressionSyntax> Formatter;
         
-        public MethodInvocationAnalyzer(ApiReplacementConfig config, IDiagnosticFormatter<InvocationExpressionSyntax> formatter)
+        public MethodInvocationAnalyzer(ApiReplacementConfig config, ISyntaxNodeDiagnosticFormatter<InvocationExpressionSyntax> formatter)
         {
             Config = config;
             Formatter = formatter;
