@@ -17,7 +17,8 @@ namespace BugHunter.Core.DiagnosticsFormatting.Implementation
 
             var location = GetLocation(syntaxNode, firstMemberBinding);
             var diagnosedUsage = GetDiagnosedUsage(syntaxNode, firstMemberBinding);
-            return Diagnostic.Create(descriptor, location, diagnosedUsage);
+
+            return Diagnostic.Create(descriptor, location, diagnosedUsage).MarkAsConditionalAccess();
         }
 
         public override Location GetLocation(ConditionalAccessExpressionSyntax syntaxNode)

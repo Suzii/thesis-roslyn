@@ -5,17 +5,23 @@ using Microsoft.CodeAnalysis.Text;
 
 namespace BugHunter.Core.DiagnosticsFormatting.Implementation
 {
-    internal class MemberInvocationOnlyNoArgsDiagnosticFormatter : DefaultDiagnosticFormatter<InvocationExpressionSyntax>
+    internal class MemberInvocationOnlyNoArgsDiagnosticFormatter : MemberInvocationDiagnosticFormatter
     {
         public override Diagnostic CreateDiagnostic(DiagnosticDescriptor descriptor, InvocationExpressionSyntax syntaxNode)
         {
             SimpleNameSyntax methodNameNode;
+            Diagnostic diagnostic;
             if (!syntaxNode.TryGetMethodNameNode(out methodNameNode))
             {
-                return Diagnostic.Create(descriptor, Location.None);
+                diagnostic = Diagnostic.Create(descriptor, Location.None);
+            }
+            else
+            {
+                diagnostic = Diagnostic.Create(descriptor, GetLocation(syntaxNode, methodNameNode),
+                    GetDiagnosedUsage(methodNameNode));
             }
 
-            return Diagnostic.Create(descriptor, GetLocation(syntaxNode, methodNameNode), GetDiagnosedUsage(methodNameNode));
+            return MarkDiagnosticIfNecessary(diagnostic, syntaxNode);
         }
 
         /// <summary>

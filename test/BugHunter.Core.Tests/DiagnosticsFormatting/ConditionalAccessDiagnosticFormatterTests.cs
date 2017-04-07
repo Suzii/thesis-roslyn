@@ -1,5 +1,7 @@
 ﻿using System.Linq;
 using BugHunter.Core.DiagnosticsFormatting;
+using BugHunter.Core.DiagnosticsFormatting.Implementation;
+using BugHunter.Core.Extensions;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -12,22 +14,25 @@ namespace BugHunter.Core.Tests.DiagnosticsFormatting
     public class ConditionalAccessDiagnosticFormatterTests
     {
         private IDiagnosticFormatter<ConditionalAccessExpressionSyntax> _diagnosticFormatter;
+        private readonly DiagnosticDescriptor _rule = new DiagnosticDescriptor("FakeID", "Title", "{0}", "Category", DiagnosticSeverity.Warning, true);
 
         [SetUp]
         public void SetUp()
         {
-            _diagnosticFormatter = DiagnosticFormatterFactory.CreateConditionalAccessFormatter();
+            _diagnosticFormatter = new ConditionalAccessDiagnosticFormatter();
         }
-
+        
         [Test]
         public void SimpleConditionalAccess()
         {
             var conditionalAccess = SyntaxFactory.ParseExpression(@"someObject?.PropA") as ConditionalAccessExpressionSyntax;
 
             var expectedLocation = Location.Create(conditionalAccess?.SyntaxTree, TextSpan.FromBounds(0, 17));
-            
-            Assert.AreEqual("someObject?.PropA", _diagnosticFormatter.GetDiagnosedUsage(conditionalAccess));
-            Assert.AreEqual(expectedLocation, _diagnosticFormatter.GetLocation(conditionalAccess));
+            var diagnostic = _diagnosticFormatter.CreateDiagnostic(_rule, conditionalAccess);
+
+            Assert.AreEqual("someObject?.PropA", diagnostic.GetMessage());
+            Assert.AreEqual(expectedLocation, diagnostic.Location);
+            Assert.IsTrue(diagnostic.IsMarkedAsConditionalAccess());
         }
 
         [Test]
@@ -36,9 +41,11 @@ namespace BugHunter.Core.Tests.DiagnosticsFormatting
             var conditionalAccess = SyntaxFactory.ParseExpression(@"new CMS.DataEngine.WhereCondition().Or()?.SomeProperty") as ConditionalAccessExpressionSyntax; ;
 
             var expectedLocation = Location.Create(conditionalAccess?.SyntaxTree, TextSpan.FromBounds(0, 54));
+            var diagnostic = _diagnosticFormatter.CreateDiagnostic(_rule, conditionalAccess);
 
-            Assert.AreEqual(@"new CMS.DataEngine.WhereCondition().Or()?.SomeProperty", _diagnosticFormatter.GetDiagnosedUsage(conditionalAccess));
-            Assert.AreEqual(expectedLocation, _diagnosticFormatter.GetLocation(conditionalAccess));
+            Assert.AreEqual(@"new CMS.DataEngine.WhereCondition().Or()?.SomeProperty", diagnostic.GetMessage());
+            Assert.AreEqual(expectedLocation, diagnostic.Location);
+            Assert.IsTrue(diagnostic.IsMarkedAsConditionalAccess());
         }
 
         [Test]
@@ -48,20 +55,25 @@ namespace BugHunter.Core.Tests.DiagnosticsFormatting
                 SyntaxFactory.ParseExpression(@"someObject?.SomeProperty.OtherProperty") as ConditionalAccessExpressionSyntax; ;
 
             var expectedLocation = Location.Create(conditionalAccess?.SyntaxTree, TextSpan.FromBounds(0, 24));
+            var diagnostic = _diagnosticFormatter.CreateDiagnostic(_rule, conditionalAccess);
 
-            Assert.AreEqual(@"someObject?.SomeProperty", _diagnosticFormatter.GetDiagnosedUsage(conditionalAccess));
-            Assert.AreEqual(expectedLocation, _diagnosticFormatter.GetLocation(conditionalAccess));
+            Assert.AreEqual(@"someObject?.SomeProperty", diagnostic.GetMessage());
+            Assert.AreEqual(expectedLocation, diagnostic.Location);
+            Assert.IsTrue(diagnostic.IsMarkedAsConditionalAccess());
         }
 
         [Test]
-        public void ConditionalAccessWithPrecidingAndFollowUpMemberAccess()
+        public void ConditionalAccessWithPrecedingAndFollowUpMemberAccess()
         {
             var conditionalAccess =
                 SyntaxFactory.ParseExpression(@"firstObject.someObject?.SomeProperty.OtherProperty") as ConditionalAccessExpressionSyntax; ;
             
             var expectedLocation = Location.Create(conditionalAccess?.SyntaxTree, TextSpan.FromBounds(0, 36));
-            Assert.AreEqual(@"firstObject.someObject?.SomeProperty", _diagnosticFormatter.GetDiagnosedUsage(conditionalAccess));
-            Assert.AreEqual(expectedLocation, _diagnosticFormatter.GetLocation(conditionalAccess));
+            var diagnostic = _diagnosticFormatter.CreateDiagnostic(_rule, conditionalAccess);
+
+            Assert.AreEqual(@"firstObject.someObject?.SomeProperty", diagnostic.GetMessage());
+            Assert.AreEqual(expectedLocation, diagnostic.Location);
+            Assert.IsTrue(diagnostic.IsMarkedAsConditionalAccess());
         }
 
         [TestCase(".OtherProperty")]
@@ -82,9 +94,11 @@ namespace BugHunter.Core.Tests.DiagnosticsFormatting
                 SyntaxFactory.ParseExpression($@"someObject?.SomeProperty{followUpDottedExpression}") as ConditionalAccessExpressionSyntax; ;
 
             var expectedLocation = Location.Create(parentConditionalAccess?.SyntaxTree, TextSpan.FromBounds(0, 24));
+            var diagnostic = _diagnosticFormatter.CreateDiagnostic(_rule, parentConditionalAccess);
 
-            Assert.AreEqual($@"someObject?.SomeProperty", _diagnosticFormatter.GetDiagnosedUsage(parentConditionalAccess));
-            Assert.AreEqual(expectedLocation, _diagnosticFormatter.GetLocation(parentConditionalAccess));
+            Assert.AreEqual(@"someObject?.SomeProperty", diagnostic.GetMessage());
+            Assert.AreEqual(expectedLocation, diagnostic.Location);
+            Assert.IsTrue(diagnostic.IsMarkedAsConditionalAccess());
         }
 
         [TestCase("firstObject?")]
@@ -97,12 +111,14 @@ namespace BugHunter.Core.Tests.DiagnosticsFormatting
             var parentConditionalAccess =
                 SyntaxFactory.ParseExpression($@"{precedingDottedExpression}.someObject?.SomeProperty") as ConditionalAccessExpressionSyntax; ;
 
-            var conditionalAccesss = parentConditionalAccess?.WhenNotNull as ConditionalAccessExpressionSyntax;
+            var conditionalAccess = parentConditionalAccess?.WhenNotNull as ConditionalAccessExpressionSyntax;
 
             var expectedLocation = Location.Create(parentConditionalAccess?.SyntaxTree, TextSpan.FromBounds(0, precedingDottedExpression.Length + 25));
+            var diagnostic = _diagnosticFormatter.CreateDiagnostic(_rule, conditionalAccess);
 
-            Assert.That($@"{precedingDottedExpression}.someObject?.SomeProperty".Contains(_diagnosticFormatter.GetDiagnosedUsage(conditionalAccesss)));
-            AssertLocation.IsWithin(expectedLocation, _diagnosticFormatter.GetLocation(conditionalAccesss));
+            Assert.That($@"{precedingDottedExpression}.someObject?.SomeProperty".Contains(diagnostic.GetMessage()));
+            AssertLocation.IsWithin(expectedLocation, diagnostic.Location);
+            Assert.IsTrue(diagnostic.IsMarkedAsConditionalAccess());
         }
 
         [TestCase("firstObject?.otherObject?")]
@@ -114,12 +130,13 @@ namespace BugHunter.Core.Tests.DiagnosticsFormatting
             var parentConditionalAccess =
                 SyntaxFactory.ParseExpression($@"{precedingDottedExpression}.someObject?.SomeProperty") as ConditionalAccessExpressionSyntax; ;
 
-            var conditionalAccesss = parentConditionalAccess?.DescendantNodesAndSelf().OfType<ConditionalAccessExpressionSyntax>().ElementAt(1);
+            var conditionalAccess = parentConditionalAccess?.DescendantNodesAndSelf().OfType<ConditionalAccessExpressionSyntax>().ElementAt(1);
 
             var expectedLocation = Location.Create(parentConditionalAccess?.SyntaxTree, TextSpan.FromBounds(0, precedingDottedExpression.Length + 24));
-            
-            Assert.That($@"{precedingDottedExpression}.someObject?.SomeProperty".Contains(_diagnosticFormatter.GetDiagnosedUsage(conditionalAccesss)));
-            AssertLocation.IsWithin(expectedLocation, _diagnosticFormatter.GetLocation(conditionalAccesss));
+            var diagnostic = _diagnosticFormatter.CreateDiagnostic(_rule, conditionalAccess);
+
+            Assert.That($@"{precedingDottedExpression}.someObject?.SomeProperty".Contains(diagnostic.GetMessage()));
+            AssertLocation.IsWithin(expectedLocation, diagnostic.Location);
         }
 
         [TestCase("firstObject?")]
@@ -132,11 +149,12 @@ namespace BugHunter.Core.Tests.DiagnosticsFormatting
             var parentConditionalAccess =
                 SyntaxFactory.ParseExpression($@"{precedingDottedExpression}.someObject?.AccessedMethod().Other") as ConditionalAccessExpressionSyntax; ;
 
-            var conditionalAccesss = parentConditionalAccess?.DescendantNodesAndSelf().OfType<ConditionalAccessExpressionSyntax>().ElementAt(1);
+            var conditionalAccess = parentConditionalAccess?.DescendantNodesAndSelf().OfType<ConditionalAccessExpressionSyntax>().ElementAt(1);
             var expectedLocation = Location.Create(parentConditionalAccess?.SyntaxTree, TextSpan.FromBounds(0, precedingDottedExpression.Length + 28));
+            var diagnostic = _diagnosticFormatter.CreateDiagnostic(_rule, conditionalAccess);
 
-            Assert.That($@"{precedingDottedExpression}.someObject?.AccessedMethod".Contains(_diagnosticFormatter.GetDiagnosedUsage(conditionalAccesss)));
-            AssertLocation.IsWithin(expectedLocation, _diagnosticFormatter.GetLocation(conditionalAccesss));
+            Assert.That($@"{precedingDottedExpression}.someObject?.AccessedMethod".Contains(diagnostic.GetMessage()));
+            AssertLocation.IsWithin(expectedLocation, diagnostic.Location);
         }
     }
 }

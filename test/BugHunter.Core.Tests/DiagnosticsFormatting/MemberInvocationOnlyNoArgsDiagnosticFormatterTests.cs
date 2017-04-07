@@ -11,7 +11,7 @@ using NUnit.Framework;
 namespace BugHunter.Core.Tests.DiagnosticsFormatting
 {
     [TestFixture]
-    public class MemberInvocationOnlyDiagnosticFormatterTests
+    public class MemberInvocationOnlyNoArgsDiagnosticFormatterTests
     {
         private IDiagnosticFormatter<InvocationExpressionSyntax> _diagnosticFormatter;
         private readonly DiagnosticDescriptor _rule = new DiagnosticDescriptor("FakeID", "Title", "{0}", "Category", DiagnosticSeverity.Warning, true);
@@ -19,7 +19,7 @@ namespace BugHunter.Core.Tests.DiagnosticsFormatting
         [SetUp]
         public void SetUp()
         {
-            _diagnosticFormatter = new MemberInvocationOnlyDiagnosticFormatter();
+            _diagnosticFormatter = new MemberInvocationOnlyNoArgsDiagnosticFormatter();
         }
 
         [Test]
@@ -46,7 +46,7 @@ namespace BugHunter.Core.Tests.DiagnosticsFormatting
             var diagnostic = _diagnosticFormatter.CreateDiagnostic(_rule, invocation);
 
             Assert.AreEqual(expectedLocation, diagnostic.Location);
-            Assert.AreEqual(@"WhereLike(""val"", ""col"")", diagnostic.GetMessage());
+            Assert.AreEqual(@"WhereLike()", diagnostic.GetMessage());
             Assert.IsTrue(diagnostic.IsMarkedAsSimpleMemberAccess());
             Assert.IsFalse(diagnostic.IsMarkedAsConditionalAccess());
         }
@@ -76,7 +76,7 @@ namespace BugHunter.Core.Tests.DiagnosticsFormatting
             var diagnostic = _diagnosticFormatter.CreateDiagnostic(_rule, invocation);
 
             AssertLocation.IsWithin(expectedLocation, diagnostic.Location);
-            Assert.That(@"WhereLike(""val"", ""col"")".Contains(diagnostic.GetMessage()));
+            Assert.That(@"WhereLike()".Contains(diagnostic.GetMessage()));
             Assert.IsFalse(diagnostic.IsMarkedAsSimpleMemberAccess());
             Assert.IsTrue(diagnostic.IsMarkedAsConditionalAccess());
         }

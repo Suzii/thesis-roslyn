@@ -1,4 +1,7 @@
-﻿using BugHunter.Core.DiagnosticsFormatting;
+﻿using System.Linq;
+using BugHunter.Core.DiagnosticsFormatting;
+using BugHunter.Core.DiagnosticsFormatting.Implementation;
+using BugHunter.Core.Extensions;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -11,11 +14,12 @@ namespace BugHunter.Core.Tests.DiagnosticsFormatting
     public class MemberInvocationDiagnosticFormatterTests
     {
         private IDiagnosticFormatter<InvocationExpressionSyntax> _diagnosticFormatter;
+        private readonly DiagnosticDescriptor _rule = new DiagnosticDescriptor("FakeID", "Title", "{0}", "Category", DiagnosticSeverity.Warning, true);
 
         [SetUp]
         public void SetUp()
         {
-            _diagnosticFormatter = DiagnosticFormatterFactory.CreateMemberInvocationFormatter();
+            _diagnosticFormatter = new MemberInvocationDiagnosticFormatter();
         }
 
         [Test]
@@ -23,12 +27,13 @@ namespace BugHunter.Core.Tests.DiagnosticsFormatting
         {
             var invocation = SyntaxFactory.ParseExpression(@"someClass.MethodA()") as InvocationExpressionSyntax;
 
-            var actualLocation = _diagnosticFormatter.GetLocation(invocation);
             var expectedLocation = Location.Create(invocation?.SyntaxTree, TextSpan.FromBounds(0, 19));
+            var diagnostic = _diagnosticFormatter.CreateDiagnostic(_rule, invocation);
 
-            Assert.AreEqual(expectedLocation, actualLocation);
-
-            Assert.AreEqual(@"someClass.MethodA()", _diagnosticFormatter.GetDiagnosedUsage(invocation));
+            Assert.AreEqual(expectedLocation, diagnostic.Location);
+            Assert.AreEqual(@"someClass.MethodA()", diagnostic.GetMessage());
+            Assert.IsTrue(diagnostic.IsMarkedAsSimpleMemberAccess());
+            Assert.IsFalse(diagnostic.IsMarkedAsConditionalAccess());
         }
 
         [Test]
@@ -37,12 +42,43 @@ namespace BugHunter.Core.Tests.DiagnosticsFormatting
             var invocation =
                 SyntaxFactory.ParseExpression(@"new CMS.DataEngine.WhereCondition().Or().WhereLike(""val"", ""col"")") as InvocationExpressionSyntax;
 
-            var actualLocation = _diagnosticFormatter.GetLocation(invocation);
             var expectedLocation = Location.Create(invocation?.SyntaxTree, TextSpan.FromBounds(0, 64));
+            var diagnostic = _diagnosticFormatter.CreateDiagnostic(_rule, invocation);
 
-            Assert.AreEqual(expectedLocation, actualLocation);
+            Assert.AreEqual(expectedLocation, diagnostic.Location);
+            Assert.AreEqual(@"new CMS.DataEngine.WhereCondition().Or().WhereLike(""val"", ""col"")", diagnostic.GetMessage());
+            Assert.IsTrue(diagnostic.IsMarkedAsSimpleMemberAccess());
+            Assert.IsFalse(diagnostic.IsMarkedAsConditionalAccess());
+        }
 
-            Assert.AreEqual(@"new CMS.DataEngine.WhereCondition().Or().WhereLike(""val"", ""col"")", _diagnosticFormatter.GetDiagnosedUsage(invocation));
+        [Test]
+        public void SimpleConditionalInvocation()
+        {
+            var expression = SyntaxFactory.ParseExpression(@"someClass?.MethodA()");
+            var invocation = expression.DescendantNodesAndSelf().OfType<InvocationExpressionSyntax>().First();
+
+            var expectedLocation = Location.Create(invocation?.SyntaxTree, TextSpan.FromBounds(10, 20));
+            var diagnostic = _diagnosticFormatter.CreateDiagnostic(_rule, invocation);
+
+            Assert.AreEqual(expectedLocation, diagnostic.Location);
+            Assert.AreEqual(@".MethodA()", diagnostic.GetMessage());
+            Assert.IsFalse(diagnostic.IsMarkedAsSimpleMemberAccess());
+            Assert.IsTrue(diagnostic.IsMarkedAsConditionalAccess());
+        }
+
+        [Test]
+        public void MultipleNestedConditionalInvocations()
+        {
+            var expression = SyntaxFactory.ParseExpression(@"new CMS.DataEngine.WhereCondition().Or()?.WhereLike(""val"", ""col"")");
+            var invocation = expression.DescendantNodesAndSelf().OfType<InvocationExpressionSyntax>().Last();
+
+            var expectedLocation = Location.Create(invocation?.SyntaxTree, TextSpan.FromBounds(0, 65));
+            var diagnostic = _diagnosticFormatter.CreateDiagnostic(_rule, invocation);
+
+            AssertLocation.IsWithin(expectedLocation, diagnostic.Location);
+            Assert.That(@"new CMS.DataEngine.WhereCondition().Or()?.WhereLike(""val"", ""col"")".Contains(diagnostic.GetMessage()));
+            Assert.IsFalse(diagnostic.IsMarkedAsSimpleMemberAccess());
+            Assert.IsTrue(diagnostic.IsMarkedAsConditionalAccess());
         }
     }
 }

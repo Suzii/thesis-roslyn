@@ -9,9 +9,9 @@ namespace BugHunter.Core.Tests.DiagnosticsFormatting
         public static void IsWithin(Location expected, Location actual)
         {
             Assert.AreEqual(expected.SourceTree, actual.SourceTree);
-            Assert.That(!actual.SourceSpan.IsEmpty);
-            Assert.That(expected.SourceSpan.Start <= actual.SourceSpan.Start);
-            Assert.That(expected.SourceSpan.End >= actual.SourceSpan.End);
+            Assert.That(!actual.SourceSpan.IsEmpty, "Location should not be empty");
+            Assert.That(expected.SourceSpan.Start <= actual.SourceSpan.Start, $"Location start {actual.SourceSpan.Start} must not be smaller than {expected.SourceSpan.Start}");
+            Assert.That(expected.SourceSpan.End >= actual.SourceSpan.End, $"Location end {actual.SourceSpan.End} must not be greater then than {expected.SourceSpan.End}");
         }
 
         public static void IsWithinOnOneLine(DiagnosticResultLocation expected, Location actual)

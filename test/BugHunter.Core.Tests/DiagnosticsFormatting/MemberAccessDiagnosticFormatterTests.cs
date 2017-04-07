@@ -1,4 +1,6 @@
 ﻿using BugHunter.Core.DiagnosticsFormatting;
+using BugHunter.Core.DiagnosticsFormatting.Implementation;
+using BugHunter.Core.Extensions;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -11,11 +13,12 @@ namespace BugHunter.Core.Tests.DiagnosticsFormatting
     public class MemberAccessDiagnosticFormatterTests
     {
         private IDiagnosticFormatter<MemberAccessExpressionSyntax> _diagnosticFormatter;
+        private readonly DiagnosticDescriptor _rule = new DiagnosticDescriptor("FakeID", "Title", "{0}", "Category", DiagnosticSeverity.Warning, true);
 
         [SetUp]
         public void SetUp()
         {
-            _diagnosticFormatter = DiagnosticFormatterFactory.CreateMemberAccessFormatter();
+            _diagnosticFormatter = new MemberAccessDiagnosticFormatter();
         }
 
         [Test]
@@ -23,12 +26,13 @@ namespace BugHunter.Core.Tests.DiagnosticsFormatting
         {
             var memberAccess = SyntaxFactory.ParseExpression(@"someClass.PropA") as MemberAccessExpressionSyntax;
 
-            var actualLocation = _diagnosticFormatter.GetLocation(memberAccess);
             var expectedLocation = Location.Create(memberAccess?.SyntaxTree, TextSpan.FromBounds(0, 15));
+            var diagnostic = _diagnosticFormatter.CreateDiagnostic(_rule, memberAccess);
 
-            Assert.AreEqual(expectedLocation, actualLocation);
-
-            Assert.AreEqual("someClass.PropA", _diagnosticFormatter.GetDiagnosedUsage(memberAccess));
+            Assert.AreEqual(expectedLocation, diagnostic.Location);
+            Assert.AreEqual("someClass.PropA", diagnostic.GetMessage());
+            Assert.IsTrue(diagnostic.IsMarkedAsSimpleMemberAccess());
+            Assert.IsFalse(diagnostic.IsMarkedAsConditionalAccess());
         }
 
         [Test]
@@ -37,12 +41,13 @@ namespace BugHunter.Core.Tests.DiagnosticsFormatting
             var memberAccess =
                 SyntaxFactory.ParseExpression(@"new CMS.DataEngine.WhereCondition().Or().SomeProperty") as MemberAccessExpressionSyntax; ;
 
-            var actualLocation = _diagnosticFormatter.GetLocation(memberAccess);
             var expectedLocation = Location.Create(memberAccess?.SyntaxTree, TextSpan.FromBounds(0, 53));
+            var diagnostic = _diagnosticFormatter.CreateDiagnostic(_rule, memberAccess);
 
-            Assert.AreEqual(expectedLocation, actualLocation);
-
-            Assert.AreEqual(@"new CMS.DataEngine.WhereCondition().Or().SomeProperty", _diagnosticFormatter.GetDiagnosedUsage(memberAccess));
+            Assert.AreEqual(expectedLocation, diagnostic.Location);
+            Assert.AreEqual(@"new CMS.DataEngine.WhereCondition().Or().SomeProperty", diagnostic.GetMessage());
+            Assert.IsTrue(diagnostic.IsMarkedAsSimpleMemberAccess());
+            Assert.IsFalse(diagnostic.IsMarkedAsConditionalAccess());
         }
     }
 }

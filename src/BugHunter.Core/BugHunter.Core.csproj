@@ -94,6 +94,7 @@
   <ItemGroup>
     <Compile Include="AnalyzerCategories.cs" />
     <Compile Include="ApiReplacementAnalysis\ApiReplacementForMethodAnalyzer.cs" />
+    <Compile Include="Constants\DiagnosticProperties.cs" />
     <Compile Include="Constants\FileExtensions.cs" />
     <Compile Include="DiagnosticsFormatting\DiagnosticFormatterFactory.cs" />
     <Compile Include="DiagnosticsFormatting\IDiagnosticFormatter.cs" />
@@ -106,6 +107,7 @@
     <Compile Include="DiagnosticsFormatting\Implementation\MemberAccessDiagnosticFormatter.cs" />
     <Compile Include="Extensions\ClassDeclarationSyntaxExtensions.cs" />
     <Compile Include="Extensions\ConditionalAccessExpressionSyntaxExtensions.cs" />
+    <Compile Include="Extensions\DiagnosticExtensions.cs" />
     <Compile Include="Extensions\IEnumerableExtensions.cs" />
     <Compile Include="Extensions\InvocationExpressionSyntaxExtensions.cs" />
     <Compile Include="Extensions\StringExtenstions.cs" />
@@ -131,7 +133,7 @@
     <Compile Include="ApiReplacementAnalysis\ApiReplacementForMemberAnalyzer.cs" />
     <Compile Include="Analyzers\ISyntaxNodeAnalyzer.cs" />
     <Compile Include="Analyzers\ConditionalAccessAnalyzer.cs" />
-    <Compile Include="Analyzers\MemberInvocationAnalyzer.cs" />
+    <Compile Include="Analyzers\MethodInvocationAnalyzer.cs" />
     <Compile Include="Analyzers\SimpleMemberAccessAnalyzer.cs" />
   </ItemGroup>
   <ItemGroup>
