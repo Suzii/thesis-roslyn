@@ -28,7 +28,7 @@ namespace BugHunter.Analyzers.CmsApiGuidelinesRules.Analyzers
            new[] { "CMS.DataEngine.WhereConditionBase`1" },
            new[] { "WhereLike", "WhereNotLike" });
 
-        private static readonly ISyntaxNodeAnalyzer analyzer = new MemberInvocationAnalyzer(config, DiagnosticFormatterFactory.CreateMemberInvocationOnlyFormatter());
+        private static readonly ISyntaxNodeAnalyzer analyzer = new MethodInvocationAnalyzer(config, DiagnosticFormatterFactory.CreateMemberInvocationOnlyFormatter());
 
         public override void Initialize(AnalysisContext context)
         {

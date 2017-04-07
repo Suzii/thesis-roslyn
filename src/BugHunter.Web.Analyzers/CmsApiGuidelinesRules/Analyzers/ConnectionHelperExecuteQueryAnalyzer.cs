@@ -39,7 +39,7 @@ namespace BugHunter.Web.Analyzers.CmsApiGuidelinesRules.Analyzers
             context.RegisterSyntaxNodeAction(analyzer.Run, SyntaxKind.InvocationExpression);
         }
 
-        internal class Analyzer : MemberInvocationAnalyzer
+        internal class Analyzer : MethodInvocationAnalyzer
         {
             public Analyzer(ApiReplacementConfig config) : base(config, DiagnosticFormatterFactory.CreateMemberInvocationFormatter())
             {
