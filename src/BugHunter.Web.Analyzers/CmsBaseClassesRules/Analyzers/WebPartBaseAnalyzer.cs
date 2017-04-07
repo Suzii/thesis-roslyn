@@ -1,5 +1,6 @@
 ﻿using System.Collections.Immutable;
 using System.Linq;
+using BugHunter.Core.DiagnosticsFormatting;
 using BugHunter.Core.Extensions;
 using BugHunter.Core.Helpers.DiagnosticDescriptionBuilders;
 using Microsoft.CodeAnalysis;
@@ -20,6 +21,8 @@ namespace BugHunter.Web.Analyzers.CmsBaseClassesRules.Analyzers
         private static readonly DiagnosticDescriptor UiWebPartRule = BaseClassesInheritanceRuleBuilder.GetRule(UI_WEB_PART_DIAGNOSTIC_ID, "UI Web Part", "some abstract CMS UI WebPart");
 
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(WebPartRule, UiWebPartRule);
+
+        private static readonly ISymbolDiagnosticFormatter<INamedTypeSymbol> DiagnosticFormatter = DiagnosticFormatterFactory.CreateNamedTypeSymbolFormatter();
 
         private static readonly string[] UiWebPartBases =
         {
@@ -73,8 +76,7 @@ namespace BugHunter.Web.Analyzers.CmsBaseClassesRules.Analyzers
                 return;
             }
 
-            // TODO how to use all locations
-            var diagnostic = Diagnostic.Create(ruleToBeUsed, namedTypeSymbol.Locations.FirstOrDefault(), namedTypeSymbol.Name);
+            var diagnostic = DiagnosticFormatter.CreateDiagnostic(ruleToBeUsed, namedTypeSymbol);
             symbolAnalysisContext.ReportDiagnostic(diagnostic);
         }
 

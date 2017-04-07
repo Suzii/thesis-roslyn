@@ -26,6 +26,8 @@ namespace BugHunter.Core.DiagnosticsFormatting
         public static ISyntaxNodeDiagnosticFormatter<ConditionalAccessExpressionSyntax> CreateConditionalAccessFormatter()
             => new ConditionalAccessDiagnosticFormatter();
 
+        public static ISymbolDiagnosticFormatter<INamedTypeSymbol> CreateNamedTypeSymbolFormatter()
+            => new NamedTypeSymbolDiagnosticFormatter();
 
         public static ISyntaxNodeDiagnosticFormatter<TSyntaxNode> CreateFormatter<TFormatter, TSyntaxNode>()
             where TFormatter : ISyntaxNodeDiagnosticFormatter<TSyntaxNode>, new()

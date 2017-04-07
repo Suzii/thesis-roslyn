@@ -12,7 +12,8 @@ namespace BugHunter.Core.DiagnosticsFormatting
     {
     }
 
-    public interface ISymbolDiagnosticFormatter : IDiagnosticFormatter<ISymbol>
+    public interface ISymbolDiagnosticFormatter<in TSymbol> : IDiagnosticFormatter<TSymbol>
+        where TSymbol : ISymbol
     {
     }
 }

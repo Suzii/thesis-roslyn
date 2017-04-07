@@ -1,5 +1,6 @@
 ﻿using System.Collections.Immutable;
 using System.Linq;
+using BugHunter.Core.DiagnosticsFormatting;
 using BugHunter.Core.Helpers.DiagnosticDescriptionBuilders;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
@@ -18,13 +19,15 @@ namespace BugHunter.Web.Analyzers.CmsBaseClassesRules.Analyzers
 
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
 
+        private static readonly ISymbolDiagnosticFormatter<INamedTypeSymbol> DiagnosticFormatter = DiagnosticFormatterFactory.CreateNamedTypeSymbolFormatter();
+
         public override void Initialize(AnalysisContext context)
         {
+            context.EnableConcurrentExecution();
+            context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.None);
+
             context.RegisterSymbolAction(symbolAnalysisContext =>
             {
-                context.EnableConcurrentExecution();
-                context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.None);
-
                 var namedTypeSymbol = symbolAnalysisContext.Symbol as INamedTypeSymbol;
                 if (namedTypeSymbol == null || namedTypeSymbol.IsAbstract)
                 {
@@ -37,9 +40,7 @@ namespace BugHunter.Web.Analyzers.CmsBaseClassesRules.Analyzers
                     return;
                 }
 
-                var location = namedTypeSymbol.Locations.FirstOrDefault();
-                var diagnostic = Diagnostic.Create(Rule, location, namedTypeSymbol.Name.ToString());
-
+                var diagnostic = DiagnosticFormatter.CreateDiagnostic(Rule, namedTypeSymbol);
                 symbolAnalysisContext.ReportDiagnostic(diagnostic);
             }, SymbolKind.NamedType);
         }

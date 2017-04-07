@@ -65,6 +65,8 @@
     <ProjectReference Include="..\BugHunter.Web.Analyzers\BugHunter.Web.Analyzers.csproj">
       <Project>{14e74fd2-d9f7-460d-a504-a915efcc0dd1}</Project>
       <Name>BugHunter.Web.Analyzers</Name>
+      <IncludeOutputGroupsInVSIX>BuiltProjectOutputGroup%3bBuiltProjectOutputGroupDependencies%3bGetCopyToOutputDirectoryItems%3bSatelliteDllsProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
+      <IncludeOutputGroupsInVSIXLocalOnly>DebugSymbolsProjectOutputGroup%3b</IncludeOutputGroupsInVSIXLocalOnly>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -2,6 +2,7 @@
 using System.Collections.Immutable;
 using System.Linq;
 using BugHunter.Core;
+using BugHunter.Core.DiagnosticsFormatting;
 using BugHunter.Core.Extensions;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
@@ -28,6 +29,8 @@ namespace BugHunter.Analyzers.CmsBaseClassesRules.Analyzers
 
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
 
+        private static readonly ISymbolDiagnosticFormatter<INamedTypeSymbol> DiagnosticFormatter = DiagnosticFormatterFactory.CreateNamedTypeSymbolFormatter();
+        
         public override void Initialize(AnalysisContext context)
         {
             context.EnableConcurrentExecution();
@@ -63,9 +66,7 @@ namespace BugHunter.Analyzers.CmsBaseClassesRules.Analyzers
                     }
                 }
 
-                var location = namedTypeSymbol.Locations.FirstOrDefault();
-                var diagnostic = Diagnostic.Create(Rule, location, namedTypeSymbol.Name.ToString());
-
+                var diagnostic = DiagnosticFormatter.CreateDiagnostic(Rule, namedTypeSymbol);
                 symbolAnalysisContext.ReportDiagnostic(diagnostic);
 
             }, SymbolKind.NamedType);

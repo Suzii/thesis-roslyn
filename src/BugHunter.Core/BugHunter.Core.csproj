@@ -105,6 +105,7 @@
     <Compile Include="DiagnosticsFormatting\Implementation\MemberInvocationOnlyDiagnosticFormatter.cs" />
     <Compile Include="DiagnosticsFormatting\Implementation\MemberInvocationDiagnosticFormatter.cs" />
     <Compile Include="DiagnosticsFormatting\Implementation\MemberAccessDiagnosticFormatter.cs" />
+    <Compile Include="DiagnosticsFormatting\Implementation\NamedTypeSymbolDiagnosticFormatter.cs" />
     <Compile Include="Extensions\ClassDeclarationSyntaxExtensions.cs" />
     <Compile Include="Extensions\ConditionalAccessExpressionSyntaxExtensions.cs" />
     <Compile Include="Extensions\DiagnosticExtensions.cs" />
