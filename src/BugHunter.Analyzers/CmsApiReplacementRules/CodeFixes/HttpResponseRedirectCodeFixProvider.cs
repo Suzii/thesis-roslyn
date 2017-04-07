@@ -3,6 +3,7 @@ using System.Composition;
 using System.Linq;
 using System.Threading.Tasks;
 using BugHunter.Analyzers.CmsApiReplacementRules.Analyzers;
+using BugHunter.Core.Extensions;
 using BugHunter.Core.Helpers.CodeFixes;
 using BugHunter.Core.ResourceBuilder;
 using Microsoft.CodeAnalysis;
@@ -23,6 +24,13 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.CodeFixes
 
         public sealed override async Task RegisterCodeFixesAsync(CodeFixContext context)
         {
+            var diagnostic = context.Diagnostics.First();
+            if (!diagnostic.IsMarkedAsSimpleMemberAccess())
+            {
+                // no support yet for complicated cases as conditional access
+                return;
+            }
+
             var editor = new MemberInvocationCodeFixHelper(context);
             var invocationExpression = await editor.GetDiagnosedInvocation();
 
@@ -38,8 +46,6 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.CodeFixes
             var message1 = $"{CodeFixMessageBuilder.GetReplaceWithMessage(codeFix2)} {CmsApiReplacementsResources.RedirectCodeFixLocal}";
             var message2 = $"{CodeFixMessageBuilder.GetReplaceWithMessage(codeFix2)} {CmsApiReplacementsResources.RedirectCodeFixExternal}";
 
-            var diagnostic = context.Diagnostics.First();
-            
             context.RegisterCodeFix(
                 CodeAction.Create(
                     title: message1,

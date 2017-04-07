@@ -109,5 +109,30 @@ namespace SampleTestProject.CsSamples
 
             VerifyCSharpFix(test, expectedFix, codeFixNumber);
         }
+
+        [TestCase(@"new System.Web.HttpResponse(null)")]
+        [TestCase(@"new System.Web.HttpResponse(null)")]
+        [TestCase(@"new System.Web.HttpResponseWrapper(new System.Web.HttpResponse(null))")]
+        [TestCase(@"new System.Web.HttpResponseWrapper(new System.Web.HttpResponse(null))")]
+        public void InputWithIncident_ConditionalAccess_SurfacesDiagnostic_NoCodeFix(string instance)
+        {
+            var test = $@"
+namespace SampleTestProject.CsSamples
+{{
+    public class SampleClass
+    {{
+        public void SampleMethod()
+        {{ 
+            var r = {instance};
+            r?.Redirect(""url"");
+        }}
+    }}
+}}";
+            var expectedDiagnostic = CreateDiagnosticResult(@".Redirect(""url"")").WithLocation(9, 15);
+
+            VerifyCSharpDiagnostic(test, expectedDiagnostic);
+            
+            VerifyCSharpFix(test, test);
+        }
     }
 }

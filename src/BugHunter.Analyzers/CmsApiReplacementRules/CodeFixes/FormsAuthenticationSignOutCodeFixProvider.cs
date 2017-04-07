@@ -24,6 +24,7 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.CodeFixes
         public sealed override async Task RegisterCodeFixesAsync(CodeFixContext context)
         {
             var editor = new MemberInvocationCodeFixHelper(context);
+            // invoked always statically no need for conditional access filtering
             var invocationExpression = await editor.GetDiagnosedInvocation();
 
             if (invocationExpression == null || !invocationExpression.Expression.IsKind(SyntaxKind.SimpleMemberAccessExpression))

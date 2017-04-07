@@ -27,8 +27,14 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.CodeFixes
         public sealed override async Task RegisterCodeFixesAsync(CodeFixContext context)
         {
             var editor = new MemberInvocationCodeFixHelper(context);
-            var invocation = await editor.GetDiagnosedInvocation();
+            var diagnostic = editor.GetFirstDiagnostic();
+            if (diagnostic.IsMarkedAsConditionalAccess())
+            {
+                // currently no support for fixing complicated cases with Conditional Access
+                return;
+            }
 
+            var invocation = await editor.GetDiagnosedInvocation();
             if (invocation == null || !invocation.Expression.IsKind(SyntaxKind.SimpleMemberAccessExpression))
             {
                 return;
@@ -53,7 +59,10 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.CodeFixes
 
             var usingNamespace = "CMS.Base.Web.UI";
             var newInvocationExpression = GetNewInvocationExpression(invocation);
-            var diagnostic = context.Diagnostics.First();
+            if (newInvocationExpression == null)
+            {
+                return;
+            }
 
             context.RegisterCodeFix(
                 CodeAction.Create(
@@ -78,22 +87,16 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.CodeFixes
         private InvocationExpressionSyntax GetNewInvocationExpression(InvocationExpressionSyntax oldInvocation)
         {
             // Methods in script helper are named same as methods in ClientScriptManager
-            var oldMethodName = GetMethodName(oldInvocation);
+            SimpleNameSyntax oldMethodName;
+            if (!oldInvocation.TryGetMethodNameNode(out oldMethodName))
+            {
+                return null;
+            }
+
             var newInvocationExpression = SyntaxFactory.ParseExpression($"ScriptHelper.{oldMethodName}()") as InvocationExpressionSyntax;
             var newArgumentList = GetNewArgumentList(oldInvocation);
             
             return newInvocationExpression?.WithArgumentList(newArgumentList); ;
-        }
-        
-        public static string GetMethodName(InvocationExpressionSyntax invocationExpression)
-        {
-            var memberAccess = invocationExpression.Expression as MemberAccessExpressionSyntax;
-            if (memberAccess == null)
-            {
-                throw new ArgumentException(@"Unable to cast to MemberAccessExpression", nameof(invocationExpression));
-            }
-            
-            return memberAccess.Name.ToString();
         }
     }
 }

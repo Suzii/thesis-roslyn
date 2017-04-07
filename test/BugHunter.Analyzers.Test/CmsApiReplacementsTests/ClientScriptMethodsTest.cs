@@ -130,5 +130,30 @@ namespace SampleTestProject.CsSamples
             // SampleClass does not inherit from System.Web.UI.Control, verify no codefix is applied
             VerifyCSharpFix(test, test);
         }
+
+        [TestCase(@"RegisterArrayDeclaration(""arrayName"", ""arrayValue"")")]
+        [TestCase(@"RegisterClientScriptBlock(typeof(object), ""key"", ""script"")")]
+        [TestCase(@"RegisterClientScriptInclude(typeof(object), ""key"", ""url"")")]
+        [TestCase(@"RegisterStartupScript(typeof(object), ""key"", ""script"")")]
+        public void InputWithIncidentConditionalAccess_SurfacesDiagnostic_NoCodeFixProvided(string methodInvocation)
+        {
+            var test = $@"
+namespace SampleTestProject.CsSamples
+{{
+    public class SampleClass : System.Web.UI.Control
+    {{
+        public void SampleMethod()
+        {{
+            new System.Web.UI.Page().ClientScript?.{methodInvocation};
+        }}
+    }}
+}}";
+            var expectedDiagnostic = CreateDiagnosticResult($".{methodInvocation}").WithLocation(8, 51);
+
+            VerifyCSharpDiagnostic(test, expectedDiagnostic);
+
+            // verify no codefix is applied
+            VerifyCSharpFix(test, test);
+        }
     }
 }
