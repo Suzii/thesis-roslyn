@@ -24,7 +24,7 @@ namespace BugHunter.Core.Helpers.CodeFixes
             var diagnosticSpan = diagnostic.Location.SourceSpan;
 
             var memberAccessExpressions =
-                root.FindNode(diagnosticSpan, true).FirstAncestorOrSelf<MemberAccessExpressionSyntax>();
+                root.FindNode(diagnosticSpan, true) as MemberAccessExpressionSyntax;
 
             return memberAccessExpressions;
         }

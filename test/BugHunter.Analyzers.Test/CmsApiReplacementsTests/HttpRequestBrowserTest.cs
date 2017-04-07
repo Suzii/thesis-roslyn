@@ -144,5 +144,30 @@ namespace SampleTestProject.CsSamples
 }}";
             VerifyCSharpFix(test, expectedFix);
         }
+
+        [TestCase(@"new System.Web.HttpRequest(""fileName"", ""url"", ""queryString"")")]
+        [TestCase(@"new System.Web.HttpRequestWrapper(new System.Web.HttpRequest(""fileName"", ""url"", ""queryString""))")]
+        public void InputWithIncident_ConditionalAccess_SurfacesDiagnostic_NoCodeFix(string requestInstance)
+        {
+            var test = $@"
+namespace SampleTestProject.CsSamples
+{{
+    public class SampleClass
+    {{
+        public void SampleMethod()
+        {{
+            var request = {requestInstance};
+            var browserInfo = request.Browser;
+            var browser = browserInfo?.Browser.Contains(""Ooops..."");
+        }}
+    }}
+}}";
+
+            var expectedDiagnostic = CreateDiagnosticResult("browserInfo?.Browser", "BrowserHelper.GetBrowser()").WithLocation(10, 27);
+
+            VerifyCSharpDiagnostic(test, expectedDiagnostic);
+
+            VerifyCSharpFix(test, test);
+        }
     }
 }

@@ -3,6 +3,7 @@ using System.Composition;
 using System.Linq;
 using System.Threading.Tasks;
 using BugHunter.Analyzers.CmsApiReplacementRules.Analyzers;
+using BugHunter.Core.Extensions;
 using BugHunter.Core.Helpers.CodeFixes;
 using BugHunter.Core.ResourceBuilder;
 using Microsoft.CodeAnalysis;
@@ -23,7 +24,15 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.CodeFixes
 
         public sealed override async Task RegisterCodeFixesAsync(CodeFixContext context)
         {
+            var diagnostic = context.Diagnostics.First();
+            if (!diagnostic.IsMarkedAsSimpleMemberAccess())
+            {
+                // no codefix for conditional accesses
+                return;
+            }
+
             var editor = new MemberAccessCodeFixHelper(context);
+
             var memberAccess = await editor.GetDiagnosedMemberAccess();
 
             if (memberAccess == null)
@@ -33,7 +42,6 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.CodeFixes
 
             var usingNamespace = "CMS.Helpers";
             var newMemberAccess = SyntaxFactory.ParseExpression("BrowserHelper.GetBrowser()");
-            var diagnostic = context.Diagnostics.First();
 
             context.RegisterCodeFix(
                 CodeAction.Create(
