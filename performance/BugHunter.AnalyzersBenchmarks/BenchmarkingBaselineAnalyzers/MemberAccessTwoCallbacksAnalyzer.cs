@@ -18,7 +18,7 @@ namespace BugHunter.AnalyzersBenchmarks.BenchmarkingBaselineAnalyzers
         private static readonly DiagnosticDescriptor Rule = new DiagnosticDescriptor(DIAGNOSTIC_ID,
                 title: "Serves as benchmarking for SyntaxNode - MemberAccess - 2 heavy callbacks",
                 messageFormat: "Serves as benchmarking for SyntaxNode - MemberAccess - 2 heavy callbacks",
-                category: nameof(AnalyzerCategories.BenchmarkingBaselines),
+                category: "BenchmarkingBaselines",
                 defaultSeverity: DiagnosticSeverity.Warning,
                 isEnabledByDefault: true);
 

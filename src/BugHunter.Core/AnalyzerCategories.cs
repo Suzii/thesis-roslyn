@@ -29,10 +29,5 @@
         /// Category for analyzers reporting suspicious usage of String comparison and manipulation methods without culture specification
         /// </summary>
         StringAndCulture,
-        
-        /// <summary>
-        /// Category of analyzers solely for benchmarking purposes
-        /// </summary>
-        BenchmarkingBaselines,
     }
 }

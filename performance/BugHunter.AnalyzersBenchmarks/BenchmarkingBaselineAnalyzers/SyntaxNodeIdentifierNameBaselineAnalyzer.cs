@@ -17,7 +17,7 @@ namespace BugHunter.AnalyzersBenchmarks.BenchmarkingBaselineAnalyzers
         private static readonly DiagnosticDescriptor Rule = new DiagnosticDescriptor(DIAGNOSTIC_ID,
                 title: "Serves as benchmarking baseline for SyntaxNode - IdentifierName",
                 messageFormat: "Serves as benchmarking baseline for SyntaxNode - IdentifierName",
-                category: nameof(AnalyzerCategories.BenchmarkingBaselines),
+                category: "BenchmarkingBaselines",
                 defaultSeverity: DiagnosticSeverity.Warning,
                 isEnabledByDefault: true);
 
