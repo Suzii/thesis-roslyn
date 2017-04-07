@@ -8,7 +8,7 @@ namespace BugHunter.Core.DiagnosticsFormatting.Implementation
         public Diagnostic CreateDiagnostic(DiagnosticDescriptor descriptor, INamedTypeSymbol namedTypeSymbol)
         {
             // TODO
-            var location = namedTypeSymbol.Locations.FirstOrDefault(l => l.SourceTree.FilePath.EndsWith("x.cs"));
+            var location = namedTypeSymbol.Locations.FirstOrDefault();
             var diagnostic = Diagnostic.Create(descriptor, location, namedTypeSymbol.Name);
 
             return diagnostic;

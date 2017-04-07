@@ -108,6 +108,7 @@
     <Compile Include="DiagnosticsFormatting\ConditionalAccessDiagnosticFormatterTests.cs" />
     <Compile Include="DiagnosticsFormatting\AssertLocation.cs" />
     <Compile Include="DiagnosticsFormatting\MemberAccessOnlyDiagnosticFormatterTests.cs" />
+    <Compile Include="DiagnosticsFormatting\NamedTypeSymbolDiagnosticFormatterTests.cs" />
     <Compile Include="DiagnosticsFormatting\MemberInvocationOnlyNoArgsDiagnosticFormatterTests.cs" />
     <Compile Include="DiagnosticsFormatting\MemberInvocationOnlyDiagnosticFormatterTests.cs" />
     <Compile Include="DiagnosticsFormatting\MemberAccessDiagnosticFormatterTests.cs" />

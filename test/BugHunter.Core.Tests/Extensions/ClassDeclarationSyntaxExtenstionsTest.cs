@@ -119,7 +119,7 @@ namespace BugHunter.Core.Tests.Extensions
             }
 
             [Test]
-            public void ImplementsFullyQUalifiedInterfaceAndExtendsBaseType_ReplacesBaseType()
+            public void ImplementsFullyQualifiedInterfaceAndExtendsBaseType_ReplacesBaseType()
             {
                 var test = $"public class SampleClass : BaseTypeToBeReplaced, Some.Namespace.IRandomInterface\r\n{{\r\n}}";
                 var expectedFix = $"public class SampleClass : SomeBaseClass, Some.Namespace.IRandomInterface\r\n{{\r\n}}";
