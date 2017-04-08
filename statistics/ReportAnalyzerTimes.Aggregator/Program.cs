@@ -15,9 +15,9 @@ namespace ReportAnalyzerTimes.Aggregator
     {
         static int Main(string[] args)
         {
-            var inputFilePathPrefix = args.FirstOrDefault(arg => arg.StartsWith("/inPrefix="))?.Substring(10) ?? @"C:\tmp\aggregated_";
-            var outputFilePath = args.FirstOrDefault(arg => arg.StartsWith("/out="))?.Substring(5) ?? @"C:\tmp\aggregated-results.csv";
-            var numberOfInputFilesString = args.FirstOrDefault(arg => arg.StartsWith("/count="))?.Substring(7) ?? "3";
+            var inputFilePathPrefix = args.FirstOrDefault(arg => arg.StartsWith("/inPrefix="))?.Substring(10);// ?? @"C:\tmp\aggregated_";
+            var outputFilePath = args.FirstOrDefault(arg => arg.StartsWith("/out="))?.Substring(5);// ?? @"C:\tmp\aggregated-results.csv";
+            var numberOfInputFilesString = args.FirstOrDefault(arg => arg.StartsWith("/count="))?.Substring(7);// ?? "3";
             int numberOfInputFiles;
 
             if (string.IsNullOrEmpty(inputFilePathPrefix) 
@@ -25,6 +25,7 @@ namespace ReportAnalyzerTimes.Aggregator
                 || !int.TryParse(numberOfInputFilesString,NumberStyles.Integer, CultureInfo.InvariantCulture, out numberOfInputFiles) 
                 || numberOfInputFiles < 1)
             {
+                Console.WriteLine($"Called with: {string.Join(" ", args)}");
                 PrintHelp();
                 return -1;
             }

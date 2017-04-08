@@ -26,7 +26,7 @@ namespace ReportAnalyzerTimes.Aggregator
         /// <returns></returns>
         public IEnumerable<IEnumerable<string>> GetLinesOfFiles()
         {
-            return Enumerable.Range(1, _numberOfFiles)
+            return Enumerable.Range(0, _numberOfFiles)
                     .Select(ConstructFileName)
                     .Select(File.ReadAllLines);
         }

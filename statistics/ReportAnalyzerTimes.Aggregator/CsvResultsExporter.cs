@@ -17,6 +17,11 @@ namespace ReportAnalyzerTimes.Aggregator
         /// <param name="analyzersExecutionTimes">Analyzers execution times to be exported</param>
         public void Export(string filePath, IEnumerable<AnalyzerExecutionTimes> analyzersExecutionTimes)
         {
+            if (File.Exists(filePath))
+            {
+                File.Delete(filePath);
+            }
+
             File.AppendAllLines(filePath, GetAllLines(analyzersExecutionTimes));
         }
 

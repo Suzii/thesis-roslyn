@@ -33,7 +33,7 @@ function Parse-AnalyzerExecutionTimesFromSingleRun
     [string] $InputFile,
     [string] $OutputFile)
     
-    $ParseReportAnalyzerResults = "..\statistics\ReportAnalyzerTimesParser\bin\Release\ReportAnalyzerTimes.Parser.exe";
+    $ParseReportAnalyzerResults = "..\statistics\ReportAnalyzerTimes.Parser\bin\Release\ReportAnalyzerTimes.Parser.exe";
     
     &$ParseReportAnalyzerResults /in=$InputFile /out=$OutputFile
 }
@@ -48,12 +48,12 @@ function Aggregate-ResultsFromMultipleRuns
 {
     param(
     [string] $InputFilePrefix,
-    [number] $NumberOfRuns,
+    [int16] $NumberOfRuns,
     [string] $OutputFile)
     
-    $AggregateReportAnalyzerResults = "..\statistics\ReportAnalyzerTimesParser\bin\Release\ReportAnalyzerTimesParser.exe";
+    $AggregateReportAnalyzerResults = "..\statistics\ReportAnalyzerTimes.Aggregator\bin\Release\ReportAnalyzerTimes.Aggregator.exe";
     
-    &$AggregateReportAnalyzerResults /in=$InputFile /out=$OutputFile
+    &$AggregateReportAnalyzerResults /inPrefix=$InputFilePrefix /out=$OutputFile /count=$NumberOfRuns
 }
 
 <#
@@ -64,17 +64,21 @@ function Program
 {
     param(
     [string] $ProjectOrSolutionFilePath,
-    [number] $NumberOfRuns,
+    [int16] $NumberOfRuns,
     [string] $TmpFolder,
     [string] $OutputFile)
 
     $MsBuildLogFile = "$TmpFolder\msbuild-output.txt"
     $AggregatedResultsPrefix = "$TmpFolder\aggregated-single-run-"
-    Run-MsBuildWithReportAnalyzer -ProjectOrSolutionFilePath $AnalyzedProjectOrSolution -OutputFile $MsBuildLogFile
     
-    Parse-AnalyzerExecutionTimesFromSingleRun -InputFile $MsBuildLogFile -OutputFile $AggregatedResultsPrefix
+    For ($Index = 0; $Index -lt $NumberOfRuns; $Index++)
+    {
+        #Run-MsBuildWithReportAnalyzer -ProjectOrSolutionFilePath $AnalyzedProjectOrSolution -OutputFile $MsBuildLogFile
+    
+        Parse-AnalyzerExecutionTimesFromSingleRun -InputFile $MsBuildLogFile -OutputFile "$AggregatedResultsPrefix$Index.txt"
+    }
 
-    # Aggregate-ResultsFromMultipleRuns 
+    Aggregate-ResultsFromMultipleRuns -InputFilePrefix $AggregatedResultsPrefix -NumberOfRuns $NumberOfRuns -OutputFile $OutputFile
 }
 
 # CMSSolution
@@ -82,12 +86,4 @@ $TmpFolder = "C:\tmp"
 $AnalyzedProjectOrSolution = "C:\TFS\CMS\MAIN\CMSSolution\CMSSolution.sln"
 $OutputFile = "$TmpFolder\aggregated.csv"
 
-Program -ProjectOrSolutionFilePath $AnalyzedProjectOrSolution -NumberOfRuns 1 -TmpFolder $TmpFolder -OutputFile $OutputFile
-
-#Run-MsBuildWithReportAnalyzer -ProjectOrSolutionFilePath $AnalyzedProjectOrSolution -OutputFile $MsBuildLogFile
-
-#Parse-AnalyzerExecutionTimesFromSingleRun -InputFile $MsBuildLogFile -OutputFile $AggregateedResults
-
-# measure-command 1000x build + azure data analysis
-
-#Aggregate-ResultsFromMultipleRuns 
+Program -ProjectOrSolutionFilePath $AnalyzedProjectOrSolution -NumberOfRuns 5 -TmpFolder $TmpFolder -OutputFile $OutputFile
