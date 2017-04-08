@@ -7,6 +7,12 @@ using ReportAnalyzerTimes.Models;
 
 namespace ReportAnalyzerTimes.Parser
 {
+    /// <summary>
+    /// Reads the MSBuild output from file name passed as parameter "/in=XY", 
+    /// parses the contnets of ReportAnalyzer sections,
+    /// groups per projects ReportAnalyzer results into one summed representation,
+    /// outputs the aggregated results into file passed as "/out=XY"
+    /// </summary>
     class Program
     {
         static int Main(string[] args)
@@ -59,7 +65,7 @@ namespace ReportAnalyzerTimes.Parser
         private static void PrintHelp()
         {
             Console.WriteLine(@"Usage:");
-            Console.WriteLine(@"ReportAnalyzerTimesParse.exe /in=C:\tmp\ms-build-output.txt /out=C:\tmp\analyzers-execution-times-aggregated.txt");
+            Console.WriteLine(@"ReportAnalyzerTimes.Parse.exe /in=C:\tmp\ms-build-output.txt /out=C:\tmp\analyzers-execution-times-aggregated.txt");
         }
     }
 }

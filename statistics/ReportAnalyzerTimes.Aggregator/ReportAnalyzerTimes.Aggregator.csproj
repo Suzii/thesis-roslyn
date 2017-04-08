@@ -43,11 +43,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CsvResultsExporter.cs" />
+    <Compile Include="ExecutionTimesAggregator.cs" />
+    <Compile Include="ExecutionTimesParser.cs" />
+    <Compile Include="InputFilesProvider.cs" />
+    <Compile Include="IResultsExporter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ReportAnalyzerTimes.Models\ReportAnalyzerTimes.Models.csproj">
+      <Project>{4C9BC256-0A33-4F21-87AF-35B936C22E13}</Project>
+      <Name>ReportAnalyzerTimes.Models</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

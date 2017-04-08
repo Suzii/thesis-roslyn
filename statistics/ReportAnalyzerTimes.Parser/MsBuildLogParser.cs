@@ -37,9 +37,7 @@ namespace ReportAnalyzerTimes.Parser
                 .Select(projectExecutionTimeMatch
                     => new AnalyzerExecutionTime
                     {
-                        ExecutionTime =
-                            double.Parse(projectExecutionTimeMatch.Groups[1].Value, NumberStyles.AllowDecimalPoint,
-                                NumberFormatInfo.InvariantInfo),
+                        ExecutionTime = double.Parse(projectExecutionTimeMatch.Groups[1].Value, NumberStyles.AllowDecimalPoint, NumberFormatInfo.InvariantInfo),
                         AnalyzerName = projectExecutionTimeMatch.Groups[2].Value
                     });
         }

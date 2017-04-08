@@ -1,9 +1,13 @@
 ﻿using System;
+using System.Globalization;
+using System.Text.RegularExpressions;
 
 namespace ReportAnalyzerTimes.Models
 {
     public struct AnalyzerExecutionTime
     {
+        private static readonly Regex LineRegex = new Regex(@"([\d,]+) s\s+- ([a-zA-z.]+)", RegexOptions.Compiled);
+
         public string AnalyzerName { get; set; }
         public double ExecutionTime { get; set; }
 
@@ -24,6 +28,20 @@ namespace ReportAnalyzerTimes.Models
         public override string ToString()
         {
             return $"{ExecutionTime:##0.000 s} \t\t- {AnalyzerName}";
+        }
+
+        public static AnalyzerExecutionTime FromString(string line)
+        {
+            var match = LineRegex.Match(line).Groups;
+
+            string analyzerName = match[2].Value;
+            double executionTime = double.Parse(match[1].Value, NumberStyles.AllowDecimalPoint, CultureInfo.CurrentCulture);
+
+            return new AnalyzerExecutionTime
+            {
+                AnalyzerName = analyzerName,
+                ExecutionTime = executionTime
+            };
         }
     }
 }
