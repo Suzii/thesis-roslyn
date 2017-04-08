@@ -3,7 +3,7 @@ using ReportAnalyzerTimes.Models;
 
 namespace ReportAnalyzerTimes.Aggregator
 {
-    public interface IResultsExporter
+    interface IResultsExporter
     {
         /// <summary>
         /// Exports the <param name="analyzersExecutionTimes"></param> into file

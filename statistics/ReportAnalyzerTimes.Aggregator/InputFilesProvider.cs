@@ -5,7 +5,7 @@ using System.Linq;
 namespace ReportAnalyzerTimes.Aggregator
 {
     /// <summary>
-    /// Class that continuously preads content of file with given prefix and yields the contents of the file in form of lines
+    /// Class that continuously reads the contents of a file with given prefix and yields the contents of the file in form of lines
     /// </summary>
     internal class InputFilesProvider
     {
@@ -20,6 +20,10 @@ namespace ReportAnalyzerTimes.Aggregator
             _extension = extension;
         }
 
+        /// <summary>
+        /// Return all lines from all files
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<IEnumerable<string>> GetLinesOfFiles()
         {
             return Enumerable.Range(1, _numberOfFiles)

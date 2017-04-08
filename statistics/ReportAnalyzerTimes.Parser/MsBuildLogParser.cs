@@ -6,13 +6,19 @@ using ReportAnalyzerTimes.Models;
 
 namespace ReportAnalyzerTimes.Parser
 {
-    class MsBuildLogParser
+    internal class MsBuildLogParser
     {
         // matches any number of lines for analyzer times
         private static readonly Regex ExecutionTimesForProjectRegex = new Regex(@"Total analyzer execution time: (.*) seconds(?:.*\n){1,4}\s*Time(?:.*\n){2}((?:.*\n){1,}?)\s+Output Item\(s\):", RegexOptions.Multiline);
 
         private static readonly Regex ExecutionTimePerAnalyzerRegex = new Regex(@"[\s]*[<]?((?:\d+)\.(?:\d+))[^B]*([\S]+)", RegexOptions.Compiled);
 
+        /// <summary>
+        /// Parses the <param name="logContents"></param> of the MSBuild process for analyzer execution times 
+        /// and returns them per project
+        /// </summary>
+        /// <param name="logContents">The contents of the MSBuild log</param>
+        /// <returns>Collection of analyzer execution times of each project in a collection</returns>
         public IEnumerable<IEnumerable<AnalyzerExecutionTime>> GetAnalyzerExecutionTimesForProjects(string logContents)
         {
             var executionTimesPerProject = ExecutionTimesForProjectRegex
