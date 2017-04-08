@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace ReportAnalyzerTimesParser
+namespace ReportAnalyzerTimes.Models
 {
-    internal struct AnalyzerExecutionTime
+    public struct AnalyzerExecutionTime
     {
         public string AnalyzerName { get; set; }
         public double ExecutionTime { get; set; }

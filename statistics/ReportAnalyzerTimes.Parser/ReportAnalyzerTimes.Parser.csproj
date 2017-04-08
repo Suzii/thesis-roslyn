@@ -7,8 +7,8 @@
     <ProjectGuid>{A88B7C72-8848-40A6-95DD-91973A00A21C}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ReportAnalyzerTimesParser</RootNamespace>
-    <AssemblyName>ReportAnalyzerTimesParser</AssemblyName>
+    <RootNamespace>ReportAnalyzerTimes.Parser</RootNamespace>
+    <AssemblyName>ReportAnalyzerTimes.Parser</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -43,7 +43,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AnalyzerExecutionTime.cs" />
     <Compile Include="AnalyzerExecutionTimesAggregator.cs" />
     <Compile Include="MsBuildLogParser.cs" />
     <Compile Include="Program.cs" />
@@ -51,6 +50,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ReportAnalyzerTimes.Models\ReportAnalyzerTimes.Models.csproj">
+      <Project>{4c9bc256-0a33-4f21-87af-35b936c22e13}</Project>
+      <Name>ReportAnalyzerTimes.Models</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

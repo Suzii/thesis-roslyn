@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using ReportAnalyzerTimes.Models;
 
-namespace ReportAnalyzerTimesParser
+namespace ReportAnalyzerTimes.Parser
 {
     class Program
     {
@@ -31,9 +32,9 @@ namespace ReportAnalyzerTimesParser
 
             var executionTimesPerProject = new MsBuildLogParser().GetAnalyzerExecutionTimesForProjects(inputFileContent);
 
-            var aggregatedRusultsPerAnalyzer = new AnalyzerExecutionTimesAggregator().GetAggregatedResultsPerAnalyzer(executionTimesPerProject);
+            var aggregatedResultsPerAnalyzer = new AnalyzerExecutionTimesAggregator().GetAggregatedResultsPerAnalyzer(executionTimesPerProject);
             
-            var aggregatedResultsInFancyString = aggregatedRusultsPerAnalyzer.Select(time => time.ToString());
+            var aggregatedResultsInFancyString = aggregatedResultsPerAnalyzer.Select(time => time.ToString());
             File.WriteAllLines(aggregatedOutputFilePath, aggregatedResultsInFancyString);
             Console.WriteLine($"Execution times aggregated and written to {aggregatedOutputFilePath}");
 

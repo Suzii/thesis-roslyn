@@ -2,8 +2,9 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
+using ReportAnalyzerTimes.Models;
 
-namespace ReportAnalyzerTimesParser
+namespace ReportAnalyzerTimes.Parser
 {
     class MsBuildLogParser
     {
