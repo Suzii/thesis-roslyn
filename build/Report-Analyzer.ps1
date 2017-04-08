@@ -70,14 +70,18 @@ function Program
 
     $MsBuildLogFile = "$TmpFolder\msbuild-output.txt"
     $AggregatedResultsPrefix = "$TmpFolder\aggregated-single-run-"
-    
+    [System.Array] $MsbuildTimes = @();
+
     For ($Index = 0; $Index -lt $NumberOfRuns; $Index++)
     {
-        #Run-MsBuildWithReportAnalyzer -ProjectOrSolutionFilePath $AnalyzedProjectOrSolution -OutputFile $MsBuildLogFile
+        Run-MsBuildWithReportAnalyzer -ProjectOrSolutionFilePath $AnalyzedProjectOrSolution -OutputFile $MsBuildLogFile
     
+        # $Sec = (Measure-Command { Parse-AnalyzerExecutionTimesFromSingleRun -InputFile $MsBuildLogFile -OutputFile "$AggregatedResultsPrefix$Index.txt"}).TotalSeconds
+        # $MsbuildTimes += $Sec
         Parse-AnalyzerExecutionTimesFromSingleRun -InputFile $MsBuildLogFile -OutputFile "$AggregatedResultsPrefix$Index.txt"
     }
 
+    # $MsbuildTimes | Export-Csv "$TmpFolder\msbuild-times.csv" -Delimiter ";" -NoTypeInformation
     Aggregate-ResultsFromMultipleRuns -InputFilePrefix $AggregatedResultsPrefix -NumberOfRuns $NumberOfRuns -OutputFile $OutputFile
 }
 
@@ -85,5 +89,6 @@ function Program
 $TmpFolder = "C:\tmp"
 $AnalyzedProjectOrSolution = "C:\TFS\CMS\MAIN\CMSSolution\CMSSolution.sln"
 $OutputFile = "$TmpFolder\aggregated.csv"
+$NumberOfRuns = 1000
 
-Program -ProjectOrSolutionFilePath $AnalyzedProjectOrSolution -NumberOfRuns 5 -TmpFolder $TmpFolder -OutputFile $OutputFile
+Program -ProjectOrSolutionFilePath $AnalyzedProjectOrSolution -NumberOfRuns $NumberOfRuns -TmpFolder $TmpFolder -OutputFile $OutputFile
