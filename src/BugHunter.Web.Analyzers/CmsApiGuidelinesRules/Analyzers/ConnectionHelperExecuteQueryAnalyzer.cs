@@ -29,7 +29,7 @@ namespace BugHunter.Web.Analyzers.CmsApiGuidelinesRules.Analyzers
             new[] { "CMS.DataEngine.ConnectionHelper" },
             new[] { "ExecuteQuery" });
 
-        private static readonly ISyntaxNodeAnalyzer analyzer = new Analyzer(config);
+        private static readonly ISyntaxNodeAnalyzer analyzer = new InnerMethodInvocationAnalyzer(config);
 
         public override void Initialize(AnalysisContext context)
         {
@@ -39,9 +39,9 @@ namespace BugHunter.Web.Analyzers.CmsApiGuidelinesRules.Analyzers
             context.RegisterSyntaxNodeAction(analyzer.Run, SyntaxKind.InvocationExpression);
         }
 
-        internal class Analyzer : MethodInvocationAnalyzer
+        internal class InnerMethodInvocationAnalyzer : MethodInvocationAnalyzer
         {
-            public Analyzer(ApiReplacementConfig config) : base(config, DiagnosticFormatterFactory.CreateMemberInvocationFormatter())
+            public InnerMethodInvocationAnalyzer(ApiReplacementConfig config) : base(config, DiagnosticFormatterFactory.CreateMemberInvocationFormatter())
             {
             }
 

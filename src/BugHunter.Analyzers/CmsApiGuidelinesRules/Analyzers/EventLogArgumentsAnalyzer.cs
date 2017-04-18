@@ -29,7 +29,7 @@ namespace BugHunter.Analyzers.CmsApiGuidelinesRules.Analyzers
             new []{ "CMS.EventLog.EventLogProvider" },
             new []{ "LogEvent" });
         
-        private static readonly ISyntaxNodeAnalyzer analyzer = new Analyzer(config);
+        private static readonly ISyntaxNodeAnalyzer analyzer = new InnerMethodInvocationAnalyzer(config);
 
         public override void Initialize(AnalysisContext context)
         {
@@ -39,11 +39,11 @@ namespace BugHunter.Analyzers.CmsApiGuidelinesRules.Analyzers
             context.RegisterSyntaxNodeAction(analyzer.Run, SyntaxKind.InvocationExpression);
         }
 
-        internal class Analyzer : MethodInvocationAnalyzer
+        internal class InnerMethodInvocationAnalyzer : MethodInvocationAnalyzer
         {
             private static readonly string[] ForbiddenEventTypeArgs = { "\"I\"", "\"W\"", "\"E\"" };
 
-            public Analyzer(ApiReplacementConfig config) : base(config, new EventLogArgumentsDiagnosticFormatter())
+            public InnerMethodInvocationAnalyzer(ApiReplacementConfig config) : base(config, new EventLogArgumentsDiagnosticFormatter())
             {
             }
 

@@ -31,7 +31,7 @@ namespace BugHunter.Web.Analyzers.CmsApiGuidelinesRules.Analyzers
             new[] { "CMS.Helpers.ValidationHelper" },
             new[] { "GetDouble", "GetDecimal", "GetDate", "GetDateTime" });
 
-        private static readonly ISyntaxNodeAnalyzer analyzer = new Analyzer(config);
+        private static readonly ISyntaxNodeAnalyzer analyzer = new InnerMethodInvocationAnalyzer(config);
 
         public override void Initialize(AnalysisContext context)
         {
@@ -41,9 +41,9 @@ namespace BugHunter.Web.Analyzers.CmsApiGuidelinesRules.Analyzers
             context.RegisterSyntaxNodeAction(analyzer.Run, SyntaxKind.InvocationExpression);
         }
 
-        internal class Analyzer : MethodInvocationAnalyzer
+        internal class InnerMethodInvocationAnalyzer : MethodInvocationAnalyzer
         {
-            public Analyzer(ApiReplacementConfig config) : base(config, DiagnosticFormatterFactory.CreateMemberInvocationOnlyFormatter(true))
+            public InnerMethodInvocationAnalyzer(ApiReplacementConfig config) : base(config, DiagnosticFormatterFactory.CreateMemberInvocationOnlyFormatter(true))
             {
             }
 
