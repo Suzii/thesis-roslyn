@@ -11,18 +11,18 @@ namespace BugHunter.Core.Analyzers
 {
     public class SimpleMemberAccessAnalyzer : ISyntaxNodeAnalyzer
     {
-        protected readonly ApiReplacementConfig Config;
-        protected readonly ISyntaxNodeDiagnosticFormatter<MemberAccessExpressionSyntax> Formatter;
+        private readonly ApiReplacementConfig _config;
+        private readonly ISyntaxNodeDiagnosticFormatter<MemberAccessExpressionSyntax> _formatter;
         
         public SimpleMemberAccessAnalyzer(ApiReplacementConfig config, ISyntaxNodeDiagnosticFormatter<MemberAccessExpressionSyntax> formatter)
         {
-            Config = config;
-            Formatter = formatter;
+            _config = config;
+            _formatter = formatter;
         }
 
         public void Run(SyntaxNodeAnalysisContext context)
         {
-            var memberAccess = (MemberAccessExpressionSyntax)context.Node;
+            var memberAccess = (MemberAccessExpressionSyntax)context.Node;  
             if (memberAccess == null)
             {
                 return;
@@ -33,22 +33,22 @@ namespace BugHunter.Core.Analyzers
                 return;
             }
 
-            var diagnostic = Formatter.CreateDiagnostic(Config.Rule, memberAccess);
+            var diagnostic = _formatter.CreateDiagnostic(_config.Rule, memberAccess);
             context.ReportDiagnostic(diagnostic);
         }
 
 
-        protected bool IsForbiddenUsage(SyntaxNodeAnalysisContext context, MemberAccessExpressionSyntax memberAccess)
+        private bool IsForbiddenUsage(SyntaxNodeAnalysisContext context, MemberAccessExpressionSyntax memberAccess)
         {
             var memberName = memberAccess.Name.ToString();
-            if (Config.ForbiddenMembers.All(forbiddenMember => forbiddenMember != memberName))
+            if (_config.ForbiddenMembers.All(forbiddenMember => forbiddenMember != memberName))
             {
                 return false;
             }
 
             var actualTargetType = context.SemanticModel.GetTypeInfo(memberAccess.Expression).Type as INamedTypeSymbol;
 
-            return actualTargetType != null && Config.ForbiddenTypes.Any(forbidenType => actualTargetType.IsDerivedFrom(forbidenType, context.Compilation));
+            return actualTargetType != null && _config.ForbiddenTypes.Any(forbidenType => actualTargetType.IsDerivedFrom(forbidenType, context.Compilation));
         }
     }
 }

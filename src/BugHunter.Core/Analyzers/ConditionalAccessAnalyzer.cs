@@ -12,13 +12,13 @@ namespace BugHunter.Core.Analyzers
 {
     public class ConditionalAccessAnalyzer : ISyntaxNodeAnalyzer
     {
-        protected readonly ApiReplacementConfig Config;
-        protected readonly ISyntaxNodeDiagnosticFormatter<ConditionalAccessExpressionSyntax> Formatter;
+        private readonly ApiReplacementConfig _config;
+        private readonly ISyntaxNodeDiagnosticFormatter<ConditionalAccessExpressionSyntax> _formatter;
         
         public ConditionalAccessAnalyzer(ApiReplacementConfig config, ISyntaxNodeDiagnosticFormatter<ConditionalAccessExpressionSyntax> formatter)
         {
-            Config = config;
-            Formatter = formatter;
+            _config = config;
+            _formatter = formatter;
         }
 
         public void Run(SyntaxNodeAnalysisContext context)
@@ -34,22 +34,22 @@ namespace BugHunter.Core.Analyzers
                 return;
             }
 
-            var diagnostic = Formatter.CreateDiagnostic(Config.Rule, conditionalAccess);
+            var diagnostic = _formatter.CreateDiagnostic(_config.Rule, conditionalAccess);
             context.ReportDiagnostic(diagnostic);
         }
 
-        protected bool IsForbiddenUsage(SyntaxNodeAnalysisContext context, ConditionalAccessExpressionSyntax conditionalAccess)
+        private bool IsForbiddenUsage(SyntaxNodeAnalysisContext context, ConditionalAccessExpressionSyntax conditionalAccess)
         {
             var whereNotNull = conditionalAccess.WhenNotNull.ToString();
             // TODO what if usage is just prefix of forbidden member name
-            if (Config.ForbiddenMembers.All(forbiddenMember => !whereNotNull.StartsWith("."+forbiddenMember, StringComparison.Ordinal)))
+            if (_config.ForbiddenMembers.All(forbiddenMember => !whereNotNull.StartsWith("."+forbiddenMember, StringComparison.Ordinal)))
             {
                 return false;
             }
 
             var actualTargetType = context.SemanticModel.GetTypeInfo(conditionalAccess.Expression).Type as INamedTypeSymbol;
 
-            return actualTargetType != null && Config.ForbiddenTypes.Any(forbidenType => actualTargetType.IsDerivedFrom(forbidenType, context.Compilation));
+            return actualTargetType != null && _config.ForbiddenTypes.Any(forbidenType => actualTargetType.IsDerivedFrom(forbidenType, context.Compilation));
         }
     }
 }
