@@ -11,7 +11,7 @@ namespace ReportAnalyzerTimes.Parser
         // matches any number of lines for analyzer times
         private static readonly Regex ExecutionTimesForProjectRegex = new Regex(@"Total analyzer execution time: (.*) seconds(?:.*\n){1,4}\s*Time(?:.*\n){2}((?:.*\n){1,}?)\s+Output Item\(s\):", RegexOptions.Multiline);
 
-        private static readonly Regex ExecutionTimePerAnalyzerRegex = new Regex(@"[\s]*[<]?((?:\d+)\.(?:\d+))[^B]*([\S]+)", RegexOptions.Compiled);
+        private static readonly Regex ExecutionTimePerAnalyzerRegex = new Regex(@"[\s]+[<]?((?:\d+)\.(?:\d+))[^B]*([\S]+) \(TaskId:[\d]+\)", RegexOptions.Compiled);
 
         /// <summary>
         /// Parses the <param name="logContents"></param> of the MSBuild process for analyzer execution times 
