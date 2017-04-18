@@ -1,5 +1,4 @@
-﻿using System.Collections.Concurrent;
-using System.Collections.Immutable;
+﻿using System.Collections.Immutable;
 using System.Linq;
 using BugHunter.Core.DiagnosticsFormatting;
 using BugHunter.Core.Extensions;
@@ -8,7 +7,7 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
 
-namespace BugHunter.SystemIO.Analyzers.Analyzers
+namespace BugHunter.AnalyzersVersions.SystemIO
 {
     /// <summary>
     /// Searches for usages of <see cref="System.IO"/> and their access to anything other than <c>Exceptions</c> or <c>Stream</c>
@@ -16,9 +15,9 @@ namespace BugHunter.SystemIO.Analyzers.Analyzers
     /// Version with callback on IdentifierName and analyzing Symbol directly
     /// </summary>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class V11_IdentifierName_EnhancedSyntaxAnalysisAndSymbolAnalysisWithCachedResults : DiagnosticAnalyzer
+    public class V10_IdentifierName_EnhancedSyntaxAnalysisAndSymbolAnalysis : DiagnosticAnalyzer
     {
-        public const string DIAGNOSTIC_ID = "V11";
+        public const string DIAGNOSTIC_ID = "V10";
         private static readonly DiagnosticDescriptor Rule = AnalyzerHelper.GetRule(DIAGNOSTIC_ID);
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
 
@@ -29,15 +28,10 @@ namespace BugHunter.SystemIO.Analyzers.Analyzers
             context.EnableConcurrentExecution();
             context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.None);
 
-            context.RegisterCompilationStartAction(compilationStartContext =>
-            {
-                var filesWithSystemIoUsing = new ConcurrentDictionary<string, bool?>();
-
-                compilationStartContext.RegisterSyntaxNodeAction(c => Analyze(c, filesWithSystemIoUsing), SyntaxKind.IdentifierName);
-            });
+            context.RegisterSyntaxNodeAction(Analyze, SyntaxKind.IdentifierName);
         }
 
-        private static void Analyze(SyntaxNodeAnalysisContext context, ConcurrentDictionary<string, bool?> filesWithSystemIoUsing)
+        private static void Analyze(SyntaxNodeAnalysisContext context)
         {
             var identifierNameSyntax = (IdentifierNameSyntax)context.Node;
             if (identifierNameSyntax == null || identifierNameSyntax.IsVar)
@@ -46,8 +40,7 @@ namespace BugHunter.SystemIO.Analyzers.Analyzers
             }
 
             // quick only syntax based analysis
-            var fileContainsSystemIoUsing = FileContainsSystemIoUsing(identifierNameSyntax, filesWithSystemIoUsing);
-            if (fileContainsSystemIoUsing.HasValue && !fileContainsSystemIoUsing.Value)
+            if (!FileContainsSystemIoUsing(identifierNameSyntax))
             {
                 // identifier name must be fully qualified - look for System.IO there
                 var rootIdentifierName = GetOuterMostParentOfDottedExpression(identifierNameSyntax);
@@ -89,7 +82,7 @@ namespace BugHunter.SystemIO.Analyzers.Analyzers
             var diagnosedNode = rootOfDottedExpression.Parent.IsKind(SyntaxKind.ObjectCreationExpression)
                 ? rootOfDottedExpression.Parent
                 : rootOfDottedExpression;
-            
+
             return DiagnosticFormatter.CreateDiagnostic(rule, diagnosedNode);
         }
 
@@ -107,33 +100,18 @@ namespace BugHunter.SystemIO.Analyzers.Analyzers
             return diagnosedNode;
         }
 
-        private static bool? FileContainsSystemIoUsing(SyntaxNode identifierNameSyntax,
-            ConcurrentDictionary<string, bool?> filesWithSystemIoUsing)
+        private static bool FileContainsSystemIoUsing(SyntaxNode identifierNameSyntax)
         {
-            var syntaxTree = identifierNameSyntax.SyntaxTree;
+            var allUsings = identifierNameSyntax
+                .AncestorsAndSelf()
+                .OfType<CompilationUnitSyntax>()
+                .SingleOrDefault()
+                .Usings;
 
-            bool? result;
-            var contains = filesWithSystemIoUsing.TryGetValue(syntaxTree.FilePath, out result);
+            var systemIoUsings = allUsings
+                .Where(u => u.ToString().Contains("System.IO"));
 
-            if (contains)
-            {
-                return result;
-            }
-
-            var root = syntaxTree.HasCompilationUnitRoot ? syntaxTree.GetCompilationUnitRoot() : null;
-
-            if (root == null)
-            {
-                return filesWithSystemIoUsing
-                    .AddOrUpdate(syntaxTree.FilePath, key => null, (key, originalVal) => null);
-            }
-
-            var containsSystemIoUsing = root
-                .Usings
-                .Any(u => u.ToString().Contains("System.IO"));
-
-            return filesWithSystemIoUsing
-                .AddOrUpdate(syntaxTree.FilePath, key => containsSystemIoUsing, (key, originalVal) => containsSystemIoUsing);
+            return systemIoUsings.Any();
         }
     }
 }

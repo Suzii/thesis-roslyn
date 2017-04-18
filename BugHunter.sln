@@ -23,7 +23,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{B741B288-9
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Analyzers", "Analyzers", "{B611CCFE-FC58-4E12-A76A-10BA4E214ED7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BugHunter.SystemIO.Analyzers", "src\BugHunter.SystemIO.Analyzers\BugHunter.SystemIO.Analyzers.csproj", "{D76F57E5-C4F0-4593-AA83-613301C7F5AB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BugHunter.SystemIO.Analyzers", "src\BugHunter.AnalyzersVersions\BugHunter.AnalyzersVersions.csproj", "{D76F57E5-C4F0-4593-AA83-613301C7F5AB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

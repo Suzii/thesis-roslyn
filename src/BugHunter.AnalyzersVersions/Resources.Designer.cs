@@ -8,11 +8,9 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace BugHunter.SystemIO.Analyzers {
-    using System;
-    using System.Reflection;
-    
-    
+using System.Reflection;
+
+namespace BugHunter.AnalyzersVersions {
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>

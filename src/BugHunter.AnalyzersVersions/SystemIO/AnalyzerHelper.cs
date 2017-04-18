@@ -4,7 +4,7 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-namespace BugHunter.SystemIO.Analyzers.Analyzers
+namespace BugHunter.AnalyzersVersions.SystemIO
 {
     public static class AnalyzerHelper
     {

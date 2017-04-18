@@ -8,8 +8,8 @@
     <ProjectGuid>{D76F57E5-C4F0-4593-AA83-613301C7F5AB}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BugHunter.SystemIO.Analyzers</RootNamespace>
-    <AssemblyName>BugHunter.SystemIO.Analyzers</AssemblyName>
+    <RootNamespace>BugHunter.AnalyzersVersions</RootNamespace>
+    <AssemblyName>BugHunter.AnalyzersVersions</AssemblyName>
     <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <TargetFrameworkProfile>Profile7</TargetFrameworkProfile>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
@@ -104,24 +104,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Analyzers\AnalyzerHelper.cs" />
-    <Compile Include="Analyzers\V00_EmptyCallbackOnIdentiferName.cs" />
-    <Compile Include="Analyzers\V11_IdentifierName_EnhancedSyntaxAnalysisAndSymbolAnalysisWithCachedResults.cs" />
-    <Compile Include="Analyzers\V02_IdentifierName_SymbolAnalysis.cs" />
-    <Compile Include="Analyzers\V09_CompilationStartSyntaxTreeAndEnd_FulltextSearchAndSymbolParallelExecutionAndAnallysis_WithBag.cs" />
-    <Compile Include="Analyzers\V08_CompilationStartSyntaxTreeAndEnd_FulltextSearchAndSymbolParallelAnallysis_WithBag.cs" />
+    <Compile Include="SystemIO\AnalyzerHelper.cs" />
+    <Compile Include="SystemIO\V00_EmptyCallbackOnIdentiferName.cs" />
+    <Compile Include="SystemIO\V11_IdentifierName_EnhancedSyntaxAnalysisAndSymbolAnalysisWithCachedResults.cs" />
+    <Compile Include="SystemIO\V02_IdentifierName_SymbolAnalysis.cs" />
+    <Compile Include="SystemIO\V09_CompilationStartSyntaxTreeAndEnd_FulltextSearchAndSymbolParallelExecutionAndAnallysis_WithBag.cs" />
+    <Compile Include="SystemIO\V08_CompilationStartSyntaxTreeAndEnd_FulltextSearchAndSymbolParallelAnallysis_WithBag.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Analyzers\V01_IdentifierName_StrignAndSymbolComparison.cs" />
-    <Compile Include="Analyzers\V10_IdentifierName_EnhancedSyntaxAnalysisAndSymbolAnalysis.cs" />
-    <Compile Include="Analyzers\V04_CompilationStartAndIdentifierName_SymbolAnalysis.cs" />
-    <Compile Include="Analyzers\V05_CompilationStartIdentifierNameAndEnd_SymbolAnalysis_WithBag.cs" />
-    <Compile Include="Analyzers\V06_CompilationStartAndSyntaxTree_LookForIdentifierNames.cs" />
-    <Compile Include="Analyzers\V07_CompilationStartSyntaxTreeAndEnd_FulltextSearchAndSymbolAnallysis_WithBag.cs" />
+    <Compile Include="SystemIO\V01_IdentifierName_StrignAndSymbolComparison.cs" />
+    <Compile Include="SystemIO\V10_IdentifierName_EnhancedSyntaxAnalysisAndSymbolAnalysis.cs" />
+    <Compile Include="SystemIO\V04_CompilationStartAndIdentifierName_SymbolAnalysis.cs" />
+    <Compile Include="SystemIO\V05_CompilationStartIdentifierNameAndEnd_SymbolAnalysis_WithBag.cs" />
+    <Compile Include="SystemIO\V06_CompilationStartAndSyntaxTree_LookForIdentifierNames.cs" />
+    <Compile Include="SystemIO\V07_CompilationStartSyntaxTreeAndEnd_FulltextSearchAndSymbolAnallysis_WithBag.cs" />
   </ItemGroup>
   <ItemGroup>
     <Analyzer Include="..\..\packages\Microsoft.CodeAnalysis.Analyzers.1.1.0\analyzers\dotnet\cs\Microsoft.CodeAnalysis.Analyzers.dll" />

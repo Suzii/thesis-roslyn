@@ -674,7 +674,7 @@
       <Project>{94312e36-802c-40fa-a07e-f479e74b61c2}</Project>
       <Name>BugHunter.Analyzers</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\src\BugHunter.SystemIO.Analyzers\BugHunter.SystemIO.Analyzers.csproj">
+    <ProjectReference Include="..\..\src\BugHunter.AnalyzersVersions\BugHunter.AnalyzersVersions.csproj">
       <Project>{d76f57e5-c4f0-4593-aa83-613301c7f5ab}</Project>
       <Name>BugHunter.SystemIO.Analyzers</Name>
     </ProjectReference>
