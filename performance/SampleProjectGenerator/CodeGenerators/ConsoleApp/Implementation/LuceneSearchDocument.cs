@@ -6,7 +6,7 @@ namespace SampleProjectGenerator.CodeGenerators.ConsoleApp.Implementation
     {
         public override FakeFileInfo GetFakeFileInfo(int index) => new FakeFileInfo(nameof(LuceneSearchDocument), index);
 
-        protected override int NumberOfDiagnosticsInBody { get; } = 3;
+        protected override int NumberOfDiagnosticsInBody { get; } = 5;
 
         protected override string GetClassPrefix(int index)
         {
@@ -24,7 +24,9 @@ namespace SampleTestProject.CsSamples
             return $@"
         private LuceneSearchDocument Method{iterationNumber}(LuceneSearchDocument doc)
         {{
-            LuceneSearchDocument badVariable = new LuceneSearchDocument();
+            LuceneSearchDocument badVariable1 = new LuceneSearchDocument();
+            LuceneSearchDocument badVariable2 = new LuceneSearchDocument();
+            LuceneSearchDocument badVariable3 = new LuceneSearchDocument();
 
             return new System.Random().Next(2) < 1 ? null : new LuceneSearchDocument();
         }}";

@@ -8,12 +8,21 @@ namespace SampleProjectGenerator
 {
     internal class Program
     {
-        private static readonly int DesiredNumberOfDiagnosticsTotal = 350;
+        // must be divisible by 10 and *NumberOfFilesPerAnalyzer*
+        private static readonly int DesiredNumberOfDiagnosticsTotal = 20;
 
-        private static readonly int NumberOfFilesPerAnalyzer = 70;
+        private static readonly int NumberOfFilesPerAnalyzer = 2;
         
         private static void Main(string[] args)
         {
+            if (DesiredNumberOfDiagnosticsTotal % 10 != 0 || NumberOfFilesPerAnalyzer % NumberOfFilesPerAnalyzer != 0)
+            {
+                Console.WriteLine("Make sure to adjust the constants correctly. 'DesiredNumberOfDiagnosticsTotal' must be divisible by 10 and 'NumberOfFilesPerAnalyzer'");
+                Console.WriteLine("Press any key to continue...");
+                Console.ReadKey();
+                return;
+            }
+
             var sampleProjectFolder = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\..\..\thesis-sample-test-project\SampleProject"));
             if (!Directory.Exists(sampleProjectFolder))
             {

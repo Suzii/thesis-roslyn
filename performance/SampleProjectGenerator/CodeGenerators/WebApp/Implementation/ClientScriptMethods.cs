@@ -6,7 +6,7 @@ namespace SampleProjectGenerator.CodeGenerators.WebApp.Implementation
     {
         public override FakeFileInfo GetFakeFileInfo(int index) => new FakeFileInfo(nameof(ClientScriptMethods), index);
 
-        protected override int NumberOfDiagnosticsInBody { get; } = 8;
+        protected override int NumberOfDiagnosticsInBody { get; } = 10;
 
         protected override string GetClassPrefix(int index)
         {
@@ -23,6 +23,7 @@ namespace SampleProjectGenerator.CodeGenerators.WebApp.Implementation
         {{
             var clientScript = new System.Web.UI.Page().ClientScript;
             clientScript.RegisterArrayDeclaration(""arrayName"", ""arrayValue"");
+            clientScript.RegisterArrayDeclaration(""arrayName"", ""arrayValue"");
             clientScript.RegisterClientScriptBlock(typeof(object), ""key"", ""script"");
             clientScript.RegisterClientScriptInclude(typeof(object), ""key"", ""url"");
             clientScript.RegisterStartupScript(typeof(object), ""key"", ""script"");
@@ -30,6 +31,7 @@ namespace SampleProjectGenerator.CodeGenerators.WebApp.Implementation
 
         public void SampleMethodB{iterationNumber}()
         {{
+            new System.Web.UI.Page().ClientScript.RegisterArrayDeclaration(""arrayName"", ""arrayValue"");
             new System.Web.UI.Page().ClientScript.RegisterArrayDeclaration(""arrayName"", ""arrayValue"");
             new System.Web.UI.Page().ClientScript.RegisterClientScriptBlock(typeof(object), ""key"", ""script"");
             new System.Web.UI.Page().ClientScript.RegisterClientScriptInclude(typeof(object), ""key"", ""url"");

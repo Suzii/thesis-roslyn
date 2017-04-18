@@ -6,7 +6,7 @@ namespace SampleProjectGenerator.CodeGenerators.WebApp.Implementation
     {
         public override FakeFileInfo GetFakeFileInfo(int index) => new FakeFileInfo(nameof(HttpRequestUrl), index);
 
-        protected override int NumberOfDiagnosticsInBody { get; } = 4;
+        protected override int NumberOfDiagnosticsInBody { get; } = 5;
 
         protected override string GetClassBodyToRepeat(int iterationNumber)
         {
@@ -23,6 +23,7 @@ namespace SampleProjectGenerator.CodeGenerators.WebApp.Implementation
             var request = new System.Web.HttpRequestWrapper(new System.Web.HttpRequest(""fileName"", ""url"", ""queryString""));
             var url = request.Url;
             var useless = request.Url.Host.Contains(""Oooops..."");
+            var useless2 = request?.Url?.Host.Contains(""Oooops..."").ToString();
         }}";
         }
     }

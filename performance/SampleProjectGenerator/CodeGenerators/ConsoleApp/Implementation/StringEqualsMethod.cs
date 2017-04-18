@@ -6,7 +6,7 @@ namespace SampleProjectGenerator.CodeGenerators.ConsoleApp.Implementation
     {
         public override FakeFileInfo GetFakeFileInfo(int index) => new FakeFileInfo(nameof(StringEqualsMethod), index);
 
-        protected override int NumberOfDiagnosticsInBody { get; } = 4;
+        protected override int NumberOfDiagnosticsInBody { get; } = 5;
 
         protected override string GetClassBodyToRepeat(int iterationNumber)
         {
@@ -22,6 +22,7 @@ namespace SampleProjectGenerator.CodeGenerators.ConsoleApp.Implementation
 
             var original = ""Original string"";
             var result2 = original.Substring(0).Equals(""a"").ToString();
+            var result3 = original?.Substring(0)?.Equals(""a"").ToString();
             
             return (result1) ? result2 : string.Empty;
         }}

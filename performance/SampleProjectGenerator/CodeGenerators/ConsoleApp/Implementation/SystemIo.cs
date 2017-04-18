@@ -6,7 +6,7 @@ namespace SampleProjectGenerator.CodeGenerators.ConsoleApp.Implementation
     {
         public override FakeFileInfo GetFakeFileInfo(int index) => new FakeFileInfo(nameof(SystemIo), index);
 
-        protected override int NumberOfDiagnosticsInBody { get; } = 8;
+        protected override int NumberOfDiagnosticsInBody { get; } = 10;
 
         protected override string GetClassBodyToRepeat(int iterationNumber)
         {
@@ -44,6 +44,8 @@ namespace SampleProjectGenerator.CodeGenerators.ConsoleApp.Implementation
         public void ComplexNestedMemberAccessMethod{iterationNumber}()
         {{
             var directory = new System.IO.DirectoryInfo(System.IO.Path.GetFullPath(""./some/path""));
+            HelperMethod{iterationNumber}(System.IO.Path.DirectorySeparatorChar);
+            HelperMethod{iterationNumber}(System.IO.Path.DirectorySeparatorChar);
             HelperMethod{iterationNumber}(System.IO.Path.DirectorySeparatorChar);
         }}";
         }

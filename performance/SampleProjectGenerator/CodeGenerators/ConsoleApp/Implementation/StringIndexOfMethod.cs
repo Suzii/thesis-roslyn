@@ -5,8 +5,8 @@ namespace SampleProjectGenerator.CodeGenerators.ConsoleApp.Implementation
     public class StringIndexOfMethod : BaseConsoleAppClassCodeGenerator
     {
         public override FakeFileInfo GetFakeFileInfo(int index) => new FakeFileInfo(nameof(StringIndexOfMethod), index);
-        
-        protected override int NumberOfDiagnosticsInBody { get; } = 4;
+
+        protected override int NumberOfDiagnosticsInBody { get; } = 5;
 
         protected override string GetClassBodyToRepeat(int iterationNumber)
         {
@@ -32,6 +32,7 @@ namespace SampleProjectGenerator.CodeGenerators.ConsoleApp.Implementation
             var original = ""Original string"";
             var result3 = original.Substring(0).IndexOf(""a"").ToString();
             var result4 = original.Substring(0).LastIndexOf(""a"").ToString();
+            var result5 = original?.Substring(0)?.LastIndexOf(""a"").ToString();
             
             return result1 + result2 + result3 + result4;
         }}";

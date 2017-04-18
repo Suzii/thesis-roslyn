@@ -6,9 +6,7 @@ namespace SampleProjectGenerator.CodeGenerators.ConsoleApp.Implementation
     {
         public override FakeFileInfo GetFakeFileInfo(int index) => new FakeFileInfo(nameof(EventLogArguments), index);
 
-
-        // TODO 
-        protected override int NumberOfDiagnosticsInBody { get; } = 3;
+        protected override int NumberOfDiagnosticsInBody { get; } = 5;
 
         protected override string GetClassBodyToRepeat(int iterationNumber)
         {
@@ -17,6 +15,8 @@ namespace SampleProjectGenerator.CodeGenerators.ConsoleApp.Implementation
         {{
             CMS.EventLog.EventLogProvider.LogEvent(""I"", ""source"", ""eventCode"", ""eventDescription"");
             CMS.EventLog.EventLogProvider.LogEvent(""E"", ""source"", ""eventCode"", ""eventDescription"");
+            CMS.EventLog.EventLogProvider.LogEvent(""E"", ""source"", ""eventCode"", ""eventDescription"");
+            CMS.EventLog.EventLogProvider.LogEvent(""W"", ""source"", ""eventCode"", ""eventDescription"");
             CMS.EventLog.EventLogProvider.LogEvent(""W"", ""source"", ""eventCode"", ""eventDescription"");
             // CMS.EventLog.EventLogProvider.LogEvent(""S"", ""source"", ""eventCode"", ""eventDescription"");
             // CMS.EventLog.EventLogProvider.LogEvent(CMS.EventLog.EventType.ERROR, ""source"", ""eventCode"", ""eventDescription"");

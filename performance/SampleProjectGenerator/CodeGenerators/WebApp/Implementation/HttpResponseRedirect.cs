@@ -6,7 +6,7 @@ namespace SampleProjectGenerator.CodeGenerators.WebApp.Implementation
     {
         public override FakeFileInfo GetFakeFileInfo(int index) => new FakeFileInfo(nameof(HttpResponseRedirect), index);
         
-        protected override int NumberOfDiagnosticsInBody { get; } = 4;
+        protected override int NumberOfDiagnosticsInBody { get; } = 5;
 
         protected override string GetClassBodyToRepeat(int iterationNumber)
         {
@@ -23,6 +23,7 @@ namespace SampleProjectGenerator.CodeGenerators.WebApp.Implementation
             var response = new System.Web.HttpResponseWrapper(new System.Web.HttpResponse(null));
             new System.Web.HttpResponse(null).Redirect(""https://some/super/funky/url"");
             response.Redirect(""https://some/url"");
+            response?.Redirect(""https://some/url"");
         }}";
         }
     }

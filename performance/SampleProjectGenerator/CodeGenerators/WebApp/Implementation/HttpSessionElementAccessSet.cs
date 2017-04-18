@@ -6,7 +6,7 @@ namespace SampleProjectGenerator.CodeGenerators.WebApp.Implementation
     {
         public override FakeFileInfo GetFakeFileInfo(int index) => new FakeFileInfo(nameof(HttpSessionElementAccessSet), index);
 
-        protected override int NumberOfDiagnosticsInBody { get; } = 4;
+        protected override int NumberOfDiagnosticsInBody { get; } = 5;
 
         protected override string GetClassBodyToRepeat(int iterationNumber)
         {
@@ -16,6 +16,7 @@ namespace SampleProjectGenerator.CodeGenerators.WebApp.Implementation
             var session = System.Web.HttpContext.Current.Session;
             session[""aKey""] = ""aValue"";
             System.Web.HttpContext.Current.Session[""aKey""] = ""aValue"";
+            System.Web.HttpContext.Current.Session[""BKey""] = ""BValue"";
         }}
 
         public void SampleMethodB{iterationNumber}()

@@ -6,7 +6,7 @@ namespace SampleProjectGenerator.CodeGenerators.WebApp.Implementation
     {
         public override FakeFileInfo GetFakeFileInfo(int index) => new FakeFileInfo(nameof(HttpRequestCookies), index);
 
-        protected override int NumberOfDiagnosticsInBody { get; } = 6;
+        protected override int NumberOfDiagnosticsInBody { get; } = 5;
 
         protected override string GetClassBodyToRepeat(int iterationNumber)
         {
@@ -24,7 +24,6 @@ namespace SampleProjectGenerator.CodeGenerators.WebApp.Implementation
             var request = new System.Web.HttpRequestWrapper(new System.Web.HttpRequest(""fileName"", ""url"", ""queryString""));
             var cookies1 = new System.Web.HttpRequestWrapper(new System.Web.HttpRequest(""fileName"", ""url"", ""queryString"")).Cookies;
             var cookies2 = request.Cookies;
-            var numberOfCookies = request.Cookies.Count;
         }}";
         }
     }
