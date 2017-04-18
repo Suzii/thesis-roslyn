@@ -86,8 +86,9 @@ function Program
 }
 
 # CMSSolution
-$TmpFolder = "D:\tmp\2017-04-15"
-$AnalyzedProjectOrSolution = "C:\TFS\CMS\MAIN\CMSSolution\CMSSolution.sln"
+$TmpFolder = "D:\tmp\2017-04-18-sample-project"
+# $AnalyzedProjectOrSolution = "C:\TFS\CMS\MAIN\CMSSolution\CMSSolution.sln"
+$AnalyzedProjectOrSolution = "C:\Users\zuzanad\code\thesis\thesis-sample-test-project\SampleProject\SampleProject.sln"
 $OutputFile = "$TmpFolder\aggregated.csv"
 $NumberOfRuns = 100
 
