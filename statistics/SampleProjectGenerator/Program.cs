@@ -34,11 +34,20 @@ namespace SampleProjectGenerator
             }
 
             Console.WriteLine("Generating project...");
+            GenerateSolutionFiles(sampleProjectFolder);
+
+            Console.WriteLine($"Project files generated to {sampleProjectFolder}");
+            Console.WriteLine("Press any key to continue...");
+            Console.ReadKey();
+        }
+
+        private static void GenerateSolutionFiles(string sampleProjectFolder)
+        {
             var classCodeGenerators = GetAllClassCodeGenerators();
 
             foreach (var codeGenerator in classCodeGenerators)
             {
-                if (codeGenerator.ProjectType==ProjectType.None)
+                if (codeGenerator.ProjectType == ProjectType.None)
                 {
                     continue;
                 }
@@ -47,14 +56,11 @@ namespace SampleProjectGenerator
 
                 for (int i = 0; i < NumberOfFilesPerAnalyzer; i++)
                 {
-                    var documentPath = Path.Combine(sampleProjectFolder, RelativeDocumentPaths.Get(codeGenerator.ProjectType), codeGenerator.GetFakeFileInfo(i).FullFilePath);
+                    var documentPath = Path.Combine(sampleProjectFolder, RelativeDocumentPaths.Get(codeGenerator.ProjectType),
+                        codeGenerator.GetFakeFileInfo(i).FullFilePath);
                     File.WriteAllText(documentPath, generatedClasses[i]);
                 }
             }
-
-            Console.WriteLine($"Project files generated to {sampleProjectFolder}");
-            Console.WriteLine("Press any key to continue...");
-            Console.ReadKey();
         }
 
         private static IEnumerable<IClassCodeGenerator> GetAllClassCodeGenerators()

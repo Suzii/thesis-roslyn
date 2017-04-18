@@ -2,7 +2,7 @@
 
 namespace SampleProjectGenerator.CodeGenerators.BaseClassRules.Implementation
 {
-    public class ModuleRegistration : BaseForBaseClassesCodeGenerator
+    internal class ModuleRegistration : BaseForBaseClassesCodeGenerator
     {
         public override FakeFileInfo GetFakeFileInfo(int index)
         {

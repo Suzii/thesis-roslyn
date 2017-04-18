@@ -5,6 +5,9 @@ using BugHunter.TestUtils.Helpers;
 
 namespace SampleProjectGenerator.CodeGenerators
 {
+    /// <summary>
+    /// Base class for class code generators, handling the combining of pieces of the class into one whole
+    /// </summary>
     public abstract class BaseClassCodeGenerator : IClassCodeGenerator
     {
         public abstract  ProjectType ProjectType { get; }
