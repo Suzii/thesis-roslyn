@@ -114,6 +114,7 @@
     <Compile Include="DiagnosticsFormatting\MemberAccessDiagnosticFormatterTests.cs" />
     <Compile Include="DiagnosticsFormatting\MemberInvocationDiagnosticFormatterTests.cs" />
     <Compile Include="Extensions\ClassDeclarationSyntaxExtenstionsTest.cs" />
+    <Compile Include="Extensions\IdentifierNameSyntaxExtensionsTest.cs" />
     <Compile Include="Extensions\InvocationExpressionSyntaxExtenstionsTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

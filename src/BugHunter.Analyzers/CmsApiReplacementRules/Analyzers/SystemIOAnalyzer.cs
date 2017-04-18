@@ -31,7 +31,7 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.Analyzers
 
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
 
-        private static readonly ISyntaxNodeDiagnosticFormatter<SyntaxNode> DiagnosticFormatter = DiagnosticFormatterFactory.CreateDefaultFormatter();
+        private static readonly ISyntaxNodeDiagnosticFormatter<IdentifierNameSyntax> DiagnosticFormatter = new SystemIoDiagnosticFormatter();
 
         public override void Initialize(AnalysisContext context)
         {
@@ -59,7 +59,7 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.Analyzers
             if (fileContainsSystemIoUsing.HasValue && !fileContainsSystemIoUsing.Value)
             {
                 // identifier name must be fully qualified - look for System.IO there
-                var rootIdentifierName = GetOuterMostParentOfDottedExpression(identifierNameSyntax);
+                var rootIdentifierName = identifierNameSyntax.GetOuterMostParentOfDottedExpression();
 
                 // if not System.IO or if exception or string are used, return
                 var rootIdentifierNameText = rootIdentifierName.ToString();
@@ -92,32 +92,8 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.Analyzers
                 return;
             }
 
-            var diagnostic = CreateDiagnostic(Rule, identifierNameSyntax);
+            var diagnostic = DiagnosticFormatter.CreateDiagnostic(Rule, identifierNameSyntax);
             context.ReportDiagnostic(diagnostic);
-        }
-
-        private static Diagnostic CreateDiagnostic(DiagnosticDescriptor rule, IdentifierNameSyntax identifierName)
-        {
-            var rootOfDottedExpression = GetOuterMostParentOfDottedExpression(identifierName);
-            var diagnosedNode = rootOfDottedExpression.Parent.IsKind(SyntaxKind.ObjectCreationExpression)
-                ? rootOfDottedExpression.Parent
-                : rootOfDottedExpression;
-
-            return DiagnosticFormatter.CreateDiagnostic(rule, diagnosedNode);
-        }
-
-        // TODO add unit tests
-        private static SyntaxNode GetOuterMostParentOfDottedExpression(IdentifierNameSyntax identifierNameSyntax)
-        {
-            SyntaxNode diagnosedNode = identifierNameSyntax;
-            while (diagnosedNode?.Parent != null && (diagnosedNode.Parent.IsKind(SyntaxKind.QualifiedName) ||
-                                                     diagnosedNode.Parent.IsKind(SyntaxKind.SimpleMemberAccessExpression) ||
-                                                     diagnosedNode.Parent.IsKind(SyntaxKind.InvocationExpression)))
-            {
-                diagnosedNode = diagnosedNode.Parent;
-            }
-
-            return diagnosedNode;
         }
 
         private static bool? FileContainsSystemIoUsing(SyntaxNode identifierNameSyntax,
@@ -147,6 +123,25 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.Analyzers
 
             return filesWithSystemIoUsing
                 .AddOrUpdate(syntaxTree.FilePath, key => containsSystemIoUsing, (key, originalVal) => containsSystemIoUsing);
+        }
+
+        private class SystemIoDiagnosticFormatter : ISyntaxNodeDiagnosticFormatter<IdentifierNameSyntax>
+        {
+            public Diagnostic CreateDiagnostic(DiagnosticDescriptor descriptor, IdentifierNameSyntax identifierName)
+            {
+                var rootOfDottedExpression = identifierName.GetOuterMostParentOfDottedExpression();
+                var diagnosedNode = rootOfDottedExpression.Parent.IsKind(SyntaxKind.ObjectCreationExpression) || rootOfDottedExpression.Parent.IsKind(SyntaxKind.InvocationExpression)
+                    ? rootOfDottedExpression.Parent
+                    : rootOfDottedExpression;
+
+                return Diagnostic.Create(descriptor, GetLocation(diagnosedNode), GetDiagnosedUsage(diagnosedNode));
+            }
+
+            private Location GetLocation(SyntaxNode syntaxNode)
+            => syntaxNode?.GetLocation();
+
+            private string GetDiagnosedUsage(SyntaxNode syntaxNode)
+                => syntaxNode?.ToString() ?? string.Empty;
         }
     }
 }

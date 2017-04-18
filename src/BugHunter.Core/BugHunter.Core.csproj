@@ -109,6 +109,7 @@
     <Compile Include="Extensions\ClassDeclarationSyntaxExtensions.cs" />
     <Compile Include="Extensions\ConditionalAccessExpressionSyntaxExtensions.cs" />
     <Compile Include="Extensions\DiagnosticExtensions.cs" />
+    <Compile Include="Extensions\IdentifierNameSyntaxExtensions.cs" />
     <Compile Include="Extensions\IEnumerableExtensions.cs" />
     <Compile Include="Extensions\InvocationExpressionSyntaxExtensions.cs" />
     <Compile Include="Extensions\StringExtenstions.cs" />
