@@ -1,6 +1,7 @@
 ﻿using System.Collections.Concurrent;
 using System.Collections.Immutable;
 using System.Linq;
+using BugHunter.AnalyzersVersions.SystemIO.Helpers;
 using BugHunter.Core.DiagnosticsFormatting;
 using BugHunter.Core.Extensions;
 using Microsoft.CodeAnalysis;
@@ -21,8 +22,7 @@ namespace BugHunter.AnalyzersVersions.SystemIO
         public const string DIAGNOSTIC_ID = "V11";
         private static readonly DiagnosticDescriptor Rule = AnalyzerHelper.GetRule(DIAGNOSTIC_ID);
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
-
-        private static readonly ISyntaxNodeDiagnosticFormatter<SyntaxNode> DiagnosticFormatter = DiagnosticFormatterFactory.CreateDefaultFormatter();
+        private static readonly ISyntaxNodeDiagnosticFormatter<IdentifierNameSyntax> DiagnosticFormatter = new SystemIoDiagnosticFormatter();
 
         public override void Initialize(AnalysisContext context)
         {
@@ -50,12 +50,14 @@ namespace BugHunter.AnalyzersVersions.SystemIO
             if (fileContainsSystemIoUsing.HasValue && !fileContainsSystemIoUsing.Value)
             {
                 // identifier name must be fully qualified - look for System.IO there
-                var rootIdentifierName = GetOuterMostParentOfDottedExpression(identifierNameSyntax);
+                var rootIdentifierName = identifierNameSyntax.GetOuterMostParentOfDottedExpression();
 
                 // if not System.IO or if exception or string are used, return
-                if (!rootIdentifierName.ToString().Contains("System.IO")
-                    || rootIdentifierName.ToString().Contains("IOException")
-                    || rootIdentifierName.ToString().Contains("Stream"))
+                var rootIdentifierNameText = rootIdentifierName.ToString();
+                if (!rootIdentifierNameText.Contains("System.IO")
+                    || rootIdentifierNameText.Contains("IOException")
+                    || rootIdentifierNameText.Contains("Stream")
+                    || rootIdentifierNameText.Contains("SeekOrigin"))
                 {
                     return;
                 }
@@ -67,6 +69,7 @@ namespace BugHunter.AnalyzersVersions.SystemIO
                 return;
             }
 
+            // leave like this, not StartsWith() - e.g. System.IO.Compression is okay
             var symbolContainingNamespace = symbol.ContainingNamespace;
             if (!symbolContainingNamespace.ToString().Equals("System.IO"))
             {
@@ -74,37 +77,14 @@ namespace BugHunter.AnalyzersVersions.SystemIO
             }
 
             if (symbol.ConstructedFrom.IsDerivedFrom("System.IO.IOException", context.Compilation) ||
-                symbol.ConstructedFrom.IsDerivedFrom("System.IO.Stream", context.Compilation))
+                symbol.ConstructedFrom.IsDerivedFrom("System.IO.Stream", context.Compilation) ||
+                symbol.ConstructedFrom.IsDerivedFrom("System.IO.SeekOrigin", context.Compilation))
             {
                 return;
             }
 
-            var diagnostic = CreateDiagnostic(Rule, identifierNameSyntax);
+            var diagnostic = DiagnosticFormatter.CreateDiagnostic(Rule, identifierNameSyntax);
             context.ReportDiagnostic(diagnostic);
-        }
-
-        private static Diagnostic CreateDiagnostic(DiagnosticDescriptor rule, IdentifierNameSyntax identifierName)
-        {
-            var rootOfDottedExpression = GetOuterMostParentOfDottedExpression(identifierName);
-            var diagnosedNode = rootOfDottedExpression.Parent.IsKind(SyntaxKind.ObjectCreationExpression)
-                ? rootOfDottedExpression.Parent
-                : rootOfDottedExpression;
-            
-            return DiagnosticFormatter.CreateDiagnostic(rule, diagnosedNode);
-        }
-
-        // TODO add unit tests
-        private static SyntaxNode GetOuterMostParentOfDottedExpression(IdentifierNameSyntax identifierNameSyntax)
-        {
-            SyntaxNode diagnosedNode = identifierNameSyntax;
-            while (diagnosedNode?.Parent != null && (diagnosedNode.Parent.IsKind(SyntaxKind.QualifiedName) ||
-                                                     diagnosedNode.Parent.IsKind(SyntaxKind.SimpleMemberAccessExpression) ||
-                                                     diagnosedNode.Parent.IsKind(SyntaxKind.InvocationExpression)))
-            {
-                diagnosedNode = diagnosedNode.Parent;
-            }
-
-            return diagnosedNode;
         }
 
         private static bool? FileContainsSystemIoUsing(SyntaxNode identifierNameSyntax,

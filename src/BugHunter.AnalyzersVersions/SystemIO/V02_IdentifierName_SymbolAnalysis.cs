@@ -1,4 +1,6 @@
 ﻿using System.Collections.Immutable;
+using BugHunter.AnalyzersVersions.SystemIO.Helpers;
+using BugHunter.Core.DiagnosticsFormatting;
 using BugHunter.Core.Extensions;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
@@ -18,7 +20,8 @@ namespace BugHunter.AnalyzersVersions.SystemIO
         public const string DIAGNOSTIC_ID = "V02";
         private static readonly DiagnosticDescriptor Rule = AnalyzerHelper.GetRule(DIAGNOSTIC_ID);
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
-
+        private static readonly ISyntaxNodeDiagnosticFormatter<IdentifierNameSyntax> DiagnosticFormatter = new SystemIoDiagnosticFormatter();
+        
         public override void Initialize(AnalysisContext context)
         {
             context.EnableConcurrentExecution();
@@ -48,12 +51,13 @@ namespace BugHunter.AnalyzersVersions.SystemIO
             }
 
             if (symbol.ConstructedFrom.IsDerivedFrom("System.IO.IOException", context.Compilation) ||
+                symbol.ConstructedFrom.IsDerivedFrom("System.IO.SeekOrigin", context.Compilation) ||
                 symbol.ConstructedFrom.IsDerivedFrom("System.IO.Stream", context.Compilation))
             {
                 return;
             }
 
-            var diagnostic = AnalyzerHelper.CreateDiagnostic(Rule, identifierNameSyntax);
+            var diagnostic = DiagnosticFormatter.CreateDiagnostic(Rule, identifierNameSyntax);
             context.ReportDiagnostic(diagnostic);
         }
     }

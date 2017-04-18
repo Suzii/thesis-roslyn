@@ -2,6 +2,8 @@
 using System.Collections.Immutable;
 using System.Linq;
 using System.Threading.Tasks;
+using BugHunter.AnalyzersVersions.SystemIO.Helpers;
+using BugHunter.Core.DiagnosticsFormatting;
 using BugHunter.Core.Extensions;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
@@ -19,6 +21,7 @@ namespace BugHunter.AnalyzersVersions.SystemIO
         public const string DIAGNOSTIC_ID = "V05";
         private static readonly DiagnosticDescriptor Rule = AnalyzerHelper.GetRule(DIAGNOSTIC_ID);
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
+        private static readonly ISyntaxNodeDiagnosticFormatter<IdentifierNameSyntax> DiagnosticFormatter = new SystemIoDiagnosticFormatter();
 
         public override void Initialize(AnalysisContext context)
         {
@@ -31,21 +34,21 @@ namespace BugHunter.AnalyzersVersions.SystemIO
                     .Select(compilationStartAnalysisContext.Compilation.GetTypeByMetadataName)
                     .ToArray();
 
-                var compilationaAnalyzer = new CompilationaAnalyzer(whitelistedTypes);
+                var compilationAnalyzer = new CompilationAnalyzer(whitelistedTypes);
 
-                compilationStartAnalysisContext.RegisterSyntaxNodeAction(nodeAnalyzsisContext => compilationaAnalyzer.Analyze(nodeAnalyzsisContext), SyntaxKind.IdentifierName);
+                compilationStartAnalysisContext.RegisterSyntaxNodeAction(nodeAnalysisContext => compilationAnalyzer.Analyze(nodeAnalysisContext), SyntaxKind.IdentifierName);
 
-                compilationStartAnalysisContext.RegisterCompilationEndAction(compilationEndContext => compilationaAnalyzer.Evaluate(compilationEndContext));
+                compilationStartAnalysisContext.RegisterCompilationEndAction(compilationEndContext => compilationAnalyzer.Evaluate(compilationEndContext));
             });
         }
 
-        private class CompilationaAnalyzer
+        private class CompilationAnalyzer
         {
             private readonly INamedTypeSymbol[] _whitelistedTypes;
             private readonly List<IdentifierNameSyntax> _badNodes;
 
 
-            public CompilationaAnalyzer(INamedTypeSymbol[] whitelistedTypes)
+            public CompilationAnalyzer(INamedTypeSymbol[] whitelistedTypes)
             {
                 _whitelistedTypes = whitelistedTypes;
                 _badNodes = new List<IdentifierNameSyntax>();
@@ -83,7 +86,7 @@ namespace BugHunter.AnalyzersVersions.SystemIO
             {
                 Parallel.ForEach(_badNodes, (identifierNameSyntax) =>
                 {
-                    var diagnostic = AnalyzerHelper.CreateDiagnostic(Rule, identifierNameSyntax);
+                    var diagnostic = DiagnosticFormatter.CreateDiagnostic(Rule, identifierNameSyntax);
                     compilationEndContext.ReportDiagnostic(diagnostic);
                 });
             }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Immutable;
+using BugHunter.AnalyzersVersions.SystemIO.Helpers;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Diagnostics;
@@ -11,7 +12,7 @@ namespace BugHunter.AnalyzersVersions.SystemIO
     /// Version with callback on IdentifierName and using SemanticModelBrowser
     /// </summary>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class V00_EmptyCallbackOnIdentiferName : DiagnosticAnalyzer
+    public class V00_IdentiferName_EmptyCallback : DiagnosticAnalyzer
     {
         public const string DIAGNOSTIC_ID = "V00";
         private static readonly DiagnosticDescriptor Rule = AnalyzerHelper.GetRule(DIAGNOSTIC_ID);

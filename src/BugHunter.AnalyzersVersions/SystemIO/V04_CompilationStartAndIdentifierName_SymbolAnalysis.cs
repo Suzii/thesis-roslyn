@@ -1,5 +1,7 @@
 ﻿using System.Collections.Immutable;
 using System.Linq;
+using BugHunter.AnalyzersVersions.SystemIO.Helpers;
+using BugHunter.Core.DiagnosticsFormatting;
 using BugHunter.Core.Extensions;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
@@ -17,6 +19,7 @@ namespace BugHunter.AnalyzersVersions.SystemIO
         public const string DIAGNOSTIC_ID = "V04";
         private static readonly DiagnosticDescriptor Rule = AnalyzerHelper.GetRule(DIAGNOSTIC_ID);
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
+        private static readonly ISyntaxNodeDiagnosticFormatter<IdentifierNameSyntax> DiagnosticFormatter = new SystemIoDiagnosticFormatter();
 
         public override void Initialize(AnalysisContext context)
         {
@@ -64,7 +67,7 @@ namespace BugHunter.AnalyzersVersions.SystemIO
                 return;
             }
 
-            var diagnostic = AnalyzerHelper.CreateDiagnostic(Rule, identifierNameSyntax);
+            var diagnostic = DiagnosticFormatter.CreateDiagnostic(Rule, identifierNameSyntax);
             context.ReportDiagnostic(diagnostic);
         }
     }

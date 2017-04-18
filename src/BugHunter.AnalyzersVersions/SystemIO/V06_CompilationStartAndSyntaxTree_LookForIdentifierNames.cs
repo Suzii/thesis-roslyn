@@ -2,6 +2,8 @@
 using System.Collections.Immutable;
 using System.Linq;
 using System.Threading.Tasks;
+using BugHunter.AnalyzersVersions.SystemIO.Helpers;
+using BugHunter.Core.DiagnosticsFormatting;
 using BugHunter.Core.Extensions;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
@@ -19,6 +21,7 @@ namespace BugHunter.AnalyzersVersions.SystemIO
         public const string DIAGNOSTIC_ID = "V06";
         private static readonly DiagnosticDescriptor Rule = AnalyzerHelper.GetRule(DIAGNOSTIC_ID);
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
+        private static readonly ISyntaxNodeDiagnosticFormatter<IdentifierNameSyntax> DiagnosticFormatter = new SystemIoDiagnosticFormatter();
 
         public override void Initialize(AnalysisContext context)
         {
@@ -27,7 +30,7 @@ namespace BugHunter.AnalyzersVersions.SystemIO
 
             context.RegisterCompilationStartAction(compilationStartAnalysisContext =>
             {
-                var compilationAnalyzer = new CompilationaAnalyzer(compilationStartAnalysisContext.Compilation);
+                var compilationAnalyzer = new CompilationAnalyzer(compilationStartAnalysisContext.Compilation);
 
                 compilationStartAnalysisContext.RegisterSyntaxTreeAction(systaxTreeContext => compilationAnalyzer.Analyze(systaxTreeContext));
 
@@ -35,13 +38,13 @@ namespace BugHunter.AnalyzersVersions.SystemIO
             });
         }
 
-        class CompilationaAnalyzer
+        class CompilationAnalyzer
         {
             private readonly Compilation _compilation;
             private readonly INamedTypeSymbol[] _whitelistedTypes;
             private readonly List<IdentifierNameSyntax> _badNodes;
 
-            public CompilationaAnalyzer(Compilation compilation)
+            public CompilationAnalyzer(Compilation compilation)
             {
                 _compilation = compilation;
 
@@ -55,10 +58,10 @@ namespace BugHunter.AnalyzersVersions.SystemIO
             public void Analyze(SyntaxTreeAnalysisContext context)
             {
                 var syntaxTree = context.Tree;
-                var identifierNameSyntaxs = syntaxTree.GetRoot().DescendantNodesAndSelf().OfType<IdentifierNameSyntax>();
+                var identifierNameSyntaxes = syntaxTree.GetRoot().DescendantNodesAndSelf().OfType<IdentifierNameSyntax>();
                 var semanticModel = _compilation.GetSemanticModel(syntaxTree);
 
-                foreach (var identifierNameSyntax in identifierNameSyntaxs)
+                foreach (var identifierNameSyntax in identifierNameSyntaxes)
                 {
                     if (identifierNameSyntax == null || identifierNameSyntax.IsVar)
                     {
@@ -90,7 +93,7 @@ namespace BugHunter.AnalyzersVersions.SystemIO
             {
                 Parallel.ForEach(_badNodes, (identifierNameSyntax) =>
                 {
-                    var diagnostic = AnalyzerHelper.CreateDiagnostic(Rule, identifierNameSyntax);
+                    var diagnostic = DiagnosticFormatter.CreateDiagnostic(Rule, identifierNameSyntax);
                     compilationEndContext.ReportDiagnostic(diagnostic);
                 });
             }
