@@ -3,6 +3,7 @@ using System.Linq;
 using BugHunter.Core;
 using BugHunter.Core.Analyzers;
 using BugHunter.Core.ApiReplacementAnalysis;
+using BugHunter.Core.Constants;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;

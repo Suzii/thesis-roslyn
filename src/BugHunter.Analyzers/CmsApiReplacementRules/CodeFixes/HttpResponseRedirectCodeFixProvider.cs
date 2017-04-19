@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using BugHunter.Analyzers.CmsApiReplacementRules.Analyzers;
 using BugHunter.Core.Extensions;
 using BugHunter.Core.Helpers.CodeFixes;
-using BugHunter.Core.ResourceBuilder;
+using BugHunter.Core.Helpers.ResourceMessages;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeActions;
 using Microsoft.CodeAnalysis.CodeFixes;
@@ -43,8 +43,8 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.CodeFixes
             var codeFix1 = SyntaxFactory.InvocationExpression(SyntaxFactory.ParseExpression("UrlHelper.Redirect"), invocationExpression.ArgumentList);
             var codeFix2 = SyntaxFactory.InvocationExpression(SyntaxFactory.ParseExpression("UrlHelper.LocalRedirect"), invocationExpression.ArgumentList);
 
-            var message1 = $"{CodeFixMessageBuilder.GetReplaceWithMessage(codeFix2)} {CmsApiReplacementsResources.RedirectCodeFixLocal}";
-            var message2 = $"{CodeFixMessageBuilder.GetReplaceWithMessage(codeFix2)} {CmsApiReplacementsResources.RedirectCodeFixExternal}";
+            var message1 = $"{CodeFixMessagesProvider.GetReplaceWithMessage(codeFix2)} {CmsApiReplacementsResources.RedirectCodeFixLocal}";
+            var message2 = $"{CodeFixMessagesProvider.GetReplaceWithMessage(codeFix2)} {CmsApiReplacementsResources.RedirectCodeFixExternal}";
 
             context.RegisterCodeFix(
                 CodeAction.Create(

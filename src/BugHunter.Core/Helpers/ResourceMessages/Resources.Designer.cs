@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace BugHunter.Core.ResourceBuilder {
+namespace BugHunter.Core.Helpers.ResourceMessages {
     using System;
     using System.Reflection;
     
@@ -40,7 +40,7 @@ namespace BugHunter.Core.ResourceBuilder {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("BugHunter.Core.ResourceBuilder.Resources", typeof(Resources).GetTypeInfo().Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("BugHunter.Core.Helpers.ResourceMessages.Resources", typeof(Resources).GetTypeInfo().Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

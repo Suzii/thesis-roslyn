@@ -6,7 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using BugHunter.Analyzers.CmsApiGuidelinesRules.Analyzers;
 using BugHunter.Core.Helpers.CodeFixes;
-using BugHunter.Core.ResourceBuilder;
+using BugHunter.Core.Helpers.ResourceMessages;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeActions;
 using Microsoft.CodeAnalysis.CodeFixes;
@@ -41,7 +41,7 @@ namespace BugHunter.Analyzers.CmsApiGuidelinesRules.CodeFixes
 
             context.RegisterCodeFix(
                 CodeAction.Create(
-                    title: CodeFixMessageBuilder.GetReplaceWithMessage(newArgumentName),
+                    title: CodeFixMessagesProvider.GetReplaceWithMessage(newArgumentName),
                     createChangedDocument: c => ReplaceEventTypeArgument(context.Document, invocationExpression, c, newArgumentName),
                     equivalenceKey: nameof(EventLogArgumentsCodeFixProvider)),
                 diagnostic);

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using BugHunter.Analyzers.CmsApiReplacementRules.Analyzers;
 using BugHunter.Core.Extensions;
 using BugHunter.Core.Helpers.CodeFixes;
-using BugHunter.Core.ResourceBuilder;
+using BugHunter.Core.Helpers.ResourceMessages;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeActions;
 using Microsoft.CodeAnalysis.CodeFixes;
@@ -66,7 +66,7 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.CodeFixes
 
             context.RegisterCodeFix(
                 CodeAction.Create(
-                    title: CodeFixMessageBuilder.GetReplaceWithMessage(newInvocationExpression),
+                    title: CodeFixMessagesProvider.GetReplaceWithMessage(newInvocationExpression),
                     createChangedDocument: c => editor.ReplaceExpressionWith(invocation, newInvocationExpression, usingNamespace),
                     equivalenceKey: nameof(ClientScriptMethodsCodeFixProvider)),
                 diagnostic);

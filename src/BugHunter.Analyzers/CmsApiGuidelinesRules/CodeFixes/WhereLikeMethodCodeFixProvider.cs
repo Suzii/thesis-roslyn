@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using BugHunter.Analyzers.CmsApiGuidelinesRules.Analyzers;
 using BugHunter.Core.Extensions;
 using BugHunter.Core.Helpers.CodeFixes;
-using BugHunter.Core.ResourceBuilder;
+using BugHunter.Core.Helpers.ResourceMessages;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeActions;
 using Microsoft.CodeAnalysis.CodeFixes;
@@ -51,21 +51,21 @@ namespace BugHunter.Analyzers.CmsApiGuidelinesRules.CodeFixes
 
             context.RegisterCodeFix(
                 CodeAction.Create(
-                    title: CodeFixMessageBuilder.GetReplaceWithMessage(containsMethodName),
+                    title: CodeFixMessagesProvider.GetReplaceWithMessage(containsMethodName),
                     createChangedDocument: c => ReplaceWithDifferentMethodCall(context.Document, methodNameNode, c, containsMethodName),
                     equivalenceKey: "Contains()"),
                 diagnostic);
 
             context.RegisterCodeFix(
                 CodeAction.Create(
-                    title: CodeFixMessageBuilder.GetReplaceWithMessage(startsWithMethodName),
+                    title: CodeFixMessagesProvider.GetReplaceWithMessage(startsWithMethodName),
                     createChangedDocument: c => ReplaceWithDifferentMethodCall(context.Document, methodNameNode, c, startsWithMethodName),
                     equivalenceKey: "StartsWith()"),
                 diagnostic);
 
             context.RegisterCodeFix(
                 CodeAction.Create(
-                    title: CodeFixMessageBuilder.GetReplaceWithMessage(endsWithMethodName),
+                    title: CodeFixMessagesProvider.GetReplaceWithMessage(endsWithMethodName),
                     createChangedDocument: c => ReplaceWithDifferentMethodCall(context.Document, methodNameNode, c, endsWithMethodName),
                     equivalenceKey: "EndsWith()"),
                 diagnostic);

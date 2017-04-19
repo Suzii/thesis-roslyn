@@ -1,6 +1,6 @@
 ﻿using System.Collections.Immutable;
 using BugHunter.Core.Extensions;
-using BugHunter.Core.Helpers.DiagnosticDescriptionBuilders;
+using BugHunter.Core.Helpers.DiagnosticDescriptors;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -15,9 +15,9 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.Analyzers
 
         public const string DIAGNOSTIC_ID_SET = DiagnosticIds.HTTP_SESSION_ELEMENT_ACCESS_SET;
 
-        private static readonly DiagnosticDescriptor RuleForGet = ApiReplacementRuleBuilder.GetRule(DIAGNOSTIC_ID_GET, "Session[]", "SessionHelper.GetValue()");
+        private static readonly DiagnosticDescriptor RuleForGet = ApiReplacementRulesProvider.GetRule(DIAGNOSTIC_ID_GET, "Session[]", "SessionHelper.GetValue()");
 
-        private static readonly DiagnosticDescriptor RuleForSet = ApiReplacementRuleBuilder.GetRule(DIAGNOSTIC_ID_SET, "Session[]", "SessionHelper.SetValue()");
+        private static readonly DiagnosticDescriptor RuleForSet = ApiReplacementRulesProvider.GetRule(DIAGNOSTIC_ID_SET, "Session[]", "SessionHelper.SetValue()");
 
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(RuleForGet, RuleForSet);
 

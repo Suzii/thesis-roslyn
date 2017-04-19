@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BugHunter.Analyzers.AbstractionOverImplementation.Analyzers;
 using BugHunter.Core.Helpers.CodeFixes;
-using BugHunter.Core.ResourceBuilder;
+using BugHunter.Core.Helpers.ResourceMessages;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeActions;
 using Microsoft.CodeAnalysis.CodeFixes;
@@ -42,7 +42,7 @@ namespace BugHunter.Analyzers.AbstractionOverImplementation.CodeFixes
             
             context.RegisterCodeFix(
                 CodeAction.Create(
-                    title: CodeFixMessageBuilder.GetReplaceWithMessage(newIdentifierNameNode),
+                    title: CodeFixMessagesProvider.GetReplaceWithMessage(newIdentifierNameNode),
                     createChangedDocument: c => editor.ReplaceExpressionWith(diagnosedNode, newIdentifierNameNode, usingNamespace),
                     equivalenceKey: nameof(LuceneSearchDocumentCodeFixProvider)),
                 diagnostic);

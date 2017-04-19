@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BugHunter.Analyzers.CmsApiReplacementRules.Analyzers;
 using BugHunter.Core.Helpers.CodeFixes;
-using BugHunter.Core.ResourceBuilder;
+using BugHunter.Core.Helpers.ResourceMessages;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeActions;
 using Microsoft.CodeAnalysis.CodeFixes;
@@ -39,7 +39,7 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.CodeFixes
 
             context.RegisterCodeFix(
                 CodeAction.Create(
-                    title: CodeFixMessageBuilder.GetReplaceWithMessage(newExpressionBody),
+                    title: CodeFixMessagesProvider.GetReplaceWithMessage(newExpressionBody),
                     createChangedDocument: c => editor.ReplaceExpressionWith(invocationExpression.Expression, newExpressionBody, usingNamespace),
                     equivalenceKey: nameof(FormsAuthenticationSignOutCodeFixProvider)),
                 diagnostic);

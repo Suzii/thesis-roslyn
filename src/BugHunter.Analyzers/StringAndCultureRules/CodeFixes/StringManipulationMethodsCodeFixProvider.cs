@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BugHunter.Analyzers.StringAndCultureRules.Analyzers;
 using BugHunter.Core.Helpers.CodeFixes;
-using BugHunter.Core.ResourceBuilder;
+using BugHunter.Core.Helpers.ResourceMessages;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeActions;
 using Microsoft.CodeAnalysis.CodeFixes;
@@ -38,14 +38,14 @@ namespace BugHunter.Analyzers.StringAndCultureRules.CodeFixes
 
             context.RegisterCodeFix(
                 CodeAction.Create(
-                    title: CodeFixMessageBuilder.GetReplaceWithMessage(newInvocation1),
+                    title: CodeFixMessagesProvider.GetReplaceWithMessage(newInvocation1),
                     createChangedDocument: c => editor.ReplaceExpressionWith(invocation, newInvocation1),
                     equivalenceKey: $"{nameof(StringManipulationMethodsCodeFixProvider)}-InvariantCulture"),
                 diagnostic);
 
             context.RegisterCodeFix(
                 CodeAction.Create(
-                    title: CodeFixMessageBuilder.GetReplaceWithMessage(newInvocation2),
+                    title: CodeFixMessagesProvider.GetReplaceWithMessage(newInvocation2),
                     createChangedDocument: c => editor.ReplaceExpressionWith(invocation, newInvocation2, "System.Globalization"),
                     equivalenceKey: $"{nameof(StringManipulationMethodsCodeFixProvider)}-CurrentCulture"),
                 diagnostic);

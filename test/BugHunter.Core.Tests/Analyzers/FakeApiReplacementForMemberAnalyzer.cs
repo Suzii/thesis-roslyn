@@ -1,6 +1,6 @@
 ﻿using System.Collections.Immutable;
 using BugHunter.Core.ApiReplacementAnalysis;
-using BugHunter.Core.Helpers.DiagnosticDescriptionBuilders;
+using BugHunter.Core.Helpers.DiagnosticDescriptors;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
 
@@ -12,7 +12,7 @@ namespace BugHunter.Core.Tests.Analyzers
     {
         public const string DIAGNOSTIC_ID = "FAKE_ID";
 
-        private static readonly DiagnosticDescriptor Rule = ApiReplacementRuleBuilder.GetRule(DIAGNOSTIC_ID, "FakeClass.FakeMember");
+        private static readonly DiagnosticDescriptor Rule = ApiReplacementRulesProvider.GetRule(DIAGNOSTIC_ID, "FakeClass.FakeMember");
 
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
 

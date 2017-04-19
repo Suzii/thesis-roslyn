@@ -1,6 +1,6 @@
 ﻿using System.Collections.Immutable;
 using BugHunter.Core.ApiReplacementAnalysis;
-using BugHunter.Core.Helpers.DiagnosticDescriptionBuilders;
+using BugHunter.Core.Helpers.DiagnosticDescriptors;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
 
@@ -14,7 +14,7 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.Analyzers
     {
         public const string DIAGNOSTIC_ID = DiagnosticIds.FORMS_AUTHENTICATION_SIGN_OUT;
 
-        private static readonly DiagnosticDescriptor Rule = ApiReplacementRuleBuilder.GetRule(DIAGNOSTIC_ID, "FormsAuthentication.SignOut()", "AuthenticationHelper.SignOut()");
+        private static readonly DiagnosticDescriptor Rule = ApiReplacementRulesProvider.GetRule(DIAGNOSTIC_ID, "FormsAuthentication.SignOut()", "AuthenticationHelper.SignOut()");
 
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
 

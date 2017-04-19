@@ -1,6 +1,6 @@
 ﻿using System.Collections.Immutable;
 using BugHunter.Core.DiagnosticsFormatting;
-using BugHunter.Core.Helpers.DiagnosticDescriptionBuilders;
+using BugHunter.Core.Helpers.DiagnosticDescriptors;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
 
@@ -14,7 +14,7 @@ namespace BugHunter.Web.Analyzers.CmsBaseClassesRules.Analyzers
     {
         public const string DIAGNOSTIC_ID = DiagnosticIds.PAGE_BASE;
 
-        private static readonly DiagnosticDescriptor Rule = BaseClassesInheritanceRuleBuilder.GetRule(DIAGNOSTIC_ID, "Page", "some abstract CMSPage");
+        private static readonly DiagnosticDescriptor Rule = BaseClassesInheritanceRulesProvider.GetRule(DIAGNOSTIC_ID, "Page", "some abstract CMSPage");
 
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
 

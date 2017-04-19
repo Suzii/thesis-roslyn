@@ -1,4 +1,4 @@
-﻿namespace BugHunter.Core
+﻿namespace BugHunter.Core.Constants
 {
     /// <summary>
     /// Enum defining the analyzer categories

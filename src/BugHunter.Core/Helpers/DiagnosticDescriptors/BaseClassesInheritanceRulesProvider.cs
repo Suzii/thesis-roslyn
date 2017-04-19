@@ -1,10 +1,21 @@
-﻿using BugHunter.Core.ResourceBuilder;
+﻿using BugHunter.Core.Constants;
+using BugHunter.Core.Helpers.ResourceMessages;
 using Microsoft.CodeAnalysis;
 
-namespace BugHunter.Core.Helpers.DiagnosticDescriptionBuilders
+namespace BugHunter.Core.Helpers.DiagnosticDescriptors
 {
-    public static class BaseClassesInheritanceRuleBuilder
+    public static class BaseClassesInheritanceRulesProvider
     {
+        /// <summary>
+        /// Constructs a <see cref="DiagnosticDescriptor"/> for CMS Base Classes Analyzers.
+        /// 
+        /// Analyzer will have provided diagnostic ID, CmsBaseClasses category, 
+        /// Warning severity and will be enabled by default
+        /// </summary>
+        /// <param name="diagnosticId">Diagnostic ID of the rule</param>
+        /// <param name="typeOfFile">Message argument with type of file that the rule applies to</param>
+        /// <param name="suggestedBaseClass">Message argument with suggested base class to be used</param>
+        /// <returns>Diagnostic descriptor for Base Class Analyzer</returns>
         public static DiagnosticDescriptor GetRule(string diagnosticId, string typeOfFile, string suggestedBaseClass)
         {
             var rule = new DiagnosticDescriptor(diagnosticId,

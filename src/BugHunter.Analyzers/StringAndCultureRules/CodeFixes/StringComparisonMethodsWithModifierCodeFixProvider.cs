@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using BugHunter.Analyzers.StringAndCultureRules.Analyzers;
 using BugHunter.Core.Extensions;
 using BugHunter.Core.Helpers.CodeFixes;
-using BugHunter.Core.ResourceBuilder;
+using BugHunter.Core.Helpers.ResourceMessages;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeActions;
 using Microsoft.CodeAnalysis.CodeFixes;
@@ -41,7 +41,7 @@ namespace BugHunter.Analyzers.StringAndCultureRules.CodeFixes
 
                 context.RegisterCodeFix(
                     CodeAction.Create(
-                        title: CodeFixMessageBuilder.GetReplaceWithMessage(newInvocation),
+                        title: CodeFixMessagesProvider.GetReplaceWithMessage(newInvocation),
                         createChangedDocument: c => editor.ReplaceExpressionWith(invocation, newInvocation, namespacesToBeReferenced),
                         equivalenceKey: $"{nameof(StringComparisonMethodsWithModifierCodeFixProvider)}-{stringComparisonOption}"),
                     context.Diagnostics.First());

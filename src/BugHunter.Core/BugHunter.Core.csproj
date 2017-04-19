@@ -92,7 +92,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AnalyzerCategories.cs" />
+    <Compile Include="Constants\AnalyzerCategories.cs" />
     <Compile Include="ApiReplacementAnalysis\ApiReplacementForMethodAnalyzer.cs" />
     <Compile Include="Constants\DiagnosticProperties.cs" />
     <Compile Include="Constants\FileExtensions.cs" />
@@ -115,22 +115,22 @@
     <Compile Include="Extensions\StringExtenstions.cs" />
     <Compile Include="Extensions\SyntaxNodeExtensions.cs" />
     <Compile Include="Extensions\TypeSymbolExtensions.cs" />
-    <Compile Include="Helpers\DiagnosticDescriptionBuilders\BaseClassesInheritanceRuleBuilder.cs" />
-    <Compile Include="Helpers\DiagnosticDescriptionBuilders\ApiReplacementRuleBuilder.cs" />
+    <Compile Include="Helpers\DiagnosticDescriptors\BaseClassesInheritanceRulesProvider.cs" />
+    <Compile Include="Helpers\DiagnosticDescriptors\ApiReplacementRulesProvider.cs" />
     <Compile Include="Helpers\CodeFixes\ClassDeclarationCodeFixHelper.cs" />
     <Compile Include="Helpers\CodeFixes\CodeFixHelper.cs" />
     <Compile Include="Helpers\CodeFixes\MemberInvocationCodeFixHelper.cs" />
     <Compile Include="Helpers\CodeFixes\MemberAccessCodeFixHelper.cs" />
     <Compile Include="Helpers\CodeFixes\UsingsHelper.cs" />
-    <Compile Include="Models\ClassAndItsNamespace.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ResourceBuilder\CodeFixMessageBuilder.cs" />
-    <Compile Include="ResourceBuilder\ApiReplacementsMessageBuilder.cs" />
-    <Compile Include="ResourceBuilder\Resources.Designer.cs">
+    <Compile Include="Helpers\ResourceMessages\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Models\ClassAndItsNamespace.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Helpers\ResourceMessages\CodeFixMessagesProvider.cs" />
+    <Compile Include="Helpers\ResourceMessages\ApiReplacementsMessagesProvider.cs" />
     <Compile Include="ApiReplacementAnalysis\ApiReplacementConfig.cs" />
     <Compile Include="ApiReplacementAnalysis\ApiReplacementForMemberAnalyzer.cs" />
     <Compile Include="Analyzers\ISyntaxNodeAnalyzer.cs" />
@@ -139,7 +139,7 @@
     <Compile Include="Analyzers\SimpleMemberAccessAnalyzer.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="ResourceBuilder\Resources.resx">
+    <EmbeddedResource Include="Helpers\ResourceMessages\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>

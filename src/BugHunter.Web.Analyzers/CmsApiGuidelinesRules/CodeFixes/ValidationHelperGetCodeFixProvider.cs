@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BugHunter.Core.Extensions;
 using BugHunter.Core.Helpers.CodeFixes;
-using BugHunter.Core.ResourceBuilder;
+using BugHunter.Core.Helpers.ResourceMessages;
 using BugHunter.Web.Analyzers.CmsApiGuidelinesRules.Analyzers;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeActions;
@@ -41,7 +41,7 @@ namespace BugHunter.Web.Analyzers.CmsApiGuidelinesRules.CodeFixes
             var diagnostic = context.Diagnostics.First();
             context.RegisterCodeFix(
                 CodeAction.Create(
-                    title: CodeFixMessageBuilder.GetReplaceWithMessage(newInvocation),
+                    title: CodeFixMessagesProvider.GetReplaceWithMessage(newInvocation),
                     createChangedDocument: c => editor.ReplaceExpressionWith(invocationExpression, newInvocation, "CMS.Helpers"),
                     equivalenceKey: nameof(ValidationHelperGetCodeFixProvider)),
                 diagnostic);
