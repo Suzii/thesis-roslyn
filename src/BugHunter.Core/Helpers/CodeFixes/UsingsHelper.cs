@@ -5,14 +5,17 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace BugHunter.Core.Helpers.CodeFixes
 {
-    public class UsingsHelper
+    /// <summary>
+    /// Helper class for work with using directices in documents
+    /// </summary>
+    internal static class UsingsHelper
     {
        /// <summary>
        /// Generates using directive for all <param name="usings"/> that are not already present in usings of <param name="root" />
        /// </summary>
-       /// <param name="root">Document to add usings to</param>
+       /// <param name="root">Root of the document to add usings to</param>
        /// <param name="usings">Usings to be added</param>
-       /// <returns></returns>
+       /// <returns>New document root with added usings</returns>
         public static CompilationUnitSyntax EnsureUsings(CompilationUnitSyntax root, params string[] usings)
         {
             if (usings == null || usings.Length == 0)
