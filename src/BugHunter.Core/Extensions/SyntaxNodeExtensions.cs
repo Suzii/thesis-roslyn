@@ -3,6 +3,9 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace BugHunter.Core.Extensions
 {
+    /// <summary>
+    /// Helper class containing extensions for <see cref="SyntaxNode"/>
+    /// </summary>
     public static class SyntaxNodeExtensions
     {
         /// <summary>

@@ -6,6 +6,7 @@ using Microsoft.CodeAnalysis;
 namespace BugHunter.Core.Extensions
 {
     /// <summary>
+    /// Helper class containing extension methods for <see cref="INamedTypeSymbol"/> and <see cref="ITypeSymbol"/>
     /// Inspired by http://fossies.org/linux/misc/mono-sources/monodevelop/monodevelop-6.0.0.4761.tar.gz/monodevelop-6.0/src/addins/CSharpBinding/Util/TypeExtensions.cs?m=t
     /// </summary>
     public static class TypeSymbolExtensions
@@ -49,11 +50,13 @@ namespace BugHunter.Core.Extensions
                         .FirstOrDefault(m => m.MethodKind == MethodKind.DelegateInvoke);
         }
         
+        /// <summary>
+        /// Determines whether <param name="type"></param> is nullable
+        /// </summary>
+        /// <param name="type">Type to be examined</param>
+        /// <returns>True if type is nullable</returns>
         public static bool IsNullableType(this ITypeSymbol type)
-        {
-            var original = type.OriginalDefinition;
-            return original.SpecialType == SpecialType.System_Nullable_T;
-        }
+            => type.OriginalDefinition.SpecialType == SpecialType.System_Nullable_T;
 
         /// <summary>
         /// Returns underlying type is nullable type, null otherwise.

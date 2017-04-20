@@ -6,23 +6,41 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace BugHunter.Core.Extensions
 {
+    /// <summary>
+    /// Helper class containing extensions for <see cref="ClassDeclarationSyntax"/>
+    /// </summary>
     public static class ClassDeclarationSyntaxExtensions
     {
+        /// <summary>
+        /// Determines whether <param name="classDeclarationSyntax"></param> is declared as abstract
+        /// </summary>
+        /// <param name="classDeclarationSyntax">Class declaration to be inspected</param>
+        /// <returns>True if class is abstract</returns>
         public static bool IsAbstract(this ClassDeclarationSyntax classDeclarationSyntax)
-        {
-            return classDeclarationSyntax.Modifiers.Any(modifier => modifier.IsKind(SyntaxKind.AbstractKeyword));
-        }
+            => classDeclarationSyntax.Modifiers.Any(modifier => modifier.IsKind(SyntaxKind.AbstractKeyword));
 
+        /// <summary>
+        /// Determines whether <param name="classDeclarationSyntax"></param> is declared as partial
+        /// </summary>
+        /// <param name="classDeclarationSyntax">Class declaration to be inspected</param>
+        /// <returns>True if class is partial</returns>
         public static bool IsPartial(this ClassDeclarationSyntax classDeclarationSyntax)
-        {
-            return classDeclarationSyntax.Modifiers.Any(modifier => modifier.IsKind(SyntaxKind.PartialKeyword));
-        }
+            => classDeclarationSyntax.Modifiers.Any(modifier => modifier.IsKind(SyntaxKind.PartialKeyword));
 
+        /// <summary>
+        /// Determines whether <param name="classDeclarationSyntax"></param> is declared as public
+        /// </summary>
+        /// <param name="classDeclarationSyntax">Class declaration to be inspected</param>
+        /// <returns>True if class is public</returns>
         public static bool IsPublic(this ClassDeclarationSyntax classDeclarationSyntax)
-        {
-            return classDeclarationSyntax.Modifiers.Any(modifier => modifier.IsKind(SyntaxKind.PublicKeyword));
-        }
-
+            => classDeclarationSyntax.Modifiers.Any(modifier => modifier.IsKind(SyntaxKind.PublicKeyword));
+        
+        /// <summary>
+        /// Adds <param name="newBaseTypeName"></param> as a base class of <param name="classDeclaration"></param>
+        /// </summary>
+        /// <param name="classDeclaration">Class declaration to be modified</param>
+        /// <param name="newBaseTypeName">Modified class declaration with new base type</param>
+        /// <returns></returns>
         public static ClassDeclarationSyntax WithBaseClass(this ClassDeclarationSyntax classDeclaration, string newBaseTypeName)
         {
             var simpleBaseTypeSyntax = SyntaxFactory.SimpleBaseType(SyntaxFactory.ParseName(newBaseTypeName));
@@ -66,8 +84,6 @@ namespace BugHunter.Core.Extensions
         }
 
         private static SeparatedSyntaxList<BaseTypeSyntax> GetOriginalBaseList(ClassDeclarationSyntax classDeclaration)
-        {
-            return classDeclaration.BaseList?.Types ?? new SeparatedSyntaxList<BaseTypeSyntax>();
-        }
+            => classDeclaration.BaseList?.Types ?? new SeparatedSyntaxList<BaseTypeSyntax>();
     }
 }

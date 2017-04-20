@@ -7,7 +7,7 @@ namespace BugHunter.Core.Extensions
     /// <summary>
     /// Class containing extension methods for <see cref="IdentifierNameSyntax"/>
     /// </summary>
-    public static class IdentifierNameSyntaxExtensions // TODO add unit tests
+    public static class IdentifierNameSyntaxExtensions
     {
         /// <summary>
         /// Returns the outer-most parent of "dotted expression" which <param name="identifierNameSyntax"></param> is part of

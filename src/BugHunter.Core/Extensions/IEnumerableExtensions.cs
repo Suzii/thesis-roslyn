@@ -3,6 +3,9 @@ using System.Linq;
 
 namespace BugHunter.Core.Extensions
 {
+    /// <summary>
+    /// Helper class containing extensions for <see cref="IEnumerable{T}"/>
+    /// </summary>
     public static class EnumerableExtensions
     {
         /// <summary>

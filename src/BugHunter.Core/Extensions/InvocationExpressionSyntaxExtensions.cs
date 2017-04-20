@@ -5,11 +5,14 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace BugHunter.Core.Extensions
 {
+    /// <summary>
+    /// Helper class containing extensions for <see cref="InvocationExpressionSyntax"/>
+    /// </summary>
     public static class InvocationExpressionSyntaxExtensions
     {
         /// <summary>
         /// Tries to extract node representing name of the invoked method.
-        /// Returns true if the method name node could be found and populates <param name="methodNameNode"></param> with it
+        /// Returns true if the method name node could be found and populates <param name="methodNameNode"></param> with it.
         /// </summary>
         /// <param name="invocationExpression">Invocation invocationExpression</param>
         /// <param name="methodNameNode">Out parameter to be populated with found method name node</param>

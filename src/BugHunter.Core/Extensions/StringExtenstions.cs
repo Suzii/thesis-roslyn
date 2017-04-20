@@ -2,6 +2,9 @@
 
 namespace BugHunter.Core.Extensions
 {
+    /// <summary>
+    /// Helper class containing extensions for <see cref="string"/>
+    /// </summary>
     public static class StringExtenstions
     {
         /// <summary>
