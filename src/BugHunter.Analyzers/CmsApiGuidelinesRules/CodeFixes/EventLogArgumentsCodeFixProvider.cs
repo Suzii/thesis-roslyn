@@ -38,7 +38,7 @@ namespace BugHunter.Analyzers.CmsApiGuidelinesRules.CodeFixes
             context.RegisterCodeFix(
                 CodeAction.Create(
                     title: CodeFixMessagesProvider.GetReplaceWithMessage(newArgumentName),
-                    createChangedDocument: c => codeFixHelper.ReplaceExpressionWith(oldArgument, newArgumentName, "CMS.EventLog"),
+                    createChangedDocument: c => codeFixHelper.ReplaceExpressionWith(oldArgument, newArgumentName, c, "CMS.EventLog"),
                     equivalenceKey: nameof(EventLogArgumentsCodeFixProvider)),
                 diagnostic);
         }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeFixes;
@@ -27,23 +28,25 @@ namespace BugHunter.Core.Helpers.CodeFixes
         /// </summary>
         /// <param name="oldNode">Node to be replaced</param>
         /// <param name="newNode">Node to be used as replacement</param>
+        /// <param name="cancellationToken">Cancellation token</param>
         /// <param name="namespacesToBeReferenced">Optional namespaces to be referenced in document if new node requires it</param>
         /// <returns>Changed document with replaced nodes</returns>
-        public async Task<Document> ReplaceExpressionWith(SyntaxNode oldNode, SyntaxNode newNode, params string[] namespacesToBeReferenced)
+        public async Task<Document> ReplaceExpressionWith(SyntaxNode oldNode, SyntaxNode newNode, CancellationToken cancellationToken, params string[] namespacesToBeReferenced)
         {
-            return await ApplyRootModification((oldRoot) => oldRoot.ReplaceNode(oldNode, newNode.WithTriviaFrom(oldNode)), namespacesToBeReferenced);
+            return await ApplyRootModification((oldRoot) => oldRoot.ReplaceNode(oldNode, newNode.WithTriviaFrom(oldNode)), cancellationToken, namespacesToBeReferenced);
         }
 
         /// <summary>
         /// Applies the <param name="rootModificationFunc"></param> on root of the document associated with current code fix context and adds usings directives if priveded
         /// </summary>
         /// <param name="rootModificationFunc">Root modification function to be applied</param>
+        /// <param name="cancellationToken">Cancellation token</param>
         /// <param name="namespacesToBeReferenced">Optional namespaces to be referenced in document if new version of the document requires it</param>
         /// <returns>Changed document with applied function</returns>
-        public async Task<Document> ApplyRootModification(Func<CompilationUnitSyntax, CompilationUnitSyntax> rootModificationFunc, params string[] namespacesToBeReferenced)
+        public async Task<Document> ApplyRootModification(Func<CompilationUnitSyntax, CompilationUnitSyntax> rootModificationFunc, CancellationToken cancellationToken, params string[] namespacesToBeReferenced)
         {
             var document = Context.Document;
-            var root = await GetDocumentRoot();
+            var root = await GetDocumentRoot(cancellationToken);
 
             var newRoot = rootModificationFunc(root);
 
@@ -85,12 +88,22 @@ namespace BugHunter.Core.Helpers.CodeFixes
         }
 
         /// <summary>
-        /// Returns the root of document associated with current code fix context
+        /// Returns the root of document associated with current code fix context.
         /// </summary>
         /// <returns>Root of the document</returns>
         protected async Task<CompilationUnitSyntax> GetDocumentRoot()
         {
             return (CompilationUnitSyntax) await Context.Document.GetSyntaxRootAsync(Context.CancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Returns the root of document associated with current code fix context.
+        /// </summary>
+        /// <param name="cancellationToken">Cancellation token</param>
+        /// <returns>Root of the document</returns>
+        protected async Task<CompilationUnitSyntax> GetDocumentRoot(CancellationToken cancellationToken)
+        {
+            return (CompilationUnitSyntax)await Context.Document.GetSyntaxRootAsync(cancellationToken).ConfigureAwait(false);
         }
     }
 }

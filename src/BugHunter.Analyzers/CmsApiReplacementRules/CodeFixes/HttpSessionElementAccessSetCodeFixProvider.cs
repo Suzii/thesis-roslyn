@@ -48,7 +48,7 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.CodeFixes
             context.RegisterCodeFix(
                 CodeAction.Create(
                     title: CodeFixMessagesProvider.GetReplaceWithMessage(newNode),
-                    createChangedDocument: c => codeFixHelper.ReplaceExpressionWith(oldNode, newNode, usingNamespace),
+                    createChangedDocument: c => codeFixHelper.ReplaceExpressionWith(oldNode, newNode, c, usingNamespace),
                     equivalenceKey: nameof(HttpSessionElementAccessSetCodeFixProvider)),
                 diagnostic);
         }

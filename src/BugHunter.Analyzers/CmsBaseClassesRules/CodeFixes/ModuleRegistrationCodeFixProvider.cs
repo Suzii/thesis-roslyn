@@ -46,7 +46,7 @@ namespace BugHunter.Analyzers.CmsBaseClassesRules.CodeFixes
             context.RegisterCodeFix(
                 CodeAction.Create(
                     title: string.Format(CmsBaseClassesResources.ModuleRegistration_CodeFix, className),
-                    createChangedDocument: c => classDeclarationCodeFixHelper.ApplyRootModification(oldRoot => oldRoot.AddAttributeLists(attributeToBeAdded), "CMS"),
+                    createChangedDocument: c => classDeclarationCodeFixHelper.ApplyRootModification(oldRoot => oldRoot.AddAttributeLists(attributeToBeAdded), c, "CMS"),
                     equivalenceKey: nameof(ModuleRegistrationCodeFixProvider)),
                 diagnostic);
         }

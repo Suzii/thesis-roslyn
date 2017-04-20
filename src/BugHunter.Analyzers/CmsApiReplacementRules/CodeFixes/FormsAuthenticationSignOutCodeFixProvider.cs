@@ -40,7 +40,7 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.CodeFixes
             context.RegisterCodeFix(
                 CodeAction.Create(
                     title: CodeFixMessagesProvider.GetReplaceWithMessage(newExpressionBody),
-                    createChangedDocument: c => editor.ReplaceExpressionWith(invocationExpression.Expression, newExpressionBody, usingNamespace),
+                    createChangedDocument: c => editor.ReplaceExpressionWith(invocationExpression.Expression, newExpressionBody, c, usingNamespace),
                     equivalenceKey: nameof(FormsAuthenticationSignOutCodeFixProvider)),
                 diagnostic);
         }

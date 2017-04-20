@@ -57,7 +57,7 @@ namespace BugHunter.Web.Analyzers.CmsBaseClassesRules.CodeFixes
                 context.RegisterCodeFix(
                    CodeAction.Create(
                        title: CodeFixMessagesProvider.GetInheritFromMessage(classAndItsNamespace.ClassName),
-                       createChangedDocument: c => baseTypeCodeFixHelper.ReplaceExpressionWith(classDeclaration, newClassDeclaration, classAndItsNamespace.ClassNamespace),
+                       createChangedDocument: c => baseTypeCodeFixHelper.ReplaceExpressionWith(classDeclaration, newClassDeclaration, c, classAndItsNamespace.ClassNamespace),
                        equivalenceKey: nameof(WebPartBaseCodeFixProvider) + classAndItsNamespace.ClassName),
                    diagnostic);
             }

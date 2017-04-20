@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Immutable;
 using System.Composition;
-using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using BugHunter.Analyzers.CmsApiGuidelinesRules.Analyzers;
 using BugHunter.Core.Extensions;
@@ -19,7 +17,7 @@ namespace BugHunter.Analyzers.CmsApiGuidelinesRules.CodeFixes
     [ExportCodeFixProvider(LanguageNames.CSharp, Name = nameof(WhereLikeMethodCodeFixProvider)), Shared]
     public class WhereLikeMethodCodeFixProvider : CodeFixProvider
     {
-        internal enum BH1000PossibleFixes
+        internal enum PossibleFixes
         {
             WhereContains,
             WhereStartsWith,
@@ -34,7 +32,6 @@ namespace BugHunter.Analyzers.CmsApiGuidelinesRules.CodeFixes
 
         public sealed override async Task RegisterCodeFixesAsync(CodeFixContext context)
         {
-            var diagnostic = context.Diagnostics.First();
             var codeFixHelper = new MemberInvocationCodeFixHelper(context);
             var invocationExpression = await codeFixHelper.GetDiagnosedInvocation();
             SimpleNameSyntax methodNameNode;
@@ -42,59 +39,42 @@ namespace BugHunter.Analyzers.CmsApiGuidelinesRules.CodeFixes
             {
                 return;
             }
+            
+            var containsMethodName = GetNewMethodName(PossibleFixes.WhereContains, methodNameNode);
+            var startsWithMethodName = GetNewMethodName(PossibleFixes.WhereStartsWith, methodNameNode);
+            var endsWithMethodName = GetNewMethodName(PossibleFixes.WhereEndsWith, methodNameNode);
 
-
-
-            var containsMethodName = GetNewMethodName(BH1000PossibleFixes.WhereContains, methodNameNode);
-            var startsWithMethodName = GetNewMethodName(BH1000PossibleFixes.WhereStartsWith, methodNameNode);
-            var endsWithMethodName = GetNewMethodName(BH1000PossibleFixes.WhereEndsWith, methodNameNode);
-
-            context.RegisterCodeFix(
-                CodeAction.Create(
-                    title: CodeFixMessagesProvider.GetReplaceWithMessage(containsMethodName),
-                    createChangedDocument: c => ReplaceWithDifferentMethodCall(context.Document, methodNameNode, c, containsMethodName),
-                    equivalenceKey: "Contains()"),
-                diagnostic);
-
-            context.RegisterCodeFix(
-                CodeAction.Create(
-                    title: CodeFixMessagesProvider.GetReplaceWithMessage(startsWithMethodName),
-                    createChangedDocument: c => ReplaceWithDifferentMethodCall(context.Document, methodNameNode, c, startsWithMethodName),
-                    equivalenceKey: "StartsWith()"),
-                diagnostic);
-
-            context.RegisterCodeFix(
-                CodeAction.Create(
-                    title: CodeFixMessagesProvider.GetReplaceWithMessage(endsWithMethodName),
-                    createChangedDocument: c => ReplaceWithDifferentMethodCall(context.Document, methodNameNode, c, endsWithMethodName),
-                    equivalenceKey: "EndsWith()"),
-                diagnostic);
+           RegisterCodeFixVariant(context, codeFixHelper, methodNameNode, containsMethodName);
+           RegisterCodeFixVariant(context, codeFixHelper, methodNameNode, startsWithMethodName);
+           RegisterCodeFixVariant(context, codeFixHelper, methodNameNode, endsWithMethodName);
         }
 
-        private async Task<Document> ReplaceWithDifferentMethodCall(Document document, SimpleNameSyntax oldMethodNameNode, CancellationToken cancellationToken, string newMethodName)
+        private void RegisterCodeFixVariant(CodeFixContext context, CodeFixHelper codeFixHelper, SimpleNameSyntax oldMethodName, SimpleNameSyntax newMethodName)
         {
-            var root = await document.GetSyntaxRootAsync(cancellationToken).ConfigureAwait(false);
-
-            var newMethodIdentifierName = SyntaxFactory.IdentifierName(newMethodName);
-            //var newMemberAccessExpression = memberAccessExpression.WithName(newMethodIdentifierName);
-
-            var newRoot = root.ReplaceNode(oldMethodNameNode, newMethodIdentifierName);
-            var newDocument = document.WithSyntaxRoot(newRoot);
-
-            return newDocument;
+            context.RegisterCodeFix(
+                CodeAction.Create(
+                    title: CodeFixMessagesProvider.GetReplaceWithMessage(newMethodName),
+                    createChangedDocument: c => codeFixHelper.ReplaceExpressionWith(oldMethodName, newMethodName, c),
+                    equivalenceKey: newMethodName.ToString()),
+                codeFixHelper.GetFirstDiagnostic());
         }
 
-        private string GetNewMethodName(BH1000PossibleFixes forFix, SimpleNameSyntax currentMethodName)
+        private SimpleNameSyntax GetNewMethodName(PossibleFixes forFix, SimpleNameSyntax currentMethodName)
+        {
+            return SyntaxFactory.IdentifierName(GetNewMethodNameText(forFix, currentMethodName));
+        }
+
+        private string GetNewMethodNameText(PossibleFixes forFix, SimpleNameSyntax currentMethodName)
         {
             var isCurrentCallNegated = currentMethodName.Identifier.ToString().Contains("Not");
 
             switch (forFix)
             {
-                case BH1000PossibleFixes.WhereContains:
+                case PossibleFixes.WhereContains:
                     return isCurrentCallNegated ? "WhereNotContains" : "WhereContains";
-                case BH1000PossibleFixes.WhereStartsWith:
+                case PossibleFixes.WhereStartsWith:
                     return isCurrentCallNegated ? "WhereNotStartsWith" : "WhereStartsWith";
-                case BH1000PossibleFixes.WhereEndsWith:
+                case PossibleFixes.WhereEndsWith:
                     return isCurrentCallNegated ? "WhereNotEndsWith" : "WhereEndsWith";
                 default:
                     throw new ArgumentOutOfRangeException(nameof(forFix));

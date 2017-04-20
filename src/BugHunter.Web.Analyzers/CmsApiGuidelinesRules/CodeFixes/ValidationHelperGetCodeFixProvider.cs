@@ -42,7 +42,7 @@ namespace BugHunter.Web.Analyzers.CmsApiGuidelinesRules.CodeFixes
             context.RegisterCodeFix(
                 CodeAction.Create(
                     title: CodeFixMessagesProvider.GetReplaceWithMessage(newInvocation),
-                    createChangedDocument: c => editor.ReplaceExpressionWith(invocationExpression, newInvocation, "CMS.Helpers"),
+                    createChangedDocument: c => editor.ReplaceExpressionWith(invocationExpression, newInvocation, c, "CMS.Helpers"),
                     equivalenceKey: nameof(ValidationHelperGetCodeFixProvider)),
                 diagnostic);
         }

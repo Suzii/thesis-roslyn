@@ -49,14 +49,14 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.CodeFixes
             context.RegisterCodeFix(
                 CodeAction.Create(
                     title: message1,
-                    createChangedDocument: c => editor.ReplaceExpressionWith(invocationExpression, codeFix1, usingNamespace),
+                    createChangedDocument: c => editor.ReplaceExpressionWith(invocationExpression, codeFix1, c, usingNamespace),
                     equivalenceKey: nameof(HttpResponseRedirectCodeFixProvider)),
                 diagnostic);
 
             context.RegisterCodeFix(
                 CodeAction.Create(
                     title: message2,
-                    createChangedDocument: c => editor.ReplaceExpressionWith(invocationExpression, codeFix2, usingNamespace),
+                    createChangedDocument: c => editor.ReplaceExpressionWith(invocationExpression, codeFix2, c, usingNamespace),
                     equivalenceKey: nameof(HttpResponseRedirectCodeFixProvider) + "Local"),
                     diagnostic);
         }
