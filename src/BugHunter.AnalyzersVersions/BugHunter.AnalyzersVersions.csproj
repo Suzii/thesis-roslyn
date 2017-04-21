@@ -106,7 +106,9 @@
   <ItemGroup>
     <Compile Include="SystemIO\Helpers\AnalyzerHelper.cs" />
     <Compile Include="SystemIO\Helpers\SystemIoDiagnosticFormatter.cs" />
+    <Compile Include="SystemIO\V00_IdentiferName_DirectSemanticModelAccess.cs" />
     <Compile Include="SystemIO\V00_IdentiferName_EmptyCallback.cs" />
+    <Compile Include="SystemIO\V12_IdentifierName_EnhancedSyntaxAnalysisAndStringPlusSymbolAnalysisWithCachedResults.cs" />
     <Compile Include="SystemIO\V11_IdentifierName_EnhancedSyntaxAnalysisAndSymbolAnalysisWithCachedResults.cs" />
     <Compile Include="SystemIO\V02_IdentifierName_SymbolAnalysis.cs" />
     <Compile Include="SystemIO\V09_CompilationStartSyntaxTreeAndEnd_FulltextSearchAndSymbolParallelExecutionAndAnallysis_WithBag.cs" />

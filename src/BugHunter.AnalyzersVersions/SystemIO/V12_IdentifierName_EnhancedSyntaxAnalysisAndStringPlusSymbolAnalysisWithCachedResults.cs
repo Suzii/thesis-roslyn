@@ -17,42 +17,12 @@ namespace BugHunter.AnalyzersVersions.SystemIO
     /// Version with callback on IdentifierName and analyzing Symbol directly
     /// </summary>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class V11_IdentifierName_EnhancedSyntaxAnalysisAndSymbolAnalysisWithCachedResults : DiagnosticAnalyzer
+    public class V12_IdentifierName_EnhancedSyntaxAnalysisAndStringPlusSymbolAnalysisWithCachedResults : DiagnosticAnalyzer
     {
         public const string DIAGNOSTIC_ID = "V11";
         private static readonly DiagnosticDescriptor Rule = AnalyzerHelper.GetRule(DIAGNOSTIC_ID);
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
         private static readonly ISyntaxNodeDiagnosticFormatter<IdentifierNameSyntax> DiagnosticFormatter = new SystemIoDiagnosticFormatter();
-        private static readonly string[] WhiteListedIdentifierNames =
-        {
-            "System.IO.IOException",
-            "System.IO.DirectoryNotFoundException",
-            "System.IO.DriveNotFoundException",
-            "System.IO.EndOfStreamException",
-            "System.IO.FileLoadException",
-            "System.IO.FileNotFoundException",
-            "System.IO.PathTooLongException",
-            "System.IO.PipeException",
-
-            "System.IO.Stream",
-            "Microsoft.JScript.COMCharStream",
-            "System.Data.OracleClient.OracleBFile",
-            "System.Data.OracleClient.OracleLob",
-            "System.Data.SqlTypes.SqlFileStream",
-            "System.IO.BufferedStream",
-            "System.IO.Compression.DeflateStream",
-            "System.IO.Compression.GZipStream",
-            "System.IO.FileStream",
-            "System.IO.MemoryStream",
-            "System.IO.Pipes.PipeStream",
-            "System.IO.UnmanagedMemoryStream",
-            "System.Net.Security.AuthenticatedStream",
-            "System.Net.Sockets.NetworkStream",
-            "System.Printing.PrintQueueStream",
-            "System.Security.Cryptography.CryptoStream",
-
-            "System.IO.SeekOrigin"
-        };
 
         public override void Initialize(AnalysisContext context)
         {
@@ -117,11 +87,6 @@ namespace BugHunter.AnalyzersVersions.SystemIO
 
         private static bool IsWhitelisted(SyntaxNodeAnalysisContext context, INamedTypeSymbol symbol)
         {
-            if (WhiteListedIdentifierNames.Contains(symbol.ConstructedFrom.ToString()))
-            {
-                return true;
-            }
-
             return symbol.ConstructedFrom.IsDerivedFrom("System.IO.IOException", context.Compilation) ||
                    symbol.ConstructedFrom.IsDerivedFrom("System.IO.SeekOrigin", context.Compilation) ||
                    symbol.ConstructedFrom.IsDerivedFrom("System.IO.Stream", context.Compilation);

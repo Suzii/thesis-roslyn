@@ -45,6 +45,8 @@ namespace BugHunter.AnalyzersVersions.SystemIO
             "System.Net.Sockets.NetworkStream",
             "System.Printing.PrintQueueStream",
             "System.Security.Cryptography.CryptoStream",
+
+            "System.IO.SeekOrigin"
         };
 
         public const string DIAGNOSTIC_ID = "V01";
@@ -90,14 +92,16 @@ namespace BugHunter.AnalyzersVersions.SystemIO
             context.ReportDiagnostic(diagnostic);
         }
 
-        private static bool IsWhiteListed(SyntaxNodeAnalysisContext context, INamedTypeSymbol identifierNameTypeSymbol)
+        private static bool IsWhiteListed(SyntaxNodeAnalysisContext context, INamedTypeSymbol symbol)
         {
-            if (identifierNameTypeSymbol != null && WhiteListedIdentifierNames.Contains(identifierNameTypeSymbol.ToString()))
+            if (WhiteListedIdentifierNames.Contains(symbol.ConstructedFrom.ToString()))
             {
                 return true;
             }
 
-            return AnalyzerHelper.WhiteListedTypeNames.Any(whiteListedType => identifierNameTypeSymbol.IsDerivedFrom(whiteListedType, context.Compilation));
+            return symbol.ConstructedFrom.IsDerivedFrom("System.IO.IOException", context.Compilation) ||
+                   symbol.ConstructedFrom.IsDerivedFrom("System.IO.SeekOrigin", context.Compilation) ||
+                   symbol.ConstructedFrom.IsDerivedFrom("System.IO.Stream", context.Compilation);
         }
     }
 }
