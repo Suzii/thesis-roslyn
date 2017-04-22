@@ -9,7 +9,7 @@ namespace ReportAnalyzerTimes.Models
     /// </summary>
     public struct AnalyzerExecutionTime
     {
-        private static readonly Regex LineRegex = new Regex(@"([\d,]+) s\s+- ([a-zA-z.]+)", RegexOptions.Compiled);
+        private static readonly Regex LineRegex = new Regex(@"([\d,]+) s\s+- ([\w.]+)", RegexOptions.Compiled);
 
         /// <summary>
         /// Name of the analyzer the <see cref="ExecutionTime"/> belongs
