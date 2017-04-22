@@ -50,15 +50,20 @@ namespace BugHunter.AnalyzersVersions.SystemIO
                 return;
             }
 
-            if (symbol.ConstructedFrom.IsDerivedFrom("System.IO.IOException", context.Compilation) ||
-                symbol.ConstructedFrom.IsDerivedFrom("System.IO.SeekOrigin", context.Compilation) ||
-                symbol.ConstructedFrom.IsDerivedFrom("System.IO.Stream", context.Compilation))
+            if (IsWhitelisted(context, symbol))
             {
                 return;
             }
 
             var diagnostic = DiagnosticFormatter.CreateDiagnostic(Rule, identifierNameSyntax);
             context.ReportDiagnostic(diagnostic);
+        }
+
+        private static bool IsWhitelisted(SyntaxNodeAnalysisContext context, INamedTypeSymbol symbol)
+        {
+            return symbol.ConstructedFrom.IsDerivedFrom("System.IO.IOException", context.Compilation) ||
+                   symbol.ConstructedFrom.IsDerivedFrom("System.IO.SeekOrigin", context.Compilation) ||
+                   symbol.ConstructedFrom.IsDerivedFrom("System.IO.Stream", context.Compilation);
         }
     }
 }

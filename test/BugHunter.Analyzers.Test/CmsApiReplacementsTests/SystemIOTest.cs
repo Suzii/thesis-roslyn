@@ -13,16 +13,40 @@ namespace BugHunter.Analyzers.Test.CmsApiReplacementsTests
     [TestFixture]
     public class SystemIOTestLive : SystemIOTest<SystemIOAnalyzer> { }
     // commented out due to mismatch diagnostic id - to run edit BugHunter.AnalyzersVersions.SystemIO.Helpers.AnalyzerHelper:15 to hardcoded "BH1014" diagnostic id
-    //public class SystemIOTestV01 : SystemIOTest<V01_IdentifierName_StrignAndSymbolComparison> { }
-    //public class SystemIOTestV02 : SystemIOTest<V02_IdentifierName_SymbolAnalysis> { }
-    //public class SystemIOTestV04 : SystemIOTest<V04_CompilationStartAndIdentifierName_SymbolAnalysis> { }
-    //public class SystemIOTestV05 : SystemIOTest<V05_CompilationStartIdentifierNameAndEnd_SymbolAnalysis_WithBag> { }
-    //public class SystemIOTestV06 : SystemIOTest<V06_CompilationStartAndSyntaxTree_LookForIdentifierNames> { }
-    //public class SystemIOTestV07 : SystemIOTest<V07_CompilationStartSyntaxTreeAndEnd_FulltextSearchAndSymbolAnallysis_WithBag> { }
-    //public class SystemIOTestV08 : SystemIOTest<V08_CompilationStartSyntaxTreeAndEnd_FulltextSearchAndSymbolParallelAnallysis_WithBag> { }
-    //public class SystemIOTestV09 : SystemIOTest<V09_CompilationStartSyntaxTreeAndEnd_FulltextSearchAndSymbolParallelExecutionAndAnallysis_WithBag> { }
-    //public class SystemIOTestV10 : SystemIOTest<V10_IdentifierName_EnhancedSyntaxAnalysisAndSymbolAnalysis> { }
-    //public class SystemIOTestV11 : SystemIOTest<V11_IdentifierName_EnhancedSyntaxAnalysisAndSymbolAnalysisWithCachedResults> { }
+    //public class SystemIOTestV01 : SystemIOTest<V01_IdentifierName_StrignAndSymbolComparison>
+    //{
+    //}
+    //public class SystemIOTestV02 : SystemIOTest<V02_IdentifierName_SymbolAnalysis>
+    //{
+    //}
+    //public class SystemIOTestV04 : SystemIOTest<V04_CompilationStartAndIdentifierName_SymbolAnalysis>
+    //{
+    //}
+    //public class SystemIOTestV05 : SystemIOTest<V05_CompilationStartIdentifierNameAndEnd_SymbolAnalysis_WithBag>
+    //{
+    //}
+    //public class SystemIOTestV06 : SystemIOTest<V06_CompilationStartAndSyntaxTree_LookForIdentifierNames>
+    //{
+    //}
+    //public class SystemIOTestV07 : SystemIOTest<V07_CompilationStartSyntaxTreeAndEnd_FulltextSearchAndSymbolAnallysis_WithBag>
+    //{
+    //}
+    //public class SystemIOTestV08 : SystemIOTest<V08_CompilationStartSyntaxTreeAndEnd_FulltextSearchAndSymbolParallelAnallysis_WithBag>
+    //{
+    //}
+    //public class SystemIOTestV09 : SystemIOTest<V09_CompilationStartSyntaxTreeAndEnd_FulltextSearchAndSymbolParallelExecutionAndAnallysis_WithBag>
+    //{
+    //}
+    //public class SystemIOTestV10 : SystemIOTest<V10_IdentifierName_EnhancedSyntaxAnalysisAndSymbolAnalysis>
+    //{
+    //}
+    //public class SystemIOTestV11 : SystemIOTest<V11_IdentifierName_EnhancedSyntaxAnalysisAndSymbolAnalysisWithCachedResults>
+    //{
+    //}
+
+    //public class SystemIOTestV12 : SystemIOTest<V12_IdentifierName_EnhancedSyntaxAnalysisAndStringPlusSymbolAnalysisWithCachedResults>
+    //{
+    //}
 
 
     public class SystemIOTest<TAnalyzer> : CodeFixVerifier<TAnalyzer> where TAnalyzer : DiagnosticAnalyzer, new()

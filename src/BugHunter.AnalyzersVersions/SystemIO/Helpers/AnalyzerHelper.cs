@@ -13,7 +13,7 @@ namespace BugHunter.AnalyzersVersions.SystemIO.Helpers
             "System.IO.SeekOrigin"
         };
 
-        public static DiagnosticDescriptor GetRule(string diagnosticId) => new DiagnosticDescriptor(diagnosticId,
+        public static DiagnosticDescriptor GetRule(string diagnosticId) => new DiagnosticDescriptor("BH1014",
                 title: "Do not use System.IO",
                 messageFormat: "'{0}' should not use 'System.IO' directly. Use equivalent method from namespace 'CMS.IO'.",
                 category: nameof(AnalyzerCategories.CmsApiReplacements),
