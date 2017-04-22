@@ -16,7 +16,7 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.Analyzers
 
         private static readonly DiagnosticDescriptor Rule = ApiReplacementRulesProvider.GetRule(DIAGNOSTIC_ID, "Response.Cookies", "CookieHelper.ResponseCookies");
 
-        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule, Rule);
+        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
 
         private static readonly ApiReplacementConfig apiReplacementConfig = new ApiReplacementConfig(Rule,
             new []{ "System.Web.HttpResponse", "System.Web.HttpResponseBase"},
