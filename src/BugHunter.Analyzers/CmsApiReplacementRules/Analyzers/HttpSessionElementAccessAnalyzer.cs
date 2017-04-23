@@ -31,13 +31,13 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.Analyzers
 
         private static void Analyze(SyntaxNodeAnalysisContext context)
         {
-            var compilation = context.SemanticModel.Compilation;
             var elementAccess = (ElementAccessExpressionSyntax)context.Node;
             if (elementAccess == null)
             {
                 return;
             }
 
+            var compilation = context.SemanticModel.Compilation;
             var accessedTypeSymbol = context.SemanticModel.GetTypeInfo(elementAccess.Expression).Type as INamedTypeSymbol;
             if (accessedTypeSymbol == null || (!IsHttpSession(accessedTypeSymbol, compilation) && !IsHttpSessionBase(accessedTypeSymbol, compilation)))
             {

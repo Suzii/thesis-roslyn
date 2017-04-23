@@ -142,7 +142,7 @@ namespace BugHunter.Core.Extensions
         /// <returns><c>true</c> if is derived from the specified type baseType; otherwise, <c>false</c>.</returns>
         public static bool IsDerivedFrom(this INamedTypeSymbol type, string baseTypeOrInterfaceName, Compilation compilation)
         {
-            if (type.Name == baseTypeOrInterfaceName)
+            if (string.Equals(type.ConstructedFrom.ToString(), baseTypeOrInterfaceName, StringComparison.Ordinal))
             {
                 return true;
             }
