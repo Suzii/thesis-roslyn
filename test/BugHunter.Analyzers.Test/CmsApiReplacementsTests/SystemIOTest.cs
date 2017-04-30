@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using System.Linq;
+using BugHunter.Analyzers;
 using BugHunter.Analyzers.CmsApiReplacementRules.Analyzers;
 using BugHunter.AnalyzersVersions.SystemIO;
 using BugHunter.TestUtils.Helpers;
@@ -13,10 +14,10 @@ namespace BugHunter.Analyzers.Test.CmsApiReplacementsTests
     [TestFixture]
     public class SystemIOTestLive : SystemIOTest<SystemIOAnalyzer> { }
     // commented out due to mismatch diagnostic id - to run edit BugHunter.AnalyzersVersions.SystemIO.Helpers.AnalyzerHelper:15 to hardcoded "BH1014" diagnostic id
-    //public class SystemIOTestV01 : SystemIOTest<V20_IdentifierName_StrignAndSymbolComparison>
+    //public class SystemIOTestV01 : SystemIOTest<V66_IdentifierName_StrignAndSymbolComparison>
     //{
     //}
-    //public class SystemIOTestV02 : SystemIOTest<V02_IdentifierName_SymbolAnalysis>
+    //public class SystemIOTestV02 : SystemIOTest<V77_IdentifierName_SymbolAnalysis>
     //{
     //}
     //public class SystemIOTestV04 : SystemIOTest<V04_CompilationStartAndIdentifierName_SymbolAnalysis>
@@ -28,7 +29,7 @@ namespace BugHunter.Analyzers.Test.CmsApiReplacementsTests
     //public class SystemIOTestV06 : SystemIOTest<V06_CompilationStartAndSyntaxTree_LookForIdentifierNames>
     //{
     //}
-    //public class SystemIOTestV07 : SystemIOTest<V07_CompilationStartSyntaxTreeAndEnd_FulltextSearchAndSymbolAnallysis_WithBag>
+    //public class SystemIOTestV07 : SystemIOTest<V33_CompilationStartSyntaxTreeAndEnd_FulltextSearchAndSymbolAnallysis_WithBag>
     //{
     //}
     //public class SystemIOTestV08 : SystemIOTest<V08_CompilationStartSyntaxTreeAndEnd_FulltextSearchAndSymbolParallelAnallysis_WithBag>
@@ -37,7 +38,7 @@ namespace BugHunter.Analyzers.Test.CmsApiReplacementsTests
     //public class SystemIOTestV09 : SystemIOTest<V09_CompilationStartSyntaxTreeAndEnd_FulltextSearchAndSymbolParallelExecutionAndAnallysis_WithBag>
     //{
     //}
-    //public class SystemIOTestV10 : SystemIOTest<V10_IdentifierName_EnhancedSyntaxAnalysisAndSymbolAnalysis>
+    //public class SystemIOTestV10 : SystemIOTest<V22_IdentifierName_EnhancedSyntaxAnalysisAndSymbolAnalysis>
     //{
     //}
     //public class SystemIOTestV11 : SystemIOTest<V11_IdentifierName_EnhancedSyntaxAnalysisAndSymbolAnalysisWithCachedResults>

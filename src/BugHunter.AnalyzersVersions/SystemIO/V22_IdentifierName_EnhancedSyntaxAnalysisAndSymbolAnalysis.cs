@@ -16,7 +16,7 @@ namespace BugHunter.AnalyzersVersions.SystemIO
     /// Version with callback on IdentifierName and analyzing Symbol directly
     /// </summary>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class V10_IdentifierName_EnhancedSyntaxAnalysisAndSymbolAnalysis : DiagnosticAnalyzer
+    public class V22_IdentifierName_EnhancedSyntaxAnalysisAndSymbolAnalysis : DiagnosticAnalyzer
     {
         public const string DIAGNOSTIC_ID = "V10";
         private static readonly DiagnosticDescriptor Rule = AnalyzerHelper.GetRule(DIAGNOSTIC_ID);
@@ -80,16 +80,23 @@ namespace BugHunter.AnalyzersVersions.SystemIO
 
         private static bool FileContainsSystemIoUsing(SyntaxNode identifierNameSyntax)
         {
-            var allUsings = identifierNameSyntax
-                .AncestorsAndSelf()
-                .OfType<CompilationUnitSyntax>()
-                .SingleOrDefault()
-                .Usings;
+            var syntaxTree = identifierNameSyntax.SyntaxTree;
 
-            var systemIoUsings = allUsings
-                .Where(u => u.ToString().Contains("System.IO"));
+            return !syntaxTree.HasCompilationUnitRoot || 
+                syntaxTree.GetCompilationUnitRoot()
+                .Usings
+                .Any(u => u.ToString().Contains("System.IO"));
 
-            return systemIoUsings.Any();
+            //var allUsings = identifierNameSyntax
+            //    .AncestorsAndSelf()
+            //    .OfType<CompilationUnitSyntax>()
+            //    .SingleOrDefault()
+            //    .Usings;
+
+            //var systemIoUsings = allUsings
+            //    .Where(u => u.ToString().Contains("System.IO"));
+
+            //return systemIoUsings.Any();
         }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using System.Collections.Immutable;
-using System.Linq;
 using BugHunter.AnalyzersVersions.SystemIO.Helpers;
 using BugHunter.Core.DiagnosticsFormatting;
 using BugHunter.Core.Extensions;
@@ -13,47 +12,16 @@ namespace BugHunter.AnalyzersVersions.SystemIO
     /// <summary>
     /// Searches for usages of <see cref="System.IO"/> and their access to anything other than <c>Exceptions</c> or <c>Stream</c>
     /// 
-    /// Version with callback on IdentifierName and using SemanticModelBrowser
+    /// Version with callback on IdentifierName and analyzing Symbol directly
     /// </summary>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class V20_IdentifierName_StrignAndSymbolComparison : DiagnosticAnalyzer
+    public class V77_IdentifierName_SymbolAnalysis : DiagnosticAnalyzer
     {
-        private static readonly string[] WhiteListedIdentifierNames =
-        {
-            "System.IO.IOException",
-            "System.IO.DirectoryNotFoundException",
-            "System.IO.DriveNotFoundException",
-            "System.IO.EndOfStreamException",
-            "System.IO.FileLoadException",
-            "System.IO.FileNotFoundException",
-            "System.IO.PathTooLongException",
-            "System.IO.PipeException",
-
-            "System.IO.Stream",
-            "Microsoft.JScript.COMCharStream",
-            "System.Data.OracleClient.OracleBFile",
-            "System.Data.OracleClient.OracleLob",
-            "System.Data.SqlTypes.SqlFileStream",
-            "System.IO.BufferedStream",
-            "System.IO.Compression.DeflateStream",
-            "System.IO.Compression.GZipStream",
-            "System.IO.FileStream",
-            "System.IO.MemoryStream",
-            "System.IO.Pipes.PipeStream",
-            "System.IO.UnmanagedMemoryStream",
-            "System.Net.Security.AuthenticatedStream",
-            "System.Net.Sockets.NetworkStream",
-            "System.Printing.PrintQueueStream",
-            "System.Security.Cryptography.CryptoStream",
-
-            "System.IO.SeekOrigin"
-        };
-
-        public const string DIAGNOSTIC_ID = "V01";
+        public const string DIAGNOSTIC_ID = "V02";
         private static readonly DiagnosticDescriptor Rule = AnalyzerHelper.GetRule(DIAGNOSTIC_ID);
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
         private static readonly ISyntaxNodeDiagnosticFormatter<IdentifierNameSyntax> DiagnosticFormatter = new SystemIoDiagnosticFormatter();
-
+        
         public override void Initialize(AnalysisContext context)
         {
             context.EnableConcurrentExecution();
@@ -70,35 +38,29 @@ namespace BugHunter.AnalyzersVersions.SystemIO
                 return;
             }
 
-            var identifierNameTypeSymbol = context.SemanticModel.GetSymbolInfo(identifierNameSyntax).Symbol as INamedTypeSymbol;
-            if (identifierNameTypeSymbol == null)
+            var symbol = context.SemanticModel.GetSymbolInfo(identifierNameSyntax).Symbol as INamedTypeSymbol;
+            if (symbol == null)
             {
                 return;
             }
 
-            var symbolContainingNamespace = identifierNameTypeSymbol.ContainingNamespace;
+            var symbolContainingNamespace = symbol.ContainingNamespace;
             if (!symbolContainingNamespace.ToString().Equals("System.IO"))
             {
                 return;
             }
 
-            if (IsWhiteListed(context, identifierNameTypeSymbol))
+            if (IsWhitelisted(context, symbol))
             {
                 return;
             }
 
             var diagnostic = DiagnosticFormatter.CreateDiagnostic(Rule, identifierNameSyntax);
-
             context.ReportDiagnostic(diagnostic);
         }
 
-        private static bool IsWhiteListed(SyntaxNodeAnalysisContext context, INamedTypeSymbol symbol)
+        private static bool IsWhitelisted(SyntaxNodeAnalysisContext context, INamedTypeSymbol symbol)
         {
-            if (WhiteListedIdentifierNames.Contains(symbol.ConstructedFrom.ToString()))
-            {
-                return true;
-            }
-
             return symbol.ConstructedFrom.IsDerivedFrom("System.IO.IOException", context.Compilation) ||
                    symbol.ConstructedFrom.IsDerivedFrom("System.IO.SeekOrigin", context.Compilation) ||
                    symbol.ConstructedFrom.IsDerivedFrom("System.IO.Stream", context.Compilation);

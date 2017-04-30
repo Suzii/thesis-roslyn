@@ -16,7 +16,7 @@ namespace BugHunter.AnalyzersVersions.SystemIO
     /// Searches for usages of <see cref="System.IO"/> and their access to anything other than <c>Exceptions</c> or <c>Stream</c>
     /// </summary>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class V07_CompilationStartSyntaxTreeAndEnd_FulltextSearchAndSymbolAnallysis_WithBag : DiagnosticAnalyzer
+    public class V33_CompilationStartSyntaxTreeAndEnd_FulltextSearchAndSymbolAnallysis_WithBag : DiagnosticAnalyzer
     {
         public const string DIAGNOSTIC_ID = "V07";
         private static readonly DiagnosticDescriptor Rule = AnalyzerHelper.GetRule(DIAGNOSTIC_ID);
