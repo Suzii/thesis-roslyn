@@ -44,7 +44,7 @@ namespace BugHunter.Analyzers.Test.CmsApiReplacementsTests
     //{
     //}
 
-    //public class SystemIOTestV12 : SystemIOTest<V12_IdentifierName_EnhancedSyntaxAnalysisAndStringPlusSymbolAnalysisWithCachedResults>
+    //public class SystemIOTestV12 : SystemIOTest<V01_IdentifierName_EnhancedSyntaxAnalysisAndStringPlusSymbolAnalysisWithCachedResults>
     //{
     //}
 
