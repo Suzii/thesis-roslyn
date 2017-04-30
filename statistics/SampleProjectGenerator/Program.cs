@@ -9,7 +9,7 @@ namespace SampleProjectGenerator
     internal class Program
     {
         // must be divisible by 10 and *NumberOfFilesPerAnalyzer*
-        private static readonly int DesiredNumberOfDiagnosticsTotal = 1000;
+        private static readonly int DesiredNumberOfDiagnosticsTotal = 500;
 
         private static readonly int NumberOfFilesPerAnalyzer = 10;
         
