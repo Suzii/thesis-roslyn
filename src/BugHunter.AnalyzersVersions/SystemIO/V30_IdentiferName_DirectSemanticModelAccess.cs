@@ -13,9 +13,9 @@ namespace BugHunter.AnalyzersVersions.SystemIO
     /// Version with callback on IdentifierName and using SemanticModelBrowser
     /// </summary>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class V00_IdentiferName_DirectSemanticModelAccess : DiagnosticAnalyzer
+    public class V30_IdentiferName_DirectSemanticModelAccess : DiagnosticAnalyzer
     {
-        public const string DIAGNOSTIC_ID = "VXX";
+        public const string DIAGNOSTIC_ID = "V30";
         private static readonly DiagnosticDescriptor Rule = AnalyzerHelper.GetRule(DIAGNOSTIC_ID);
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
 

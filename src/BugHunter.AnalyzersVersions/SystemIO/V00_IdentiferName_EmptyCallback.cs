@@ -2,6 +2,7 @@
 using BugHunter.AnalyzersVersions.SystemIO.Helpers;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
 
 namespace BugHunter.AnalyzersVersions.SystemIO
@@ -28,7 +29,17 @@ namespace BugHunter.AnalyzersVersions.SystemIO
 
         private static void Analyze(SyntaxNodeAnalysisContext context, DiagnosticDescriptor rule)
         {
-            // empty callback serves only as baseline for performance tests
+            var identifierNameSyntax = context.Node as IdentifierNameSyntax;
+            if (identifierNameSyntax == null)
+            {
+                return;
+            }
+            
+            // just to make sure compiler does note ignore out semantic model access.. but no diagnostic should ever be raised here
+            if (identifierNameSyntax.Identifier.Text == "XXX_This_Should_Never_Be_True_XXX")
+            {
+                context.ReportDiagnostic(Diagnostic.Create(Rule, Location.None, "XXX_This_Should_Never_Be_True_XXX"));
+            }
         }
     }
 }

@@ -16,7 +16,7 @@ namespace BugHunter.AnalyzersVersions.SystemIO
     /// Version with callback on IdentifierName and using SemanticModelBrowser
     /// </summary>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class V01_IdentifierName_StrignAndSymbolComparison : DiagnosticAnalyzer
+    public class V20_IdentifierName_StrignAndSymbolComparison : DiagnosticAnalyzer
     {
         private static readonly string[] WhiteListedIdentifierNames =
         {

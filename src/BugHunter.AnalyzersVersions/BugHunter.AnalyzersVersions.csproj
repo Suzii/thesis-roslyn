@@ -106,7 +106,7 @@
   <ItemGroup>
     <Compile Include="SystemIO\Helpers\AnalyzerHelper.cs" />
     <Compile Include="SystemIO\Helpers\SystemIoDiagnosticFormatter.cs" />
-    <Compile Include="SystemIO\V00_IdentiferName_DirectSemanticModelAccess.cs" />
+    <Compile Include="SystemIO\V30_IdentiferName_DirectSemanticModelAccess.cs" />
     <Compile Include="SystemIO\V00_IdentiferName_EmptyCallback.cs" />
     <Compile Include="SystemIO\V01_IdentifierName_EnhancedSyntaxAnalysisAndStringPlusSymbolAnalysisWithCachedResults.cs" />
     <Compile Include="SystemIO\V11_IdentifierName_EnhancedSyntaxAnalysisAndSymbolAnalysisWithCachedResults.cs" />
@@ -114,7 +114,7 @@
     <Compile Include="SystemIO\V09_CompilationStartSyntaxTreeAndEnd_FulltextSearchAndSymbolParallelExecutionAndAnallysis_WithBag.cs" />
     <Compile Include="SystemIO\V08_CompilationStartSyntaxTreeAndEnd_FulltextSearchAndSymbolParallelAnallysis_WithBag.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SystemIO\V01_IdentifierName_StrignAndSymbolComparison.cs" />
+    <Compile Include="SystemIO\V20_IdentifierName_StrignAndSymbolComparison.cs" />
     <Compile Include="SystemIO\V10_IdentifierName_EnhancedSyntaxAnalysisAndSymbolAnalysis.cs" />
     <Compile Include="SystemIO\V04_CompilationStartAndIdentifierName_SymbolAnalysis.cs" />
     <Compile Include="SystemIO\V05_CompilationStartIdentifierNameAndEnd_SymbolAnalysis_WithBag.cs" />

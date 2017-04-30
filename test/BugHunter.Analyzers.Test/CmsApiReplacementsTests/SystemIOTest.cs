@@ -13,7 +13,7 @@ namespace BugHunter.Analyzers.Test.CmsApiReplacementsTests
     [TestFixture]
     public class SystemIOTestLive : SystemIOTest<SystemIOAnalyzer> { }
     // commented out due to mismatch diagnostic id - to run edit BugHunter.AnalyzersVersions.SystemIO.Helpers.AnalyzerHelper:15 to hardcoded "BH1014" diagnostic id
-    //public class SystemIOTestV01 : SystemIOTest<V01_IdentifierName_StrignAndSymbolComparison>
+    //public class SystemIOTestV01 : SystemIOTest<V20_IdentifierName_StrignAndSymbolComparison>
     //{
     //}
     //public class SystemIOTestV02 : SystemIOTest<V02_IdentifierName_SymbolAnalysis>

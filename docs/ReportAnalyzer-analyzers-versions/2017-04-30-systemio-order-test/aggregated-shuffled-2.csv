@@ -1,0 +1,13 @@
+BugHunter.AnalyzersVersions.SystemIO.V04_CompilationStartAndIdentifierName_SymbolAnalysis;7,482;7,049;6,994;7,447;7,288;7,285;7,157;7,447;7,644
+BugHunter.AnalyzersVersions.SystemIO.V02_IdentifierName_SymbolAnalysis;1,086;0,477;0,436;0,459;0,463;0,472;0,456;0,453;0,475
+BugHunter.AnalyzersVersions.SystemIO.V00_IdentiferName_DirectSemanticModelAccess;0,525
+BugHunter.AnalyzersVersions.SystemIO.V01_IdentifierName_StrignAndSymbolComparison;0,428
+BugHunter.AnalyzersVersions.SystemIO.V05_CompilationStartIdentifierNameAndEnd_SymbolAnalysis_WithBag;0,36;0,396;0,449;0,415;0,455;0,417;0,453;0,525;0,52
+BugHunter.AnalyzersVersions.SystemIO.V10_IdentifierName_EnhancedSyntaxAnalysisAndSymbolAnalysis;0,209;0,219;0,178;0,196;0,181;0,177;0,295;0,208;0,196
+BugHunter.AnalyzersVersions.SystemIO.V01_IdentifierName_EnhancedSyntaxAnalysisAndStringPlusSymbolAnalysisWithCachedResults;0,171;0,259;0,112;0,111;0,109;0,115;0,107;0,118;0,107
+BugHunter.AnalyzersVersions.SystemIO.V11_IdentifierName_EnhancedSyntaxAnalysisAndSymbolAnalysisWithCachedResults;0,102;0,141;0,096;0,1;0,134;0,103;0,097;0,096;0,139
+BugHunter.AnalyzersVersions.SystemIO.V09_CompilationStartSyntaxTreeAndEnd_FulltextSearchAndSymbolParallelExecutionAndAnallysis_WithBag;0,097;0,066;0,066;0,045;0,255;0,095;0,138;0,092;0,234
+BugHunter.AnalyzersVersions.SystemIO.V07_CompilationStartSyntaxTreeAndEnd_FulltextSearchAndSymbolAnallysis_WithBag;0,045;0,088;0,041;0,059;0,042;0,144;0,041;0,068;0,041
+BugHunter.AnalyzersVersions.SystemIO.V00_IdentiferName_EmptyCallback;0,008;0,011;0,041;0,008;0,089;0,025;0,005;0,184;0,016
+BugHunter.AnalyzersVersions.SystemIO.V20_IdentifierName_StrignAndSymbolComparison;1,211;1,124;1,042;1,103;1,159;1,146;1,084;1,124
+BugHunter.AnalyzersVersions.SystemIO.V30_IdentiferName_DirectSemanticModelAccess;0,441;0,406;0,447;0,449;0,494;0,424;0,409;0,478

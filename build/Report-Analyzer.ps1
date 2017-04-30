@@ -89,7 +89,7 @@ function Program
 $TmpFolder = "D:\tmp\2017-04-30-system-io-order-check"
 #$AnalyzedProjectOrSolution = "C:\TFS\CMS\MAIN\CMSSolution\CMSSolution.sln"
 $AnalyzedProjectOrSolution = "C:\Users\zuzanad\code\thesis\thesis-sample-test-project\SampleProject\SampleProject.sln"
-$OutputFile = "$TmpFolder\aggregated.csv"
+$OutputFile = "$TmpFolder\aggregated-shuffled-2.csv"
 $NumberOfRuns = 10
 
 Program -ProjectOrSolutionFilePath $AnalyzedProjectOrSolution -NumberOfRuns $NumberOfRuns -TmpFolder $TmpFolder -OutputFile $OutputFile
