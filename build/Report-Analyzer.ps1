@@ -72,7 +72,7 @@ function Program
     $AggregatedResultsPrefix = "$TmpFolder\aggregated-single-run-"
     [System.Array] $MsbuildTimes = @();
 
-    For ($Index = 1; $Index -lt $NumberOfRuns; $Index++)
+    For ($Index = 0; $Index -lt $NumberOfRuns; $Index++)
     {
         Run-MsBuildWithReportAnalyzer -ProjectOrSolutionFilePath $AnalyzedProjectOrSolution -OutputFile "$MsBuildLogFile$Index.txt"
     
@@ -86,10 +86,10 @@ function Program
 }
 
 # CMSSolution
-$TmpFolder = "D:\tmp\2017-04-30-system-io-order-check"
-#$AnalyzedProjectOrSolution = "C:\TFS\CMS\MAIN\CMSSolution\CMSSolution.sln"
-$AnalyzedProjectOrSolution = "C:\Users\zuzanad\code\thesis\thesis-sample-test-project\SampleProject\SampleProject.sln"
-$OutputFile = "$TmpFolder\aggregated-shuffled-2.csv"
-$NumberOfRuns = 10
+$TmpFolder = "D:\tmp\2017-05-01-system-io-reversed-order"
+$AnalyzedProjectOrSolution = "C:\TFS\CMS\MAIN\CMSSolution\CMSSolution.sln"
+#$AnalyzedProjectOrSolution = "C:\Users\zuzanad\code\thesis\thesis-sample-test-project\SampleProject\SampleProject.sln"
+$OutputFile = "$TmpFolder\aggregated-reversed-order.csv"
+$NumberOfRuns = 100
 
 Program -ProjectOrSolutionFilePath $AnalyzedProjectOrSolution -NumberOfRuns $NumberOfRuns -TmpFolder $TmpFolder -OutputFile $OutputFile
