@@ -6,14 +6,8 @@ namespace BugHunter.Core.DiagnosticsFormatting
 {
     public static class DiagnosticFormatterFactory
     {
-        public static ISyntaxNodeDiagnosticFormatter<SyntaxNode> CreateDefaultFormatter()
-            => new DefaultDiagnosticFormatter<SyntaxNode>();
-
         public static ISyntaxNodeDiagnosticFormatter<MemberAccessExpressionSyntax> CreateMemberAccessFormatter()
             =>new MemberAccessDiagnosticFormatter();
-
-        public static ISyntaxNodeDiagnosticFormatter<MemberAccessExpressionSyntax> CreateMemberAccessOnlyFormatter()
-            => new MemberAccessOnlyDiagnosticFormatter();
 
         public static ISyntaxNodeDiagnosticFormatter<InvocationExpressionSyntax> CreateMemberInvocationFormatter()
             => new MemberInvocationDiagnosticFormatter();
@@ -28,12 +22,5 @@ namespace BugHunter.Core.DiagnosticsFormatting
 
         public static ISymbolDiagnosticFormatter<INamedTypeSymbol> CreateNamedTypeSymbolFormatter()
             => new NamedTypeSymbolDiagnosticFormatter();
-
-        public static ISyntaxNodeDiagnosticFormatter<TSyntaxNode> CreateFormatter<TFormatter, TSyntaxNode>()
-            where TFormatter : ISyntaxNodeDiagnosticFormatter<TSyntaxNode>, new()
-            where TSyntaxNode : SyntaxNode
-        {
-            return new TFormatter();
-        }
     }
 }

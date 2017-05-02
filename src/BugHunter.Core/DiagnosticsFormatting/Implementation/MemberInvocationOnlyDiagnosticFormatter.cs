@@ -5,65 +5,83 @@ using Microsoft.CodeAnalysis.Text;
 
 namespace BugHunter.Core.DiagnosticsFormatting.Implementation
 {
+    /// <summary>
+    /// Diagnostic formatter for <see cref="InvocationExpressionSyntax"/> nodes, where only method name part should be reflected in raised diagnostic
+    /// </summary>
     internal class MemberInvocationOnlyDiagnosticFormatter : MemberInvocationDiagnosticFormatter
     {
-        public override Diagnostic CreateDiagnostic(DiagnosticDescriptor descriptor, InvocationExpressionSyntax syntaxNode)
+        /// <summary>
+        /// Creates a <see cref="Diagnostic"/> from <param name="descriptor"></param> based on passed <param name="invocationExpression"></param>.
+        /// 
+        /// MessageFormat will be passed a string representation of invoked method name along with argument list of <param name="invocationExpression"></param>.
+        /// Location will be only of method name + argument list part of passed <param name="invocationExpression"></param>.
+        /// </summary>
+        /// <param name="descriptor">Diagnostic descriptor for diagnostic to be created</param>
+        /// <param name="invocationExpression">Invocation expression that the diagnostic should be raised for</param>
+        /// <returns>Diagnostic created from descriptor for given invocation expression</returns>
+        public override Diagnostic CreateDiagnostic(DiagnosticDescriptor descriptor, InvocationExpressionSyntax invocationExpression)
         {
             SimpleNameSyntax methodNameNode;
             Diagnostic diagnostic;
-            if (!syntaxNode.TryGetMethodNameNode(out methodNameNode))
+            if (!invocationExpression.TryGetMethodNameNode(out methodNameNode))
             {
                 diagnostic = Diagnostic.Create(descriptor, Location.None);
             }
             else
             {
-                diagnostic = Diagnostic.Create(descriptor, GetLocation(syntaxNode, methodNameNode), GetDiagnosedUsage(syntaxNode, methodNameNode));
+                diagnostic = Diagnostic.Create(descriptor, GetLocation(invocationExpression, methodNameNode), GetDiagnosedUsage(invocationExpression, methodNameNode));
             }
 
-            return MarkDiagnosticIfNecessary(diagnostic, syntaxNode);
+            return MarkDiagnosticIfNecessary(diagnostic, invocationExpression);
         }
 
         /// <summary>
-        /// Returns location of method syntaxNode only. 
+        /// Returns location of only method name syntaxNode + argument list of invocation. 
         /// 
         /// E.g. if Invocation like 'condition.Or().WhereLike("col", "val")' is passed,
         /// location of 'WhereLike("col", "val")' is returned.
-        /// Throws if <param name="syntaxNode"></param> cannot be casted to <see cref="MemberAccessExpressionSyntax"/>
         /// </summary>
-        /// <param name="syntaxNode">Invocation syntaxNode</param>
-        /// <returns>Location of nested method syntaxNode</returns>
-        public override Location GetLocation(InvocationExpressionSyntax syntaxNode)
+        /// <param name="invocationExpression">Invocation expression</param>
+        /// <returns>Location of nested method name and arguments</returns>
+        protected override Location GetLocation(InvocationExpressionSyntax invocationExpression)
         {
             SimpleNameSyntax methodNameNode;
-            if (!syntaxNode.TryGetMethodNameNode(out methodNameNode))
+            if (!invocationExpression.TryGetMethodNameNode(out methodNameNode))
             {
                 return Location.None;
             }
 
-            return GetLocation(syntaxNode, methodNameNode);
+            return GetLocation(invocationExpression, methodNameNode);
         }
 
-        public override string GetDiagnosedUsage(InvocationExpressionSyntax syntaxNode)
+        /// <summary>
+        /// Returns string representation of only method name syntaxNode + argument list of invocation, without possible whitespaces.
+        /// 
+        /// E.g. if Invocation like 'condition.Or().WhereLike("col", "val")' is passed, only 'WhereLike("col", "val")' string is returned.
+        /// </summary>
+        /// <param name="invocationExpression">Invocation expression</param>
+        /// <returns>String representation of nested method name and arguments</returns>
+        protected override string GetDiagnosedUsage(InvocationExpressionSyntax invocationExpression)
         {
             SimpleNameSyntax methodNameNode;
-            if (!syntaxNode.TryGetMethodNameNode(out methodNameNode))
+            if (!invocationExpression.TryGetMethodNameNode(out methodNameNode))
             {
-                return syntaxNode.ToString();
+                return invocationExpression.ToString();
             }
 
-            return GetDiagnosedUsage(syntaxNode, methodNameNode);
+            return GetDiagnosedUsage(invocationExpression, methodNameNode);
         }
 
-        private Location GetLocation(InvocationExpressionSyntax syntaxNode, SimpleNameSyntax methodNameNode)
+        private Location GetLocation(InvocationExpressionSyntax invocationExpression, SimpleNameSyntax methodNameNode)
         {
             var statLocation = methodNameNode.GetLocation().SourceSpan.Start;
-            var endLocation = syntaxNode.GetLocation().SourceSpan.End;
-            var location = Location.Create(syntaxNode.SyntaxTree, TextSpan.FromBounds(statLocation, endLocation));
+            var endLocation = invocationExpression.GetLocation().SourceSpan.End;
+            var location = Location.Create(invocationExpression.SyntaxTree, TextSpan.FromBounds(statLocation, endLocation));
 
             return location;
         }
 
-        private string GetDiagnosedUsage(InvocationExpressionSyntax syntaxNode, SimpleNameSyntax methodNameNode)
-            => $"{methodNameNode.Identifier.ValueText}{syntaxNode.ArgumentList}";
+        private string GetDiagnosedUsage(InvocationExpressionSyntax invocationExpression, SimpleNameSyntax methodNameNode)
+            => $"{methodNameNode.Identifier.ValueText}{invocationExpression.ArgumentList}";
     }
 }

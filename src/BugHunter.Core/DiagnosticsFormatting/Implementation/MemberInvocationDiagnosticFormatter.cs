@@ -5,8 +5,20 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace BugHunter.Core.DiagnosticsFormatting.Implementation
 {
+    /// <summary>
+    /// Default diagnostic formatter for <see cref="InvocationExpressionSyntax"/> nodes
+    /// </summary>
     internal class MemberInvocationDiagnosticFormatter : DefaultDiagnosticFormatter<InvocationExpressionSyntax>
     {
+        /// <summary>
+        /// Creates a <see cref="Diagnostic"/> from <param name="descriptor"></param> based on passed <param name="invocationExpression"></param>.
+        /// 
+        /// MessageFormat will be passed a string representation of <param name="invocationExpression"></param>.
+        /// Location will be of a whole <param name="invocationExpression"></param>.
+        /// </summary>
+        /// <param name="descriptor">Diagnostic descriptor for diagnostic to be created</param>
+        /// <param name="invocationExpression">Invocation that the diagnostic should be raised for</param>
+        /// <returns>Diagnostic created from descriptor for given invocation</returns>
         public override Diagnostic CreateDiagnostic(DiagnosticDescriptor descriptor, InvocationExpressionSyntax invocationExpression)
         {
             var diagnostic = base.CreateDiagnostic(descriptor, invocationExpression);
@@ -15,6 +27,12 @@ namespace BugHunter.Core.DiagnosticsFormatting.Implementation
             return markedDiagnostic;
         }
 
+        /// <summary>
+        /// Diagnostic will be marked as being raised on conditional or simple member access, based on the underlying kind of 'Expression' property 
+        /// </summary>
+        /// <param name="diagnostic">Diagnostic to be marked</param>
+        /// <param name="invocationExpression">Invocation that the diagnostic is being raised for</param>
+        /// <returns>Potentially marked diagnostic</returns>
         protected Diagnostic MarkDiagnosticIfNecessary(Diagnostic diagnostic, InvocationExpressionSyntax invocationExpression)
         {
             var expression = invocationExpression?.Expression;
