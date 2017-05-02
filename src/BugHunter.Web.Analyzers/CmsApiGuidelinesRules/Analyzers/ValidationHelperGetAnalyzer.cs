@@ -1,9 +1,8 @@
 ﻿using System.Collections.Immutable;
-using BugHunter.Core;
 using BugHunter.Core.Analyzers;
 using BugHunter.Core.ApiReplacementAnalysis;
 using BugHunter.Core.Constants;
-using BugHunter.Core.DiagnosticsFormatting;
+using BugHunter.Core.DiagnosticsFormatting.Implementation;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
 using Microsoft.CodeAnalysis.CSharp;
@@ -44,7 +43,7 @@ namespace BugHunter.Web.Analyzers.CmsApiGuidelinesRules.Analyzers
 
         internal class InnerMethodInvocationAnalyzer : MethodInvocationAnalyzer
         {
-            public InnerMethodInvocationAnalyzer(ApiReplacementConfig config) : base(config, DiagnosticFormatterFactory.CreateMemberInvocationOnlyFormatter(true))
+            public InnerMethodInvocationAnalyzer(ApiReplacementConfig config) : base(config, new MethodInvocationOnlyNoArgsDiagnosticFormatter())
             {
             }
 

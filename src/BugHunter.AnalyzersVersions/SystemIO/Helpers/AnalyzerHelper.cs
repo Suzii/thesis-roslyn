@@ -1,5 +1,4 @@
-﻿using BugHunter.Core;
-using BugHunter.Core.Constants;
+﻿using BugHunter.Core.Constants;
 using Microsoft.CodeAnalysis;
 
 namespace BugHunter.AnalyzersVersions.SystemIO.Helpers

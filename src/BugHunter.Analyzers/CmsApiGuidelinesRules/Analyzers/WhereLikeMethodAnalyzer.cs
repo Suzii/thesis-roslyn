@@ -1,9 +1,8 @@
 using System.Collections.Immutable;
-using BugHunter.Core;
 using BugHunter.Core.Analyzers;
 using BugHunter.Core.ApiReplacementAnalysis;
 using BugHunter.Core.Constants;
-using BugHunter.Core.DiagnosticsFormatting;
+using BugHunter.Core.DiagnosticsFormatting.Implementation;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Diagnostics;
@@ -29,7 +28,7 @@ namespace BugHunter.Analyzers.CmsApiGuidelinesRules.Analyzers
            new[] { "CMS.DataEngine.WhereConditionBase`1" },
            new[] { "WhereLike", "WhereNotLike" });
 
-        private static readonly ISyntaxNodeAnalyzer analyzer = new MethodInvocationAnalyzer(config, DiagnosticFormatterFactory.CreateMemberInvocationOnlyFormatter());
+        private static readonly ISyntaxNodeAnalyzer analyzer = new MethodInvocationAnalyzer(config, new MethodInvocationOnlyDiagnosticFormatter());
 
         public override void Initialize(AnalysisContext context)
         {

@@ -6,7 +6,7 @@ namespace BugHunter.Core.DiagnosticsFormatting.Implementation
     /// <summary>
     /// Default diagnostic formatter for all <see cref="INamedTypeSymbol"/>s
     /// </summary>
-    internal class NamedTypeSymbolDiagnosticFormatter : ISymbolDiagnosticFormatter<INamedTypeSymbol>
+    public class NamedTypeSymbolDiagnosticFormatter : ISymbolDiagnosticFormatter<INamedTypeSymbol>
     {
         /// <summary>
         /// Creates a <see cref="Diagnostic"/> from <param name="descriptor"></param> od passed <param name="namedTypeSymbol"></param>

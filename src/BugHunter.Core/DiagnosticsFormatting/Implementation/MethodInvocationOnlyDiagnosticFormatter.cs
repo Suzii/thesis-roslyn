@@ -8,7 +8,7 @@ namespace BugHunter.Core.DiagnosticsFormatting.Implementation
     /// <summary>
     /// Diagnostic formatter for <see cref="InvocationExpressionSyntax"/> nodes, where only method name part should be reflected in raised diagnostic
     /// </summary>
-    internal class MethodInvocationOnlyDiagnosticFormatter : MethodInvocationDiagnosticFormatter
+    public class MethodInvocationOnlyDiagnosticFormatter : MethodInvocationDiagnosticFormatter
     {
         /// <summary>
         /// Creates a <see cref="Diagnostic"/> from <param name="descriptor"></param> based on passed <param name="invocationExpression"></param>.

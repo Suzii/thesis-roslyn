@@ -1,6 +1,5 @@
 ﻿using BugHunter.Core.Extensions;
 using Microsoft.CodeAnalysis.CSharp;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using NUnit.Framework;
 
 namespace BugHunter.Core.Tests.Extensions

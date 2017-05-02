@@ -1,5 +1,5 @@
 ﻿using BugHunter.Core.Analyzers;
-using BugHunter.Core.DiagnosticsFormatting;
+using BugHunter.Core.DiagnosticsFormatting.Implementation;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Diagnostics;
 
@@ -11,7 +11,7 @@ namespace BugHunter.Core.ApiReplacementAnalysis
 
         public ApiReplacementForMethodAnalyzer(ApiReplacementConfig config)
         {
-            _methodInvocationAnalyzer = new MethodInvocationAnalyzer(config, DiagnosticFormatterFactory.CreateMemberInvocationFormatter());
+            _methodInvocationAnalyzer = new MethodInvocationAnalyzer(config, new MethodInvocationDiagnosticFormatter());
         }
 
         public void RegisterAnalyzers(AnalysisContext analysisContext)
@@ -19,7 +19,6 @@ namespace BugHunter.Core.ApiReplacementAnalysis
             analysisContext.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.None);
             analysisContext.EnableConcurrentExecution();
 
-            // TODO consider registering compilation action first, get the INamedTypeSymbol and pass to underlying analyzers
             analysisContext.RegisterSyntaxNodeAction(_methodInvocationAnalyzer.Run, SyntaxKind.InvocationExpression);
         }
     }
