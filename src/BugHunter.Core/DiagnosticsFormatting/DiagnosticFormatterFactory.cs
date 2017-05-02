@@ -10,12 +10,12 @@ namespace BugHunter.Core.DiagnosticsFormatting
             =>new MemberAccessDiagnosticFormatter();
 
         public static ISyntaxNodeDiagnosticFormatter<InvocationExpressionSyntax> CreateMemberInvocationFormatter()
-            => new MemberInvocationDiagnosticFormatter();
+            => new MethodInvocationDiagnosticFormatter();
 
         public static ISyntaxNodeDiagnosticFormatter<InvocationExpressionSyntax> CreateMemberInvocationOnlyFormatter(bool stripOfArgsFromMessage = false)
             => stripOfArgsFromMessage
-            ? (ISyntaxNodeDiagnosticFormatter<InvocationExpressionSyntax>) new MemberInvocationOnlyNoArgsDiagnosticFormatter()        
-            : (ISyntaxNodeDiagnosticFormatter<InvocationExpressionSyntax>) new MemberInvocationOnlyDiagnosticFormatter();
+            ? (ISyntaxNodeDiagnosticFormatter<InvocationExpressionSyntax>) new MethodInvocationOnlyNoArgsDiagnosticFormatter()        
+            : (ISyntaxNodeDiagnosticFormatter<InvocationExpressionSyntax>) new MethodInvocationOnlyDiagnosticFormatter();
 
         public static ISyntaxNodeDiagnosticFormatter<ConditionalAccessExpressionSyntax> CreateConditionalAccessFormatter()
             => new ConditionalAccessDiagnosticFormatter();

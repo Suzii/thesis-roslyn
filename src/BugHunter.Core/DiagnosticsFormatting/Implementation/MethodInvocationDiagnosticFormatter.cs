@@ -8,7 +8,7 @@ namespace BugHunter.Core.DiagnosticsFormatting.Implementation
     /// <summary>
     /// Default diagnostic formatter for <see cref="InvocationExpressionSyntax"/> nodes
     /// </summary>
-    internal class MemberInvocationDiagnosticFormatter : DefaultDiagnosticFormatter<InvocationExpressionSyntax>
+    internal class MethodInvocationDiagnosticFormatter : DefaultDiagnosticFormatter<InvocationExpressionSyntax>
     {
         /// <summary>
         /// Creates a <see cref="Diagnostic"/> from <param name="descriptor"></param> based on passed <param name="invocationExpression"></param>.

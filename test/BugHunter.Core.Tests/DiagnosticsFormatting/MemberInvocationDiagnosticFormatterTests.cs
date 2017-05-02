@@ -19,7 +19,7 @@ namespace BugHunter.Core.Tests.DiagnosticsFormatting
         [SetUp]
         public void SetUp()
         {
-            _diagnosticFormatter = new MemberInvocationDiagnosticFormatter();
+            _diagnosticFormatter = new MethodInvocationDiagnosticFormatter();
         }
 
         [Test]

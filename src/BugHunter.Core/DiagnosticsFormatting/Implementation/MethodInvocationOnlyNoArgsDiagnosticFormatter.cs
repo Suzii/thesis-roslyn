@@ -6,14 +6,14 @@ using Microsoft.CodeAnalysis.Text;
 namespace BugHunter.Core.DiagnosticsFormatting.Implementation
 {
     /// <summary>
-    /// Diagnostic formatter for <see cref="InvocationExpressionSyntax"/> nodes, where only method name part should be reflected in raised diagnostic
+    /// Diagnostic formatter for <see cref="InvocationExpressionSyntax"/> nodes, where only method name part without method arguments should be reflected in raised diagnostic
     /// </summary>
-    internal class MemberInvocationOnlyDiagnosticFormatter : MemberInvocationDiagnosticFormatter
+    internal class MethodInvocationOnlyNoArgsDiagnosticFormatter : MethodInvocationDiagnosticFormatter
     {
         /// <summary>
         /// Creates a <see cref="Diagnostic"/> from <param name="descriptor"></param> based on passed <param name="invocationExpression"></param>.
         /// 
-        /// MessageFormat will be passed a string representation of invoked method name along with argument list of <param name="invocationExpression"></param>.
+        /// MessageFormat will be passed a string representation of invoked method name only (with empty argument list) of <param name="invocationExpression"></param>.
         /// Location will be only of method name + argument list part of passed <param name="invocationExpression"></param>.
         /// </summary>
         /// <param name="descriptor">Diagnostic descriptor for diagnostic to be created</param>
@@ -29,7 +29,8 @@ namespace BugHunter.Core.DiagnosticsFormatting.Implementation
             }
             else
             {
-                diagnostic = Diagnostic.Create(descriptor, GetLocation(invocationExpression, methodNameNode), GetDiagnosedUsage(invocationExpression, methodNameNode));
+                diagnostic = Diagnostic.Create(descriptor, GetLocation(invocationExpression, methodNameNode),
+                    GetDiagnosedUsage(methodNameNode));
             }
 
             return MarkDiagnosticIfNecessary(diagnostic, invocationExpression);
@@ -55,21 +56,21 @@ namespace BugHunter.Core.DiagnosticsFormatting.Implementation
         }
 
         /// <summary>
-        /// Returns string representation of only method name syntaxNode + argument list of invocation, without possible whitespaces.
+        /// Returns string representation of only method name syntaxNode + empty argument list of invocation.
         /// 
-        /// E.g. if Invocation like 'condition.Or().WhereLike("col", "val")' is passed, only 'WhereLike("col", "val")' string is returned.
+        /// E.g. if Invocation like 'condition.Or().WhereLike("col", "val")' is passed, only 'WhereLike()' string is returned.
         /// </summary>
         /// <param name="invocationExpression">Invocation expression</param>
-        /// <returns>String representation of nested method name and arguments</returns>
+        /// <returns>String representation of nested method name and no arguments</returns>
         protected override string GetDiagnosedUsage(InvocationExpressionSyntax invocationExpression)
         {
             SimpleNameSyntax methodNameNode;
             if (!invocationExpression.TryGetMethodNameNode(out methodNameNode))
             {
-                return invocationExpression.ToString();
+                return $"{invocationExpression.Expression}()";
             }
 
-            return GetDiagnosedUsage(invocationExpression, methodNameNode);
+            return GetDiagnosedUsage(methodNameNode);
         }
 
         private Location GetLocation(InvocationExpressionSyntax invocationExpression, SimpleNameSyntax methodNameNode)
@@ -81,7 +82,8 @@ namespace BugHunter.Core.DiagnosticsFormatting.Implementation
             return location;
         }
 
-        private string GetDiagnosedUsage(InvocationExpressionSyntax invocationExpression, SimpleNameSyntax methodNameNode)
-            => $"{methodNameNode.Identifier.ValueText}{invocationExpression.ArgumentList}";
+        private string GetDiagnosedUsage(SimpleNameSyntax methodNameNode)
+            => $"{methodNameNode.Identifier.ValueText}()";
+
     }
 }
