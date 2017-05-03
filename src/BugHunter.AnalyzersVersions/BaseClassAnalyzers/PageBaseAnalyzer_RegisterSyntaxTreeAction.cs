@@ -26,9 +26,7 @@ namespace BugHunter.AnalyzersVersions.BaseClassAnalyzers
         private static readonly DiagnosticDescriptor Rule = BaseClassesInheritanceRulesProvider.GetRule(DIAGNOSTIC_ID, "Page", "some abstract CMSPage");
 
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
-
-        private static readonly ISymbolDiagnosticFormatter<INamedTypeSymbol> DiagnosticFormatter = new NamedTypeSymbolDiagnosticFormatter();
-
+        
         public override void Initialize(AnalysisContext context)
         {
             context.EnableConcurrentExecution();
