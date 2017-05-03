@@ -3,7 +3,7 @@ using Microsoft.CodeAnalysis;
 
 namespace BugHunter.Analyzers.StringAndCultureRules.Analyzers.Helpers
 {
-    internal class StringMethodsRuleBuilder
+    public class StringMethodsRuleBuilder
     {
         public static DiagnosticDescriptor CreateRuleForComparisonMethods(string diagnosticId)
             => new DiagnosticDescriptor(diagnosticId,

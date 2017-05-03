@@ -6,8 +6,11 @@ using Microsoft.CodeAnalysis.Diagnostics;
 
 namespace BugHunter.AnalyzersVersions.MethodInvocationHeuristics
 {
+
     /// <summary>
     /// ApiReplacementAnalyzerForMethod WITH syntax heuristic optimization in MethodInvocationAnalyzer
+    /// 
+    /// !!! THIS FILE SERVES ONLY FOR PURPOSES OF PERFORMANCE TESTING !!!
     /// </summary>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     public class FormsAuthenticationSignOutAnalyzer : DiagnosticAnalyzer

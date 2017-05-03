@@ -10,6 +10,11 @@ using Microsoft.CodeAnalysis.Diagnostics;
 
 namespace BugHunter.AnalyzersVersions.MethodInvocationHeuristics.Helpers
 {
+    /// <summary>
+    /// This is duplicate version of <see cref="MethodInvocationAnalyzer"/> BUT withou syntax heuristics optimization.
+    /// 
+    /// !!! THIS FILE SERVES ONLY FOR PURPOSES OF PERFORMANCE TESTING !!!
+    /// </summary>
     public class MethodInvocationAnalyzer_NoOptimization : ISyntaxNodeAnalyzer
     {
         protected readonly ApiReplacementConfig Config;

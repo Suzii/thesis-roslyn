@@ -1,6 +1,6 @@
 using System.Collections.Immutable;
 using System.Linq;
-using BugHunter.AnalyzersVersions.StringAndCulture.Helpers;
+using BugHunter.Analyzers.StringAndCultureRules.Analyzers.Helpers;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
@@ -9,6 +9,8 @@ namespace BugHunter.AnalyzersVersions.StringAndCulture
 {
     /// <summary>
     /// Test version of StringAndCulture analyzer that uses the base class optimized approach
+    /// 
+    /// !!! THIS FILE SERVES ONLY FOR PURPOSES OF PERFORMANCE TESTING !!!
     /// </summary>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     public class StringAndCulture_WithBaseClass_Analyzer : BaseStringMethodsAnalyzer

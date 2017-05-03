@@ -3,6 +3,9 @@ using Microsoft.CodeAnalysis;
 
 namespace BugHunter.AnalyzersVersions.SystemIO.Helpers
 {
+    /// <summary>
+    /// !!! THIS FILE SERVES ONLY FOR PURPOSES OF PERFORMANCE TESTING !!!
+    /// </summary>
     public static class AnalyzerHelper
     {
         public static readonly string[] WhiteListedTypeNames =

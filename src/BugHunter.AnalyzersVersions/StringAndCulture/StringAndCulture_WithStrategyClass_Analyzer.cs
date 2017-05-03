@@ -1,6 +1,6 @@
 using System.Collections.Immutable;
 using System.Linq;
-using BugHunter.AnalyzersVersions.StringAndCulture.Helpers;
+using BugHunter.Analyzers.StringAndCultureRules.Analyzers.Helpers;
 using BugHunter.Core.Analyzers;
 using BugHunter.Core.ApiReplacementAnalysis;
 using BugHunter.Core.DiagnosticsFormatting.Implementation;
@@ -13,6 +13,8 @@ namespace BugHunter.AnalyzersVersions.StringAndCulture
 {
     /// <summary>
     /// Test version of StringAndCulture analyzer that uses the MethodInvocationAnalyzer strategy pattern
+    /// 
+    /// !!! THIS FILE SERVES ONLY FOR PURPOSES OF PERFORMANCE TESTING !!!
     /// </summary>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     public class StringAndCulture_WithStrategyClass_Analyzer : DiagnosticAnalyzer

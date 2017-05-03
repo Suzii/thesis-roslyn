@@ -108,13 +108,6 @@
     <Compile Include="MethodInvocationHeuristics\FormsAuthenticationSignOutAnalyzer.cs" />
     <Compile Include="MethodInvocationHeuristics\Helpers\ApiReplacementForMethodAnalyzer_NoOptimization.cs" />
     <Compile Include="MethodInvocationHeuristics\Helpers\MethodInvocationAnalyzer_NoOptimization.cs" />
-    <Compile Include="StringAndCulture\Helpers\BaseStringMethodsAnalyzer.cs" />
-    <Compile Include="StringAndCulture\Helpers\StringMethodsResources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>StringMethodsResources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="StringAndCulture\Helpers\StringMethodsRuleBuilder.cs" />
     <Compile Include="StringAndCulture\StringAndCulture_WithStrategyClass_Analyzer.cs" />
     <Compile Include="StringAndCulture\StringAndCulture_WithBaseClass_Analyzer.cs" />
     <Compile Include="SystemIO\Helpers\AnalyzerHelper.cs" />
@@ -139,19 +132,16 @@
     <Analyzer Include="..\..\packages\Microsoft.CodeAnalysis.Analyzers.1.1.0\analyzers\dotnet\cs\Microsoft.CodeAnalysis.CSharp.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BugHunter.Analyzers\BugHunter.Analyzers.csproj">
+      <Project>{94312E36-802C-40FA-A07E-F479E74B61C2}</Project>
+      <Name>BugHunter.Analyzers</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BugHunter.Core\BugHunter.Core.csproj">
       <Project>{5eba700c-b241-41ce-a39d-6862a95cfb7d}</Project>
       <Name>BugHunter.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />
-  <ItemGroup>
-    <EmbeddedResource Include="StringAndCulture\Helpers\StringMethodsResources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>StringMethodsResources.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\v4.6\Microsoft.Portable.CSharp.targets" />
   <Target Name="AfterBuild">
     <GetAssemblyIdentity AssemblyFiles="$(OutDir)\$(AssemblyName).dll">
