@@ -1,0 +1,33 @@
+using System.Collections.Immutable;
+using System.Linq;
+using BugHunter.AnalyzersVersions.StringAndCulture.Helpers;
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.CodeAnalysis.Diagnostics;
+
+namespace BugHunter.AnalyzersVersions.StringAndCulture
+{
+    /// <summary>
+    /// Test version of StringAndCulture analyzer that uses the base class optimized approach
+    /// </summary>
+    [DiagnosticAnalyzer(LanguageNames.CSharp)]
+    public class StringAndCulture_WithBaseClass_Analyzer : BaseStringMethodsAnalyzer
+    {
+        public const string DIAGNOSTIC_ID = "BH4004";
+        
+        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
+
+        protected override DiagnosticDescriptor Rule => StringMethodsRuleBuilder.CreateRuleForComparisonMethods(DIAGNOSTIC_ID);
+
+        public StringAndCulture_WithBaseClass_Analyzer()
+            : base("IndexOf", "LastIndexOf")
+        {
+        }
+
+        protected override bool IsForbiddenOverload(SyntaxNodeAnalysisContext context, InvocationExpressionSyntax invocationExpression, IMethodSymbol methodSymbol)
+            => base.IsForbiddenOverload(context, invocationExpression, methodSymbol) && !IsFirstArgumentChar(methodSymbol);
+
+        private static bool IsFirstArgumentChar(IMethodSymbol methodSymbol)
+            => !methodSymbol.Parameters.IsEmpty && methodSymbol.Parameters.First().Type.SpecialType == SpecialType.System_Char;
+    }
+}

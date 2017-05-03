@@ -104,6 +104,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="StringAndCulture\Helpers\BaseStringMethodsAnalyzer.cs" />
+    <Compile Include="StringAndCulture\Helpers\StringMethodsResources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>StringMethodsResources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="StringAndCulture\Helpers\StringMethodsRuleBuilder.cs" />
+    <Compile Include="StringAndCulture\StringAndCulture_WithStrategyClass_Analyzer.cs" />
+    <Compile Include="StringAndCulture\StringAndCulture_WithBaseClass_Analyzer.cs" />
     <Compile Include="SystemIO\Helpers\AnalyzerHelper.cs" />
     <Compile Include="SystemIO\Helpers\SystemIoDiagnosticFormatter.cs" />
     <Compile Include="SystemIO\V00_IdentiferName_DirectSemanticModelAccess.cs" />
@@ -131,7 +140,16 @@
       <Name>BugHunter.Core</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="MethodInvocationHeuristics\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="StringAndCulture\Helpers\StringMethodsResources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>StringMethodsResources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\v4.6\Microsoft.Portable.CSharp.targets" />
   <Target Name="AfterBuild">
     <GetAssemblyIdentity AssemblyFiles="$(OutDir)\$(AssemblyName).dll">

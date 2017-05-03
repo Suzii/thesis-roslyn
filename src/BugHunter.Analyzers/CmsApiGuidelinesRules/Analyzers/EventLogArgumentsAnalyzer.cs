@@ -24,12 +24,8 @@ namespace BugHunter.Analyzers.CmsApiGuidelinesRules.Analyzers
             description: new LocalizableResourceString(nameof(CmsApiGuidelinesResources.EventLogArguments_Description), CmsApiGuidelinesResources.ResourceManager, typeof(CmsApiGuidelinesResources)));
 
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
-
-        private static readonly ApiReplacementConfig config = new ApiReplacementConfig(Rule,
-            new []{ "CMS.EventLog.EventLogProvider" },
-            new []{ "LogEvent" });
         
-        private static readonly ISyntaxNodeAnalyzer analyzer = new InnerMethodInvocationAnalyzer(config);
+        private static readonly ISyntaxNodeAnalyzer analyzer = new InnerMethodInvocationAnalyzer();
 
         public override void Initialize(AnalysisContext context)
         {
@@ -43,7 +39,11 @@ namespace BugHunter.Analyzers.CmsApiGuidelinesRules.Analyzers
         {
             private static readonly string[] ForbiddenEventTypeArgs = { "\"I\"", "\"W\"", "\"E\"" };
 
-            public InnerMethodInvocationAnalyzer(ApiReplacementConfig config) : base(config, new EventLogArgumentsDiagnosticFormatter())
+            private static readonly ApiReplacementConfig config = new ApiReplacementConfig(Rule,
+            new[] { "CMS.EventLog.EventLogProvider" },
+            new[] { "LogEvent" });
+
+            public InnerMethodInvocationAnalyzer() : base(config, new EventLogArgumentsDiagnosticFormatter())
             {
             }
 
