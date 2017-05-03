@@ -12,7 +12,7 @@ namespace BugHunter.AnalyzersVersions.SystemIO
     /// Searches for usages of <see cref="System.IO"/> and their access to anything other than <c>Exceptions</c> or <c>Stream</c> 
     /// Version with callback on IdentifierName and using SemanticModelBrowser
     /// </summary>
-    [DiagnosticAnalyzer(LanguageNames.CSharp)]
+    //[DiagnosticAnalyzer(LanguageNames.CSharp)]
     public class V00_IdentiferName_EmptyCallback : DiagnosticAnalyzer
     {
         public const string DIAGNOSTIC_ID = "V00";

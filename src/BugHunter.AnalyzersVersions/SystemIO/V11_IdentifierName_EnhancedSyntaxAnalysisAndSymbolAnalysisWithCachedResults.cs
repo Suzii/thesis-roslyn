@@ -17,7 +17,7 @@ namespace BugHunter.AnalyzersVersions.SystemIO
     /// 
     /// Version with callback on IdentifierName and analyzing Symbol directly
     /// </summary>
-    [DiagnosticAnalyzer(LanguageNames.CSharp)]
+    //[DiagnosticAnalyzer(LanguageNames.CSharp)]
     public class V11_IdentifierName_EnhancedSyntaxAnalysisAndSymbolAnalysisWithCachedResults : DiagnosticAnalyzer
     {
         public const string DIAGNOSTIC_ID = "V11";

@@ -14,7 +14,7 @@ namespace BugHunter.AnalyzersVersions.SystemIO
     /// 
     /// Version with callback on IdentifierName and using SemanticModelBrowser
     /// </summary>
-    [DiagnosticAnalyzer(LanguageNames.CSharp)]
+    //[DiagnosticAnalyzer(LanguageNames.CSharp)]
     public class V00_IdentiferName_DirectSemanticModelAccess : DiagnosticAnalyzer
     {
         public const string DIAGNOSTIC_ID = "VXX";

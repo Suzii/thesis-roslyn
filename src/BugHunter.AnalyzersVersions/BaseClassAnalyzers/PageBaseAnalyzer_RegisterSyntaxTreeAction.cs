@@ -18,7 +18,7 @@ namespace BugHunter.AnalyzersVersions.BaseClassAnalyzers
     /// 
     /// Checks if Page file inherits from right class. -- register syntax tree action action
     /// </summary>
-    [DiagnosticAnalyzer(LanguageNames.CSharp)]
+    //[DiagnosticAnalyzer(LanguageNames.CSharp)]
     public class PageBaseAnalyzer_RegisterSyntaxTreeAction : DiagnosticAnalyzer
     {
         public const string DIAGNOSTIC_ID = "BH3502";

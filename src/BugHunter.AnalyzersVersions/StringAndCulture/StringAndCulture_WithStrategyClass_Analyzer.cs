@@ -16,7 +16,7 @@ namespace BugHunter.AnalyzersVersions.StringAndCulture
     /// 
     /// !!! THIS FILE SERVES ONLY FOR PURPOSES OF PERFORMANCE TESTING !!!
     /// </summary>
-    [DiagnosticAnalyzer(LanguageNames.CSharp)]
+    //[DiagnosticAnalyzer(LanguageNames.CSharp)]
     public class StringAndCulture_WithStrategyClass_Analyzer : DiagnosticAnalyzer
     {
         public const string DIAGNOSTIC_ID = "BH4004";

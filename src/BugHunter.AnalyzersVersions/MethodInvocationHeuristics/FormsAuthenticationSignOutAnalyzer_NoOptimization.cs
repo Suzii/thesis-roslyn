@@ -11,7 +11,7 @@ namespace BugHunter.AnalyzersVersions.MethodInvocationHeuristics
     /// 
     /// !!! THIS FILE SERVES ONLY FOR PURPOSES OF PERFORMANCE TESTING !!!
     /// </summary>
-    [DiagnosticAnalyzer(LanguageNames.CSharp)]
+    //[DiagnosticAnalyzer(LanguageNames.CSharp)]
     public class FormsAuthenticationSignOutAnalyzer_NoOptimization : DiagnosticAnalyzer
     {
         public const string DIAGNOSTIC_ID = "BH1012";
