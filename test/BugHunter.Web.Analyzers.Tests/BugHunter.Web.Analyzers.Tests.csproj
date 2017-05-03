@@ -633,6 +633,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\src\BugHunter.AnalyzersVersions\BugHunter.AnalyzersVersions.csproj">
+      <Project>{d76f57e5-c4f0-4593-aa83-613301c7f5ab}</Project>
+      <Name>BugHunter.AnalyzersVersions</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\src\BugHunter.Core\BugHunter.Core.csproj">
       <Project>{656a8756-6af4-44d7-8728-d09a50a40a04}</Project>
       <Name>BugHunter.Core</Name>

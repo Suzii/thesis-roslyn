@@ -104,6 +104,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseClassAnalyzers\PageBaseAnalyzer_RegisterSymbolAction.cs" />
+    <Compile Include="BaseClassAnalyzers\PageBaseAnalyzer_RegisterSyntaxTreeAction.cs" />
     <Compile Include="MethodInvocationHeuristics\FormsAuthenticationSignOutAnalyzer_NoOptimization.cs" />
     <Compile Include="MethodInvocationHeuristics\FormsAuthenticationSignOutAnalyzer.cs" />
     <Compile Include="MethodInvocationHeuristics\Helpers\ApiReplacementForMethodAnalyzer_NoOptimization.cs" />
