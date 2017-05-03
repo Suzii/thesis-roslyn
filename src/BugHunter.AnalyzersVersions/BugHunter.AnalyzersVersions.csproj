@@ -104,6 +104,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MethodInvocationHeuristics\FormsAuthenticationSignOutAnalyzer_NoOptimization.cs" />
+    <Compile Include="MethodInvocationHeuristics\FormsAuthenticationSignOutAnalyzer.cs" />
+    <Compile Include="MethodInvocationHeuristics\Helpers\ApiReplacementForMethodAnalyzer_NoOptimization.cs" />
+    <Compile Include="MethodInvocationHeuristics\Helpers\MethodInvocationAnalyzer_NoOptimization.cs" />
     <Compile Include="StringAndCulture\Helpers\BaseStringMethodsAnalyzer.cs" />
     <Compile Include="StringAndCulture\Helpers\StringMethodsResources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -140,9 +144,7 @@
       <Name>BugHunter.Core</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="MethodInvocationHeuristics\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <EmbeddedResource Include="StringAndCulture\Helpers\StringMethodsResources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
