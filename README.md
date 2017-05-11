@@ -1,11 +1,17 @@
 # thesis-roslyn
-Master thesis - Roslyn - Automated source code review (Masaryk University &amp; Kentico)
+This repository contains BugHunter analyzers for Kentico CMS solution. They were implemented as part of the master thesis at Faculty of Informatics, Masaryk University.
 
-### Resseting VS2015 Experimental Hive
-In case the analyzers/codefixes misbehave in the experimental instance reset it using these commands:
+## Repository structure:
+- `docs/` - contains the HTML pages with online documentation available also at TODO
+- `src/` - contains projects with BugHunter analyzers
+- `test/` - contains tests for BugHunter analyzers and util functions from BH.Core project
 
-1. `cd C:\Program Files (x86)\Microsoft Visual Studio 14.0\VSSDK\VisualStudioIntegration\Tools\Bin`
-2. `CreateExpInstance.exe /Reset /VSInstance=14.0 /RootSuffix=Exp`
-or alternatively 
-2. `CreateExpInstance.exe /Reset /VSInstance=14.0 /RootSuffix=Roslyn`
-2. `CreateExpInstance.exe /Reset /VSInstance=14.0 /RootSuffix=RoslynDev`
+## Licence
+All the source codes are published under MIT licence.
+
+## Versions
+The current version of analyzers is v1.0.0, compatible with Kentico.Livraries v10.0.13 and using Microsoft.CodeAnalysis v1.3.2.
+Due to Roslyn version analyzers are only compatible with Visual Studio 2015 Update 3 and higher. Update to Microsoft.CodeAnalysis v2.0, which only works in Visual Studio 2017, is currently impossible due to company restrictions at Kentico (.NET framework and Visual Studio backward compatibility).
+
+## NuGet Availability
+The NuGet packages with BugHunter analyzers are currently only available via inernal Kentico NuGet feed. Publishing to the official NuGet Gallery is considered for the future.
