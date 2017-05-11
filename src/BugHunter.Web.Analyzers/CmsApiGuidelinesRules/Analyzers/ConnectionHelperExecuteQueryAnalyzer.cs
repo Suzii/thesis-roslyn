@@ -24,11 +24,7 @@ namespace BugHunter.Web.Analyzers.CmsApiGuidelinesRules.Analyzers
 
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
 
-        private static readonly ApiReplacementConfig config = new ApiReplacementConfig(Rule,
-            new[] { "CMS.DataEngine.ConnectionHelper" },
-            new[] { "ExecuteQuery" });
-
-        private static readonly ISyntaxNodeAnalyzer analyzer = new InnerMethodInvocationAnalyzer(config);
+        private static readonly ISyntaxNodeAnalyzer analyzer = new InnerMethodInvocationAnalyzer();
 
         public override void Initialize(AnalysisContext context)
         {
@@ -38,9 +34,13 @@ namespace BugHunter.Web.Analyzers.CmsApiGuidelinesRules.Analyzers
             context.RegisterSyntaxNodeAction(analyzer.Run, SyntaxKind.InvocationExpression);
         }
 
-        internal class InnerMethodInvocationAnalyzer : MethodInvocationAnalyzer
+        private sealed class InnerMethodInvocationAnalyzer : MethodInvocationAnalyzer
         {
-            public InnerMethodInvocationAnalyzer(ApiReplacementConfig config) : base(config, new MethodInvocationDiagnosticFormatter())
+            private static readonly ApiReplacementConfig config = new ApiReplacementConfig(Rule,
+            new[] { "CMS.DataEngine.ConnectionHelper" },
+            new[] { "ExecuteQuery" });
+
+            public InnerMethodInvocationAnalyzer() : base(config, new MethodInvocationDiagnosticFormatter())
             {
             }
 
