@@ -94,6 +94,7 @@
   <ItemGroup>
     <Compile Include="Constants\AnalyzerCategories.cs" />
     <Compile Include="ApiReplacementAnalysis\ApiReplacementForMethodAnalyzer.cs" />
+    <Compile Include="Constants\DiagnosticIds.cs" />
     <Compile Include="Constants\DiagnosticProperties.cs" />
     <Compile Include="Constants\FileExtensions.cs" />
     <Compile Include="DiagnosticsFormatting\IDiagnosticFormatter.cs" />

@@ -96,7 +96,6 @@
     <Compile Include="CmsBaseClassesRules\CodeFixes\PageBaseCodeFixProvider.cs" />
     <Compile Include="CmsBaseClassesRules\CodeFixes\UserControlBaseCodeFixProvider.cs" />
     <Compile Include="CmsBaseClassesRules\CodeFixes\WebPartBaseCodeFixProvider.cs" />
-    <Compile Include="DiagnosticIds.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SolutionFolders.cs" />
     <Compile Include="CmsApiGuidelinesRules\Analyzers\ConnectionHelperExecuteQueryAnalyzer.cs" />

@@ -104,7 +104,6 @@
     <Compile Include="CmsApiReplacementRules\CodeFixes\PageIsPostBackCodeFixProvider.cs" />
     <Compile Include="CmsApiReplacementRules\CodeFixes\HttpSessionSessionIdCodeFixProvider.cs" />
     <Compile Include="CmsApiReplacementRules\CodeFixes\ClientScriptMethodsCodeFixProvider.cs" />
-    <Compile Include="DiagnosticIds.cs" />
     <Compile Include="CmsApiGuidelinesRules\Analyzers\EventLogArgumentsAnalyzer.cs" />
     <Compile Include="CmsApiReplacementRules\Analyzers\HttpRequestUserHostAddressAnalyzer.cs" />
     <Compile Include="CmsApiGuidelinesRules\CodeFixes\WhereLikeMethodCodeFixProvider.cs" />

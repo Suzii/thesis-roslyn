@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using BugHunter.Core.Constants;
 using BugHunter.TestUtils;
 using BugHunter.TestUtils.Helpers;
 using BugHunter.TestUtils.Verifiers;
@@ -25,7 +26,7 @@ namespace BugHunter.Web.Analyzers.Tests.CmsBaseClassesTests
         {
             return new DiagnosticResult
             {
-                Id = BugHunter.Web.Analyzers.DiagnosticIds.PAGE_BASE,
+                Id = DiagnosticIds.PAGE_BASE,
                 Message = $"'{messageArguments[0]}' should inherit from some abstract CMSPage.",
                 Severity = DiagnosticSeverity.Warning,
             };

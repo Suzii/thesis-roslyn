@@ -1,5 +1,6 @@
 ﻿using BugHunter.Analyzers.StringAndCultureRules.Analyzers;
 using BugHunter.Analyzers.StringAndCultureRules.CodeFixes;
+using BugHunter.Core.Constants;
 using BugHunter.TestUtils.Helpers;
 using BugHunter.TestUtils.Verifiers;
 using Microsoft.CodeAnalysis;

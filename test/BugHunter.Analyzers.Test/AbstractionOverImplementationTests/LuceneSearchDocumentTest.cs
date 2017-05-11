@@ -2,6 +2,7 @@ using System.Linq;
 using BugHunter.Analyzers.AbstractionOverImplementation.Analyzers;
 using BugHunter.Analyzers.AbstractionOverImplementation.CodeFixes;
 using BugHunter.Analyzers.Test.CmsApiReplacementsTests.Constants;
+using BugHunter.Core.Constants;
 using BugHunter.TestUtils;
 using BugHunter.TestUtils.Helpers;
 using BugHunter.TestUtils.Verifiers;

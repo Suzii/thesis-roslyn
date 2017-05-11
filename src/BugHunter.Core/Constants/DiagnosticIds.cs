@@ -1,9 +1,12 @@
-﻿namespace BugHunter.Analyzers
+﻿namespace BugHunter.Core.Constants
 {
     /// <summary>
-    /// Class defining the IDs for diagnostic analyzers.
+    /// Class defining the IDs for all diagnostic analyzers.
     /// </summary>
-    internal static class DiagnosticIds
+    /// <remarks>
+    /// No not move to spearate files/projects in order to ensure no duplicate identifiers are assigned
+    /// </remarks>
+    public static class DiagnosticIds
     {
         // AbstractionOverImplementation
         public const string LUCENE_SEARCH_DOCUMENT = "BH0000";
@@ -30,10 +33,18 @@
         // CmsApiGuidelines
         public const string WHERE_LIKE_METHOD = "BH2000";
         public const string EVENT_LOG_ARGUMENTS = "BH2001";
-        
+
+        public const string VALIDATION_HELPER_GET = "BH2500";
+        public const string CONNECTION_HELPER_EXECUTE_QUERY = "BH2501";
+
         // CmsBaseClasses
         public const string MODULE_REGISTRATION = "BH3000";
         
+        public const string WEB_PART_BASE = "BH3500";
+        public const string UI_WEB_PART_BASE = "BH3501";
+        public const string PAGE_BASE = "BH3502";
+        public const string USER_CONTROL_BASE = "BH3503";
+
         // StringAndCulture
         public const string STRING_MANIPULATION_METHODS = "BH4000";
         public const string STRING_EQUALS_METHOD = "BH4001";

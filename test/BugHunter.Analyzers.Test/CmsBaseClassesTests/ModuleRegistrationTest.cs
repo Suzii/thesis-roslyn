@@ -1,5 +1,6 @@
 ﻿using BugHunter.Analyzers.CmsBaseClassesRules.Analyzers;
 using BugHunter.Analyzers.CmsBaseClassesRules.CodeFixes;
+using BugHunter.Core.Constants;
 using BugHunter.TestUtils;
 using BugHunter.TestUtils.Helpers;
 using BugHunter.TestUtils.Verifiers;

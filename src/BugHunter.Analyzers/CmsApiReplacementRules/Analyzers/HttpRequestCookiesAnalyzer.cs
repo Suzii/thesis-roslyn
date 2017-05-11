@@ -1,5 +1,6 @@
 ﻿using System.Collections.Immutable;
 using BugHunter.Core.ApiReplacementAnalysis;
+using BugHunter.Core.Constants;
 using BugHunter.Core.Helpers.DiagnosticDescriptors;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
