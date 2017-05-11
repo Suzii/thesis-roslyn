@@ -9,11 +9,22 @@ using Microsoft.CodeAnalysis.Diagnostics;
 
 namespace BugHunter.Core.Analyzers
 {
+    /// <summary>
+    /// Analyzing strategy for <see cref="InvocationExpressionSyntax"/>
+    /// 
+    /// Runs the analysis for current context based on the <see cref="ApiReplacementConfig"/>
+    /// and raises diagnostics using passed <see cref="ISyntaxNodeDiagnosticFormatter{TSyntaxNode}"/>
+    /// </summary>
     public class MethodInvocationAnalyzer : ISyntaxNodeAnalyzer
     {
         protected readonly ApiReplacementConfig Config;
         protected readonly ISyntaxNodeDiagnosticFormatter<InvocationExpressionSyntax> Formatter;
-        
+
+        /// <summary>
+        /// Constructor accepting <param name="config"></param> and <param name="formatter"></param>
+        /// </summary>
+        /// <param name="config">Configuration to be used for the analysis, specifying forbidden members on specific types</param>
+        /// <param name="formatter">Diagnostic formatter to be used for creation of diagnostic</param>
         public MethodInvocationAnalyzer(ApiReplacementConfig config, ISyntaxNodeDiagnosticFormatter<InvocationExpressionSyntax> formatter)
         {
             Config = config;

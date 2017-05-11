@@ -10,17 +10,32 @@ using Microsoft.CodeAnalysis.Diagnostics;
 
 namespace BugHunter.Core.Analyzers
 {
+    /// <summary>
+    /// Analyzing strategy for <see cref="ConditionalAccessExpressionSyntax"/>
+    /// 
+    /// Runs the analysis for current context based on the <see cref="ApiReplacementConfig"/>
+    /// and raises diagnostics using passed <see cref="ISyntaxNodeDiagnosticFormatter{TSyntaxNode}"/>
+    /// </summary>
     public class ConditionalAccessAnalyzer : ISyntaxNodeAnalyzer
     {
         private readonly ApiReplacementConfig _config;
         private readonly ISyntaxNodeDiagnosticFormatter<ConditionalAccessExpressionSyntax> _formatter;
-        
+
+        /// <summary>
+        /// Constructor accepting <param name="config"></param> and <param name="formatter"></param>
+        /// </summary>
+        /// <param name="config">Configuration to be used for the analysis, specifying forbidden members on specific types</param>
+        /// <param name="formatter">Diagnostic formatter to be used for creation of diagnostic</param>
         public ConditionalAccessAnalyzer(ApiReplacementConfig config, ISyntaxNodeDiagnosticFormatter<ConditionalAccessExpressionSyntax> formatter)
         {
             _config = config;
             _formatter = formatter;
         }
 
+        /// <summary>
+        /// Runs the analysis for current <paramref name="context"/> and raises <see cref="Diagnostic"/> if usage is qualified as forbidden
+        /// </summary>
+        /// <param name="context">Context to perform analysis on</param>
         public void Run(SyntaxNodeAnalysisContext context)
         {
             var conditionalAccess = (ConditionalAccessExpressionSyntax)context.Node;
@@ -40,9 +55,9 @@ namespace BugHunter.Core.Analyzers
 
         private bool IsForbiddenUsage(SyntaxNodeAnalysisContext context, ConditionalAccessExpressionSyntax conditionalAccess)
         {
-            var whereNotNull = conditionalAccess.WhenNotNull.ToString();
-            // TODO what if usage is just prefix of forbidden member name
-            if (_config.ForbiddenMembers.All(forbiddenMember => !whereNotNull.StartsWith("."+forbiddenMember, StringComparison.Ordinal)))
+            var memberName = conditionalAccess.GetFirstMemberBindingExpression()?.Name?.Identifier.ValueText;
+            if (!string.IsNullOrEmpty(memberName) && 
+                _config.ForbiddenMembers.All(forbiddenMember => !memberName.Equals(forbiddenMember, StringComparison.Ordinal)))
             {
                 return false;
             }
