@@ -24,7 +24,7 @@ namespace BugHunter.Core.Analyzers
         /// <summary>
         /// Constructor accepting <param name="config"></param> and <param name="formatter"></param>
         /// </summary>
-        /// <param name="config">Configuration to be used for the analysis, specifying forbidden members on specific types</param>
+        /// <param name="config">Configuration to be used for the analysis, specifying forbidden members on specific types and diagnostic descriptor</param>
         /// <param name="formatter">Diagnostic formatter to be used for creation of diagnostic</param>
         public ConditionalAccessAnalyzer(ApiReplacementConfig config, ISyntaxNodeDiagnosticFormatter<ConditionalAccessExpressionSyntax> formatter)
         {
