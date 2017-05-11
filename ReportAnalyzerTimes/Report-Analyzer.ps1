@@ -86,6 +86,6 @@ $TmpFolder = "D:\tmp\report-analyzer"
 
 $AnalyzedProjectOrSolution = "C:\TFS\CMS\MAIN\CMSSolution\CMSSolution.sln"
 $OutputFile = "$TmpFolder\aggregated.csv"
-$NumberOfRuns = 1000
+$NumberOfRuns = 100
 
 Program -ProjectOrSolutionFilePath $AnalyzedProjectOrSolution -NumberOfRuns $NumberOfRuns -TmpFolder $TmpFolder -OutputFile $OutputFile

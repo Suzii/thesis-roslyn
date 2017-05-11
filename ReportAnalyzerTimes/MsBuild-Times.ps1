@@ -1,5 +1,4 @@
-﻿# CMSSolution
-$TmpFolder = "D:\tmp\2017-04-29-ms-build-times-with-bh"
+﻿$TmpFolder = "D:\tmp\ms-build-times"
 $AnalyzedProjectOrSolution = "C:\TFS\CMS\MAIN\CMSSolution\CMSSolution.sln"
 $OutputFile = "$TmpFolder\bh-analyzers.csv"
 $MsBuildLogFile = "$TmpFolder\msbuild-output-"
