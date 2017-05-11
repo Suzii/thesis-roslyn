@@ -133,9 +133,26 @@ function Install-MassAnalyzer
     } 
 }
 
-Install-MassAnalyzer -SolutionPath "C:\TFS\CMS\MAIN\CMSSolution" -PackageName "BugHunter.AnalyzersVersions" -PackageVersion 0.1.0.0 -PackageFileNames @("BugHunter.AnalyzersVersions.dll", "BugHunter.Core.dll")
-#Install-MassAnalyzer -SolutionPath "C:\TFS\CMS\MAIN\CMSSolution" -PackageName "BugHunter.SystemIO.Analyzers" -PackageVersion 1.0.6277.24015 -PackageFileNames @("BugHunter.SystemIO.Analyzers.dll", "BugHunter.Core.dll")
+<#
+  .SYNOPSIS
+  Restores packages of CMS solution located at $SolutionPath
+  EXAMPLE
+  Restore-CmsPackages $SolutionPath
+#>
+function Restore-CmsPackages
+{
+   param(
+        [string] $SolutionPath
+   )
+        
+   Push-Location
+   cd $SolutionPath
+   .\NuGet.exe restore "$SolutionPath\CMSSolution.sln" -Source nuget.org -Source \\kentico\dev\Build\NugetFeed -Source C:\LocalNugetSource
+   Pop-Location
+}
+
+$SolutionPath = "C:\TFS\CMS\MAIN\CMSSolution"
+Install-MassAnalyzer -SolutionPath $SolutionPath -PackageName "BugHunter.Analyzers" -PackageVersion 1.0.0 -PackageFileNames @("BugHunter.Analyzers.dll", "BugHunter.Core.dll")
 
 # Then run if necessary
-# cd C:\TFS\CMS\MAIN\CMSSolution\.nuget
-#.\NuGet.exe restore C:\TFS\CMS\MAIN\CMSSolution\CMSSolution.sln -Source nuget.org -Source \\kentico\dev\Build\NugetFeed -Source C:\LocalNugetSource
+# Restore-CmsPackages $SolutionPath
