@@ -12,12 +12,21 @@ namespace BugHunter.Analyzers.StringAndCultureRules.Analyzers
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     public class StringCompareStaticMethodAnalyzer : BaseStringMethodsAnalyzer
     {
+        /// <summary>
+        /// The ID for diagnostics raises by <see cref="StringCompareStaticMethodAnalyzer"/>
+        /// </summary>
         public const string DIAGNOSTIC_ID = DiagnosticIds.STRING_COMPARE_STATIC_METHOD;
 
-        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
+        /// <inheritdoc />
+        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics 
+            => ImmutableArray.Create(Rule);
 
+        /// <inheritdoc />
         protected override DiagnosticDescriptor Rule => StringMethodsRuleBuilder.CreateRuleForComparisonMethods(DIAGNOSTIC_ID);
-        
+
+        /// <summary>
+        /// Constructor initializing base class with method names to be diagnosed
+        /// </summary>
         public StringCompareStaticMethodAnalyzer() 
             : base("Compare")
         {

@@ -15,15 +15,18 @@ namespace BugHunter.Analyzers.StringAndCultureRules.CodeFixes
     [ExportCodeFixProvider(LanguageNames.CSharp, Name = nameof(StringComparisonMethodsWithModifierCodeFixProvider)), Shared]
     public class StringComparisonMethodsWithModifierCodeFixProvider : CodeFixProvider
     {
+        /// <inheritdoc />
         public sealed override ImmutableArray<string> FixableDiagnosticIds
             => ImmutableArray.Create(
                 StringEqualsMethodAnalyzer.DIAGNOSTIC_ID,
                 StringStartAndEndsWithMethodsAnalyzer.DIAGNOSTIC_ID,
                 StringIndexOfMethodsAnalyzer.DIAGNOSTIC_ID);
 
+        /// <inheritdoc />
         public sealed override FixAllProvider GetFixAllProvider()
             => WellKnownFixAllProviders.BatchFixer;
 
+        /// <inheritdoc />
         public sealed override async Task RegisterCodeFixesAsync(CodeFixContext context)
         {
             var editor = new MemberInvocationCodeFixHelper(context);

@@ -12,16 +12,24 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.Analyzers
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     public class HttpSessionElementAccessAnalyzer : DiagnosticAnalyzer
     {
+        /// <summary>
+        /// The ID for diagnostics raises by <see cref="HttpSessionElementAccessAnalyzer"/> when element node is assess for reading
+        /// </summary>
         public const string DIAGNOSTIC_ID_GET = DiagnosticIds.HTTP_SESSION_ELEMENT_ACCESS_GET;
 
+        /// <summary>
+        /// The ID for diagnostics raises by <see cref="HttpSessionElementAccessAnalyzer"/> when element node is assess for writing
+        /// </summary>
         public const string DIAGNOSTIC_ID_SET = DiagnosticIds.HTTP_SESSION_ELEMENT_ACCESS_SET;
 
         private static readonly DiagnosticDescriptor RuleForGet = ApiReplacementRulesProvider.GetRule(DIAGNOSTIC_ID_GET, "Session[]", "SessionHelper.GetValue()");
 
         private static readonly DiagnosticDescriptor RuleForSet = ApiReplacementRulesProvider.GetRule(DIAGNOSTIC_ID_SET, "Session[]", "SessionHelper.SetValue()");
 
+        /// <inheritdoc />
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(RuleForGet, RuleForSet);
 
+        /// <inheritdoc />
         public override void Initialize(AnalysisContext context)
         {
             context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.None);

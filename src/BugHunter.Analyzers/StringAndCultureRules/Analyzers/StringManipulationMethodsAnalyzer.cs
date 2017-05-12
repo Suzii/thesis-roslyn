@@ -13,19 +13,29 @@ namespace BugHunter.Analyzers.StringAndCultureRules.Analyzers
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     public class StringManipulationMethodsAnalyzer : BaseStringMethodsAnalyzer
     {
+        /// <summary>
+        /// The ID for diagnostics raises by <see cref="StringManipulationMethodsAnalyzer"/>
+        /// </summary>
         public const string DIAGNOSTIC_ID = DiagnosticIds.STRING_MANIPULATION_METHODS;
 
-        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
+        /// <inheritdoc />
+        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics 
+            => ImmutableArray.Create(Rule);
 
-        protected override DiagnosticDescriptor Rule => StringMethodsRuleBuilder.CreateRuleForManipulationMethods(DIAGNOSTIC_ID);
-        
-        // CMS solution contains overload that has one argument of type CultureInfo
+        /// <inheritdoc />
+        protected override DiagnosticDescriptor Rule 
+            => StringMethodsRuleBuilder.CreateRuleForManipulationMethods(DIAGNOSTIC_ID);
+
+        /// <inheritdoc />
         protected override bool IsForbiddenOverload(SyntaxNodeAnalysisContext context, InvocationExpressionSyntax invocationExpression, IMethodSymbol methodSymbol)
         {
             // If method is already called with StringComparison argument, no need for diagnostic
             return invocationExpression.ArgumentList.Arguments.Count == 0;
         }
 
+        /// <summary>
+        /// Constructor initializing base class with method names to be diagnosed
+        /// </summary>
         public StringManipulationMethodsAnalyzer()
             : base("ToLower", "ToUpper")
         {

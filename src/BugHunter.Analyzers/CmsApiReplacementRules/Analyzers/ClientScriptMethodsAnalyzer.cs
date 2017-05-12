@@ -10,10 +10,14 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.Analyzers
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     public class ClientScriptMethodsAnalyzer : DiagnosticAnalyzer
     {
+        /// <summary>
+        /// The ID for diagnostics raised by <see cref="ClientScriptMethodsAnalyzer"/>
+        /// </summary>
         public const string DIAGNOSTIC_ID = DiagnosticIds.CLIENT_SCRIPT_METHODS;
 
         private static readonly DiagnosticDescriptor Rule = ApiReplacementRulesProvider.GetRule(DIAGNOSTIC_ID, "ClientScript methods");
 
+        /// <inheritdoc />
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
 
         private static readonly ApiReplacementConfig config = new ApiReplacementConfig(Rule,
@@ -22,6 +26,7 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.Analyzers
 
         private static readonly ApiReplacementForMethodAnalyzer analyzer = new ApiReplacementForMethodAnalyzer(config);
 
+        /// <inheritdoc />
         public override void Initialize(AnalysisContext context)
         {
             analyzer.RegisterAnalyzers(context);

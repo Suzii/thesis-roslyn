@@ -16,12 +16,15 @@ namespace BugHunter.Analyzers.StringAndCultureRules.CodeFixes
     [ExportCodeFixProvider(LanguageNames.CSharp, Name = nameof(StringManipulationMethodsCodeFixProvider)), Shared]
     public class StringManipulationMethodsCodeFixProvider : CodeFixProvider
     {
+        /// <inheritdoc />
         public sealed override ImmutableArray<string> FixableDiagnosticIds
             => ImmutableArray.Create(StringManipulationMethodsAnalyzer.DIAGNOSTIC_ID);
 
+        /// <inheritdoc />
         public sealed override FixAllProvider GetFixAllProvider()
             => WellKnownFixAllProviders.BatchFixer;
 
+        /// <inheritdoc />
         public sealed override async Task RegisterCodeFixesAsync(CodeFixContext context)
         {
             var editor = new MemberInvocationCodeFixHelper(context);
@@ -52,13 +55,10 @@ namespace BugHunter.Analyzers.StringAndCultureRules.CodeFixes
         }
 
         private static ExpressionSyntax GetNewInvocationWithCultureInfoParameter(InvocationExpressionSyntax invocation)
-        {
-            return SyntaxFactory.ParseExpression($"{invocation.Expression}(CultureInfo.CurrentCulture)");
-        }
+            => SyntaxFactory.ParseExpression($"{invocation.Expression}(CultureInfo.CurrentCulture)");
+        
 
         private static ExpressionSyntax GetNewInvocationWithInvariantMethod(InvocationExpressionSyntax invocation)
-        {
-            return SyntaxFactory.ParseExpression($"{invocation.Expression}Invariant()");
-        }
+            => SyntaxFactory.ParseExpression($"{invocation.Expression}Invariant()");
     }
 }

@@ -20,6 +20,9 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.Analyzers
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     public class SystemIOAnalyzer : DiagnosticAnalyzer
     {
+        /// <summary>
+        /// The ID for diagnostics raises by <see cref="SystemIOAnalyzer"/>
+        /// </summary>
         public const string DIAGNOSTIC_ID = DiagnosticIds.SYSTEM_IO;
 
         private static readonly DiagnosticDescriptor Rule = new DiagnosticDescriptor(DIAGNOSTIC_ID,
@@ -31,10 +34,13 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.Analyzers
                 description: new LocalizableResourceString(nameof(CmsApiReplacementsResources.SystemIo_Description), CmsApiReplacementsResources.ResourceManager, typeof(CmsApiReplacementsResources)),
             helpLinkUri: HelpLinkUriProvider.GetHelpLink(DIAGNOSTIC_ID));
 
-        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
+        /// <inheritdoc />
+        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics
+            => ImmutableArray.Create(Rule);
 
         private static readonly ISyntaxNodeDiagnosticFormatter<IdentifierNameSyntax> DiagnosticFormatter = new SystemIoDiagnosticFormatter();
 
+        /// <inheritdoc />
         public override void Initialize(AnalysisContext context)
         {
             context.EnableConcurrentExecution();

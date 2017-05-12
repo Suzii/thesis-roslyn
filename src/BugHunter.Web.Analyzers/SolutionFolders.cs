@@ -3,6 +3,9 @@ using System;
 
 namespace BugHunter.Web.Analyzers
 {
+    /// <summary>
+    /// Helper class containing constants and utility  functions for relative paths of folders in CMS solution
+    /// </summary>
     public static class SolutionFolders
     {
         /// <summary>

@@ -10,11 +10,16 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.Analyzers
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     public class HttpResponseRedirectAnalyzer : DiagnosticAnalyzer
     {
+        /// <summary>
+        /// The ID for diagnostics raises by <see cref="HttpResponseRedirectAnalyzer"/>
+        /// </summary>
         public const string DIAGNOSTIC_ID = DiagnosticIds.HTTP_RESPONSE_REDIRECT;
 
         private static readonly DiagnosticDescriptor Rule = ApiReplacementRulesProvider.GetRule(DIAGNOSTIC_ID, "Response.Redirect()");
 
-        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
+        /// <inheritdoc />
+        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics
+            => ImmutableArray.Create(Rule);
 
         private static readonly ApiReplacementConfig config = new ApiReplacementConfig(Rule,
             new []{ "System.Web.HttpResponse", "System.Web.HttpResponseBase"},
@@ -22,6 +27,7 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.Analyzers
 
         private static readonly ApiReplacementForMethodAnalyzer analyzer = new ApiReplacementForMethodAnalyzer(config);
 
+        /// <inheritdoc />
         public override void Initialize(AnalysisContext context)
         {
             analyzer.RegisterAnalyzers(context);

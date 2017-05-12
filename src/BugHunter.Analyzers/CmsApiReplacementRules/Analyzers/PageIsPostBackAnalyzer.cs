@@ -13,11 +13,16 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.Analyzers
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     public class PageIsPostBackAnalyzer : DiagnosticAnalyzer
     {
+        /// <summary>
+        /// The ID for diagnostics raises by <see cref="PageIsPostBackAnalyzer"/>
+        /// </summary>
         public const string DIAGNOSTIC_ID = DiagnosticIds.PAGE_IS_POST_BACK;
 
         private static readonly DiagnosticDescriptor Rule = ApiReplacementRulesProvider.GetRule(DIAGNOSTIC_ID, "Page.IsPostBack", "RequestHelper.IsPostBack()");
 
-        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
+        /// <inheritdoc />
+        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics 
+            => ImmutableArray.Create(Rule);
 
         private static readonly ApiReplacementConfig apiReplacementConfig = new ApiReplacementConfig(Rule,
             new []{ "System.Web.UI.Page"},
@@ -25,6 +30,7 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.Analyzers
 
         private static readonly ApiReplacementForMemberAnalyzer apiReplacementAnalyzer = new ApiReplacementForMemberAnalyzer(apiReplacementConfig);
 
+        /// <inheritdoc />
         public override void Initialize(AnalysisContext context)
         {
             apiReplacementAnalyzer.RegisterAnalyzers(context);

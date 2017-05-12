@@ -16,8 +16,11 @@ namespace BugHunter.Web.Analyzers.CmsApiGuidelinesRules.Analyzers
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     public class ValidationHelperGetAnalyzer : DiagnosticAnalyzer
     {
+        /// <summary>
+        /// The ID for diagnostics raised by <see cref="ValidationHelperGetAnalyzer"/>
+        /// </summary>
         public const string DIAGNOSTIC_ID = DiagnosticIds.VALIDATION_HELPER_GET;
-        
+
         private static readonly DiagnosticDescriptor Rule = new DiagnosticDescriptor(DIAGNOSTIC_ID,
                 title: new LocalizableResourceString(nameof(CmsApiGuidelinesResources.ValidationHelperGet_Title), CmsApiGuidelinesResources.ResourceManager, typeof(CmsApiGuidelinesResources)),
                 messageFormat: new LocalizableResourceString(nameof(CmsApiGuidelinesResources.ValidationHelperGet_MessageFormat), CmsApiGuidelinesResources.ResourceManager, typeof(CmsApiGuidelinesResources)),
@@ -25,17 +28,19 @@ namespace BugHunter.Web.Analyzers.CmsApiGuidelinesRules.Analyzers
                 defaultSeverity: DiagnosticSeverity.Warning,
                 isEnabledByDefault: true,
                 description: new LocalizableResourceString(nameof(CmsApiGuidelinesResources.ValidationHelperGet_Description), CmsApiGuidelinesResources.ResourceManager, typeof(CmsApiGuidelinesResources)),
-            helpLinkUri: HelpLinkUriProvider.GetHelpLink(DIAGNOSTIC_ID));
+                helpLinkUri: HelpLinkUriProvider.GetHelpLink(DIAGNOSTIC_ID));
 
-        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
-
-       private static readonly ISyntaxNodeAnalyzer analyzer = new InnerMethodInvocationAnalyzer();
-
+        /// <inheritdoc />
+        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics 
+            => ImmutableArray.Create(Rule);
+        
+        /// <inheritdoc />
         public override void Initialize(AnalysisContext context)
         {
             context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.None);
             context.EnableConcurrentExecution();
 
+            var analyzer = new InnerMethodInvocationAnalyzer();
             context.RegisterSyntaxNodeAction(analyzer.Run, SyntaxKind.InvocationExpression);
         }
 
@@ -45,10 +50,14 @@ namespace BugHunter.Web.Analyzers.CmsApiGuidelinesRules.Analyzers
             new[] { "CMS.Helpers.ValidationHelper" },
             new[] { "GetDouble", "GetDecimal", "GetDate", "GetDateTime" });
 
-            public InnerMethodInvocationAnalyzer(): base(config, new MethodInvocationOnlyNoArgsDiagnosticFormatter())
+            /// <summary>
+            /// Constructor initializing config and diagnostic formatter of <see cref="MethodInvocationAnalyzer"/> base class
+            /// </summary>
+            public InnerMethodInvocationAnalyzer() : base(config, new MethodInvocationOnlyNoArgsDiagnosticFormatter())
             {
             }
 
+            /// <inheritdoc />
             protected override bool IsOnForbiddenPath(string filePath)
             {
                 return SolutionFolders.FileIsInWebPartsFolder(filePath);

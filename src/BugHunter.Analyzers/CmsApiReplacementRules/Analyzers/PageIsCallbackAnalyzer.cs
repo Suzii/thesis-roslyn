@@ -13,10 +13,14 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.Analyzers
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     public class PageIsCallbackAnalyzer : DiagnosticAnalyzer
     {
+        /// <summary>
+        /// The ID for diagnostics raises by <see cref="PageIsCallbackAnalyzer"/>
+        /// </summary>
         public const string DIAGNOSTIC_ID = DiagnosticIds.PAGE_IS_CALLBACK;
 
         private static readonly DiagnosticDescriptor Rule = ApiReplacementRulesProvider.GetRule(DIAGNOSTIC_ID, "Page.IsCallback", "RequestHelper.IsCallback()");
 
+        /// <inheritdoc />
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics
             => ImmutableArray.Create(Rule);
 
@@ -26,6 +30,7 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.Analyzers
 
         private static readonly ApiReplacementForMemberAnalyzer apiReplacementAnalyzer = new ApiReplacementForMemberAnalyzer(apiReplacementConfig);
 
+        /// <inheritdoc />
         public override void Initialize(AnalysisContext context)
         {
             apiReplacementAnalyzer.RegisterAnalyzers(context);

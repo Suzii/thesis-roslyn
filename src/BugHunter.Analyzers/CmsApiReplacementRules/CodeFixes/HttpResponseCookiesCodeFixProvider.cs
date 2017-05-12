@@ -16,12 +16,15 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.CodeFixes
     [ExportCodeFixProvider(LanguageNames.CSharp, Name = nameof(HttpResponseCookiesCodeFixProvider)), Shared]
     public class HttpResponseCookiesCodeFixProvider : CodeFixProvider
     {
+        /// <inheritdoc />
         public sealed override ImmutableArray<string> FixableDiagnosticIds
             => ImmutableArray.Create(HttpResponseCookiesAnalyzer.DIAGNOSTIC_ID);
 
+        /// <inheritdoc />
         public sealed override FixAllProvider GetFixAllProvider()
             => WellKnownFixAllProviders.BatchFixer;
 
+        /// <inheritdoc />
         public sealed override async Task RegisterCodeFixesAsync(CodeFixContext context)
         {
             var diagnostic = context.Diagnostics.First();

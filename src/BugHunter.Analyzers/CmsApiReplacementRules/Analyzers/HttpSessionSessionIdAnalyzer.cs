@@ -16,11 +16,16 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.Analyzers
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     public class HttpSessionSessionIdAnalyzer : DiagnosticAnalyzer
     {
+        /// <summary>
+        /// The ID for diagnostics raises by <see cref="HttpSessionSessionIdAnalyzer"/>
+        /// </summary>
         public const string DIAGNOSTIC_ID = DiagnosticIds.HTTP_SESSION_SESSION_ID;
 
         private static readonly DiagnosticDescriptor Rule = ApiReplacementRulesProvider.GetRule(DIAGNOSTIC_ID, "Session.SessionId", "SessionHelper.GetSessionID()");
 
-        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
+        /// <inheritdoc />
+        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics 
+            => ImmutableArray.Create(Rule);
 
         private static readonly ApiReplacementConfig apiReplacementConfig = new ApiReplacementConfig(Rule,
             new []{ "System.Web.SessionState.HttpSessionState", "System.Web.HttpSessionStateBase"},
@@ -28,6 +33,7 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.Analyzers
 
         private static readonly ApiReplacementForMemberAnalyzer apiReplacementAnalyzer = new ApiReplacementForMemberAnalyzer(apiReplacementConfig);
 
+        /// <inheritdoc />
         public override void Initialize(AnalysisContext context)
         {
             apiReplacementAnalyzer.RegisterAnalyzers(context);

@@ -15,12 +15,15 @@ namespace BugHunter.Analyzers.CmsBaseClassesRules.CodeFixes
     [ExportCodeFixProvider(LanguageNames.CSharp, Name = nameof(ModuleRegistrationCodeFixProvider)), Shared]
     public class ModuleRegistrationCodeFixProvider : CodeFixProvider
     {
+        /// <inheritdoc />
         public sealed override ImmutableArray<string> FixableDiagnosticIds
             => ImmutableArray.Create(ModuleRegistrationAnalyzer.DIAGNOSTIC_ID);
 
+        /// <inheritdoc />
         public sealed override FixAllProvider GetFixAllProvider()
             => WellKnownFixAllProviders.BatchFixer;
 
+        /// <inheritdoc />
         public sealed override async Task RegisterCodeFixesAsync(CodeFixContext context)
         {
             var classDeclarationCodeFixHelper = new ClassDeclarationCodeFixHelper(context);

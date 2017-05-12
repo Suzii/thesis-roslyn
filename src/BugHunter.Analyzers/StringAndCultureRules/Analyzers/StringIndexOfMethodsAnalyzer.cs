@@ -14,17 +14,28 @@ namespace BugHunter.Analyzers.StringAndCultureRules.Analyzers
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     public class StringIndexOfMethodsAnalyzer : BaseStringMethodsAnalyzer
     {
+        /// <summary>
+        /// The ID for diagnostics raises by <see cref="StringIndexOfMethodsAnalyzer"/>
+        /// </summary>
         public const string DIAGNOSTIC_ID = DiagnosticIds.STRING_INDEX_OF_METHODS;
         
-        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
+        /// <inheritdoc />
+        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics 
+            => ImmutableArray.Create(Rule);
 
-        protected override DiagnosticDescriptor Rule => StringMethodsRuleBuilder.CreateRuleForComparisonMethods(DIAGNOSTIC_ID);
-
+        /// <inheritdoc />
+        protected override DiagnosticDescriptor Rule 
+            => StringMethodsRuleBuilder.CreateRuleForComparisonMethods(DIAGNOSTIC_ID);
+        
+        /// <summary>
+        /// Constructor initializing base class with method names to be diagnosed
+        /// </summary>
         public StringIndexOfMethodsAnalyzer()
             : base("IndexOf", "LastIndexOf")
         {
         }
 
+        /// <inheritdoc />
         protected override bool IsForbiddenOverload(SyntaxNodeAnalysisContext context, InvocationExpressionSyntax invocationExpression, IMethodSymbol methodSymbol)
             => base.IsForbiddenOverload(context, invocationExpression, methodSymbol) && !IsFirstArgumentChar(methodSymbol);
 

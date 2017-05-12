@@ -14,14 +14,20 @@ namespace BugHunter.Web.Analyzers.CmsBaseClassesRules.Analyzers
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     public class UserControlBaseAnalyzer : DiagnosticAnalyzer
     {
+        /// <summary>
+        /// The ID for diagnostics raised by <see cref="UserControlBaseAnalyzer"/>
+        /// </summary>
         public const string DIAGNOSTIC_ID = DiagnosticIds.USER_CONTROL_BASE;
+
+        /// <inheritdoc />
+        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics 
+            => ImmutableArray.Create(Rule);
 
         private static readonly DiagnosticDescriptor Rule = BaseClassesInheritanceRulesProvider.GetRule(DIAGNOSTIC_ID, "User Control", "some abstract CMSUserControl");
 
-        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
-
         private static readonly ISymbolDiagnosticFormatter<INamedTypeSymbol> DiagnosticFormatter = new NamedTypeSymbolDiagnosticFormatter();
 
+        /// <inheritdoc />
         public override void Initialize(AnalysisContext context)
         {
             context.EnableConcurrentExecution();

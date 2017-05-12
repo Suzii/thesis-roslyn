@@ -19,6 +19,9 @@ namespace BugHunter.Analyzers.CmsBaseClassesRules.Analyzers
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     public class ModuleRegistrationAnalyzer : DiagnosticAnalyzer
     {
+        /// <summary>
+        /// The ID for diagnostics raises by <see cref="ModuleRegistrationAnalyzer"/>
+        /// </summary>
         public const string DIAGNOSTIC_ID = DiagnosticIds.MODULE_REGISTRATION;
 
         private static readonly DiagnosticDescriptor Rule = new DiagnosticDescriptor(DIAGNOSTIC_ID,
@@ -30,10 +33,13 @@ namespace BugHunter.Analyzers.CmsBaseClassesRules.Analyzers
                 description: new LocalizableResourceString(nameof(CmsBaseClassesResources.ModuleRegistration_Description), CmsBaseClassesResources.ResourceManager, typeof(CmsBaseClassesResources)),
             helpLinkUri: HelpLinkUriProvider.GetHelpLink(DIAGNOSTIC_ID));
 
-        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
+        /// <inheritdoc />
+        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics
+            => ImmutableArray.Create(Rule);
 
         private static readonly ISymbolDiagnosticFormatter<INamedTypeSymbol> DiagnosticFormatter = new NamedTypeSymbolDiagnosticFormatter();
         
+        /// <inheritdoc />
         public override void Initialize(AnalysisContext context)
         {
             context.EnableConcurrentExecution();

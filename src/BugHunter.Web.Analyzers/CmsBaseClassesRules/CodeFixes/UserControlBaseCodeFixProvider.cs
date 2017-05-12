@@ -16,9 +16,11 @@ namespace BugHunter.Web.Analyzers.CmsBaseClassesRules.CodeFixes
     [ExportCodeFixProvider(LanguageNames.CSharp, Name = nameof(UserControlBaseCodeFixProvider)), Shared]
     public class UserControlBaseCodeFixProvider : CodeFixProvider
     {
+        /// <inheritdoc />
         public sealed override ImmutableArray<string> FixableDiagnosticIds
             => ImmutableArray.Create(UserControlBaseAnalyzer.DIAGNOSTIC_ID);
 
+        /// <inheritdoc />
         public sealed override FixAllProvider GetFixAllProvider()
             => WellKnownFixAllProviders.BatchFixer;
 
@@ -28,6 +30,7 @@ namespace BugHunter.Web.Analyzers.CmsBaseClassesRules.CodeFixes
             new ClassAndItsNamespace { ClassNamespace = "CMS.Base.Web.UI", ClassName = "AbstractUserControl"},
         };
 
+        /// <inheritdoc />
         public sealed override async Task RegisterCodeFixesAsync(CodeFixContext context)
         {
             var baseTypeCodeFixHelper = new ClassDeclarationCodeFixHelper(context);

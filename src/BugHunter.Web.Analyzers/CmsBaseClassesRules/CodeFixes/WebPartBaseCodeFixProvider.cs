@@ -17,9 +17,11 @@ namespace BugHunter.Web.Analyzers.CmsBaseClassesRules.CodeFixes
     [ExportCodeFixProvider(LanguageNames.CSharp, Name = nameof(WebPartBaseCodeFixProvider)), Shared]
     public class WebPartBaseCodeFixProvider : CodeFixProvider
     {
+        /// <inheritdoc />
         public sealed override ImmutableArray<string> FixableDiagnosticIds
             => ImmutableArray.Create(WebPartBaseAnalyzer.WEB_PART_DIAGNOSTIC_ID, WebPartBaseAnalyzer.UI_WEB_PART_DIAGNOSTIC_ID);
 
+        /// <inheritdoc />
         public sealed override FixAllProvider GetFixAllProvider()
             => WellKnownFixAllProviders.BatchFixer;
 
@@ -37,6 +39,7 @@ namespace BugHunter.Web.Analyzers.CmsBaseClassesRules.CodeFixes
             new ClassAndItsNamespace { ClassNamespace = "CMS.Ecommerce.Web.UI", ClassName = "CMSCheckoutWebPart"},
         };
 
+        /// <inheritdoc />
         public sealed override async Task RegisterCodeFixesAsync(CodeFixContext context)
         {
             var baseTypeCodeFixHelper = new ClassDeclarationCodeFixHelper(context);

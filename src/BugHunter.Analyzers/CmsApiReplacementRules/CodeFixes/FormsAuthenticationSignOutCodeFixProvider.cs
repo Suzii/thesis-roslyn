@@ -15,12 +15,15 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.CodeFixes
     [ExportCodeFixProvider(LanguageNames.CSharp, Name = nameof(FormsAuthenticationSignOutCodeFixProvider)), Shared]
     public class FormsAuthenticationSignOutCodeFixProvider : CodeFixProvider
     {
+        /// <inheritdoc />
         public sealed override ImmutableArray<string> FixableDiagnosticIds
             => ImmutableArray.Create(FormsAuthenticationSignOutAnalyzer.DIAGNOSTIC_ID);
 
+        /// <inheritdoc />
         public sealed override FixAllProvider GetFixAllProvider()
             => WellKnownFixAllProviders.BatchFixer;
 
+        /// <inheritdoc />
         public sealed override async Task RegisterCodeFixesAsync(CodeFixContext context)
         {
             var editor = new MemberInvocationCodeFixHelper(context);

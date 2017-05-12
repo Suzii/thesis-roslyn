@@ -20,12 +20,15 @@ namespace BugHunter.Analyzers.StringAndCultureRules.CodeFixes
     [ExportCodeFixProvider(LanguageNames.CSharp, Name = nameof(StringCompareToMethodCodeFixProvider)), Shared]
     public class StringCompareToMethodCodeFixProvider : CodeFixProvider
     {
+        /// <inheritdoc />
         public sealed override ImmutableArray<string> FixableDiagnosticIds
             => ImmutableArray.Create(StringCompareToMethodAnalyzer.DIAGNOSTIC_ID);
 
+        /// <inheritdoc />
         public sealed override FixAllProvider GetFixAllProvider()
             => WellKnownFixAllProviders.BatchFixer;
 
+        /// <inheritdoc />
         public sealed override async Task RegisterCodeFixesAsync(CodeFixContext context)
         {
             var editor = new MemberInvocationCodeFixHelper(context);
@@ -65,15 +68,11 @@ namespace BugHunter.Analyzers.StringAndCultureRules.CodeFixes
         }
 
         private static bool IsFixable(InvocationExpressionSyntax invocation)
-        {
-            return invocation != null && 
-                   invocation.Expression.IsKind(SyntaxKind.SimpleMemberAccessExpression) &&
-                   !invocation.Parent.IsKind(SyntaxKind.ConditionalAccessExpression);
-        }
+            => invocation != null &&
+               invocation.Expression.IsKind(SyntaxKind.SimpleMemberAccessExpression) &&
+               !invocation.Parent.IsKind(SyntaxKind.ConditionalAccessExpression);
 
         private static bool IsChainedMemberAccesses(MemberAccessExpressionSyntax memberAccess)
-        {
-            return memberAccess.DescendantNodes().OfType<MemberAccessExpressionSyntax>().Any();
-        }
+            => memberAccess.DescendantNodes().OfType<MemberAccessExpressionSyntax>().Any();
     }
 }

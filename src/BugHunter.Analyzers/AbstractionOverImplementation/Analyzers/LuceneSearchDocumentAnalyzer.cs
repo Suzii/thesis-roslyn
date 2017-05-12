@@ -12,6 +12,9 @@ namespace BugHunter.Analyzers.AbstractionOverImplementation.Analyzers
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     public class LuceneSearchDocumentAnalyzer : DiagnosticAnalyzer
     {
+        /// <summary>
+        /// The ID for diagnostics raised by <see cref="LuceneSearchDocumentAnalyzer"/>
+        /// </summary>
         public const string DIAGNOSTIC_ID = DiagnosticIds.LUCENE_SEARCH_DOCUMENT;
 
         private static readonly DiagnosticDescriptor Rule = new DiagnosticDescriptor(DIAGNOSTIC_ID,
@@ -23,8 +26,11 @@ namespace BugHunter.Analyzers.AbstractionOverImplementation.Analyzers
             description: new LocalizableResourceString(nameof(AbstractionOverImplementationResources.LuceneSearchDocument_Description), AbstractionOverImplementationResources.ResourceManager, typeof(AbstractionOverImplementationResources)),
             helpLinkUri: HelpLinkUriProvider.GetHelpLink(DIAGNOSTIC_ID));
 
-        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
+        /// <inheritdoc />
+        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics 
+            => ImmutableArray.Create(Rule);
 
+        /// <inheritdoc />
         public override void Initialize(AnalysisContext context)
         {
             context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.None);

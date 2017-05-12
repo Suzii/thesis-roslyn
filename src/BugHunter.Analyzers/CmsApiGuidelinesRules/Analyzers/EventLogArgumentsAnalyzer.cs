@@ -14,6 +14,9 @@ namespace BugHunter.Analyzers.CmsApiGuidelinesRules.Analyzers
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     public class EventLogArgumentsAnalyzer : DiagnosticAnalyzer
     {
+        /// <summary>
+        /// The ID for diagnostics raised by <see cref="EventLogArgumentsAnalyzer"/>
+        /// </summary>
         public const string DIAGNOSTIC_ID = DiagnosticIds.EVENT_LOG_ARGUMENTS;
 
         private static readonly DiagnosticDescriptor Rule = new DiagnosticDescriptor(DIAGNOSTIC_ID,
@@ -25,10 +28,13 @@ namespace BugHunter.Analyzers.CmsApiGuidelinesRules.Analyzers
             description: new LocalizableResourceString(nameof(CmsApiGuidelinesResources.EventLogArguments_Description), CmsApiGuidelinesResources.ResourceManager, typeof(CmsApiGuidelinesResources)),
             helpLinkUri: HelpLinkUriProvider.GetHelpLink(DIAGNOSTIC_ID));
 
-        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
+        /// <inheritdoc />
+        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics
+            => ImmutableArray.Create(Rule);
         
         private static readonly ISyntaxNodeAnalyzer analyzer = new InnerMethodInvocationAnalyzer();
 
+        /// <inheritdoc />
         public override void Initialize(AnalysisContext context)
         {
             context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.None);
@@ -45,6 +51,9 @@ namespace BugHunter.Analyzers.CmsApiGuidelinesRules.Analyzers
             new[] { "CMS.EventLog.EventLogProvider" },
             new[] { "LogEvent" });
 
+            /// <summary>
+            /// Constructor initializing config and diagnostic formatter of <see cref="MethodInvocationAnalyzer"/> base class
+            /// </summary>
             public InnerMethodInvocationAnalyzer() : base(config, new EventLogArgumentsDiagnosticFormatter())
             {
             }

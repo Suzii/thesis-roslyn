@@ -13,6 +13,9 @@ namespace BugHunter.Web.Analyzers.CmsApiGuidelinesRules.Analyzers
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     public class ConnectionHelperExecuteQueryAnalyzer : DiagnosticAnalyzer
     {
+        /// <summary>
+        /// The ID for diagnostics raised by <see cref="ConnectionHelperExecuteQueryAnalyzer"/>
+        /// </summary>
         public const string DIAGNOSTIC_ID = DiagnosticIds.CONNECTION_HELPER_EXECUTE_QUERY;
 
         private static readonly DiagnosticDescriptor Rule = new DiagnosticDescriptor(DIAGNOSTIC_ID,
@@ -22,12 +25,15 @@ namespace BugHunter.Web.Analyzers.CmsApiGuidelinesRules.Analyzers
                 defaultSeverity: DiagnosticSeverity.Warning,
                 isEnabledByDefault: true,
                 description: new LocalizableResourceString(nameof(CmsApiGuidelinesResources.ConnectionHelperExecuteQuery_Description), CmsApiGuidelinesResources.ResourceManager, typeof(CmsApiGuidelinesResources)),
-            helpLinkUri: HelpLinkUriProvider.GetHelpLink(DIAGNOSTIC_ID));
+                helpLinkUri: HelpLinkUriProvider.GetHelpLink(DIAGNOSTIC_ID));
 
-        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
+        /// <inheritdoc />
+        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics 
+            => ImmutableArray.Create(Rule);
 
         private static readonly ISyntaxNodeAnalyzer analyzer = new InnerMethodInvocationAnalyzer();
 
+        /// <inheritdoc />
         public override void Initialize(AnalysisContext context)
         {
             context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.None);
@@ -42,10 +48,14 @@ namespace BugHunter.Web.Analyzers.CmsApiGuidelinesRules.Analyzers
             new[] { "CMS.DataEngine.ConnectionHelper" },
             new[] { "ExecuteQuery" });
 
+            /// <summary>
+            /// Constructor initializing config and diagnostic formatter of <see cref="MethodInvocationAnalyzer"/> base class
+            /// </summary>
             public InnerMethodInvocationAnalyzer() : base(config, new MethodInvocationDiagnosticFormatter())
             {
             }
 
+            /// <inheritdoc />
             protected override bool IsOnForbiddenPath(string filePath)
             {
                 return filePath.EndsWith(FileExtensions.PAGES)

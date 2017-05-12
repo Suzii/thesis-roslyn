@@ -13,9 +13,14 @@ namespace BugHunter.Analyzers.CmsApiGuidelinesRules.Analyzers
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     public class WhereLikeMethodAnalyzer : DiagnosticAnalyzer
     {
+        /// <summary>
+        /// The ID for diagnostics raises by <see cref="WhereLikeMethodAnalyzer"/>
+        /// </summary>
         public const string DIAGNOSTIC_ID = DiagnosticIds.WHERE_LIKE_METHOD;
 
-        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
+        /// <inheritdoc />
+        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics 
+            => ImmutableArray.Create(Rule);
 
         private static readonly DiagnosticDescriptor Rule = new DiagnosticDescriptor(DIAGNOSTIC_ID,
             title: new LocalizableResourceString(nameof(CmsApiGuidelinesResources.WhereLikeMethod_Title), CmsApiGuidelinesResources.ResourceManager, typeof(CmsApiGuidelinesResources)),
@@ -32,6 +37,7 @@ namespace BugHunter.Analyzers.CmsApiGuidelinesRules.Analyzers
 
         private static readonly ISyntaxNodeAnalyzer analyzer = new MethodInvocationAnalyzer(config, new MethodInvocationOnlyDiagnosticFormatter());
 
+        /// <inheritdoc />
         public override void Initialize(AnalysisContext context)
         {
             context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.None);

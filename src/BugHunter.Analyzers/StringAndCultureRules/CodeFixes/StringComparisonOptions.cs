@@ -2,7 +2,7 @@
 
 namespace BugHunter.Analyzers.StringAndCultureRules.CodeFixes
 {
-    public static class StringComparisonOptions
+    internal static class StringComparisonOptions
     {
         internal static IEnumerable<string> GetAll()
         {
