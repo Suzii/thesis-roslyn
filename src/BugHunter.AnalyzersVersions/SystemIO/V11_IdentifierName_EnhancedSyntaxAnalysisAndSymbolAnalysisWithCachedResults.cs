@@ -18,7 +18,9 @@ namespace BugHunter.AnalyzersVersions.SystemIO
     /// Version with callback on IdentifierName and analyzing Symbol directly
     /// </summary>
     //[DiagnosticAnalyzer(LanguageNames.CSharp)]
+#pragma warning disable RS1001 // Missing diagnostic analyzer attribute.
     public class V11_IdentifierName_EnhancedSyntaxAnalysisAndSymbolAnalysisWithCachedResults : DiagnosticAnalyzer
+#pragma warning restore RS1001 // Missing diagnostic analyzer attribute.
     {
         public const string DIAGNOSTIC_ID = "V11";
         private static readonly DiagnosticDescriptor Rule = AnalyzerHelper.GetRule(DIAGNOSTIC_ID);

@@ -12,7 +12,9 @@ namespace BugHunter.AnalyzersVersions.MethodInvocationHeuristics
     /// !!! THIS FILE SERVES ONLY FOR PURPOSES OF PERFORMANCE TESTING !!!
     /// </summary>
     //[DiagnosticAnalyzer(LanguageNames.CSharp)]
+#pragma warning disable RS1001 // Missing diagnostic analyzer attribute.
     public class FormsAuthenticationSignOutAnalyzer_NoOptimization : DiagnosticAnalyzer
+#pragma warning restore RS1001 // Missing diagnostic analyzer attribute.
     {
         public const string DIAGNOSTIC_ID = "BH1012";
 

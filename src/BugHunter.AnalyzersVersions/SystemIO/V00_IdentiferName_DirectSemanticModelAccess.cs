@@ -15,7 +15,9 @@ namespace BugHunter.AnalyzersVersions.SystemIO
     /// Version with callback on IdentifierName and using SemanticModelBrowser
     /// </summary>
     //[DiagnosticAnalyzer(LanguageNames.CSharp)]
+#pragma warning disable RS1001 // Missing diagnostic analyzer attribute.
     public class V00_IdentiferName_DirectSemanticModelAccess : DiagnosticAnalyzer
+#pragma warning restore RS1001 // Missing diagnostic analyzer attribute.
     {
         public const string DIAGNOSTIC_ID = "VXX";
         private static readonly DiagnosticDescriptor Rule = AnalyzerHelper.GetRule(DIAGNOSTIC_ID);

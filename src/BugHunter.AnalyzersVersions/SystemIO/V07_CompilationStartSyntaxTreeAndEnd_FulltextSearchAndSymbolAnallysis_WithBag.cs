@@ -17,7 +17,9 @@ namespace BugHunter.AnalyzersVersions.SystemIO
     /// Searches for usages of <see cref="System.IO"/> and their access to anything other than <c>Exceptions</c> or <c>Stream</c>
     /// </summary>
     //[DiagnosticAnalyzer(LanguageNames.CSharp)]
+#pragma warning disable RS1001 // Missing diagnostic analyzer attribute.
     public class V07_CompilationStartSyntaxTreeAndEnd_FulltextSearchAndSymbolAnallysis_WithBag : DiagnosticAnalyzer
+#pragma warning restore RS1001 // Missing diagnostic analyzer attribute.
     {
         public const string DIAGNOSTIC_ID = "V07";
         private static readonly DiagnosticDescriptor Rule = AnalyzerHelper.GetRule(DIAGNOSTIC_ID);
