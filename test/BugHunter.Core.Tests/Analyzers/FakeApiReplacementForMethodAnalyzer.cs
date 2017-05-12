@@ -10,7 +10,7 @@ namespace BugHunter.Core.Tests.Analyzers
     public class FakeApiReplacementForMethodAnalyzer : DiagnosticAnalyzer
 #pragma warning restore RS1001 // Missing diagnostic analyzer attribute.
     {
-        public const string DIAGNOSTIC_ID = "FAKE_ID";
+        public const string DIAGNOSTIC_ID = "BHFAKE";
 
         private static readonly DiagnosticDescriptor Rule = ApiReplacementRulesProvider.GetRule(DIAGNOSTIC_ID, "FakeClass.FakeMethod");
 

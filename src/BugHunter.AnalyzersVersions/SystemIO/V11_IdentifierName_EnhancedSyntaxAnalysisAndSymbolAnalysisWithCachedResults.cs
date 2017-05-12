@@ -22,7 +22,7 @@ namespace BugHunter.AnalyzersVersions.SystemIO
     public class V11_IdentifierName_EnhancedSyntaxAnalysisAndSymbolAnalysisWithCachedResults : DiagnosticAnalyzer
 #pragma warning restore RS1001 // Missing diagnostic analyzer attribute.
     {
-        public const string DIAGNOSTIC_ID = "V11";
+        public const string DIAGNOSTIC_ID = "BHxV11";
         private static readonly DiagnosticDescriptor Rule = AnalyzerHelper.GetRule(DIAGNOSTIC_ID);
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
         private static readonly ISyntaxNodeDiagnosticFormatter<IdentifierNameSyntax> DiagnosticFormatter = new SystemIoDiagnosticFormatter();

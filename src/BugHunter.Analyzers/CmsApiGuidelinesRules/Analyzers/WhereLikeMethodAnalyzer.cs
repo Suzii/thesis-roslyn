@@ -3,6 +3,7 @@ using BugHunter.Core.Analyzers;
 using BugHunter.Core.ApiReplacementAnalysis;
 using BugHunter.Core.Constants;
 using BugHunter.Core.DiagnosticsFormatting.Implementation;
+using BugHunter.Core.Helpers.DiagnosticDescriptors;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Diagnostics;
@@ -22,7 +23,8 @@ namespace BugHunter.Analyzers.CmsApiGuidelinesRules.Analyzers
             category: nameof(AnalyzerCategories.AbstractionOverImplementation),
             defaultSeverity: DiagnosticSeverity.Warning,
             isEnabledByDefault: true,
-            description: new LocalizableResourceString(nameof(CmsApiGuidelinesResources.WhereLikeMethod_Description), CmsApiGuidelinesResources.ResourceManager, typeof(CmsApiGuidelinesResources)));
+            description: new LocalizableResourceString(nameof(CmsApiGuidelinesResources.WhereLikeMethod_Description), CmsApiGuidelinesResources.ResourceManager, typeof(CmsApiGuidelinesResources)),
+            helpLinkUri: HelpLinkUriProvider.GetHelpLink(DIAGNOSTIC_ID));
 
         private static readonly ApiReplacementConfig config = new ApiReplacementConfig(Rule,
            new[] { "CMS.DataEngine.WhereConditionBase`1" },

@@ -25,7 +25,8 @@ namespace BugHunter.Core.Helpers.DiagnosticDescriptors
                 category: nameof(AnalyzerCategories.CmsApiReplacements),
                 defaultSeverity: DiagnosticSeverity.Warning,
                 isEnabledByDefault: true,
-                description: ApiReplacementsMessagesProvider.GetDescription(forbiddenUsage));
+                description: ApiReplacementsMessagesProvider.GetDescription(forbiddenUsage),
+                helpLinkUri: HelpLinkUriProvider.GetHelpLink(diagnosticId));
 
         /// <summary>
         /// Constructs a <see cref="DiagnosticDescriptor"/> for API Replacement Analyzer.
@@ -44,6 +45,7 @@ namespace BugHunter.Core.Helpers.DiagnosticDescriptors
                 category: nameof(AnalyzerCategories.CmsApiReplacements),
                 defaultSeverity: DiagnosticSeverity.Warning,
                 isEnabledByDefault: true,
-                description: ApiReplacementsMessagesProvider.GetDescription(forbiddenUsage, recommendedUsage));
+                description: ApiReplacementsMessagesProvider.GetDescription(forbiddenUsage, recommendedUsage),
+                helpLinkUri: HelpLinkUriProvider.GetHelpLink(diagnosticId));
     }
 }

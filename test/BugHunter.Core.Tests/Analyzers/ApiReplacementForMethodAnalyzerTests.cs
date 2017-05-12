@@ -17,7 +17,7 @@ namespace BugHunter.Core.Tests.Analyzers
         private static DiagnosticResult CreateDiagnosticResult(params object[] messageArgs)
             => new DiagnosticResult
             {
-                Id = "FAKE_ID",
+                Id = "BHFAKE",
                 Message = string.Format(@"'{0}' should not be used.", messageArgs),
                 Severity = DiagnosticSeverity.Warning,
             };

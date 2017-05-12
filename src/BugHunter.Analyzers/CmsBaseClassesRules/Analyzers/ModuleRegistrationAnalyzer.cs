@@ -5,6 +5,7 @@ using BugHunter.Core.Constants;
 using BugHunter.Core.DiagnosticsFormatting;
 using BugHunter.Core.DiagnosticsFormatting.Implementation;
 using BugHunter.Core.Extensions;
+using BugHunter.Core.Helpers.DiagnosticDescriptors;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -26,7 +27,8 @@ namespace BugHunter.Analyzers.CmsBaseClassesRules.Analyzers
                 category: nameof(AnalyzerCategories.CmsBaseClasses),
                 defaultSeverity: DiagnosticSeverity.Warning,
                 isEnabledByDefault: true,
-                description: new LocalizableResourceString(nameof(CmsBaseClassesResources.ModuleRegistration_Description), CmsBaseClassesResources.ResourceManager, typeof(CmsBaseClassesResources)));
+                description: new LocalizableResourceString(nameof(CmsBaseClassesResources.ModuleRegistration_Description), CmsBaseClassesResources.ResourceManager, typeof(CmsBaseClassesResources)),
+            helpLinkUri: HelpLinkUriProvider.GetHelpLink(DIAGNOSTIC_ID));
 
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
 

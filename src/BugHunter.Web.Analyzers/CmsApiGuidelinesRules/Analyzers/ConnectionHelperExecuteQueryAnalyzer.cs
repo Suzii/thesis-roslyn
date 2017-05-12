@@ -3,6 +3,7 @@ using BugHunter.Core.Analyzers;
 using BugHunter.Core.ApiReplacementAnalysis;
 using BugHunter.Core.Constants;
 using BugHunter.Core.DiagnosticsFormatting.Implementation;
+using BugHunter.Core.Helpers.DiagnosticDescriptors;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Diagnostics;
@@ -20,7 +21,8 @@ namespace BugHunter.Web.Analyzers.CmsApiGuidelinesRules.Analyzers
                 category: nameof(AnalyzerCategories.CmsApiGuidelines),
                 defaultSeverity: DiagnosticSeverity.Warning,
                 isEnabledByDefault: true,
-                description: new LocalizableResourceString(nameof(CmsApiGuidelinesResources.ConnectionHelperExecuteQuery_Description), CmsApiGuidelinesResources.ResourceManager, typeof(CmsApiGuidelinesResources)));
+                description: new LocalizableResourceString(nameof(CmsApiGuidelinesResources.ConnectionHelperExecuteQuery_Description), CmsApiGuidelinesResources.ResourceManager, typeof(CmsApiGuidelinesResources)),
+            helpLinkUri: HelpLinkUriProvider.GetHelpLink(DIAGNOSTIC_ID));
 
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
 

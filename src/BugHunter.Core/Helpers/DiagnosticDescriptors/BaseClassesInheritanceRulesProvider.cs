@@ -24,7 +24,8 @@ namespace BugHunter.Core.Helpers.DiagnosticDescriptors
                 category: nameof(AnalyzerCategories.CmsApiReplacements),
                 defaultSeverity: DiagnosticSeverity.Warning,
                 isEnabledByDefault: true,
-                description: new LocalizableResourceString(nameof(Resources.BaseClasses_Description), Resources.ResourceManager, typeof(Resources), typeOfFile, suggestedBaseClass));
+                description: new LocalizableResourceString(nameof(Resources.BaseClasses_Description), Resources.ResourceManager, typeof(Resources), typeOfFile, suggestedBaseClass),
+                helpLinkUri: HelpLinkUriProvider.GetHelpLink(diagnosticId));
 
             return rule;
         }

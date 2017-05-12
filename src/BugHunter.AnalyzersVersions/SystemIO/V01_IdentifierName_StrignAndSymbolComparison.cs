@@ -53,7 +53,7 @@ namespace BugHunter.AnalyzersVersions.SystemIO
             "System.IO.SeekOrigin"
         };
 
-        public const string DIAGNOSTIC_ID = "V01";
+        public const string DIAGNOSTIC_ID = "BHxV01";
         private static readonly DiagnosticDescriptor Rule = AnalyzerHelper.GetRule(DIAGNOSTIC_ID);
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
         private static readonly ISyntaxNodeDiagnosticFormatter<IdentifierNameSyntax> DiagnosticFormatter = new SystemIoDiagnosticFormatter();

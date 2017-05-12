@@ -21,7 +21,7 @@ namespace BugHunter.AnalyzersVersions.SystemIO
     public class V02_IdentifierName_SymbolAnalysis : DiagnosticAnalyzer
 #pragma warning restore RS1001 // Missing diagnostic analyzer attribute.
     {
-        public const string DIAGNOSTIC_ID = "V02";
+        public const string DIAGNOSTIC_ID = "BHxV02";
         private static readonly DiagnosticDescriptor Rule = AnalyzerHelper.GetRule(DIAGNOSTIC_ID);
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
         private static readonly ISyntaxNodeDiagnosticFormatter<IdentifierNameSyntax> DiagnosticFormatter = new SystemIoDiagnosticFormatter();
