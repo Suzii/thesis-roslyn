@@ -124,6 +124,7 @@
     <Compile Include="Helpers\CodeFixes\MemberInvocationCodeFixHelper.cs" />
     <Compile Include="Helpers\CodeFixes\MemberAccessCodeFixHelper.cs" />
     <Compile Include="Helpers\CodeFixes\UsingsHelper.cs" />
+    <Compile Include="Helpers\DiagnosticDescriptors\HelpLinkUriProvider.cs" />
     <Compile Include="Helpers\ResourceMessages\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

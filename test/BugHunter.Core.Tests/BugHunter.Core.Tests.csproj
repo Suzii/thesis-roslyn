@@ -117,6 +117,7 @@
     <Compile Include="Extensions\ConditionalAccessExpressionSyntaxExtensionsTest.cs" />
     <Compile Include="Extensions\IdentifierNameSyntaxExtensionsTest.cs" />
     <Compile Include="Extensions\InvocationExpressionSyntaxExtenstionsTest.cs" />
+    <Compile Include="Helpers\HelpLinkUriProviderTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
