@@ -19,20 +19,20 @@ namespace BugHunter.Web.Analyzers.CmsBaseClassesRules.Analyzers
         /// <summary>
         /// The ID for diagnostics raised by <see cref="WebPartBaseAnalyzer"/> for normal web parts
         /// </summary>
-        public const string WEB_PART_DIAGNOSTIC_ID = DiagnosticIds.WEB_PART_BASE;
+        public const string WebPartDiagnosticId = DiagnosticIds.WebPartBase;
 
         /// <summary>
         /// The ID for diagnostics raised by <see cref="WebPartBaseAnalyzer"/> for UI web parts
         /// </summary>
-        public const string UI_WEB_PART_DIAGNOSTIC_ID = DiagnosticIds.UI_WEB_PART_BASE;
+        public const string UIWebPartDiagnosticId = DiagnosticIds.UIWebPartBase;
         
         /// <inheritdoc />
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics 
             => ImmutableArray.Create(WebPartRule, UiWebPartRule);
 
-        private static readonly DiagnosticDescriptor WebPartRule = BaseClassesInheritanceRulesProvider.GetRule(WEB_PART_DIAGNOSTIC_ID, "Web Part", "some abstract CMS WebPart");
+        private static readonly DiagnosticDescriptor WebPartRule = BaseClassesInheritanceRulesProvider.GetRule(WebPartDiagnosticId, "Web Part", "some abstract CMS WebPart");
 
-        private static readonly DiagnosticDescriptor UiWebPartRule = BaseClassesInheritanceRulesProvider.GetRule(UI_WEB_PART_DIAGNOSTIC_ID, "UI Web Part", "some abstract CMS UI WebPart");
+        private static readonly DiagnosticDescriptor UiWebPartRule = BaseClassesInheritanceRulesProvider.GetRule(UIWebPartDiagnosticId, "UI Web Part", "some abstract CMS UI WebPart");
 
         private static readonly ISymbolDiagnosticFormatter<INamedTypeSymbol> DiagnosticFormatter = new NamedTypeSymbolDiagnosticFormatter();
 

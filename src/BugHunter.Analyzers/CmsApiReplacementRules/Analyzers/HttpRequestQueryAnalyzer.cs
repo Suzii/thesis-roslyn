@@ -13,9 +13,9 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.Analyzers
         /// <summary>
         /// The ID for diagnostics raises by <see cref="HttpRequestQueryStringAnalyzer"/>
         /// </summary>
-        public const string DIAGNOSTIC_ID = DiagnosticIds.HTTP_REQUEST_QUERY_STRING;
+        public const string DiagnosticId = DiagnosticIds.HttpRequestQueryString;
 
-        private static readonly DiagnosticDescriptor Rule = ApiReplacementRulesProvider.GetRule(DIAGNOSTIC_ID, "QueryString[]", "QueryHelper.Get<Type>()");
+        private static readonly DiagnosticDescriptor Rule = ApiReplacementRulesProvider.GetRule(DiagnosticId, "QueryString[]", "QueryHelper.Get<Type>()");
 
         /// <inheritdoc />
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics 

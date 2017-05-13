@@ -23,16 +23,16 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.Analyzers
         /// <summary>
         /// The ID for diagnostics raises by <see cref="SystemIOAnalyzer"/>
         /// </summary>
-        public const string DIAGNOSTIC_ID = DiagnosticIds.SYSTEM_IO;
+        public const string DiagnosticId = DiagnosticIds.SystemIO;
 
-        private static readonly DiagnosticDescriptor Rule = new DiagnosticDescriptor(DIAGNOSTIC_ID,
+        private static readonly DiagnosticDescriptor Rule = new DiagnosticDescriptor(DiagnosticId,
                 title: new LocalizableResourceString(nameof(CmsApiReplacementsResources.SystemIo_Title), CmsApiReplacementsResources.ResourceManager, typeof(CmsApiReplacementsResources)),
                 messageFormat: new LocalizableResourceString(nameof(CmsApiReplacementsResources.SystemIo_MessageFormat), CmsApiReplacementsResources.ResourceManager, typeof(CmsApiReplacementsResources)),
                 category: nameof(AnalyzerCategories.CmsApiReplacements),
                 defaultSeverity: DiagnosticSeverity.Warning,
                 isEnabledByDefault: true,
                 description: new LocalizableResourceString(nameof(CmsApiReplacementsResources.SystemIo_Description), CmsApiReplacementsResources.ResourceManager, typeof(CmsApiReplacementsResources)),
-            helpLinkUri: HelpLinkUriProvider.GetHelpLink(DIAGNOSTIC_ID));
+            helpLinkUri: HelpLinkUriProvider.GetHelpLink(DiagnosticId));
 
         /// <inheritdoc />
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics

@@ -22,7 +22,7 @@ namespace BugHunter.Core.Tests.Analyzers
                 Severity = DiagnosticSeverity.Warning,
             };
 
-        private static string FakeClassSource = @"
+        private static string _fakeClassSource = @"
 namespace OkayNamespace
 {
     public class FakeClass
@@ -82,7 +82,7 @@ namespace SampleTestProject.CsSamples
     }}
 }}";
 
-            VerifyCSharpDiagnostic(new [] { test, FakeClassSource });
+            VerifyCSharpDiagnostic(new [] { test, _fakeClassSource });
         }
 
         [TestCase("instance")]
@@ -111,7 +111,7 @@ namespace SampleTestProject.CsSamples
         }}
     }}
 }}";
-            var sources = new[] { test, FakeClassSource };
+            var sources = new[] { test, _fakeClassSource };
 
             var documents = ProjectCompilation.GetDocuments(sources, null, null);
             var analyzer = GetCSharpDiagnosticAnalyzer();
@@ -149,7 +149,7 @@ namespace SampleTestProject.CsSamples
         }}
     }}
 }}";
-            var sources = new[] { test, FakeClassSource };
+            var sources = new[] { test, _fakeClassSource };
 
             var documents = ProjectCompilation.GetDocuments(sources, null, null);
             var analyzer = GetCSharpDiagnosticAnalyzer();

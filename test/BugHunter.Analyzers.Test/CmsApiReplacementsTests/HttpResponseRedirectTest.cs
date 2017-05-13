@@ -21,8 +21,8 @@ namespace BugHunter.Analyzers.Test.CmsApiReplacementsTests
         {
             return new DiagnosticResult
             {
-                Id = DiagnosticIds.HTTP_RESPONSE_REDIRECT,
-                Message = string.Format(MessagesConstants.MESSAGE_NO_SUGGESTION, messageArgs),
+                Id = DiagnosticIds.HttpResponseRedirect,
+                Message = string.Format(MessagesConstants.MessageNoSuggestion, messageArgs),
                 Severity = DiagnosticSeverity.Warning,
             };
         }

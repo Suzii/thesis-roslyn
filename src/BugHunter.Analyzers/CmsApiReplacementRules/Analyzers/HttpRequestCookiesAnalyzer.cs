@@ -16,9 +16,9 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.Analyzers
         /// <summary>
         /// The ID for diagnostics raises by <see cref="HttpRequestCookiesAnalyzer"/>
         /// </summary>
-        public const string DIAGNOSTIC_ID = DiagnosticIds.HTTP_REQUEST_COOKIES;
+        public const string DiagnosticId = DiagnosticIds.HttpRequestCookies;
 
-        private static readonly DiagnosticDescriptor Rule = ApiReplacementRulesProvider.GetRule(DIAGNOSTIC_ID, "Request.Cookies", "CookieHelper.RequestCookies");
+        private static readonly DiagnosticDescriptor Rule = ApiReplacementRulesProvider.GetRule(DiagnosticId, "Request.Cookies", "CookieHelper.RequestCookies");
 
         /// <inheritdoc />
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics

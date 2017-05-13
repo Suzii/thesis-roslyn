@@ -11,12 +11,12 @@ namespace BugHunter.Web.Analyzers
         /// <summary>
         /// Relative path to folder containing webparts for UI elements
         /// </summary>
-        public const string UI_WEB_PARTS = @"CMSModules\AdminControls\Controls\UIControls\";
+        public const string UIWebParts = @"CMSModules\AdminControls\Controls\UIControls\";
 
         /// <summary>
         /// Relative path for folder containing webparts
         /// </summary>
-        public const string WEB_PARTS = @"CMSWebParts\";
+        public const string WebParts = @"CMSWebParts\";
 
         /// <summary>
         /// Determines whether given <param name="filePath"></param> is located in WebParts folder
@@ -27,7 +27,7 @@ namespace BugHunter.Web.Analyzers
         {
             return !string.IsNullOrEmpty(filePath) &&
                    !filePath.Contains("_files\\") &&
-                   (filePath.Contains(UI_WEB_PARTS, StringComparison.OrdinalIgnoreCase) || filePath.Contains(WEB_PARTS, StringComparison.OrdinalIgnoreCase));
+                   (filePath.Contains(UIWebParts, StringComparison.OrdinalIgnoreCase) || filePath.Contains(WebParts, StringComparison.OrdinalIgnoreCase));
         }
 
         /// <summary>
@@ -36,7 +36,7 @@ namespace BugHunter.Web.Analyzers
         /// <param name="path">Path to web part file.</param>
         public static bool IsUIWebPart(string path)
         {
-            return path?.Contains(UI_WEB_PARTS, StringComparison.OrdinalIgnoreCase) ?? false;
+            return path?.Contains(UIWebParts, StringComparison.OrdinalIgnoreCase) ?? false;
         }
     }
 }

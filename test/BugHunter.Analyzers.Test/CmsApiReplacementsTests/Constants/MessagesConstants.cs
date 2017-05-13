@@ -2,8 +2,8 @@
 {
     public static class MessagesConstants
     {
-        public const string MESSAGE = @"'{0}' should not be used. Use '{1}' instead.";
+        public const string Message = @"'{0}' should not be used. Use '{1}' instead.";
 
-        public const string MESSAGE_NO_SUGGESTION = @"'{0}' should not be used.";
+        public const string MessageNoSuggestion = @"'{0}' should not be used.";
     }
 }

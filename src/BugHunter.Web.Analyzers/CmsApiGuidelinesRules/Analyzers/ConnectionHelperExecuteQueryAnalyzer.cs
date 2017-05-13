@@ -16,16 +16,16 @@ namespace BugHunter.Web.Analyzers.CmsApiGuidelinesRules.Analyzers
         /// <summary>
         /// The ID for diagnostics raised by <see cref="ConnectionHelperExecuteQueryAnalyzer"/>
         /// </summary>
-        public const string DIAGNOSTIC_ID = DiagnosticIds.CONNECTION_HELPER_EXECUTE_QUERY;
+        public const string DiagnosticId = DiagnosticIds.ConnectionHelperExecuteQuery;
 
-        private static readonly DiagnosticDescriptor Rule = new DiagnosticDescriptor(DIAGNOSTIC_ID,
+        private static readonly DiagnosticDescriptor Rule = new DiagnosticDescriptor(DiagnosticId,
                 title: new LocalizableResourceString(nameof(CmsApiGuidelinesResources.ConnectionHelperExecuteQuery_Title), CmsApiGuidelinesResources.ResourceManager, typeof(CmsApiGuidelinesResources)),
                 messageFormat: new LocalizableResourceString(nameof(CmsApiGuidelinesResources.ConnectionHelperExecuteQuery_MessageFormat), CmsApiGuidelinesResources.ResourceManager, typeof(CmsApiGuidelinesResources)),
                 category: nameof(AnalyzerCategories.CmsApiGuidelines),
                 defaultSeverity: DiagnosticSeverity.Warning,
                 isEnabledByDefault: true,
                 description: new LocalizableResourceString(nameof(CmsApiGuidelinesResources.ConnectionHelperExecuteQuery_Description), CmsApiGuidelinesResources.ResourceManager, typeof(CmsApiGuidelinesResources)),
-                helpLinkUri: HelpLinkUriProvider.GetHelpLink(DIAGNOSTIC_ID));
+                helpLinkUri: HelpLinkUriProvider.GetHelpLink(DiagnosticId));
 
         /// <inheritdoc />
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics 
@@ -51,17 +51,16 @@ namespace BugHunter.Web.Analyzers.CmsApiGuidelinesRules.Analyzers
             /// <summary>
             /// Constructor initializing config and diagnostic formatter of <see cref="MethodInvocationAnalyzer"/> base class
             /// </summary>
-            public InnerMethodInvocationAnalyzer() : base(config, new MethodInvocationDiagnosticFormatter())
-            {
-            }
+            public InnerMethodInvocationAnalyzer() 
+                : base(config, new MethodInvocationDiagnosticFormatter()) { }
 
             /// <inheritdoc />
             protected override bool IsOnForbiddenPath(string filePath)
             {
-                return filePath.EndsWith(FileExtensions.PAGES)
-                    || filePath.EndsWith(FileExtensions.CONTROLS)
-                    || filePath.EndsWith(FileExtensions.HANDLERS)
-                    || filePath.EndsWith(FileExtensions.MASTER_PAGE);
+                return filePath.EndsWith(FileExtensions.Pages)
+                    || filePath.EndsWith(FileExtensions.Controls)
+                    || filePath.EndsWith(FileExtensions.Handlers)
+                    || filePath.EndsWith(FileExtensions.MasterPage);
             }
         }
     }

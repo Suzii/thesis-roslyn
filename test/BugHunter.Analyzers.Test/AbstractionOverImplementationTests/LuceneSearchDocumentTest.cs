@@ -51,8 +51,8 @@ namespace SampleTestProject.CsSamples
 }";
             var expectedDiagnostic = new DiagnosticResult
             {
-                Id = DiagnosticIds.LUCENE_SEARCH_DOCUMENT,
-                Message = string.Format(MessagesConstants.MESSAGE, "LuceneSearchDocument", "ISearchDocument"),
+                Id = DiagnosticIds.LuceneSearchDocument,
+                Message = string.Format(MessagesConstants.Message, "LuceneSearchDocument", "ISearchDocument"),
                 Severity = DiagnosticSeverity.Warning,
                 Locations = new[] { new DiagnosticResultLocation("Test0.cs", 7, 17) }
             };
@@ -91,8 +91,8 @@ namespace SampleTestProject.CsSamples
 }";
             var expectedDiagnostic = new DiagnosticResult
             {
-                Id = DiagnosticIds.LUCENE_SEARCH_DOCUMENT,
-                Message = string.Format(MessagesConstants.MESSAGE, "CMS.Search.Lucene3.LuceneSearchDocument", "ISearchDocument"),
+                Id = DiagnosticIds.LuceneSearchDocument,
+                Message = string.Format(MessagesConstants.Message, "CMS.Search.Lucene3.LuceneSearchDocument", "ISearchDocument"),
                 Severity = DiagnosticSeverity.Warning,
                 Locations = new[] { new DiagnosticResultLocation("Test0.cs", 5, 17) }
             };
@@ -133,8 +133,8 @@ namespace SampleTestProject.CsSamples
 }";
             var expectedDiagnostic = new DiagnosticResult
             {
-                Id = DiagnosticIds.LUCENE_SEARCH_DOCUMENT,
-                Message = string.Format(MessagesConstants.MESSAGE, "LuceneSearchDocument", "ISearchDocument"),
+                Id = DiagnosticIds.LuceneSearchDocument,
+                Message = string.Format(MessagesConstants.Message, "LuceneSearchDocument", "ISearchDocument"),
                 Severity = DiagnosticSeverity.Warning,
                 Locations = new[] { new DiagnosticResultLocation("Test0.cs", 9, 13) }
             };
@@ -175,8 +175,8 @@ namespace SampleTestProject.CsSamples
 }";
             var expectedDiagnostic = new DiagnosticResult
             {
-                Id = DiagnosticIds.LUCENE_SEARCH_DOCUMENT,
-                Message = string.Format(MessagesConstants.MESSAGE, "CMS.Search.Lucene3.LuceneSearchDocument", "ISearchDocument"),
+                Id = DiagnosticIds.LuceneSearchDocument,
+                Message = string.Format(MessagesConstants.Message, "CMS.Search.Lucene3.LuceneSearchDocument", "ISearchDocument"),
                 Severity = DiagnosticSeverity.Warning,
                 Locations = new[] { new DiagnosticResultLocation("Test0.cs", 7, 13) }
             };
@@ -217,8 +217,8 @@ namespace SampleTestProject.CsSamples
 }";
             var expectedDiagnostic = new DiagnosticResult
             {
-                Id = DiagnosticIds.LUCENE_SEARCH_DOCUMENT,
-                Message = string.Format(MessagesConstants.MESSAGE, "LuceneSearchDocument", "ISearchDocument"),
+                Id = DiagnosticIds.LuceneSearchDocument,
+                Message = string.Format(MessagesConstants.Message, "LuceneSearchDocument", "ISearchDocument"),
                 Severity = DiagnosticSeverity.Warning,
                 Locations = new[] { new DiagnosticResultLocation("Test0.cs", 7, 29) }
             };
@@ -258,8 +258,8 @@ namespace SampleTestProject.CsSamples
 }";
             var expectedDiagnostic = new DiagnosticResult
             {
-                Id = DiagnosticIds.LUCENE_SEARCH_DOCUMENT,
-                Message = string.Format(MessagesConstants.MESSAGE, "CMS.Search.Lucene3.LuceneSearchDocument", "ISearchDocument"),
+                Id = DiagnosticIds.LuceneSearchDocument,
+                Message = string.Format(MessagesConstants.Message, "CMS.Search.Lucene3.LuceneSearchDocument", "ISearchDocument"),
                 Severity = DiagnosticSeverity.Warning,
                 Locations = new[] { new DiagnosticResultLocation("Test0.cs", 5, 29) }
             };

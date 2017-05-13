@@ -17,16 +17,16 @@ namespace BugHunter.Analyzers.CmsApiGuidelinesRules.Analyzers
         /// <summary>
         /// The ID for diagnostics raised by <see cref="EventLogArgumentsAnalyzer"/>
         /// </summary>
-        public const string DIAGNOSTIC_ID = DiagnosticIds.EVENT_LOG_ARGUMENTS;
+        public const string DiagnosticId = DiagnosticIds.EventLogArguments;
 
-        private static readonly DiagnosticDescriptor Rule = new DiagnosticDescriptor(DIAGNOSTIC_ID,
+        private static readonly DiagnosticDescriptor Rule = new DiagnosticDescriptor(DiagnosticId,
             title: new LocalizableResourceString(nameof(CmsApiGuidelinesResources.EventLogArguments_Title), CmsApiGuidelinesResources.ResourceManager, typeof(CmsApiGuidelinesResources)),
             messageFormat: new LocalizableResourceString(nameof(CmsApiGuidelinesResources.EventLogArguments_MessageFormat), CmsApiGuidelinesResources.ResourceManager, typeof(CmsApiGuidelinesResources)),
             category: nameof(AnalyzerCategories.CmsApiGuidelines),
             defaultSeverity: DiagnosticSeverity.Warning,
             isEnabledByDefault: true,
             description: new LocalizableResourceString(nameof(CmsApiGuidelinesResources.EventLogArguments_Description), CmsApiGuidelinesResources.ResourceManager, typeof(CmsApiGuidelinesResources)),
-            helpLinkUri: HelpLinkUriProvider.GetHelpLink(DIAGNOSTIC_ID));
+            helpLinkUri: HelpLinkUriProvider.GetHelpLink(DiagnosticId));
 
         /// <inheritdoc />
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics

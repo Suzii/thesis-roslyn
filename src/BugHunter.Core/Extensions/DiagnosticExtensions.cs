@@ -16,7 +16,7 @@ namespace BugHunter.Core.Extensions
         /// <returns>Diagnostic with added flag</returns>
         public static Diagnostic MarkAsConditionalAccess(this Diagnostic diagnostic)
         {
-            var newProperties = diagnostic.Properties.SetItem(DiagnosticProperties.IS_CONDITIONAL_ACCESS, DiagnosticProperties.TRUE_FLAG);
+            var newProperties = diagnostic.Properties.SetItem(DiagnosticProperties.IsConditionalAccess, DiagnosticProperties.TrueFlag);
 
             return diagnostic.WithNewProperties(newProperties);
         }
@@ -29,8 +29,8 @@ namespace BugHunter.Core.Extensions
         public static bool IsMarkedAsConditionalAccess(this Diagnostic diagnostic)
         {
             string conditionalAccessValue;
-            return diagnostic.Properties.TryGetValue(DiagnosticProperties.IS_CONDITIONAL_ACCESS, out conditionalAccessValue) 
-                && conditionalAccessValue == DiagnosticProperties.TRUE_FLAG;
+            return diagnostic.Properties.TryGetValue(DiagnosticProperties.IsConditionalAccess, out conditionalAccessValue) 
+                && conditionalAccessValue == DiagnosticProperties.TrueFlag;
         }
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace BugHunter.Core.Extensions
         /// <returns>Diagnostic with added flag</returns>
         public static Diagnostic MarkAsSimpleMemberAccess(this Diagnostic diagnostic)
         {
-            var newProperties = diagnostic.Properties.SetItem(DiagnosticProperties.IS_SIMPLE_MEMBER_ACCESS, DiagnosticProperties.TRUE_FLAG);
+            var newProperties = diagnostic.Properties.SetItem(DiagnosticProperties.IsSimpleMemberAccess, DiagnosticProperties.TrueFlag);
 
             return diagnostic.WithNewProperties(newProperties);
         }
@@ -53,8 +53,8 @@ namespace BugHunter.Core.Extensions
         public static bool IsMarkedAsSimpleMemberAccess(this Diagnostic diagnostic)
         {
             string simpleMemberAccessValue;
-            return diagnostic.Properties.TryGetValue(DiagnosticProperties.IS_SIMPLE_MEMBER_ACCESS, out simpleMemberAccessValue)
-                && simpleMemberAccessValue == DiagnosticProperties.TRUE_FLAG;
+            return diagnostic.Properties.TryGetValue(DiagnosticProperties.IsSimpleMemberAccess, out simpleMemberAccessValue)
+                && simpleMemberAccessValue == DiagnosticProperties.TrueFlag;
         }
 
         private static Diagnostic WithNewProperties(this Diagnostic diagnostic, ImmutableDictionary<string, string> newProperties)

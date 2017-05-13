@@ -26,7 +26,7 @@ namespace BugHunter.Analyzers.CmsApiGuidelinesRules.CodeFixes
 
         /// <inheritdoc />
         public sealed override ImmutableArray<string> FixableDiagnosticIds
-            => ImmutableArray.Create(WhereLikeMethodAnalyzer.DIAGNOSTIC_ID);
+            => ImmutableArray.Create(WhereLikeMethodAnalyzer.DiagnosticId);
 
         /// <inheritdoc />
         public sealed override FixAllProvider GetFixAllProvider()

@@ -17,13 +17,13 @@ namespace BugHunter.Web.Analyzers.CmsBaseClassesRules.Analyzers
         /// <summary>
         /// The ID for diagnostics raised by <see cref="PageBaseAnalyzer"/>
         /// </summary>
-        public const string DIAGNOSTIC_ID = DiagnosticIds.PAGE_BASE;
+        public const string DiagnosticId = DiagnosticIds.PageBase;
 
         /// <inheritdoc />
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics
             => ImmutableArray.Create(Rule);
 
-        private static readonly DiagnosticDescriptor Rule = BaseClassesInheritanceRulesProvider.GetRule(DIAGNOSTIC_ID, "Page", "some abstract CMSPage");
+        private static readonly DiagnosticDescriptor Rule = BaseClassesInheritanceRulesProvider.GetRule(DiagnosticId, "Page", "some abstract CMSPage");
         
         private static readonly ISymbolDiagnosticFormatter<INamedTypeSymbol> DiagnosticFormatter = new NamedTypeSymbolDiagnosticFormatter();
 

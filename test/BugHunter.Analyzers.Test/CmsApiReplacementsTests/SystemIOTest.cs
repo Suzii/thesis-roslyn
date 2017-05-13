@@ -56,7 +56,7 @@ namespace BugHunter.Analyzers.Test.CmsApiReplacementsTests
         private static DiagnosticResult CreateDiagnosticResult(string messageArg, int row, int column)
             => new DiagnosticResult
             {
-                Id = DiagnosticIds.SYSTEM_IO,
+                Id = DiagnosticIds.SystemIO,
                 Message = $"'{messageArg}' should not use 'System.IO' directly. Use equivalent method from namespace 'CMS.IO'.",
                 Severity = DiagnosticSeverity.Warning,
                 Locations = new[] { new DiagnosticResultLocation("Test0.cs", row, column) }

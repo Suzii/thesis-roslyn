@@ -16,7 +16,7 @@ namespace BugHunter.Analyzers.StringAndCultureRules.Analyzers
         /// <summary>
         /// The ID for diagnostics raises by <see cref="StringManipulationMethodsAnalyzer"/>
         /// </summary>
-        public const string DIAGNOSTIC_ID = DiagnosticIds.STRING_MANIPULATION_METHODS;
+        public const string DiagnosticId = DiagnosticIds.StringManipulationMethods;
 
         /// <inheritdoc />
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics 
@@ -24,7 +24,7 @@ namespace BugHunter.Analyzers.StringAndCultureRules.Analyzers
 
         /// <inheritdoc />
         protected override DiagnosticDescriptor Rule 
-            => StringMethodsRuleBuilder.CreateRuleForManipulationMethods(DIAGNOSTIC_ID);
+            => StringMethodsRuleBuilder.CreateRuleForManipulationMethods(DiagnosticId);
 
         /// <inheritdoc />
         protected override bool IsForbiddenOverload(SyntaxNodeAnalysisContext context, InvocationExpressionSyntax invocationExpression, IMethodSymbol methodSymbol)

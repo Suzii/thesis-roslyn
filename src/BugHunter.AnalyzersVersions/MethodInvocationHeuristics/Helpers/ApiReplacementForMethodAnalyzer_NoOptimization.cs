@@ -11,13 +11,13 @@ namespace BugHunter.AnalyzersVersions.MethodInvocationHeuristics.Helpers
     /// 
     /// !!! THIS FILE SERVES ONLY FOR PURPOSES OF PERFORMANCE TESTING !!!
     /// </summary>
-    public class ApiReplacementForMethodAnalyzer_NoOptimization
+    public class ApiReplacementForMethodAnalyzerNoOptimization
     {
         private readonly ISyntaxNodeAnalyzer _methodInvocationAnalyzer;
 
-        public ApiReplacementForMethodAnalyzer_NoOptimization(ApiReplacementConfig config)
+        public ApiReplacementForMethodAnalyzerNoOptimization(ApiReplacementConfig config)
         {
-            _methodInvocationAnalyzer = new MethodInvocationAnalyzer_NoOptimization(config, new MethodInvocationDiagnosticFormatter());
+            _methodInvocationAnalyzer = new MethodInvocationAnalyzerNoOptimization(config, new MethodInvocationDiagnosticFormatter());
         }
 
         public void RegisterAnalyzers(AnalysisContext analysisContext)

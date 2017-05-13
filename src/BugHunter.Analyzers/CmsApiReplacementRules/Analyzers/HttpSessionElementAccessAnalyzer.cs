@@ -15,16 +15,16 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.Analyzers
         /// <summary>
         /// The ID for diagnostics raises by <see cref="HttpSessionElementAccessAnalyzer"/> when element node is assess for reading
         /// </summary>
-        public const string DIAGNOSTIC_ID_GET = DiagnosticIds.HTTP_SESSION_ELEMENT_ACCESS_GET;
+        public const string DiagnosticIdGet = DiagnosticIds.HttpSessionElementAccessGet;
 
         /// <summary>
         /// The ID for diagnostics raises by <see cref="HttpSessionElementAccessAnalyzer"/> when element node is assess for writing
         /// </summary>
-        public const string DIAGNOSTIC_ID_SET = DiagnosticIds.HTTP_SESSION_ELEMENT_ACCESS_SET;
+        public const string DiagnosticIdSet = DiagnosticIds.HttpSessionElementAccessSet;
 
-        private static readonly DiagnosticDescriptor RuleForGet = ApiReplacementRulesProvider.GetRule(DIAGNOSTIC_ID_GET, "Session[]", "SessionHelper.GetValue()");
+        private static readonly DiagnosticDescriptor RuleForGet = ApiReplacementRulesProvider.GetRule(DiagnosticIdGet, "Session[]", "SessionHelper.GetValue()");
 
-        private static readonly DiagnosticDescriptor RuleForSet = ApiReplacementRulesProvider.GetRule(DIAGNOSTIC_ID_SET, "Session[]", "SessionHelper.SetValue()");
+        private static readonly DiagnosticDescriptor RuleForSet = ApiReplacementRulesProvider.GetRule(DiagnosticIdSet, "Session[]", "SessionHelper.SetValue()");
 
         /// <inheritdoc />
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(RuleForGet, RuleForSet);

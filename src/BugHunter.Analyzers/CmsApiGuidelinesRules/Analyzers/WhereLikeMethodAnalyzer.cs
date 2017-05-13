@@ -16,20 +16,20 @@ namespace BugHunter.Analyzers.CmsApiGuidelinesRules.Analyzers
         /// <summary>
         /// The ID for diagnostics raises by <see cref="WhereLikeMethodAnalyzer"/>
         /// </summary>
-        public const string DIAGNOSTIC_ID = DiagnosticIds.WHERE_LIKE_METHOD;
+        public const string DiagnosticId = DiagnosticIds.WhereLikeMethod;
 
         /// <inheritdoc />
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics 
             => ImmutableArray.Create(Rule);
 
-        private static readonly DiagnosticDescriptor Rule = new DiagnosticDescriptor(DIAGNOSTIC_ID,
+        private static readonly DiagnosticDescriptor Rule = new DiagnosticDescriptor(DiagnosticId,
             title: new LocalizableResourceString(nameof(CmsApiGuidelinesResources.WhereLikeMethod_Title), CmsApiGuidelinesResources.ResourceManager, typeof(CmsApiGuidelinesResources)),
             messageFormat: new LocalizableResourceString(nameof(CmsApiGuidelinesResources.WhereLikeMethod_MessageFormat), CmsApiGuidelinesResources.ResourceManager, typeof(CmsApiGuidelinesResources)),
             category: nameof(AnalyzerCategories.AbstractionOverImplementation),
             defaultSeverity: DiagnosticSeverity.Warning,
             isEnabledByDefault: true,
             description: new LocalizableResourceString(nameof(CmsApiGuidelinesResources.WhereLikeMethod_Description), CmsApiGuidelinesResources.ResourceManager, typeof(CmsApiGuidelinesResources)),
-            helpLinkUri: HelpLinkUriProvider.GetHelpLink(DIAGNOSTIC_ID));
+            helpLinkUri: HelpLinkUriProvider.GetHelpLink(DiagnosticId));
 
         private static readonly ApiReplacementConfig config = new ApiReplacementConfig(Rule,
            new[] { "CMS.DataEngine.WhereConditionBase`1" },

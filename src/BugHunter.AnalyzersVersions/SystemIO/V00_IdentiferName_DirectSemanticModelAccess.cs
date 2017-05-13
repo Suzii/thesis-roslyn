@@ -16,11 +16,11 @@ namespace BugHunter.AnalyzersVersions.SystemIO
     /// </summary>
     //[DiagnosticAnalyzer(LanguageNames.CSharp)]
 #pragma warning disable RS1001 // Missing diagnostic analyzer attribute.
-    public class V00_IdentiferName_DirectSemanticModelAccess : DiagnosticAnalyzer
+    public class V00IdentiferNameDirectSemanticModelAccess : DiagnosticAnalyzer
 #pragma warning restore RS1001 // Missing diagnostic analyzer attribute.
     {
-        public const string DIAGNOSTIC_ID = "BHxV00";
-        private static readonly DiagnosticDescriptor Rule = AnalyzerHelper.GetRule(DIAGNOSTIC_ID);
+        public const string DiagnosticId = "BHxV00";
+        private static readonly DiagnosticDescriptor Rule = AnalyzerHelper.GetRule(DiagnosticId);
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
 
         public override void Initialize(AnalysisContext context)

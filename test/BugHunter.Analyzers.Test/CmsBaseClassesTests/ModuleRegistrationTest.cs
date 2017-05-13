@@ -18,7 +18,7 @@ namespace BugHunter.Analyzers.Test.CmsBaseClassesTests
         private DiagnosticResult GetDiagnosticResult(params string[] messageArgumentStrings)
             => new DiagnosticResult
             {
-                Id = DiagnosticIds.MODULE_REGISTRATION,
+                Id = DiagnosticIds.ModuleRegistration,
                 Message = string.Format("Module or ModuleEntry '{0}' is not registered in the same file where it is declared. Add assembly attribute [assembly: RegisterModule(typeof({0}))] to the file.", messageArgumentStrings),
                 Severity = DiagnosticSeverity.Warning,
             };

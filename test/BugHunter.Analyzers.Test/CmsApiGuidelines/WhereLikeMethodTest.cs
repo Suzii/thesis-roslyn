@@ -19,8 +19,8 @@ namespace BugHunter.Analyzers.Test.CmsApiGuidelines
         private static DiagnosticResult CreateDiagnosticResult(string usage)
             => new DiagnosticResult
             {
-                Id = DiagnosticIds.WHERE_LIKE_METHOD,
-                Message = string.Format(MessagesConstants.MESSAGE_NO_SUGGESTION, usage),
+                Id = DiagnosticIds.WhereLikeMethod,
+                Message = string.Format(MessagesConstants.MessageNoSuggestion, usage),
                 Severity = DiagnosticSeverity.Warning,
             };
 

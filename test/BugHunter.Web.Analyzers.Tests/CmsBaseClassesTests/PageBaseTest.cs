@@ -26,7 +26,7 @@ namespace BugHunter.Web.Analyzers.Tests.CmsBaseClassesTests
         {
             return new DiagnosticResult
             {
-                Id = DiagnosticIds.PAGE_BASE,
+                Id = DiagnosticIds.PageBase,
                 Message = $"'{messageArguments[0]}' should inherit from some abstract CMSPage.",
                 Severity = DiagnosticSeverity.Warning,
             };

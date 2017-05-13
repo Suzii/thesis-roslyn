@@ -15,16 +15,16 @@ namespace BugHunter.Analyzers.AbstractionOverImplementation.Analyzers
         /// <summary>
         /// The ID for diagnostics raised by <see cref="LuceneSearchDocumentAnalyzer"/>
         /// </summary>
-        public const string DIAGNOSTIC_ID = DiagnosticIds.LUCENE_SEARCH_DOCUMENT;
+        public const string DiagnosticId = DiagnosticIds.LuceneSearchDocument;
 
-        private static readonly DiagnosticDescriptor Rule = new DiagnosticDescriptor(DIAGNOSTIC_ID,
+        private static readonly DiagnosticDescriptor Rule = new DiagnosticDescriptor(DiagnosticId,
             title: new LocalizableResourceString(nameof(AbstractionOverImplementationResources.LuceneSearchDocument_Title), AbstractionOverImplementationResources.ResourceManager, typeof(AbstractionOverImplementationResources)),
             messageFormat: new LocalizableResourceString(nameof(AbstractionOverImplementationResources.LuceneSearchDocument_MessageFormat), AbstractionOverImplementationResources.ResourceManager, typeof(AbstractionOverImplementationResources)),
             category: nameof(AnalyzerCategories.AbstractionOverImplementation),
             defaultSeverity: DiagnosticSeverity.Warning,
             isEnabledByDefault: true,
             description: new LocalizableResourceString(nameof(AbstractionOverImplementationResources.LuceneSearchDocument_Description), AbstractionOverImplementationResources.ResourceManager, typeof(AbstractionOverImplementationResources)),
-            helpLinkUri: HelpLinkUriProvider.GetHelpLink(DIAGNOSTIC_ID));
+            helpLinkUri: HelpLinkUriProvider.GetHelpLink(DiagnosticId));
 
         /// <inheritdoc />
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics 

@@ -21,7 +21,7 @@ namespace BugHunter.Web.Analyzers.Tests.CmsApiGuidelinesTests
         {
             return new DiagnosticResult
             {
-                Id = DiagnosticIds.CONNECTION_HELPER_EXECUTE_QUERY,
+                Id = DiagnosticIds.ConnectionHelperExecuteQuery,
                 Message = $"'{usage}' should not be called directly from this file. Move the logic to codebehind instead.",
                 Severity = DiagnosticSeverity.Warning,
             };

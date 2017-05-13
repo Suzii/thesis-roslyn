@@ -24,7 +24,7 @@ namespace BugHunter.Web.Analyzers.Tests.CmsBaseClassesTests
         {
             return new DiagnosticResult
             {
-                Id = DiagnosticIds.USER_CONTROL_BASE,
+                Id = DiagnosticIds.UserControlBase,
                 Message = $"'{messageArguments[0]}' should inherit from some abstract CMSUserControl.",
                 Severity = DiagnosticSeverity.Warning,
             };

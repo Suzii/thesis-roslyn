@@ -15,7 +15,7 @@ namespace BugHunter.Analyzers.StringAndCultureRules.Analyzers
         /// <summary>
         /// The ID for diagnostics raises by <see cref="StringCompareToMethodAnalyzer"/>
         /// </summary>
-        public const string DIAGNOSTIC_ID = DiagnosticIds.STRING_COMPARE_TO_METHOD;
+        public const string DiagnosticId = DiagnosticIds.StringCompareToMethod;
 
         /// <inheritdoc />
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics 
@@ -23,7 +23,7 @@ namespace BugHunter.Analyzers.StringAndCultureRules.Analyzers
 
         /// <inheritdoc />
         protected override DiagnosticDescriptor Rule 
-            => StringMethodsRuleBuilder.CreateRuleForComparisonMethods(DIAGNOSTIC_ID);
+            => StringMethodsRuleBuilder.CreateRuleForComparisonMethods(DiagnosticId);
 
         /// <summary>
         /// Constructor initializing base class with method names to be diagnosed

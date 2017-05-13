@@ -20,8 +20,8 @@ namespace BugHunter.Analyzers.Test.CmsApiReplacementsTests
         private static DiagnosticResult CreateDiagnosticResult(params object[] messageArgs)
             => new DiagnosticResult
             {
-                Id = DiagnosticIds.HTTP_RESPONSE_COOKIES,
-                Message = string.Format(MessagesConstants.MESSAGE, messageArgs),
+                Id = DiagnosticIds.HttpResponseCookies,
+                Message = string.Format(MessagesConstants.Message, messageArgs),
                 Severity = DiagnosticSeverity.Warning,
             };
 

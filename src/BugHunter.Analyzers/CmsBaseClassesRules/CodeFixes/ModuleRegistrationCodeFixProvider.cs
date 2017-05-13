@@ -17,7 +17,7 @@ namespace BugHunter.Analyzers.CmsBaseClassesRules.CodeFixes
     {
         /// <inheritdoc />
         public sealed override ImmutableArray<string> FixableDiagnosticIds
-            => ImmutableArray.Create(ModuleRegistrationAnalyzer.DIAGNOSTIC_ID);
+            => ImmutableArray.Create(ModuleRegistrationAnalyzer.DiagnosticId);
 
         /// <inheritdoc />
         public sealed override FixAllProvider GetFixAllProvider()

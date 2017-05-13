@@ -14,16 +14,16 @@ namespace BugHunter.AnalyzersVersions.StringAndCulture
     /// </summary>
     //[DiagnosticAnalyzer(LanguageNames.CSharp)]
 #pragma warning disable RS1001 // Missing diagnostic analyzer attribute.
-    public class StringAndCulture_WithBaseClass_Analyzer : BaseStringMethodsAnalyzer
+    public class StringAndCultureWithBaseClassAnalyzer : BaseStringMethodsAnalyzer
 #pragma warning restore RS1001 // Missing diagnostic analyzer attribute.
     {
-        public const string DIAGNOSTIC_ID = "BH4004";
+        public const string DiagnosticId = "BH4004";
         
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
 
-        protected override DiagnosticDescriptor Rule => StringMethodsRuleBuilder.CreateRuleForComparisonMethods(DIAGNOSTIC_ID);
+        protected override DiagnosticDescriptor Rule => StringMethodsRuleBuilder.CreateRuleForComparisonMethods(DiagnosticId);
 
-        public StringAndCulture_WithBaseClass_Analyzer()
+        public StringAndCultureWithBaseClassAnalyzer()
             : base("IndexOf", "LastIndexOf")
         {
         }

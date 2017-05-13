@@ -18,7 +18,7 @@ namespace BugHunter.Analyzers.Test.CmsApiGuidelines
         private static DiagnosticResult CreateDiagnosticResult(string oldArgument)
             => new DiagnosticResult
             {
-                Id = DiagnosticIds.EVENT_LOG_ARGUMENTS,
+                Id = DiagnosticIds.EventLogArguments,
                 Message = $"LogEvent called with event type '{oldArgument}'.",
                 Severity = DiagnosticSeverity.Warning,
             };

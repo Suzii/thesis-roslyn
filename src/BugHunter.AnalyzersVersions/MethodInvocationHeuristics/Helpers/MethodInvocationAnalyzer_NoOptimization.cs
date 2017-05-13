@@ -15,12 +15,12 @@ namespace BugHunter.AnalyzersVersions.MethodInvocationHeuristics.Helpers
     /// 
     /// !!! THIS FILE SERVES ONLY FOR PURPOSES OF PERFORMANCE TESTING !!!
     /// </summary>
-    public class MethodInvocationAnalyzer_NoOptimization : ISyntaxNodeAnalyzer
+    public class MethodInvocationAnalyzerNoOptimization : ISyntaxNodeAnalyzer
     {
         protected readonly ApiReplacementConfig Config;
         protected readonly ISyntaxNodeDiagnosticFormatter<InvocationExpressionSyntax> Formatter;
         
-        public MethodInvocationAnalyzer_NoOptimization(ApiReplacementConfig config, ISyntaxNodeDiagnosticFormatter<InvocationExpressionSyntax> formatter)
+        public MethodInvocationAnalyzerNoOptimization(ApiReplacementConfig config, ISyntaxNodeDiagnosticFormatter<InvocationExpressionSyntax> formatter)
         {
             Config = config;
             Formatter = formatter;

@@ -22,13 +22,13 @@ namespace BugHunter.Web.Analyzers.Tests.CmsApiGuidelinesTests
         {
             return new DiagnosticResult
             {
-                Id = DiagnosticIds.VALIDATION_HELPER_GET,
+                Id = DiagnosticIds.ValidationHelperGet,
                 Message = string.Format("Do not use {0}(). Use Get method with 'System' instead to ensure specific culture representation.", messageArguments),
                 Severity = DiagnosticSeverity.Warning,
             };
         }
 
-        private readonly FakeFileInfo _fakeFileInfo = new FakeFileInfo { FileLocation = SolutionFolders.WEB_PARTS };
+        private readonly FakeFileInfo _fakeFileInfo = new FakeFileInfo { FileLocation = SolutionFolders.WebParts };
 
         [Test]
         public void EmptyInput_NoDiagnostic()

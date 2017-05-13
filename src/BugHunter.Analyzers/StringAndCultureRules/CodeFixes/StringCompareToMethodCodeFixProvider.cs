@@ -22,7 +22,7 @@ namespace BugHunter.Analyzers.StringAndCultureRules.CodeFixes
     {
         /// <inheritdoc />
         public sealed override ImmutableArray<string> FixableDiagnosticIds
-            => ImmutableArray.Create(StringCompareToMethodAnalyzer.DIAGNOSTIC_ID);
+            => ImmutableArray.Create(StringCompareToMethodAnalyzer.DiagnosticId);
 
         /// <inheritdoc />
         public sealed override FixAllProvider GetFixAllProvider()

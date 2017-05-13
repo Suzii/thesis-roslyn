@@ -10,9 +10,9 @@ namespace BugHunter.Core.Tests.Analyzers
     public class FakeApiReplacementForMemberAnalyzer : DiagnosticAnalyzer
 #pragma warning restore RS1001 // Missing diagnostic analyzer attribute.
     {
-        public const string DIAGNOSTIC_ID = "BHFAKE";
+        public const string DiagnosticId = "BHFAKE";
 
-        private static readonly DiagnosticDescriptor Rule = ApiReplacementRulesProvider.GetRule(DIAGNOSTIC_ID, "FakeClass.FakeMember");
+        private static readonly DiagnosticDescriptor Rule = ApiReplacementRulesProvider.GetRule(DiagnosticId, "FakeClass.FakeMember");
 
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
 

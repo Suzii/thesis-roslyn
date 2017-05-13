@@ -19,7 +19,7 @@ namespace BugHunter.Web.Analyzers.CmsBaseClassesRules.CodeFixes
     {
         /// <inheritdoc />
         public sealed override ImmutableArray<string> FixableDiagnosticIds
-            => ImmutableArray.Create(WebPartBaseAnalyzer.WEB_PART_DIAGNOSTIC_ID, WebPartBaseAnalyzer.UI_WEB_PART_DIAGNOSTIC_ID);
+            => ImmutableArray.Create(WebPartBaseAnalyzer.WebPartDiagnosticId, WebPartBaseAnalyzer.UIWebPartDiagnosticId);
 
         /// <inheritdoc />
         public sealed override FixAllProvider GetFixAllProvider()
@@ -51,7 +51,7 @@ namespace BugHunter.Web.Analyzers.CmsBaseClassesRules.CodeFixes
                 return;
             }
 
-            var suggestions = diagnostic.Id == DiagnosticIds.UI_WEB_PART_BASE
+            var suggestions = diagnostic.Id == DiagnosticIds.UIWebPartBase
                 ? UiWebPartBaseClasses
                 : WebPartBaseClasses;
 

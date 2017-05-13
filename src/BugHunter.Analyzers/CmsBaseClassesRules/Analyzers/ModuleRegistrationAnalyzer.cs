@@ -22,16 +22,16 @@ namespace BugHunter.Analyzers.CmsBaseClassesRules.Analyzers
         /// <summary>
         /// The ID for diagnostics raises by <see cref="ModuleRegistrationAnalyzer"/>
         /// </summary>
-        public const string DIAGNOSTIC_ID = DiagnosticIds.MODULE_REGISTRATION;
+        public const string DiagnosticId = DiagnosticIds.ModuleRegistration;
 
-        private static readonly DiagnosticDescriptor Rule = new DiagnosticDescriptor(DIAGNOSTIC_ID,
+        private static readonly DiagnosticDescriptor Rule = new DiagnosticDescriptor(DiagnosticId,
                 title: new LocalizableResourceString(nameof(CmsBaseClassesResources.ModuleRegistration_Title), CmsBaseClassesResources.ResourceManager, typeof(CmsBaseClassesResources)),
                 messageFormat: new LocalizableResourceString(nameof(CmsBaseClassesResources.ModuleRegistration_MessageFormat), CmsBaseClassesResources.ResourceManager, typeof(CmsBaseClassesResources)),
                 category: nameof(AnalyzerCategories.CmsBaseClasses),
                 defaultSeverity: DiagnosticSeverity.Warning,
                 isEnabledByDefault: true,
                 description: new LocalizableResourceString(nameof(CmsBaseClassesResources.ModuleRegistration_Description), CmsBaseClassesResources.ResourceManager, typeof(CmsBaseClassesResources)),
-            helpLinkUri: HelpLinkUriProvider.GetHelpLink(DIAGNOSTIC_ID));
+            helpLinkUri: HelpLinkUriProvider.GetHelpLink(DiagnosticId));
 
         /// <inheritdoc />
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics

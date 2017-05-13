@@ -17,7 +17,7 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.CodeFixes
     {
         /// <inheritdoc />
         public sealed override ImmutableArray<string> FixableDiagnosticIds
-            => ImmutableArray.Create(FormsAuthenticationSignOutAnalyzer.DIAGNOSTIC_ID);
+            => ImmutableArray.Create(FormsAuthenticationSignOutAnalyzer.DiagnosticId);
 
         /// <inheritdoc />
         public sealed override FixAllProvider GetFixAllProvider()

@@ -29,24 +29,24 @@ namespace BugHunter.Web.Analyzers.Tests.CmsBaseClassesTests
             ).ToArray();
         }
 
-        private readonly FakeFileInfo _uiWebPartFakeFileInfo = new FakeFileInfo() { FileLocation = SolutionFolders.UI_WEB_PARTS };
-        private readonly FakeFileInfo _webPartFakeFileInfo = new FakeFileInfo() { FileLocation = SolutionFolders.WEB_PARTS };
+        private readonly FakeFileInfo _uiWebPartFakeFileInfo = new FakeFileInfo() { FileLocation = SolutionFolders.UIWebParts };
+        private readonly FakeFileInfo _webPartFakeFileInfo = new FakeFileInfo() { FileLocation = SolutionFolders.WebParts };
         
         private static DiagnosticResult GetDiagnosticResult(string projectPath, params string[] messageArguments)
         {
             switch (projectPath)
             {
-                case SolutionFolders.UI_WEB_PARTS:
+                case SolutionFolders.UIWebParts:
                     return new DiagnosticResult
                     {
-                        Id = DiagnosticIds.UI_WEB_PART_BASE,
+                        Id = DiagnosticIds.UIWebPartBase,
                         Message = $"'{messageArguments[0]}' should inherit from some abstract CMS UI WebPart.",
                         Severity = DiagnosticSeverity.Warning,
                     };
-                case SolutionFolders.WEB_PARTS:
+                case SolutionFolders.WebParts:
                     return new DiagnosticResult
                     {
-                        Id = DiagnosticIds.WEB_PART_BASE,
+                        Id = DiagnosticIds.WebPartBase,
                         Message = $"'{messageArguments[0]}' should inherit from some abstract CMS WebPart.",
                         Severity = DiagnosticSeverity.Warning,
                     };
@@ -106,21 +106,21 @@ namespace BugHunter.Web.Analyzers.Tests.CmsBaseClassesTests
     }}
 }}";
 
-            VerifyCSharpDiagnostic(test, new FakeFileInfo { FileLocation = SolutionFolders.WEB_PARTS });
+            VerifyCSharpDiagnostic(test, new FakeFileInfo { FileLocation = SolutionFolders.WebParts });
         }
 
-        [TestCase(nameof(CMS.UIControls.CMSAbstractUIWebpart), "using CMS.UIControls;\r\n\r\n", SolutionFolders.UI_WEB_PARTS)]
-        [TestCase(nameof(CMS.PortalEngine.Web.UI.CMSAbstractWebPart), "using CMS.PortalEngine.Web.UI;\r\n\r\n", SolutionFolders.WEB_PARTS)]
-        [TestCase(nameof(CMS.PortalEngine.Web.UI.CMSAbstractEditableWebPart), "using CMS.PortalEngine.Web.UI;\r\n\r\n", SolutionFolders.WEB_PARTS)]
-        [TestCase(nameof(CMS.PortalEngine.Web.UI.CMSAbstractLayoutWebPart), "using CMS.PortalEngine.Web.UI;\r\n\r\n", SolutionFolders.WEB_PARTS)]
-        [TestCase(nameof(CMS.PortalEngine.Web.UI.CMSAbstractWizardWebPart), "using CMS.PortalEngine.Web.UI;\r\n\r\n", SolutionFolders.WEB_PARTS)]
-        [TestCase(nameof(CMS.Ecommerce.Web.UI.CMSCheckoutWebPart), "using CMS.Ecommerce.Web.UI;\r\n\r\n", SolutionFolders.WEB_PARTS)]
-        [TestCase("CMS.UIControls.CMSAbstractUIWebpart", "", SolutionFolders.UI_WEB_PARTS)]
-        [TestCase("CMS.PortalEngine.Web.UI.CMSAbstractWebPart", "", SolutionFolders.WEB_PARTS)]
-        [TestCase("CMS.PortalEngine.Web.UI.CMSAbstractEditableWebPart", "", SolutionFolders.WEB_PARTS)]
-        [TestCase("CMS.PortalEngine.Web.UI.CMSAbstractLayoutWebPart", "", SolutionFolders.WEB_PARTS)]
-        [TestCase("CMS.PortalEngine.Web.UI.CMSAbstractWizardWebPart", "", SolutionFolders.WEB_PARTS)]
-        [TestCase("CMS.Ecommerce.Web.UI.CMSCheckoutWebPart", "", SolutionFolders.WEB_PARTS)]
+        [TestCase(nameof(CMS.UIControls.CMSAbstractUIWebpart), "using CMS.UIControls;\r\n\r\n", SolutionFolders.UIWebParts)]
+        [TestCase(nameof(CMS.PortalEngine.Web.UI.CMSAbstractWebPart), "using CMS.PortalEngine.Web.UI;\r\n\r\n", SolutionFolders.WebParts)]
+        [TestCase(nameof(CMS.PortalEngine.Web.UI.CMSAbstractEditableWebPart), "using CMS.PortalEngine.Web.UI;\r\n\r\n", SolutionFolders.WebParts)]
+        [TestCase(nameof(CMS.PortalEngine.Web.UI.CMSAbstractLayoutWebPart), "using CMS.PortalEngine.Web.UI;\r\n\r\n", SolutionFolders.WebParts)]
+        [TestCase(nameof(CMS.PortalEngine.Web.UI.CMSAbstractWizardWebPart), "using CMS.PortalEngine.Web.UI;\r\n\r\n", SolutionFolders.WebParts)]
+        [TestCase(nameof(CMS.Ecommerce.Web.UI.CMSCheckoutWebPart), "using CMS.Ecommerce.Web.UI;\r\n\r\n", SolutionFolders.WebParts)]
+        [TestCase("CMS.UIControls.CMSAbstractUIWebpart", "", SolutionFolders.UIWebParts)]
+        [TestCase("CMS.PortalEngine.Web.UI.CMSAbstractWebPart", "", SolutionFolders.WebParts)]
+        [TestCase("CMS.PortalEngine.Web.UI.CMSAbstractEditableWebPart", "", SolutionFolders.WebParts)]
+        [TestCase("CMS.PortalEngine.Web.UI.CMSAbstractLayoutWebPart", "", SolutionFolders.WebParts)]
+        [TestCase("CMS.PortalEngine.Web.UI.CMSAbstractWizardWebPart", "", SolutionFolders.WebParts)]
+        [TestCase("CMS.Ecommerce.Web.UI.CMSCheckoutWebPart", "", SolutionFolders.WebParts)]
         public void OkayInput_ClassExtendingCMSClass_NoDiagnostic(string oldUsage, string usings, string fileLocation)
         {
             var test = $@"{usings}namespace SampleTestProject.CsSamples
@@ -157,25 +157,25 @@ namespace SampleTestProject.CsSamples
     }}
 }}";
 
-            var expectedDiagnosticForWebPart = GetDiagnosticResult(SolutionFolders.WEB_PARTS, "SampleClass").WithLocation(5, 18, _webPartFakeFileInfo);
-            var expectedDiagnosticForUiWebPart = GetDiagnosticResult(SolutionFolders.UI_WEB_PARTS, "SampleClass").WithLocation(5, 18, _uiWebPartFakeFileInfo);
+            var expectedDiagnosticForWebPart = GetDiagnosticResult(SolutionFolders.WebParts, "SampleClass").WithLocation(5, 18, _webPartFakeFileInfo);
+            var expectedDiagnosticForUiWebPart = GetDiagnosticResult(SolutionFolders.UIWebParts, "SampleClass").WithLocation(5, 18, _uiWebPartFakeFileInfo);
 
             VerifyCSharpDiagnostic(test, _webPartFakeFileInfo, expectedDiagnosticForWebPart);
             VerifyCSharpDiagnostic(test, _uiWebPartFakeFileInfo, expectedDiagnosticForUiWebPart);
         }
 
-        [TestCase(nameof(CMS.UIControls.CMSAbstractUIWebpart), "using CMS.UIControls;\r\n\r\n", SolutionFolders.WEB_PARTS)]
-        [TestCase(nameof(CMS.PortalEngine.Web.UI.CMSAbstractWebPart), "using CMS.PortalEngine.Web.UI;\r\n\r\n", SolutionFolders.UI_WEB_PARTS)]
-        [TestCase(nameof(CMS.PortalEngine.Web.UI.CMSAbstractEditableWebPart), "using CMS.PortalEngine.Web.UI;\r\n\r\n", SolutionFolders.UI_WEB_PARTS)]
-        [TestCase(nameof(CMS.PortalEngine.Web.UI.CMSAbstractLayoutWebPart), "using CMS.PortalEngine.Web.UI;\r\n\r\n", SolutionFolders.UI_WEB_PARTS)]
-        [TestCase(nameof(CMS.PortalEngine.Web.UI.CMSAbstractWizardWebPart), "using CMS.PortalEngine.Web.UI;\r\n\r\n", SolutionFolders.UI_WEB_PARTS)]
-        [TestCase(nameof(CMS.Ecommerce.Web.UI.CMSCheckoutWebPart), "using CMS.Ecommerce.Web.UI;\r\n\r\n", SolutionFolders.UI_WEB_PARTS)]
-        [TestCase("CMS.UIControls.CMSAbstractUIWebpart", "", SolutionFolders.WEB_PARTS)]
-        [TestCase("CMS.PortalEngine.Web.UI.CMSAbstractWebPart", "", SolutionFolders.UI_WEB_PARTS)]
-        [TestCase("CMS.PortalEngine.Web.UI.CMSAbstractEditableWebPart", "", SolutionFolders.UI_WEB_PARTS)]
-        [TestCase("CMS.PortalEngine.Web.UI.CMSAbstractLayoutWebPart", "", SolutionFolders.UI_WEB_PARTS)]
-        [TestCase("CMS.PortalEngine.Web.UI.CMSAbstractWizardWebPart", "", SolutionFolders.UI_WEB_PARTS)]
-        [TestCase("CMS.Ecommerce.Web.UI.CMSCheckoutWebPart", "", SolutionFolders.UI_WEB_PARTS)]
+        [TestCase(nameof(CMS.UIControls.CMSAbstractUIWebpart), "using CMS.UIControls;\r\n\r\n", SolutionFolders.WebParts)]
+        [TestCase(nameof(CMS.PortalEngine.Web.UI.CMSAbstractWebPart), "using CMS.PortalEngine.Web.UI;\r\n\r\n", SolutionFolders.UIWebParts)]
+        [TestCase(nameof(CMS.PortalEngine.Web.UI.CMSAbstractEditableWebPart), "using CMS.PortalEngine.Web.UI;\r\n\r\n", SolutionFolders.UIWebParts)]
+        [TestCase(nameof(CMS.PortalEngine.Web.UI.CMSAbstractLayoutWebPart), "using CMS.PortalEngine.Web.UI;\r\n\r\n", SolutionFolders.UIWebParts)]
+        [TestCase(nameof(CMS.PortalEngine.Web.UI.CMSAbstractWizardWebPart), "using CMS.PortalEngine.Web.UI;\r\n\r\n", SolutionFolders.UIWebParts)]
+        [TestCase(nameof(CMS.Ecommerce.Web.UI.CMSCheckoutWebPart), "using CMS.Ecommerce.Web.UI;\r\n\r\n", SolutionFolders.UIWebParts)]
+        [TestCase("CMS.UIControls.CMSAbstractUIWebpart", "", SolutionFolders.WebParts)]
+        [TestCase("CMS.PortalEngine.Web.UI.CMSAbstractWebPart", "", SolutionFolders.UIWebParts)]
+        [TestCase("CMS.PortalEngine.Web.UI.CMSAbstractEditableWebPart", "", SolutionFolders.UIWebParts)]
+        [TestCase("CMS.PortalEngine.Web.UI.CMSAbstractLayoutWebPart", "", SolutionFolders.UIWebParts)]
+        [TestCase("CMS.PortalEngine.Web.UI.CMSAbstractWizardWebPart", "", SolutionFolders.UIWebParts)]
+        [TestCase("CMS.Ecommerce.Web.UI.CMSCheckoutWebPart", "", SolutionFolders.UIWebParts)]
         public void InputWithIncident_ClassExtendingCMSClassButOnWrongPath_SurfacesDignostic(string oldUsage, string usings, string fileLocation)
         {
             var test = $@"{usings}namespace SampleTestProject.CsSamples
@@ -195,12 +195,12 @@ namespace SampleTestProject.CsSamples
         #region  CodeFixes tests - only testing CodeFix, not analyzer part
 
         private static readonly object[] CodeFixesTestSource = {
-            new object [] {SolutionFolders.UI_WEB_PARTS, "CMSAbstractUIWebpart", "CMS.UIControls", 0},
-            new object [] {SolutionFolders.WEB_PARTS, "CMSAbstractWebPart", "CMS.PortalEngine.Web.UI", 0},
-            new object [] {SolutionFolders.WEB_PARTS, "CMSAbstractEditableWebPart", "CMS.PortalEngine.Web.UI", 1},
-            new object [] {SolutionFolders.WEB_PARTS, "CMSAbstractLayoutWebPart", "CMS.PortalEngine.Web.UI", 2},
-            new object [] {SolutionFolders.WEB_PARTS, "CMSAbstractWizardWebPart", "CMS.PortalEngine.Web.UI", 3},
-            new object [] {SolutionFolders.WEB_PARTS, "CMSCheckoutWebPart", "CMS.Ecommerce.Web.UI", 4},
+            new object [] {SolutionFolders.UIWebParts, "CMSAbstractUIWebpart", "CMS.UIControls", 0},
+            new object [] {SolutionFolders.WebParts, "CMSAbstractWebPart", "CMS.PortalEngine.Web.UI", 0},
+            new object [] {SolutionFolders.WebParts, "CMSAbstractEditableWebPart", "CMS.PortalEngine.Web.UI", 1},
+            new object [] {SolutionFolders.WebParts, "CMSAbstractLayoutWebPart", "CMS.PortalEngine.Web.UI", 2},
+            new object [] {SolutionFolders.WebParts, "CMSAbstractWizardWebPart", "CMS.PortalEngine.Web.UI", 3},
+            new object [] {SolutionFolders.WebParts, "CMSCheckoutWebPart", "CMS.Ecommerce.Web.UI", 4},
         };
 
         [Test, TestCaseSource(nameof(CodeFixesTestSource))]

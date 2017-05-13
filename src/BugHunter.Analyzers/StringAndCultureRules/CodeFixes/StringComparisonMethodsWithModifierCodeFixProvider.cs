@@ -18,9 +18,9 @@ namespace BugHunter.Analyzers.StringAndCultureRules.CodeFixes
         /// <inheritdoc />
         public sealed override ImmutableArray<string> FixableDiagnosticIds
             => ImmutableArray.Create(
-                StringEqualsMethodAnalyzer.DIAGNOSTIC_ID,
-                StringStartAndEndsWithMethodsAnalyzer.DIAGNOSTIC_ID,
-                StringIndexOfMethodsAnalyzer.DIAGNOSTIC_ID);
+                StringEqualsMethodAnalyzer.DiagnosticId,
+                StringStartAndEndsWithMethodsAnalyzer.DiagnosticId,
+                StringIndexOfMethodsAnalyzer.DiagnosticId);
 
         /// <inheritdoc />
         public sealed override FixAllProvider GetFixAllProvider()

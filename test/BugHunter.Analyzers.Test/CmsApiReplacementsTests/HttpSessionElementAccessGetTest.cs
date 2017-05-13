@@ -19,7 +19,7 @@ namespace BugHunter.Analyzers.Test.CmsApiReplacementsTests
         private static DiagnosticResult CreateDiagnosticResult(params object[] messageArgs)
             => new DiagnosticResult
             {
-                Id = DiagnosticIds.HTTP_SESSION_ELEMENT_ACCESS_GET,
+                Id = DiagnosticIds.HttpSessionElementAccessGet,
                 Message = string.Format(@"'{0}' should not be used. Use 'SessionHelper.GetValue()' instead.", messageArgs),
                 Severity = DiagnosticSeverity.Warning,
             };

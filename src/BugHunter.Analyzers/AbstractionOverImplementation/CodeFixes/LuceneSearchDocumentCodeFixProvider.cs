@@ -18,7 +18,7 @@ namespace BugHunter.Analyzers.AbstractionOverImplementation.CodeFixes
     {
         /// <inheritdoc />
         public sealed override ImmutableArray<string> FixableDiagnosticIds
-            => ImmutableArray.Create(LuceneSearchDocumentAnalyzer.DIAGNOSTIC_ID);
+            => ImmutableArray.Create(LuceneSearchDocumentAnalyzer.DiagnosticId);
 
         /// <inheritdoc />
         public sealed override FixAllProvider GetFixAllProvider()

@@ -28,8 +28,8 @@ namespace BugHunter.Core.Tests.DiagnosticsFormatting
         public void SimpleInvocation(string sourceText, int locationStart)
         {
             var tree = CSharpSyntaxTree.ParseText(sourceText);
-            var Mscorlib = MetadataReference.CreateFromFile(typeof(object).Assembly.Location);
-            var compilation = CSharpCompilation.Create("Compilation", new[] { tree }, new[] { Mscorlib });
+            var mscorlib = MetadataReference.CreateFromFile(typeof(object).Assembly.Location);
+            var compilation = CSharpCompilation.Create("Compilation", new[] { tree }, new[] { mscorlib });
 
             var classDeclaration = tree.GetRoot().DescendantNodesAndSelf().OfType<ClassDeclarationSyntax>().First();
             var semanticModel = compilation.GetSemanticModel(tree);

@@ -25,7 +25,7 @@ namespace BugHunter.Analyzers.Test.StringAndCultureTests
         private DiagnosticResult GetDiagnosticResult(string methodUsed)
             => new DiagnosticResult
             {
-                Id = DiagnosticIds.STRING_MANIPULATION_METHODS,
+                Id = DiagnosticIds.StringManipulationMethods,
                 Message = $"'{methodUsed}' used without specifying CultureInfo.",
                 Severity = DiagnosticSeverity.Warning,
             };

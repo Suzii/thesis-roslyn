@@ -41,7 +41,7 @@ namespace BugHunter.Analyzers.Test.StringAndCultureTests
         private DiagnosticResult GetDiagnosticResult(string methodUsed)
             => new DiagnosticResult
             {
-                Id = DiagnosticIds.STRING_COMPARE_STATIC_METHOD,
+                Id = DiagnosticIds.StringCompareStaticMethod,
                 Message = $"'{methodUsed}' used without specifying StringComparison.",
                 Severity = DiagnosticSeverity.Warning,
             };

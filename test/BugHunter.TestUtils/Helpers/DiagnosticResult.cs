@@ -46,18 +46,18 @@ namespace BugHunter.TestUtils.Helpers
     /// </summary>
     public struct DiagnosticResult
     {
-        private DiagnosticResultLocation[] locations;
+        private DiagnosticResultLocation[] _locations;
 
         public DiagnosticResultLocation[] Locations
         {
             get
             {
-                return locations ?? (locations = new DiagnosticResultLocation[] { });
+                return _locations ?? (_locations = new DiagnosticResultLocation[] { });
             }
 
             set
             {
-                locations = value;
+                _locations = value;
             }
         }
 

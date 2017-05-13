@@ -20,8 +20,8 @@ namespace BugHunter.Analyzers.Test.CmsApiReplacementsTests
         private static DiagnosticResult CreateDiagnosticResult(params object[] messageArgs)
             => new DiagnosticResult
             {
-                Id = DiagnosticIds.CLIENT_SCRIPT_METHODS,
-                Message = string.Format(MessagesConstants.MESSAGE_NO_SUGGESTION, messageArgs),
+                Id = DiagnosticIds.ClientScriptMethods,
+                Message = string.Format(MessagesConstants.MessageNoSuggestion, messageArgs),
                 Severity = DiagnosticSeverity.Warning,
             };
 

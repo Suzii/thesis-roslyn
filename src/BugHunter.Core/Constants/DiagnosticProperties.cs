@@ -8,21 +8,21 @@
         /// <summary>
         /// Constant for 'IsConditionalAccess' key
         /// </summary>
-        public const string IS_CONDITIONAL_ACCESS = "IsConditionalAccess";
+        public const string IsConditionalAccess = "IsConditionalAccess";
 
         /// <summary>
         /// Constant for 'IsSimpleMemberAccess' key
         /// </summary>
-        public const string IS_SIMPLE_MEMBER_ACCESS = "IsSimpleMemberAccess";
+        public const string IsSimpleMemberAccess = "IsSimpleMemberAccess";
 
         /// <summary>
         /// Constant for true value
         /// </summary>
-        public const string TRUE_FLAG = "True";
+        public const string TrueFlag = "True";
 
         /// <summary>
         /// Constant for false value
         /// </summary>
-        public const string FALSE_FLAG = "False";
+        public const string FalseFlag = "False";
     }
 }
