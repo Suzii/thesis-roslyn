@@ -17,13 +17,6 @@ namespace BugHunter.Analyzers.CmsApiGuidelinesRules.CodeFixes
     [ExportCodeFixProvider(LanguageNames.CSharp, Name = nameof(WhereLikeMethodCodeFixProvider)), Shared]
     public class WhereLikeMethodCodeFixProvider : CodeFixProvider
     {
-        internal enum PossibleFixes
-        {
-            WhereContains,
-            WhereStartsWith,
-            WhereEndsWith
-        }
-
         /// <inheritdoc />
         public sealed override ImmutableArray<string> FixableDiagnosticIds
             => ImmutableArray.Create(WhereLikeMethodAnalyzer.DiagnosticId);
@@ -63,9 +56,7 @@ namespace BugHunter.Analyzers.CmsApiGuidelinesRules.CodeFixes
         }
 
         private SimpleNameSyntax GetNewMethodName(PossibleFixes forFix, SimpleNameSyntax currentMethodName)
-        {
-            return SyntaxFactory.IdentifierName(GetNewMethodNameText(forFix, currentMethodName));
-        }
+            => SyntaxFactory.IdentifierName(GetNewMethodNameText(forFix, currentMethodName));
 
         private string GetNewMethodNameText(PossibleFixes forFix, SimpleNameSyntax currentMethodName)
         {
@@ -82,6 +73,16 @@ namespace BugHunter.Analyzers.CmsApiGuidelinesRules.CodeFixes
                 default:
                     throw new ArgumentOutOfRangeException(nameof(forFix));
             }
+        }
+
+        /// <summary>
+        /// Enumeration containing Method names of possible fixes
+        /// </summary>
+        internal enum PossibleFixes
+        {
+            WhereContains,
+            WhereStartsWith,
+            WhereEndsWith
         }
     }
 }

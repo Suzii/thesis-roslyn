@@ -18,10 +18,6 @@ namespace BugHunter.Analyzers.CmsApiGuidelinesRules.Analyzers
         /// </summary>
         public const string DiagnosticId = DiagnosticIds.WhereLikeMethod;
 
-        /// <inheritdoc />
-        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics 
-            => ImmutableArray.Create(Rule);
-
         private static readonly DiagnosticDescriptor Rule = new DiagnosticDescriptor(DiagnosticId,
             title: new LocalizableResourceString(nameof(CmsApiGuidelinesResources.WhereLikeMethod_Title), CmsApiGuidelinesResources.ResourceManager, typeof(CmsApiGuidelinesResources)),
             messageFormat: new LocalizableResourceString(nameof(CmsApiGuidelinesResources.WhereLikeMethod_MessageFormat), CmsApiGuidelinesResources.ResourceManager, typeof(CmsApiGuidelinesResources)),
@@ -36,6 +32,10 @@ namespace BugHunter.Analyzers.CmsApiGuidelinesRules.Analyzers
            new[] { "WhereLike", "WhereNotLike" });
 
         private static readonly ISyntaxNodeAnalyzer analyzer = new MethodInvocationAnalyzer(config, new MethodInvocationOnlyDiagnosticFormatter());
+        
+        /// <inheritdoc />
+        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics
+            => ImmutableArray.Create(Rule);
 
         /// <inheritdoc />
         public override void Initialize(AnalysisContext context)

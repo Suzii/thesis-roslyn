@@ -30,6 +30,11 @@ namespace BugHunter.Web.Analyzers.CmsApiGuidelinesRules.Analyzers
                 description: new LocalizableResourceString(nameof(CmsApiGuidelinesResources.ValidationHelperGet_Description), CmsApiGuidelinesResources.ResourceManager, typeof(CmsApiGuidelinesResources)),
                 helpLinkUri: HelpLinkUriProvider.GetHelpLink(DiagnosticId));
 
+        private static readonly ApiReplacementConfig config = new ApiReplacementConfig(Rule,
+            new[] { "CMS.Helpers.ValidationHelper" },
+            new[] { "GetDouble", "GetDecimal", "GetDate", "GetDateTime" });
+
+        private static readonly ISyntaxNodeAnalyzer analyzer = new InnerMethodInvocationAnalyzer(config);
         /// <inheritdoc />
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics 
             => ImmutableArray.Create(Rule);
@@ -39,23 +44,17 @@ namespace BugHunter.Web.Analyzers.CmsApiGuidelinesRules.Analyzers
         {
             context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.None);
             context.EnableConcurrentExecution();
-
-            var analyzer = new InnerMethodInvocationAnalyzer();
+            
             context.RegisterSyntaxNodeAction(analyzer.Run, SyntaxKind.InvocationExpression);
         }
 
         private sealed class InnerMethodInvocationAnalyzer : MethodInvocationAnalyzer
         {
-            private static readonly ApiReplacementConfig config = new ApiReplacementConfig(Rule,
-            new[] { "CMS.Helpers.ValidationHelper" },
-            new[] { "GetDouble", "GetDecimal", "GetDate", "GetDateTime" });
-
             /// <summary>
             /// Constructor initializing config and diagnostic formatter of <see cref="MethodInvocationAnalyzer"/> base class
             /// </summary>
-            public InnerMethodInvocationAnalyzer() : base(config, new MethodInvocationOnlyNoArgsDiagnosticFormatter())
-            {
-            }
+            public InnerMethodInvocationAnalyzer(ApiReplacementConfig config) 
+                : base(config, new MethodInvocationOnlyNoArgsDiagnosticFormatter()) { }
 
             /// <inheritdoc />
             protected override bool IsOnForbiddenPath(string filePath)

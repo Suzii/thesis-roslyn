@@ -25,13 +25,14 @@ namespace BugHunter.AnalyzersVersions.StringAndCulture
         
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
 
-        private static DiagnosticDescriptor Rule => StringMethodsRuleBuilder.CreateRuleForComparisonMethods(DiagnosticId);
-
         private static readonly ApiReplacementConfig config = new ApiReplacementConfig(Rule,
             new[] { "System.String" },
             new[] { "IndexOf", "LastIndexOf" });
-
+        
         private static readonly ISyntaxNodeAnalyzer analyzer = new InnerMethodInvocationAnalyzer(config);
+
+        private static DiagnosticDescriptor Rule 
+            => StringMethodsRuleBuilder.CreateRuleForComparisonMethods(DiagnosticId);
 
         public override void Initialize(AnalysisContext context)
         {
@@ -43,9 +44,8 @@ namespace BugHunter.AnalyzersVersions.StringAndCulture
 
         internal class InnerMethodInvocationAnalyzer : MethodInvocationAnalyzer
         {
-            public InnerMethodInvocationAnalyzer(ApiReplacementConfig config) : base(config, new MethodInvocationOnlyDiagnosticFormatter())
-            {
-            }
+            public InnerMethodInvocationAnalyzer(ApiReplacementConfig config) 
+                : base(config, new MethodInvocationOnlyDiagnosticFormatter()) { }
 
             protected override bool IsForbiddenUsage(InvocationExpressionSyntax invocationExpression, IMethodSymbol methodSymbol)
             => methodSymbol.Parameters.All(argument => !IsStringComparison(argument) && !IsCultureInfo(argument)) && !IsFirstArgumentChar(methodSymbol);

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Immutable;
+﻿using System.Collections.Immutable;
 using System.Composition;
 using System.Threading.Tasks;
 using BugHunter.Analyzers.CmsApiGuidelinesRules.Analyzers;
@@ -37,6 +36,10 @@ namespace BugHunter.Analyzers.CmsApiGuidelinesRules.CodeFixes
 
             var oldArgument = invocationExpression.ArgumentList.Arguments.First();
             var newArgumentName = GetNewMethodArgument(oldArgument);
+            if (newArgumentName == null)
+            {
+                return;
+            }
 
             context.RegisterCodeFix(
                 CodeAction.Create(
@@ -48,7 +51,7 @@ namespace BugHunter.Analyzers.CmsApiGuidelinesRules.CodeFixes
 
         private ArgumentSyntax GetNewMethodArgument(ArgumentSyntax oldArgument)
         {
-            string newArgumentText = null;
+            string newArgumentText;
             switch (oldArgument.Expression.ToString())
             {
                 case "\"I\"":
@@ -61,7 +64,7 @@ namespace BugHunter.Analyzers.CmsApiGuidelinesRules.CodeFixes
                     newArgumentText = "EventType.ERROR";
                     break;
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(oldArgument));
+                    return null;
             }
 
             return SyntaxFactory.Argument(SyntaxFactory.ParseExpression(newArgumentText));

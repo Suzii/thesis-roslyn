@@ -1,5 +1,7 @@
 ﻿using System.Collections.Immutable;
 using BugHunter.Core.Constants;
+using BugHunter.Core.DiagnosticsFormatting;
+using BugHunter.Core.DiagnosticsFormatting.Implementation;
 using BugHunter.Core.Extensions;
 using BugHunter.Core.Helpers.DiagnosticDescriptors;
 using Microsoft.CodeAnalysis;
@@ -25,6 +27,8 @@ namespace BugHunter.Analyzers.AbstractionOverImplementation.Analyzers
             isEnabledByDefault: true,
             description: new LocalizableResourceString(nameof(AbstractionOverImplementationResources.LuceneSearchDocument_Description), AbstractionOverImplementationResources.ResourceManager, typeof(AbstractionOverImplementationResources)),
             helpLinkUri: HelpLinkUriProvider.GetHelpLink(DiagnosticId));
+
+        private static readonly ISyntaxNodeDiagnosticFormatter<SyntaxNode> diagnosticFormatter = new DefaultDiagnosticFormatter<SyntaxNode>();
 
         /// <inheritdoc />
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics 
@@ -68,8 +72,7 @@ namespace BugHunter.Analyzers.AbstractionOverImplementation.Analyzers
                 ? identifierNameSyntax.Parent
                 : identifierNameSyntax;
 
-            var warningLocation = diagnosedNode.GetLocation();
-            var diagnostic = Diagnostic.Create(Rule, warningLocation, diagnosedNode);
+           var diagnostic = diagnosticFormatter.CreateDiagnostic(Rule, diagnosedNode);
 
             context.ReportDiagnostic(diagnostic);
         }

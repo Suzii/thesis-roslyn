@@ -7,7 +7,7 @@ namespace BugHunter.Analyzers.StringAndCultureRules.Analyzers.Helpers
     /// <summary>
     /// Helper class for constructing <see cref="DiagnosticDescriptor"/> for String and Culture Analyzers
     /// </summary>
-    internal class StringMethodsRuleBuilder
+    public class StringMethodsRuleBuilder
     {
         /// <summary>
         /// Constructs a <see cref="DiagnosticDescriptor"/> for String comparison methods Analyzer.
