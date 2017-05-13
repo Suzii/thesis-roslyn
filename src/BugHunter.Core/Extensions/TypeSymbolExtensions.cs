@@ -12,15 +12,15 @@ namespace BugHunter.Core.Extensions
     public static class TypeSymbolExtensions
     {
         /// <summary>
-        /// Determines whether <param name="namedTypeSymbol"></param> is a nested in some other named type
+        /// Determines whether <paramref name="namedTypeSymbol" /> is a nested in some other named type
         /// </summary>
         /// <param name="namedTypeSymbol">TypeSymbol to be examined</param>
-        /// <returns>True if <param name="namedTypeSymbol"></param>is nested</returns>
+        /// <returns>True if <paramref name="namedTypeSymbol" />is nested</returns>
         public static bool IsNested(this INamedTypeSymbol namedTypeSymbol)
             => namedTypeSymbol.ContainingSymbol.Kind == SymbolKind.NamedType;
 
         /// <summary>
-        /// Determines whether <param name="namedTypeSymbol"></param> has only <see cref="object"/> in inheritance hierarchy
+        /// Determines whether <paramref name="namedTypeSymbol" /> has only <see cref="object"/> in inheritance hierarchy
         /// </summary>
         /// <param name="namedTypeSymbol">TypeSymbol to be examined</param>
         /// <returns>True if type symbol only extends <see cref="object"/></returns>
@@ -28,30 +28,7 @@ namespace BugHunter.Core.Extensions
             => namedTypeSymbol?.BaseType?.SpecialType == SpecialType.System_Object;
 
         /// <summary>
-        /// Gets the invoke method for a delegate type.
-        /// </summary>
-        /// <remarks>
-        /// Returns null if the type is not a delegate type; or if the invoke method could not be found.
-        /// </remarks>
-        public static IMethodSymbol GetDelegateInvokeMethod(this ITypeSymbol type)
-        {
-            if (type == null)
-            {
-                throw new ArgumentNullException(nameof(type));
-            }
-
-            if (type.TypeKind != TypeKind.Delegate)
-            {
-                return null;
-            }
-
-            return type.GetMembers("Invoke")
-                        .OfType<IMethodSymbol>()
-                        .FirstOrDefault(m => m.MethodKind == MethodKind.DelegateInvoke);
-        }
-
-        /// <summary>
-        /// Determines whether <param name="type"></param> is nullable
+        /// Determines whether <paramref name="type"/> is nullable
         /// </summary>
         /// <param name="type">Type to be examined</param>
         /// <returns>True if type is nullable</returns>

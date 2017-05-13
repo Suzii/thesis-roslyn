@@ -43,7 +43,7 @@ namespace BugHunter.Analyzers.StringAndCultureRules.Analyzers.Helpers
         }
 
         /// <summary>
-        /// Determines whether the passed <param name="invocation"></param> corresponding to <param name="invokedMethodSymbol"></param> is considered forbidden
+        /// Determines whether the passed <paramref name="invocation" /> corresponding to <paramref name="invokedMethodSymbol" /> is considered forbidden
         /// </summary>
         /// <param name="context">Current syntax node analysis context</param>
         /// <param name="invocation">Inspected invocation</param>

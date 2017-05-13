@@ -66,14 +66,14 @@ namespace BugHunter.Analyzers.CmsApiGuidelinesRules.Analyzers
             /// Checks whether first argument provided is one of forbidden ones
             /// </summary>
             /// <remarks>
-            /// Note that analysis has to be performed on syntax since it always is a string,
-            /// but we want to achieve that not plain string is passed but rather a constant defined in <c>CMS.EventLog.EventType</c>.
+            ///  Note that analysis has to be performed on syntax since it always is a string,
+            ///  but we want to achieve that not plain string is passed but rather a constant defined in <c>CMS.EventLog.EventType</c>.
             ///
             /// When a variable is passed, there is no way of finding out whether the variable was created from a plain string
             /// or an constant defined in EventType class (it is not an enum), therefore no diagnostic is provided
             /// </remarks>
             /// <param name="invocationExpression">Invocation expression to be analyzed</param>
-            /// <param name="methodSymbol">Method symbol for <param name="invocationExpression"></param></param>
+            /// <param name="methodSymbol">Method symbol for <paramref name="invocationExpression" /></param>
             /// <returns>True if forbidden usage is detected, false otherwise</returns>
             protected override bool IsForbiddenUsage(InvocationExpressionSyntax invocationExpression, IMethodSymbol methodSymbol)
             {

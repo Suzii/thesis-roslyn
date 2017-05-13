@@ -10,10 +10,10 @@ namespace BugHunter.Core.DiagnosticsFormatting.Implementation
     internal class MemberAccessOnlyDiagnosticFormatter : DefaultDiagnosticFormatter<MemberAccessExpressionSyntax>
     {
         /// <summary>
-        /// Creates a <see cref="Diagnostic"/> from <param name="descriptor"></param> based on passed <param name="memberAccess"></param>.
+        /// Creates a <see cref="Diagnostic"/> from <paramref name="descriptor" /> based on passed <paramref name="memberAccess" />.
         ///
-        /// MessageFormat will be passed an argument with string representation of 'Name' part of passed <param name="memberAccess"></param>.
-        /// Location will be only of 'Name' part of passed <param name="memberAccess"></param>.
+        /// MessageFormat will be passed an argument with string representation of 'Name' part of passed <paramref name="memberAccess" />.
+        /// Location will be only of 'Name' part of passed <paramref name="memberAccess" />.
         /// </summary>
         /// <param name="descriptor">Diagnostic descriptor for diagnostic to be created</param>
         /// <param name="memberAccess">Member access that the diagnostic should be raised for</param>
@@ -22,7 +22,7 @@ namespace BugHunter.Core.DiagnosticsFormatting.Implementation
             => base.CreateDiagnostic(descriptor, memberAccess).MarkAsSimpleMemberAccess();
 
         /// <summary>
-        /// Returns location of Name property of passed <param name="memberAccess"></param>
+        /// Returns location of Name property of passed <paramref name="memberAccess" />
         /// </summary>
         /// <param name="memberAccess">Member access whose location of Name property should be returned</param>
         /// <returns>Location of Name property of passed member access; Empty location if anything is null</returns>
@@ -30,7 +30,7 @@ namespace BugHunter.Core.DiagnosticsFormatting.Implementation
             => memberAccess?.Name?.GetLocation();
 
         /// <summary>
-        /// Returns string representation of Name property of passed <param name="memberAccess"></param>
+        /// Returns string representation of Name property of passed <paramref name="memberAccess" />
         /// </summary>
         /// <param name="memberAccess">Member access whose string representation of Name property should be returned</param>
         /// <returns>String representation of Name property of passed member access; Empty string if anything is null</returns>

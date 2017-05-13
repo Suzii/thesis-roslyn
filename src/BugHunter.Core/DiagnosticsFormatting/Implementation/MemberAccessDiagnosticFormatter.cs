@@ -10,10 +10,10 @@ namespace BugHunter.Core.DiagnosticsFormatting.Implementation
     internal class MemberAccessDiagnosticFormatter : DefaultDiagnosticFormatter<MemberAccessExpressionSyntax>
     {
         /// <summary>
-        /// Creates a <see cref="Diagnostic"/> from <param name="descriptor"></param> based on passed <param name="memberAccess"></param>.
+        /// Creates a <see cref="Diagnostic"/> from <paramref name="descriptor" /> based on passed <paramref name="memberAccess" />.
         ///
-        /// MessageFormat will be passed an argument in form 'expression.name' of passed <param name="memberAccess"></param>.
-        /// Location will be of a whole <param name="memberAccess"></param>.
+        /// MessageFormat will be passed an argument in form 'expression.name' of passed <paramref name="memberAccess" />.
+        /// Location will be of a whole <paramref name="memberAccess" />.
         /// </summary>
         /// <param name="descriptor">Diagnostic descriptor for diagnostic to be created</param>
         /// <param name="memberAccess">Member access that the diagnostic should be raised for</param>
@@ -22,7 +22,7 @@ namespace BugHunter.Core.DiagnosticsFormatting.Implementation
             => base.CreateDiagnostic(descriptor, memberAccess).MarkAsSimpleMemberAccess();
 
         /// <summary>
-        /// Returns string in form 'expression.name' of passed <param name="memberAccess"></param>. Any whitespaces will be discarded.
+        /// Returns string in form 'expression.name' of passed <paramref name="memberAccess" />. Any whitespaces will be discarded.
         /// </summary>
         /// <param name="memberAccess">Member access whose location is being requested</param>
         /// <returns>String representation of member access withou whitespaces; empty string if member access is null</returns>

@@ -19,7 +19,7 @@ namespace BugHunter.Web.Analyzers
         public const string WebParts = @"CMSWebParts\";
 
         /// <summary>
-        /// Determines whether given <param name="filePath"></param> is located in WebParts folder
+        /// Determines whether given <paramref name="filePath" /> is located in WebParts folder
         /// </summary>
         /// <param name="filePath">File path to be checked</param>
         /// <returns>True if file is in one of WebParts folders</returns>
@@ -34,6 +34,7 @@ namespace BugHunter.Web.Analyzers
         /// Checks if the given file is UI web part.
         /// </summary>
         /// <param name="path">Path to web part file.</param>
+        /// <returns>True if based on path the web part is a UI web part; false otherwise</returns>
         public static bool IsUIWebPart(string path)
         {
             return path?.Contains(UIWebParts, StringComparison.OrdinalIgnoreCase) ?? false;

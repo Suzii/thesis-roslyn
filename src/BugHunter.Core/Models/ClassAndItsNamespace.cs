@@ -6,12 +6,12 @@
     public struct ClassAndItsNamespace
     {
         /// <summary>
-        /// Name of the class
+        /// Gets or sets name of the class
         /// </summary>
         public string ClassName { get; set; }
 
         /// <summary>
-        /// Name of the namespace class is defined in
+        /// Gets or sets name of the namespace class is defined in
         /// </summary>
         public string ClassNamespace { get; set; }
     }

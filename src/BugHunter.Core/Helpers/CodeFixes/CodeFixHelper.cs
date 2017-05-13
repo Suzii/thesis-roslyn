@@ -13,18 +13,18 @@ namespace BugHunter.Core.Helpers.CodeFixes
     /// </summary>
     public class CodeFixHelper
     {
-        /// <summary>
-        /// Context of the code fix
-        /// </summary>
-        protected readonly CodeFixContext Context;
-
         public CodeFixHelper(CodeFixContext context)
         {
             Context = context;
         }
 
         /// <summary>
-        /// Replaces <param name="oldNode"></param> with <param name="newNode"></param> in document associated to current codefix context and adds using directive if provided
+        /// Gets context of the code fix
+        /// </summary>
+        protected CodeFixContext Context { get; }
+
+        /// <summary>
+        /// Replaces <paramref name="oldNode" /> with <paramref name="newNode" /> in document associated to current codefix context and adds using directive if provided
         /// </summary>
         /// <param name="oldNode">Node to be replaced</param>
         /// <param name="newNode">Node to be used as replacement</param>
@@ -37,7 +37,7 @@ namespace BugHunter.Core.Helpers.CodeFixes
         }
 
         /// <summary>
-        /// Applies the <param name="rootModificationFunc"></param> on root of the document associated with current code fix context and adds usings directives if priveded
+        /// Applies the <paramref name="rootModificationFunc" /> on root of the document associated with current code fix context and adds usings directives if priveded
         /// </summary>
         /// <param name="rootModificationFunc">Root modification function to be applied</param>
         /// <param name="cancellationToken">Cancellation token</param>
@@ -70,8 +70,9 @@ namespace BugHunter.Core.Helpers.CodeFixes
         }
 
         /// <summary>
-        /// Returns first <see cref="Diagnostic"/> associated with current code fix context that has one if id from <param name="diagnosticIds"></param>
+        /// Returns first <see cref="Diagnostic"/> associated with current code fix context that has one if id from <paramref name="diagnosticIds" />
         /// </summary>
+        /// <param name="diagnosticIds">Possible IDs of diagnostic that should be returned</param>
         /// <returns>First diagnostic in current code fix context with matching id</returns>
         public Diagnostic GetFirstDiagnostic(params string[] diagnosticIds)
         {

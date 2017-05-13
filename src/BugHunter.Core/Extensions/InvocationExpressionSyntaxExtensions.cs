@@ -12,7 +12,7 @@ namespace BugHunter.Core.Extensions
     {
         /// <summary>
         /// Tries to extract node representing name of the invoked method.
-        /// Returns true if the method name node could be found and populates <param name="methodNameNode"></param> with it.
+        /// Returns true if the method name node could be found and populates <paramref name="methodNameNode" /> with it.
         /// </summary>
         /// <param name="invocationExpression">Invocation invocationExpression</param>
         /// <param name="methodNameNode">Out parameter to be populated with found method name node</param>
@@ -44,7 +44,7 @@ namespace BugHunter.Core.Extensions
         }
 
         /// <summary>
-        /// Appends <param name="newArguments"></param> to <param name="invocation"></param>
+        /// Appends <paramref name="newArguments" /> to <paramref name="invocation" />
         /// </summary>
         /// <param name="invocation">Invocation expression</param>
         /// <param name="newArguments">Arguments to be appended</param>
@@ -64,7 +64,7 @@ namespace BugHunter.Core.Extensions
         }
 
         /// <summary>
-        /// Appends <param name="newArguments"></param> to <param name="invocation"></param>
+        /// Appends <paramref name="newArguments" /> to <paramref name="invocation" />
         /// </summary>
         /// <param name="invocation">Invocation expression</param>
         /// <param name="newArguments">Arguments to be appended</param>

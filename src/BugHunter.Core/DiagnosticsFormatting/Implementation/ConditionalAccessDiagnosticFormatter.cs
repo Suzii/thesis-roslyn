@@ -11,10 +11,10 @@ namespace BugHunter.Core.DiagnosticsFormatting.Implementation
     internal class ConditionalAccessDiagnosticFormatter : DefaultDiagnosticFormatter<ConditionalAccessExpressionSyntax>
     {
         /// <summary>
-        /// Creates a <see cref="Diagnostic"/> from <param name="descriptor"></param> based on passed <param name="conditionalAccess"></param>.
+        /// Creates a <see cref="Diagnostic"/> from <paramref name="descriptor" /> based on passed <paramref name="conditionalAccess" />.
         ///
-        /// MessageFormat will be passed an argument in form 'Expression?.WhenNotNull' of passed <param name="conditionalAccess"></param>.
-        /// Location will be of a expression + firs member binding expression of passed<param name="conditionalAccess"></param>.
+        /// MessageFormat will be passed an argument in form 'Expression?.WhenNotNull' of passed <paramref name="conditionalAccess" />.
+        /// Location will be of a expression + firs member binding expression of passed <paramref name="conditionalAccess" />.
         /// </summary>
         /// <param name="descriptor">Diagnostic descriptor for diagnostic to be created</param>
         /// <param name="conditionalAccess">Conditional access that the diagnostic should be raised for</param>
@@ -34,7 +34,7 @@ namespace BugHunter.Core.DiagnosticsFormatting.Implementation
         }
 
         /// <summary>
-        /// Returns Location of 'expression?.firstMemberBindingName' of passed <param name="conditionalAccess"></param>.
+        /// Returns Location of 'expression?.firstMemberBindingName' of passed <paramref name="conditionalAccess" />.
         /// The follow up part of WhenNotNull property after first member binding expression found will be discarded.
         /// </summary>
         /// <param name="conditionalAccess">Conditional access whose location is being requested</param>
@@ -54,7 +54,7 @@ namespace BugHunter.Core.DiagnosticsFormatting.Implementation
         }
 
         /// <summary>
-        /// Returns string in form 'expression?.firstMemberBindingName' of passed <param name="conditionalAccess"></param>.
+        /// Returns string in form 'expression?.firstMemberBindingName' of passed <paramref name="conditionalAccess" />.
         /// Any whitespaces will be discarded, as will be the rest of the WhenNotNull property after first member binding expression found.
         /// </summary>
         /// <param name="conditionalAccess">Conditional access whose location is being requested</param>

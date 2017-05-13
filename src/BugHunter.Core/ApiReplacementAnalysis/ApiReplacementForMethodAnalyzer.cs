@@ -25,7 +25,7 @@ namespace BugHunter.Core.ApiReplacementAnalysis
         }
 
         /// <summary>
-        /// Registers the analyzers on <param name="analysisContext"></param>
+        /// Registers the analyzers on <paramref name="analysisContext" />
         ///
         /// Makes sure the analysis is run for all method invocations
         /// and enables concurrent analysis execution and disables analysis of generated code

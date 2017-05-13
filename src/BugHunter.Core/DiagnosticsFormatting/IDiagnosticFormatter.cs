@@ -5,11 +5,11 @@ namespace BugHunter.Core.DiagnosticsFormatting
     /// <summary>
     /// Generic interface for diagnostic formatters
     /// </summary>
-    /// <typeparam name="TNodeOrSymbol"></typeparam>
+    /// <typeparam name="TNodeOrSymbol">Syntax node or ISymbol</typeparam>
     public interface IDiagnosticFormatter<in TNodeOrSymbol>
     {
         /// <summary>
-        /// Creates a <see cref="Diagnostic"/> from <param name="descriptor"></param> based on passed <param name="nodeOrSymbol"></param>.
+        /// Creates a <see cref="Diagnostic"/> from <paramref name="descriptor" /> based on passed <paramref name="nodeOrSymbol" />.
         ///
         /// Arguments for MessageFormat diagnostic's location depend on specific implementations
         /// </summary>

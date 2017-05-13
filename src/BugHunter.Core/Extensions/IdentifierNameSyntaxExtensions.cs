@@ -10,7 +10,7 @@ namespace BugHunter.Core.Extensions
     public static class IdentifierNameSyntaxExtensions
     {
         /// <summary>
-        /// Returns the outer-most parent of "dotted expression" which <param name="identifierNameSyntax"></param> is part of
+        /// Returns the outer-most parent of "dotted expression" which <paramref name="identifierNameSyntax" /> is part of
         ///
         /// Dotted expression can be either <see cref="MemberAccessExpressionSyntax"/> or <see cref="QualifiedNameSyntax"/>
         /// </summary>

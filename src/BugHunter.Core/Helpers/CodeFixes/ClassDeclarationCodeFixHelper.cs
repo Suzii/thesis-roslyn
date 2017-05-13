@@ -17,7 +17,7 @@ namespace BugHunter.Core.Helpers.CodeFixes
         }
 
         /// <summary>
-        /// Returns the <see cref="ClassDeclarationSyntax"/> associated with current code fix context at location of passed <param name="diagnostic"></param>
+        /// Returns the <see cref="ClassDeclarationSyntax"/> associated with current code fix context at location of passed <paramref name="diagnostic" />
         /// </summary>
         /// <param name="diagnostic">Diagnostic of class declaration syntax</param>
         /// <returns>Class declarations syntax at diagnostic location</returns>

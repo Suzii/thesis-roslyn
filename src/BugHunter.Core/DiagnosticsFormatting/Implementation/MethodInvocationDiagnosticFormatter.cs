@@ -11,10 +11,10 @@ namespace BugHunter.Core.DiagnosticsFormatting.Implementation
     public class MethodInvocationDiagnosticFormatter : DefaultDiagnosticFormatter<InvocationExpressionSyntax>
     {
         /// <summary>
-        /// Creates a <see cref="Diagnostic"/> from <param name="descriptor"></param> based on passed <param name="invocationExpression"></param>.
+        /// Creates a <see cref="Diagnostic"/> from <paramref name="descriptor" /> based on passed <paramref name="invocationExpression" />.
         ///
-        /// MessageFormat will be passed a string representation of <param name="invocationExpression"></param>.
-        /// Location will be of a whole <param name="invocationExpression"></param>.
+        /// MessageFormat will be passed a string representation of <paramref name="invocationExpression" />.
+        /// Location will be of a whole <paramref name="invocationExpression" />.
         /// </summary>
         /// <param name="descriptor">Diagnostic descriptor for diagnostic to be created</param>
         /// <param name="invocationExpression">Invocation that the diagnostic should be raised for</param>

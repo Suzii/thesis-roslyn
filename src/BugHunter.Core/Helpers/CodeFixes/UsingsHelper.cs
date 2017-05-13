@@ -10,12 +10,12 @@ namespace BugHunter.Core.Helpers.CodeFixes
     /// </summary>
     internal static class UsingsHelper
     {
-       /// <summary>
-       /// Generates using directive for all <param name="usings"/> that are not already present in usings of <param name="root" />
-       /// </summary>
-       /// <param name="root">Root of the document to add usings to</param>
-       /// <param name="usings">Usings to be added</param>
-       /// <returns>New document root with added usings</returns>
+        /// <summary>
+        /// Generates using directive for all <paramref name="usings"/> that are not already present in usings of <paramref name="root" />
+        /// </summary>
+        /// <param name="root">Root of the document to add usings to</param>
+        /// <param name="usings">Usings to be added</param>
+        /// <returns>New document root with added usings</returns>
         public static CompilationUnitSyntax EnsureUsings(CompilationUnitSyntax root, params string[] usings)
         {
             if (usings == null || usings.Length == 0)

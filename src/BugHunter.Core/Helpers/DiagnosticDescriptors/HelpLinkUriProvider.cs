@@ -12,7 +12,7 @@ namespace BugHunter.Core.Helpers.DiagnosticDescriptors
         private static readonly Regex AnalyzerIdFormat = new Regex(@"^BH[0-9a-zA-Z]{4}$", RegexOptions.None);
 
         /// <summary>
-        /// Returns an online documentation help link URI based on <param name="analyzerId"></param>
+        /// Returns an online documentation help link URI based on <paramref name="analyzerId" />
         /// </summary>
         /// <param name="analyzerId">ID of an analyzer to provide an URI for, must be non empty and in BHXXXX, where X is alphanumeric</param>
         /// <returns>URI with an online documentation for given analyzer ID, if ID is in correct format; throws otherwise</returns>

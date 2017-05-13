@@ -12,7 +12,7 @@ namespace BugHunter.Core.Extensions
     public static class ClassDeclarationSyntaxExtensions
     {
         /// <summary>
-        /// Determines whether <param name="classDeclarationSyntax"></param> is declared as abstract
+        /// Determines whether <paramref name="classDeclarationSyntax" /> is declared as abstract
         /// </summary>
         /// <param name="classDeclarationSyntax">Class declaration to be inspected</param>
         /// <returns>True if class is abstract</returns>
@@ -20,7 +20,7 @@ namespace BugHunter.Core.Extensions
             => classDeclarationSyntax.Modifiers.Any(modifier => modifier.IsKind(SyntaxKind.AbstractKeyword));
 
         /// <summary>
-        /// Determines whether <param name="classDeclarationSyntax"></param> is declared as partial
+        /// Determines whether <paramref name="classDeclarationSyntax" /> is declared as partial
         /// </summary>
         /// <param name="classDeclarationSyntax">Class declaration to be inspected</param>
         /// <returns>True if class is partial</returns>
@@ -28,7 +28,7 @@ namespace BugHunter.Core.Extensions
             => classDeclarationSyntax.Modifiers.Any(modifier => modifier.IsKind(SyntaxKind.PartialKeyword));
 
         /// <summary>
-        /// Determines whether <param name="classDeclarationSyntax"></param> is declared as public
+        /// Determines whether <paramref name="classDeclarationSyntax" /> is declared as public
         /// </summary>
         /// <param name="classDeclarationSyntax">Class declaration to be inspected</param>
         /// <returns>True if class is public</returns>
@@ -36,11 +36,11 @@ namespace BugHunter.Core.Extensions
             => classDeclarationSyntax.Modifiers.Any(modifier => modifier.IsKind(SyntaxKind.PublicKeyword));
 
         /// <summary>
-        /// Adds <param name="newBaseTypeName"></param> as a base class of <param name="classDeclaration"></param>
+        /// Adds <paramref name="newBaseTypeName" /> as a base class of <paramref name="classDeclaration" />
         /// </summary>
         /// <param name="classDeclaration">Class declaration to be modified</param>
         /// <param name="newBaseTypeName">Modified class declaration with new base type</param>
-        /// <returns></returns>
+        /// <returns>Modified class with base class specified</returns>
         public static ClassDeclarationSyntax WithBaseClass(this ClassDeclarationSyntax classDeclaration, string newBaseTypeName)
         {
             var simpleBaseTypeSyntax = SyntaxFactory.SimpleBaseType(SyntaxFactory.ParseName(newBaseTypeName));

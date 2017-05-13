@@ -9,7 +9,7 @@ namespace BugHunter.Core.DiagnosticsFormatting.Implementation
     public class NamedTypeSymbolDiagnosticFormatter : ISymbolDiagnosticFormatter<INamedTypeSymbol>
     {
         /// <summary>
-        /// Creates a <see cref="Diagnostic"/> from <param name="descriptor"></param> od passed <param name="namedTypeSymbol"></param>
+        /// Creates a <see cref="Diagnostic"/> from <paramref name="descriptor" /> of passed <paramref name="namedTypeSymbol" />
         ///
         /// MessageFormat will be passed name of the symbol.
         /// Location will be the first location of the symbol. For partial classes it is only one location.

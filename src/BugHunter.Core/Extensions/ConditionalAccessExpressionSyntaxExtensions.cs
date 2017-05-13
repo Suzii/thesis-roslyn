@@ -9,7 +9,7 @@ namespace BugHunter.Core.Extensions
     public static class ConditionalAccessExpressionSyntaxExtensions
     {
         /// <summary>
-        /// Returns first <see cref="MemberBindingExpressionSyntax"/> of <param name="conditionalAccessExpression"></param>
+        /// Returns first <see cref="MemberBindingExpressionSyntax"/> of <paramref name="conditionalAccessExpression" />
         /// </summary>
         /// <param name="conditionalAccessExpression">Conditional access to be inspected</param>
         /// <returns>First member binding expression</returns>

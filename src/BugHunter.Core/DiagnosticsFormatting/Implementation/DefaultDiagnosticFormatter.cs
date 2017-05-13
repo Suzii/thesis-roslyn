@@ -10,10 +10,10 @@ namespace BugHunter.Core.DiagnosticsFormatting.Implementation
         where TSyntaxNode : SyntaxNode
     {
         /// <summary>
-        /// Creates a <see cref="Diagnostic"/> from <param name="descriptor"></param> based on passed <param name="syntaxNode"></param>.
+        /// Creates a <see cref="Diagnostic"/> from <paramref name="descriptor" /> based on passed <paramref name="syntaxNode" />.
         ///
-        /// MessageFormat will be passed a string version of <param name="syntaxNode"></param>.
-        /// Location will be of a whole <param name="syntaxNode"></param>.
+        /// MessageFormat will be passed a string version of <paramref name="syntaxNode" />.
+        /// Location will be of a whole <paramref name="syntaxNode" />.
         /// </summary>
         /// <param name="descriptor">Diagnostic descriptor for diagnostic to be created</param>
         /// <param name="syntaxNode">Syntax node that the diagnostic should be raised for</param>
@@ -22,7 +22,7 @@ namespace BugHunter.Core.DiagnosticsFormatting.Implementation
             => Diagnostic.Create(descriptor, GetLocation(syntaxNode), GetDiagnosedUsage(syntaxNode));
 
         /// <summary>
-        /// Returns location of passed <param name="syntaxNode"></param>
+        /// Returns location of passed <paramref name="syntaxNode" />
         /// </summary>
         /// <param name="syntaxNode">Syntax node whose location is being requested</param>
         /// <returns>Loaction of passed syntax node; empty location if syntax node is null</returns>
@@ -30,7 +30,7 @@ namespace BugHunter.Core.DiagnosticsFormatting.Implementation
             => syntaxNode?.GetLocation();
 
         /// <summary>
-        /// Returns string representation of passed <param name="syntaxNode"></param>
+        /// Returns string representation of passed <paramref name="syntaxNode" />
         /// </summary>
         /// <param name="syntaxNode">Syntax node whose string representation is being requested</param>
         /// <returns>String representation of passed syntax node; empty string if syntax node is null</returns>

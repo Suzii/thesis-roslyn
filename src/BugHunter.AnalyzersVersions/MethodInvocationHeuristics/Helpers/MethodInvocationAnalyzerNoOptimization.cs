@@ -17,13 +17,13 @@ namespace BugHunter.AnalyzersVersions.MethodInvocationHeuristics.Helpers
     /// </summary>
     public class MethodInvocationAnalyzerNoOptimization : ISyntaxNodeAnalyzer
     {
-        protected readonly ApiReplacementConfig Config;
-        protected readonly ISyntaxNodeDiagnosticFormatter<InvocationExpressionSyntax> Formatter;
+        private readonly ApiReplacementConfig _config;
+        private readonly ISyntaxNodeDiagnosticFormatter<InvocationExpressionSyntax> _formatter;
 
         public MethodInvocationAnalyzerNoOptimization(ApiReplacementConfig config, ISyntaxNodeDiagnosticFormatter<InvocationExpressionSyntax> formatter)
         {
-            Config = config;
-            Formatter = formatter;
+            _config = config;
+            _formatter = formatter;
         }
 
         public void Run(SyntaxNodeAnalysisContext context)
@@ -51,7 +51,7 @@ namespace BugHunter.AnalyzersVersions.MethodInvocationHeuristics.Helpers
                 return;
             }
 
-            var diagnostic = Formatter.CreateDiagnostic(Config.Rule, invocation);
+            var diagnostic = _formatter.CreateDiagnostic(_config.Rule, invocation);
             context.ReportDiagnostic(diagnostic);
         }
 
@@ -71,9 +71,9 @@ namespace BugHunter.AnalyzersVersions.MethodInvocationHeuristics.Helpers
         }
 
         private bool IsForbiddenMethod(string methodName)
-            => Config.ForbiddenMembers.Contains(methodName);
+            => _config.ForbiddenMembers.Contains(methodName);
 
         private bool IsForbiddenType(INamedTypeSymbol receiverTypeSymbol, Compilation compilation)
-            => Config.ForbiddenTypes.Any(forbiddenType => receiverTypeSymbol.IsDerivedFrom(forbiddenType, compilation));
+            => _config.ForbiddenTypes.Any(forbiddenType => receiverTypeSymbol.IsDerivedFrom(forbiddenType, compilation));
     }
 }

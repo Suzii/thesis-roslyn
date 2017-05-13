@@ -17,17 +17,17 @@ namespace BugHunter.Core.ApiReplacementAnalysis
         }
 
         /// <summary>
-        /// The <see cref="DiagnosticDescriptor"/> to be used when diagnostic should be raised
+        /// Gets the <see cref="DiagnosticDescriptor"/> to be used when diagnostic should be raised
         /// </summary>
         public DiagnosticDescriptor Rule { get; }
 
         /// <summary>
-        /// Fully qualified names of types whose <see cref="ForbiddenMembers"/> should be diagnosed
+        /// Gets fully qualified names of types whose <see cref="ForbiddenMembers"/> should be diagnosed
         /// </summary>
         public string[] ForbiddenTypes { get; }
 
         /// <summary>
-        /// Member names of <see cref="ForbiddenTypes"/> that should be diagnosed
+        /// Gets member names of <see cref="ForbiddenTypes"/> that should be diagnosed
         /// </summary>
         public string[] ForbiddenMembers { get; }
     }

@@ -16,8 +16,8 @@ namespace BugHunter.TestUtils.Services
     /// </summary>
     public static class ProjectCompilation
     {
-        internal static string TestProjectName = "TestProject";
-        internal static FakeFileInfo DefaultFileInfo = new FakeFileInfo { FileLocation = string.Empty, FileName = "Test", FileExtension = "cs" };
+        private static readonly string TestProjectName = "TestProject";
+        private static readonly FakeFileInfo DefaultFileInfo = new FakeFileInfo { FileLocation = string.Empty, FileName = "Test", FileExtension = "cs" };
 
         /// <summary>
         /// Get the existing compiler diagnostics on the inputted document.
