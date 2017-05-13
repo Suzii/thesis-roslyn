@@ -20,12 +20,18 @@ namespace BugHunter.AnalyzersVersions.MethodInvocationHeuristics.Helpers
         private readonly ApiReplacementConfig _config;
         private readonly ISyntaxNodeDiagnosticFormatter<InvocationExpressionSyntax> _formatter;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MethodInvocationAnalyzerNoOptimization"/> class.
+        /// </summary>
+        /// <param name="config">Configuration for the analysis</param>
+        /// <param name="formatter">Diagnostic formatter</param>
         public MethodInvocationAnalyzerNoOptimization(ApiReplacementConfig config, ISyntaxNodeDiagnosticFormatter<InvocationExpressionSyntax> formatter)
         {
             _config = config;
             _formatter = formatter;
         }
 
+        /// <inheritdoc/>
         public void Run(SyntaxNodeAnalysisContext context)
         {
             var filePath = context.Node?.SyntaxTree?.FilePath;
@@ -55,8 +61,20 @@ namespace BugHunter.AnalyzersVersions.MethodInvocationHeuristics.Helpers
             context.ReportDiagnostic(diagnostic);
         }
 
+        /// <summary>
+        /// Determines whether the analysis should continue based on the document path
+        /// </summary>
+        /// <param name="filePath">File path of the document</param>
+        /// <returns>True if the path is considered forbiden in context of the analysis; false otherwise</returns>
         protected virtual bool IsOnForbiddenPath(string filePath) => true;
 
+        /// <summary>
+        /// Determines, whether the analysis should continue based on the inspected
+        /// <paramref name="invocation"/> and its corresponding <paramref name="methodSymbol"/>
+        /// </summary>
+        /// <param name="invocation">Inspected invocation</param>
+        /// <param name="methodSymbol">Method symbol corresponding to the invocation</param>
+        /// <returns>True if the inspected invocation is considered forbidden; false otherwise</returns>
         protected virtual bool IsForbiddenUsage(InvocationExpressionSyntax invocation, IMethodSymbol methodSymbol) => true;
 
         private bool IsForbiddenMethodOnForbiddenType(IMethodSymbol methodSymbol, Compilation compilation)

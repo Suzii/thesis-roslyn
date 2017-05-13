@@ -21,6 +21,9 @@ namespace BugHunter.AnalyzersVersions.BaseClassAnalyzers
     public class PageBaseAnalyzerRegisterSyntaxTreeAction : DiagnosticAnalyzer
 #pragma warning restore RS1001 // Missing diagnostic analyzer attribute.
     {
+        /// <summary>
+        /// The ID for diagnostics raises by <see cref="PageBaseAnalyzerRegisterSyntaxTreeAction"/>
+        /// </summary>
         public const string DiagnosticId = "BH3502";
 
         private static readonly DiagnosticDescriptor Rule = BaseClassesInheritanceRulesProvider.GetRule(DiagnosticId, "Page", "some abstract CMSPage");

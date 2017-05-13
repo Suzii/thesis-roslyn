@@ -4,6 +4,9 @@ using Microsoft.CodeAnalysis;
 
 namespace BugHunter.Core.Helpers.DiagnosticDescriptors
 {
+    /// <summary>
+    /// Helper class for constructing <see cref="DiagnosticDescriptor"/> for CMS Base Class analyzer category
+    /// </summary>
     public static class BaseClassesInheritanceRulesProvider
     {
         /// <summary>

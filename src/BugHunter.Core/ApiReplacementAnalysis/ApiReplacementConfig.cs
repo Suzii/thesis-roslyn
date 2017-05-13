@@ -9,6 +9,12 @@ namespace BugHunter.Core.ApiReplacementAnalysis
     /// </summary>
     public class ApiReplacementConfig
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ApiReplacementConfig"/> class.
+        /// </summary>
+        /// <param name="rule">Diagnostic descriptor</param>
+        /// <param name="forbiddenTypes">Fully qualified names of forbidden types</param>
+        /// <param name="forbiddenMembers">Names of forbidden members of type</param>
         public ApiReplacementConfig(DiagnosticDescriptor rule, string[] forbiddenTypes, string[] forbiddenMembers)
         {
             Rule = rule;

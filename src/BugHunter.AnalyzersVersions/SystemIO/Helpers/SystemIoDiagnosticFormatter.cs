@@ -11,6 +11,7 @@ namespace BugHunter.AnalyzersVersions.SystemIO.Helpers
     /// </summary>
     internal class SystemIoDiagnosticFormatter : ISyntaxNodeDiagnosticFormatter<IdentifierNameSyntax>
     {
+        /// <inheritdoc/>
         public Diagnostic CreateDiagnostic(DiagnosticDescriptor descriptor, IdentifierNameSyntax identifierName)
         {
             var rootOfDottedExpression = identifierName.GetOuterMostParentOfDottedExpression();

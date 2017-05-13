@@ -21,6 +21,9 @@ namespace BugHunter.AnalyzersVersions.StringAndCulture
     public class StringAndCultureWithStrategyClassAnalyzer : DiagnosticAnalyzer
 #pragma warning restore RS1001 // Missing diagnostic analyzer attribute.
     {
+        /// <summary>
+        /// The ID for diagnostics raises by <see cref="StringAndCultureWithStrategyClassAnalyzer"/>
+        /// </summary>
         public const string DiagnosticId = "BH4004";
 
         private static readonly ApiReplacementConfig Config = new ApiReplacementConfig(
@@ -46,7 +49,7 @@ namespace BugHunter.AnalyzersVersions.StringAndCulture
             context.RegisterSyntaxNodeAction(Analyzer.Run, SyntaxKind.InvocationExpression);
         }
 
-        internal class InnerMethodInvocationAnalyzer : MethodInvocationAnalyzer
+        private class InnerMethodInvocationAnalyzer : MethodInvocationAnalyzer
         {
             /// <summary>
             /// Initializes a new instance of the <see cref="InnerMethodInvocationAnalyzer"/> class.

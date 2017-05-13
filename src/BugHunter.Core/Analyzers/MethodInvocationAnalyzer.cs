@@ -31,6 +31,10 @@ namespace BugHunter.Core.Analyzers
             _formatter = formatter;
         }
 
+        /// <summary>
+        /// Run the analysis on current syntax node context and raise the diagnostic if forbidden invocations are found
+        /// </summary>
+        /// <param name="context">Current syntax node analysis context</param>
         public void Run(SyntaxNodeAnalysisContext context)
         {
             var filePath = context.Node?.SyntaxTree?.FilePath;
@@ -60,8 +64,20 @@ namespace BugHunter.Core.Analyzers
             context.ReportDiagnostic(diagnostic);
         }
 
+        /// <summary>
+        /// Determines whether the analysis should continue based on the document path
+        /// </summary>
+        /// <param name="filePath">File path of the document</param>
+        /// <returns>True if the path is considered forbiden in context of the analysis; false otherwise</returns>
         protected virtual bool IsOnForbiddenPath(string filePath) => true;
 
+        /// <summary>
+        /// Determines, whether the analysis should continue based on the inspected
+        /// <paramref name="invocation"/> and its corresponding <paramref name="methodSymbol"/>
+        /// </summary>
+        /// <param name="invocation">Inspected invocation</param>
+        /// <param name="methodSymbol">Method symbol corresponding to the invocation</param>
+        /// <returns>True if the inspected invocation is considered forbidden; false otherwise</returns>
         protected virtual bool IsForbiddenUsage(InvocationExpressionSyntax invocation, IMethodSymbol methodSymbol) => true;
 
         private bool CanBeSkippedBasedOnSyntaxOnly(InvocationExpressionSyntax invocationExpression)

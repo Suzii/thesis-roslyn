@@ -16,6 +16,9 @@ namespace BugHunter.AnalyzersVersions.MethodInvocationHeuristics
     public class FormsAuthenticationSignOutAnalyzerNoOptimization : DiagnosticAnalyzer
 #pragma warning restore RS1001 // Missing diagnostic analyzer attribute.
     {
+        /// <summary>
+        /// The ID for diagnostics raises by <see cref="FormsAuthenticationSignOutAnalyzerNoOptimization"/>
+        /// </summary>
         public const string DiagnosticId = "BH1012";
 
         private static readonly DiagnosticDescriptor Rule = ApiReplacementRulesProvider.GetRule(DiagnosticId, "FormsAuthentication.SignOut()", "AuthenticationHelper.SignOut()");

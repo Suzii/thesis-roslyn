@@ -17,6 +17,9 @@ namespace BugHunter.AnalyzersVersions.SystemIO
     public class V00IdentifierNameEmptyCallback : DiagnosticAnalyzer
 #pragma warning restore RS1001 // Missing diagnostic analyzer attribute.
     {
+        /// <summary>
+        /// The ID for diagnostics raises by <see cref="V00IdentifierNameEmptyCallback"/>
+        /// </summary>
         public const string DiagnosticId = "BHxV00";
 
         private static readonly DiagnosticDescriptor Rule = AnalyzerHelper.GetRule(DiagnosticId);

@@ -8,6 +8,9 @@ namespace BugHunter.AnalyzersVersions.SystemIO.Helpers
     /// </summary>
     public static class AnalyzerHelper
     {
+        /// <summary>
+        /// Names of whitelisted types for SystemIOAnalyzer
+        /// </summary>
         public static readonly string[] WhiteListedTypeNames =
         {
             "System.IO.IOException",
@@ -15,6 +18,11 @@ namespace BugHunter.AnalyzersVersions.SystemIO.Helpers
             "System.IO.SeekOrigin"
         };
 
+        /// <summary>
+        /// Constructs a Diagnostic Descriptor for SystemIOAnalyzer
+        /// </summary>
+        /// <param name="diagnosticId">Id of the diagnostic</param>
+        /// <returns>Diagnostic descriptor for SystemIOAnalyzer</returns>
         public static DiagnosticDescriptor GetRule(string diagnosticId) => new DiagnosticDescriptor(
             "BH1014",
             title: "Do not use System.IO",

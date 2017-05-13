@@ -22,8 +22,19 @@ namespace BugHunter.Analyzers.CmsApiGuidelinesRules.CodeFixes
         /// </summary>
         internal enum PossibleFixes
         {
+            /// <summary>
+            /// Option for 'WhereContains' method
+            /// </summary>
             WhereContains,
+
+            /// <summary>
+            /// Option for 'WhereStartsWith' method
+            /// </summary>
             WhereStartsWith,
+
+            /// <summary>
+            /// Option for 'WhereEndsWith' method
+            /// </summary>
             WhereEndsWith
         }
 

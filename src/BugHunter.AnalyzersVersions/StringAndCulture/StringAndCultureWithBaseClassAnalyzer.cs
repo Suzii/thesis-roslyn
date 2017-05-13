@@ -17,6 +17,9 @@ namespace BugHunter.AnalyzersVersions.StringAndCulture
     public class StringAndCultureWithBaseClassAnalyzer : BaseStringMethodsAnalyzer
 #pragma warning restore RS1001 // Missing diagnostic analyzer attribute.
     {
+        /// <summary>
+        /// The ID for diagnostics raises by <see cref="StringAndCultureWithBaseClassAnalyzer"/>
+        /// </summary>
         public const string DiagnosticId = "BH4004";
 
         /// <summary>

@@ -8,7 +8,7 @@ using Microsoft.CodeAnalysis.Diagnostics;
 namespace BugHunter.Analyzers.CmsApiReplacementRules.Analyzers
 {
     /// <summary>
-    /// Searches for usages of <see cref="System.Web.Security.FormsAuthentication"/> and their access to SignOut member
+    /// Searches for usages of <c>System.Web.Security.FormsAuthentication</c> and their access to SignOut member
     /// </summary>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     public class FormsAuthenticationSignOutAnalyzer : DiagnosticAnalyzer

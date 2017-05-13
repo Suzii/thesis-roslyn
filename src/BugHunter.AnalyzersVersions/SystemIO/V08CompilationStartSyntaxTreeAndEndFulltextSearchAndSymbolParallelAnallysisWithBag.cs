@@ -21,6 +21,9 @@ namespace BugHunter.AnalyzersVersions.SystemIO
     public class V08CompilationStartSyntaxTreeAndEndFulltextSearchAndSymbolParallelAnallysisWithBag : DiagnosticAnalyzer
 #pragma warning restore RS1001 // Missing diagnostic analyzer attribute.
     {
+        /// <summary>
+        /// The ID for diagnostics raises by <see cref="V08CompilationStartSyntaxTreeAndEndFulltextSearchAndSymbolParallelAnallysisWithBag"/>
+        /// </summary>
         public const string DiagnosticId = "BHxV08";
 
         private static readonly DiagnosticDescriptor Rule = AnalyzerHelper.GetRule(DiagnosticId);

@@ -49,7 +49,7 @@ namespace BugHunter.Analyzers.CmsApiGuidelinesRules.Analyzers
             context.RegisterSyntaxNodeAction(Analyzer.Run, SyntaxKind.InvocationExpression);
         }
 
-        internal class InnerMethodInvocationAnalyzer : MethodInvocationAnalyzer
+        private class InnerMethodInvocationAnalyzer : MethodInvocationAnalyzer
         {
             private static readonly string[] ForbiddenEventTypeArgs = { "\"I\"", "\"W\"", "\"E\"" };
 

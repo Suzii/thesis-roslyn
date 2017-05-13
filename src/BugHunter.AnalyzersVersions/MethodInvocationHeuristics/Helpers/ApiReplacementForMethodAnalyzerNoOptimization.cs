@@ -15,6 +15,10 @@ namespace BugHunter.AnalyzersVersions.MethodInvocationHeuristics.Helpers
     {
         private readonly ISyntaxNodeAnalyzer _methodInvocationAnalyzer;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ApiReplacementForMethodAnalyzerNoOptimization"/> class.
+        /// </summary>
+        /// <param name="config">Configuration of the analysis</param>
         public ApiReplacementForMethodAnalyzerNoOptimization(ApiReplacementConfig config)
         {
             _methodInvocationAnalyzer = new MethodInvocationAnalyzerNoOptimization(config, new MethodInvocationDiagnosticFormatter());

@@ -10,6 +10,10 @@ namespace BugHunter.Core.Helpers.CodeFixes
     /// </summary>
     public class MemberInvocationCodeFixHelper : CodeFixHelper
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MemberInvocationCodeFixHelper"/> class.
+        /// </summary>
+        /// <param name="context">Context of the code fix</param>
         public MemberInvocationCodeFixHelper(CodeFixContext context)
             : base(context)
         {
