@@ -113,6 +113,70 @@ namespace SampleTestProject.CsSamples
         }
 
         [Test]
+        public void OkayInputPartialDefinition_ModuleEntryIsRegistered_NoDiagnostic()
+        {
+            var test1 = @"using CMS;
+using CMS.Core;
+using SampleTestProject.CsSamples;
+
+[assembly: RegisterModule(typeof(MyModule))]
+namespace SampleTestProject.CsSamples
+{
+    public partial class MyModule : ModuleEntry
+    {
+        public MyModule(ModuleMetadata metadata, bool isInstallable = false) : base(metadata, isInstallable)
+        {
+        }
+    }
+}";
+
+            var test2 = @"using CMS;
+using CMS.Core;
+using SampleTestProject.CsSamples;
+
+namespace SampleTestProject.CsSamples
+{
+    public partial class MyModule : ModuleEntry
+    {
+    }
+}";
+
+            VerifyCSharpDiagnostic(new [] { test1, test2 });
+            VerifyCSharpDiagnostic(new [] { test2, test1 });
+        }
+
+        [Test]
+        public void InputWithErrorPartialDefinition_ModuleNotRegistered_SurfacesDiagnostic()
+        {
+            var test1 = @"using CMS;
+using CMS.Core;
+
+namespace SampleTestProject.CsSamples
+{
+    public partial class MyModule : ModuleEntry
+    {
+        public MyModule(ModuleMetadata metadata, bool isInstallable = false) : base(metadata, isInstallable)
+        {
+        }
+    }
+}";
+
+            var test2 = @"using CMS;
+using CMS.Core;
+
+namespace SampleTestProject.CsSamples
+{
+    public partial class MyModule : ModuleEntry
+    {
+    }
+}";
+            var expectedDiagnostic = GetDiagnosticResult("MyModule").WithLocation(6, 26);
+
+            VerifyCSharpDiagnostic(new []{ test1, test2 }, expectedDiagnostic);
+            VerifyCSharpDiagnostic(new []{ test2, test1 }, expectedDiagnostic);
+        }
+
+        [Test]
         public void InputWithError_ModuleNotRegistered_SurfacesDiagnostic()
         {
             var test = @"using CMS;
