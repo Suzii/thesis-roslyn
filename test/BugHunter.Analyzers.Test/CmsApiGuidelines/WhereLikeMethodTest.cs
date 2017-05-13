@@ -56,7 +56,8 @@ namespace SampleTestProject.CsSamples
 }}";
             var expectedDiagnostic = CreateDiagnosticResult($@"{oldMethodCall}(""columnName"", ""value"")").WithLocation(9, 45);
 
-            VerifyCSharpDiagnostic(test,
+            VerifyCSharpDiagnostic(
+                test,
                 expectedDiagnostic,
                 expectedDiagnostic.WithLocation(10, 46));
 
@@ -211,20 +212,25 @@ namespace SampleTestProject.CsSamples
     }}
 }}";
 
-            VerifyCSharpDiagnostic(test,
+            VerifyCSharpDiagnostic(
+                test,
                 CreateDiagnosticResult($@"{methodCall}(""columnName1"", ""value"")").WithLocation(9, 45),
                 CreateDiagnosticResult($@"{methodCall}(""columnName2"", ""value"")").WithLocation(10, 46),
                 CreateDiagnosticResult($@"{methodCall}(""columnName3"", ""value"")").WithLocation(11, 45),
                 CreateDiagnosticResult($@"{methodCall}(""columnName4"", ""value"")").WithLocation(12, 46));
         }
 
-        [TestCase(@"whereCondition = whereCondition.WhereNotLike(""columnName1"", ""value"").WhereTrue(""this is gonna be tricky"");",
+        [TestCase(
+            @"whereCondition = whereCondition.WhereNotLike(""columnName1"", ""value"").WhereTrue(""this is gonna be tricky"");",
                   @"whereCondition = whereCondition.WhereNotContains(""columnName1"", ""value"").WhereTrue(""this is gonna be tricky"");")]
-        [TestCase(@"whereCondition = whereCondition?.WhereNotLike(""columnName1"", ""value"").WhereTrue(""this is gonna be tricky"");",
+        [TestCase(
+            @"whereCondition = whereCondition?.WhereNotLike(""columnName1"", ""value"").WhereTrue(""this is gonna be tricky"");",
                   @"whereCondition = whereCondition?.WhereNotContains(""columnName1"", ""value"").WhereTrue(""this is gonna be tricky"");")]
-        [TestCase(@"whereCondition = whereCondition.WhereNotLike(""columnName1"", ""value"")?.WhereTrue(""this is gonna be tricky"");",
+        [TestCase(
+            @"whereCondition = whereCondition.WhereNotLike(""columnName1"", ""value"")?.WhereTrue(""this is gonna be tricky"");",
                   @"whereCondition = whereCondition.WhereNotContains(""columnName1"", ""value"")?.WhereTrue(""this is gonna be tricky"");")]
-        [TestCase(@"whereCondition = whereCondition?.WhereNotLike(""columnName1"", ""value"")?.WhereTrue(""this is gonna be tricky"");",
+        [TestCase(
+            @"whereCondition = whereCondition?.WhereNotLike(""columnName1"", ""value"")?.WhereTrue(""this is gonna be tricky"");",
                   @"whereCondition = whereCondition?.WhereNotContains(""columnName1"", ""value"")?.WhereTrue(""this is gonna be tricky"");")]
         public void InputWithWhereLike_ConditionalAccesses_AppliesFirstCodeFixInAllCases(string before, string after)
         {

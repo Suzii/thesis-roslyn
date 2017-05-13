@@ -23,13 +23,14 @@ namespace BugHunter.Analyzers.CmsBaseClassesRules.Analyzers
         /// </summary>
         public const string DiagnosticId = DiagnosticIds.ModuleRegistration;
 
-        private static readonly DiagnosticDescriptor Rule = new DiagnosticDescriptor(DiagnosticId,
-                title: new LocalizableResourceString(nameof(CmsBaseClassesResources.ModuleRegistration_Title), CmsBaseClassesResources.ResourceManager, typeof(CmsBaseClassesResources)),
-                messageFormat: new LocalizableResourceString(nameof(CmsBaseClassesResources.ModuleRegistration_MessageFormat), CmsBaseClassesResources.ResourceManager, typeof(CmsBaseClassesResources)),
-                category: nameof(AnalyzerCategories.CmsBaseClasses),
-                defaultSeverity: DiagnosticSeverity.Warning,
-                isEnabledByDefault: true,
-                description: new LocalizableResourceString(nameof(CmsBaseClassesResources.ModuleRegistration_Description), CmsBaseClassesResources.ResourceManager, typeof(CmsBaseClassesResources)),
+        private static readonly DiagnosticDescriptor Rule = new DiagnosticDescriptor(
+            DiagnosticId,
+            title: new LocalizableResourceString(nameof(CmsBaseClassesResources.ModuleRegistration_Title), CmsBaseClassesResources.ResourceManager, typeof(CmsBaseClassesResources)),
+            messageFormat: new LocalizableResourceString(nameof(CmsBaseClassesResources.ModuleRegistration_MessageFormat), CmsBaseClassesResources.ResourceManager, typeof(CmsBaseClassesResources)),
+            category: nameof(AnalyzerCategories.CmsBaseClasses),
+            defaultSeverity: DiagnosticSeverity.Warning,
+            isEnabledByDefault: true,
+            description: new LocalizableResourceString(nameof(CmsBaseClassesResources.ModuleRegistration_Description), CmsBaseClassesResources.ResourceManager, typeof(CmsBaseClassesResources)),
             helpLinkUri: HelpLinkUriProvider.GetHelpLink(DiagnosticId));
 
         /// <inheritdoc />
@@ -43,7 +44,8 @@ namespace BugHunter.Analyzers.CmsBaseClassesRules.Analyzers
             context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.None);
 
             var diagnosticFormatter = new NamedTypeSymbolDiagnosticFormatter();
-            context.RegisterSymbolAction(symbolAnalysisContext =>
+            context.RegisterSymbolAction(
+                symbolAnalysisContext =>
             {
                 var namedTypeSymbol = symbolAnalysisContext.Symbol as INamedTypeSymbol;
 

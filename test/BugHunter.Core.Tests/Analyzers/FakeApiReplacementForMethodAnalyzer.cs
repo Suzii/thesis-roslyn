@@ -16,7 +16,8 @@ namespace BugHunter.Core.Tests.Analyzers
 
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
 
-        private static readonly ApiReplacementConfig ApiReplacementConfig = new ApiReplacementConfig(Rule,
+        private static readonly ApiReplacementConfig ApiReplacementConfig = new ApiReplacementConfig(
+            Rule,
             new []{ "FakeNamespace.FakeClass"},
             new []{ "FakeMethod"});
 

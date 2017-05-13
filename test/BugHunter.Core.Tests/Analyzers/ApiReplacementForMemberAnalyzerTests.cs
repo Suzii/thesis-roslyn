@@ -112,7 +112,8 @@ namespace SampleTestProject.CsSamples
     }}
 }}";
 
-            VerifyCSharpDiagnostic(new [] { test, _fakeClassSource },
+            VerifyCSharpDiagnostic(
+                new [] { test, _fakeClassSource },
                 CreateDiagnosticResult($"{accessedInstance}.FakeMember").WithLocation(9, 22),
                 CreateDiagnosticResult($"{accessedInstance}?.FakeMember").WithLocation(10, 22),
                 CreateDiagnosticResult($"{accessedInstance}.FakeMember").WithLocation(12, 22),
@@ -178,7 +179,8 @@ namespace SampleTestProject.CsSamples
             Assert.AreEqual(expected.Severity, actual.Severity,
                 $"Expected diagnostic severity to be \"{expected.Severity}\" was \"{actual.Severity}\"\r\n\r\nDiagnostic:\r\n    {FormatDiagnostics(analyzer, actual)}\r\n");
 
-            Assert.That(actual.GetMessage().Contains(expected.Message),
+            Assert.That(
+                actual.GetMessage().Contains(expected.Message),
                 $"Expected diagnostic message \"{actual.GetMessage()}\" to contain \"{expected.Message}\"\r\n\r\nDiagnostic:\r\n    {FormatDiagnostics(analyzer, actual)}\r\n");
         }
     }

@@ -130,7 +130,8 @@ namespace BugHunter.AnalyzersVersions.SystemIO
                    symbol.ConstructedFrom.IsDerivedFrom("System.IO.Stream", context.Compilation);
         }
 
-        private static bool? FileContainsSystemIoUsing(SyntaxNode identifierNameSyntax,
+        private static bool? FileContainsSystemIoUsing(
+            SyntaxNode identifierNameSyntax,
             ConcurrentDictionary<string, bool?> filesWithSystemIoUsing)
         {
             var syntaxTree = identifierNameSyntax.SyntaxTree;

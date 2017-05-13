@@ -20,7 +20,8 @@ namespace BugHunter.Core.Helpers.DiagnosticDescriptors
         /// <param name="forbiddenUsage">Message argument with forbidden usage</param>
         /// <returns>Diagnostic descriptor for API Replacement Analyzer</returns>
         public static DiagnosticDescriptor GetRule(string diagnosticId, string forbiddenUsage)
-            => new DiagnosticDescriptor(diagnosticId,
+            => new DiagnosticDescriptor(
+                diagnosticId,
                 title: ApiReplacementsMessagesProvider.GetTitle(forbiddenUsage),
                 messageFormat: ApiReplacementsMessagesProvider.GetMessageFormat(),
                 category: nameof(AnalyzerCategories.CmsApiReplacements),
@@ -41,7 +42,8 @@ namespace BugHunter.Core.Helpers.DiagnosticDescriptors
         /// <param name="recommendedUsage">Message argument with recommended usage</param>
         /// <returns>Diagnostic descriptor for API Replacement Analyzer</returns>
         public static DiagnosticDescriptor GetRule(string diagnosticId, string forbiddenUsage, string recommendedUsage)
-           => new DiagnosticDescriptor(diagnosticId,
+           => new DiagnosticDescriptor(
+               diagnosticId,
                 title: ApiReplacementsMessagesProvider.GetTitle(forbiddenUsage, recommendedUsage),
                 messageFormat: ApiReplacementsMessagesProvider.GetMessageFormat(recommendedUsage),
                 category: nameof(AnalyzerCategories.CmsApiReplacements),

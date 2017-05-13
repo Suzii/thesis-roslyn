@@ -25,7 +25,8 @@ namespace BugHunter.AnalyzersVersions.StringAndCulture
 
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
 
-        private static readonly ApiReplacementConfig Config = new ApiReplacementConfig(Rule,
+        private static readonly ApiReplacementConfig Config = new ApiReplacementConfig(
+            Rule,
             new[] { "System.String" },
             new[] { "IndexOf", "LastIndexOf" });
 

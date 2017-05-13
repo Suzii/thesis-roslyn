@@ -19,7 +19,8 @@ namespace BugHunter.Core.Helpers.DiagnosticDescriptors
         /// <returns>Diagnostic descriptor for Base Class Analyzer</returns>
         public static DiagnosticDescriptor GetRule(string diagnosticId, string typeOfFile, string suggestedBaseClass)
         {
-            var rule = new DiagnosticDescriptor(diagnosticId,
+            var rule = new DiagnosticDescriptor(
+                diagnosticId,
                 title: new LocalizableResourceString(nameof(Resources.BaseClasses_Title), Resources.ResourceManager, typeof(Resources), typeOfFile, suggestedBaseClass),
                 messageFormat: new LocalizableResourceString(nameof(Resources.BaseClasses_MessageFormat), Resources.ResourceManager, typeof(Resources), "{0}", suggestedBaseClass),
                 category: nameof(AnalyzerCategories.CmsApiReplacements),

@@ -19,7 +19,8 @@ namespace BugHunter.Analyzers.CmsApiGuidelinesRules.Analyzers
         /// </summary>
         public const string DiagnosticId = DiagnosticIds.EventLogArguments;
 
-        private static readonly DiagnosticDescriptor Rule = new DiagnosticDescriptor(DiagnosticId,
+        private static readonly DiagnosticDescriptor Rule = new DiagnosticDescriptor(
+            DiagnosticId,
             title: new LocalizableResourceString(nameof(CmsApiGuidelinesResources.EventLogArguments_Title), CmsApiGuidelinesResources.ResourceManager, typeof(CmsApiGuidelinesResources)),
             messageFormat: new LocalizableResourceString(nameof(CmsApiGuidelinesResources.EventLogArguments_MessageFormat), CmsApiGuidelinesResources.ResourceManager, typeof(CmsApiGuidelinesResources)),
             category: nameof(AnalyzerCategories.CmsApiGuidelines),
@@ -28,9 +29,10 @@ namespace BugHunter.Analyzers.CmsApiGuidelinesRules.Analyzers
             description: new LocalizableResourceString(nameof(CmsApiGuidelinesResources.EventLogArguments_Description), CmsApiGuidelinesResources.ResourceManager, typeof(CmsApiGuidelinesResources)),
             helpLinkUri: HelpLinkUriProvider.GetHelpLink(DiagnosticId));
 
-        private static readonly ApiReplacementConfig Config = new ApiReplacementConfig(Rule,
-                new[] { "CMS.EventLog.EventLogProvider" },
-                new[] { "LogEvent" });
+        private static readonly ApiReplacementConfig Config = new ApiReplacementConfig(
+            Rule,
+            new[] { "CMS.EventLog.EventLogProvider" },
+            new[] { "LogEvent" });
 
         private static readonly ISyntaxNodeAnalyzer Analyzer = new InnerMethodInvocationAnalyzer(Config);
 

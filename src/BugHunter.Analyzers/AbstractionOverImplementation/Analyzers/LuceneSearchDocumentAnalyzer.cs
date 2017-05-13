@@ -19,7 +19,8 @@ namespace BugHunter.Analyzers.AbstractionOverImplementation.Analyzers
         /// </summary>
         public const string DiagnosticId = DiagnosticIds.LuceneSearchDocument;
 
-        private static readonly DiagnosticDescriptor Rule = new DiagnosticDescriptor(DiagnosticId,
+        private static readonly DiagnosticDescriptor Rule = new DiagnosticDescriptor(
+            DiagnosticId,
             title: new LocalizableResourceString(nameof(AbstractionOverImplementationResources.LuceneSearchDocument_Title), AbstractionOverImplementationResources.ResourceManager, typeof(AbstractionOverImplementationResources)),
             messageFormat: new LocalizableResourceString(nameof(AbstractionOverImplementationResources.LuceneSearchDocument_MessageFormat), AbstractionOverImplementationResources.ResourceManager, typeof(AbstractionOverImplementationResources)),
             category: nameof(AnalyzerCategories.AbstractionOverImplementation),

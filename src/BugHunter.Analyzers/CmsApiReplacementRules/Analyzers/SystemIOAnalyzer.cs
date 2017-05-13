@@ -25,13 +25,14 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.Analyzers
         /// </summary>
         public const string DiagnosticId = DiagnosticIds.SystemIO;
 
-        private static readonly DiagnosticDescriptor Rule = new DiagnosticDescriptor(DiagnosticId,
-                title: new LocalizableResourceString(nameof(CmsApiReplacementsResources.SystemIo_Title), CmsApiReplacementsResources.ResourceManager, typeof(CmsApiReplacementsResources)),
-                messageFormat: new LocalizableResourceString(nameof(CmsApiReplacementsResources.SystemIo_MessageFormat), CmsApiReplacementsResources.ResourceManager, typeof(CmsApiReplacementsResources)),
-                category: nameof(AnalyzerCategories.CmsApiReplacements),
-                defaultSeverity: DiagnosticSeverity.Warning,
-                isEnabledByDefault: true,
-                description: new LocalizableResourceString(nameof(CmsApiReplacementsResources.SystemIo_Description), CmsApiReplacementsResources.ResourceManager, typeof(CmsApiReplacementsResources)),
+        private static readonly DiagnosticDescriptor Rule = new DiagnosticDescriptor(
+            DiagnosticId,
+            title: new LocalizableResourceString(nameof(CmsApiReplacementsResources.SystemIo_Title), CmsApiReplacementsResources.ResourceManager, typeof(CmsApiReplacementsResources)),
+            messageFormat: new LocalizableResourceString(nameof(CmsApiReplacementsResources.SystemIo_MessageFormat), CmsApiReplacementsResources.ResourceManager, typeof(CmsApiReplacementsResources)),
+            category: nameof(AnalyzerCategories.CmsApiReplacements),
+            defaultSeverity: DiagnosticSeverity.Warning,
+            isEnabledByDefault: true,
+            description: new LocalizableResourceString(nameof(CmsApiReplacementsResources.SystemIo_Description), CmsApiReplacementsResources.ResourceManager, typeof(CmsApiReplacementsResources)),
             helpLinkUri: HelpLinkUriProvider.GetHelpLink(DiagnosticId));
 
         /// <inheritdoc />
@@ -104,7 +105,8 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.Analyzers
             context.ReportDiagnostic(diagnostic);
         }
 
-        private static bool? FileContainsSystemIoUsing(SyntaxNode identifierNameSyntax,
+        private static bool? FileContainsSystemIoUsing(
+            SyntaxNode identifierNameSyntax,
             ConcurrentDictionary<string, bool?> filesWithSystemIoUsing)
         {
             var syntaxTree = identifierNameSyntax.SyntaxTree;

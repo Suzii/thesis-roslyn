@@ -18,7 +18,8 @@ namespace BugHunter.Analyzers.CmsApiGuidelinesRules.Analyzers
         /// </summary>
         public const string DiagnosticId = DiagnosticIds.WhereLikeMethod;
 
-        private static readonly DiagnosticDescriptor Rule = new DiagnosticDescriptor(DiagnosticId,
+        private static readonly DiagnosticDescriptor Rule = new DiagnosticDescriptor(
+            DiagnosticId,
             title: new LocalizableResourceString(nameof(CmsApiGuidelinesResources.WhereLikeMethod_Title), CmsApiGuidelinesResources.ResourceManager, typeof(CmsApiGuidelinesResources)),
             messageFormat: new LocalizableResourceString(nameof(CmsApiGuidelinesResources.WhereLikeMethod_MessageFormat), CmsApiGuidelinesResources.ResourceManager, typeof(CmsApiGuidelinesResources)),
             category: nameof(AnalyzerCategories.AbstractionOverImplementation),
@@ -27,9 +28,10 @@ namespace BugHunter.Analyzers.CmsApiGuidelinesRules.Analyzers
             description: new LocalizableResourceString(nameof(CmsApiGuidelinesResources.WhereLikeMethod_Description), CmsApiGuidelinesResources.ResourceManager, typeof(CmsApiGuidelinesResources)),
             helpLinkUri: HelpLinkUriProvider.GetHelpLink(DiagnosticId));
 
-        private static readonly ApiReplacementConfig Config = new ApiReplacementConfig(Rule,
-           new[] { "CMS.DataEngine.WhereConditionBase`1" },
-           new[] { "WhereLike", "WhereNotLike" });
+        private static readonly ApiReplacementConfig Config = new ApiReplacementConfig(
+            Rule,
+            new[] { "CMS.DataEngine.WhereConditionBase`1" },
+            new[] { "WhereLike", "WhereNotLike" });
 
         private static readonly ISyntaxNodeAnalyzer Analyzer = new MethodInvocationAnalyzer(Config, new MethodInvocationOnlyDiagnosticFormatter());
 

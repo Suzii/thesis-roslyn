@@ -18,7 +18,8 @@ namespace BugHunter.Core.Tests.DiagnosticsFormatting
         {
             var actualSpan = actual.GetLineSpan();
 
-            Assert.IsTrue(actualSpan.Path == expected.Path || (actualSpan.Path != null && actualSpan.Path.Contains("Test0.") && expected.Path.Contains("Test.")),
+            Assert.IsTrue(
+                actualSpan.Path == expected.Path || (actualSpan.Path != null && actualSpan.Path.Contains("Test0.") && expected.Path.Contains("Test.")),
                 $"Expected diagnostic to be in file \"{expected.Path}\" was actually in file \"{actualSpan.Path}\"");
 
             var actualLinePosition = actualSpan.StartLinePosition;
@@ -33,7 +34,8 @@ namespace BugHunter.Core.Tests.DiagnosticsFormatting
             // Only check column position if there is an actual column position in the real diagnostic
             if (actualLinePosition.Character > 0)
             {
-                Assert.That(expected.Column <= actualLinePosition.Character + 1,
+                Assert.That(
+                    expected.Column <= actualLinePosition.Character + 1,
                     $"Expected diagnostic to start at column greater than \"{expected.Column - 1}\" was actually at column \"{actualLinePosition.Character + 1}\"");
             }
         }
