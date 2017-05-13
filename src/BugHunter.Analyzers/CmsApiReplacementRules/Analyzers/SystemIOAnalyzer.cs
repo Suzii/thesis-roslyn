@@ -35,11 +35,11 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.Analyzers
             description: new LocalizableResourceString(nameof(CmsApiReplacementsResources.SystemIo_Description), CmsApiReplacementsResources.ResourceManager, typeof(CmsApiReplacementsResources)),
             helpLinkUri: HelpLinkUriProvider.GetHelpLink(DiagnosticId));
 
+        private static readonly ISyntaxNodeDiagnosticFormatter<IdentifierNameSyntax> DiagnosticFormatter = new SystemIoDiagnosticFormatter();
+
         /// <inheritdoc />
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics
             => ImmutableArray.Create(Rule);
-
-        private static readonly ISyntaxNodeDiagnosticFormatter<IdentifierNameSyntax> DiagnosticFormatter = new SystemIoDiagnosticFormatter();
 
         /// <inheritdoc />
         public override void Initialize(AnalysisContext context)

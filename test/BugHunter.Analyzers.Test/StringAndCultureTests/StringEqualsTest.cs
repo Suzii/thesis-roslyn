@@ -11,7 +11,7 @@ namespace BugHunter.Analyzers.Test.StringAndCultureTests
     [TestFixture]
     public class StringEqualsTest : CodeFixVerifier<StringEqualsMethodAnalyzer, StringComparisonMethodsWithModifierCodeFixProvider>
     {
-        static readonly object[] TestSource =
+        private static readonly object[] TestSource =
         {
             new object[] { @"Equals(""a"")", @"Equals(""a"", StringComparison.Ordinal)", 0 },
             new object[] { @"Equals(""a"")", @"Equals(""a"", StringComparison.OrdinalIgnoreCase)", 1 },

@@ -23,8 +23,6 @@ namespace BugHunter.AnalyzersVersions.StringAndCulture
     {
         public const string DiagnosticId = "BH4004";
 
-        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
-
         private static readonly ApiReplacementConfig Config = new ApiReplacementConfig(
             Rule,
             new[] { "System.String" },
@@ -32,9 +30,14 @@ namespace BugHunter.AnalyzersVersions.StringAndCulture
 
         private static readonly ISyntaxNodeAnalyzer Analyzer = new InnerMethodInvocationAnalyzer(Config);
 
+        /// <inheritdoc />
+        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics
+            => ImmutableArray.Create(Rule);
+
         private static DiagnosticDescriptor Rule
             => StringMethodsRuleBuilder.CreateRuleForComparisonMethods(DiagnosticId);
 
+        /// <inheritdoc />
         public override void Initialize(AnalysisContext context)
         {
             context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.None);
@@ -45,11 +48,16 @@ namespace BugHunter.AnalyzersVersions.StringAndCulture
 
         internal class InnerMethodInvocationAnalyzer : MethodInvocationAnalyzer
         {
+            /// <summary>
+            /// Initializes a new instance of the <see cref="InnerMethodInvocationAnalyzer"/> class.
+            /// </summary>
+            /// <param name="config">Configuration for analysis</param>
             public InnerMethodInvocationAnalyzer(ApiReplacementConfig config)
                 : base(config, new MethodInvocationOnlyDiagnosticFormatter())
             {
             }
 
+            /// <inheritdoc />
             protected override bool IsForbiddenUsage(InvocationExpressionSyntax invocationExpression, IMethodSymbol methodSymbol)
             => methodSymbol.Parameters.All(argument => !IsStringComparison(argument) && !IsCultureInfo(argument)) && !IsFirstArgumentChar(methodSymbol);
 

@@ -13,19 +13,15 @@ namespace BugHunter.Web.Analyzers.Tests.CmsApiGuidelinesTests
     public class ConnectionHelperExecuteQueryTest : CodeFixVerifier<ConnectionHelperExecuteQueryAnalyzer>
     {
         protected override MetadataReference[] GetAdditionalReferences()
-        {
-            return ReferencesHelper.CMSBasicReferences.Union(ReferencesHelper.GetReferencesFor(typeof(System.Data.DataSet))).ToArray();
-        }
+            => ReferencesHelper.CMSBasicReferences.Union(ReferencesHelper.GetReferencesFor(typeof(System.Data.DataSet))).ToArray();
 
         private DiagnosticResult GetDiagnosticResult(string usage)
-        {
-            return new DiagnosticResult
-            {
-                Id = DiagnosticIds.ConnectionHelperExecuteQuery,
-                Message = $"'{usage}' should not be called directly from this file. Move the logic to codebehind instead.",
-                Severity = DiagnosticSeverity.Warning,
-            };
-        }
+            => new DiagnosticResult
+                {
+                    Id = DiagnosticIds.ConnectionHelperExecuteQuery,
+                    Message = $"'{usage}' should not be called directly from this file. Move the logic to codebehind instead.",
+                    Severity = DiagnosticSeverity.Warning,
+                };
 
         [Test]
         public void EmptyInput_NoDiagnostic()

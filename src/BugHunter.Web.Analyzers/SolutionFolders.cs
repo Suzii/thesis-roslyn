@@ -1,5 +1,5 @@
-﻿using BugHunter.Core.Extensions;
-using System;
+﻿using System;
+using BugHunter.Core.Extensions;
 
 namespace BugHunter.Web.Analyzers
 {

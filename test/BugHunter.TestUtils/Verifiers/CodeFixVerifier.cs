@@ -13,14 +13,7 @@ using NUnit.Framework;
 
 namespace BugHunter.TestUtils.Verifiers
 {
-    public abstract class CodeFixVerifier<TAnalyzer> : CodeFixVerifier
-    where TAnalyzer : DiagnosticAnalyzer, new()
-    {
-        protected override DiagnosticAnalyzer GetCSharpDiagnosticAnalyzer() => new TAnalyzer();
-
-        protected override CodeFixProvider GetCSharpCodeFixProvider() => null;
-    }
-
+#pragma warning disable SA1402 // File may only contain a single class
     public abstract class CodeFixVerifier<TAnalyzer, TCodeFix> : CodeFixVerifier
         where TAnalyzer : DiagnosticAnalyzer, new()
         where TCodeFix : CodeFixProvider, new()
@@ -28,6 +21,14 @@ namespace BugHunter.TestUtils.Verifiers
         protected override DiagnosticAnalyzer GetCSharpDiagnosticAnalyzer() => new TAnalyzer();
 
         protected override CodeFixProvider GetCSharpCodeFixProvider() => new TCodeFix();
+    }
+
+    public abstract class CodeFixVerifier<TAnalyzer> : CodeFixVerifier
+        where TAnalyzer : DiagnosticAnalyzer, new()
+    {
+        protected override DiagnosticAnalyzer GetCSharpDiagnosticAnalyzer() => new TAnalyzer();
+
+        protected override CodeFixProvider GetCSharpCodeFixProvider() => null;
     }
 
     /// <summary>
@@ -129,7 +130,7 @@ namespace BugHunter.TestUtils.Verifiers
         /// <param name="document">The Document to apply the fix on</param>
         /// <param name="codeAction">A CodeAction that will be applied to the Document.</param>
         /// <returns>A Document with the changes from the CodeAction</returns>
-        private static Document ApplyFix(Document document, CodeAction codeAction)
+        private Document ApplyFix(Document document, CodeAction codeAction)
         {
             var operations = codeAction.GetOperationsAsync(CancellationToken.None).Result;
             var solution = operations.OfType<ApplyChangesOperation>().Single().ChangedSolution;
@@ -166,4 +167,5 @@ namespace BugHunter.TestUtils.Verifiers
             }
         }
     }
+#pragma warning restore SA1402 // File may only contain a single class
 }

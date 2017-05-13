@@ -14,14 +14,9 @@ namespace BugHunter.Analyzers.StringAndCultureRules.Analyzers.Helpers
     /// </summary>
     public abstract class BaseStringMethodsAnalyzer : DiagnosticAnalyzer
     {
-        /// <summary>
-        /// Diagnostic Descriptor that should be used for diagnostic creation
-        /// </summary>
-        protected abstract DiagnosticDescriptor Rule { get; }
+        private static readonly ISyntaxNodeDiagnosticFormatter<InvocationExpressionSyntax> DiagnosticFormatter = new MethodInvocationOnlyDiagnosticFormatter();
 
         private readonly string[] _forbiddenMethods;
-
-        private static readonly ISyntaxNodeDiagnosticFormatter<InvocationExpressionSyntax> DiagnosticFormatter = new MethodInvocationOnlyDiagnosticFormatter();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BaseStringMethodsAnalyzer"/> class.
@@ -32,6 +27,11 @@ namespace BugHunter.Analyzers.StringAndCultureRules.Analyzers.Helpers
         {
             _forbiddenMethods = additionalForbiddenMethods.Concat(new[] { forbiddenMethod }).ToArray();
         }
+
+        /// <summary>
+        /// Gets diagnostic descriptor that should be used for diagnostic creation
+        /// </summary>
+        protected abstract DiagnosticDescriptor Rule { get; }
 
         /// <inheritdoc />
         public override void Initialize(AnalysisContext context)

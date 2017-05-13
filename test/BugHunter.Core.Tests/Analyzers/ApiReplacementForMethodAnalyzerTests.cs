@@ -12,16 +12,6 @@ namespace BugHunter.Core.Tests.Analyzers
     [TestFixture]
     public class ApiReplacementForMethodAnalyzerTests : CodeFixVerifier<FakeApiReplacementForMethodAnalyzer>
     {
-        protected override MetadataReference[] GetAdditionalReferences() => null;
-
-        private static DiagnosticResult CreateDiagnosticResult(params object[] messageArgs)
-            => new DiagnosticResult
-            {
-                Id = "BHFAKE",
-                Message = string.Format(@"'{0}' should not be used.", messageArgs),
-                Severity = DiagnosticSeverity.Warning,
-            };
-
         private static string _fakeClassSource = @"
 namespace OkayNamespace
 {
@@ -48,6 +38,16 @@ namespace FakeNamespace
         }
     }
 }";
+
+        protected override MetadataReference[] GetAdditionalReferences() => null;
+
+        private static DiagnosticResult CreateDiagnosticResult(params object[] messageArgs)
+            => new DiagnosticResult
+            {
+                Id = "BHFAKE",
+                Message = string.Format(@"'{0}' should not be used.", messageArgs),
+                Severity = DiagnosticSeverity.Warning,
+            };
 
         [Test]
         public void EmptyInput_NoDiagnostic()

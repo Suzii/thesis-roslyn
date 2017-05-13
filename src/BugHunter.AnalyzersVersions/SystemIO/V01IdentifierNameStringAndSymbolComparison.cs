@@ -22,6 +22,12 @@ namespace BugHunter.AnalyzersVersions.SystemIO
     public class V01IdentifierNameStringAndSymbolComparison : DiagnosticAnalyzer
 #pragma warning restore RS1001 // Missing diagnostic analyzer attribute.
     {
+        public const string DiagnosticId = "BHxV01";
+
+        private static readonly DiagnosticDescriptor Rule = AnalyzerHelper.GetRule(DiagnosticId);
+
+        private static readonly ISyntaxNodeDiagnosticFormatter<IdentifierNameSyntax> DiagnosticFormatter = new SystemIoDiagnosticFormatter();
+
         private static readonly string[] WhiteListedIdentifierNames =
         {
             "System.IO.IOException",
@@ -53,13 +59,11 @@ namespace BugHunter.AnalyzersVersions.SystemIO
             "System.IO.SeekOrigin"
         };
 
-        public const string DiagnosticId = "BHxV01";
-        private static readonly DiagnosticDescriptor Rule = AnalyzerHelper.GetRule(DiagnosticId);
+        /// <inheritdoc />
+        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics
+            => ImmutableArray.Create(Rule);
 
-        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
-
-        private static readonly ISyntaxNodeDiagnosticFormatter<IdentifierNameSyntax> DiagnosticFormatter = new SystemIoDiagnosticFormatter();
-
+        /// <inheritdoc />
         public override void Initialize(AnalysisContext context)
         {
             context.EnableConcurrentExecution();

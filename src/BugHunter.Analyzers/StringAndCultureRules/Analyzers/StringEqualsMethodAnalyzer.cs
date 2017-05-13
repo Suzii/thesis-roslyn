@@ -17,14 +17,6 @@ namespace BugHunter.Analyzers.StringAndCultureRules.Analyzers
         /// </summary>
         public const string DiagnosticId = DiagnosticIds.StringEqualsMethod;
 
-        /// <inheritdoc />
-        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics
-            => ImmutableArray.Create(Rule);
-
-        /// <inheritdoc />
-        protected override DiagnosticDescriptor Rule
-            => StringMethodsRuleBuilder.CreateRuleForComparisonMethods(DiagnosticId);
-
         /// <summary>
         /// Initializes a new instance of the <see cref="StringEqualsMethodAnalyzer"/> class.
         /// </summary>
@@ -32,5 +24,13 @@ namespace BugHunter.Analyzers.StringAndCultureRules.Analyzers
             : base("Equals")
         {
         }
+
+        /// <inheritdoc />
+        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics
+            => ImmutableArray.Create(Rule);
+
+        /// <inheritdoc />
+        protected override DiagnosticDescriptor Rule
+            => StringMethodsRuleBuilder.CreateRuleForComparisonMethods(DiagnosticId);
     }
 }

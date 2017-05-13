@@ -112,14 +112,14 @@
     <Compile Include="BaseClassAnalyzers\PageBaseAnalyzerRegisterSyntaxTreeAction.cs" />
     <Compile Include="MethodInvocationHeuristics\FormsAuthenticationSignOutAnalyzerNoOptimization.cs" />
     <Compile Include="MethodInvocationHeuristics\FormsAuthenticationSignOutAnalyzer.cs" />
-    <Compile Include="MethodInvocationHeuristics\Helpers\ApiReplacementForMethodAnalyzer_NoOptimization.cs" />
-    <Compile Include="MethodInvocationHeuristics\Helpers\MethodInvocationAnalyzer_NoOptimization.cs" />
+    <Compile Include="MethodInvocationHeuristics\Helpers\ApiReplacementForMethodAnalyzerNoOptimization.cs" />
+    <Compile Include="MethodInvocationHeuristics\Helpers\MethodInvocationAnalyzerNoOptimization.cs" />
     <Compile Include="StringAndCulture\StringAndCultureWithStrategyClassAnalyzer.cs" />
     <Compile Include="StringAndCulture\StringAndCultureWithBaseClassAnalyzer.cs" />
     <Compile Include="SystemIO\Helpers\AnalyzerHelper.cs" />
     <Compile Include="SystemIO\Helpers\SystemIoDiagnosticFormatter.cs" />
     <Compile Include="SystemIO\V00IdentifierNameDirectSemanticModelAccess.cs" />
-    <Compile Include="SystemIO\V00_IdentiferName_EmptyCallback.cs" />
+    <Compile Include="SystemIO\V00IdentifierNameEmptyCallback.cs" />
     <Compile Include="SystemIO\V12IdentifierNameEnhancedSyntaxAnalysisAndStringPlusSymbolAnalysisWithCachedResults.cs" />
     <Compile Include="SystemIO\V11IdentifierNameEnhancedSyntaxAnalysisAndSymbolAnalysisWithCachedResults.cs" />
     <Compile Include="SystemIO\V02IdentifierNameSymbolAnalysis.cs" />

@@ -19,14 +19,6 @@ namespace BugHunter.Analyzers.StringAndCultureRules.Analyzers
         /// </summary>
         public const string DiagnosticId = DiagnosticIds.StringIndexOfMethods;
 
-        /// <inheritdoc />
-        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics
-            => ImmutableArray.Create(Rule);
-
-        /// <inheritdoc />
-        protected override DiagnosticDescriptor Rule
-            => StringMethodsRuleBuilder.CreateRuleForComparisonMethods(DiagnosticId);
-
         /// <summary>
         /// Initializes a new instance of the <see cref="StringIndexOfMethodsAnalyzer"/> class.
         /// </summary>
@@ -34,6 +26,14 @@ namespace BugHunter.Analyzers.StringAndCultureRules.Analyzers
             : base("IndexOf", "LastIndexOf")
         {
         }
+
+        /// <inheritdoc />
+        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics
+            => ImmutableArray.Create(Rule);
+
+        /// <inheritdoc />
+        protected override DiagnosticDescriptor Rule
+            => StringMethodsRuleBuilder.CreateRuleForComparisonMethods(DiagnosticId);
 
         /// <inheritdoc />
         protected override bool IsForbiddenOverload(SyntaxNodeAnalysisContext context, InvocationExpressionSyntax invocationExpression, IMethodSymbol methodSymbol)

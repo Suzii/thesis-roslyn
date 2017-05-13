@@ -11,7 +11,7 @@ namespace BugHunter.Analyzers.Test.StringAndCultureTests
     [TestFixture]
     public class StringIndexOfTest : CodeFixVerifier<StringIndexOfMethodsAnalyzer, StringComparisonMethodsWithModifierCodeFixProvider>
     {
-        static readonly object[] TestSource =
+        private static readonly object[] TestSource =
         {
             new object[] { @"IndexOf(""a"")", @"IndexOf(""a"", StringComparison.Ordinal)", 0 },
             new object[] { @"IndexOf(""a"")", @"IndexOf(""a"", StringComparison.OrdinalIgnoreCase)", 1 },

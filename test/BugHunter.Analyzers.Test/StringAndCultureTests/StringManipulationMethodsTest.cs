@@ -11,7 +11,7 @@ namespace BugHunter.Analyzers.Test.StringAndCultureTests
     [TestFixture]
     public class StringManipulationMethodsTest : CodeFixVerifier<StringManipulationMethodsAnalyzer, StringManipulationMethodsCodeFixProvider>
     {
-        static readonly object[] TestSource =
+        private static readonly object[] TestSource =
         {
             new object[] { "ToLower()", "ToLowerInvariant()", null, 0 },
             new object[] { "ToLower()", "ToLower(CultureInfo.CurrentCulture)", "using System.Globalization;\r\n\r\n", 1 },

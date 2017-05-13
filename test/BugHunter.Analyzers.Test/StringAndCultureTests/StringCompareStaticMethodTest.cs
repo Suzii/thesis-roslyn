@@ -12,7 +12,7 @@ namespace BugHunter.Analyzers.Test.StringAndCultureTests
     [TestFixture]
     public class StringCompareStaticMethodTest : CodeFixVerifier<StringCompareStaticMethodAnalyzer, StringCompareStaticMethodCodeFixProvider>
     {
-        static readonly object[] TestSource =
+        private static readonly object[] TestSource =
         {
             new object[] { @"Compare(""a"", ""aa"")", @"Compare(""a"", ""aa"", StringComparison.Ordinal)", 0 },
             new object[] { @"Compare(""a"", ""aa"")", @"Compare(""a"", ""aa"", StringComparison.OrdinalIgnoreCase)", 1 },

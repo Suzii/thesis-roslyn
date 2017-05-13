@@ -8,7 +8,7 @@ namespace BugHunter.Core.Tests.Extensions
     [TestFixture]
     public class IdentifierNameSyntaxExtensionsTest
     {
-        class GetOuterMostDottedExpression
+        private class GetOuterMostDottedExpression
         {
             [Test]
             public void SingleIdentifierName_ReturnsSelf()

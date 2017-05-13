@@ -18,6 +18,14 @@ namespace BugHunter.Analyzers.StringAndCultureRules.Analyzers
         /// </summary>
         public const string DiagnosticId = DiagnosticIds.StringManipulationMethods;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="StringManipulationMethodsAnalyzer"/> class.
+        /// </summary>
+        public StringManipulationMethodsAnalyzer()
+            : base("ToLower", "ToUpper")
+        {
+        }
+
         /// <inheritdoc />
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics
             => ImmutableArray.Create(Rule);
@@ -29,13 +37,5 @@ namespace BugHunter.Analyzers.StringAndCultureRules.Analyzers
         /// <inheritdoc />
         protected override bool IsForbiddenOverload(SyntaxNodeAnalysisContext context, InvocationExpressionSyntax invocationExpression, IMethodSymbol methodSymbol)
             => invocationExpression.ArgumentList.Arguments.Count == 0;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="StringManipulationMethodsAnalyzer"/> class.
-        /// </summary>
-        public StringManipulationMethodsAnalyzer()
-            : base("ToLower", "ToUpper")
-        {
-        }
     }
 }

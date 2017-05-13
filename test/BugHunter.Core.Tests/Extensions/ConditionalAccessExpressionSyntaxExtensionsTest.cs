@@ -7,7 +7,7 @@ namespace BugHunter.Core.Tests.Extensions
     [TestFixture]
     public class ConditionalAccessExpressionSyntaxExtensionsTest
     {
-        class GetFirstMemberBindingExpression
+        private class GetFirstMemberBindingExpression
         {
             [Test]
             public void OnConditionalAccess_ReturnsFirstMemberBinding()

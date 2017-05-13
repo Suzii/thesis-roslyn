@@ -12,8 +12,8 @@ namespace BugHunter.Core.Tests.DiagnosticsFormatting
     [TestFixture]
     public class NamedTypeSymbolDiagnosticFormatterTests
     {
-        private ISymbolDiagnosticFormatter<INamedTypeSymbol> _diagnosticFormatter;
         private readonly DiagnosticDescriptor _rule = new DiagnosticDescriptor("FakeID", "Title", "{0}", "Category", DiagnosticSeverity.Warning, true);
+        private ISymbolDiagnosticFormatter<INamedTypeSymbol> _diagnosticFormatter;
 
         [SetUp]
         public void SetUp()

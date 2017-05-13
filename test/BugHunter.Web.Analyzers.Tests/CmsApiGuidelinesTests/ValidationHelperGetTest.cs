@@ -13,22 +13,18 @@ namespace BugHunter.Web.Analyzers.Tests.CmsApiGuidelinesTests
     [TestFixture]
     public class ValidationHelperGetTest : CodeFixVerifier<ValidationHelperGetAnalyzer, ValidationHelperGetCodeFixProvider>
     {
+        private readonly FakeFileInfo _fakeFileInfo = new FakeFileInfo { FileLocation = SolutionFolders.WebParts };
+
         protected override MetadataReference[] GetAdditionalReferences()
-        {
-            return ReferencesHelper.CMSBasicReferences;
-        }
+            => ReferencesHelper.CMSBasicReferences;
 
         private DiagnosticResult GetDiagnosticResult(params string[] messageArguments)
-        {
-            return new DiagnosticResult
-            {
-                Id = DiagnosticIds.ValidationHelperGet,
-                Message = string.Format("Do not use {0}(). Use Get method with 'System' instead to ensure specific culture representation.", messageArguments),
-                Severity = DiagnosticSeverity.Warning,
-            };
-        }
-
-        private readonly FakeFileInfo _fakeFileInfo = new FakeFileInfo { FileLocation = SolutionFolders.WebParts };
+            => new DiagnosticResult
+                {
+                    Id = DiagnosticIds.ValidationHelperGet,
+                    Message = string.Format("Do not use {0}(). Use Get method with 'System' instead to ensure specific culture representation.", messageArguments),
+                    Severity = DiagnosticSeverity.Warning,
+                };
 
         [Test]
         public void EmptyInput_NoDiagnostic()

@@ -26,10 +26,6 @@ namespace BugHunter.Web.Analyzers.CmsBaseClassesRules.Analyzers
         /// </summary>
         public const string UIWebPartDiagnosticId = DiagnosticIds.UIWebPartBase;
 
-        /// <inheritdoc />
-        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics
-            => ImmutableArray.Create(WebPartRule, UiWebPartRule);
-
         private static readonly DiagnosticDescriptor WebPartRule = BaseClassesInheritanceRulesProvider.GetRule(WebPartDiagnosticId, "Web Part", "some abstract CMS WebPart");
 
         private static readonly DiagnosticDescriptor UiWebPartRule = BaseClassesInheritanceRulesProvider.GetRule(UIWebPartDiagnosticId, "UI Web Part", "some abstract CMS UI WebPart");
@@ -49,6 +45,10 @@ namespace BugHunter.Web.Analyzers.CmsBaseClassesRules.Analyzers
             "CMS.PortalEngine.Web.UI.CMSAbstractWizardWebPart",
             "CMS.Ecommerce.Web.UI.CMSCheckoutWebPart"
         };
+
+        /// <inheritdoc />
+        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics
+            => ImmutableArray.Create(WebPartRule, UiWebPartRule);
 
         /// <inheritdoc />
         public override void Initialize(AnalysisContext context)

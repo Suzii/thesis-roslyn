@@ -13,24 +13,26 @@ namespace BugHunter.Web.Analyzers.Tests.CmsBaseClassesTests
     [TestFixture]
     public class PageBaseTest : CodeFixVerifier<PageBaseAnalyzer, PageBaseCodeFixProvider>
     {
-        protected override MetadataReference[] GetAdditionalReferences()
+        private static readonly FakeFileInfo PagesFakeFileInfo = new FakeFileInfo { FileExtension = "aspx.cs" };
+
+        private static readonly object[] CodeFixesTestSource =
         {
-            return ReferencesHelper.CMSBasicReferences
+            new object[] { nameof(CMS.UIControls.AbstractCMSPage), "CMS.UIControls", 0 },
+            new object[] { nameof(CMS.UIControls.CMSUIPage), "CMS.UIControls", 1 },
+        };
+
+        protected override MetadataReference[] GetAdditionalReferences()
+            => ReferencesHelper.CMSBasicReferences
                 .Union(new[] { ReferencesHelper.CMSBaseWebUI, ReferencesHelper.SystemWebReference, ReferencesHelper.SystemWebUIReference, ReferencesHelper.CMSUiControls })
                 .ToArray();
-        }
-
-        private readonly FakeFileInfo _pagesFakeFileInfo = new FakeFileInfo { FileExtension = "aspx.cs" };
 
         private DiagnosticResult GetDiagnosticResult(params string[] messageArguments)
-        {
-            return new DiagnosticResult
-            {
-                Id = DiagnosticIds.PageBase,
-                Message = $"'{messageArguments[0]}' should inherit from some abstract CMSPage.",
-                Severity = DiagnosticSeverity.Warning,
-            };
-        }
+            => new DiagnosticResult
+                {
+                    Id = DiagnosticIds.PageBase,
+                    Message = $"'{messageArguments[0]}' should inherit from some abstract CMSPage.",
+                    Severity = DiagnosticSeverity.Warning,
+                };
 
         [Test]
         public void EmptyInput_NoDiagnostic()
@@ -67,7 +69,7 @@ namespace BugHunter.Web.Analyzers.Tests.CmsBaseClassesTests
     }}
 }}";
 
-            VerifyCSharpDiagnostic(test, _pagesFakeFileInfo);
+            VerifyCSharpDiagnostic(test, PagesFakeFileInfo);
         }
 
         [TestCase(nameof(CMS.UIControls.AbstractCMSPage))]
@@ -82,7 +84,7 @@ namespace SampleTestProject.CsSamples
     {{
     }}
 }}";
-            VerifyCSharpDiagnostic(test, _pagesFakeFileInfo);
+            VerifyCSharpDiagnostic(test, PagesFakeFileInfo);
         }
 
         [TestCase(nameof(System.Web.UI.Page))]
@@ -102,16 +104,10 @@ namespace SampleTestProject.CsSamples
         }}
     }}
 }}";
-            var expectedDiagnostic = GetDiagnosticResult("SampleClass").WithLocation(5, 26, _pagesFakeFileInfo);
+            var expectedDiagnostic = GetDiagnosticResult("SampleClass").WithLocation(5, 26, PagesFakeFileInfo);
 
-            VerifyCSharpDiagnostic(test, _pagesFakeFileInfo, expectedDiagnostic);
+            VerifyCSharpDiagnostic(test, PagesFakeFileInfo, expectedDiagnostic);
         }
-
-        private static readonly object[] CodeFixesTestSource =
-        {
-            new object[] { nameof(CMS.UIControls.AbstractCMSPage), "CMS.UIControls", 0 },
-            new object[] { nameof(CMS.UIControls.CMSUIPage), "CMS.UIControls", 1 },
-        };
 
         [Test, TestCaseSource(nameof(CodeFixesTestSource))]
         public void InputWithError_ClassExtendingWrongClass_ProvidesCodefixes(string baseClassToExtend, string namespaceToBeUsed, int codeFixNumber)
@@ -122,9 +118,9 @@ namespace SampleTestProject.CsSamples
     {{
     }}
 }}";
-            var expectedDiagnostic = GetDiagnosticResult("SampleClass").WithLocation(3, 26, _pagesFakeFileInfo);
+            var expectedDiagnostic = GetDiagnosticResult("SampleClass").WithLocation(3, 26, PagesFakeFileInfo);
 
-            VerifyCSharpDiagnostic(test, _pagesFakeFileInfo, expectedDiagnostic);
+            VerifyCSharpDiagnostic(test, PagesFakeFileInfo, expectedDiagnostic);
 
             var expectedFix = $@"using {namespaceToBeUsed};
 
@@ -135,7 +131,7 @@ namespace SampleTestProject.CsSamples
     }}
 }}";
 
-            VerifyCSharpFix(test, expectedFix, codeFixNumber, false, _pagesFakeFileInfo);
+            VerifyCSharpFix(test, expectedFix, codeFixNumber, false, PagesFakeFileInfo);
         }
     }
 }

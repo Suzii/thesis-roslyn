@@ -16,6 +16,12 @@ namespace BugHunter.Web.Analyzers.CmsBaseClassesRules.CodeFixes
     [ExportCodeFixProvider(LanguageNames.CSharp, Name = nameof(PageBaseCodeFixProvider)), Shared]
     public class PageBaseCodeFixProvider : CodeFixProvider
     {
+        private static readonly ClassAndItsNamespace[] SuggestedBaseClasses =
+        {
+            new ClassAndItsNamespace { ClassNamespace = "CMS.UIControls", ClassName = "AbstractCMSPage" },
+            new ClassAndItsNamespace { ClassNamespace = "CMS.UIControls", ClassName = "CMSUIPage" },
+        };
+
         /// <inheritdoc />
         public sealed override ImmutableArray<string> FixableDiagnosticIds
             => ImmutableArray.Create(PageBaseAnalyzer.DiagnosticId);
@@ -23,12 +29,6 @@ namespace BugHunter.Web.Analyzers.CmsBaseClassesRules.CodeFixes
         /// <inheritdoc />
         public sealed override FixAllProvider GetFixAllProvider()
             => WellKnownFixAllProviders.BatchFixer;
-
-        private static readonly ClassAndItsNamespace[] SuggestedBaseClasses =
-        {
-            new ClassAndItsNamespace { ClassNamespace = "CMS.UIControls", ClassName = "AbstractCMSPage" },
-            new ClassAndItsNamespace { ClassNamespace = "CMS.UIControls", ClassName = "CMSUIPage" },
-        };
 
         /// <inheritdoc />
         public sealed override async Task RegisterCodeFixesAsync(CodeFixContext context)

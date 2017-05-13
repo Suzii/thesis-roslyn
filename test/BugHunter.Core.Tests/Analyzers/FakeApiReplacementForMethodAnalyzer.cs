@@ -14,8 +14,6 @@ namespace BugHunter.Core.Tests.Analyzers
 
         private static readonly DiagnosticDescriptor Rule = ApiReplacementRulesProvider.GetRule(DiagnosticId, "FakeClass.FakeMethod");
 
-        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
-
         private static readonly ApiReplacementConfig ApiReplacementConfig = new ApiReplacementConfig(
             Rule,
             new[] { "FakeNamespace.FakeClass" },
@@ -23,6 +21,10 @@ namespace BugHunter.Core.Tests.Analyzers
 
         private static readonly ApiReplacementForMethodAnalyzer ApiReplacementAnalyzer = new ApiReplacementForMethodAnalyzer(ApiReplacementConfig);
 
+        /// <inheritdoc />
+        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
+
+        /// <inheritdoc />
         public override void Initialize(AnalysisContext context)
         {
             ApiReplacementAnalyzer.RegisterAnalyzers(context);

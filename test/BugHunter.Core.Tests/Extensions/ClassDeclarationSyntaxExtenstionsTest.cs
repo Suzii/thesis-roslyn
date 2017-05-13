@@ -9,6 +9,16 @@ namespace BugHunter.Core.Tests.Extensions
     [TestFixture]
     public class ClassDeclarationSyntaxExtenstionsTest
     {
+        private static ClassDeclarationSyntax GetClassDeclarationSyntax(string classDeclaration)
+        {
+            return SyntaxFactory
+                .ParseSyntaxTree(classDeclaration)
+                .GetRoot()
+                .DescendantNodesAndSelf()
+                .OfType<ClassDeclarationSyntax>()
+                .Single();
+        }
+
         private class IsPublic
         {
             [TestCase("public class A { }")]
@@ -125,16 +135,6 @@ namespace BugHunter.Core.Tests.Extensions
 
                 Assert.AreEqual(expectedFix, GetClassDeclarationSyntax(test).WithBaseClass("SomeBaseClass").ToString());
             }
-        }
-
-        private static ClassDeclarationSyntax GetClassDeclarationSyntax(string classDeclaration)
-        {
-            return SyntaxFactory
-                .ParseSyntaxTree(classDeclaration)
-                .GetRoot()
-                .DescendantNodesAndSelf()
-                .OfType<ClassDeclarationSyntax>()
-                .Single();
         }
     }
 }

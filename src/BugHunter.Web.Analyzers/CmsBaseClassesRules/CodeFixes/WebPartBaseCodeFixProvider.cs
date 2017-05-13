@@ -17,14 +17,6 @@ namespace BugHunter.Web.Analyzers.CmsBaseClassesRules.CodeFixes
     [ExportCodeFixProvider(LanguageNames.CSharp, Name = nameof(WebPartBaseCodeFixProvider)), Shared]
     public class WebPartBaseCodeFixProvider : CodeFixProvider
     {
-        /// <inheritdoc />
-        public sealed override ImmutableArray<string> FixableDiagnosticIds
-            => ImmutableArray.Create(WebPartBaseAnalyzer.WebPartDiagnosticId, WebPartBaseAnalyzer.UIWebPartDiagnosticId);
-
-        /// <inheritdoc />
-        public sealed override FixAllProvider GetFixAllProvider()
-            => WellKnownFixAllProviders.BatchFixer;
-
         private static readonly ClassAndItsNamespace[] UiWebPartBaseClasses =
         {
             new ClassAndItsNamespace { ClassNamespace = "CMS.UIControls", ClassName = "CMSAbstractUIWebpart" },
@@ -38,6 +30,14 @@ namespace BugHunter.Web.Analyzers.CmsBaseClassesRules.CodeFixes
             new ClassAndItsNamespace { ClassNamespace = "CMS.PortalEngine.Web.UI", ClassName = "CMSAbstractWizardWebPart" },
             new ClassAndItsNamespace { ClassNamespace = "CMS.Ecommerce.Web.UI", ClassName = "CMSCheckoutWebPart" },
         };
+
+        /// <inheritdoc />
+        public sealed override ImmutableArray<string> FixableDiagnosticIds
+            => ImmutableArray.Create(WebPartBaseAnalyzer.WebPartDiagnosticId, WebPartBaseAnalyzer.UIWebPartDiagnosticId);
+
+        /// <inheritdoc />
+        public sealed override FixAllProvider GetFixAllProvider()
+            => WellKnownFixAllProviders.BatchFixer;
 
         /// <inheritdoc />
         public sealed override async Task RegisterCodeFixesAsync(CodeFixContext context)

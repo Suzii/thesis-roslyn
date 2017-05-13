@@ -11,7 +11,7 @@ namespace BugHunter.Analyzers.Test.StringAndCultureTests
     [TestFixture]
     public class StringCompareToTest : CodeFixVerifier<StringCompareToMethodAnalyzer, StringCompareToMethodCodeFixProvider>
     {
-        static readonly object[] TestSource =
+        private static readonly object[] TestSource =
         {
             new object[] { @"CompareTo(""a"")", @"string.Compare(""aa"", ""a"", StringComparison.Ordinal)", 0 },
             new object[] { @"CompareTo(""a"")", @"string.Compare(""aa"", ""a"", StringComparison.OrdinalIgnoreCase)", 1 },
@@ -21,7 +21,7 @@ namespace BugHunter.Analyzers.Test.StringAndCultureTests
             new object[] { @"CompareTo(""a"")", @"string.Compare(""aa"", ""a"", StringComparison.InvariantCultureIgnoreCase)", 5 },
         };
 
-        static readonly object[] TestSourceWithVariable =
+        private static readonly object[] TestSourceWithVariable =
 {
             new object[] { @"CompareTo(""a"")", @"string.Compare(ouch, ""a"", StringComparison.Ordinal)", 0 },
             new object[] { @"CompareTo(""a"")", @"string.Compare(ouch, ""a"", StringComparison.OrdinalIgnoreCase)", 1 },

@@ -11,17 +11,7 @@ namespace BugHunter.Analyzers.Test.StringAndCultureTests
     [TestFixture]
     public class StringStartsEndsWithTest : CodeFixVerifier<StringStartAndEndsWithMethodsAnalyzer, StringComparisonMethodsWithModifierCodeFixProvider>
     {
-        protected override MetadataReference[] GetAdditionalReferences() => null;
-
-        private DiagnosticResult GetDiagnosticResult(string methodUsed)
-            => new DiagnosticResult
-            {
-                Id = DiagnosticIds.StringStartsEndsWithMethods,
-                Message = $"'{methodUsed}' used without specifying StringComparison.",
-                Severity = DiagnosticSeverity.Warning,
-            };
-
-        static readonly object[] TestSource =
+        private static readonly object[] TestSource =
         {
             new object[] { @"StartsWith(""a"")", @"StartsWith(""a"", StringComparison.Ordinal)", 0 },
             new object[] { @"StartsWith(""a"")", @"StartsWith(""a"", StringComparison.OrdinalIgnoreCase)", 1 },
@@ -37,6 +27,16 @@ namespace BugHunter.Analyzers.Test.StringAndCultureTests
             new object[] { @"EndsWith(""a"")", @"EndsWith(""a"", StringComparison.InvariantCulture)", 4 },
             new object[] { @"EndsWith(""a"")", @"EndsWith(""a"", StringComparison.InvariantCultureIgnoreCase)", 5 },
         };
+
+        protected override MetadataReference[] GetAdditionalReferences() => null;
+
+        private DiagnosticResult GetDiagnosticResult(string methodUsed)
+            => new DiagnosticResult
+            {
+                Id = DiagnosticIds.StringStartsEndsWithMethods,
+                Message = $"'{methodUsed}' used without specifying StringComparison.",
+                Severity = DiagnosticSeverity.Warning,
+            };
 
         [Test]
         public void EmptyInput_NoDiagnostic()

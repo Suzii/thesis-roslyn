@@ -17,16 +17,16 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.Analyzers
 
         private static readonly DiagnosticDescriptor Rule = ApiReplacementRulesProvider.GetRule(DiagnosticId, "Response.Redirect()");
 
-        /// <inheritdoc />
-        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics
-            => ImmutableArray.Create(Rule);
-
         private static readonly ApiReplacementConfig Config = new ApiReplacementConfig(
             Rule,
             new[] { "System.Web.HttpResponse", "System.Web.HttpResponseBase" },
             new[] { "Redirect" });
 
         private static readonly ApiReplacementForMethodAnalyzer Analyzer = new ApiReplacementForMethodAnalyzer(Config);
+
+        /// <inheritdoc />
+        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics
+            => ImmutableArray.Create(Rule);
 
         /// <inheritdoc />
         public override void Initialize(AnalysisContext context)

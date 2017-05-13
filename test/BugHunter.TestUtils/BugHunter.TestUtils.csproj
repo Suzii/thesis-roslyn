@@ -610,6 +610,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Helpers\DiagnosticResultLocation.cs" />
     <Compile Include="ReferencesHelper.cs" />
     <Compile Include="Services\AnalyzerExecution.cs" />
     <Compile Include="Services\ProjectCompilation.cs" />

@@ -13,22 +13,24 @@ namespace BugHunter.Web.Analyzers.Tests.CmsBaseClassesTests
     [TestFixture]
     public class UserControlBaseTest : CodeFixVerifier<UserControlBaseAnalyzer, UserControlBaseCodeFixProvider>
     {
-        protected override MetadataReference[] GetAdditionalReferences()
-        {
-            return ReferencesHelper.CMSBasicReferences.Union(new[] { ReferencesHelper.CMSBaseWebUI, ReferencesHelper.SystemWebReference, ReferencesHelper.SystemWebUIReference }).ToArray();
-        }
+        private static readonly FakeFileInfo UserControlFakeFileInfo = new FakeFileInfo { FileExtension = "ascx.cs" };
 
-        private readonly FakeFileInfo _userControlFakeFileInfo = new FakeFileInfo { FileExtension = "ascx.cs" };
+        private static readonly object[] CodeFixesTestSource =
+        {
+            new object[] { nameof(CMS.UIControls.CMSUserControl), "CMS.UIControls", 0 },
+            new object[] { nameof(CMS.Base.Web.UI.AbstractUserControl), "CMS.Base.Web.UI", 1 },
+        };
+
+        protected override MetadataReference[] GetAdditionalReferences()
+            => ReferencesHelper.CMSBasicReferences.Union(new[] { ReferencesHelper.CMSBaseWebUI, ReferencesHelper.SystemWebReference, ReferencesHelper.SystemWebUIReference }).ToArray();
 
         private DiagnosticResult GetDiagnosticResult(params string[] messageArguments)
-        {
-            return new DiagnosticResult
-            {
-                Id = DiagnosticIds.UserControlBase,
-                Message = $"'{messageArguments[0]}' should inherit from some abstract CMSUserControl.",
-                Severity = DiagnosticSeverity.Warning,
-            };
-        }
+            => new DiagnosticResult
+                {
+                    Id = DiagnosticIds.UserControlBase,
+                    Message = $"'{messageArguments[0]}' should inherit from some abstract CMSUserControl.",
+                    Severity = DiagnosticSeverity.Warning,
+                };
 
         [Test]
         public void EmptyInput_NoDiagnostic()
@@ -64,7 +66,7 @@ namespace BugHunter.Web.Analyzers.Tests.CmsBaseClassesTests
     }}
 }}";
 
-            VerifyCSharpDiagnostic(test, _userControlFakeFileInfo);
+            VerifyCSharpDiagnostic(test, UserControlFakeFileInfo);
         }
 
         [TestCase(nameof(CMS.Base.Web.UI.AbstractUserControl))]
@@ -79,7 +81,7 @@ namespace SampleTestProject.CsSamples
     {{
     }}
 }}";
-            VerifyCSharpDiagnostic(test, _userControlFakeFileInfo);
+            VerifyCSharpDiagnostic(test, UserControlFakeFileInfo);
         }
 
         [TestCase(nameof(System.Web.UI.UserControl))]
@@ -94,16 +96,10 @@ namespace SampleTestProject.CsSamples
     {{
     }}
 }}";
-            var expectedDiagnostic = GetDiagnosticResult("SampleClass").WithLocation(5, 26, _userControlFakeFileInfo);
+            var expectedDiagnostic = GetDiagnosticResult("SampleClass").WithLocation(5, 26, UserControlFakeFileInfo);
 
-            VerifyCSharpDiagnostic(test, _userControlFakeFileInfo, expectedDiagnostic);
+            VerifyCSharpDiagnostic(test, UserControlFakeFileInfo, expectedDiagnostic);
         }
-
-        private static readonly object[] CodeFixesTestSource =
-        {
-            new object[] { nameof(CMS.UIControls.CMSUserControl), "CMS.UIControls", 0 },
-            new object[] { nameof(CMS.Base.Web.UI.AbstractUserControl), "CMS.Base.Web.UI", 1 },
-        };
 
         [Test, TestCaseSource(nameof(CodeFixesTestSource))]
         public void InputWithError_ClassExtendingWrongClass_ProvidesCodefixes(string baseClassToExtend, string namespaceToBeUsed, int codeFixNumber)
@@ -114,9 +110,9 @@ namespace SampleTestProject.CsSamples
     {{
     }}
 }}";
-            var expectedDiagnostic = GetDiagnosticResult("SampleClass").WithLocation(3, 26, _userControlFakeFileInfo);
+            var expectedDiagnostic = GetDiagnosticResult("SampleClass").WithLocation(3, 26, UserControlFakeFileInfo);
 
-            VerifyCSharpDiagnostic(test, _userControlFakeFileInfo, expectedDiagnostic);
+            VerifyCSharpDiagnostic(test, UserControlFakeFileInfo, expectedDiagnostic);
 
             var expectedFix = $@"using {namespaceToBeUsed};
 
@@ -127,7 +123,7 @@ namespace SampleTestProject.CsSamples
     }}
 }}";
 
-            VerifyCSharpFix(test, expectedFix, codeFixNumber, false, _userControlFakeFileInfo);
+            VerifyCSharpFix(test, expectedFix, codeFixNumber, false, UserControlFakeFileInfo);
         }
     }
 }
