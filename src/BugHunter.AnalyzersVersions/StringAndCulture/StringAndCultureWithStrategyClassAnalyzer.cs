@@ -25,11 +25,11 @@ namespace BugHunter.AnalyzersVersions.StringAndCulture
         
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
 
-        private static readonly ApiReplacementConfig config = new ApiReplacementConfig(Rule,
+        private static readonly ApiReplacementConfig Config = new ApiReplacementConfig(Rule,
             new[] { "System.String" },
             new[] { "IndexOf", "LastIndexOf" });
         
-        private static readonly ISyntaxNodeAnalyzer analyzer = new InnerMethodInvocationAnalyzer(config);
+        private static readonly ISyntaxNodeAnalyzer Analyzer = new InnerMethodInvocationAnalyzer(Config);
 
         private static DiagnosticDescriptor Rule 
             => StringMethodsRuleBuilder.CreateRuleForComparisonMethods(DiagnosticId);
@@ -39,7 +39,7 @@ namespace BugHunter.AnalyzersVersions.StringAndCulture
             context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.None);
             context.EnableConcurrentExecution();
 
-            context.RegisterSyntaxNodeAction(analyzer.Run, SyntaxKind.InvocationExpression);
+            context.RegisterSyntaxNodeAction(Analyzer.Run, SyntaxKind.InvocationExpression);
         }
 
         internal class InnerMethodInvocationAnalyzer : MethodInvocationAnalyzer

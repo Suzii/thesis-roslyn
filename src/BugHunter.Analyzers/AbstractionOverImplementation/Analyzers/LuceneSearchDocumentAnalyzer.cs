@@ -28,7 +28,7 @@ namespace BugHunter.Analyzers.AbstractionOverImplementation.Analyzers
             description: new LocalizableResourceString(nameof(AbstractionOverImplementationResources.LuceneSearchDocument_Description), AbstractionOverImplementationResources.ResourceManager, typeof(AbstractionOverImplementationResources)),
             helpLinkUri: HelpLinkUriProvider.GetHelpLink(DiagnosticId));
 
-        private static readonly ISyntaxNodeDiagnosticFormatter<SyntaxNode> diagnosticFormatter = new DefaultDiagnosticFormatter<SyntaxNode>();
+        private static readonly ISyntaxNodeDiagnosticFormatter<SyntaxNode> DiagnosticFormatter = new DefaultDiagnosticFormatter<SyntaxNode>();
 
         /// <inheritdoc />
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics 
@@ -72,7 +72,7 @@ namespace BugHunter.Analyzers.AbstractionOverImplementation.Analyzers
                 ? identifierNameSyntax.Parent
                 : identifierNameSyntax;
 
-           var diagnostic = diagnosticFormatter.CreateDiagnostic(Rule, diagnosedNode);
+           var diagnostic = DiagnosticFormatter.CreateDiagnostic(Rule, diagnosedNode);
 
             context.ReportDiagnostic(diagnostic);
         }

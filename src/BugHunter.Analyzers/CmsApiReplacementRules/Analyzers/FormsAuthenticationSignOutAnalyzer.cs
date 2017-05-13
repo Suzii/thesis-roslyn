@@ -24,16 +24,16 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.Analyzers
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics 
             => ImmutableArray.Create(Rule);
 
-        private static readonly ApiReplacementConfig config = new ApiReplacementConfig(Rule,
+        private static readonly ApiReplacementConfig Config = new ApiReplacementConfig(Rule,
             new []{ "System.Web.Security.FormsAuthentication" },
             new []{ "SignOut" });
 
-        private static readonly ApiReplacementForMethodAnalyzer analyzer = new ApiReplacementForMethodAnalyzer(config);
+        private static readonly ApiReplacementForMethodAnalyzer Analyzer = new ApiReplacementForMethodAnalyzer(Config);
 
         /// <inheritdoc />
         public override void Initialize(AnalysisContext context)
         {
-            analyzer.RegisterAnalyzers(context);
+            Analyzer.RegisterAnalyzers(context);
         }
     }
 }

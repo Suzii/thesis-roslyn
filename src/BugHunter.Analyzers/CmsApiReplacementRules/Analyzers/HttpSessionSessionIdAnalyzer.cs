@@ -27,16 +27,16 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.Analyzers
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics 
             => ImmutableArray.Create(Rule);
 
-        private static readonly ApiReplacementConfig apiReplacementConfig = new ApiReplacementConfig(Rule,
+        private static readonly ApiReplacementConfig ApiReplacementConfig = new ApiReplacementConfig(Rule,
             new []{ "System.Web.SessionState.HttpSessionState", "System.Web.HttpSessionStateBase"},
             new []{ "SessionID"});
 
-        private static readonly ApiReplacementForMemberAnalyzer apiReplacementAnalyzer = new ApiReplacementForMemberAnalyzer(apiReplacementConfig);
+        private static readonly ApiReplacementForMemberAnalyzer ApiReplacementAnalyzer = new ApiReplacementForMemberAnalyzer(ApiReplacementConfig);
 
         /// <inheritdoc />
         public override void Initialize(AnalysisContext context)
         {
-            apiReplacementAnalyzer.RegisterAnalyzers(context);
+            ApiReplacementAnalyzer.RegisterAnalyzers(context);
         }
     }
 }

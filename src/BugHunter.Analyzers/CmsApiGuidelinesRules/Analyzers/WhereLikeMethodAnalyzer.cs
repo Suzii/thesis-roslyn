@@ -27,11 +27,11 @@ namespace BugHunter.Analyzers.CmsApiGuidelinesRules.Analyzers
             description: new LocalizableResourceString(nameof(CmsApiGuidelinesResources.WhereLikeMethod_Description), CmsApiGuidelinesResources.ResourceManager, typeof(CmsApiGuidelinesResources)),
             helpLinkUri: HelpLinkUriProvider.GetHelpLink(DiagnosticId));
 
-        private static readonly ApiReplacementConfig config = new ApiReplacementConfig(Rule,
+        private static readonly ApiReplacementConfig Config = new ApiReplacementConfig(Rule,
            new[] { "CMS.DataEngine.WhereConditionBase`1" },
            new[] { "WhereLike", "WhereNotLike" });
 
-        private static readonly ISyntaxNodeAnalyzer analyzer = new MethodInvocationAnalyzer(config, new MethodInvocationOnlyDiagnosticFormatter());
+        private static readonly ISyntaxNodeAnalyzer Analyzer = new MethodInvocationAnalyzer(Config, new MethodInvocationOnlyDiagnosticFormatter());
         
         /// <inheritdoc />
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics
@@ -43,7 +43,7 @@ namespace BugHunter.Analyzers.CmsApiGuidelinesRules.Analyzers
             context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.None);
             context.EnableConcurrentExecution();
 
-            context.RegisterSyntaxNodeAction(analyzer.Run, SyntaxKind.InvocationExpression);
+            context.RegisterSyntaxNodeAction(Analyzer.Run, SyntaxKind.InvocationExpression);
         }
     }
 }

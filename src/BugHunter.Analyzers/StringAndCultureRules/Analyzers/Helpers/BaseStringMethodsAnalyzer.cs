@@ -21,7 +21,7 @@ namespace BugHunter.Analyzers.StringAndCultureRules.Analyzers.Helpers
 
         private readonly string[] _forbiddenMethods;
 
-        private static readonly ISyntaxNodeDiagnosticFormatter<InvocationExpressionSyntax> diagnosticFormatter = new MethodInvocationOnlyDiagnosticFormatter();
+        private static readonly ISyntaxNodeDiagnosticFormatter<InvocationExpressionSyntax> DiagnosticFormatter = new MethodInvocationOnlyDiagnosticFormatter();
 
         /// <summary>
         /// Constructor accepting one or more names of string methods that are considered forbidden and diagnostic should be raised for them
@@ -84,7 +84,7 @@ namespace BugHunter.Analyzers.StringAndCultureRules.Analyzers.Helpers
                 return;
             }
 
-            var diagnostic = diagnosticFormatter.CreateDiagnostic(Rule, invocationExpression);
+            var diagnostic = DiagnosticFormatter.CreateDiagnostic(Rule, invocationExpression);
             context.ReportDiagnostic(diagnostic);
         }
 

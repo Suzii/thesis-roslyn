@@ -28,11 +28,11 @@ namespace BugHunter.Analyzers.CmsApiGuidelinesRules.Analyzers
             description: new LocalizableResourceString(nameof(CmsApiGuidelinesResources.EventLogArguments_Description), CmsApiGuidelinesResources.ResourceManager, typeof(CmsApiGuidelinesResources)),
             helpLinkUri: HelpLinkUriProvider.GetHelpLink(DiagnosticId));
 
-        private static readonly ApiReplacementConfig config = new ApiReplacementConfig(Rule,
+        private static readonly ApiReplacementConfig Config = new ApiReplacementConfig(Rule,
                 new[] { "CMS.EventLog.EventLogProvider" },
                 new[] { "LogEvent" });
 
-        private static readonly ISyntaxNodeAnalyzer analyzer = new InnerMethodInvocationAnalyzer(config);
+        private static readonly ISyntaxNodeAnalyzer Analyzer = new InnerMethodInvocationAnalyzer(Config);
 
         /// <inheritdoc />
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics
@@ -44,7 +44,7 @@ namespace BugHunter.Analyzers.CmsApiGuidelinesRules.Analyzers
             context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.None);
             context.EnableConcurrentExecution();
             
-            context.RegisterSyntaxNodeAction(analyzer.Run, SyntaxKind.InvocationExpression);
+            context.RegisterSyntaxNodeAction(Analyzer.Run, SyntaxKind.InvocationExpression);
         }
 
         internal class InnerMethodInvocationAnalyzer : MethodInvocationAnalyzer
