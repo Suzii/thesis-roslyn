@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿// Copyright (c) Zuzana Dankovcikova. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
@@ -13,6 +16,12 @@ namespace ReportAnalyzerTimes.Aggregator
         private readonly int _numberOfFiles;
         private readonly string _extension;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="InputFilesProvider"/> class.
+        /// </summary>
+        /// <param name="fileNamePrefix">Prefix of the file name</param>
+        /// <param name="numberOfFiles">Number of files</param>
+        /// <param name="extension">File extension</param>
         public InputFilesProvider(string fileNamePrefix, int numberOfFiles, string extension)
         {
             _fileNamePrefix = fileNamePrefix;
@@ -23,7 +32,7 @@ namespace ReportAnalyzerTimes.Aggregator
         /// <summary>
         /// Return all lines from all files
         /// </summary>
-        /// <returns></returns>
+        /// <returns>All lines of all files</returns>
         public IEnumerable<IEnumerable<string>> GetLinesOfFiles()
         {
             return Enumerable.Range(0, _numberOfFiles)

@@ -1,3 +1,6 @@
+// Copyright (c) Zuzana Dankovcikova. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -6,6 +9,9 @@ using ReportAnalyzerTimes.Models;
 
 namespace ReportAnalyzerTimes.Parser
 {
+    /// <summary>
+    /// Helper class for parsing the log file from MsBuild and searching for section on reported analyzer execution times
+    /// </summary>
     internal class MsBuildLogParser
     {
         // matches any number of lines for analyzer times
@@ -14,7 +20,7 @@ namespace ReportAnalyzerTimes.Parser
         private static readonly Regex ExecutionTimePerAnalyzerRegex = new Regex(@"[\s]+[<]?((?:\d+)\.(?:\d+))[^B]*([\S]+) \(TaskId:[\d]+\)", RegexOptions.Compiled);
 
         /// <summary>
-        /// Parses the <param name="logContents"></param> of the MSBuild process for analyzer execution times 
+        /// Parses the <paramref name="logContents" /> of the MSBuild process for analyzer execution times
         /// and returns them per project
         /// </summary>
         /// <param name="logContents">The contents of the MSBuild log</param>

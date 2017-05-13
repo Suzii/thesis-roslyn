@@ -1,4 +1,7 @@
-﻿using System;
+﻿// Copyright (c) Zuzana Dankovcikova. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -11,18 +14,18 @@ namespace ReportAnalyzerTimes.Aggregator
     /// aggregates the times per analyzer into string,
     /// outputs the times per analyzer as csv file
     /// </summary>
-    class Program
+    internal class Program
     {
-        static int Main(string[] args)
+        private static int Main(string[] args)
         {
-            var inputFilePathPrefix = args.FirstOrDefault(arg => arg.StartsWith("/inPrefix="))?.Substring(10);// ?? @"C:\tmp\aggregated_";
-            var outputFilePath = args.FirstOrDefault(arg => arg.StartsWith("/out="))?.Substring(5);// ?? @"C:\tmp\aggregated-results.csv";
-            var numberOfInputFilesString = args.FirstOrDefault(arg => arg.StartsWith("/count="))?.Substring(7);// ?? "3";
+            var inputFilePathPrefix = args.FirstOrDefault(arg => arg.StartsWith("/inPrefix="))?.Substring(10); // ?? @"C:\tmp\aggregated_";
+            var outputFilePath = args.FirstOrDefault(arg => arg.StartsWith("/out="))?.Substring(5); // ?? @"C:\tmp\aggregated-results.csv";
+            var numberOfInputFilesString = args.FirstOrDefault(arg => arg.StartsWith("/count="))?.Substring(7); // ?? "3";
             int numberOfInputFiles;
 
-            if (string.IsNullOrEmpty(inputFilePathPrefix) 
-                || string.IsNullOrEmpty(outputFilePath) 
-                || !int.TryParse(numberOfInputFilesString,NumberStyles.Integer, CultureInfo.InvariantCulture, out numberOfInputFiles) 
+            if (string.IsNullOrEmpty(inputFilePathPrefix)
+                || string.IsNullOrEmpty(outputFilePath)
+                || !int.TryParse(numberOfInputFilesString, NumberStyles.Integer, CultureInfo.InvariantCulture, out numberOfInputFiles)
                 || numberOfInputFiles < 1)
             {
                 Console.WriteLine($"Called with: {string.Join(" ", args)}");
@@ -30,7 +33,7 @@ namespace ReportAnalyzerTimes.Aggregator
                 return -1;
             }
 
-            Console.WriteLine($"Aggregating the ReportAnalyzer times from files {inputFilePathPrefix} 0-{numberOfInputFiles-1}");
+            Console.WriteLine($"Aggregating the ReportAnalyzer times from files {inputFilePathPrefix} 0-{numberOfInputFiles - 1}");
             var filesProvider = new InputFilesProvider(inputFilePathPrefix, numberOfInputFiles, "txt");
             var result = GetAggregatedAnalyzerExecutionTimes(filesProvider);
 

@@ -1,4 +1,7 @@
-﻿using System;
+﻿// Copyright (c) Zuzana Dankovcikova. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
+using System;
 using System.Globalization;
 using System.Text.RegularExpressions;
 
@@ -12,12 +15,12 @@ namespace ReportAnalyzerTimes.Models
         private static readonly Regex LineRegex = new Regex(@"([\d,]+) s\s+- ([\w.]+)", RegexOptions.Compiled);
 
         /// <summary>
-        /// Name of the analyzer the <see cref="ExecutionTime"/> belongs
+        /// Gets or sets name of the analyzer the <see cref="ExecutionTime"/> belongs
         /// </summary>
         public string AnalyzerName { get; set; }
-        
+
         /// <summary>
-        /// Execution time of the <see cref="AnalyzerName"/>
+        /// Gets or sets execution time of the <see cref="AnalyzerName"/>
         /// </summary>
         public double ExecutionTime { get; set; }
 
@@ -42,19 +45,10 @@ namespace ReportAnalyzerTimes.Models
         }
 
         /// <summary>
-        /// Returns a string representation in for of 'time unit - analyzer name'
-        /// </summary>
-        /// <returns>Analyzer execution time string representation</returns>
-        public override string ToString()
-        {
-            return $"{ExecutionTime:##0.000 s} \t\t- {AnalyzerName}";
-        }
-
-        /// <summary>
         /// Parses the string representation into the <see cref="AnalyzerExecutionTime"/> structure
         /// </summary>
         /// <param name="line">Line to be parsed, needs to be in a same format thet the ToSting() method produces</param>
-        /// <returns>AnalyzerExecutionTime structure parsed from <param name="line"></param> data</returns>
+        /// <returns>AnalyzerExecutionTime structure parsed from <paramref name="line" /> data</returns>
         public static AnalyzerExecutionTime FromString(string line)
         {
             var match = LineRegex.Match(line).Groups;
@@ -67,6 +61,15 @@ namespace ReportAnalyzerTimes.Models
                 AnalyzerName = analyzerName,
                 ExecutionTime = executionTime
             };
+        }
+
+        /// <summary>
+        /// Returns a string representation in for of 'time unit - analyzer name'
+        /// </summary>
+        /// <returns>Analyzer execution time string representation</returns>
+        public override string ToString()
+        {
+            return $"{ExecutionTime:##0.000 s} \t\t- {AnalyzerName}";
         }
     }
 }

@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿// Copyright (c) Zuzana Dankovcikova. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
+using System.Collections.Generic;
 
 namespace ReportAnalyzerTimes.Models
 {
@@ -8,12 +11,12 @@ namespace ReportAnalyzerTimes.Models
     public struct AnalyzerExecutionTimes
     {
         /// <summary>
-        /// Name of the analyzer the times belong to
+        /// Gets or sets name of the analyzer the times belong to
         /// </summary>
         public string AnalyzerName { get; set; }
 
         /// <summary>
-        /// Times of the analyzer execution
+        /// Gets or sets times of the analyzer execution
         /// </summary>
         public IList<double> ExecutionTimes { get; set; }
     }
