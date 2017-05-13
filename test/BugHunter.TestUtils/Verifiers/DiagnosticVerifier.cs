@@ -14,7 +14,6 @@ namespace BugHunter.TestUtils.Verifiers
     /// </summary>
     public abstract class DiagnosticVerifier
     {
-        #region To be implemented by Test classes
         /// <summary>
         /// Get the CSharp analyzer being tested - to be implemented in non-abstract class
         /// </summary>
@@ -23,11 +22,8 @@ namespace BugHunter.TestUtils.Verifiers
         /// <summary>
         /// Get the additional references to be included in ad-hoc created project
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Additional references to be included in the project</returns>
         protected abstract MetadataReference[] GetAdditionalReferences();
-        #endregion
-
-        #region Verifier wrappers
 
         /// <summary>
         /// Called to test a C# DiagnosticAnalyzer when applied on the single inputted string as a source
@@ -79,9 +75,6 @@ namespace BugHunter.TestUtils.Verifiers
             VerifyDiagnosticResults(diagnostics, analyzer, expected);
         }
 
-        #endregion
-
-        #region Actual comparisons and verifications
         /// <summary>
         /// Checks each of the actual Diagnostics found and compares them with the corresponding DiagnosticResult in the array of expected results.
         /// Diagnostics are considered equal only if the DiagnosticResultLocation, Id, Severity, and Message of the DiagnosticResult match the actual diagnostic.
@@ -181,9 +174,7 @@ namespace BugHunter.TestUtils.Verifiers
                     $"Expected diagnostic to start at column \"{expected.Column}\" was actually at column \"{actualLinePosition.Character + 1}\"\r\n\r\nDiagnostic:\r\n    {FormatDiagnostics(analyzer, diagnostic)}\r\n");
             }
         }
-        #endregion
 
-        #region Formatting Diagnostics
         /// <summary>
         /// Helper method to format a Diagnostic into an easily readable string
         /// </summary>
@@ -239,6 +230,5 @@ namespace BugHunter.TestUtils.Verifiers
             }
             return builder.ToString();
         }
-        #endregion
     }
 }

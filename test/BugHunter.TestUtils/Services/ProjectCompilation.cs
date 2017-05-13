@@ -19,7 +19,6 @@ namespace BugHunter.TestUtils.Services
         internal static string TestProjectName = "TestProject";
         internal static FakeFileInfo DefaultFileInfo = new FakeFileInfo { FileLocation = string.Empty, FileName = "Test", FileExtension = "cs" };
 
-        #region Set up compilation and documents
         /// <summary>
         /// Get the existing compiler diagnostics on the inputted document.
         /// </summary>
@@ -117,6 +116,5 @@ namespace BugHunter.TestUtils.Services
 
             return solution;
         }
-    #endregion
     }
 }
