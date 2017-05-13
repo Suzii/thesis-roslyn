@@ -1,3 +1,6 @@
+// Copyright (c) Zuzana Dankovcikova. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 using BugHunter.Analyzers.CmsApiGuidelinesRules.Analyzers;
 using BugHunter.Analyzers.CmsApiGuidelinesRules.CodeFixes;
 using BugHunter.Analyzers.Test.CmsApiReplacementsTests.Constants;

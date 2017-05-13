@@ -1,4 +1,7 @@
-﻿namespace BugHunter.Core.Models
+﻿// Copyright (c) Zuzana Dankovcikova. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
+namespace BugHunter.Core.Models
 {
     /// <summary>
     /// Structure representing pair of class name and name of namespace it is defined in

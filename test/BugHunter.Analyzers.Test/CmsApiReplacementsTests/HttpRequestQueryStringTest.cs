@@ -1,4 +1,7 @@
-﻿using BugHunter.Analyzers.CmsApiReplacementRules.Analyzers;
+﻿// Copyright (c) Zuzana Dankovcikova. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
+using BugHunter.Analyzers.CmsApiReplacementRules.Analyzers;
 using BugHunter.Analyzers.Test.CmsApiReplacementsTests.Constants;
 using BugHunter.Core.Constants;
 using BugHunter.TestUtils;

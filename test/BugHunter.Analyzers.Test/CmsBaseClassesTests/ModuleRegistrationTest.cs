@@ -1,4 +1,7 @@
-﻿using BugHunter.Analyzers.CmsBaseClassesRules.Analyzers;
+﻿// Copyright (c) Zuzana Dankovcikova. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
+using BugHunter.Analyzers.CmsBaseClassesRules.Analyzers;
 using BugHunter.Analyzers.CmsBaseClassesRules.CodeFixes;
 using BugHunter.Core.Constants;
 using BugHunter.TestUtils;

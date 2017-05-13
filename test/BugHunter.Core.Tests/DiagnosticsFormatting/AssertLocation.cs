@@ -1,4 +1,7 @@
-﻿using BugHunter.TestUtils.Helpers;
+﻿// Copyright (c) Zuzana Dankovcikova. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
+using BugHunter.TestUtils.Helpers;
 using Microsoft.CodeAnalysis;
 using NUnit.Framework;
 

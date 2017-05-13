@@ -1,4 +1,7 @@
-﻿using System;
+﻿// Copyright (c) Zuzana Dankovcikova. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
+using System;
 using BugHunter.Analyzers.StringAndCultureRules.Analyzers;
 using BugHunter.Analyzers.StringAndCultureRules.CodeFixes;
 using BugHunter.Core.Constants;

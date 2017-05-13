@@ -1,4 +1,7 @@
-﻿namespace BugHunter.Analyzers.Test.CmsApiReplacementsTests.Constants
+﻿// Copyright (c) Zuzana Dankovcikova. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
+namespace BugHunter.Analyzers.Test.CmsApiReplacementsTests.Constants
 {
     public static class MessagesConstants
     {

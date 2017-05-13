@@ -1,4 +1,7 @@
-﻿using BugHunter.Core.Analyzers;
+﻿// Copyright (c) Zuzana Dankovcikova. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
+using BugHunter.Core.Analyzers;
 using BugHunter.Core.DiagnosticsFormatting.Implementation;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Diagnostics;
