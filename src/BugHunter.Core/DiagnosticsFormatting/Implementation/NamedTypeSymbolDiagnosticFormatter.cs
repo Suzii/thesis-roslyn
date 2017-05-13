@@ -10,7 +10,7 @@ namespace BugHunter.Core.DiagnosticsFormatting.Implementation
     {
         /// <summary>
         /// Creates a <see cref="Diagnostic"/> from <param name="descriptor"></param> od passed <param name="namedTypeSymbol"></param>
-        /// 
+        ///
         /// MessageFormat will be passed name of the symbol.
         /// Location will be the first location of the symbol. For partial classes it is only one location.
         /// </summary>

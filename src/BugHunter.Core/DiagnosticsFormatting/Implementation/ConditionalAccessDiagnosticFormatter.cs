@@ -12,7 +12,7 @@ namespace BugHunter.Core.DiagnosticsFormatting.Implementation
     {
         /// <summary>
         /// Creates a <see cref="Diagnostic"/> from <param name="descriptor"></param> based on passed <param name="conditionalAccess"></param>.
-        /// 
+        ///
         /// MessageFormat will be passed an argument in form 'Expression?.WhenNotNull' of passed <param name="conditionalAccess"></param>.
         /// Location will be of a expression + firs member binding expression of passed<param name="conditionalAccess"></param>.
         /// </summary>
@@ -34,7 +34,7 @@ namespace BugHunter.Core.DiagnosticsFormatting.Implementation
         }
 
         /// <summary>
-        /// Returns Location of 'expression?.firstMemberBindingName' of passed <param name="conditionalAccess"></param>. 
+        /// Returns Location of 'expression?.firstMemberBindingName' of passed <param name="conditionalAccess"></param>.
         /// The follow up part of WhenNotNull property after first member binding expression found will be discarded.
         /// </summary>
         /// <param name="conditionalAccess">Conditional access whose location is being requested</param>
@@ -47,14 +47,14 @@ namespace BugHunter.Core.DiagnosticsFormatting.Implementation
             {
                 return Location.None;
             }
-            
+
             var location = GetLocation(conditionalAccess, firstMemberBindingExpressionOnTheRightOfTheDot);
 
             return location;
         }
 
         /// <summary>
-        /// Returns string in form 'expression?.firstMemberBindingName' of passed <param name="conditionalAccess"></param>. 
+        /// Returns string in form 'expression?.firstMemberBindingName' of passed <param name="conditionalAccess"></param>.
         /// Any whitespaces will be discarded, as will be the rest of the WhenNotNull property after first member binding expression found.
         /// </summary>
         /// <param name="conditionalAccess">Conditional access whose location is being requested</param>
@@ -64,8 +64,8 @@ namespace BugHunter.Core.DiagnosticsFormatting.Implementation
         {
             var firstMemberBinding = conditionalAccess?.GetFirstMemberBindingExpression();
 
-            return firstMemberBinding == null 
-                ? string.Empty 
+            return firstMemberBinding == null
+                ? string.Empty
                 : GetDiagnosedUsage(conditionalAccess, firstMemberBinding);
         }
 

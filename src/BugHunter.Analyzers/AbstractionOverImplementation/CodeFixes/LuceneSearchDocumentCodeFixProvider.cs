@@ -29,7 +29,7 @@ namespace BugHunter.Analyzers.AbstractionOverImplementation.CodeFixes
         {
             var diagnostic = context.Diagnostics.First();
             var diagnosticSpan = diagnostic.Location.SourceSpan;
-            
+
             var editor = new CodeFixHelper(context);
             var root = await context.Document.GetSyntaxRootAsync(context.CancellationToken);
             var diagnosedNode = root.FindNode(diagnosticSpan).FirstAncestorOrSelf<QualifiedNameSyntax>() ??
@@ -42,7 +42,7 @@ namespace BugHunter.Analyzers.AbstractionOverImplementation.CodeFixes
 
             const string usingNamespace = "CMS.DataEngine";
             var newIdentifierNameNode = SyntaxFactory.ParseExpression("ISearchDocument");
-            
+
             context.RegisterCodeFix(
                 CodeAction.Create(
                     title: CodeFixMessagesProvider.GetReplaceWithMessage(newIdentifierNameNode),

@@ -11,7 +11,7 @@ namespace BugHunter.Core.Analyzers
 {
     /// <summary>
     /// Analyzing strategy for <see cref="InvocationExpressionSyntax"/>
-    /// 
+    ///
     /// Runs the analysis for current context based on the <see cref="ApiReplacementConfig"/>
     /// and raises diagnostics using passed <see cref="ISyntaxNodeDiagnosticFormatter{TSyntaxNode}"/>
     /// </summary>
@@ -63,7 +63,7 @@ namespace BugHunter.Core.Analyzers
         protected virtual bool IsOnForbiddenPath(string filePath) => true;
 
         protected virtual bool IsForbiddenUsage(InvocationExpressionSyntax invocation, IMethodSymbol methodSymbol) => true;
-        
+
         private bool CanBeSkippedBasedOnSyntaxOnly(InvocationExpressionSyntax invocationExpression)
         {
             SimpleNameSyntax methodNameNode;

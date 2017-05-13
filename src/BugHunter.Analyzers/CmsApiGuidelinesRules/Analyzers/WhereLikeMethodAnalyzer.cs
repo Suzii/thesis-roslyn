@@ -32,7 +32,7 @@ namespace BugHunter.Analyzers.CmsApiGuidelinesRules.Analyzers
            new[] { "WhereLike", "WhereNotLike" });
 
         private static readonly ISyntaxNodeAnalyzer Analyzer = new MethodInvocationAnalyzer(Config, new MethodInvocationOnlyDiagnosticFormatter());
-        
+
         /// <inheritdoc />
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics
             => ImmutableArray.Create(Rule);

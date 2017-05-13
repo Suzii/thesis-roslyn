@@ -19,11 +19,11 @@ namespace BugHunter.Analyzers.StringAndCultureRules.Analyzers
         public const string DiagnosticId = DiagnosticIds.StringManipulationMethods;
 
         /// <inheritdoc />
-        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics 
+        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics
             => ImmutableArray.Create(Rule);
 
         /// <inheritdoc />
-        protected override DiagnosticDescriptor Rule 
+        protected override DiagnosticDescriptor Rule
             => StringMethodsRuleBuilder.CreateRuleForManipulationMethods(DiagnosticId);
 
         /// <inheritdoc />

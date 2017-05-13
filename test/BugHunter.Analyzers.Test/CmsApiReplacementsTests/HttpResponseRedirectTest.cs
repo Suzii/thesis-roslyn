@@ -132,7 +132,7 @@ namespace SampleTestProject.CsSamples
             var expectedDiagnostic = CreateDiagnosticResult(@".Redirect(""url"")").WithLocation(9, 15);
 
             VerifyCSharpDiagnostic(test, expectedDiagnostic);
-            
+
             VerifyCSharpFix(test, test);
         }
     }

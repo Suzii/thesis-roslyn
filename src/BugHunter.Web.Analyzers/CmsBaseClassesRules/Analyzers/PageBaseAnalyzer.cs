@@ -24,7 +24,7 @@ namespace BugHunter.Web.Analyzers.CmsBaseClassesRules.Analyzers
             => ImmutableArray.Create(Rule);
 
         private static readonly DiagnosticDescriptor Rule = BaseClassesInheritanceRulesProvider.GetRule(DiagnosticId, "Page", "some abstract CMSPage");
-        
+
         private static readonly ISymbolDiagnosticFormatter<INamedTypeSymbol> DiagnosticFormatter = new NamedTypeSymbolDiagnosticFormatter();
 
         /// <inheritdoc />
@@ -32,7 +32,7 @@ namespace BugHunter.Web.Analyzers.CmsBaseClassesRules.Analyzers
         {
             context.EnableConcurrentExecution();
             context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.None);
-            
+
             context.RegisterSymbolAction(symbolAnalysisContext =>
             {
                 var namedTypeSymbol = symbolAnalysisContext.Symbol as INamedTypeSymbol;

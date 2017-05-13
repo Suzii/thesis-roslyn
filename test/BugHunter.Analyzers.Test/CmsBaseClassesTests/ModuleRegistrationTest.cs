@@ -8,7 +8,7 @@ using Microsoft.CodeAnalysis;
 using NUnit.Framework;
 
 namespace BugHunter.Analyzers.Test.CmsBaseClassesTests
-{    
+{
     [TestFixture]
     public class ModuleRegistrationTest : CodeFixVerifier<ModuleRegistrationAnalyzer, ModuleRegistrationCodeFixProvider>
     {

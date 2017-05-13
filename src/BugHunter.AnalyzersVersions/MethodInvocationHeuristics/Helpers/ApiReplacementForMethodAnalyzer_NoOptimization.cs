@@ -8,7 +8,7 @@ namespace BugHunter.AnalyzersVersions.MethodInvocationHeuristics.Helpers
 {
     /// <summary>
     /// This is duplicate version of <see cref="ApiReplacementForMethodAnalyzer"/> BUT withou syntax heuristics optimization.
-    /// 
+    ///
     /// !!! THIS FILE SERVES ONLY FOR PURPOSES OF PERFORMANCE TESTING !!!
     /// </summary>
     public class ApiReplacementForMethodAnalyzerNoOptimization

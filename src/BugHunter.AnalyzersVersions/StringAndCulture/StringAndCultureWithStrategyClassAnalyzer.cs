@@ -13,7 +13,7 @@ namespace BugHunter.AnalyzersVersions.StringAndCulture
 {
     /// <summary>
     /// Test version of StringAndCulture analyzer that uses the MethodInvocationAnalyzer strategy pattern
-    /// 
+    ///
     /// !!! THIS FILE SERVES ONLY FOR PURPOSES OF PERFORMANCE TESTING !!!
     /// </summary>
     //[DiagnosticAnalyzer(LanguageNames.CSharp)]
@@ -22,16 +22,16 @@ namespace BugHunter.AnalyzersVersions.StringAndCulture
 #pragma warning restore RS1001 // Missing diagnostic analyzer attribute.
     {
         public const string DiagnosticId = "BH4004";
-        
+
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
 
         private static readonly ApiReplacementConfig Config = new ApiReplacementConfig(Rule,
             new[] { "System.String" },
             new[] { "IndexOf", "LastIndexOf" });
-        
+
         private static readonly ISyntaxNodeAnalyzer Analyzer = new InnerMethodInvocationAnalyzer(Config);
 
-        private static DiagnosticDescriptor Rule 
+        private static DiagnosticDescriptor Rule
             => StringMethodsRuleBuilder.CreateRuleForComparisonMethods(DiagnosticId);
 
         public override void Initialize(AnalysisContext context)
@@ -44,7 +44,7 @@ namespace BugHunter.AnalyzersVersions.StringAndCulture
 
         internal class InnerMethodInvocationAnalyzer : MethodInvocationAnalyzer
         {
-            public InnerMethodInvocationAnalyzer(ApiReplacementConfig config) 
+            public InnerMethodInvocationAnalyzer(ApiReplacementConfig config)
                 : base(config, new MethodInvocationOnlyDiagnosticFormatter()) { }
 
             protected override bool IsForbiddenUsage(InvocationExpressionSyntax invocationExpression, IMethodSymbol methodSymbol)

@@ -111,7 +111,7 @@ namespace BugHunter.TestUtils.Services
                 var newFileName = fakeFileInfo.GetFullFilePath(count++);
                 var documentId = DocumentId.CreateNewId(projectId, debugName: newFileName);
                 var sourceText = SourceText.From(source);
-                
+
                 solution = solution.AddDocument(documentId, newFileName, sourceText);
             }
 

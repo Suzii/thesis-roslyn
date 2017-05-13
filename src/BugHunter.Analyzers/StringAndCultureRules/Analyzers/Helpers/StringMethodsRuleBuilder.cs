@@ -13,7 +13,7 @@ namespace BugHunter.Analyzers.StringAndCultureRules.Analyzers.Helpers
         /// Constructs a <see cref="DiagnosticDescriptor"/> for String comparison methods Analyzer.
         /// </summary>
         /// <remarks>
-        /// Analyzer will have provided diagnostic ID, StringAndCulture category, 
+        /// Analyzer will have provided diagnostic ID, StringAndCulture category,
         /// Warning severity, HelperLinkUri, and will be enabled by default
         /// </remarks>
         /// <param name="diagnosticId">Diagnostic ID of the rule</param>
@@ -32,7 +32,7 @@ namespace BugHunter.Analyzers.StringAndCultureRules.Analyzers.Helpers
         /// Constructs a <see cref="DiagnosticDescriptor"/> for String manipulation methods Analyzer.
         /// </summary>
         /// <remarks>
-        /// Analyzer will have provided diagnostic ID, StringAndCulture category, 
+        /// Analyzer will have provided diagnostic ID, StringAndCulture category,
         /// Warning severity, HelperLinkUri, and will be enabled by default
         /// </remarks>
         /// <param name="diagnosticId">Diagnostic ID of the rule</param>

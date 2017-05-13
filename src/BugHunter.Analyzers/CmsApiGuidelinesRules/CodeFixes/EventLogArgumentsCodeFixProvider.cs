@@ -22,7 +22,7 @@ namespace BugHunter.Analyzers.CmsApiGuidelinesRules.CodeFixes
         /// <inheritdoc />
         public sealed override FixAllProvider GetFixAllProvider()
             => WellKnownFixAllProviders.BatchFixer;
-        
+
         /// <inheritdoc />
         public sealed override async Task RegisterCodeFixesAsync(CodeFixContext context)
         {

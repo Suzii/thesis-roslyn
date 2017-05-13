@@ -11,7 +11,7 @@ namespace BugHunter.Core.DiagnosticsFormatting.Implementation
     {
         /// <summary>
         /// Creates a <see cref="Diagnostic"/> from <param name="descriptor"></param> based on passed <param name="memberAccess"></param>.
-        /// 
+        ///
         /// MessageFormat will be passed an argument in form 'expression.name' of passed <param name="memberAccess"></param>.
         /// Location will be of a whole <param name="memberAccess"></param>.
         /// </summary>

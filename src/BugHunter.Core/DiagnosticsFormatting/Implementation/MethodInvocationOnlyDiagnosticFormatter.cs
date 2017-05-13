@@ -12,7 +12,7 @@ namespace BugHunter.Core.DiagnosticsFormatting.Implementation
     {
         /// <summary>
         /// Creates a <see cref="Diagnostic"/> from <param name="descriptor"></param> based on passed <param name="invocationExpression"></param>.
-        /// 
+        ///
         /// MessageFormat will be passed a string representation of invoked method name along with argument list of <param name="invocationExpression"></param>.
         /// Location will be only of method name + argument list part of passed <param name="invocationExpression"></param>.
         /// </summary>
@@ -22,16 +22,16 @@ namespace BugHunter.Core.DiagnosticsFormatting.Implementation
         public override Diagnostic CreateDiagnostic(DiagnosticDescriptor descriptor, InvocationExpressionSyntax invocationExpression)
         {
             SimpleNameSyntax methodNameNode;
-            var diagnostic = !invocationExpression.TryGetMethodNameNode(out methodNameNode) 
-                ? Diagnostic.Create(descriptor, Location.None) 
+            var diagnostic = !invocationExpression.TryGetMethodNameNode(out methodNameNode)
+                ? Diagnostic.Create(descriptor, Location.None)
                 : Diagnostic.Create(descriptor, GetLocation(invocationExpression, methodNameNode), GetDiagnosedUsage(invocationExpression, methodNameNode));
 
             return MarkDiagnosticIfNecessary(diagnostic, invocationExpression);
         }
 
         /// <summary>
-        /// Returns location of only method name syntaxNode + argument list of invocation. 
-        /// 
+        /// Returns location of only method name syntaxNode + argument list of invocation.
+        ///
         /// E.g. if Invocation like 'condition.Or().WhereLike("col", "val")' is passed,
         /// location of 'WhereLike("col", "val")' is returned.
         /// </summary>
@@ -50,7 +50,7 @@ namespace BugHunter.Core.DiagnosticsFormatting.Implementation
 
         /// <summary>
         /// Returns string representation of only method name syntaxNode + argument list of invocation, without possible whitespaces.
-        /// 
+        ///
         /// E.g. if Invocation like 'condition.Or().WhereLike("col", "val")' is passed, only 'WhereLike("col", "val")' string is returned.
         /// </summary>
         /// <param name="invocationExpression">Invocation expression</param>

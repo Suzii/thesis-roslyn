@@ -53,7 +53,7 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.CodeFixes
             var semanticModel = await context.Document.GetSemanticModelAsync();
             var enclosingClassType  = semanticModel.GetDeclaredSymbol(enclosingClassName);
             var uiControlType = "System.Web.UI.Control";
-            if (enclosingClassType == null || 
+            if (enclosingClassType == null ||
                 !enclosingClassType.IsDerivedFrom(uiControlType, semanticModel.Compilation))
             {
                 return;
@@ -97,7 +97,7 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.CodeFixes
 
             var newInvocationExpression = SyntaxFactory.ParseExpression($"ScriptHelper.{oldMethodName}()") as InvocationExpressionSyntax;
             var newArgumentList = GetNewArgumentList(oldInvocation);
-            
+
             return newInvocationExpression?.WithArgumentList(newArgumentList);
         }
     }

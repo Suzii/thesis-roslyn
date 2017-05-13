@@ -17,7 +17,7 @@ namespace BugHunter.Core.Extensions
         /// <param name="namedTypeSymbol">TypeSymbol to be examined</param>
         /// <returns>True if <param name="namedTypeSymbol"></param>is nested</returns>
         public static bool IsNested(this INamedTypeSymbol namedTypeSymbol)
-            => namedTypeSymbol.ContainingSymbol.Kind == SymbolKind.NamedType; 
+            => namedTypeSymbol.ContainingSymbol.Kind == SymbolKind.NamedType;
 
         /// <summary>
         /// Determines whether <param name="namedTypeSymbol"></param> has only <see cref="object"/> in inheritance hierarchy
@@ -49,7 +49,7 @@ namespace BugHunter.Core.Extensions
                         .OfType<IMethodSymbol>()
                         .FirstOrDefault(m => m.MethodKind == MethodKind.DelegateInvoke);
         }
-        
+
         /// <summary>
         /// Determines whether <param name="type"></param> is nullable
         /// </summary>
@@ -92,7 +92,7 @@ namespace BugHunter.Core.Extensions
                 yield return currentType;
                 currentType = currentType.BaseType;
             }
-            
+
             foreach (var inter in type.AllInterfaces)
             {
                 yield return inter;

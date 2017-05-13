@@ -44,7 +44,7 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.CodeFixes
 
             var usingNamespace = "CMS.Helpers";
             var newMemberAccess = SyntaxFactory.ParseExpression("RequestContext.UserHostAddress");
-            
+
             context.RegisterCodeFix(
                 CodeAction.Create(
                     title: CodeFixMessagesProvider.GetReplaceWithMessage(newMemberAccess),

@@ -21,7 +21,7 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.Analyzers
         private static readonly DiagnosticDescriptor Rule = ApiReplacementRulesProvider.GetRule(DiagnosticId, "FormsAuthentication.SignOut()", "AuthenticationHelper.SignOut()");
 
         /// <inheritdoc />
-        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics 
+        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics
             => ImmutableArray.Create(Rule);
 
         private static readonly ApiReplacementConfig Config = new ApiReplacementConfig(Rule,

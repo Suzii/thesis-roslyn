@@ -11,7 +11,7 @@ namespace BugHunter.Core.DiagnosticsFormatting.Implementation
     {
         /// <summary>
         /// Creates a <see cref="Diagnostic"/> from <param name="descriptor"></param> based on passed <param name="syntaxNode"></param>.
-        /// 
+        ///
         /// MessageFormat will be passed a string version of <param name="syntaxNode"></param>.
         /// Location will be of a whole <param name="syntaxNode"></param>.
         /// </summary>

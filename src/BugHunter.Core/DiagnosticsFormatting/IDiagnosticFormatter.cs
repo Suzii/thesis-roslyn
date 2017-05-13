@@ -10,7 +10,7 @@ namespace BugHunter.Core.DiagnosticsFormatting
     {
         /// <summary>
         /// Creates a <see cref="Diagnostic"/> from <param name="descriptor"></param> based on passed <param name="nodeOrSymbol"></param>.
-        /// 
+        ///
         /// Arguments for MessageFormat diagnostic's location depend on specific implementations
         /// </summary>
         /// <param name="descriptor">Diagnostic descriptor for diagnostic to be created</param>

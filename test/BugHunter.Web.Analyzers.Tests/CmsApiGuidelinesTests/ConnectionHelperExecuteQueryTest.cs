@@ -16,7 +16,7 @@ namespace BugHunter.Web.Analyzers.Tests.CmsApiGuidelinesTests
         {
             return ReferencesHelper.CMSBasicReferences.Union(ReferencesHelper.GetReferencesFor(typeof(System.Data.DataSet))).ToArray();
         }
-        
+
         private DiagnosticResult GetDiagnosticResult(string usage)
         {
             return new DiagnosticResult

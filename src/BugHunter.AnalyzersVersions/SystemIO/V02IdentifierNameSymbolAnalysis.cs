@@ -11,9 +11,9 @@ namespace BugHunter.AnalyzersVersions.SystemIO
 {
     /// <summary>
     /// !!! THIS FILE SERVES ONLY FOR PURPOSES OF PERFORMANCE TESTING !!!
-    /// 
+    ///
     /// Searches for usages of <see cref="System.IO"/> and their access to anything other than <c>Exceptions</c> or <c>Stream</c>
-    /// 
+    ///
     /// Version with callback on IdentifierName and analyzing Symbol directly
     /// </summary>
     //[DiagnosticAnalyzer(LanguageNames.CSharp)]
@@ -25,7 +25,7 @@ namespace BugHunter.AnalyzersVersions.SystemIO
         private static readonly DiagnosticDescriptor Rule = AnalyzerHelper.GetRule(DiagnosticId);
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
         private static readonly ISyntaxNodeDiagnosticFormatter<IdentifierNameSyntax> DiagnosticFormatter = new SystemIoDiagnosticFormatter();
-        
+
         public override void Initialize(AnalysisContext context)
         {
             context.EnableConcurrentExecution();

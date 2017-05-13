@@ -12,7 +12,7 @@ namespace BugHunter.Core.Analyzers
 {
     /// <summary>
     /// Analyzing strategy for <see cref="ConditionalAccessExpressionSyntax"/>
-    /// 
+    ///
     /// Runs the analysis for current context based on the <see cref="ApiReplacementConfig"/>
     /// and raises diagnostics using passed <see cref="ISyntaxNodeDiagnosticFormatter{TSyntaxNode}"/>
     /// </summary>
@@ -56,7 +56,7 @@ namespace BugHunter.Core.Analyzers
         private bool IsForbiddenUsage(SyntaxNodeAnalysisContext context, ConditionalAccessExpressionSyntax conditionalAccess)
         {
             var memberName = conditionalAccess.GetFirstMemberBindingExpression()?.Name?.Identifier.ValueText;
-            if (!string.IsNullOrEmpty(memberName) && 
+            if (!string.IsNullOrEmpty(memberName) &&
                 _config.ForbiddenMembers.All(forbiddenMember => !memberName.Equals(forbiddenMember, StringComparison.Ordinal)))
             {
                 return false;

@@ -29,7 +29,7 @@ namespace BugHunter.Core.Tests.DiagnosticsFormatting
                 Assert.AreEqual(expected.Line, actualLinePosition.Line + 1,
                     $"Expected diagnostic to be on line \"{expected.Line}\" was actually on line \"{actualLinePosition.Line + 1}\"");
             }
-            
+
             // Only check column position if there is an actual column position in the real diagnostic
             if (actualLinePosition.Character > 0)
             {

@@ -155,7 +155,7 @@ namespace SampleTestProject.CsSamples
             var methodParameterDiagnostic = CreateDiagnosticResult(typeName, 6 + usingLinesCount, methodParameterColumn);
             var objectInstantiationDiagnostic = CreateDiagnosticResult(objectInstantiation, 8 + usingLinesCount, 26);
             var explicitVariableDeclarationDiagnostic = CreateDiagnosticResult(typeName, 9 + usingLinesCount, 13);
-            
+
             VerifyCSharpDiagnostic(test, returnTypeDiagnostic, methodParameterDiagnostic, objectInstantiationDiagnostic, explicitVariableDeclarationDiagnostic);
         }
 

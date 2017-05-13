@@ -36,7 +36,7 @@ namespace BugHunter.Analyzers.Test.CmsApiReplacementsTests
         [TestCase("System.Web.HttpContext.Current.Session")]
         [TestCase("new System.Web.HttpSessionStateWrapper(System.Web.HttpContext.Current.Session)")]
         public void InputWithIncident_SimpleMemberAccess_SurfacesDiagnostic(string sessionInstance)
-        {   
+        {
             var test = $@"
 namespace SampleTestProject.CsSamples 
 {{
@@ -51,7 +51,7 @@ namespace SampleTestProject.CsSamples
 }}";
 
             var expectedDiagnostic = CreateDiagnosticResult("session.SessionID", "SessionHelper.GetSessionID()").WithLocation(9, 29);
-            
+
             VerifyCSharpDiagnostic(test, expectedDiagnostic);
 
             var expectedFix = $@"using CMS.Helpers;
@@ -69,7 +69,7 @@ namespace SampleTestProject.CsSamples
 }}";
             VerifyCSharpFix(test, expectedFix);
         }
-        
+
         [TestCase("System.Web.HttpContext.Current.Session")]
         [TestCase("new System.Web.HttpSessionStateWrapper(System.Web.HttpContext.Current.Session)")]
         public void InputWithIncident_ChainedMemberAccess_SurfacesDiagnostic(string sessionInstance)

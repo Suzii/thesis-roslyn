@@ -21,7 +21,7 @@ namespace BugHunter.TestUtils.Verifiers
         protected abstract DiagnosticAnalyzer GetCSharpDiagnosticAnalyzer();
 
         /// <summary>
-        /// Get the additional references to be included in ad-hoc created project 
+        /// Get the additional references to be included in ad-hoc created project
         /// </summary>
         /// <returns></returns>
         protected abstract MetadataReference[] GetAdditionalReferences();
@@ -64,7 +64,7 @@ namespace BugHunter.TestUtils.Verifiers
         }
 
         /// <summary>
-        /// General method that gets a collection of actual diagnostics found in the source after the analyzer is run, 
+        /// General method that gets a collection of actual diagnostics found in the source after the analyzer is run,
         /// then verifies each of them.
         /// </summary>
         /// <param name="sources">An array of strings to create source documents from to run the analyzers on</param>

@@ -21,7 +21,7 @@ namespace BugHunter.Core.Tests.DiagnosticsFormatting
         {
             _diagnosticFormatter = new ConditionalAccessDiagnosticFormatter();
         }
-        
+
         [Test]
         public void SimpleConditionalAccess()
         {
@@ -67,7 +67,7 @@ namespace BugHunter.Core.Tests.DiagnosticsFormatting
         {
             var conditionalAccess =
                 SyntaxFactory.ParseExpression(@"firstObject.someObject?.SomeProperty.OtherProperty") as ConditionalAccessExpressionSyntax;
-            
+
             var expectedLocation = Location.Create(conditionalAccess?.SyntaxTree, TextSpan.FromBounds(0, 36));
             var diagnostic = _diagnosticFormatter.CreateDiagnostic(_rule, conditionalAccess);
 

@@ -44,7 +44,7 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.CodeFixes
             var assignmentExpression = elementAccess.FirstAncestorOrSelf<AssignmentExpressionSyntax>();
             var sessionKey = GetElementAccessKey(elementAccess);
             var valueToBeAssigned = assignmentExpression.Right;
-            
+
             SyntaxNode oldNode = assignmentExpression;
             SyntaxNode newNode = SyntaxFactory.ParseExpression($@"SessionHelper.SetValue({sessionKey}, {valueToBeAssigned})");
 

@@ -35,7 +35,7 @@ namespace BugHunter.Analyzers.CmsApiGuidelinesRules.CodeFixes
             {
                 return;
             }
-            
+
             var containsMethodName = GetNewMethodName(PossibleFixes.WhereContains, methodNameNode);
             var startsWithMethodName = GetNewMethodName(PossibleFixes.WhereStartsWith, methodNameNode);
             var endsWithMethodName = GetNewMethodName(PossibleFixes.WhereEndsWith, methodNameNode);

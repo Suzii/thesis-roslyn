@@ -18,7 +18,7 @@ namespace BugHunter.Analyzers.CmsApiGuidelinesRules.Analyzers
         /// The ID for diagnostics raised by <see cref="EventLogArgumentsAnalyzer"/>
         /// </summary>
         public const string DiagnosticId = DiagnosticIds.EventLogArguments;
-        
+
         private static readonly DiagnosticDescriptor Rule = new DiagnosticDescriptor(DiagnosticId,
             title: new LocalizableResourceString(nameof(CmsApiGuidelinesResources.EventLogArguments_Title), CmsApiGuidelinesResources.ResourceManager, typeof(CmsApiGuidelinesResources)),
             messageFormat: new LocalizableResourceString(nameof(CmsApiGuidelinesResources.EventLogArguments_MessageFormat), CmsApiGuidelinesResources.ResourceManager, typeof(CmsApiGuidelinesResources)),
@@ -37,35 +37,35 @@ namespace BugHunter.Analyzers.CmsApiGuidelinesRules.Analyzers
         /// <inheritdoc />
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics
             => ImmutableArray.Create(Rule);
-        
+
         /// <inheritdoc />
         public override void Initialize(AnalysisContext context)
         {
             context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.None);
             context.EnableConcurrentExecution();
-            
+
             context.RegisterSyntaxNodeAction(Analyzer.Run, SyntaxKind.InvocationExpression);
         }
 
         internal class InnerMethodInvocationAnalyzer : MethodInvocationAnalyzer
         {
             private static readonly string[] ForbiddenEventTypeArgs = { "\"I\"", "\"W\"", "\"E\"" };
-            
+
             /// <summary>
             /// Constructor initializing config and diagnostic formatter of <see cref="MethodInvocationAnalyzer"/> base class
             /// </summary>
             public InnerMethodInvocationAnalyzer(ApiReplacementConfig config) : base(config, new EventLogArgumentsDiagnosticFormatter())
-            { 
+            {
             }
 
             /// <summary>
             /// Checks whether first argument provided is one of forbidden ones
             /// </summary>
             /// <remarks>
-            /// Note that analysis has to be performed on syntax since it always is a string, 
+            /// Note that analysis has to be performed on syntax since it always is a string,
             /// but we want to achieve that not plain string is passed but rather a constant defined in <c>CMS.EventLog.EventType</c>.
-            /// 
-            /// When a variable is passed, there is no way of finding out whether the variable was created from a plain string 
+            ///
+            /// When a variable is passed, there is no way of finding out whether the variable was created from a plain string
             /// or an constant defined in EventType class (it is not an enum), therefore no diagnostic is provided
             /// </remarks>
             /// <param name="invocationExpression">Invocation expression to be analyzed</param>

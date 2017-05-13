@@ -31,7 +31,7 @@ namespace BugHunter.Analyzers.AbstractionOverImplementation.Analyzers
         private static readonly ISyntaxNodeDiagnosticFormatter<SyntaxNode> DiagnosticFormatter = new DefaultDiagnosticFormatter<SyntaxNode>();
 
         /// <inheritdoc />
-        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics 
+        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics
             => ImmutableArray.Create(Rule);
 
         /// <inheritdoc />
@@ -61,12 +61,12 @@ namespace BugHunter.Analyzers.AbstractionOverImplementation.Analyzers
             }
 
             var actualTargetType = context.SemanticModel.GetTypeInfo(identifierNameSyntax).Type as INamedTypeSymbol;
-            if (actualTargetType == null || 
+            if (actualTargetType == null ||
                 !actualTargetType.IsDerivedFrom(forbiddenTypeFullyQualified, context.Compilation))
             {
                 return;
             }
-            
+
             // if direct parent is QualifiedName, surface diagnostic for whole QualifiedName
             var diagnosedNode = identifierNameSyntax.Parent.IsKind(SyntaxKind.QualifiedName)
                 ? identifierNameSyntax.Parent

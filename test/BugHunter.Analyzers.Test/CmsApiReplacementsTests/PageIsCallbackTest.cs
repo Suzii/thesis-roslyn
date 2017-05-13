@@ -35,7 +35,7 @@ namespace BugHunter.Analyzers.Test.CmsApiReplacementsTests
 
         [Test]
         public void InputWithIncident_SimpleMemberAccess_SurfacesDiagnostic()
-        {   
+        {
             var test = $@"
 namespace SampleTestProject.CsSamples 
 {{
@@ -140,7 +140,7 @@ namespace SampleTestProject.CsSamples
     }}
 }}";
 
-            var expectedDiagnostic = CreateDiagnosticResult("page?.IsCallback", "RequestHelper.IsCallback()").WithLocation(9, 26); 
+            var expectedDiagnostic = CreateDiagnosticResult("page?.IsCallback", "RequestHelper.IsCallback()").WithLocation(9, 26);
 
             VerifyCSharpDiagnostic(test, expectedDiagnostic);
             // No fix

@@ -10,7 +10,7 @@
     {
         // AbstractionOverImplementation
         public const string LuceneSearchDocument = "BH0000";
-        
+
         // CmsApiReplacements
         public const string HttpSessionSessionId = "BH1000";
         public const string HttpSessionElementAccessGet = "BH1001";
@@ -39,7 +39,7 @@
 
         // CmsBaseClasses
         public const string ModuleRegistration = "BH3000";
-        
+
         public const string WebPartBase = "BH3500";
         public const string UIWebPartBase = "BH3501";
         public const string PageBase = "BH3502";

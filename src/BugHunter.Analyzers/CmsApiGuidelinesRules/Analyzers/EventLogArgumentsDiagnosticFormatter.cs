@@ -10,7 +10,7 @@ namespace BugHunter.Analyzers.CmsApiGuidelinesRules.Analyzers
     internal class EventLogArgumentsDiagnosticFormatter : DefaultDiagnosticFormatter<InvocationExpressionSyntax>
     {
         /// <summary>
-        /// Returns location of only the first argument of the invocation. 
+        /// Returns location of only the first argument of the invocation.
         /// </summary>
         /// <remarks>
         /// E.g. if Invocation like 'Method("col", "val")' is passed, location of "col" is returned.
@@ -21,7 +21,7 @@ namespace BugHunter.Analyzers.CmsApiGuidelinesRules.Analyzers
             => invocationExpression?.ArgumentList.Arguments.First().GetLocation();
 
         /// <summary>
-        /// Returns string representation of only the first argument of the invocation. 
+        /// Returns string representation of only the first argument of the invocation.
         /// </summary>
         /// <remarks>
         /// E.g. if Invocation like 'Method("col", "val")' is passed, "col" is returned.

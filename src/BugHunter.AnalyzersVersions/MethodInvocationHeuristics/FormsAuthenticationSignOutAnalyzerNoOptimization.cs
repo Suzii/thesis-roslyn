@@ -8,7 +8,7 @@ namespace BugHunter.AnalyzersVersions.MethodInvocationHeuristics
 {
     /// <summary>
     /// ApiReplacementAnalyzerForMethod WITHOUT syntax heuristic optimization in MethodInvocationAnalyzer
-    /// 
+    ///
     /// !!! THIS FILE SERVES ONLY FOR PURPOSES OF PERFORMANCE TESTING !!!
     /// </summary>
     //[DiagnosticAnalyzer(LanguageNames.CSharp)]

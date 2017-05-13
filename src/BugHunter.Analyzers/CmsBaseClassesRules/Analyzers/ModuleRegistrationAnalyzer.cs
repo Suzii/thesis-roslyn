@@ -61,12 +61,12 @@ namespace BugHunter.Analyzers.CmsBaseClassesRules.Analyzers
                 var registeredModuleTypes = syntaxTrees
                     .SelectMany(syntaxTree => GetRegisteredModuleTypeSymbols(syntaxTree, symbolAnalysisContext))
                     .ToList();
-                
+
                 if (IsModuleRegistered(registeredModuleTypes, namedTypeSymbol))
                 {
                     return;
                 }
-                
+
                 var diagnostic = diagnosticFormatter.CreateDiagnostic(Rule, namedTypeSymbol);
                 symbolAnalysisContext.ReportDiagnostic(diagnostic);
 
@@ -76,10 +76,10 @@ namespace BugHunter.Analyzers.CmsBaseClassesRules.Analyzers
         private static bool IsModuleOrModuleEntry(INamedTypeSymbol namedTypeSymbol, SymbolAnalysisContext symbolAnalysisContext)
             => namedTypeSymbol.IsDerivedFrom("CMS.Core.ModuleEntry", symbolAnalysisContext.Compilation) ||
                namedTypeSymbol.IsDerivedFrom("CMS.DataEngine.Module", symbolAnalysisContext.Compilation);
-        
+
         private static bool IsModuleRegistered(IList<ISymbol> registeredModuleTypes, INamedTypeSymbol moduleToBeChecked)
             => registeredModuleTypes.Any(registeredModule => registeredModule.Equals(moduleToBeChecked));
-        
+
         private static IEnumerable<TypeSyntax> GetRegisteredModuleTypeSyntaxes(SyntaxTree syntaxTree)
         {
             var assemblyAttributeListSyntaxes = GetAttributeListSyntaxes(syntaxTree)

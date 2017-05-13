@@ -16,7 +16,7 @@ namespace BugHunter.Analyzers.Test.CmsApiReplacementsTests
     {
         protected override MetadataReference[] GetAdditionalReferences()
             => ReferencesHelper.CMSBasicReferences.Union(new[] { ReferencesHelper.SystemWebReference }).ToArray();
-        
+
         private static DiagnosticResult CreateDiagnosticResult(params object[] messageArgs)
             => new DiagnosticResult
             {
@@ -32,7 +32,7 @@ namespace BugHunter.Analyzers.Test.CmsApiReplacementsTests
 
             VerifyCSharpDiagnostic(test);
         }
-        
+
         [TestCase(@"new System.Web.HttpResponse(null)", "CookieHelper.ResponseCookies")]
         [TestCase(@"new System.Web.HttpResponseWrapper(new System.Web.HttpResponse(null))", "CookieHelper.ResponseCookies")]
         public void InputWithIncident_SimpleMemberAccess_SurfacesDiagnostic(string instance, string codeFix)

@@ -20,6 +20,6 @@ namespace BugHunter.Core.Extensions
 
             return assignmentExpression?.Left.Contains(syntaxNode) ?? false;
         }
-        
+
     }
 }

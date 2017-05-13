@@ -32,7 +32,7 @@ namespace BugHunter.Analyzers.Test.CmsApiReplacementsTests
 
             VerifyCSharpDiagnostic(test);
         }
-        
+
         [TestCase(@"new System.Web.HttpRequest(""fileName"", ""url"", ""queryString"")")]
         [TestCase(@"new System.Web.HttpRequestWrapper(new System.Web.HttpRequest(""fileName"", ""url"", ""queryString""))")]
         public void InputWithIncident_SipleMemberAccess_SurfacesDiagnostic(string instance)
@@ -85,7 +85,7 @@ namespace SampleTestProject.CsSamples
     }}
 }}";
             var expectedDiagnostic = CreateDiagnosticResult($"{instance}.Cookies", "CookieHelper.RequestCookies").WithLocation(8, 27);
-            
+
             VerifyCSharpDiagnostic(test, expectedDiagnostic);
 
             var expectedFix = $@"using CMS.Helpers;
@@ -120,7 +120,7 @@ namespace SampleTestProject.CsSamples
     }}
 }}";
             var expectedDiagnostic = CreateDiagnosticResult("r.Cookies", "CookieHelper.RequestCookies").WithLocation(9, 27);
-            
+
             VerifyCSharpDiagnostic(test, expectedDiagnostic);
 
             var expectedFix = $@"using CMS.Helpers;

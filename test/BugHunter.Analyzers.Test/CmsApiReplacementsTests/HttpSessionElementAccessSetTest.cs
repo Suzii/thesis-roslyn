@@ -86,7 +86,7 @@ namespace SampleTestProject.CsSamples
 }}";
 
             var expectedDiagnostic = CreateDiagnosticResult($@"{sessionInstance}[""aKey""]").WithLocation(8, 13);
-            
+
             VerifyCSharpDiagnostic(test, expectedDiagnostic);
 
             var expectedFix = $@"using CMS.Helpers;

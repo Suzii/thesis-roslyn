@@ -87,7 +87,7 @@ namespace SampleTestProject.CsSamples
     }}
 }}";
             var expectedDiagnostic = CreateDiagnosticResult("browserInfo.Browser", "BrowserHelper.GetBrowser()").WithLocation(10, 27);
-            
+
             VerifyCSharpDiagnostic(test, expectedDiagnostic);
 
             var expectedFix = $@"using CMS.Helpers;

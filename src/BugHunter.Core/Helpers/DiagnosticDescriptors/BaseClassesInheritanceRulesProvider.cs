@@ -10,7 +10,7 @@ namespace BugHunter.Core.Helpers.DiagnosticDescriptors
         /// Constructs a <see cref="DiagnosticDescriptor"/> for CMS Base Classes Analyzers.
         /// </summary>
         /// <remarks>
-        /// Analyzer will have provided diagnostic ID, CmsBaseClass category, 
+        /// Analyzer will have provided diagnostic ID, CmsBaseClass category,
         /// Warning severity, HelperLinkUri, and will be enabled by default
         /// </remarks>
         /// <param name="diagnosticId">Diagnostic ID of the rule</param>

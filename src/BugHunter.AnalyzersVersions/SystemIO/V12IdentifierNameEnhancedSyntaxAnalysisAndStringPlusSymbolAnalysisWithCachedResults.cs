@@ -14,7 +14,7 @@ namespace BugHunter.AnalyzersVersions.SystemIO
     /// <summary>
     /// !!! THIS FILE SERVES ONLY FOR PURPOSES OF PERFORMANCE TESTING !!!
     /// Searches for usages of <see cref="System.IO"/> and their access to anything other than <c>Exceptions</c> or <c>Stream</c>
-    /// 
+    ///
     /// Version with callback on IdentifierName and analyzing Symbol directly
     /// </summary>
     //[DiagnosticAnalyzer(LanguageNames.CSharp)]

@@ -13,7 +13,7 @@ namespace BugHunter.AnalyzersVersions.BaseClassAnalyzers
 {
     /// <summary>
     /// !!! THIS FILE SERVES ONLY FOR PURPOSES OF PERFORMANCE TESTING !!!
-    /// 
+    ///
     /// Checks if Page file inherits from right class. -- register syntax tree action action
     /// </summary>
     //[DiagnosticAnalyzer(LanguageNames.CSharp)]
@@ -26,7 +26,7 @@ namespace BugHunter.AnalyzersVersions.BaseClassAnalyzers
         private static readonly DiagnosticDescriptor Rule = BaseClassesInheritanceRulesProvider.GetRule(DiagnosticId, "Page", "some abstract CMSPage");
 
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
-        
+
         public override void Initialize(AnalysisContext context)
         {
             context.EnableConcurrentExecution();

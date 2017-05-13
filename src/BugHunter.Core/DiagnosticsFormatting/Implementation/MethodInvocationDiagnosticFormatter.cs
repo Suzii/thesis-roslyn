@@ -12,7 +12,7 @@ namespace BugHunter.Core.DiagnosticsFormatting.Implementation
     {
         /// <summary>
         /// Creates a <see cref="Diagnostic"/> from <param name="descriptor"></param> based on passed <param name="invocationExpression"></param>.
-        /// 
+        ///
         /// MessageFormat will be passed a string representation of <param name="invocationExpression"></param>.
         /// Location will be of a whole <param name="invocationExpression"></param>.
         /// </summary>
@@ -28,7 +28,7 @@ namespace BugHunter.Core.DiagnosticsFormatting.Implementation
         }
 
         /// <summary>
-        /// Diagnostic will be marked as being raised on conditional or simple member access, based on the underlying kind of 'Expression' property 
+        /// Diagnostic will be marked as being raised on conditional or simple member access, based on the underlying kind of 'Expression' property
         /// </summary>
         /// <param name="diagnostic">Diagnostic to be marked</param>
         /// <param name="invocationExpression">Invocation that the diagnostic is being raised for</param>

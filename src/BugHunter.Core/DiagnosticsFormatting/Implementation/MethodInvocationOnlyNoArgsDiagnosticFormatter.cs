@@ -12,7 +12,7 @@ namespace BugHunter.Core.DiagnosticsFormatting.Implementation
     {
         /// <summary>
         /// Creates a <see cref="Diagnostic"/> from <param name="descriptor"></param> based on passed <param name="invocationExpression"></param>.
-        /// 
+        ///
         /// MessageFormat will be passed a string representation of invoked method name only (with empty argument list) of <param name="invocationExpression"></param>.
         /// Location will be only of method name + argument list part of passed <param name="invocationExpression"></param>.
         /// </summary>
@@ -37,8 +37,8 @@ namespace BugHunter.Core.DiagnosticsFormatting.Implementation
         }
 
         /// <summary>
-        /// Returns location of only method name syntaxNode + argument list of invocation. 
-        /// 
+        /// Returns location of only method name syntaxNode + argument list of invocation.
+        ///
         /// E.g. if Invocation like 'condition.Or().WhereLike("col", "val")' is passed,
         /// location of 'WhereLike("col", "val")' is returned.
         /// </summary>
@@ -57,7 +57,7 @@ namespace BugHunter.Core.DiagnosticsFormatting.Implementation
 
         /// <summary>
         /// Returns string representation of only method name syntaxNode + empty argument list of invocation.
-        /// 
+        ///
         /// E.g. if Invocation like 'condition.Or().WhereLike("col", "val")' is passed, only 'WhereLike()' string is returned.
         /// </summary>
         /// <param name="invocationExpression">Invocation expression</param>

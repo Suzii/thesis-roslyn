@@ -29,7 +29,7 @@ namespace BugHunter.Core.Extensions
         public static bool IsMarkedAsConditionalAccess(this Diagnostic diagnostic)
         {
             string conditionalAccessValue;
-            return diagnostic.Properties.TryGetValue(DiagnosticProperties.IsConditionalAccess, out conditionalAccessValue) 
+            return diagnostic.Properties.TryGetValue(DiagnosticProperties.IsConditionalAccess, out conditionalAccessValue)
                 && conditionalAccessValue == DiagnosticProperties.TrueFlag;
         }
 

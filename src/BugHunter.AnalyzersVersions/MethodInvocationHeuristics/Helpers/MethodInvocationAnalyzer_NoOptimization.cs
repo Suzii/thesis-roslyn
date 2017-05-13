@@ -12,14 +12,14 @@ namespace BugHunter.AnalyzersVersions.MethodInvocationHeuristics.Helpers
 {
     /// <summary>
     /// This is duplicate version of <see cref="MethodInvocationAnalyzer"/> BUT withou syntax heuristics optimization.
-    /// 
+    ///
     /// !!! THIS FILE SERVES ONLY FOR PURPOSES OF PERFORMANCE TESTING !!!
     /// </summary>
     public class MethodInvocationAnalyzerNoOptimization : ISyntaxNodeAnalyzer
     {
         protected readonly ApiReplacementConfig Config;
         protected readonly ISyntaxNodeDiagnosticFormatter<InvocationExpressionSyntax> Formatter;
-        
+
         public MethodInvocationAnalyzerNoOptimization(ApiReplacementConfig config, ISyntaxNodeDiagnosticFormatter<InvocationExpressionSyntax> formatter)
         {
             Config = config;
@@ -58,7 +58,7 @@ namespace BugHunter.AnalyzersVersions.MethodInvocationHeuristics.Helpers
         protected virtual bool IsOnForbiddenPath(string filePath) => true;
 
         protected virtual bool IsForbiddenUsage(InvocationExpressionSyntax invocation, IMethodSymbol methodSymbol) => true;
-        
+
         private bool IsForbiddenMethodOnForbiddenType(IMethodSymbol methodSymbol, Compilation compilation)
         {
             if (!IsForbiddenMethod(methodSymbol.Name))

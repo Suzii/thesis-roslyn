@@ -35,7 +35,7 @@ namespace BugHunter.Analyzers.Test.CmsApiReplacementsTests
         [TestCase("System.Web.HttpContext.Current.Session")]
         [TestCase("new System.Web.HttpSessionStateWrapper(System.Web.HttpContext.Current.Session)")]
         public void InputWithIncident_SimpleAccess_SurfacesDiagnostic(string sessionInstance)
-        {   
+        {
             var test = $@"
 namespace SampleTestProject.CsSamples 
 {{
@@ -50,7 +50,7 @@ namespace SampleTestProject.CsSamples
 }}";
 
             var expectedDiagnostic = CreateDiagnosticResult(@"session[""aKey""]").WithLocation(9, 26);
-            
+
             VerifyCSharpDiagnostic(test, expectedDiagnostic);
 
             var expectedFix = $@"using CMS.Helpers;

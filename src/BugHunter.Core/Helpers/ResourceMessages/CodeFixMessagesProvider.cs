@@ -3,7 +3,7 @@
 namespace BugHunter.Core.Helpers.ResourceMessages
 {
     /// <summary>
-    /// Helper class for constructing code fix messages 
+    /// Helper class for constructing code fix messages
     /// </summary>
     public static class CodeFixMessagesProvider
     {

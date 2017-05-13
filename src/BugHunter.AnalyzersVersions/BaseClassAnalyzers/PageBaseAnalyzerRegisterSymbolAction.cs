@@ -9,7 +9,7 @@ namespace BugHunter.AnalyzersVersions.BaseClassAnalyzers
 {
     /// <summary>
     /// !!! THIS FILE SERVES ONLY FOR PURPOSES OF PERFORMANCE TESTING !!!
-    /// 
+    ///
     /// Checks if Page file inherits from right class. -- register symbol action
     /// </summary>
     //[DiagnosticAnalyzer(LanguageNames.CSharp)]

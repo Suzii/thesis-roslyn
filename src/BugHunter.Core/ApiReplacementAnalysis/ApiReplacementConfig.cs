@@ -3,8 +3,8 @@
 namespace BugHunter.Core.ApiReplacementAnalysis
 {
     /// <summary>
-    /// Configuration class for ApiReplacement analyzers 
-    /// It defines <see cref="ForbiddenTypes"/> and their <see cref="ForbiddenMembers"/> that should be analyzed, 
+    /// Configuration class for ApiReplacement analyzers
+    /// It defines <see cref="ForbiddenTypes"/> and their <see cref="ForbiddenMembers"/> that should be analyzed,
     /// and upon which diagnostic specified by <see cref="Rule"/> should be raised
     /// </summary>
     public class ApiReplacementConfig

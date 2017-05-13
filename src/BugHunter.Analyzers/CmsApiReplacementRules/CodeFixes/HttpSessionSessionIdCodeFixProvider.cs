@@ -41,10 +41,10 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.CodeFixes
             {
                 return;
             }
-            
+
             var usingNamespace = "CMS.Helpers";
             var newMemberAccess = SyntaxFactory.ParseExpression("SessionHelper.GetSessionID()");
-            
+
             context.RegisterCodeFix(
                 CodeAction.Create(
                     title: CodeFixMessagesProvider.GetReplaceWithMessage(newMemberAccess),

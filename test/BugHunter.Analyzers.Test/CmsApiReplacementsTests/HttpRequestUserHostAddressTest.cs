@@ -33,7 +33,7 @@ namespace BugHunter.Analyzers.Test.CmsApiReplacementsTests
 
             VerifyCSharpDiagnostic(test);
         }
-        
+
         [TestCase(@"new System.Web.HttpRequest(""fileName"", ""url"", ""queryString"")")]
         [TestCase(@"new System.Web.HttpRequestWrapper(new System.Web.HttpRequest(""fileName"", ""url"", ""queryString""))")]
         public void InputWithIncident_SimpleMemberAccess_SurfacesDiagnostic(string requestInstance)

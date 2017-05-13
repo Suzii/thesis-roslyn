@@ -34,7 +34,7 @@ namespace BugHunter.Core.Extensions
         /// <returns>True if class is public</returns>
         public static bool IsPublic(this ClassDeclarationSyntax classDeclarationSyntax)
             => classDeclarationSyntax.Modifiers.Any(modifier => modifier.IsKind(SyntaxKind.PublicKeyword));
-        
+
         /// <summary>
         /// Adds <param name="newBaseTypeName"></param> as a base class of <param name="classDeclaration"></param>
         /// </summary>

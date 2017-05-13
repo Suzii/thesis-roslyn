@@ -72,7 +72,7 @@ namespace BugHunter.Analyzers.StringAndCultureRules.Analyzers.Helpers
             {
                 return;
             }
-            
+
             var invokedMethodSymbol = context.SemanticModel.GetSymbolInfo(invocationExpression).Symbol as IMethodSymbol;
             if (invokedMethodSymbol == null || !IsForbiddenStringMethod(context, invocationExpression, invokedMethodSymbol))
             {

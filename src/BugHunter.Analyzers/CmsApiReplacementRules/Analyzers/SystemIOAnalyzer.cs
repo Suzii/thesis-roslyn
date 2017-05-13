@@ -14,7 +14,7 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.Analyzers
 {
     /// <summary>
     /// Searches for usages of <see cref="System.IO"/> and their access to anything other than <c>Exceptions</c> or <c>Stream</c>
-    /// 
+    ///
     /// Version with callback on IdentifierName and using SemanticModelBrowser
     /// </summary>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
@@ -92,8 +92,8 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.Analyzers
             {
                 return;
             }
-            
-            if (symbol.ConstructedFrom.IsDerivedFrom("System.IO.IOException", context.Compilation) || 
+
+            if (symbol.ConstructedFrom.IsDerivedFrom("System.IO.IOException", context.Compilation) ||
                 symbol.ConstructedFrom.IsDerivedFrom("System.IO.Stream", context.Compilation) ||
                 symbol.ConstructedFrom.IsDerivedFrom("System.IO.SeekOrigin", context.Compilation))
             {

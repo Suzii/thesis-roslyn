@@ -41,7 +41,7 @@ namespace BugHunter.TestUtils.Verifiers
         /// </summary>
         /// <returns>The CodeFixProvider to be used for CSharp code</returns>
         protected abstract CodeFixProvider GetCSharpCodeFixProvider();
-        
+
         /// <summary>
         /// Called to test a C# codefix when applied on the inputted string as a source
         /// </summary>
@@ -77,7 +77,7 @@ namespace BugHunter.TestUtils.Verifiers
 
             var analyzerDiagnostics = AnalyzerExecution.GetSortedDiagnosticsFromDocuments(analyzer, new[] { document });
             var attempts = analyzerDiagnostics.Length;
-            
+
             for (int i = 0; i < attempts; ++i)
             {
                 var actions = new List<CodeAction>();

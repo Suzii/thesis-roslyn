@@ -80,7 +80,7 @@ namespace SampleTestProject.CsSamples
 
         [Test, TestCaseSource(nameof(TestSource))]
         public void InputWithIncident_SimpleMemberAccess_SurfacesDiagnostic(string methodUsed, string codeFix, int codeFixNumber)
-        {   
+        {
             var test = $@"namespace SampleTestProject.CsSamples 
 {{
     public class SampleClass

@@ -7,7 +7,7 @@ namespace BugHunter.Core.ApiReplacementAnalysis
 {
     /// <summary>
     /// Strategy to be used for all method API Replacements analyzers
-    /// 
+    ///
     /// It register the analysis action based on passed <see cref="ApiReplacementConfig"/> object
     /// and makes sure analysis is run for all method invocations
     /// </summary>
@@ -26,7 +26,7 @@ namespace BugHunter.Core.ApiReplacementAnalysis
 
         /// <summary>
         /// Registers the analyzers on <param name="analysisContext"></param>
-        /// 
+        ///
         /// Makes sure the analysis is run for all method invocations
         /// and enables concurrent analysis execution and disables analysis of generated code
         /// </summary>

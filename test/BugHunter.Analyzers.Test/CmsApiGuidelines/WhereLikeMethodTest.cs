@@ -32,7 +32,7 @@ namespace BugHunter.Analyzers.Test.CmsApiGuidelines
 
             VerifyCSharpDiagnostic(test);
         }
-        
+
         [TestCase("WhereLike", "WhereContains", 0)]
         [TestCase("WhereLike", "WhereStartsWith", 1)]
         [TestCase("WhereLike", "WhereEndsWith", 2)]
@@ -56,7 +56,7 @@ namespace SampleTestProject.CsSamples
 }}";
             var expectedDiagnostic = CreateDiagnosticResult($@"{oldMethodCall}(""columnName"", ""value"")").WithLocation(9, 45);
 
-            VerifyCSharpDiagnostic(test, 
+            VerifyCSharpDiagnostic(test,
                 expectedDiagnostic,
                 expectedDiagnostic.WithLocation(10, 46));
 
@@ -210,10 +210,10 @@ namespace SampleTestProject.CsSamples
         }}
     }}
 }}";
-            
+
             VerifyCSharpDiagnostic(test,
                 CreateDiagnosticResult($@"{methodCall}(""columnName1"", ""value"")").WithLocation(9, 45),
-                CreateDiagnosticResult($@"{methodCall}(""columnName2"", ""value"")").WithLocation(10, 46), 
+                CreateDiagnosticResult($@"{methodCall}(""columnName2"", ""value"")").WithLocation(10, 46),
                 CreateDiagnosticResult($@"{methodCall}(""columnName3"", ""value"")").WithLocation(11, 45),
                 CreateDiagnosticResult($@"{methodCall}(""columnName4"", ""value"")").WithLocation(12, 46));
         }
@@ -240,7 +240,7 @@ namespace SampleTestProject.CsSamples
         }}
     }}
 }}";
-            
+
             var expectedFix = $@"
 namespace SampleTestProject.CsSamples
 {{

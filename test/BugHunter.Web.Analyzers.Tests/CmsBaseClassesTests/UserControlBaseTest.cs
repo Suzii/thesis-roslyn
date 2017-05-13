@@ -19,7 +19,7 @@ namespace BugHunter.Web.Analyzers.Tests.CmsBaseClassesTests
         }
 
         private readonly FakeFileInfo _userControlFakeFileInfo = new FakeFileInfo { FileExtension= "ascx.cs" };
-        
+
         private DiagnosticResult GetDiagnosticResult(params string[] messageArguments)
         {
             return new DiagnosticResult

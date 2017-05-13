@@ -18,7 +18,7 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.Analyzers
         private static readonly DiagnosticDescriptor Rule = ApiReplacementRulesProvider.GetRule(DiagnosticId, "QueryString[]", "QueryHelper.Get<Type>()");
 
         /// <inheritdoc />
-        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics 
+        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics
             => ImmutableArray.Create(Rule);
 
         private static readonly ApiReplacementConfig ApiReplacementConfig = new ApiReplacementConfig(Rule,

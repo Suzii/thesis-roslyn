@@ -20,7 +20,7 @@ namespace BugHunter.Web.Analyzers.CmsBaseClassesRules.Analyzers
         public const string DiagnosticId = DiagnosticIds.UserControlBase;
 
         /// <inheritdoc />
-        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics 
+        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics
             => ImmutableArray.Create(Rule);
 
         private static readonly DiagnosticDescriptor Rule = BaseClassesInheritanceRulesProvider.GetRule(DiagnosticId, "User Control", "some abstract CMSUserControl");

@@ -13,7 +13,7 @@ namespace BugHunter.Core.Helpers.DiagnosticDescriptors
         /// Constructs a <see cref="DiagnosticDescriptor"/> for API Replacement Analyzer.
         /// </summary>
         /// <remarks>
-        /// Analyzer will have provided diagnostic ID, CmsApiReplacements category, 
+        /// Analyzer will have provided diagnostic ID, CmsApiReplacements category,
         /// Warning severity, HelperLinkUri, and will be enabled by default
         /// </remarks>
         /// <param name="diagnosticId">Diagnostic ID of the rule</param>
@@ -33,7 +33,7 @@ namespace BugHunter.Core.Helpers.DiagnosticDescriptors
         /// Constructs a <see cref="DiagnosticDescriptor"/> for API Replacement Analyzer.
         /// </summary>
         /// <remarks>
-        /// Analyzer will have provided diagnostic ID, CmsApiReplacements category, 
+        /// Analyzer will have provided diagnostic ID, CmsApiReplacements category,
         /// Warning severity, HelperLinkUri, and will be enabled by default
         /// </remarks>
         /// <param name="diagnosticId">Diagnostic ID of the rule</param>

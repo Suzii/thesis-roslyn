@@ -16,8 +16,8 @@ namespace BugHunter.Analyzers.Test.StringAndCultureTests
             new object[] {"ToLower()", "ToLowerInvariant()", null, 0},
             new object[] {"ToLower()", "ToLower(CultureInfo.CurrentCulture)", "using System.Globalization;\r\n\r\n", 1},
 
-            new object[] {"ToUpper()", "ToUpperInvariant()", null, 0}, 
-            new object[] {"ToUpper()", "ToUpper(CultureInfo.CurrentCulture)", "using System.Globalization;\r\n\r\n", 1}, 
+            new object[] {"ToUpper()", "ToUpperInvariant()", null, 0},
+            new object[] {"ToUpper()", "ToUpper(CultureInfo.CurrentCulture)", "using System.Globalization;\r\n\r\n", 1},
         };
 
         protected override MetadataReference[] GetAdditionalReferences() => null;
@@ -71,7 +71,7 @@ namespace SampleTestProject.CsSamples
 
         [Test, TestCaseSource(nameof(TestSource))]
         public void InputWithIncident_SimpleMemberAccess_SurfacesDiagnostic(string methodUsed, string codeFix, string usings, int codeFixNumber)
-        {   
+        {
             var test = $@"namespace SampleTestProject.CsSamples 
 {{
     public class SampleClass

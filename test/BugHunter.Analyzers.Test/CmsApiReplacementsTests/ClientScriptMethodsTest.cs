@@ -125,7 +125,7 @@ namespace SampleTestProject.CsSamples
     }}
 }}";
             var expectedDiagnostic = CreateDiagnosticResult($"new System.Web.UI.Page().ClientScript.{methodInvocation}").WithLocation(8, 13);
-            
+
             VerifyCSharpDiagnostic(test, expectedDiagnostic);
 
             // SampleClass does not inherit from System.Web.UI.Control, verify no codefix is applied

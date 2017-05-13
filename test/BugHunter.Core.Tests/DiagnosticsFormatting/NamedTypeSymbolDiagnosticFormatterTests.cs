@@ -34,7 +34,7 @@ namespace BugHunter.Core.Tests.DiagnosticsFormatting
             var classDeclaration = tree.GetRoot().DescendantNodesAndSelf().OfType<ClassDeclarationSyntax>().First();
             var semanticModel = compilation.GetSemanticModel(tree);
             var namedSymbol = semanticModel.GetDeclaredSymbol(classDeclaration);
-            
+
             var expectedLocation = Location.Create(classDeclaration?.SyntaxTree, TextSpan.FromBounds(locationStart, locationStart + 9));
             var diagnostic = _diagnosticFormatter.CreateDiagnostic(_rule, namedSymbol);
 

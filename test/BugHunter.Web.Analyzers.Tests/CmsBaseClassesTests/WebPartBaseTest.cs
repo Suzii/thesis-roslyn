@@ -31,7 +31,7 @@ namespace BugHunter.Web.Analyzers.Tests.CmsBaseClassesTests
 
         private readonly FakeFileInfo _uiWebPartFakeFileInfo = new FakeFileInfo() { FileLocation = SolutionFolders.UIWebParts };
         private readonly FakeFileInfo _webPartFakeFileInfo = new FakeFileInfo() { FileLocation = SolutionFolders.WebParts };
-        
+
         private static DiagnosticResult GetDiagnosticResult(string projectPath, params string[] messageArguments)
         {
             switch (projectPath)

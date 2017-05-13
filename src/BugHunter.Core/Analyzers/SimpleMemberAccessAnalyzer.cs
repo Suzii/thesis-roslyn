@@ -11,7 +11,7 @@ namespace BugHunter.Core.Analyzers
 {
     /// <summary>
     /// Analyzing strategy for <see cref="MemberAccessExpressionSyntax"/>
-    /// 
+    ///
     /// Runs the analysis for current context based on the <see cref="ApiReplacementConfig"/>
     /// and raises diagnostics using passed <see cref="ISyntaxNodeDiagnosticFormatter{TSyntaxNode}"/>
     /// </summary>
@@ -37,7 +37,7 @@ namespace BugHunter.Core.Analyzers
         /// <param name="context">Context to perform analysis on</param>
         public void Run(SyntaxNodeAnalysisContext context)
         {
-            var memberAccess = (MemberAccessExpressionSyntax)context.Node;  
+            var memberAccess = (MemberAccessExpressionSyntax)context.Node;
             if (memberAccess == null)
             {
                 return;

@@ -35,7 +35,7 @@ namespace BugHunter.Analyzers.Test.CmsApiReplacementsTests
 
         [Test]
         public void InputWithIncident_SimpleMemberAccess_SurfacesDiagnostic()
-        {   
+        {
             var test = $@"
 namespace SampleTestProject.CsSamples 
 {{
@@ -49,7 +49,7 @@ namespace SampleTestProject.CsSamples
 }}";
 
             var expectedDiagnostic = CreateDiagnosticResult("new System.Web.UI.Page().IsPostBack", "RequestHelper.IsPostBack()").WithLocation(8, 30);
-            
+
             VerifyCSharpDiagnostic(test, expectedDiagnostic);
 
             var expectedFix = $@"using CMS.Helpers;

@@ -56,7 +56,7 @@ namespace BugHunter.Analyzers.StringAndCultureRules.CodeFixes
 
         private static ExpressionSyntax GetNewInvocationWithCultureInfoParameter(InvocationExpressionSyntax invocation)
             => SyntaxFactory.ParseExpression($"{invocation.Expression}(CultureInfo.CurrentCulture)");
-        
+
         private static ExpressionSyntax GetNewInvocationWithInvariantMethod(InvocationExpressionSyntax invocation)
             => SyntaxFactory.ParseExpression($"{invocation.Expression}Invariant()");
     }

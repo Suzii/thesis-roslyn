@@ -11,7 +11,7 @@ namespace BugHunter.Core.Extensions
     {
         /// <summary>
         /// Returns the outer-most parent of "dotted expression" which <param name="identifierNameSyntax"></param> is part of
-        /// 
+        ///
         /// Dotted expression can be either <see cref="MemberAccessExpressionSyntax"/> or <see cref="QualifiedNameSyntax"/>
         /// </summary>
         /// <param name="identifierNameSyntax">Identifier name whose parent should be searched for</param>

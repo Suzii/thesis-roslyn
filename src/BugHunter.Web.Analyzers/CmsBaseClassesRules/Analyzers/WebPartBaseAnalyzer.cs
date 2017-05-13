@@ -25,9 +25,9 @@ namespace BugHunter.Web.Analyzers.CmsBaseClassesRules.Analyzers
         /// The ID for diagnostics raised by <see cref="WebPartBaseAnalyzer"/> for UI web parts
         /// </summary>
         public const string UIWebPartDiagnosticId = DiagnosticIds.UIWebPartBase;
-        
+
         /// <inheritdoc />
-        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics 
+        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics
             => ImmutableArray.Create(WebPartRule, UiWebPartRule);
 
         private static readonly DiagnosticDescriptor WebPartRule = BaseClassesInheritanceRulesProvider.GetRule(WebPartDiagnosticId, "Web Part", "some abstract CMS WebPart");
@@ -62,8 +62,8 @@ namespace BugHunter.Web.Analyzers.CmsBaseClassesRules.Analyzers
         private static void Analyze(SymbolAnalysisContext symbolAnalysisContext)
         {
             var namedTypeSymbol = (INamedTypeSymbol)symbolAnalysisContext.Symbol;
-            if (namedTypeSymbol == null || 
-                namedTypeSymbol.IsAbstract || 
+            if (namedTypeSymbol == null ||
+                namedTypeSymbol.IsAbstract ||
                 namedTypeSymbol.IsNested())
             {
                 return;
@@ -80,7 +80,7 @@ namespace BugHunter.Web.Analyzers.CmsBaseClassesRules.Analyzers
             var isUiWebPart = symbolFilePaths.Any(SolutionFolders.IsUIWebPart);
             var allowedBaseTypeNames = isUiWebPart ? UiWebPartBases : WebPartBases;
             var ruleToBeUsed = isUiWebPart ? UiWebPartRule : WebPartRule;
-            
+
             var extendsOnlyObject = namedTypeSymbol.ExtendsOnlyObject();
             var inheritsFromOneOfRequiredTypes = InheritsFromOneOfRequiredTypes(allowedBaseTypeNames, namedTypeSymbol);
             if (extendsOnlyObject || inheritsFromOneOfRequiredTypes)

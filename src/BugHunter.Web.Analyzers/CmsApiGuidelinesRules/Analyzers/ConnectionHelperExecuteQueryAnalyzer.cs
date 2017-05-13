@@ -34,7 +34,7 @@ namespace BugHunter.Web.Analyzers.CmsApiGuidelinesRules.Analyzers
         private static readonly ISyntaxNodeAnalyzer Analyzer = new InnerMethodInvocationAnalyzer(Config);
 
         /// <inheritdoc />
-        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics 
+        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics
             => ImmutableArray.Create(Rule);
 
         /// <inheritdoc />
@@ -51,7 +51,7 @@ namespace BugHunter.Web.Analyzers.CmsApiGuidelinesRules.Analyzers
             /// <summary>
             /// Constructor initializing config and diagnostic formatter of <see cref="MethodInvocationAnalyzer"/> base class
             /// </summary>
-            public InnerMethodInvocationAnalyzer(ApiReplacementConfig config) 
+            public InnerMethodInvocationAnalyzer(ApiReplacementConfig config)
                 : base(config, new MethodInvocationDiagnosticFormatter()) { }
 
             /// <inheritdoc />

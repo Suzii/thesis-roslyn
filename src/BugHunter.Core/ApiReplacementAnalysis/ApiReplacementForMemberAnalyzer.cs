@@ -7,7 +7,7 @@ namespace BugHunter.Core.ApiReplacementAnalysis
 {
     /// <summary>
     /// Strategy to be used for all member API Replacements analyzers
-    /// 
+    ///
     /// It register the analysis action based on passed <see cref="ApiReplacementConfig"/> object
     /// and makes sure analysis is run on all possible member accesses (both simple and conditional)
     /// </summary>
@@ -28,8 +28,8 @@ namespace BugHunter.Core.ApiReplacementAnalysis
 
         /// <summary>
         /// Registers the analyzers on <param name="analysisContext"></param>
-        /// 
-        /// Makes sure the analysis is run on all possible member accesses (both simple and conditional) 
+        ///
+        /// Makes sure the analysis is run on all possible member accesses (both simple and conditional)
         /// and enables concurrent analysis execution and disables analysis of generated code
         /// </summary>
         /// <param name="analysisContext">Contex of the analysis to register the action on</param>
@@ -37,7 +37,7 @@ namespace BugHunter.Core.ApiReplacementAnalysis
         {
             analysisContext.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.None);
             analysisContext.EnableConcurrentExecution();
-            
+
             analysisContext.RegisterSyntaxNodeAction(_simpleMemberAccessAnalyzer.Run, SyntaxKind.SimpleMemberAccessExpression);
             analysisContext.RegisterSyntaxNodeAction(_conditionalAccessAnalyzer.Run, SyntaxKind.ConditionalAccessExpression);
         }
