@@ -14,7 +14,7 @@ namespace BugHunter.AnalyzersVersions.SystemIO
     /// </summary>
     //[DiagnosticAnalyzer(LanguageNames.CSharp)]
 #pragma warning disable RS1001 // Missing diagnostic analyzer attribute.
-    public class V00IdentiferNameEmptyCallback : DiagnosticAnalyzer
+    public class V00IdentifierNameEmptyCallback : DiagnosticAnalyzer
 #pragma warning restore RS1001 // Missing diagnostic analyzer attribute.
     {
         public const string DiagnosticId = "BHxV00";

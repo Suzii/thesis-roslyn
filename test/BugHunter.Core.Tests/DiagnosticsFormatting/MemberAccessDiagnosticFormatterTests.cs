@@ -39,7 +39,7 @@ namespace BugHunter.Core.Tests.DiagnosticsFormatting
         public void MultipleNestedMemberAccesses()
         {
             var memberAccess =
-                SyntaxFactory.ParseExpression(@"new CMS.DataEngine.WhereCondition().Or().SomeProperty") as MemberAccessExpressionSyntax; ;
+                SyntaxFactory.ParseExpression(@"new CMS.DataEngine.WhereCondition().Or().SomeProperty") as MemberAccessExpressionSyntax;
 
             var expectedLocation = Location.Create(memberAccess?.SyntaxTree, TextSpan.FromBounds(0, 53));
             var diagnostic = _diagnosticFormatter.CreateDiagnostic(_rule, memberAccess);

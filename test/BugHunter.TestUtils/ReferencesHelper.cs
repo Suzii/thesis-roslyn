@@ -27,7 +27,7 @@ namespace BugHunter.TestUtils
         public static readonly MetadataReference SystemWebUIReference = MetadataReference.CreateFromFile(typeof(System.Web.UI.Control).Assembly.Location);
 
         // Kentico.Libraries
-        public static readonly MetadataReference[] CMSBasicReferences = ReferencesHelper.GetReferencesFor(
+        public static readonly MetadataReference[] CMSBasicReferences = GetReferencesFor(
             typeof(CMS.Core.ModuleName),
             typeof(CMS.Base.BaseModule),
             typeof(CMS.DataEngine.TypeCondition),

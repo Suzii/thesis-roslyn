@@ -104,30 +104,30 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BaseClassAnalyzers\PageBaseAnalyzer_RegisterSymbolAction.cs" />
-    <Compile Include="BaseClassAnalyzers\PageBaseAnalyzer_RegisterSyntaxTreeAction.cs" />
-    <Compile Include="MethodInvocationHeuristics\FormsAuthenticationSignOutAnalyzer_NoOptimization.cs" />
+    <Compile Include="BaseClassAnalyzers\PageBaseAnalyzerRegisterSymbolAction.cs" />
+    <Compile Include="BaseClassAnalyzers\PageBaseAnalyzerRegisterSyntaxTreeAction.cs" />
+    <Compile Include="MethodInvocationHeuristics\FormsAuthenticationSignOutAnalyzerNoOptimization.cs" />
     <Compile Include="MethodInvocationHeuristics\FormsAuthenticationSignOutAnalyzer.cs" />
     <Compile Include="MethodInvocationHeuristics\Helpers\ApiReplacementForMethodAnalyzer_NoOptimization.cs" />
     <Compile Include="MethodInvocationHeuristics\Helpers\MethodInvocationAnalyzer_NoOptimization.cs" />
-    <Compile Include="StringAndCulture\StringAndCulture_WithStrategyClass_Analyzer.cs" />
-    <Compile Include="StringAndCulture\StringAndCulture_WithBaseClass_Analyzer.cs" />
+    <Compile Include="StringAndCulture\StringAndCultureWithStrategyClassAnalyzer.cs" />
+    <Compile Include="StringAndCulture\StringAndCultureWithBaseClassAnalyzer.cs" />
     <Compile Include="SystemIO\Helpers\AnalyzerHelper.cs" />
     <Compile Include="SystemIO\Helpers\SystemIoDiagnosticFormatter.cs" />
-    <Compile Include="SystemIO\V00_IdentiferName_DirectSemanticModelAccess.cs" />
+    <Compile Include="SystemIO\V00IdentifierNameDirectSemanticModelAccess.cs" />
     <Compile Include="SystemIO\V00_IdentiferName_EmptyCallback.cs" />
-    <Compile Include="SystemIO\V12_IdentifierName_EnhancedSyntaxAnalysisAndStringPlusSymbolAnalysisWithCachedResults.cs" />
-    <Compile Include="SystemIO\V11_IdentifierName_EnhancedSyntaxAnalysisAndSymbolAnalysisWithCachedResults.cs" />
-    <Compile Include="SystemIO\V02_IdentifierName_SymbolAnalysis.cs" />
-    <Compile Include="SystemIO\V09_CompilationStartSyntaxTreeAndEnd_FulltextSearchAndSymbolParallelExecutionAndAnallysis_WithBag.cs" />
-    <Compile Include="SystemIO\V08_CompilationStartSyntaxTreeAndEnd_FulltextSearchAndSymbolParallelAnallysis_WithBag.cs" />
+    <Compile Include="SystemIO\V12IdentifierNameEnhancedSyntaxAnalysisAndStringPlusSymbolAnalysisWithCachedResults.cs" />
+    <Compile Include="SystemIO\V11IdentifierNameEnhancedSyntaxAnalysisAndSymbolAnalysisWithCachedResults.cs" />
+    <Compile Include="SystemIO\V02IdentifierNameSymbolAnalysis.cs" />
+    <Compile Include="SystemIO\V09CompilationStartSyntaxTreeAndEndFulltextSearchAndSymbolParallelExecutionAndAnallysisWithBag.cs" />
+    <Compile Include="SystemIO\V08CompilationStartSyntaxTreeAndEndFulltextSearchAndSymbolParallelAnallysisWithBag.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SystemIO\V01_IdentifierName_StrignAndSymbolComparison.cs" />
-    <Compile Include="SystemIO\V10_IdentifierName_EnhancedSyntaxAnalysisAndSymbolAnalysis.cs" />
-    <Compile Include="SystemIO\V04_CompilationStartAndIdentifierName_SymbolAnalysis.cs" />
-    <Compile Include="SystemIO\V05_CompilationStartIdentifierNameAndEnd_SymbolAnalysis_WithBag.cs" />
-    <Compile Include="SystemIO\V06_CompilationStartAndSyntaxTree_LookForIdentifierNames.cs" />
-    <Compile Include="SystemIO\V07_CompilationStartSyntaxTreeAndEnd_FulltextSearchAndSymbolAnallysis_WithBag.cs" />
+    <Compile Include="SystemIO\V01IdentifierNameStringAndSymbolComparison.cs" />
+    <Compile Include="SystemIO\V10IdentifierNameEnhancedSyntaxAnalysisAndSymbolAnalysis.cs" />
+    <Compile Include="SystemIO\V04CompilationStartAndIdentifierNameSymbolAnalysis.cs" />
+    <Compile Include="SystemIO\V05CompilationStartIdentifierNameAndEndSymbolAnalysisWithBag.cs" />
+    <Compile Include="SystemIO\V06CompilationStartAndSyntaxTreeLookForIdentifierNames.cs" />
+    <Compile Include="SystemIO\V07CompilationStartSyntaxTreeAndEndFulltextSearchAndSymbolAnallysisWithBag.cs" />
   </ItemGroup>
   <ItemGroup>
     <Analyzer Include="..\..\packages\Microsoft.CodeAnalysis.Analyzers.1.1.0\analyzers\dotnet\cs\Microsoft.CodeAnalysis.Analyzers.dll" />

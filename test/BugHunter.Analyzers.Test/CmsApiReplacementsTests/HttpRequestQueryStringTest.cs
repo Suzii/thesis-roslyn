@@ -88,7 +88,7 @@ namespace SampleTestProject.CsSamples
         }}
     }}
 }}";
-            var expectedDiagnostic = CreateDiagnosticResult($@"request.QueryString", "QueryHelper.Get<Type>()").WithLocation(9, 23);
+            var expectedDiagnostic = CreateDiagnosticResult(@"request.QueryString", "QueryHelper.Get<Type>()").WithLocation(9, 23);
 
             VerifyCSharpDiagnostic(test, expectedDiagnostic);
         }

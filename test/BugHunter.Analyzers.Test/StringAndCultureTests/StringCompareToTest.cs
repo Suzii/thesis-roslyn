@@ -200,23 +200,6 @@ namespace SampleTestProject.CsSamples
 
             var expectedDiagnostic = GetDiagnosticResult(methodUsed).WithLocation(8, 48);
             VerifyCSharpDiagnostic(test, expectedDiagnostic);
-
-            var expectedFix = $@"using System;
-
-namespace SampleTestProject.CsSamples 
-{{
-    public class SampleClass
-    {{
-        public void SampleMethod()
-        {{
-            var original = ""Original string"";
-            var temp = {codeFix};
-            var result = original.Substring(0).temp.ToString();
-        }}
-    }}
-}}";
-            // TODO no codfix to be applied (so far)
-            VerifyCSharpFix(test, test);
         }
     }
 }

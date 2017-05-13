@@ -122,7 +122,7 @@
     <comment>0 - suggested code fix</comment>
   </data>
   <data name="ValidationHelperGet_Description" xml:space="preserve">
-    <value>Do not use Get..() methods on ValidatinoHelper. Use Get..System() instead to ensure specific culture representation.</value>
+    <value>Do not use Get..() methods on ValidationHelper. Use Get..System() instead to ensure specific culture representation.</value>
     <comment>0 - forbidden usage</comment>
   </data>
   <data name="ValidationHelperGet_MessageFormat" xml:space="preserve">

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Text.RegularExpressions;
-using Microsoft.CodeAnalysis.VisualBasic.Syntax;
 
 namespace BugHunter.Core.Helpers.DiagnosticDescriptors
 {

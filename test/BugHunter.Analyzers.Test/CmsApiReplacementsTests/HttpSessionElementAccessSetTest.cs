@@ -106,7 +106,7 @@ namespace SampleTestProject.CsSamples
 
         [TestCase("System.Web.HttpContext.Current.Session")]
         [TestCase("new System.Web.HttpSessionStateWrapper(System.Web.HttpContext.Current.Session)")]
-        public void InputWithIncident_ParenthizedExpression_SurfacesDiagnostic(string sessionInstance)
+        public void InputWithIncident_ExpressionWithPerantheses_SurfacesDiagnostic(string sessionInstance)
         {
             var test = $@"
 namespace SampleTestProject.CsSamples 

@@ -39,8 +39,8 @@ namespace BugHunter.Core.Tests.Extensions
             {
                 var objectCreation = SyntaxFactory.ParseExpression("new This.Is.SomeQualified.Name.Syntax.AndThisIsSpecificName()") as ObjectCreationExpressionSyntax;
 
-                var expected = objectCreation.Type as QualifiedNameSyntax;
-                var actual = (expected.Right as IdentifierNameSyntax).GetOuterMostParentOfDottedExpression();
+                var expected = objectCreation?.Type as QualifiedNameSyntax;
+                var actual = (expected?.Right as IdentifierNameSyntax)?.GetOuterMostParentOfDottedExpression();
 
                 Assert.AreEqual(expected, actual);
             }

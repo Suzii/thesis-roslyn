@@ -34,7 +34,7 @@ namespace BugHunter.TestUtils.Verifiers
     /// Superclass of all Unit tests made for diagnostics with codefixes.
     /// Contains methods used to verify correctness of codefixes
     /// </summary>
-    public abstract partial class CodeFixVerifier : DiagnosticVerifier
+    public abstract class CodeFixVerifier : DiagnosticVerifier
     {
         /// <summary>
         /// Returns the codefix being tested (C#) - to be implemented in non-abstract class

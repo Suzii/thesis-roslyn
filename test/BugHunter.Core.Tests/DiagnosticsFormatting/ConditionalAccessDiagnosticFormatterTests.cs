@@ -38,7 +38,7 @@ namespace BugHunter.Core.Tests.DiagnosticsFormatting
         [Test]
         public void ConditionalAccessWithPrecedingMemberAccesses()
         {
-            var conditionalAccess = SyntaxFactory.ParseExpression(@"new CMS.DataEngine.WhereCondition().Or()?.SomeProperty") as ConditionalAccessExpressionSyntax; ;
+            var conditionalAccess = SyntaxFactory.ParseExpression(@"new CMS.DataEngine.WhereCondition().Or()?.SomeProperty") as ConditionalAccessExpressionSyntax;
 
             var expectedLocation = Location.Create(conditionalAccess?.SyntaxTree, TextSpan.FromBounds(0, 54));
             var diagnostic = _diagnosticFormatter.CreateDiagnostic(_rule, conditionalAccess);
@@ -52,7 +52,7 @@ namespace BugHunter.Core.Tests.DiagnosticsFormatting
         public void ConditionalAccessWithFollowUpMemberAccess()
         {
             var conditionalAccess =
-                SyntaxFactory.ParseExpression(@"someObject?.SomeProperty.OtherProperty") as ConditionalAccessExpressionSyntax; ;
+                SyntaxFactory.ParseExpression(@"someObject?.SomeProperty.OtherProperty") as ConditionalAccessExpressionSyntax;
 
             var expectedLocation = Location.Create(conditionalAccess?.SyntaxTree, TextSpan.FromBounds(0, 24));
             var diagnostic = _diagnosticFormatter.CreateDiagnostic(_rule, conditionalAccess);
@@ -66,7 +66,7 @@ namespace BugHunter.Core.Tests.DiagnosticsFormatting
         public void ConditionalAccessWithPrecedingAndFollowUpMemberAccess()
         {
             var conditionalAccess =
-                SyntaxFactory.ParseExpression(@"firstObject.someObject?.SomeProperty.OtherProperty") as ConditionalAccessExpressionSyntax; ;
+                SyntaxFactory.ParseExpression(@"firstObject.someObject?.SomeProperty.OtherProperty") as ConditionalAccessExpressionSyntax;
             
             var expectedLocation = Location.Create(conditionalAccess?.SyntaxTree, TextSpan.FromBounds(0, 36));
             var diagnostic = _diagnosticFormatter.CreateDiagnostic(_rule, conditionalAccess);
@@ -91,7 +91,7 @@ namespace BugHunter.Core.Tests.DiagnosticsFormatting
         public void ConditionalAccessWithFollowUpConditionalAccesses(string followUpDottedExpression)
         {
             var parentConditionalAccess =
-                SyntaxFactory.ParseExpression($@"someObject?.SomeProperty{followUpDottedExpression}") as ConditionalAccessExpressionSyntax; ;
+                SyntaxFactory.ParseExpression($@"someObject?.SomeProperty{followUpDottedExpression}") as ConditionalAccessExpressionSyntax;
 
             var expectedLocation = Location.Create(parentConditionalAccess?.SyntaxTree, TextSpan.FromBounds(0, 24));
             var diagnostic = _diagnosticFormatter.CreateDiagnostic(_rule, parentConditionalAccess);
@@ -109,7 +109,7 @@ namespace BugHunter.Core.Tests.DiagnosticsFormatting
         public void ConditionalAccessWithPrecedingConditionalAccessesAndInvocations(string precedingDottedExpression)
         {
             var parentConditionalAccess =
-                SyntaxFactory.ParseExpression($@"{precedingDottedExpression}.someObject?.SomeProperty") as ConditionalAccessExpressionSyntax; ;
+                SyntaxFactory.ParseExpression($@"{precedingDottedExpression}.someObject?.SomeProperty") as ConditionalAccessExpressionSyntax;
 
             var conditionalAccess = parentConditionalAccess?.WhenNotNull as ConditionalAccessExpressionSyntax;
 
@@ -128,7 +128,7 @@ namespace BugHunter.Core.Tests.DiagnosticsFormatting
         public void ConditionalAccessWithTwoPrecedingConditionalAccessesAndInvocations(string precedingDottedExpression)
         {
             var parentConditionalAccess =
-                SyntaxFactory.ParseExpression($@"{precedingDottedExpression}.someObject?.SomeProperty") as ConditionalAccessExpressionSyntax; ;
+                SyntaxFactory.ParseExpression($@"{precedingDottedExpression}.someObject?.SomeProperty") as ConditionalAccessExpressionSyntax;
 
             var conditionalAccess = parentConditionalAccess?.DescendantNodesAndSelf().OfType<ConditionalAccessExpressionSyntax>().ElementAt(1);
 
@@ -147,7 +147,7 @@ namespace BugHunter.Core.Tests.DiagnosticsFormatting
         public void ConditionalAccessWithInvocation_ReportsCorrectly(string precedingDottedExpression)
         {
             var parentConditionalAccess =
-                SyntaxFactory.ParseExpression($@"{precedingDottedExpression}.someObject?.AccessedMethod().Other") as ConditionalAccessExpressionSyntax; ;
+                SyntaxFactory.ParseExpression($@"{precedingDottedExpression}.someObject?.AccessedMethod().Other") as ConditionalAccessExpressionSyntax;
 
             var conditionalAccess = parentConditionalAccess?.DescendantNodesAndSelf().OfType<ConditionalAccessExpressionSyntax>().ElementAt(1);
             var expectedLocation = Location.Create(parentConditionalAccess?.SyntaxTree, TextSpan.FromBounds(0, precedingDottedExpression.Length + 28));

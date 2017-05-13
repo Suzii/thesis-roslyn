@@ -22,15 +22,9 @@ namespace BugHunter.Core.DiagnosticsFormatting.Implementation
         public override Diagnostic CreateDiagnostic(DiagnosticDescriptor descriptor, InvocationExpressionSyntax invocationExpression)
         {
             SimpleNameSyntax methodNameNode;
-            Diagnostic diagnostic;
-            if (!invocationExpression.TryGetMethodNameNode(out methodNameNode))
-            {
-                diagnostic = Diagnostic.Create(descriptor, Location.None);
-            }
-            else
-            {
-                diagnostic = Diagnostic.Create(descriptor, GetLocation(invocationExpression, methodNameNode), GetDiagnosedUsage(invocationExpression, methodNameNode));
-            }
+            var diagnostic = !invocationExpression.TryGetMethodNameNode(out methodNameNode) 
+                ? Diagnostic.Create(descriptor, Location.None) 
+                : Diagnostic.Create(descriptor, GetLocation(invocationExpression, methodNameNode), GetDiagnosedUsage(invocationExpression, methodNameNode));
 
             return MarkDiagnosticIfNecessary(diagnostic, invocationExpression);
         }

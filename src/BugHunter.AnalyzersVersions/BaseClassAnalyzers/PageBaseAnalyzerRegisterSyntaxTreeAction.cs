@@ -2,8 +2,6 @@
 using System.Collections.Immutable;
 using System.Linq;
 using BugHunter.Core.Constants;
-using BugHunter.Core.DiagnosticsFormatting;
-using BugHunter.Core.DiagnosticsFormatting.Implementation;
 using BugHunter.Core.Extensions;
 using BugHunter.Core.Helpers.DiagnosticDescriptors;
 using Microsoft.CodeAnalysis;

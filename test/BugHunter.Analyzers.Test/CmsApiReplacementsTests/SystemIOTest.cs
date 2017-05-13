@@ -201,30 +201,11 @@ namespace SampleTestProject.CsSamples
         }
     }
 }";
-            var s= new System.IO.BinaryReader(Stream.Null);
-            
             var objectCreationDiagnostic = CreateDiagnosticResult(@"new System.IO.DirectoryInfo(System.IO.Path.GetFullPath(""./some/path""))", 13, 29);
             var nestedInObjectCreationDiagnostic = CreateDiagnosticResult(@"System.IO.Path.GetFullPath(""./some/path"")", 13, 57);
             var nestedInMemberAccessDiagnostic = CreateDiagnosticResult("System.IO.Path.DirectorySeparatorChar", 14, 66);
 
             VerifyCSharpDiagnostic(test, objectCreationDiagnostic, nestedInObjectCreationDiagnostic, nestedInMemberAccessDiagnostic);
-        }
-    }
-}
-
-namespace SampleTestProject.CsSamples
-{
-    public class SampleClass
-    {
-        public static void HelperMethod(char c)
-        {
-            // Do nothing
-        }
-
-        public void SampleMethod()
-        {
-            var directory = new System.IO.DirectoryInfo(System.IO.Path.GetFullPath("./ some / path"));
-            SampleTestProject.CsSamples.SampleClass.HelperMethod(System.IO.Path.DirectorySeparatorChar);
         }
     }
 }

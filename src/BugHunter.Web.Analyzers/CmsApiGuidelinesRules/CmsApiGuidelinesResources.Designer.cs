@@ -98,7 +98,7 @@ namespace BugHunter.Web.Analyzers.CmsApiGuidelinesRules {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Do not use Get..() methods on ValidatinoHelper. Use Get..System() instead to ensure specific culture representation..
+        ///   Looks up a localized string similar to Do not use Get..() methods on ValidationHelper. Use Get..System() instead to ensure specific culture representation..
         /// </summary>
         internal static string ValidationHelperGet_Description {
             get {

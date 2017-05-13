@@ -16,7 +16,7 @@ namespace BugHunter.AnalyzersVersions.SystemIO
     /// </summary>
     //[DiagnosticAnalyzer(LanguageNames.CSharp)]
 #pragma warning disable RS1001 // Missing diagnostic analyzer attribute.
-    public class V00IdentiferNameDirectSemanticModelAccess : DiagnosticAnalyzer
+    public class V00IdentifierNameDirectSemanticModelAccess : DiagnosticAnalyzer
 #pragma warning restore RS1001 // Missing diagnostic analyzer attribute.
     {
         public const string DiagnosticId = "BHxV00";
@@ -28,7 +28,7 @@ namespace BugHunter.AnalyzersVersions.SystemIO
             context.EnableConcurrentExecution();
             context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.None);
 
-            context.RegisterSyntaxNodeAction(c => Analyze(c), SyntaxKind.IdentifierName);
+            context.RegisterSyntaxNodeAction(Analyze, SyntaxKind.IdentifierName);
         }
 
         private static void Analyze(SyntaxNodeAnalysisContext context)

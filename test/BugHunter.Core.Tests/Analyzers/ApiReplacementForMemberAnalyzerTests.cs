@@ -152,12 +152,12 @@ namespace SampleTestProject.CsSamples
 
             Assert.AreEqual(6, diagnostics.Length);
 
-            AssertBestEfforDiagnostic(analyzer, CreateDiagnosticResult("").WithMessage($".FakeMember").WithLocation(9, 22), diagnostics.ElementAt(0));
-            AssertBestEfforDiagnostic(analyzer, CreateDiagnosticResult("").WithMessage($".FakeMember").WithLocation(10, 22), diagnostics.ElementAt(1));
-            AssertBestEfforDiagnostic(analyzer, CreateDiagnosticResult("").WithMessage($".FakeMember").WithLocation(12, 22), diagnostics.ElementAt(2));
-            AssertBestEfforDiagnostic(analyzer, CreateDiagnosticResult("").WithMessage($".FakeMember").WithLocation(13, 22), diagnostics.ElementAt(3));
-            AssertBestEfforDiagnostic(analyzer, CreateDiagnosticResult("").WithMessage($".FakeMember").WithLocation(14, 22), diagnostics.ElementAt(4));
-            AssertBestEfforDiagnostic(analyzer, CreateDiagnosticResult("").WithMessage($".FakeMember").WithLocation(15, 22), diagnostics.ElementAt(5));
+            AssertBestEfforDiagnostic(analyzer, CreateDiagnosticResult("").WithMessage(".FakeMember").WithLocation(9, 22), diagnostics.ElementAt(0));
+            AssertBestEfforDiagnostic(analyzer, CreateDiagnosticResult("").WithMessage(".FakeMember").WithLocation(10, 22), diagnostics.ElementAt(1));
+            AssertBestEfforDiagnostic(analyzer, CreateDiagnosticResult("").WithMessage(".FakeMember").WithLocation(12, 22), diagnostics.ElementAt(2));
+            AssertBestEfforDiagnostic(analyzer, CreateDiagnosticResult("").WithMessage(".FakeMember").WithLocation(13, 22), diagnostics.ElementAt(3));
+            AssertBestEfforDiagnostic(analyzer, CreateDiagnosticResult("").WithMessage(".FakeMember").WithLocation(14, 22), diagnostics.ElementAt(4));
+            AssertBestEfforDiagnostic(analyzer, CreateDiagnosticResult("").WithMessage(".FakeMember").WithLocation(15, 22), diagnostics.ElementAt(5));
         }
 
         private void AssertBestEfforDiagnostic(DiagnosticAnalyzer analyzer, DiagnosticResult expected, Diagnostic actual)

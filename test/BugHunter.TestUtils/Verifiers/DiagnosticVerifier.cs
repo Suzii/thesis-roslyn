@@ -12,7 +12,7 @@ namespace BugHunter.TestUtils.Verifiers
     /// <summary>
     /// Superclass of all Unit Tests for DiagnosticAnalyzers
     /// </summary>
-    public abstract partial class DiagnosticVerifier
+    public abstract class DiagnosticVerifier
     {
         #region To be implemented by Test classes
         /// <summary>
@@ -92,7 +92,7 @@ namespace BugHunter.TestUtils.Verifiers
         private static void VerifyDiagnosticResults(IEnumerable<Diagnostic> actualResults, DiagnosticAnalyzer analyzer, params DiagnosticResult[] expectedResults)
         {
             actualResults = actualResults as IList<Diagnostic> ?? actualResults.ToList();
-            int expectedCount = expectedResults.Count();
+            int expectedCount = expectedResults.Length;
             int actualCount = actualResults.Count();
 
             if (expectedCount != actualCount)

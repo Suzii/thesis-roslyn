@@ -35,7 +35,7 @@ namespace BugHunter.Analyzers.Test.CmsApiReplacementsTests
 
         [TestCase(@"new System.Web.HttpRequest(""fileName"", ""url"", ""queryString"")")]
         [TestCase(@"new System.Web.HttpRequestWrapper(new System.Web.HttpRequest(""fileName"", ""url"", ""queryString""))")]
-        public void InputWithIncident_ChainedMemeberAccess_SurfacesDiagnostic(string requestInstance)
+        public void InputWithIncident_ChainedMemberAccess_SurfacesDiagnostic(string requestInstance)
         {
             var test = $@"
 namespace SampleTestProject.CsSamples

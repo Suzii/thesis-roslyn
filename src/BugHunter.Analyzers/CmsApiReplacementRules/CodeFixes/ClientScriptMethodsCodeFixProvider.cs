@@ -44,7 +44,7 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.CodeFixes
 
             // only apply codefix if invocation is placed in class inheriting from System.Web.Ui.Control
             // since as first argument we add 'this' and it has to have right type
-            var enclosingClassName = invocation?.FirstAncestorOrSelf<ClassDeclarationSyntax>();
+            var enclosingClassName = invocation.FirstAncestorOrSelf<ClassDeclarationSyntax>();
             if (enclosingClassName == null)
             {
                 return;
@@ -98,7 +98,7 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.CodeFixes
             var newInvocationExpression = SyntaxFactory.ParseExpression($"ScriptHelper.{oldMethodName}()") as InvocationExpressionSyntax;
             var newArgumentList = GetNewArgumentList(oldInvocation);
             
-            return newInvocationExpression?.WithArgumentList(newArgumentList); ;
+            return newInvocationExpression?.WithArgumentList(newArgumentList);
         }
     }
 }
