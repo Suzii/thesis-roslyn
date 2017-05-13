@@ -17,7 +17,7 @@ namespace BugHunter.TestUtils.Services
     public static class ProjectCompilation
     {
         internal static string TestProjectName = "TestProject";
-        internal static FakeFileInfo DefaultFileInfo = new FakeFileInfo { FileLocation = "", FileName = "Test", FileExtension = "cs" };
+        internal static FakeFileInfo DefaultFileInfo = new FakeFileInfo { FileLocation = string.Empty, FileName = "Test", FileExtension = "cs" };
 
         #region Set up compilation and documents
         /// <summary>

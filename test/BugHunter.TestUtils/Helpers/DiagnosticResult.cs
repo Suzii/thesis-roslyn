@@ -76,7 +76,7 @@ namespace BugHunter.TestUtils.Helpers
             get; set;
         }
 
-        public string Path => Locations.Length > 0 ? Locations[0].Path : "";
+        public string Path => Locations.Length > 0 ? Locations[0].Path : string.Empty;
 
         public int Line => Locations.Length > 0 ? Locations[0].Line : -1;
 

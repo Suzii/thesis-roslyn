@@ -68,7 +68,7 @@ namespace BugHunter.Analyzers.Test.CmsApiReplacementsTests
         [Test]
         public void EmptyInput_NoDiagnostic()
         {
-            var test = @"";
+            var test = string.Empty;
 
             VerifyCSharpDiagnostic(test);
         }

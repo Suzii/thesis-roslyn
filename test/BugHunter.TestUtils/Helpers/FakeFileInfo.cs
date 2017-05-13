@@ -10,7 +10,7 @@ namespace BugHunter.TestUtils.Helpers
 
         public FakeFileInfo(string namePrefix, int index = 0)
         {
-            FileLocation = "";
+            FileLocation = string.Empty;
             FileName = $"{namePrefix}{index}";
             FileExtension = "cs";
         }

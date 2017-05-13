@@ -34,7 +34,7 @@ namespace BugHunter.Analyzers.Test.StringAndCultureTests
         [Test]
         public void EmptyInput_NoDiagnostic()
         {
-            var test = @"";
+            var test = string.Empty;
 
             VerifyCSharpDiagnostic(test);
         }

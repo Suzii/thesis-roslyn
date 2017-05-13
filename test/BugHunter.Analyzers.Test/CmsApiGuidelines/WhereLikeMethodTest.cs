@@ -27,7 +27,7 @@ namespace BugHunter.Analyzers.Test.CmsApiGuidelines
         [Test]
         public void EmptyInput_NoDiagnostic()
         {
-            var test = @"";
+            var test = string.Empty;
 
             VerifyCSharpDiagnostic(test);
         }

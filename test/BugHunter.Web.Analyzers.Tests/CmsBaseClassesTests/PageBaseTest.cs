@@ -35,7 +35,7 @@ namespace BugHunter.Web.Analyzers.Tests.CmsBaseClassesTests
         [Test]
         public void EmptyInput_NoDiagnostic()
         {
-            var test = @"";
+            var test = string.Empty;
 
             VerifyCSharpDiagnostic(test);
         }
