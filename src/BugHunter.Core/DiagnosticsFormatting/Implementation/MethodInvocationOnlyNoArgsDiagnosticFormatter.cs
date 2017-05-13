@@ -29,8 +29,7 @@ namespace BugHunter.Core.DiagnosticsFormatting.Implementation
             }
             else
             {
-                diagnostic = Diagnostic.Create(descriptor, GetLocation(invocationExpression, methodNameNode),
-                    GetDiagnosedUsage(methodNameNode));
+                diagnostic = Diagnostic.Create(descriptor, GetLocation(invocationExpression, methodNameNode), GetDiagnosedUsage(methodNameNode));
             }
 
             return MarkDiagnosticIfNecessary(diagnostic, invocationExpression);

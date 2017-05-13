@@ -51,7 +51,7 @@ namespace BugHunter.Analyzers.Test.CmsApiReplacementsTests
     // {
     // }
 
-    public class SystemIOTest<TAnalyzer> : CodeFixVerifier<TAnalyzer> 
+    public class SystemIOTest<TAnalyzer> : CodeFixVerifier<TAnalyzer>
         where TAnalyzer : DiagnosticAnalyzer, new()
     {
         protected override MetadataReference[] GetAdditionalReferences() => null;
