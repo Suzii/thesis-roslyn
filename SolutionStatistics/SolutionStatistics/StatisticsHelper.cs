@@ -1,4 +1,7 @@
-﻿using System;
+﻿// Copyright (c) Zuzana Dankovcikova. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,8 +19,8 @@ namespace SolutionStatistics
     internal class StatisticsHelper
     {
         /// <summary>
-        /// Determines whether a given <param name="project"></param> should be excluded from stats gathering
-        /// 
+        /// Determines whether a given <paramref name="project" /> should be excluded from stats gathering
+        ///
         /// If the project is one of third-party projects or a test project, it does not have analyzers installed, and therefore shall be excluded from statistics
         /// </summary>
         /// <param name="project">Project to be inspected</param>
@@ -39,7 +42,7 @@ namespace SolutionStatistics
         }
 
         /// <summary>
-        /// Prints given <param name="statistics"></param> to Console
+        /// Prints given <paramref name="statistics" /> to the Console
         /// </summary>
         /// <param name="statistics">Statistics to be printed outs</param>
         public static void PrintStatistics(Statistic statistics)
@@ -57,7 +60,7 @@ namespace SolutionStatistics
         }
 
         /// <summary>
-        /// Given multiple <param name="projects"></param> calculates statistics for every one of them and aggregates them into one <see cref="Statistic"/>
+        /// Given multiple <paramref name="projects" /> calculates statistics for every one of them and aggregates them into one <see cref="Statistic"/>
         /// </summary>
         /// <param name="projects">Projects to gather stats about</param>
         /// <param name="cancellationToken">Cancellation token</param>
@@ -77,7 +80,7 @@ namespace SolutionStatistics
         }
 
         /// <summary>
-        /// Given <param name="document"></param> returns <see cref="Statistic"/> about it
+        /// Given <paramref name="document" /> returns <see cref="Statistic"/> about it
         /// </summary>
         /// <param name="document">Document to return stats about</param>
         /// <param name="cancellationToken">Cancellation token</param>

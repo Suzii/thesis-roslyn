@@ -1,4 +1,7 @@
-﻿namespace SolutionStatistics.Models
+﻿// Copyright (c) Zuzana Dankovcikova. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
+namespace SolutionStatistics.Models
 {
     /// <summary>
     /// Structure for grouping statistics about nodes, tokens and trivia
@@ -6,22 +9,7 @@
     internal struct Statistic
     {
         /// <summary>
-        /// Detailed statistics about nodes
-        /// </summary>
-        public NodesStatistic NodesStatistic { get; }
-
-        /// <summary>
-        /// Number of tokens statistic
-        /// </summary>
-        public int NumberOfTokens { get; }
-
-        /// <summary>
-        /// Number of trivia statistic
-        /// </summary>
-        public int NumberOfTrivia { get; }
-
-        /// <summary>
-        /// Constructor accepting number of tokens, trivia, and detailed node statistics
+        /// Initializes a new instance of the <see cref="Statistic"/> struct.
         /// </summary>
         /// <param name="nodesStatistic">Detailed stats about nodes</param>
         /// <param name="numberOfTokens">Number of tokens</param>
@@ -32,6 +20,21 @@
             NumberOfTokens = numberOfTokens;
             NumberOfTrivia = numberOfTrivia;
         }
+
+        /// <summary>
+        /// Gets detailed statistics about nodes
+        /// </summary>
+        public NodesStatistic NodesStatistic { get; }
+
+        /// <summary>
+        /// Gets number of tokens statistic
+        /// </summary>
+        public int NumberOfTokens { get; }
+
+        /// <summary>
+        /// Gets number of trivia statistic
+        /// </summary>
+        public int NumberOfTrivia { get; }
 
         /// <summary>
         /// Sums two <see cref="Statistic"/> structures and returns a new one
