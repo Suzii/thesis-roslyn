@@ -18,17 +18,17 @@ namespace BugHunter.TestUtils.Verifiers
         where TAnalyzer : DiagnosticAnalyzer, new()
         where TCodeFix : CodeFixProvider, new()
     {
-        protected override DiagnosticAnalyzer GetCSharpDiagnosticAnalyzer() => new TAnalyzer();
+        protected override DiagnosticAnalyzer CSharpDiagnosticAnalyzer => new TAnalyzer();
 
-        protected override CodeFixProvider GetCSharpCodeFixProvider() => new TCodeFix();
+        protected override CodeFixProvider CSharpCodeFixProvider => new TCodeFix();
     }
 
     public abstract class CodeFixVerifier<TAnalyzer> : CodeFixVerifier
         where TAnalyzer : DiagnosticAnalyzer, new()
     {
-        protected override DiagnosticAnalyzer GetCSharpDiagnosticAnalyzer() => new TAnalyzer();
+        protected override DiagnosticAnalyzer CSharpDiagnosticAnalyzer => new TAnalyzer();
 
-        protected override CodeFixProvider GetCSharpCodeFixProvider() => null;
+        protected override CodeFixProvider CSharpCodeFixProvider => null;
     }
 
     /// <summary>
@@ -38,10 +38,10 @@ namespace BugHunter.TestUtils.Verifiers
     public abstract class CodeFixVerifier : DiagnosticVerifier
     {
         /// <summary>
-        /// Returns the codefix being tested (C#) - to be implemented in non-abstract class
+        /// Gets the codefix being tested (C#) - to be implemented in non-abstract class
         /// </summary>
         /// <returns>The CodeFixProvider to be used for CSharp code</returns>
-        protected abstract CodeFixProvider GetCSharpCodeFixProvider();
+        protected abstract CodeFixProvider CSharpCodeFixProvider { get; }
 
         /// <summary>
         /// Called to test a C# codefix when applied on the inputted string as a source
@@ -53,7 +53,7 @@ namespace BugHunter.TestUtils.Verifiers
         /// <param name="fakeFileInfo">Fake file info generated files should have</param>
         protected void VerifyCSharpFix(string oldSource, string newSource, int? codeFixIndex = null, bool allowNewCompilerDiagnostics = false, FakeFileInfo fakeFileInfo = null)
         {
-            VerifyFix(GetCSharpDiagnosticAnalyzer(), GetCSharpCodeFixProvider(), oldSource, newSource, GetAdditionalReferences(), codeFixIndex, allowNewCompilerDiagnostics, fakeFileInfo);
+            VerifyFix(CSharpDiagnosticAnalyzer, CSharpCodeFixProvider, oldSource, newSource, AdditionalReferences, codeFixIndex, allowNewCompilerDiagnostics, fakeFileInfo);
         }
 
         /// <summary>
@@ -145,7 +145,7 @@ namespace BugHunter.TestUtils.Verifiers
         /// <param name="diagnostics">The Diagnostics that existed in the code before the CodeFix was applied</param>
         /// <param name="newDiagnostics">The Diagnostics that exist in the code after the CodeFix was applied</param>
         /// <returns>A list of Diagnostics that only surfaced in the code after the CodeFix was applied</returns>
-        private static IEnumerable<Diagnostic> GetNewDiagnostics(IEnumerable<Diagnostic> diagnostics, IEnumerable<Diagnostic> newDiagnostics)
+        private IEnumerable<Diagnostic> GetNewDiagnostics(IEnumerable<Diagnostic> diagnostics, IEnumerable<Diagnostic> newDiagnostics)
         {
             var oldArray = diagnostics.OrderBy(d => d.Location.SourceSpan.Start).ToArray();
             var newArray = newDiagnostics.OrderBy(d => d.Location.SourceSpan.Start).ToArray();

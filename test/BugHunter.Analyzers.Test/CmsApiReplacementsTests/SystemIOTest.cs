@@ -11,16 +11,7 @@ namespace BugHunter.Analyzers.Test.CmsApiReplacementsTests
     [TestFixture]
     public class SystemIOTest : CodeFixVerifier<SystemIOAnalyzer>
     {
-        protected override MetadataReference[] GetAdditionalReferences() => null;
-
-        private static DiagnosticResult CreateDiagnosticResult(string messageArg, int row, int column)
-            => new DiagnosticResult
-            {
-                Id = DiagnosticIds.SystemIO,
-                Message = $"'{messageArg}' should not use 'System.IO' directly. Use equivalent method from namespace 'CMS.IO'.",
-                Severity = DiagnosticSeverity.Warning,
-                Locations = new[] { new DiagnosticResultLocation("Test0.cs", row, column) }
-            };
+        protected override MetadataReference[] AdditionalReferences => null;
 
         [Test]
         public void EmptyInput_NoDiagnostic()
@@ -167,5 +158,14 @@ namespace SampleTestProject.CsSamples
 
             VerifyCSharpDiagnostic(test, objectCreationDiagnostic, nestedInObjectCreationDiagnostic, nestedInMemberAccessDiagnostic);
         }
+
+        private static DiagnosticResult CreateDiagnosticResult(string messageArg, int row, int column)
+            => new DiagnosticResult
+            {
+                Id = DiagnosticIds.SystemIO,
+                Message = $"'{messageArg}' should not use 'System.IO' directly. Use equivalent method from namespace 'CMS.IO'.",
+                Severity = DiagnosticSeverity.Warning,
+                Locations = new[] { new DiagnosticResultLocation("Test0.cs", row, column) }
+            };
     }
 }

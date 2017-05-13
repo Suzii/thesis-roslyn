@@ -21,18 +21,10 @@ namespace BugHunter.Web.Analyzers.Tests.CmsBaseClassesTests
             new object[] { nameof(CMS.UIControls.CMSUIPage), "CMS.UIControls", 1 },
         };
 
-        protected override MetadataReference[] GetAdditionalReferences()
+        protected override MetadataReference[] AdditionalReferences
             => ReferencesHelper.CMSBasicReferences
                 .Union(new[] { ReferencesHelper.CMSBaseWebUI, ReferencesHelper.SystemWebReference, ReferencesHelper.SystemWebUIReference, ReferencesHelper.CMSUiControls })
                 .ToArray();
-
-        private DiagnosticResult GetDiagnosticResult(params string[] messageArguments)
-            => new DiagnosticResult
-                {
-                    Id = DiagnosticIds.PageBase,
-                    Message = $"'{messageArguments[0]}' should inherit from some abstract CMSPage.",
-                    Severity = DiagnosticSeverity.Warning,
-                };
 
         [Test]
         public void EmptyInput_NoDiagnostic()
@@ -133,5 +125,13 @@ namespace SampleTestProject.CsSamples
 
             VerifyCSharpFix(test, expectedFix, codeFixNumber, false, PagesFakeFileInfo);
         }
+
+        private DiagnosticResult GetDiagnosticResult(params string[] messageArguments)
+            => new DiagnosticResult
+            {
+                Id = DiagnosticIds.PageBase,
+                Message = $"'{messageArguments[0]}' should inherit from some abstract CMSPage.",
+                Severity = DiagnosticSeverity.Warning,
+            };
     }
 }

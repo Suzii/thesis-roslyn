@@ -15,16 +15,8 @@ namespace BugHunter.Web.Analyzers.Tests.CmsApiGuidelinesTests
     {
         private readonly FakeFileInfo _fakeFileInfo = new FakeFileInfo { FileLocation = SolutionFolders.WebParts };
 
-        protected override MetadataReference[] GetAdditionalReferences()
+        protected override MetadataReference[] AdditionalReferences
             => ReferencesHelper.CMSBasicReferences;
-
-        private DiagnosticResult GetDiagnosticResult(params string[] messageArguments)
-            => new DiagnosticResult
-                {
-                    Id = DiagnosticIds.ValidationHelperGet,
-                    Message = string.Format("Do not use {0}(). Use Get method with 'System' instead to ensure specific culture representation.", messageArguments),
-                    Severity = DiagnosticSeverity.Warning,
-                };
 
         [Test]
         public void EmptyInput_NoDiagnostic()
@@ -102,5 +94,13 @@ namespace SampleTestProject.CsSamples
 
             VerifyCSharpFix(test, expectedFix, null, true, _fakeFileInfo);
         }
+
+        private DiagnosticResult GetDiagnosticResult(params string[] messageArguments)
+            => new DiagnosticResult
+            {
+                Id = DiagnosticIds.ValidationHelperGet,
+                Message = string.Format("Do not use {0}(). Use Get method with 'System' instead to ensure specific culture representation.", messageArguments),
+                Severity = DiagnosticSeverity.Warning,
+            };
     }
 }

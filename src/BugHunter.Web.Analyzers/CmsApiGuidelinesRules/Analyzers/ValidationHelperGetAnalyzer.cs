@@ -5,8 +5,8 @@ using BugHunter.Core.Constants;
 using BugHunter.Core.DiagnosticsFormatting.Implementation;
 using BugHunter.Core.Helpers.DiagnosticDescriptors;
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Diagnostics;
 using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.Diagnostics;
 
 namespace BugHunter.Web.Analyzers.CmsApiGuidelinesRules.Analyzers
 {

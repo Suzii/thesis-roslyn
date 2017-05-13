@@ -12,16 +12,8 @@ namespace BugHunter.Analyzers.Test.CmsApiGuidelines
     [TestFixture]
     public class EventLogArgumentsTest : CodeFixVerifier<EventLogArgumentsAnalyzer, EventLogArgumentsCodeFixProvider>
     {
-        protected override MetadataReference[] GetAdditionalReferences()
+        protected override MetadataReference[] AdditionalReferences
             => ReferencesHelper.CMSBasicReferences;
-
-        private static DiagnosticResult CreateDiagnosticResult(string oldArgument)
-            => new DiagnosticResult
-            {
-                Id = DiagnosticIds.EventLogArguments,
-                Message = $"LogEvent called with event type '{oldArgument}'.",
-                Severity = DiagnosticSeverity.Warning,
-            };
 
         [Test]
         public void EmptyInput_NoDiagnostic()
@@ -86,5 +78,13 @@ namespace SampleTestProject.CsSamples
 }}";
             VerifyCSharpDiagnostic(test);
         }
+
+        private static DiagnosticResult CreateDiagnosticResult(string oldArgument)
+            => new DiagnosticResult
+            {
+                Id = DiagnosticIds.EventLogArguments,
+                Message = $"LogEvent called with event type '{oldArgument}'.",
+                Severity = DiagnosticSeverity.Warning,
+            };
     }
 }

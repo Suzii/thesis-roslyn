@@ -20,15 +20,7 @@ namespace BugHunter.Analyzers.Test.StringAndCultureTests
             new object[] { "ToUpper()", "ToUpper(CultureInfo.CurrentCulture)", "using System.Globalization;\r\n\r\n", 1 },
         };
 
-        protected override MetadataReference[] GetAdditionalReferences() => null;
-
-        private DiagnosticResult GetDiagnosticResult(string methodUsed)
-            => new DiagnosticResult
-            {
-                Id = DiagnosticIds.StringManipulationMethods,
-                Message = $"'{methodUsed}' used without specifying CultureInfo.",
-                Severity = DiagnosticSeverity.Warning,
-            };
+        protected override MetadataReference[] AdditionalReferences => null;
 
         [Test]
         public void EmptyInput_NoDiagnostic()
@@ -257,5 +249,13 @@ namespace SampleTestProject.CsSamples
 }}";
             VerifyCSharpFix(test, expectedFix, codeFixNumber);
         }
+
+        private DiagnosticResult GetDiagnosticResult(string methodUsed)
+            => new DiagnosticResult
+            {
+                Id = DiagnosticIds.StringManipulationMethods,
+                Message = $"'{methodUsed}' used without specifying CultureInfo.",
+                Severity = DiagnosticSeverity.Warning,
+            };
     }
 }

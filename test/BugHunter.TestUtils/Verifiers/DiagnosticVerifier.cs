@@ -15,15 +15,72 @@ namespace BugHunter.TestUtils.Verifiers
     public abstract class DiagnosticVerifier
     {
         /// <summary>
-        /// Get the CSharp analyzer being tested - to be implemented in non-abstract class
+        /// Gets the CSharp analyzer being tested - to be implemented in non-abstract class
         /// </summary>
-        protected abstract DiagnosticAnalyzer GetCSharpDiagnosticAnalyzer();
+        protected abstract DiagnosticAnalyzer CSharpDiagnosticAnalyzer { get; }
 
         /// <summary>
-        /// Get the additional references to be included in ad-hoc created project
+        /// Gets the additional references to be included in ad-hoc created project
         /// </summary>
         /// <returns>Additional references to be included in the project</returns>
-        protected abstract MetadataReference[] GetAdditionalReferences();
+        protected abstract MetadataReference[] AdditionalReferences { get; }
+
+        /// <summary>
+        /// Helper method to format a Diagnostic into an easily readable string
+        /// </summary>
+        /// <param name="analyzer">The analyzer that this verifier tests</param>
+        /// <param name="diagnostics">The Diagnostics to be formatted</param>
+        /// <returns>The Diagnostics formatted as a string</returns>
+        protected static string FormatDiagnostics(DiagnosticAnalyzer analyzer, params Diagnostic[] diagnostics)
+        {
+            var builder = new StringBuilder();
+            for (int i = 0; i < diagnostics.Length; ++i)
+            {
+                builder.AppendLine("// " + diagnostics[i]);
+
+                var analyzerType = analyzer.GetType();
+                var rules = analyzer.SupportedDiagnostics;
+
+                foreach (var rule in rules)
+                {
+                    if (rule != null && rule.Id == diagnostics[i].Id)
+                    {
+                        var location = diagnostics[i].Location;
+                        if (location == Location.None)
+                        {
+                            builder.AppendFormat("GetGlobalResult({0}.{1})", analyzerType.Name, rule.Id);
+                        }
+                        else
+                        {
+                            Assert.IsTrue(
+                                location.IsInSource,
+                                $"Test base does not currently handle diagnostics in metadata locations. Diagnostic in metadata: {diagnostics[i]}\r\n");
+
+                            string resultMethodName = diagnostics[i].Location.SourceTree.FilePath.EndsWith(".cs") ? "GetCSharpResultAt" : "GetBasicResultAt";
+                            var linePosition = diagnostics[i].Location.GetLineSpan().StartLinePosition;
+
+                            builder.AppendFormat(
+                                "{0}({1}, {2}, {3}.{4})",
+                                resultMethodName,
+                                linePosition.Line + 1,
+                                linePosition.Character + 1,
+                                analyzerType.Name,
+                                rule.Id);
+                        }
+
+                        if (i != diagnostics.Length - 1)
+                        {
+                            builder.Append(',');
+                        }
+
+                        builder.AppendLine();
+                        break;
+                    }
+                }
+            }
+
+            return builder.ToString();
+        }
 
         /// <summary>
         /// Called to test a C# DiagnosticAnalyzer when applied on the single inputted string as a source
@@ -33,7 +90,7 @@ namespace BugHunter.TestUtils.Verifiers
         /// <param name="expected"> DiagnosticResults that should appear after the analyzer is run on the source</param>
         protected void VerifyCSharpDiagnostic(string source, params DiagnosticResult[] expected)
         {
-            VerifyDiagnostics(new[] { source }, GetCSharpDiagnosticAnalyzer(), GetAdditionalReferences(), null, expected);
+            VerifyDiagnostics(new[] { source }, CSharpDiagnosticAnalyzer, AdditionalReferences, null, expected);
         }
 
         /// <summary>
@@ -44,7 +101,7 @@ namespace BugHunter.TestUtils.Verifiers
         /// <param name="expected">DiagnosticResults that should appear after the analyzer is run on the sources</param>
         protected void VerifyCSharpDiagnostic(string[] sources, params DiagnosticResult[] expected)
         {
-            VerifyDiagnostics(sources, GetCSharpDiagnosticAnalyzer(), GetAdditionalReferences(), null, expected);
+            VerifyDiagnostics(sources, CSharpDiagnosticAnalyzer, AdditionalReferences, null, expected);
         }
 
         /// <summary>
@@ -56,7 +113,7 @@ namespace BugHunter.TestUtils.Verifiers
         /// <param name="expected">DiagnosticResults that should appear after the analyzer is run on the sources</param>
         protected void VerifyCSharpDiagnostic(string source, FakeFileInfo fakeFileInfo, params DiagnosticResult[] expected)
         {
-            VerifyDiagnostics(new[] { source }, GetCSharpDiagnosticAnalyzer(), GetAdditionalReferences(), fakeFileInfo, expected);
+            VerifyDiagnostics(new[] { source }, CSharpDiagnosticAnalyzer, AdditionalReferences, fakeFileInfo, expected);
         }
 
         /// <summary>
@@ -66,9 +123,9 @@ namespace BugHunter.TestUtils.Verifiers
         /// <param name="sources">An array of strings to create source documents from to run the analyzers on</param>
         /// <param name="analyzer">The analyzer to be run on the source code</param>
         /// <param name="references">An array of additional metadata references, source files are dependent on</param>
-        /// <param name="expected">DiagnosticResults that should appear after the analyzer is run on the sources</param>
         /// <param name="fakeFileInfo">Fake file info generated files should have</param>
-        private void VerifyDiagnostics(string[] sources, DiagnosticAnalyzer analyzer, MetadataReference[] references, FakeFileInfo fakeFileInfo = null, params DiagnosticResult[] expected)
+        /// <param name="expected">DiagnosticResults that should appear after the analyzer is run on the sources</param>
+        private static void VerifyDiagnostics(string[] sources, DiagnosticAnalyzer analyzer, MetadataReference[] references, FakeFileInfo fakeFileInfo = null, params DiagnosticResult[] expected)
         {
             var documents = ProjectCompilation.GetDocuments(sources, references, fakeFileInfo);
             var diagnostics = AnalyzerExecution.GetSortedDiagnosticsFromDocuments(analyzer, documents);
@@ -82,7 +139,7 @@ namespace BugHunter.TestUtils.Verifiers
         /// <param name="actualResults">The Diagnostics found by the compiler after running the analyzer on the source code</param>
         /// <param name="analyzer">The analyzer that was being run on the sources</param>
         /// <param name="expectedResults">Diagnostic Results that should have appeared in the code</param>
-        private void VerifyDiagnosticResults(IEnumerable<Diagnostic> actualResults, DiagnosticAnalyzer analyzer, params DiagnosticResult[] expectedResults)
+        private static void VerifyDiagnosticResults(IEnumerable<Diagnostic> actualResults, DiagnosticAnalyzer analyzer, params DiagnosticResult[] expectedResults)
         {
             actualResults = actualResults as IList<Diagnostic> ?? actualResults.ToList();
             int expectedCount = expectedResults.Length;
@@ -109,9 +166,9 @@ namespace BugHunter.TestUtils.Verifiers
         /// Checks the actual Diagnostic found and compares it to the corresponding DiagnosticResult.
         /// Diagnostics are considered equal only if the DiagnosticResultLocation, Id, Severity, and Message of the DiagnosticResult match the actual diagnostic.
         /// </summary>
-        /// <param name="actual">The Diagnostic found by the compiler after running the analyzer on the source code</param>
         /// <param name="analyzer">The analyzer that was being run on the sources</param>
         /// <param name="expected">Diagnostic Result that should have appeared in the code</param>
+        /// <param name="actual">The Diagnostic found by the compiler after running the analyzer on the source code</param>
         private static void VerifyDiagnosticResult(DiagnosticAnalyzer analyzer, DiagnosticResult expected, Diagnostic actual)
         {
             if (expected.Line == -1 && expected.Column == -1)
@@ -173,63 +230,6 @@ namespace BugHunter.TestUtils.Verifiers
                 Assert.AreEqual(expected.Column, actualLinePosition.Character + 1,
                     $"Expected diagnostic to start at column \"{expected.Column}\" was actually at column \"{actualLinePosition.Character + 1}\"\r\n\r\nDiagnostic:\r\n    {FormatDiagnostics(analyzer, diagnostic)}\r\n");
             }
-        }
-
-        /// <summary>
-        /// Helper method to format a Diagnostic into an easily readable string
-        /// </summary>
-        /// <param name="analyzer">The analyzer that this verifier tests</param>
-        /// <param name="diagnostics">The Diagnostics to be formatted</param>
-        /// <returns>The Diagnostics formatted as a string</returns>
-        protected static string FormatDiagnostics(DiagnosticAnalyzer analyzer, params Diagnostic[] diagnostics)
-        {
-            var builder = new StringBuilder();
-            for (int i = 0; i < diagnostics.Length; ++i)
-            {
-                builder.AppendLine("// " + diagnostics[i]);
-
-                var analyzerType = analyzer.GetType();
-                var rules = analyzer.SupportedDiagnostics;
-
-                foreach (var rule in rules)
-                {
-                    if (rule != null && rule.Id == diagnostics[i].Id)
-                    {
-                        var location = diagnostics[i].Location;
-                        if (location == Location.None)
-                        {
-                            builder.AppendFormat("GetGlobalResult({0}.{1})", analyzerType.Name, rule.Id);
-                        }
-                        else
-                        {
-                            Assert.IsTrue(
-                                location.IsInSource,
-                                $"Test base does not currently handle diagnostics in metadata locations. Diagnostic in metadata: {diagnostics[i]}\r\n");
-
-                            string resultMethodName = diagnostics[i].Location.SourceTree.FilePath.EndsWith(".cs") ? "GetCSharpResultAt" : "GetBasicResultAt";
-                            var linePosition = diagnostics[i].Location.GetLineSpan().StartLinePosition;
-
-                            builder.AppendFormat(
-                                "{0}({1}, {2}, {3}.{4})",
-                                resultMethodName,
-                                linePosition.Line + 1,
-                                linePosition.Character + 1,
-                                analyzerType.Name,
-                                rule.Id);
-                        }
-
-                        if (i != diagnostics.Length - 1)
-                        {
-                            builder.Append(',');
-                        }
-
-                        builder.AppendLine();
-                        break;
-                    }
-                }
-            }
-
-            return builder.ToString();
         }
     }
 }

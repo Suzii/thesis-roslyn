@@ -12,16 +12,8 @@ namespace BugHunter.Web.Analyzers.Tests.CmsApiGuidelinesTests
     [TestFixture]
     public class ConnectionHelperExecuteQueryTest : CodeFixVerifier<ConnectionHelperExecuteQueryAnalyzer>
     {
-        protected override MetadataReference[] GetAdditionalReferences()
+        protected override MetadataReference[] AdditionalReferences
             => ReferencesHelper.CMSBasicReferences.Union(ReferencesHelper.GetReferencesFor(typeof(System.Data.DataSet))).ToArray();
-
-        private DiagnosticResult GetDiagnosticResult(string usage)
-            => new DiagnosticResult
-                {
-                    Id = DiagnosticIds.ConnectionHelperExecuteQuery,
-                    Message = $"'{usage}' should not be called directly from this file. Move the logic to codebehind instead.",
-                    Severity = DiagnosticSeverity.Warning,
-                };
 
         [Test]
         public void EmptyInput_NoDiagnostic()
@@ -77,5 +69,13 @@ namespace SampleTestProject.CsSamples
 
             VerifyCSharpDiagnostic(test, fakeFileInfo, expectedDiagnostic1, expectedDiagnostic2);
         }
+
+        private DiagnosticResult GetDiagnosticResult(string usage)
+            => new DiagnosticResult
+            {
+                Id = DiagnosticIds.ConnectionHelperExecuteQuery,
+                Message = $"'{usage}' should not be called directly from this file. Move the logic to codebehind instead.",
+                Severity = DiagnosticSeverity.Warning,
+            };
     }
 }

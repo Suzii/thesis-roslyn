@@ -21,15 +21,7 @@ namespace BugHunter.Analyzers.Test.StringAndCultureTests
             new object[] { @"Equals(""a"", ""b"")", @"Equals(""a"", ""b"", StringComparison.InvariantCultureIgnoreCase)", 5 },
         };
 
-        protected override MetadataReference[] GetAdditionalReferences() => null;
-
-        private DiagnosticResult GetDiagnosticResult(string methodUsed)
-            => new DiagnosticResult
-            {
-                Id = DiagnosticIds.StringEqualsMethod,
-                Message = $"'{methodUsed}' used without specifying StringComparison.",
-                Severity = DiagnosticSeverity.Warning,
-            };
+        protected override MetadataReference[] AdditionalReferences => null;
 
         [Test]
         public void EmptyInput_NoDiagnostic()
@@ -126,5 +118,13 @@ namespace SampleTestProject.CsSamples
 
             VerifyCSharpFix(test, expectedFix, codeFixNumber);
         }
+
+        private DiagnosticResult GetDiagnosticResult(string methodUsed)
+            => new DiagnosticResult
+            {
+                Id = DiagnosticIds.StringEqualsMethod,
+                Message = $"'{methodUsed}' used without specifying StringComparison.",
+                Severity = DiagnosticSeverity.Warning,
+            };
     }
 }

@@ -85,6 +85,6 @@ namespace BugHunter.Core.Extensions
         }
 
         private static SeparatedSyntaxList<BaseTypeSyntax> GetOriginalBaseList(ClassDeclarationSyntax classDeclaration)
-            => classDeclaration.BaseList?.Types ?? new SeparatedSyntaxList<BaseTypeSyntax>();
+            => classDeclaration.BaseList?.Types ?? default(SeparatedSyntaxList<BaseTypeSyntax>);
     }
 }

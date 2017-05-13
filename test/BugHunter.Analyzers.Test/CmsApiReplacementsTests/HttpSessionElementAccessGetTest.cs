@@ -13,16 +13,8 @@ namespace BugHunter.Analyzers.Test.CmsApiReplacementsTests
     [TestFixture]
     public class HttpSessionElementAccessGetTest : CodeFixVerifier<HttpSessionElementAccessAnalyzer, HttpSessionElementAccessGetCodeFixProvider>
     {
-        protected override MetadataReference[] GetAdditionalReferences()
+        protected override MetadataReference[] AdditionalReferences
             => ReferencesHelper.CMSBasicReferences.Union(new[] { ReferencesHelper.SystemWebReference }).ToArray();
-
-        private static DiagnosticResult CreateDiagnosticResult(params object[] messageArgs)
-            => new DiagnosticResult
-            {
-                Id = DiagnosticIds.HttpSessionElementAccessGet,
-                Message = string.Format(@"'{0}' should not be used. Use 'SessionHelper.GetValue()' instead.", messageArgs),
-                Severity = DiagnosticSeverity.Warning,
-            };
 
         [Test]
         public void EmptyInput_NoDiagnostic()
@@ -140,5 +132,13 @@ namespace SampleTestProject.CsSamples
 }}";
             VerifyCSharpFix(test, expectedFix);
         }
+
+        private static DiagnosticResult CreateDiagnosticResult(params object[] messageArgs)
+            => new DiagnosticResult
+            {
+                Id = DiagnosticIds.HttpSessionElementAccessGet,
+                Message = string.Format(@"'{0}' should not be used. Use 'SessionHelper.GetValue()' instead.", messageArgs),
+                Severity = DiagnosticSeverity.Warning,
+            };
     }
 }

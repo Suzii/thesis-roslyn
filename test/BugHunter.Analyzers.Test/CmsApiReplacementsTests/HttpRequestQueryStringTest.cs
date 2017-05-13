@@ -12,16 +12,8 @@ namespace BugHunter.Analyzers.Test.CmsApiReplacementsTests
     [TestFixture]
     public class HttpRequestQueryStringTest : CodeFixVerifier<HttpRequestQueryStringAnalyzer>
     {
-        protected override MetadataReference[] GetAdditionalReferences()
+        protected override MetadataReference[] AdditionalReferences
             => new[] { ReferencesHelper.SystemWebReference };
-
-        private static DiagnosticResult CreateDiagnosticResult(params object[] messageArgs)
-            => new DiagnosticResult
-            {
-                Id = DiagnosticIds.HttpRequestQueryString,
-                Message = string.Format(MessagesConstants.Message, messageArgs),
-                Severity = DiagnosticSeverity.Warning,
-            };
 
         [Test]
         public void EmptyInput_NoDiagnostic()
@@ -92,5 +84,13 @@ namespace SampleTestProject.CsSamples
 
             VerifyCSharpDiagnostic(test, expectedDiagnostic);
         }
+
+        private static DiagnosticResult CreateDiagnosticResult(params object[] messageArgs)
+            => new DiagnosticResult
+            {
+                Id = DiagnosticIds.HttpRequestQueryString,
+                Message = string.Format(MessagesConstants.Message, messageArgs),
+                Severity = DiagnosticSeverity.Warning,
+            };
     }
 }

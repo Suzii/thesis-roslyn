@@ -36,15 +36,7 @@ namespace BugHunter.Analyzers.Test.StringAndCultureTests
             new object[] { @"Compare(""a"", 0, ""aa"", 0, 1, false)", @"Compare(""a"", 0, ""aa"", 0, 1, StringComparison.InvariantCulture)", 2 },
         };
 
-        protected override MetadataReference[] GetAdditionalReferences() => null;
-
-        private DiagnosticResult GetDiagnosticResult(string methodUsed)
-            => new DiagnosticResult
-            {
-                Id = DiagnosticIds.StringCompareStaticMethod,
-                Message = $"'{methodUsed}' used without specifying StringComparison.",
-                Severity = DiagnosticSeverity.Warning,
-            };
+        protected override MetadataReference[] AdditionalReferences => null;
 
         [Test]
         public void EmptyInput_NoDiagnostic()
@@ -166,5 +158,13 @@ namespace SampleTestProject.CsSamples
 }}";
             Assert.Throws<ArgumentOutOfRangeException>(() => VerifyCSharpFix(test, test, 3));
         }
+
+        private DiagnosticResult GetDiagnosticResult(string methodUsed)
+            => new DiagnosticResult
+            {
+                Id = DiagnosticIds.StringCompareStaticMethod,
+                Message = $"'{methodUsed}' used without specifying StringComparison.",
+                Severity = DiagnosticSeverity.Warning,
+            };
     }
 }

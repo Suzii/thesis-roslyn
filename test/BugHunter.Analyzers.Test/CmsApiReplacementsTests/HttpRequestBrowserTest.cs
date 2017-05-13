@@ -14,16 +14,8 @@ namespace BugHunter.Analyzers.Test.CmsApiReplacementsTests
     [TestFixture]
     public class HttpRequestBrowserTest : CodeFixVerifier<HttpRequestBrowserAnalyzer, HttpRequestBrowserCodeFixProvider>
     {
-        protected override MetadataReference[] GetAdditionalReferences()
+        protected override MetadataReference[] AdditionalReferences
             => ReferencesHelper.CMSBasicReferences.Union(new[] { ReferencesHelper.SystemWebReference }).ToArray();
-
-        private static DiagnosticResult CreateDiagnosticResult(params object[] messageArgs)
-            => new DiagnosticResult
-            {
-                Id = DiagnosticIds.HttpRequestBrowser,
-                Message = string.Format(MessagesConstants.Message, messageArgs),
-                Severity = DiagnosticSeverity.Warning,
-            };
 
         [Test]
         public void EmptyInput_NoDiagnostic()
@@ -170,5 +162,13 @@ namespace SampleTestProject.CsSamples
 
             VerifyCSharpFix(test, test);
         }
+
+        private static DiagnosticResult CreateDiagnosticResult(params object[] messageArgs)
+            => new DiagnosticResult
+            {
+                Id = DiagnosticIds.HttpRequestBrowser,
+                Message = string.Format(MessagesConstants.Message, messageArgs),
+                Severity = DiagnosticSeverity.Warning,
+            };
     }
 }

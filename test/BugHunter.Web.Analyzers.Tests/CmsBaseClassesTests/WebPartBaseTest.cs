@@ -28,7 +28,7 @@ namespace BugHunter.Web.Analyzers.Tests.CmsBaseClassesTests
             new object[] { SolutionFolders.WebParts, "CMSCheckoutWebPart", "CMS.Ecommerce.Web.UI", 4 },
         };
 
-        protected override MetadataReference[] GetAdditionalReferences()
+        protected override MetadataReference[] AdditionalReferences
             => ReferencesHelper.CMSBasicReferences.Union(new[]
             {
                 ReferencesHelper.CMSBaseWebUI,
@@ -39,29 +39,6 @@ namespace BugHunter.Web.Analyzers.Tests.CmsBaseClassesTests
                 typeof(CMS.Ecommerce.Web.UI.CMSAuthorizeNetProvider),
                 typeof(CMS.UIControls.CMSAbstractUIWebpart)))
             .ToArray();
-
-        private static DiagnosticResult GetDiagnosticResult(string projectPath, params string[] messageArguments)
-        {
-            switch (projectPath)
-            {
-                case SolutionFolders.UIWebParts:
-                    return new DiagnosticResult
-                    {
-                        Id = DiagnosticIds.UIWebPartBase,
-                        Message = $"'{messageArguments[0]}' should inherit from some abstract CMS UI WebPart.",
-                        Severity = DiagnosticSeverity.Warning,
-                    };
-                case SolutionFolders.WebParts:
-                    return new DiagnosticResult
-                    {
-                        Id = DiagnosticIds.WebPartBase,
-                        Message = $"'{messageArguments[0]}' should inherit from some abstract CMS WebPart.",
-                        Severity = DiagnosticSeverity.Warning,
-                    };
-                default:
-                    throw new ArgumentException(nameof(projectPath));
-            }
-        }
 
         [Test]
         public void EmptyInput_NoDiagnostic()
@@ -265,6 +242,29 @@ namespace SampleTestProject.CsSamples
 }}";
 
             VerifyCSharpFix(test, expectedFix, codeFixNumber, false, fakeFileInfo);
+        }
+
+        private static DiagnosticResult GetDiagnosticResult(string projectPath, params string[] messageArguments)
+        {
+            switch (projectPath)
+            {
+                case SolutionFolders.UIWebParts:
+                    return new DiagnosticResult
+                    {
+                        Id = DiagnosticIds.UIWebPartBase,
+                        Message = $"'{messageArguments[0]}' should inherit from some abstract CMS UI WebPart.",
+                        Severity = DiagnosticSeverity.Warning,
+                    };
+                case SolutionFolders.WebParts:
+                    return new DiagnosticResult
+                    {
+                        Id = DiagnosticIds.WebPartBase,
+                        Message = $"'{messageArguments[0]}' should inherit from some abstract CMS WebPart.",
+                        Severity = DiagnosticSeverity.Warning,
+                    };
+                default:
+                    throw new ArgumentException(nameof(projectPath));
+            }
         }
     }
 }

@@ -14,16 +14,14 @@ namespace BugHunter.Analyzers.Test.AbstractionOverImplementationTests
     [TestFixture]
     public class LuceneSearchDocumentTest : CodeFixVerifier<LuceneSearchDocumentAnalyzer, LuceneSearchDocumentCodeFixProvider>
     {
-        protected override MetadataReference[] GetAdditionalReferences()
-        {
-            return ReferencesHelper.CMSBasicReferences.Union(
-                ReferencesHelper.GetReferencesFor(
-                    typeof(CMS.Search.ISearchProvider),
-                    typeof(Lucene.Net.Search.BooleanClause),
-                    typeof(WorldNet.Net.SynExpand),
-                    typeof(CMS.Search.Lucene3.LuceneSearchDocument)))
-                .ToArray();
-        }
+        protected override MetadataReference[] AdditionalReferences
+            => ReferencesHelper.CMSBasicReferences.Union(
+                   ReferencesHelper.GetReferencesFor(
+                        typeof(CMS.Search.ISearchProvider),
+                        typeof(Lucene.Net.Search.BooleanClause),
+                        typeof(WorldNet.Net.SynExpand),
+                        typeof(CMS.Search.Lucene3.LuceneSearchDocument)))
+                    .ToArray();
 
         [Test]
         public void EmptyInput_NoDiagnostic()

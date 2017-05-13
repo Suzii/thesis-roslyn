@@ -14,16 +14,8 @@ namespace BugHunter.Analyzers.Test.CmsApiReplacementsTests
     [TestFixture]
     public class FormsAuthenticationSignOutTest : CodeFixVerifier<FormsAuthenticationSignOutAnalyzer, FormsAuthenticationSignOutCodeFixProvider>
     {
-        protected override MetadataReference[] GetAdditionalReferences()
+        protected override MetadataReference[] AdditionalReferences
             => ReferencesHelper.CMSBasicReferences.Union(ReferencesHelper.GetReferencesFor(typeof(System.Web.HtmlString), typeof(CMS.Membership.AuthenticationHelper))).ToArray();
-
-        private static DiagnosticResult CreateDiagnosticResult(params object[] messageArgs)
-            => new DiagnosticResult
-            {
-                Id = DiagnosticIds.FormsAuthenticationSignOut,
-                Message = string.Format(MessagesConstants.Message, messageArgs),
-                Severity = DiagnosticSeverity.Warning,
-            };
 
         [Test]
         public void EmptyInput_NoDiagnostic()
@@ -100,5 +92,13 @@ namespace SampleTestProject.CsSamples
 }}";
             VerifyCSharpFix(test, expectedFix);
         }
+
+        private static DiagnosticResult CreateDiagnosticResult(params object[] messageArgs)
+            => new DiagnosticResult
+            {
+                Id = DiagnosticIds.FormsAuthenticationSignOut,
+                Message = string.Format(MessagesConstants.Message, messageArgs),
+                Severity = DiagnosticSeverity.Warning,
+            };
     }
 }

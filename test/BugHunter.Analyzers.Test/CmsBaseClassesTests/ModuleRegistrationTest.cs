@@ -12,16 +12,8 @@ namespace BugHunter.Analyzers.Test.CmsBaseClassesTests
     [TestFixture]
     public class ModuleRegistrationTest : CodeFixVerifier<ModuleRegistrationAnalyzer, ModuleRegistrationCodeFixProvider>
     {
-        protected override MetadataReference[] GetAdditionalReferences()
+        protected override MetadataReference[] AdditionalReferences
             => ReferencesHelper.CMSBasicReferences;
-
-        private DiagnosticResult GetDiagnosticResult(params string[] messageArgumentStrings)
-            => new DiagnosticResult
-            {
-                Id = DiagnosticIds.ModuleRegistration,
-                Message = string.Format("Module or ModuleEntry '{0}' is not registered in the same file where it is declared. Add assembly attribute [assembly: RegisterModule(typeof({0}))] to the file.", messageArgumentStrings),
-                Severity = DiagnosticSeverity.Warning,
-            };
 
         [Test]
         public void EmptyInput_NoDiagnostic()
@@ -304,5 +296,13 @@ namespace SampleTestProject.CsSamples
 
             VerifyCSharpFix(test, expectedFix);
         }
+
+        private DiagnosticResult GetDiagnosticResult(params string[] messageArgumentStrings)
+            => new DiagnosticResult
+            {
+                Id = DiagnosticIds.ModuleRegistration,
+                Message = string.Format("Module or ModuleEntry '{0}' is not registered in the same file where it is declared. Add assembly attribute [assembly: RegisterModule(typeof({0}))] to the file.", messageArgumentStrings),
+                Severity = DiagnosticSeverity.Warning,
+            };
     }
 }

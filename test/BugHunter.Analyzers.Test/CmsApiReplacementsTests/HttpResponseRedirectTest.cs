@@ -14,18 +14,8 @@ namespace BugHunter.Analyzers.Test.CmsApiReplacementsTests
     [TestFixture]
     public class HttpResponseRedirectTest : CodeFixVerifier<HttpResponseRedirectAnalyzer, HttpResponseRedirectCodeFixProvider>
     {
-        protected override MetadataReference[] GetAdditionalReferences()
+        protected override MetadataReference[] AdditionalReferences
             => ReferencesHelper.CMSBasicReferences.Union(new[] { ReferencesHelper.SystemWebReference }).ToArray();
-
-        private static DiagnosticResult CreateDiagnosticResult(params object[] messageArgs)
-        {
-            return new DiagnosticResult
-            {
-                Id = DiagnosticIds.HttpResponseRedirect,
-                Message = string.Format(MessagesConstants.MessageNoSuggestion, messageArgs),
-                Severity = DiagnosticSeverity.Warning,
-            };
-        }
 
         [Test]
         public void EmptyInput_NoDiagnostic()
@@ -135,5 +125,13 @@ namespace SampleTestProject.CsSamples
 
             VerifyCSharpFix(test, test);
         }
+
+        private static DiagnosticResult CreateDiagnosticResult(params object[] messageArgs)
+            => new DiagnosticResult
+            {
+                Id = DiagnosticIds.HttpResponseRedirect,
+                Message = string.Format(MessagesConstants.MessageNoSuggestion, messageArgs),
+                Severity = DiagnosticSeverity.Warning,
+            };
     }
 }

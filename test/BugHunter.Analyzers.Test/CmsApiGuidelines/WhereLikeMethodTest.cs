@@ -13,16 +13,8 @@ namespace BugHunter.Analyzers.Test.CmsApiGuidelines
     [TestFixture]
     public class WhereLikeMethodTest : CodeFixVerifier<WhereLikeMethodAnalyzer, WhereLikeMethodCodeFixProvider>
     {
-        protected override MetadataReference[] GetAdditionalReferences()
+        protected override MetadataReference[] AdditionalReferences
             => ReferencesHelper.CMSBasicReferences;
-
-        private static DiagnosticResult CreateDiagnosticResult(string usage)
-            => new DiagnosticResult
-            {
-                Id = DiagnosticIds.WhereLikeMethod,
-                Message = string.Format(MessagesConstants.MessageNoSuggestion, usage),
-                Severity = DiagnosticSeverity.Warning,
-            };
 
         [Test]
         public void EmptyInput_NoDiagnostic()
@@ -282,5 +274,13 @@ namespace SampleTestProject.CsSamples
 }";
             VerifyCSharpDiagnostic(test);
         }
+
+        private static DiagnosticResult CreateDiagnosticResult(string usage)
+            => new DiagnosticResult
+            {
+                Id = DiagnosticIds.WhereLikeMethod,
+                Message = string.Format(MessagesConstants.MessageNoSuggestion, usage),
+                Severity = DiagnosticSeverity.Warning,
+            };
     }
 }

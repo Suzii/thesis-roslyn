@@ -39,15 +39,7 @@ namespace FakeNamespace
     }
 }";
 
-        protected override MetadataReference[] GetAdditionalReferences() => null;
-
-        private static DiagnosticResult CreateDiagnosticResult(params object[] messageArgs)
-            => new DiagnosticResult
-            {
-                Id = "BHFAKE",
-                Message = string.Format(@"'{0}' should not be used.", messageArgs),
-                Severity = DiagnosticSeverity.Warning,
-            };
+        protected override MetadataReference[] AdditionalReferences => null;
 
         [Test]
         public void EmptyInput_NoDiagnostic()
@@ -115,7 +107,7 @@ namespace SampleTestProject.CsSamples
             var sources = new[] { test, _fakeClassSource };
 
             var documents = ProjectCompilation.GetDocuments(sources, null, null);
-            var analyzer = GetCSharpDiagnosticAnalyzer();
+            var analyzer = CSharpDiagnosticAnalyzer;
             var diagnostics = AnalyzerExecution.GetSortedDiagnosticsFromDocuments(analyzer, documents);
 
             Assert.AreEqual(6, diagnostics.Length);
@@ -153,7 +145,7 @@ namespace SampleTestProject.CsSamples
             var sources = new[] { test, _fakeClassSource };
 
             var documents = ProjectCompilation.GetDocuments(sources, null, null);
-            var analyzer = GetCSharpDiagnosticAnalyzer();
+            var analyzer = CSharpDiagnosticAnalyzer;
             var diagnostics = AnalyzerExecution.GetSortedDiagnosticsFromDocuments(analyzer, documents);
 
             Assert.AreEqual(6, diagnostics.Length);
@@ -166,7 +158,7 @@ namespace SampleTestProject.CsSamples
             AssertBestEfforDiagnostic(analyzer, CreateDiagnosticResult(string.Empty).WithMessage(".FakeMethod()").WithLocation(15, 22), diagnostics.ElementAt(5));
         }
 
-        private void AssertBestEfforDiagnostic(DiagnosticAnalyzer analyzer, DiagnosticResult expected, Diagnostic actual)
+        private static void AssertBestEfforDiagnostic(DiagnosticAnalyzer analyzer, DiagnosticResult expected, Diagnostic actual)
         {
             if (expected.Line == -1 && expected.Column == -1)
             {
@@ -188,5 +180,13 @@ namespace SampleTestProject.CsSamples
                 actual.GetMessage().Contains(expected.Message),
                 $"Expected diagnostic message \"{actual.GetMessage()}\" to contain \"{expected.Message}\"\r\n\r\nDiagnostic:\r\n    {FormatDiagnostics(analyzer, actual)}\r\n");
         }
+
+        private static DiagnosticResult CreateDiagnosticResult(params object[] messageArgs)
+            => new DiagnosticResult
+            {
+                Id = "BHFAKE",
+                Message = string.Format(@"'{0}' should not be used.", messageArgs),
+                Severity = DiagnosticSeverity.Warning,
+            };
     }
 }

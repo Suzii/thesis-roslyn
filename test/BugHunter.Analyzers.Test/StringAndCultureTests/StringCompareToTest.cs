@@ -31,15 +31,7 @@ namespace BugHunter.Analyzers.Test.StringAndCultureTests
             new object[] { @"CompareTo(""a"")", @"string.Compare(ouch, ""a"", StringComparison.InvariantCultureIgnoreCase)", 5 },
         };
 
-        protected override MetadataReference[] GetAdditionalReferences() => null;
-
-        private DiagnosticResult GetDiagnosticResult(string methodUsed)
-            => new DiagnosticResult
-            {
-                Id = DiagnosticIds.StringCompareToMethod,
-                Message = $"'{methodUsed}' used without specifying StringComparison.",
-                Severity = DiagnosticSeverity.Warning,
-            };
+        protected override MetadataReference[] AdditionalReferences => null;
 
         [Test]
         public void EmptyInput_NoDiagnostic()
@@ -201,5 +193,13 @@ namespace SampleTestProject.CsSamples
             var expectedDiagnostic = GetDiagnosticResult(methodUsed).WithLocation(8, 48);
             VerifyCSharpDiagnostic(test, expectedDiagnostic);
         }
+
+        private DiagnosticResult GetDiagnosticResult(string methodUsed)
+            => new DiagnosticResult
+            {
+                Id = DiagnosticIds.StringCompareToMethod,
+                Message = $"'{methodUsed}' used without specifying StringComparison.",
+                Severity = DiagnosticSeverity.Warning,
+            };
     }
 }

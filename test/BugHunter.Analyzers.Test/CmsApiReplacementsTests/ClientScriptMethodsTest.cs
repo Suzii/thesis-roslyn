@@ -14,16 +14,8 @@ namespace BugHunter.Analyzers.Test.CmsApiReplacementsTests
     [TestFixture]
     public class ClientScriptMethodsTest : CodeFixVerifier<ClientScriptMethodsAnalyzer, ClientScriptMethodsCodeFixProvider>
     {
-        protected override MetadataReference[] GetAdditionalReferences()
+        protected override MetadataReference[] AdditionalReferences
             => ReferencesHelper.CMSBasicReferences.Union(new[] { ReferencesHelper.SystemWebReference, ReferencesHelper.CMSBaseWebUI }).ToArray();
-
-        private static DiagnosticResult CreateDiagnosticResult(params object[] messageArgs)
-            => new DiagnosticResult
-            {
-                Id = DiagnosticIds.ClientScriptMethods,
-                Message = string.Format(MessagesConstants.MessageNoSuggestion, messageArgs),
-                Severity = DiagnosticSeverity.Warning,
-            };
 
         [Test]
         public void EmptyInput_NoDiagnostic()
@@ -156,5 +148,13 @@ namespace SampleTestProject.CsSamples
             // verify no codefix is applied
             VerifyCSharpFix(test, test);
         }
+
+        private static DiagnosticResult CreateDiagnosticResult(params object[] messageArgs)
+            => new DiagnosticResult
+            {
+                Id = DiagnosticIds.ClientScriptMethods,
+                Message = string.Format(MessagesConstants.MessageNoSuggestion, messageArgs),
+                Severity = DiagnosticSeverity.Warning,
+            };
     }
 }

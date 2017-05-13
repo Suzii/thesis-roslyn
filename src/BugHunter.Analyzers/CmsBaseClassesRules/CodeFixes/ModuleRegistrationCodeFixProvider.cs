@@ -58,7 +58,7 @@ namespace BugHunter.Analyzers.CmsBaseClassesRules.CodeFixes
         {
             var attributeName = SyntaxFactory.ParseName("RegisterModule");
             var attributeArgumentListSyntax = SyntaxFactory.ParseAttributeArgumentList($"(typeof({containingNamespaceName}.{className}))");
-            var separatedSyntaxList = new SeparatedSyntaxList<AttributeSyntax>().Add(SyntaxFactory.Attribute(attributeName, attributeArgumentListSyntax));
+            var separatedSyntaxList = default(SeparatedSyntaxList<AttributeSyntax>).Add(SyntaxFactory.Attribute(attributeName, attributeArgumentListSyntax));
             var attributeTargetSpecifierSyntax = SyntaxFactory.AttributeTargetSpecifier(SyntaxFactory.Identifier("assembly"));
             var attributeToBeAdded = SyntaxFactory.AttributeList(attributeTargetSpecifierSyntax, separatedSyntaxList);
 

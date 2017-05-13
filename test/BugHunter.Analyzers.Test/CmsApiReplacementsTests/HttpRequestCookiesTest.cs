@@ -14,16 +14,8 @@ namespace BugHunter.Analyzers.Test.CmsApiReplacementsTests
     [TestFixture]
     public class HttpRequestCookiesTest : CodeFixVerifier<HttpRequestCookiesAnalyzer, HttpRequestCookiesCodeFixProvider>
     {
-        protected override MetadataReference[] GetAdditionalReferences()
+        protected override MetadataReference[] AdditionalReferences
             => ReferencesHelper.CMSBasicReferences.Union(new[] { ReferencesHelper.SystemWebReference }).ToArray();
-
-        private static DiagnosticResult CreateDiagnosticResult(params object[] messageArgs)
-            => new DiagnosticResult
-            {
-                Id = DiagnosticIds.HttpRequestCookies,
-                Message = string.Format(MessagesConstants.Message, messageArgs),
-                Severity = DiagnosticSeverity.Warning,
-            };
 
         [Test]
         public void EmptyInput_NoDiagnostic()
@@ -138,5 +130,13 @@ namespace SampleTestProject.CsSamples
 }}";
             VerifyCSharpFix(test, expectedFix);
         }
+
+        private static DiagnosticResult CreateDiagnosticResult(params object[] messageArgs)
+            => new DiagnosticResult
+            {
+                Id = DiagnosticIds.HttpRequestCookies,
+                Message = string.Format(MessagesConstants.Message, messageArgs),
+                Severity = DiagnosticSeverity.Warning,
+            };
     }
 }
