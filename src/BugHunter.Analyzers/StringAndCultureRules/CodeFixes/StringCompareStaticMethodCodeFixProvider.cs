@@ -58,6 +58,7 @@ namespace BugHunter.Analyzers.StringAndCultureRules.CodeFixes
                     return;
                 }
 
+                // delete last argument of the previous invocation
                 tempInvocation = tempInvocation.WithArgumentList(SyntaxFactory.ArgumentList(originalArguments.RemoveAt(originalArguments.Count - 1)));
                 stringComparisonOptions = ignoreCase
                     ? StringComparisonOptions.GetCaseInsensitive()
@@ -71,7 +72,8 @@ namespace BugHunter.Analyzers.StringAndCultureRules.CodeFixes
                 context.RegisterCodeFix(
                     CodeAction.Create(
                         title: CodeFixMessagesProvider.GetReplaceWithMessage(newInvocation),
-                        createChangedDocument: c => editor.ReplaceExpressionWith(invocation, newInvocation, c, namespacesToBeReferenced),
+                        createChangedDocument:
+                        c => editor.ReplaceExpressionWith(invocation, newInvocation, c, namespacesToBeReferenced),
                         equivalenceKey: $"{nameof(StringCompareStaticMethodCodeFixProvider)}-{stringComparisonOption}"),
                     context.Diagnostics.First());
             }

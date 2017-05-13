@@ -22,7 +22,8 @@ namespace BugHunter.Analyzers.StringAndCultureRules.Analyzers
             => ImmutableArray.Create(Rule);
 
         /// <inheritdoc />
-        protected override DiagnosticDescriptor Rule => StringMethodsRuleBuilder.CreateRuleForComparisonMethods(DiagnosticId);
+        protected override DiagnosticDescriptor Rule 
+            => StringMethodsRuleBuilder.CreateRuleForComparisonMethods(DiagnosticId);
 
         /// <summary>
         /// Constructor initializing base class with method names to be diagnosed

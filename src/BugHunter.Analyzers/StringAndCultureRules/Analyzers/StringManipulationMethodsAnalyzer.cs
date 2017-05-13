@@ -28,10 +28,7 @@ namespace BugHunter.Analyzers.StringAndCultureRules.Analyzers
 
         /// <inheritdoc />
         protected override bool IsForbiddenOverload(SyntaxNodeAnalysisContext context, InvocationExpressionSyntax invocationExpression, IMethodSymbol methodSymbol)
-        {
-            // If method is already called with StringComparison argument, no need for diagnostic
-            return invocationExpression.ArgumentList.Arguments.Count == 0;
-        }
+            => invocationExpression.ArgumentList.Arguments.Count == 0;
 
         /// <summary>
         /// Constructor initializing base class with method names to be diagnosed

@@ -41,7 +41,6 @@ namespace BugHunter.Analyzers.StringAndCultureRules.CodeFixes
             var memberAccess = (MemberAccessExpressionSyntax)invocation.Expression;
             if (IsChainedMemberAccesses(memberAccess))
             {
-                // TODO
                 // if this is the case, we cannot apply codefix directly as it is a static method call
                 // new variable needs to be introduced to keep the result of the call
                 // this variable would be later used in member access chain
