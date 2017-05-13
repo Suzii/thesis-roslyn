@@ -9,7 +9,8 @@ namespace BugHunter.Core.Helpers.CodeFixes
     /// </summary>
     public class MemberAccessCodeFixHelper : CodeFixHelper
     {
-        public MemberAccessCodeFixHelper(CodeFixContext context) : base(context)
+        public MemberAccessCodeFixHelper(CodeFixContext context)
+            : base(context)
         {
         }
 

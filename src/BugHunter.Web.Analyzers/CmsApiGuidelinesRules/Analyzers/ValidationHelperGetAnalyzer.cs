@@ -37,6 +37,7 @@ namespace BugHunter.Web.Analyzers.CmsApiGuidelinesRules.Analyzers
             new[] { "GetDouble", "GetDecimal", "GetDate", "GetDateTime" });
 
         private static readonly ISyntaxNodeAnalyzer Analyzer = new InnerMethodInvocationAnalyzer(Config);
+        
         /// <inheritdoc />
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics
             => ImmutableArray.Create(Rule);

@@ -228,6 +228,7 @@ namespace BugHunter.TestUtils.Verifiers
                     }
                 }
             }
+
             return builder.ToString();
         }
     }

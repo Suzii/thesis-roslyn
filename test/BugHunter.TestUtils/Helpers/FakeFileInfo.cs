@@ -4,7 +4,8 @@ namespace BugHunter.TestUtils.Helpers
 {
     public class FakeFileInfo
     {
-        public FakeFileInfo() : this("Test")
+        public FakeFileInfo()
+            : this("Test")
         {
         }
 
@@ -29,6 +30,5 @@ namespace BugHunter.TestUtils.Helpers
         /// <param name="index">Index of file to be added as suffix of filename in combined full path</param>
         /// <returns>Full file path with index as file name suffix</returns>
         public string GetFullFilePath(int index) => $"{FileLocation}{FileName}{index}.{FileExtension}";
-
     }
 }

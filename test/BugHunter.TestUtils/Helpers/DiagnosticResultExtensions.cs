@@ -27,6 +27,7 @@ namespace BugHunter.TestUtils.Helpers
         {
             return WithLocation(diagnosticResult, line, column, fakeFileInfo.GetFullFilePath(sourceFileIndex));
         }
+
         public static DiagnosticResult WithLocation(this DiagnosticResult diagnosticResult, int line, int column, string path = "Test0.cs")
         {
             if (line < -1)

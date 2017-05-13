@@ -38,7 +38,6 @@ namespace BugHunter.TestUtils.Services
                 Assert.IsEmpty(compilerDiagnostics.Where(diag => diag.Severity == DiagnosticSeverity.Error), "Unable to compile original source code.");
 
                 // Assert.IsEmpty(compilerDiagnostics.Where(diag => diag.Severity == DiagnosticSeverity.Warning), "Original source code contains compiler warnings.");
-
                 projects.Add(document.Project);
             }
 

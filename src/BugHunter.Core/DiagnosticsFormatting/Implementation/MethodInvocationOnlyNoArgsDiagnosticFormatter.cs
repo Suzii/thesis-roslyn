@@ -83,6 +83,5 @@ namespace BugHunter.Core.DiagnosticsFormatting.Implementation
 
         private string GetDiagnosedUsage(SimpleNameSyntax methodNameNode)
             => $"{methodNameNode.Identifier.ValueText}()";
-
     }
 }

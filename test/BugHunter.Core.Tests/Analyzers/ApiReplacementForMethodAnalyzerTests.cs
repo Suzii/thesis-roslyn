@@ -48,6 +48,7 @@ namespace FakeNamespace
         }
     }
 }";
+
         [Test]
         public void EmptyInput_NoDiagnostic()
         {

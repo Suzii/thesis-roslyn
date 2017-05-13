@@ -71,7 +71,6 @@ namespace BugHunter.Analyzers.CmsBaseClassesRules.Analyzers
 
                 var diagnostic = diagnosticFormatter.CreateDiagnostic(Rule, namedTypeSymbol);
                 symbolAnalysisContext.ReportDiagnostic(diagnostic);
-
             }, SymbolKind.NamedType);
         }
 

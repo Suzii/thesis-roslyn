@@ -23,7 +23,9 @@ namespace BugHunter.AnalyzersVersions.SystemIO
     {
         public const string DiagnosticId = "BHxV05";
         private static readonly DiagnosticDescriptor Rule = AnalyzerHelper.GetRule(DiagnosticId);
+
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
+
         private static readonly ISyntaxNodeDiagnosticFormatter<IdentifierNameSyntax> DiagnosticFormatter = new SystemIoDiagnosticFormatter();
 
         public override void Initialize(AnalysisContext context)
@@ -49,6 +51,7 @@ namespace BugHunter.AnalyzersVersions.SystemIO
         {
             private readonly INamedTypeSymbol[] _whitelistedTypes;
             private readonly List<IdentifierNameSyntax> _badNodes;
+
             public CompilationAnalyzer(INamedTypeSymbol[] whitelistedTypes)
             {
                 _whitelistedTypes = whitelistedTypes;

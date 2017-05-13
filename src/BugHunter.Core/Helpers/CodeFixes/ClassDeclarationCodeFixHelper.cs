@@ -11,7 +11,8 @@ namespace BugHunter.Core.Helpers.CodeFixes
     /// </summary>
     public class ClassDeclarationCodeFixHelper : CodeFixHelper
     {
-        public ClassDeclarationCodeFixHelper(CodeFixContext context) : base(context)
+        public ClassDeclarationCodeFixHelper(CodeFixContext context)
+            : base(context)
         {
         }
 
