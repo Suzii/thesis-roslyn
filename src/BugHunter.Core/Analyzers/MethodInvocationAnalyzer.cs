@@ -39,7 +39,7 @@ namespace BugHunter.Core.Analyzers
                 return;
             }
 
-            var invocation = (InvocationExpressionSyntax) context.Node;
+            var invocation = (InvocationExpressionSyntax)context.Node;
             if (invocation == null || CanBeSkippedBasedOnSyntaxOnly(invocation))
             {
                 return;

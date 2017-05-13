@@ -39,7 +39,6 @@ namespace BugHunter.Core.Tests.Extensions
                 Assert.IsTrue(GetClassDeclarationSyntax(classDeclaration).IsPartial());
             }
 
-
             [TestCase("class A { }")]
             [TestCase("internal abstract class A { }")]
             [TestCase("private class A { }")]

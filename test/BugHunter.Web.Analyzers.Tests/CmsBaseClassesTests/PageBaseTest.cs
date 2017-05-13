@@ -20,7 +20,7 @@ namespace BugHunter.Web.Analyzers.Tests.CmsBaseClassesTests
                 .ToArray();
         }
 
-        private readonly FakeFileInfo _pagesFakeFileInfo = new FakeFileInfo {FileExtension= "aspx.cs"};
+        private readonly FakeFileInfo _pagesFakeFileInfo = new FakeFileInfo { FileExtension = "aspx.cs" };
 
         private DiagnosticResult GetDiagnosticResult(params string[] messageArguments)
         {
@@ -53,7 +53,7 @@ namespace BugHunter.Web.Analyzers.Tests.CmsBaseClassesTests
     {{
     }}
 }}";
-            var fakeFileInfo = new FakeFileInfo {FileExtension = excludedFileExtension};
+            var fakeFileInfo = new FakeFileInfo { FileExtension = excludedFileExtension };
             VerifyCSharpDiagnostic(test, fakeFileInfo);
         }
 
@@ -107,9 +107,10 @@ namespace SampleTestProject.CsSamples
             VerifyCSharpDiagnostic(test, _pagesFakeFileInfo, expectedDiagnostic);
         }
 
-        private static readonly object[] CodeFixesTestSource = {
-            new object [] {nameof(CMS.UIControls.AbstractCMSPage), "CMS.UIControls", 0},
-            new object [] {nameof(CMS.UIControls.CMSUIPage), "CMS.UIControls", 1},
+        private static readonly object[] CodeFixesTestSource =
+        {
+            new object[] { nameof(CMS.UIControls.AbstractCMSPage), "CMS.UIControls", 0 },
+            new object[] { nameof(CMS.UIControls.CMSUIPage), "CMS.UIControls", 1 },
         };
 
         [Test, TestCaseSource(nameof(CodeFixesTestSource))]

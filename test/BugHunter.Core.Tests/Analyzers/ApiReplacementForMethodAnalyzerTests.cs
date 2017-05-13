@@ -82,7 +82,7 @@ namespace SampleTestProject.CsSamples
     }}
 }}";
 
-            VerifyCSharpDiagnostic(new [] { test, _fakeClassSource });
+            VerifyCSharpDiagnostic(new[] { test, _fakeClassSource });
         }
 
         [TestCase("instance")]

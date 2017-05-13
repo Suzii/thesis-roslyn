@@ -60,8 +60,7 @@ namespace BugHunter.Analyzers.StringAndCultureRules.CodeFixes
                     CodeAction.Create(
                         title: CodeFixMessagesProvider.GetReplaceWithMessage(newInvocation),
                         createChangedDocument: c => editor.ReplaceExpressionWith(invocation, newInvocation, c, namespacesToBeReferenced),
-                        equivalenceKey:
-                        $"{nameof(StringCompareToMethodCodeFixProvider)}-{stringComparisonOption}"),
+                        equivalenceKey: $"{nameof(StringCompareToMethodCodeFixProvider)}-{stringComparisonOption}"),
                     context.Diagnostics.First());
             }
         }

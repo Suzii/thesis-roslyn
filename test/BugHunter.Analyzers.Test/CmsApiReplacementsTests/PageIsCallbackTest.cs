@@ -15,7 +15,7 @@ namespace BugHunter.Analyzers.Test.CmsApiReplacementsTests
     public class PageIsCallbackTest : CodeFixVerifier<PageIsCallbackAnalyzer, PageIsCallbackCodeFixProvider>
     {
         protected override MetadataReference[] GetAdditionalReferences()
-            => ReferencesHelper.CMSBasicReferences.Union(new[] {ReferencesHelper.SystemWebReference}).ToArray();
+            => ReferencesHelper.CMSBasicReferences.Union(new[] { ReferencesHelper.SystemWebReference }).ToArray();
 
         private static DiagnosticResult CreateDiagnosticResult(params object[] messageArgs)
             => new DiagnosticResult
@@ -84,6 +84,7 @@ namespace SampleTestProject.CsSamples
             var expectedDiagnostic = CreateDiagnosticResult($"new System.Web.UI.Page()?.IsCallback", "RequestHelper.IsCallback()").WithLocation(8, 30);
 
             VerifyCSharpDiagnostic(test, expectedDiagnostic);
+
             // No fix
             VerifyCSharpFix(test, test);
         }
@@ -143,6 +144,7 @@ namespace SampleTestProject.CsSamples
             var expectedDiagnostic = CreateDiagnosticResult("page?.IsCallback", "RequestHelper.IsCallback()").WithLocation(9, 26);
 
             VerifyCSharpDiagnostic(test, expectedDiagnostic);
+
             // No fix
             VerifyCSharpFix(test, test);
         }

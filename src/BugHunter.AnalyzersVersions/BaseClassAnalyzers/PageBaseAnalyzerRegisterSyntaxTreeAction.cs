@@ -60,7 +60,6 @@ namespace BugHunter.AnalyzersVersions.BaseClassAnalyzers
                         return;
                     }
 
-
                     var semanticModel = compilationContext.Compilation.GetSemanticModel(syntaxTreeAnalysisContext.Tree);
 
                     foreach (var classDeclaration in publicPartialInstantiableClassDeclarations)

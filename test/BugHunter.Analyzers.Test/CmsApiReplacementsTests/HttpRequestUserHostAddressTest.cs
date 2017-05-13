@@ -15,7 +15,7 @@ namespace BugHunter.Analyzers.Test.CmsApiReplacementsTests
     public class HttpRequestUserHostAddressTest : CodeFixVerifier<HttpRequestUserHostAddressAnalyzer, HttpRequestUserHostAddressCodeFixProvider>
     {
         protected override MetadataReference[] GetAdditionalReferences()
-            => ReferencesHelper.CMSBasicReferences.Union(new[] {ReferencesHelper.SystemWebReference}).ToArray();
+            => ReferencesHelper.CMSBasicReferences.Union(new[] { ReferencesHelper.SystemWebReference }).ToArray();
 
         private static DiagnosticResult CreateDiagnosticResult(params object[] messageArgs)
             => new DiagnosticResult
@@ -24,7 +24,6 @@ namespace BugHunter.Analyzers.Test.CmsApiReplacementsTests
                 Message = string.Format(MessagesConstants.Message, messageArgs),
                 Severity = DiagnosticSeverity.Warning,
             };
-
 
         [Test]
         public void EmptyInput_NoDiagnostic()

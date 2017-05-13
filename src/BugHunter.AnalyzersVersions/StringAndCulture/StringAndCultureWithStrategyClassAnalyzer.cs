@@ -16,7 +16,7 @@ namespace BugHunter.AnalyzersVersions.StringAndCulture
     ///
     /// !!! THIS FILE SERVES ONLY FOR PURPOSES OF PERFORMANCE TESTING !!!
     /// </summary>
-    //[DiagnosticAnalyzer(LanguageNames.CSharp)]
+    // [DiagnosticAnalyzer(LanguageNames.CSharp)]
 #pragma warning disable RS1001 // Missing diagnostic analyzer attribute.
     public class StringAndCultureWithStrategyClassAnalyzer : DiagnosticAnalyzer
 #pragma warning restore RS1001 // Missing diagnostic analyzer attribute.
@@ -46,7 +46,9 @@ namespace BugHunter.AnalyzersVersions.StringAndCulture
         internal class InnerMethodInvocationAnalyzer : MethodInvocationAnalyzer
         {
             public InnerMethodInvocationAnalyzer(ApiReplacementConfig config)
-                : base(config, new MethodInvocationOnlyDiagnosticFormatter()) { }
+                : base(config, new MethodInvocationOnlyDiagnosticFormatter())
+            {
+            }
 
             protected override bool IsForbiddenUsage(InvocationExpressionSyntax invocationExpression, IMethodSymbol methodSymbol)
             => methodSymbol.Parameters.All(argument => !IsStringComparison(argument) && !IsCultureInfo(argument)) && !IsFirstArgumentChar(methodSymbol);

@@ -25,8 +25,7 @@ namespace BugHunter.Web.Analyzers.Tests.CmsBaseClassesTests
                 ReferencesHelper.GetReferencesFor(
                     typeof(CMS.PortalEngine.Web.UI.BaseEditMenu),
                     typeof(CMS.Ecommerce.Web.UI.CMSAuthorizeNetProvider),
-                    typeof(CMS.UIControls.CMSAbstractUIWebpart))
-            ).ToArray();
+                    typeof(CMS.UIControls.CMSAbstractUIWebpart))).ToArray();
         }
 
         private readonly FakeFileInfo _uiWebPartFakeFileInfo = new FakeFileInfo() { FileLocation = SolutionFolders.UIWebParts };
@@ -89,7 +88,7 @@ namespace BugHunter.Web.Analyzers.Tests.CmsBaseClassesTests
     {{
     }}
 }}";
-            VerifyCSharpDiagnostic(test, new FakeFileInfo {FileLocation = excludedPath});
+            VerifyCSharpDiagnostic(test, new FakeFileInfo { FileLocation = excludedPath });
         }
 
         [Test]
@@ -129,7 +128,7 @@ namespace BugHunter.Web.Analyzers.Tests.CmsBaseClassesTests
     {{
     }}
 }}";
-            VerifyCSharpDiagnostic(test, new FakeFileInfo {FileLocation = fileLocation});
+            VerifyCSharpDiagnostic(test, new FakeFileInfo { FileLocation = fileLocation });
         }
 
         [Test]
@@ -186,21 +185,20 @@ namespace SampleTestProject.CsSamples
 }}";
 
             var line = string.IsNullOrEmpty(usings) ? 3 : 5;
-            var fakeFileInfo = new FakeFileInfo() {FileLocation = fileLocation};
+            var fakeFileInfo = new FakeFileInfo() { FileLocation = fileLocation };
             var expectedDiagnostic = GetDiagnosticResult(fileLocation, "SampleClass").WithLocation(line, 18, fakeFileInfo);
 
             VerifyCSharpDiagnostic(test, fakeFileInfo, expectedDiagnostic);
         }
 
-        #region  CodeFixes tests - only testing CodeFix, not analyzer part
-
-        private static readonly object[] CodeFixesTestSource = {
-            new object [] {SolutionFolders.UIWebParts, "CMSAbstractUIWebpart", "CMS.UIControls", 0},
-            new object [] {SolutionFolders.WebParts, "CMSAbstractWebPart", "CMS.PortalEngine.Web.UI", 0},
-            new object [] {SolutionFolders.WebParts, "CMSAbstractEditableWebPart", "CMS.PortalEngine.Web.UI", 1},
-            new object [] {SolutionFolders.WebParts, "CMSAbstractLayoutWebPart", "CMS.PortalEngine.Web.UI", 2},
-            new object [] {SolutionFolders.WebParts, "CMSAbstractWizardWebPart", "CMS.PortalEngine.Web.UI", 3},
-            new object [] {SolutionFolders.WebParts, "CMSCheckoutWebPart", "CMS.Ecommerce.Web.UI", 4},
+        private static readonly object[] CodeFixesTestSource =
+        {
+            new object[] { SolutionFolders.UIWebParts, "CMSAbstractUIWebpart", "CMS.UIControls", 0 },
+            new object[] { SolutionFolders.WebParts, "CMSAbstractWebPart", "CMS.PortalEngine.Web.UI", 0 },
+            new object[] { SolutionFolders.WebParts, "CMSAbstractEditableWebPart", "CMS.PortalEngine.Web.UI", 1 },
+            new object[] { SolutionFolders.WebParts, "CMSAbstractLayoutWebPart", "CMS.PortalEngine.Web.UI", 2 },
+            new object[] { SolutionFolders.WebParts, "CMSAbstractWizardWebPart", "CMS.PortalEngine.Web.UI", 3 },
+            new object[] { SolutionFolders.WebParts, "CMSCheckoutWebPart", "CMS.Ecommerce.Web.UI", 4 },
         };
 
         [Test, TestCaseSource(nameof(CodeFixesTestSource))]
@@ -253,7 +251,7 @@ namespace SampleTestProject.CsSamples
     {{
     }}
 }}";
-            var fakeFileInfo = new FakeFileInfo {FileLocation = fileLocation};
+            var fakeFileInfo = new FakeFileInfo { FileLocation = fileLocation };
             var expectedDiagnostic = GetDiagnosticResult(fileLocation, "SampleClass").WithLocation(3, 18, fakeFileInfo);
 
             VerifyCSharpDiagnostic(test, fakeFileInfo, expectedDiagnostic);
@@ -269,6 +267,5 @@ namespace SampleTestProject.CsSamples
 
             VerifyCSharpFix(test, expectedFix, codeFixNumber, false, fakeFileInfo);
         }
-        #endregion
     }
 }

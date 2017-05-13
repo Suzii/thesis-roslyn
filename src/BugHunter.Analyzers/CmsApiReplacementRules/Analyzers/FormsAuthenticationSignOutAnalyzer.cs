@@ -26,8 +26,8 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.Analyzers
 
         private static readonly ApiReplacementConfig Config = new ApiReplacementConfig(
             Rule,
-            new []{ "System.Web.Security.FormsAuthentication" },
-            new []{ "SignOut" });
+            new[] { "System.Web.Security.FormsAuthentication" },
+            new[] { "SignOut" });
 
         private static readonly ApiReplacementForMethodAnalyzer Analyzer = new ApiReplacementForMethodAnalyzer(Config);
 

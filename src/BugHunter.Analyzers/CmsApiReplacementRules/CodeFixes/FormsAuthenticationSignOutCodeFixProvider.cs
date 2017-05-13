@@ -27,6 +27,7 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.CodeFixes
         public sealed override async Task RegisterCodeFixesAsync(CodeFixContext context)
         {
             var editor = new MemberInvocationCodeFixHelper(context);
+
             // invoked always statically no need for conditional access filtering
             var invocationExpression = await editor.GetDiagnosedInvocation();
 
@@ -36,6 +37,7 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.CodeFixes
             }
 
             var usingNamespace = "CMS.Membership";
+
             // parenthesis (for method invocation) will be reused from previous code
             var newExpressionBody = SyntaxFactory.ParseExpression("AuthenticationHelper.SignOut");
             var diagnostic = context.Diagnostics.First();

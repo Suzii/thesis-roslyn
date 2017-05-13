@@ -16,7 +16,7 @@ namespace BugHunter.AnalyzersVersions.SystemIO
     /// !!! THIS FILE SERVES ONLY FOR PURPOSES OF PERFORMANCE TESTING !!!
     /// Searches for usages of <see cref="System.IO"/> and their access to anything other than <c>Exceptions</c> or <c>Stream</c>
     /// </summary>
-    //[DiagnosticAnalyzer(LanguageNames.CSharp)]
+    // [DiagnosticAnalyzer(LanguageNames.CSharp)]
 #pragma warning disable RS1001 // Missing diagnostic analyzer attribute.
     public class V08CompilationStartSyntaxTreeAndEndFulltextSearchAndSymbolParallelAnallysisWithBag : DiagnosticAnalyzer
 #pragma warning restore RS1001 // Missing diagnostic analyzer attribute.

@@ -18,7 +18,7 @@ namespace BugHunter.Web.Analyzers.Tests.CmsBaseClassesTests
             return ReferencesHelper.CMSBasicReferences.Union(new[] { ReferencesHelper.CMSBaseWebUI, ReferencesHelper.SystemWebReference, ReferencesHelper.SystemWebUIReference }).ToArray();
         }
 
-        private readonly FakeFileInfo _userControlFakeFileInfo = new FakeFileInfo { FileExtension= "ascx.cs" };
+        private readonly FakeFileInfo _userControlFakeFileInfo = new FakeFileInfo { FileExtension = "ascx.cs" };
 
         private DiagnosticResult GetDiagnosticResult(params string[] messageArguments)
         {
@@ -51,7 +51,7 @@ namespace BugHunter.Web.Analyzers.Tests.CmsBaseClassesTests
     {{
     }}
 }}";
-            VerifyCSharpDiagnostic(test, new FakeFileInfo {FileExtension = excludedFileExtension});
+            VerifyCSharpDiagnostic(test, new FakeFileInfo { FileExtension = excludedFileExtension });
         }
 
         [Test]
@@ -99,9 +99,10 @@ namespace SampleTestProject.CsSamples
             VerifyCSharpDiagnostic(test, _userControlFakeFileInfo, expectedDiagnostic);
         }
 
-        private static readonly object[] CodeFixesTestSource = {
-            new object [] {nameof(CMS.UIControls.CMSUserControl), "CMS.UIControls", 0},
-            new object [] {nameof(CMS.Base.Web.UI.AbstractUserControl), "CMS.Base.Web.UI", 1},
+        private static readonly object[] CodeFixesTestSource =
+        {
+            new object[] { nameof(CMS.UIControls.CMSUserControl), "CMS.UIControls", 0 },
+            new object[] { nameof(CMS.Base.Web.UI.AbstractUserControl), "CMS.Base.Web.UI", 1 },
         };
 
         [Test, TestCaseSource(nameof(CodeFixesTestSource))]

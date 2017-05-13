@@ -29,8 +29,8 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.Analyzers
 
         private static readonly ApiReplacementConfig ApiReplacementConfig = new ApiReplacementConfig(
             Rule,
-            new []{ "System.Web.SessionState.HttpSessionState", "System.Web.HttpSessionStateBase"},
-            new []{ "SessionID"});
+            new[] { "System.Web.SessionState.HttpSessionState", "System.Web.HttpSessionStateBase" },
+            new[] { "SessionID" });
 
         private static readonly ApiReplacementForMemberAnalyzer ApiReplacementAnalyzer = new ApiReplacementForMemberAnalyzer(ApiReplacementConfig);
 

@@ -24,7 +24,6 @@ namespace BugHunter.Analyzers.Test.CmsApiGuidelines
                 Severity = DiagnosticSeverity.Warning,
             };
 
-
         [Test]
         public void EmptyInput_NoDiagnostic()
         {
@@ -261,7 +260,6 @@ namespace SampleTestProject.CsSamples
 }}";
             VerifyCSharpFix(test, expectedFix, 0);
         }
-
 
         [Test]
         public void InputWithPossibleFalsePositive_NoDiagnostic()

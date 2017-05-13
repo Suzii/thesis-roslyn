@@ -26,8 +26,8 @@ namespace BugHunter.Web.Analyzers.CmsBaseClassesRules.CodeFixes
 
         private static readonly ClassAndItsNamespace[] SuggestedBaseClasses =
         {
-            new ClassAndItsNamespace { ClassNamespace = "CMS.UIControls", ClassName = "AbstractCMSPage"},
-            new ClassAndItsNamespace { ClassNamespace = "CMS.UIControls", ClassName = "CMSUIPage"},
+            new ClassAndItsNamespace { ClassNamespace = "CMS.UIControls", ClassName = "AbstractCMSPage" },
+            new ClassAndItsNamespace { ClassNamespace = "CMS.UIControls", ClassName = "CMSUIPage" },
         };
 
         /// <inheritdoc />

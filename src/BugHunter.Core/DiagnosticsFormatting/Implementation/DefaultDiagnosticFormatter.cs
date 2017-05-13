@@ -7,7 +7,7 @@ namespace BugHunter.Core.DiagnosticsFormatting.Implementation
     /// </summary>
     /// <typeparam name="TSyntaxNode">Syntax node or its subtype for which the diagnostic is being raised</typeparam>
     public class DefaultDiagnosticFormatter<TSyntaxNode> : ISyntaxNodeDiagnosticFormatter<TSyntaxNode>
-        where TSyntaxNode: SyntaxNode
+        where TSyntaxNode : SyntaxNode
     {
         /// <summary>
         /// Creates a <see cref="Diagnostic"/> from <param name="descriptor"></param> based on passed <param name="syntaxNode"></param>.

@@ -17,7 +17,7 @@ namespace BugHunter.AnalyzersVersions.SystemIO
     ///
     /// Version with callback on IdentifierName and using SemanticModelBrowser
     /// </summary>
-    //[DiagnosticAnalyzer(LanguageNames.CSharp)]
+    // [DiagnosticAnalyzer(LanguageNames.CSharp)]
 #pragma warning disable RS1001 // Missing diagnostic analyzer attribute.
     public class V01IdentifierNameStringAndSymbolComparison : DiagnosticAnalyzer
 #pragma warning restore RS1001 // Missing diagnostic analyzer attribute.

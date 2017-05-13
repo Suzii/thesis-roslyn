@@ -141,8 +141,8 @@ namespace SampleTestProject.CsSamples
     }
 }";
 
-            VerifyCSharpDiagnostic(new [] { test1, test2 });
-            VerifyCSharpDiagnostic(new [] { test2, test1 });
+            VerifyCSharpDiagnostic(new[] { test1, test2 });
+            VerifyCSharpDiagnostic(new[] { test2, test1 });
         }
 
         [Test]
@@ -172,8 +172,8 @@ namespace SampleTestProject.CsSamples
 }";
             var expectedDiagnostic = GetDiagnosticResult("MyModule").WithLocation(6, 26);
 
-            VerifyCSharpDiagnostic(new []{ test1, test2 }, expectedDiagnostic);
-            VerifyCSharpDiagnostic(new []{ test2, test1 }, expectedDiagnostic);
+            VerifyCSharpDiagnostic(new[] { test1, test2 }, expectedDiagnostic);
+            VerifyCSharpDiagnostic(new[] { test2, test1 }, expectedDiagnostic);
         }
 
         [Test]

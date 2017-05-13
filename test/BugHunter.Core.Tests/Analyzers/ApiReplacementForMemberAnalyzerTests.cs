@@ -82,7 +82,7 @@ namespace SampleTestProject.CsSamples
     }}
 }}";
 
-            VerifyCSharpDiagnostic(new [] { test, _fakeClassSource });
+            VerifyCSharpDiagnostic(new[] { test, _fakeClassSource });
         }
 
         [TestCase("instance")]
@@ -113,14 +113,13 @@ namespace SampleTestProject.CsSamples
 }}";
 
             VerifyCSharpDiagnostic(
-                new [] { test, _fakeClassSource },
+                new[] { test, _fakeClassSource },
                 CreateDiagnosticResult($"{accessedInstance}.FakeMember").WithLocation(9, 22),
                 CreateDiagnosticResult($"{accessedInstance}?.FakeMember").WithLocation(10, 22),
                 CreateDiagnosticResult($"{accessedInstance}.FakeMember").WithLocation(12, 22),
                 CreateDiagnosticResult($"{accessedInstance}.FakeMember").WithLocation(13, 22),
                 CreateDiagnosticResult($"{accessedInstance}?.FakeMember").WithLocation(14, 22),
-                CreateDiagnosticResult($"{accessedInstance}?.FakeMember").WithLocation(15, 22)
-                );
+                CreateDiagnosticResult($"{accessedInstance}?.FakeMember").WithLocation(15, 22));
         }
 
         [TestCase("instance?.Create()")]

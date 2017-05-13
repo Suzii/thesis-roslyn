@@ -51,10 +51,9 @@ namespace SampleTestProject.CsSamples
         }
     }
 }";
-            var fakeFileInfo = new FakeFileInfo {FileLocation = excludedPath};
+            var fakeFileInfo = new FakeFileInfo { FileLocation = excludedPath };
             VerifyCSharpDiagnostic(test, fakeFileInfo);
         }
-
 
         [TestCase("aspx.cs")]
         [TestCase("ascx.cs")]
@@ -76,7 +75,7 @@ namespace SampleTestProject.CsSamples
         }
     }
 }";
-            var fakeFileInfo = new FakeFileInfo {FileExtension = fileExtension};
+            var fakeFileInfo = new FakeFileInfo { FileExtension = fileExtension };
             var expectedDiagnostic1 = GetDiagnosticResult("ConnectionHelper.ExecuteQuery(null)").WithLocation(10, 13, fakeFileInfo);
             var expectedDiagnostic2 = GetDiagnosticResult("CMS.DataEngine.ConnectionHelper.ExecuteQuery(null)").WithLocation(11, 13, fakeFileInfo);
 

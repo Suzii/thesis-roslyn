@@ -30,7 +30,7 @@ namespace BugHunter.Analyzers.StringAndCultureRules.Analyzers.Helpers
         /// <param name="additionalForbiddenMethods">Names of additional forbidden methods</param>
         protected BaseStringMethodsAnalyzer(string forbiddenMethod, params string[] additionalForbiddenMethods)
         {
-            _forbiddenMethods = additionalForbiddenMethods.Concat(new []{ forbiddenMethod }).ToArray();
+            _forbiddenMethods = additionalForbiddenMethods.Concat(new[] { forbiddenMethod }).ToArray();
         }
 
         /// <inheritdoc />

@@ -33,7 +33,7 @@ namespace BugHunter.Analyzers.AbstractionOverImplementation.CodeFixes
             var editor = new CodeFixHelper(context);
             var root = await context.Document.GetSyntaxRootAsync(context.CancellationToken);
             var diagnosedNode = root.FindNode(diagnosticSpan).FirstAncestorOrSelf<QualifiedNameSyntax>() ??
-                                (NameSyntax) root.FindNode(diagnosticSpan).FirstAncestorOrSelf<IdentifierNameSyntax>();
+                                (NameSyntax)root.FindNode(diagnosticSpan).FirstAncestorOrSelf<IdentifierNameSyntax>();
 
             if (diagnosedNode == null)
             {

@@ -23,7 +23,6 @@ namespace BugHunter.Analyzers.Test.StringAndCultureTests
 
         protected override MetadataReference[] GetAdditionalReferences() => null;
 
-
         private DiagnosticResult GetDiagnosticResult(string methodUsed)
             => new DiagnosticResult
             {
@@ -76,7 +75,6 @@ namespace SampleTestProject.CsSamples
     }}
 }}";
 
-
             var expectedDiagnostic = GetDiagnosticResult(methodUsed).WithLocation(7, 33);
             VerifyCSharpDiagnostic(test, expectedDiagnostic);
 
@@ -109,7 +107,6 @@ namespace SampleTestProject.CsSamples
         }}
     }}
 }}";
-
 
             var expectedDiagnostic = GetDiagnosticResult(methodUsed).WithLocation(7, 33);
             VerifyCSharpDiagnostic(test, expectedDiagnostic);

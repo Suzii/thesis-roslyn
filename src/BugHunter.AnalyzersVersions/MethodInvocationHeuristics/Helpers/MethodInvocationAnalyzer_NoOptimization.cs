@@ -34,7 +34,7 @@ namespace BugHunter.AnalyzersVersions.MethodInvocationHeuristics.Helpers
                 return;
             }
 
-            var invocation = (InvocationExpressionSyntax) context.Node;
+            var invocation = (InvocationExpressionSyntax)context.Node;
             if (invocation == null)
             {
                 return;

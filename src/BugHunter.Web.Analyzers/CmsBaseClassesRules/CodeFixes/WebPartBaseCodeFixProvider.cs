@@ -27,16 +27,16 @@ namespace BugHunter.Web.Analyzers.CmsBaseClassesRules.CodeFixes
 
         private static readonly ClassAndItsNamespace[] UiWebPartBaseClasses =
         {
-            new ClassAndItsNamespace { ClassNamespace = "CMS.UIControls", ClassName = "CMSAbstractUIWebpart"},
+            new ClassAndItsNamespace { ClassNamespace = "CMS.UIControls", ClassName = "CMSAbstractUIWebpart" },
         };
 
         private static readonly ClassAndItsNamespace[] WebPartBaseClasses =
         {
-            new ClassAndItsNamespace { ClassNamespace = "CMS.PortalEngine.Web.UI", ClassName = "CMSAbstractWebPart"},
-            new ClassAndItsNamespace { ClassNamespace = "CMS.PortalEngine.Web.UI", ClassName = "CMSAbstractEditableWebPart"},
-            new ClassAndItsNamespace { ClassNamespace = "CMS.PortalEngine.Web.UI", ClassName = "CMSAbstractLayoutWebPart"},
-            new ClassAndItsNamespace { ClassNamespace = "CMS.PortalEngine.Web.UI", ClassName = "CMSAbstractWizardWebPart"},
-            new ClassAndItsNamespace { ClassNamespace = "CMS.Ecommerce.Web.UI", ClassName = "CMSCheckoutWebPart"},
+            new ClassAndItsNamespace { ClassNamespace = "CMS.PortalEngine.Web.UI", ClassName = "CMSAbstractWebPart" },
+            new ClassAndItsNamespace { ClassNamespace = "CMS.PortalEngine.Web.UI", ClassName = "CMSAbstractEditableWebPart" },
+            new ClassAndItsNamespace { ClassNamespace = "CMS.PortalEngine.Web.UI", ClassName = "CMSAbstractLayoutWebPart" },
+            new ClassAndItsNamespace { ClassNamespace = "CMS.PortalEngine.Web.UI", ClassName = "CMSAbstractWizardWebPart" },
+            new ClassAndItsNamespace { ClassNamespace = "CMS.Ecommerce.Web.UI", ClassName = "CMSCheckoutWebPart" },
         };
 
         /// <inheritdoc />

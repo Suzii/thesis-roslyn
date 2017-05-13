@@ -78,6 +78,7 @@ namespace BugHunter.Core.Extensions
         private static bool IsInterfaceName(TypeSyntax typeSyntax)
         {
             var fullTypeName = typeSyntax.ToString();
+
             // zero if does not contain dot
             var typeName = fullTypeName.Substring(fullTypeName.LastIndexOf(".", StringComparison.Ordinal) + 1);
             return typeName.StartsWith("I") && typeName.Length > 1 && char.IsUpper(typeName[1]);

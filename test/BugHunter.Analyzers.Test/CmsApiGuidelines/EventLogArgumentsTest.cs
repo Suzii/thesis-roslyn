@@ -23,7 +23,6 @@ namespace BugHunter.Analyzers.Test.CmsApiGuidelines
                 Severity = DiagnosticSeverity.Warning,
             };
 
-
         [Test]
         public void EmptyInput_NoDiagnostic()
         {

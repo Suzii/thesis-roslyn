@@ -12,7 +12,7 @@ namespace BugHunter.AnalyzersVersions.SystemIO
     /// Searches for usages of <see cref="System.IO"/> and their access to anything other than <c>Exceptions</c> or <c>Stream</c>
     /// Version with callback on IdentifierName and using SemanticModelBrowser
     /// </summary>
-    //[DiagnosticAnalyzer(LanguageNames.CSharp)]
+    // [DiagnosticAnalyzer(LanguageNames.CSharp)]
 #pragma warning disable RS1001 // Missing diagnostic analyzer attribute.
     public class V00IdentifierNameEmptyCallback : DiagnosticAnalyzer
 #pragma warning restore RS1001 // Missing diagnostic analyzer attribute.

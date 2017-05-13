@@ -13,11 +13,11 @@ namespace BugHunter.Analyzers.Test.StringAndCultureTests
     {
         static readonly object[] TestSource =
         {
-            new object[] {"ToLower()", "ToLowerInvariant()", null, 0},
-            new object[] {"ToLower()", "ToLower(CultureInfo.CurrentCulture)", "using System.Globalization;\r\n\r\n", 1},
+            new object[] { "ToLower()", "ToLowerInvariant()", null, 0 },
+            new object[] { "ToLower()", "ToLower(CultureInfo.CurrentCulture)", "using System.Globalization;\r\n\r\n", 1 },
 
-            new object[] {"ToUpper()", "ToUpperInvariant()", null, 0},
-            new object[] {"ToUpper()", "ToUpper(CultureInfo.CurrentCulture)", "using System.Globalization;\r\n\r\n", 1},
+            new object[] { "ToUpper()", "ToUpperInvariant()", null, 0 },
+            new object[] { "ToUpper()", "ToUpper(CultureInfo.CurrentCulture)", "using System.Globalization;\r\n\r\n", 1 },
         };
 
         protected override MetadataReference[] GetAdditionalReferences() => null;

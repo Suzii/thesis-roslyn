@@ -12,7 +12,7 @@ namespace BugHunter.AnalyzersVersions.StringAndCulture
     ///
     /// !!! THIS FILE SERVES ONLY FOR PURPOSES OF PERFORMANCE TESTING !!!
     /// </summary>
-    //[DiagnosticAnalyzer(LanguageNames.CSharp)]
+    // [DiagnosticAnalyzer(LanguageNames.CSharp)]
 #pragma warning disable RS1001 // Missing diagnostic analyzer attribute.
     public class StringAndCultureWithBaseClassAnalyzer : BaseStringMethodsAnalyzer
 #pragma warning restore RS1001 // Missing diagnostic analyzer attribute.

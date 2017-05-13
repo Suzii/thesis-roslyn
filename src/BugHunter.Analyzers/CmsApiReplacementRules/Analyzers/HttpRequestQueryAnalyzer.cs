@@ -23,8 +23,8 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.Analyzers
 
         private static readonly ApiReplacementConfig ApiReplacementConfig = new ApiReplacementConfig(
             Rule,
-            new []{ "System.Web.HttpRequest", "System.Web.HttpRequestBase"},
-            new []{ "QueryString"});
+            new[] { "System.Web.HttpRequest", "System.Web.HttpRequestBase" },
+            new[] { "QueryString" });
 
         private static readonly ApiReplacementForMemberAnalyzer ApiReplacementAnalyzer = new ApiReplacementForMemberAnalyzer(ApiReplacementConfig);
 

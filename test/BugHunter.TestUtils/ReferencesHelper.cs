@@ -14,7 +14,8 @@ namespace BugHunter.TestUtils
         private static readonly MetadataReference CSharpSymbolsReference = MetadataReference.CreateFromFile(typeof(CSharpCompilation).Assembly.Location);
         private static readonly MetadataReference CodeAnalysisReference = MetadataReference.CreateFromFile(typeof(Compilation).Assembly.Location);
 
-        public static readonly MetadataReference[] CoreDotNetReferences = {
+        public static readonly MetadataReference[] CoreDotNetReferences =
+        {
             CorlibReference,
             SystemReference,
             SystemCoreReference,
@@ -33,8 +34,7 @@ namespace BugHunter.TestUtils
             typeof(CMS.DataEngine.TypeCondition),
             typeof(CMS.Helpers.AJAXHelper),
             typeof(CMS.IO.AbstractFile),
-            typeof(CMS.EventLog.EventType)
-            );
+            typeof(CMS.EventLog.EventType));
 
         // Kentico.Librarie.Web.Ui
         public static readonly MetadataReference CMSBaseWebUI = MetadataReference.CreateFromFile(typeof(CMS.Base.Web.UI.ScriptHelper).Assembly.Location);
@@ -44,7 +44,7 @@ namespace BugHunter.TestUtils
         {
             if (types == null || types.Length == 0)
             {
-                return new MetadataReference[] {};
+                return new MetadataReference[] { };
             }
 
             var references = types.Select(type => MetadataReference.CreateFromFile(type.Assembly.Location)).Distinct();

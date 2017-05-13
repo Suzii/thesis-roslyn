@@ -26,8 +26,8 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.Analyzers
 
         private static readonly ApiReplacementConfig ApiReplacementConfig = new ApiReplacementConfig(
             Rule,
-            new []{ "System.Web.UI.Page"},
-            new []{ "IsPostBack"});
+            new[] { "System.Web.UI.Page" },
+            new[] { "IsPostBack" });
 
         private static readonly ApiReplacementForMemberAnalyzer ApiReplacementAnalyzer = new ApiReplacementForMemberAnalyzer(ApiReplacementConfig);
 

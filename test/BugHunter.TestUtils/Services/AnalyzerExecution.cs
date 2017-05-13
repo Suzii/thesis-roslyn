@@ -36,7 +36,8 @@ namespace BugHunter.TestUtils.Services
                 // check that original documents are compilable
                 var compilerDiagnostics = ProjectCompilation.GetCompilerDiagnostics(document).ToList();
                 Assert.IsEmpty(compilerDiagnostics.Where(diag => diag.Severity == DiagnosticSeverity.Error), "Unable to compile original source code.");
-                //Assert.IsEmpty(compilerDiagnostics.Where(diag => diag.Severity == DiagnosticSeverity.Warning), "Original source code contains compiler warnings.");
+
+                // Assert.IsEmpty(compilerDiagnostics.Where(diag => diag.Severity == DiagnosticSeverity.Warning), "Original source code contains compiler warnings.");
 
                 projects.Add(document.Project);
             }

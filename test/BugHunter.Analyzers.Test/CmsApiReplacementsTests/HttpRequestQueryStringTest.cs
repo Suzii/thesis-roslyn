@@ -13,7 +13,7 @@ namespace BugHunter.Analyzers.Test.CmsApiReplacementsTests
     public class HttpRequestQueryStringTest : CodeFixVerifier<HttpRequestQueryStringAnalyzer>
     {
         protected override MetadataReference[] GetAdditionalReferences()
-            => new[] {ReferencesHelper.SystemWebReference};
+            => new[] { ReferencesHelper.SystemWebReference };
 
         private static DiagnosticResult CreateDiagnosticResult(params object[] messageArgs)
             => new DiagnosticResult

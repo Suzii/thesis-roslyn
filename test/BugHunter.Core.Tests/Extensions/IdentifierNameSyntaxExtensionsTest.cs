@@ -33,7 +33,6 @@ namespace BugHunter.Core.Tests.Extensions
                 Assert.AreEqual(expected, actual);
             }
 
-
             [Test]
             public void QualifiedNameWithinObjectCreation_ReturnsWholeExpression()
             {

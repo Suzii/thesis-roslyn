@@ -21,8 +21,7 @@ namespace BugHunter.Analyzers.Test.AbstractionOverImplementationTests
                     typeof(CMS.Search.ISearchProvider),
                     typeof(Lucene.Net.Search.BooleanClause),
                     typeof(WorldNet.Net.SynExpand),
-                    typeof(CMS.Search.Lucene3.LuceneSearchDocument)
-                ))
+                    typeof(CMS.Search.Lucene3.LuceneSearchDocument)))
                 .ToArray();
         }
 
@@ -155,6 +154,7 @@ namespace SampleTestProject.CsSamples
         }
     }
 }";
+
             // allow new compiler diagnostics is true due to unnecessary using directive
             VerifyCSharpFix(test, expectedFix, 0, true);
         }

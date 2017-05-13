@@ -23,7 +23,6 @@ namespace BugHunter.Analyzers.Test.StringAndCultureTests
 
         protected override MetadataReference[] GetAdditionalReferences() => null;
 
-
         private DiagnosticResult GetDiagnosticResult(string methodUsed)
             => new DiagnosticResult
             {
@@ -44,7 +43,6 @@ namespace BugHunter.Analyzers.Test.StringAndCultureTests
         [TestCase(@"Equals(""a"", StringComparison.InvariantCultureIgnoreCase)")]
         public void AllowedOverloadCalled_NoDiagnostic(string methodUsed)
         {
-
             var test = $@"using System;
 using System.Globalization;
 
@@ -134,8 +132,6 @@ namespace SampleTestProject.CsSamples
 
             VerifyCSharpFix(test, expectedFix, codeFixNumber);
         }
-
-
 
         [Test, TestCaseSource(nameof(TestSource))]
         public void InputWithIncident_FollowUpMemberAccess_SurfacesDiagnostic(string methodUsed, string codeFix, int codeFixNumber)

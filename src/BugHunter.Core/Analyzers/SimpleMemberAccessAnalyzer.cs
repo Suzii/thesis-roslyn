@@ -52,7 +52,6 @@ namespace BugHunter.Core.Analyzers
             context.ReportDiagnostic(diagnostic);
         }
 
-
         private bool IsForbiddenUsage(SyntaxNodeAnalysisContext context, MemberAccessExpressionSyntax memberAccess)
         {
             var memberName = memberAccess.Name.ToString();

@@ -93,7 +93,7 @@ namespace BugHunter.Core.Helpers.CodeFixes
         /// <returns>Root of the document</returns>
         protected async Task<CompilationUnitSyntax> GetDocumentRoot()
         {
-            return (CompilationUnitSyntax) await Context.Document.GetSyntaxRootAsync(Context.CancellationToken).ConfigureAwait(false);
+            return (CompilationUnitSyntax)await Context.Document.GetSyntaxRootAsync(Context.CancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>

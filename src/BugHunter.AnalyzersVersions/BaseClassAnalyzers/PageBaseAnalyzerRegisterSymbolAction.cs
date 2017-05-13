@@ -12,7 +12,7 @@ namespace BugHunter.AnalyzersVersions.BaseClassAnalyzers
     ///
     /// Checks if Page file inherits from right class. -- register symbol action
     /// </summary>
-    //[DiagnosticAnalyzer(LanguageNames.CSharp)]
+    // [DiagnosticAnalyzer(LanguageNames.CSharp)]
 #pragma warning disable RS1001 // Missing diagnostic analyzer attribute.
     public class PageBaseAnalyzerRegisterSymbolAction : DiagnosticAnalyzer
 #pragma warning restore RS1001 // Missing diagnostic analyzer attribute.

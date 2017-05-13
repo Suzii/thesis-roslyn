@@ -23,8 +23,8 @@ namespace BugHunter.Analyzers.CmsApiReplacementRules.Analyzers
 
         private static readonly ApiReplacementConfig Config = new ApiReplacementConfig(
             Rule,
-            new []{ "System.Web.HttpResponse", "System.Web.HttpResponseBase"},
-            new []{ "Redirect"});
+            new[] { "System.Web.HttpResponse", "System.Web.HttpResponseBase" },
+            new[] { "Redirect" });
 
         private static readonly ApiReplacementForMethodAnalyzer Analyzer = new ApiReplacementForMethodAnalyzer(Config);
 

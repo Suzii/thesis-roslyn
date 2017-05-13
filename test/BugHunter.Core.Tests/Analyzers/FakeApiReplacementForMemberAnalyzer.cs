@@ -18,8 +18,8 @@ namespace BugHunter.Core.Tests.Analyzers
 
         private static readonly ApiReplacementConfig ApiReplacementConfig = new ApiReplacementConfig(
             Rule,
-            new []{ "FakeNamespace.FakeClass"},
-            new []{ "FakeMember"});
+            new[] { "FakeNamespace.FakeClass" },
+            new[] { "FakeMember" });
 
         private static readonly ApiReplacementForMemberAnalyzer ApiReplacementAnalyzer = new ApiReplacementForMemberAnalyzer(ApiReplacementConfig);
 

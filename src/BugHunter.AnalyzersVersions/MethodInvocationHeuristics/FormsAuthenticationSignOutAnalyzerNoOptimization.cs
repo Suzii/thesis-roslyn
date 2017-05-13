@@ -11,7 +11,7 @@ namespace BugHunter.AnalyzersVersions.MethodInvocationHeuristics
     ///
     /// !!! THIS FILE SERVES ONLY FOR PURPOSES OF PERFORMANCE TESTING !!!
     /// </summary>
-    //[DiagnosticAnalyzer(LanguageNames.CSharp)]
+    // [DiagnosticAnalyzer(LanguageNames.CSharp)]
 #pragma warning disable RS1001 // Missing diagnostic analyzer attribute.
     public class FormsAuthenticationSignOutAnalyzerNoOptimization : DiagnosticAnalyzer
 #pragma warning restore RS1001 // Missing diagnostic analyzer attribute.
@@ -24,8 +24,8 @@ namespace BugHunter.AnalyzersVersions.MethodInvocationHeuristics
 
         private static readonly ApiReplacementConfig Config = new ApiReplacementConfig(
             Rule,
-            new []{ "System.Web.Security.FormsAuthentication" },
-            new []{ "SignOut" });
+            new[] { "System.Web.Security.FormsAuthentication" },
+            new[] { "SignOut" });
 
         private static readonly ApiReplacementForMethodAnalyzer Analyzer = new ApiReplacementForMethodAnalyzer(Config);
 
