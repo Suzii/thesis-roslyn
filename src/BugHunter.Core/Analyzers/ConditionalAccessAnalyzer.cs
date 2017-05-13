@@ -22,7 +22,7 @@ namespace BugHunter.Core.Analyzers
         private readonly ISyntaxNodeDiagnosticFormatter<ConditionalAccessExpressionSyntax> _formatter;
 
         /// <summary>
-        /// Constructor accepting <param name="config"></param> and <param name="formatter"></param>
+        /// Initializes a new instance of the <see cref="ConditionalAccessAnalyzer"/> class.
         /// </summary>
         /// <param name="config">Configuration to be used for the analysis, specifying forbidden members on specific types and diagnostic descriptor</param>
         /// <param name="formatter">Diagnostic formatter to be used for creation of diagnostic</param>

@@ -17,7 +17,7 @@ namespace BugHunter.Core.ApiReplacementAnalysis
         private readonly ISyntaxNodeAnalyzer _conditionalAccessAnalyzer;
 
         /// <summary>
-        /// Constructor accepting <param name="config"></param> object to be used during the analysis
+        /// Initializes a new instance of the <see cref="ApiReplacementForMemberAnalyzer"/> class.
         /// </summary>
         /// <param name="config">Configuration to be used for the analysis, specifying forbidden members on specific types and diagnostic descriptor</param>
         public ApiReplacementForMemberAnalyzer(ApiReplacementConfig config)

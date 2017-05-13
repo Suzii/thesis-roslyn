@@ -16,7 +16,7 @@ namespace BugHunter.Core.ApiReplacementAnalysis
         private readonly ISyntaxNodeAnalyzer _methodInvocationAnalyzer;
 
         /// <summary>
-        /// Constructor accepting <param name="config"></param> object to be used during the analysis
+        /// Initializes a new instance of the <see cref="ApiReplacementForMethodAnalyzer"/> class.
         /// </summary>
         /// <param name="config">Configuration to be used for the analysis, specifying forbidden method names on specific types and diagnostic descriptor</param>
         public ApiReplacementForMethodAnalyzer(ApiReplacementConfig config)

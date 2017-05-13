@@ -26,7 +26,7 @@ namespace BugHunter.Analyzers.StringAndCultureRules.Analyzers
             => StringMethodsRuleBuilder.CreateRuleForComparisonMethods(DiagnosticId);
 
         /// <summary>
-        /// Constructor initializing base class with method names to be diagnosed
+        /// Initializes a new instance of the <see cref="StringCompareToMethodAnalyzer"/> class.
         /// </summary>
         public StringCompareToMethodAnalyzer()
             : base("CompareTo")

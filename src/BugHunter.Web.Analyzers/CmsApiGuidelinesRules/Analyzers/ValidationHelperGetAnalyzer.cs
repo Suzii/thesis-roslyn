@@ -53,10 +53,13 @@ namespace BugHunter.Web.Analyzers.CmsApiGuidelinesRules.Analyzers
         private sealed class InnerMethodInvocationAnalyzer : MethodInvocationAnalyzer
         {
             /// <summary>
-            /// Constructor initializing config and diagnostic formatter of <see cref="MethodInvocationAnalyzer"/> base class
+            /// Initializes a new instance of the <see cref="InnerMethodInvocationAnalyzer"/> class.
             /// </summary>
+            /// <param name="config">Configuration for the analysis</param>
             public InnerMethodInvocationAnalyzer(ApiReplacementConfig config)
-                : base(config, new MethodInvocationOnlyNoArgsDiagnosticFormatter()) { }
+                : base(config, new MethodInvocationOnlyNoArgsDiagnosticFormatter())
+            {
+            }
 
             /// <inheritdoc />
             protected override bool IsOnForbiddenPath(string filePath)

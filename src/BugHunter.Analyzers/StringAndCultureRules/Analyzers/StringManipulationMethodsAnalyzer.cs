@@ -31,7 +31,7 @@ namespace BugHunter.Analyzers.StringAndCultureRules.Analyzers
             => invocationExpression.ArgumentList.Arguments.Count == 0;
 
         /// <summary>
-        /// Constructor initializing base class with method names to be diagnosed
+        /// Initializes a new instance of the <see cref="StringManipulationMethodsAnalyzer"/> class.
         /// </summary>
         public StringManipulationMethodsAnalyzer()
             : base("ToLower", "ToUpper")

@@ -24,7 +24,7 @@ namespace BugHunter.Analyzers.StringAndCultureRules.Analyzers.Helpers
         private static readonly ISyntaxNodeDiagnosticFormatter<InvocationExpressionSyntax> DiagnosticFormatter = new MethodInvocationOnlyDiagnosticFormatter();
 
         /// <summary>
-        /// Constructor accepting one or more names of string methods that are considered forbidden and diagnostic should be raised for them
+        /// Initializes a new instance of the <see cref="BaseStringMethodsAnalyzer"/> class.
         /// </summary>
         /// <param name="forbiddenMethod">Name of the forbidden method</param>
         /// <param name="additionalForbiddenMethods">Names of additional forbidden methods</param>

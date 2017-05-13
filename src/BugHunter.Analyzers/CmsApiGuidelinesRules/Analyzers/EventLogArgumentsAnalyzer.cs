@@ -54,9 +54,11 @@ namespace BugHunter.Analyzers.CmsApiGuidelinesRules.Analyzers
             private static readonly string[] ForbiddenEventTypeArgs = { "\"I\"", "\"W\"", "\"E\"" };
 
             /// <summary>
-            /// Constructor initializing config and diagnostic formatter of <see cref="MethodInvocationAnalyzer"/> base class
+            /// Initializes a new instance of the <see cref="InnerMethodInvocationAnalyzer"/> class.
             /// </summary>
-            public InnerMethodInvocationAnalyzer(ApiReplacementConfig config) : base(config, new EventLogArgumentsDiagnosticFormatter())
+            /// <param name="config">Configuration for the analysis</param>
+            public InnerMethodInvocationAnalyzer(ApiReplacementConfig config)
+                : base(config, new EventLogArgumentsDiagnosticFormatter())
             {
             }
 
