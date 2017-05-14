@@ -10,9 +10,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("BugHunter.TestUtils")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Kentico software")]
+[assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("BugHunter.TestUtils")]
-[assembly: AssemblyCopyright("Copyright © Kentico software 2017")]
+[assembly: AssemblyCopyright("Copyright © 2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
