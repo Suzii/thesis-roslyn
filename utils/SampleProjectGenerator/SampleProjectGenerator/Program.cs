@@ -9,9 +9,9 @@ namespace SampleProjectGenerator
     internal class Program
     {
         // must be divisible by 10 and *NumberOfFilesPerAnalyzer*
-        private static readonly int DesiredNumberOfDiagnosticsTotal = 1000;
+        private static readonly int DesiredNumberOfDiagnosticsTotal = 10;
 
-        private static readonly int NumberOfFilesPerAnalyzer = 10;
+        private static readonly int NumberOfFilesPerAnalyzer = 1;
         
         private static void Main(string[] args)
         {
@@ -23,7 +23,7 @@ namespace SampleProjectGenerator
                 return;
             }
 
-            var sampleProjectFolder = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\..\..\thesis-sample-test-project\SampleProject"));
+            var sampleProjectFolder = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\..\..\..\thesis-sample-test-project\SampleProject"));
             if (!Directory.Exists(sampleProjectFolder))
             {
                 Console.WriteLine("This console app expects you have https://github.com/Suzii/thesis-sample-test-project cloned in a folder next to thesis-roslyn project");
